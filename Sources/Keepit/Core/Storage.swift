@@ -1,12 +1,12 @@
 import Foundation
 
-/// Files live in ~/Library/Application Support/CLCL/ (CLCL used %LOCALAPPDATA%\CLCL).
+/// Files live in ~/Library/Application Support/Keepit/.
 enum Storage {
     static let directory: URL = {
         let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
         let dir = base.appendingPathComponent("Keepit", isDirectory: true)
-        // One-time migration from the pre-rename location (…/Application Support/CLCL).
-        let legacy = base.appendingPathComponent("CLCL", isDirectory: true)
+        // One-time migration from the pre-2.1 data folder.
+        let legacy = base.appendingPathComponent(Legacy.dataFolderName, isDirectory: true)
         if !FileManager.default.fileExists(atPath: dir.path), FileManager.default.fileExists(atPath: legacy.path) {
             if (try? FileManager.default.moveItem(at: legacy, to: dir)) == nil {
                 try? FileManager.default.copyItem(at: legacy, to: dir)

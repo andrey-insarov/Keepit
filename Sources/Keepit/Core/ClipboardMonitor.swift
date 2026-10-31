@@ -68,7 +68,7 @@ final class ClipboardMonitor {
         let frontApp = NSWorkspace.shared.frontmostApplication
         let bundleId = frontApp?.bundleIdentifier
 
-        // CLCL's window filter → ignore list by bundle id.
+        // Ignore list by bundle id.
         if let id = bundleId, settings.ignoreApps.contains(id) { return }
         if let id = bundleId, id == Bundle.main.bundleIdentifier { return }
 

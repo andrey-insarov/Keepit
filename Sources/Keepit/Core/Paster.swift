@@ -3,7 +3,7 @@ import ApplicationServices
 import Carbon.HIToolbox
 
 /// Puts an item on the pasteboard and pastes it into the previously active app.
-/// Replaces CLCL's SendKey.c (keybd_event) with CGEvent, which requires the Accessibility permission.
+/// Uses CGEvent to synthesize the paste key stroke, which requires the Accessibility permission.
 enum Paster {
 
     // MARK: Accessibility
@@ -24,7 +24,7 @@ enum Paster {
     /// - Parameters:
     ///   - item: what to paste
     ///   - target: the app that was frontmost before our menu appeared (nil = whatever is frontmost now)
-    ///   - sendKey: false → only copy to the pasteboard (CLCL "paste=0")
+    ///   - sendKey: false → only copy to the pasteboard (no key stroke)
     static func paste(_ item: ClipItem,
                       into target: NSRunningApplication?,
                       monitor: ClipboardMonitor,
@@ -82,7 +82,7 @@ enum Paster {
         up.post(tap: .cgAnnotatedSessionEventTap)
     }
 
-    // MARK: Caret position (CLCL "show menu at caret")
+    // MARK: Caret position ("open menu at text cursor")
 
     /// Screen position (Cocoa coordinates, bottom-left origin) of the text cursor in the focused app, if exposed via AX.
     static func caretScreenPoint() -> NSPoint? {

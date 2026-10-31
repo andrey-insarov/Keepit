@@ -78,7 +78,7 @@ final class ViewerOutlineView: NSOutlineView {
 
 // MARK: - Viewer window
 
-/// CLCL's Viewer (Viewer.c + TreeView.c + ListView.c): tree of Clipboard / History / Template on the left,
+/// The Viewer: tree of Clipboard / History / Template on the left,
 /// the selected format's contents on the right, editable where the original allowed it.
 final class ViewerWindowController: NSWindowController,
     NSOutlineViewDataSource, NSOutlineViewDelegate, NSWindowDelegate, NSMenuDelegate {

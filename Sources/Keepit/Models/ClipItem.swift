@@ -1,19 +1,19 @@
 import AppKit
 import CryptoKit
 
-/// One clipboard snapshot: a set of pasteboard formats, like CLCL's DATA_INFO tree
+/// One clipboard snapshot: a set of pasteboard formats, organised as a tree
 /// (one history item → several format children: TEXT, BITMAP, …).
 struct ClipItem: Codable, Identifiable, Equatable {
     enum Kind: String, Codable { case text, image, files }
 
     /// Formats we keep. Everything else on the pasteboard is dropped
-    /// (CLCL had a configurable format list; this is the built-in equivalent).
+    /// (a fixed list for now; a configurable format filter is on the roadmap).
     enum Format {
         static let text  = NSPasteboard.PasteboardType.string.rawValue      // public.utf8-plain-text
         static let rtf   = NSPasteboard.PasteboardType.rtf.rawValue         // public.rtf
         static let html  = NSPasteboard.PasteboardType.html.rawValue        // public.html
         static let png   = NSPasteboard.PasteboardType.png.rawValue         // public.png
-        static let files = "net.nakka.clcl.file-list"   // our own: JSON [String] of paths. Kept after the rename so existing data loads.
+        static let files = "com.it.keep.file-list"       // our own: JSON [String] of paths
     }
 
     let id: UUID
@@ -25,7 +25,28 @@ struct ClipItem: Codable, Identifiable, Equatable {
 
     static func == (a: ClipItem, b: ClipItem) -> Bool { a.id == b.id && a.contentHash == b.contentHash }
 
-    /// Display order / priority of formats (CLCL "Format" priority list).
+    init(id: UUID, date: Date, formats: [String: Data], sourceApp: String?, contentHash: String) {
+        self.id = id
+        self.date = date
+        self.formats = formats
+        self.sourceApp = sourceApp
+        self.contentHash = contentHash
+    }
+
+    private enum CodingKeys: String, CodingKey { case id, date, formats, sourceApp, contentHash }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decode(UUID.self, forKey: .id)
+        date = try c.decode(Date.self, forKey: .date)
+        var f = try c.decode([String: Data].self, forKey: .formats)
+        if let legacy = f.removeValue(forKey: Legacy.filesFormat) { f[Format.files] = legacy }
+        formats = f
+        sourceApp = try c.decodeIfPresent(String.self, forKey: .sourceApp)
+        contentHash = try c.decode(String.self, forKey: .contentHash)
+    }
+
+    /// Display order / priority of formats (primary format is shown in menus and the Viewer).
     static let formatOrder = [Format.files, Format.png, Format.text, Format.rtf, Format.html]
 
     static func displayName(for format: String) -> String {
@@ -68,7 +89,7 @@ struct ClipItem: Codable, Identifiable, Equatable {
         rehash()
     }
 
-    /// Replace one format's raw bytes (Viewer edits RTF/HTML in place, like CLCL).
+    /// Replace one format's raw bytes (Viewer edits RTF/HTML in place).
     mutating func setData(_ d: Data, for format: String) {
         formats[format] = d
         rehash()
@@ -114,7 +135,7 @@ struct ClipItem: Codable, Identifiable, Equatable {
         return NSImage(data: d)
     }
 
-    /// Menu title, CLCL-style: first meaningful line, whitespace collapsed, truncated.
+    /// Menu title: first meaningful line, whitespace collapsed, truncated.
     func title(maxLength: Int) -> String {
         let raw: String
         switch kind {
@@ -142,7 +163,7 @@ struct ClipItem: Codable, Identifiable, Equatable {
         return raw
     }
 
-    /// Tooltip text (CLCL showed the beginning of the content in a tooltip).
+    /// Tooltip text: the beginning of the content.
     var tooltip: String? {
         switch kind {
         case .text:

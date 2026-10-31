@@ -44,12 +44,13 @@ final class SecureKey {
 /// Nothing derived from the password is written to disk except a GCM-sealed verifier.
 /// Intermediate buffers (password bytes, derived key) are wiped as soon as they are no longer needed.
 enum Vault {
-    static let magic = Data("CLCLENC1".utf8)     // file-format marker, unchanged after the rename for compatibility
+    static let magic = Data("KEEPITENC1".utf8)
+    private static let okToken = Data("KEEPIT-OK".utf8)
     private static let rounds: UInt32 = 200_000
 
     struct Meta: Codable {
         var salt: Data
-        var check: Data          // encrypt("CLCL-OK") with the key
+        var check: Data          // encrypt(okToken) with the key
     }
 
     static let metaURL = Storage.directory.appendingPathComponent("vault.json")
@@ -86,13 +87,16 @@ enum Vault {
         }
     }
 
-    static func isEncrypted(_ data: Data) -> Bool {
-        data.count > magic.count && data.prefix(magic.count) == magic
+    private static func marker(of data: Data) -> Data? {
+        for m in [magic, Legacy.fileMagic] where data.count > m.count && data.prefix(m.count) == m { return m }
+        return nil
     }
 
+    static func isEncrypted(_ data: Data) -> Bool { marker(of: data) != nil }
+
     static func decrypt(_ data: Data, key: SecureKey) throws -> Data {
-        guard isEncrypted(data) else { return data }
-        let box = try AES.GCM.SealedBox(combined: data.dropFirst(magic.count))
+        guard let m = marker(of: data) else { return data }
+        let box = try AES.GCM.SealedBox(combined: data.dropFirst(m.count))
         return try key.withKey { try AES.GCM.open(box, using: $0) }
     }
 
@@ -103,7 +107,7 @@ enum Vault {
         var salt = Data(count: 16)
         _ = salt.withUnsafeMutableBytes { SecRandomCopyBytes(kSecRandomDefault, 16, $0.baseAddress!) }
         let key = deriveKey(password: password, salt: salt)
-        let check = try encrypt(Data("CLCL-OK".utf8), key: key)
+        let check = try encrypt(okToken, key: key)
         let meta = Meta(salt: salt, check: check)
         let data = try JSONEncoder().encode(meta)
         try data.write(to: metaURL, options: .atomic)
@@ -115,9 +119,13 @@ enum Vault {
         guard let data = try? Data(contentsOf: metaURL),
               let meta = try? JSONDecoder().decode(Meta.self, from: data) else { return nil }
         let key = deriveKey(password: password, salt: meta.salt)
-        guard let plain = try? decrypt(meta.check, key: key), plain == Data("CLCL-OK".utf8) else {
+        guard let plain = try? decrypt(meta.check, key: key), plain == okToken || plain == Legacy.vaultOkToken else {
             key.zero()
             return nil
+        }
+        if plain == Legacy.vaultOkToken, let fresh = try? encrypt(okToken, key: key),
+           let d = try? JSONEncoder().encode(Meta(salt: meta.salt, check: fresh)) {
+            try? d.write(to: metaURL, options: .atomic)      // upgrade pre-2.1 vault metadata in place
         }
         return key
     }

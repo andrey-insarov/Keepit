@@ -11,7 +11,7 @@ final class Spacer: NSView {
     required init?(coder: NSCoder) { fatalError() }
 }
 
-/// Options window (a slim CLCLSet). Edits a copy of Settings and applies on "Save".
+/// Options window. Edits a copy of Settings and applies on "Save".
 final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     private unowned let app: AppDelegate
     private var draft: Settings

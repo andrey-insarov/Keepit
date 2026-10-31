@@ -1,11 +1,11 @@
 import AppKit
 
-/// Builds the popup menus (CLCL Menu.c): history list with accelerators + thumbnails, template tree.
+/// Builds the popup menus: history list with accelerators + thumbnails, template tree.
 final class MenuBuilder {
     var settings: Settings
     private var thumbCache: [UUID: NSImage] = [:]
 
-    /// Accelerator characters in CLCL order: 1-9, 0, A-Z.
+    /// Accelerator characters: 1-9, 0, A-Z.
     private static let accelerators: [Character] = Array("1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
     init(settings: Settings) { self.settings = settings }
@@ -33,7 +33,7 @@ final class MenuBuilder {
                 let ch = Self.accelerators[i]
                 mi.keyEquivalent = String(ch).lowercased()
                 mi.keyEquivalentModifierMask = []
-                // Visible prefix like CLCL's "&1 text" (the key equivalent column shows it too).
+                // Visible prefix "1  text" (the key equivalent column shows it too).
                 mi.title = "\(ch)  \(title)"
             }
             if settings.showThumbnails, item.kind == .image {
@@ -86,7 +86,7 @@ final class MenuBuilder {
         return menu
     }
 
-    /// CLCL name syntax: "&x" makes x the shortcut key, "&&" is a literal ampersand.
+    /// Template name syntax: "&x" makes x the shortcut key, "&&" is a literal ampersand.
     static func parseAmpersand(_ name: String) -> (title: String, shortcut: String?) {
         var title = ""
         var shortcut: String?

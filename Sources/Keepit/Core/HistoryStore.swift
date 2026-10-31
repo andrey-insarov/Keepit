@@ -1,6 +1,6 @@
 import Foundation
 
-/// Ordered clipboard history, newest first. Equivalent of CLCL's History.c.
+/// Ordered clipboard history, newest first.
 final class HistoryStore {
     private(set) var items: [ClipItem] = []
     var settings: Settings

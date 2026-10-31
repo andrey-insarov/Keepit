@@ -14,7 +14,7 @@ extension NSView {
 }
 
 /// Right-hand pane of the Viewer: one view per clipboard format
-/// (CLCL fmt_text_view.c / fmt_bitmap_view.c / fmt_file_view.c / BinView.c).
+/// (text, image, file list, hex dump).
 
 // MARK: - Text / RTF / HTML
 
@@ -74,7 +74,7 @@ final class TextFormatView: NSView, NSTextViewDelegate {
 
     func textDidEndEditing(_ notification: Notification) { commit() }
 
-    /// Apply pending edits (CLCL applies when focus leaves the editor).
+    /// Apply pending edits (applied when focus leaves the editor).
     func commit() {
         guard dirty, textView.isEditable else { return }
         dirty = false

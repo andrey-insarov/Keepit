@@ -14,7 +14,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var preferencesWindow: PreferencesWindowController?
     private var viewer: ViewerWindowController?
 
-    /// Most recently active app other than us — the Viewer pastes into it (CLCL remembered the previous window).
+    /// Most recently active app other than us — the Viewer pastes into it (the original remembered the previous window).
     private(set) var lastExternalApp: NSRunningApplication?
 
     /// App that was frontmost when a popup menu opened — paste goes back there.
@@ -250,7 +250,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if !hotKeys.register(settings.templateHotKey, handler: { [weak self] in self?.showTemplatePopup() }) {
             failed.append(settings.templateHotKey.displayString)
         }
-        // Per-template hot keys: paste the item directly, no menu (CLCL "Set Hot key").
+        // Per-template hot keys: paste the item directly, no menu ("Set Hot Key" on a template item).
         for t in templates.allItems() {
             guard let hk = t.hotKey, t.clip != nil else { continue }
             let id = t.id
@@ -263,7 +263,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             }
         }
         if !failed.isEmpty {
-            // CLCL: action.show_hotkey_error
+            // Report hot keys that could not be registered
             let a = NSAlert()
             a.messageText = "Hot key unavailable"
             a.informativeText = "Could not register: \(failed.joined(separator: ", ")). Another app or macOS is using it. Change it in Preferences."
@@ -337,7 +337,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         // The status-bar click does not activate us, so the frontmost app is still the paste target.
         pasteTarget = NSWorkspace.shared.frontmostApplication
         if isRight {
-            // CLCL: right-click on the tray icon opens the Viewer.
+            // Right-click on the menu-bar icon opens the Viewer.
             openViewer()
             return
         }

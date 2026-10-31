@@ -1,7 +1,7 @@
 import AppKit
 import Carbon.HIToolbox
 
-/// Click, then press a key combination. Equivalent of CLCL's SetHotkey.c control.
+/// Click, then press a key combination.
 final class HotKeyRecorderView: NSControl {
     var hotKey: HotKey? {
         didSet { needsDisplay = true }

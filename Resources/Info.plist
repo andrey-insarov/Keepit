@@ -26,7 +26,7 @@
     <key>LSUIElement</key>
     <true/>
     <key>NSHumanReadableCopyright</key>
-    <string>© 2026 Andrey Insarov — keep.it.com. Fork of CLCL © Ohno Tomoaki (nakka). MIT License.</string>
+    <string>© 2026 Andrey Insarov — keep.it.com. MIT License.</string>
     <key>NSPrincipalClass</key>
     <string>NSApplication</string>
     <key>NSSupportsAutomaticTermination</key>

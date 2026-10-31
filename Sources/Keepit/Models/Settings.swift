@@ -2,7 +2,6 @@ import Foundation
 import Carbon.HIToolbox
 
 /// Global hot key (Carbon key code + Carbon modifier mask).
-/// Mirrors CLCL's `action_info.modifiers / virtkey`.
 struct HotKey: Codable, Equatable {
     var keyCode: UInt32
     var modifiers: UInt32   // cmdKey | shiftKey | optionKey | controlKey
@@ -20,8 +19,7 @@ struct HotKey: Codable, Equatable {
     }
 }
 
-/// Key stroke sent to the target application to paste.
-/// Mirrors CLCL's `sendkey` section (`def_paste_modifiers`, `def_paste_virtkey`).
+/// Key stroke sent to the target application to paste; can be overridden per application (`Settings.pasteKeys`).
 struct PasteKey: Codable, Equatable {
     var keyCode: UInt16 = UInt16(kVK_ANSI_V)
     var command = true
@@ -34,18 +32,18 @@ struct PasteKey: Codable, Equatable {
     static let shiftCommandV = PasteKey(keyCode: UInt16(kVK_ANSI_V), command: true, shift: true)
 }
 
-/// Persisted user options. Field names follow CLCL's ini keys where sensible.
+/// Persisted user options.
 struct Settings: Codable, Equatable {
     // [history]
     var historyMax = 30            // history.max
     var historySave = true         // history.save
     var overlapCheck = true        // history.overlap_check — dedupe identical entries
-    var moveToTopOnPaste = true    // CLCL re-adds pasted item at the top
+    var moveToTopOnPaste = true    // pasted item moves to the top
     var maxImageBytes = 10 * 1024 * 1024
-    var pollInterval: Double = 0.3 // macOS has no clipboard listener; CLCL used WM_CLIPBOARDUPDATE
+    var pollInterval: Double = 0.3 // macOS has no clipboard change notification, so we poll
 
     // [menu]
-    var titleLength = 60           // chars (CLCL used menu.max_width in px)
+    var titleLength = 60           // chars
     var showThumbnails = true      // menu.show_bitmap
     var thumbnailSize = 32         // menu.bitmap_width / height
     var showTooltips = true        // menu.show_tooltip

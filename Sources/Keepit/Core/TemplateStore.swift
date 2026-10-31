@@ -1,6 +1,6 @@
 import Foundation
 
-/// Template tree persistence. Equivalent of CLCL's Regist.c.
+/// Template tree persistence.
 final class TemplateStore {
     private(set) var root = TemplateNode(name: "Template")
     var onChange: (() -> Void)?
