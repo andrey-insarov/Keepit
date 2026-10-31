@@ -47,8 +47,10 @@ ifneq ($(NOTARY_PROFILE),)
 else
 	xcrun notarytool submit $(DMG) --key "$(APPSTORE_KEY_PATH)" --key-id "$(APPSTORE_KEY_ID)" --issuer "$(APPSTORE_ISSUER_ID)" --wait
 endif
-	xcrun stapler staple $(DMG)
-	xcrun stapler staple $(BUNDLE)
+	# Apple's ticket service drops connections now and then: retry stapling a few times.
+	for t in $(DMG) $(BUNDLE); do \
+	  n=0; until xcrun stapler staple "$$t"; do n=$$((n+1)); [ $$n -ge 5 ] && exit 68; echo "stapler failed, retry $$n/5 in 20s"; sleep 20; done; \
+	done
 	spctl -a -vv -t install $(DMG)
 	@echo "Notarized and stapled $(DMG)"
 
