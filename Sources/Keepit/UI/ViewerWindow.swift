@@ -88,7 +88,10 @@ final class ViewerWindowController: NSWindowController,
     private var templates: TemplateStore { app.templates }
 
     private let outline = ViewerOutlineView()
-    private let rightPane = NSView()
+    private let rightPane = NSView()          // split view's right side: name row + content
+    private let contentPane = NSView()        // where the format views go
+    private let nameRow = NSStackView()
+    private let nameField = NSTextField()
     private let statusBar = NSTextField(labelWithString: "")
     private let textFormat = TextFormatView(frame: .zero)
     private let imageFormat = ImageFormatView(frame: .zero)
@@ -195,6 +198,28 @@ final class ViewerWindowController: NSWindowController,
         leftScroll.hasVerticalScroller = true
         leftScroll.borderType = .noBorder
 
+        // Right side: "Name" row (template items/folders only) above the content.
+        let nameLabel = NSTextField(labelWithString: "Name:")
+        nameField.placeholderString = "Empty = show contents · “-” = separator · &x = menu shortcut"
+        nameField.target = self
+        nameField.action = #selector(nameFieldChanged)
+        (nameField.cell as? NSTextFieldCell)?.sendsActionOnEndEditing = true   // commit on focus loss, not only ↩
+        nameRow.orientation = .horizontal
+        nameRow.spacing = 6
+        nameRow.edgeInsets = NSEdgeInsets(top: 8, left: 8, bottom: 4, right: 8)
+        nameRow.addArrangedSubview(nameLabel)
+        nameRow.addArrangedSubview(nameField)
+        nameField.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        let rightStack = NSStackView(views: [nameRow, contentPane])
+        rightStack.orientation = .vertical
+        rightStack.spacing = 0
+        rightStack.alignment = .width
+        rightStack.distribution = .fill
+        contentPane.setContentHuggingPriority(.defaultLow, for: .vertical)
+        rightPane.addSubview(rightStack)
+        rightPane.pinToEdges(rightStack)
+        nameRow.isHidden = true
+
         let split = NSSplitView()
         split.isVertical = true
         split.dividerStyle = .thin
@@ -231,10 +256,32 @@ final class ViewerWindowController: NSWindowController,
     }
 
     private func showPane(_ v: NSView) {
-        if v.superview === rightPane { return }
-        rightPane.subviews.forEach { $0.removeFromSuperview() }
-        rightPane.addSubview(v)
-        rightPane.pinToEdges(v)
+        if v.superview === contentPane { return }
+        contentPane.subviews.forEach { $0.removeFromSuperview() }
+        contentPane.addSubview(v)
+        contentPane.pinToEdges(v)
+    }
+
+    /// Show the Name row for template nodes (items and folders), hide it elsewhere.
+    private func updateNameRow(for n: VNode?) {
+        if let t = n?.itemNode?.templateNode {
+            nameRow.isHidden = false
+            nameField.stringValue = t.name
+            nameField.isEnabled = true
+        } else {
+            nameRow.isHidden = true
+            nameField.stringValue = ""
+        }
+    }
+
+    @objc private func nameFieldChanged() {
+        guard let t = selectedNode?.itemNode?.templateNode else { return }
+        let new = nameField.stringValue
+        guard new != t.name else { return }
+        t.name = new
+        templates.changed()
+        if t.hotKey != nil { app.registerHotKeys() }
+        refresh()
     }
 
     // MARK: Tree model
@@ -329,6 +376,7 @@ final class ViewerWindowController: NSWindowController,
     // MARK: Right pane
 
     private func showSelection() {
+        updateNameRow(for: selectedNode)
         guard let n = selectedNode else {
             showPane(infoFormat)
             infoFormat.load("Select an item in the tree.")
@@ -483,11 +531,13 @@ final class ViewerWindowController: NSWindowController,
             select(key: "h:\(c.id.uuidString)")
         } else {
             let (folder, idx) = templateInsertionPoint()
-            let t = TemplateNode(name: "New Item", clip: .text(""))
+            let t = TemplateNode(name: "", clip: .text(""))
             folder.insert(t, at: idx)
             templates.changed()
             refresh()
             select(key: "t:\(t.id.uuidString)")
+            window?.makeFirstResponder(nameField)
+            return
         }
         window?.makeFirstResponder(textFormat.textView)
     }
@@ -500,7 +550,8 @@ final class ViewerWindowController: NSWindowController,
         templates.changed()
         refresh()
         select(key: "t:\(t.id.uuidString)")
-        rename()
+        window?.makeFirstResponder(nameField)
+        nameField.selectText(nil)
     }
 
     @objc private func importFromFile() {
