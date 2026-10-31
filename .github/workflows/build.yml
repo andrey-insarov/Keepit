@@ -36,7 +36,7 @@ jobs:
         env:
           KEEPIT_DATA_DIR: ${{ runner.temp }}/keepit-selftest
         run: |
-          timeout 90 ./Keepit.app/Contents/MacOS/Keepit --selftest
+          perl -e 'alarm 120; exec @ARGV' ./Keepit.app/Contents/MacOS/Keepit --selftest
           cat selftest-output/report.txt
 
       - name: Upload self-test snapshots
