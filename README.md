@@ -114,7 +114,7 @@ unticking the option asks for the password and writes the files back as plain JS
 ## Files
 
 ```
-~/Library/Application Support/Keepit/      (migrated automatically from …/CLCL/ on first launch)
+~/Library/Application Support/Keepit/
   settings.json    options (editable by hand; missing keys fall back to defaults)
   history.json     clipboard history (base64 data per format)
   templates.json   template tree

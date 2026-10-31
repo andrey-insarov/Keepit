@@ -87,16 +87,13 @@ enum Vault {
         }
     }
 
-    private static func marker(of data: Data) -> Data? {
-        for m in [magic, Legacy.fileMagic] where data.count > m.count && data.prefix(m.count) == m { return m }
-        return nil
+    static func isEncrypted(_ data: Data) -> Bool {
+        data.count > magic.count && data.prefix(magic.count) == magic
     }
 
-    static func isEncrypted(_ data: Data) -> Bool { marker(of: data) != nil }
-
     static func decrypt(_ data: Data, key: SecureKey) throws -> Data {
-        guard let m = marker(of: data) else { return data }
-        let box = try AES.GCM.SealedBox(combined: data.dropFirst(m.count))
+        guard isEncrypted(data) else { return data }
+        let box = try AES.GCM.SealedBox(combined: data.dropFirst(magic.count))
         return try key.withKey { try AES.GCM.open(box, using: $0) }
     }
 
@@ -119,13 +116,9 @@ enum Vault {
         guard let data = try? Data(contentsOf: metaURL),
               let meta = try? JSONDecoder().decode(Meta.self, from: data) else { return nil }
         let key = deriveKey(password: password, salt: meta.salt)
-        guard let plain = try? decrypt(meta.check, key: key), plain == okToken || plain == Legacy.vaultOkToken else {
+        guard let plain = try? decrypt(meta.check, key: key), plain == okToken else {
             key.zero()
             return nil
-        }
-        if plain == Legacy.vaultOkToken, let fresh = try? encrypt(okToken, key: key),
-           let d = try? JSONEncoder().encode(Meta(salt: meta.salt, check: fresh)) {
-            try? d.write(to: metaURL, options: .atomic)      // upgrade pre-2.1 vault metadata in place
         }
         return key
     }

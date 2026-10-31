@@ -15,12 +15,9 @@ final class TemplateNode: Codable {
     var hotKey: HotKey?
     var children: [TemplateNode]
 
-    /// Legacy 1.x field; migrated into `clip` by `relink()`.
-    private var text: String?
-
     weak var parent: TemplateNode?
 
-    private enum CodingKeys: String, CodingKey { case id, name, clip, hotKey, children, text }
+    private enum CodingKeys: String, CodingKey { case id, name, clip, hotKey, children }
 
     init(id: UUID = UUID(), name: String, clip: ClipItem? = nil, children: [TemplateNode] = []) {
         self.id = id
@@ -44,12 +41,8 @@ final class TemplateNode: Codable {
         return "(Folder)"
     }
 
-    /// Re-link `parent` pointers after decoding and migrate 1.x text-only items.
+    /// Re-link `parent` pointers after decoding.
     func relink() {
-        if clip == nil, let t = text {
-            clip = .text(t)
-            text = nil
-        }
         for c in children {
             c.parent = self
             c.relink()

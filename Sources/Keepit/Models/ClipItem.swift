@@ -33,18 +33,6 @@ struct ClipItem: Codable, Identifiable, Equatable {
         self.contentHash = contentHash
     }
 
-    private enum CodingKeys: String, CodingKey { case id, date, formats, sourceApp, contentHash }
-
-    init(from decoder: Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        id = try c.decode(UUID.self, forKey: .id)
-        date = try c.decode(Date.self, forKey: .date)
-        var f = try c.decode([String: Data].self, forKey: .formats)
-        if let legacy = f.removeValue(forKey: Legacy.filesFormat) { f[Format.files] = legacy }
-        formats = f
-        sourceApp = try c.decodeIfPresent(String.self, forKey: .sourceApp)
-        contentHash = try c.decode(String.self, forKey: .contentHash)
-    }
 
     /// Display order / priority of formats (primary format is shown in menus and the Viewer).
     static let formatOrder = [Format.files, Format.png, Format.text, Format.rtf, Format.html]
