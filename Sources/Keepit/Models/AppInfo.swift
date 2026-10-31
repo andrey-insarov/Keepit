@@ -11,5 +11,5 @@ enum AppInfo {
     }
     static var versionLine: String { "\(name) \(version) (\(build))" }
     static let homepage = "https://keep.it.com"
-    static let copyright = "© 2026 Andrey Insarov"
+    static let copyright = "© 2026 UK Intis Telecom LTD (Andrey Insarov)"
 }

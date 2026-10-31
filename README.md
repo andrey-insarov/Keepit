@@ -198,4 +198,4 @@ Sources/Keepit/
 ## License
 
 MIT, same as upstream CLCL. `LICENSE` carries the original copyright notice of Ohno Tomoaki
-as the license requires, plus `Copyright (c) 2026 Andrey Insarov` for the Keep it fork.
+as the license requires, plus `Copyright (c) 2026 UK Intis Telecom LTD (Andrey Insarov)` for the Keep it fork.
