@@ -72,6 +72,14 @@ Or in Xcode: `open Package.swift` and run the `Keepit` scheme (the `LSUIElement`
 
 ### Accessibility permission resets after rebuild
 
+If you have a Developer ID certificate, build local test copies with the same identity as the
+release and the permission survives every rebuild:
+
+```bash
+make install SIGN_ID="Developer ID Application: Your Company (TEAMID)"
+```
+
+
 `make app` signs the bundle ad-hoc (`SIGN_ID=-`). macOS ties the Accessibility grant to the code
 signature, so after each rebuild you may need to toggle Keepit off/on in the Accessibility list.
 To avoid that, create a self-signed "Code Signing" certificate in Keychain Access (e.g. named

@@ -466,6 +466,30 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
               let item = history.items.first(where: { $0.id == id }) else { return }
         history.touch(item)
         Paster.paste(item, into: pasteTarget, monitor: monitor, settings: settings, sendKey: settings.pasteAfterSelect)
+        nudgeAccessibilityIfNeeded()
+    }
+
+    private var accessibilityNudgeShown = false
+
+    /// The item was copied but ⌘V could not be sent: say so once per launch instead of failing silently.
+    private func nudgeAccessibilityIfNeeded() {
+        guard settings.pasteAfterSelect, !Paster.isTrusted(), !accessibilityNudgeShown else { return }
+        accessibilityNudgeShown = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
+            let a = NSAlert()
+            a.messageText = "Copied to the clipboard — but Keepit can't paste for you yet"
+            a.informativeText = "Press ⌘V to paste now. To paste automatically, allow Keepit in System Settings → Privacy & Security → Accessibility. If Keepit is already listed, turn it off and on again (macOS forgets the grant when the app is rebuilt with a different signature)."
+            a.addButton(withTitle: "Open System Settings")
+            a.addButton(withTitle: "Later")
+            NSApp.activate(ignoringOtherApps: true)
+            if a.runModal() == .alertFirstButtonReturn {
+                Paster.requestTrust()
+                if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") {
+                    NSWorkspace.shared.open(url)
+                }
+            }
+            self?.pasteTarget?.activate(options: [])
+        }
     }
 
     @objc private func templateChosen(_ sender: NSMenuItem) {
@@ -473,6 +497,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         guard let id = sender.representedObject as? UUID,
               let node = templates.root.find(id: id), let clip = node.clip else { return }
         Paster.paste(clip, into: pasteTarget, monitor: monitor, settings: settings, sendKey: settings.pasteAfterSelect)
+        nudgeAccessibilityIfNeeded()
     }
 
     @objc private func clearHistory() {
