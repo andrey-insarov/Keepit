@@ -26,8 +26,25 @@ jobs:
       - name: Build (debug, warnings visible)
         run: swift build
 
+      - name: Unit tests
+        run: swift test
+
       - name: Package app
         run: make dist VERSION=$(cat VERSION)
+
+      - name: UI smoke test (launches the app, snapshots windows)
+        env:
+          KEEPIT_DATA_DIR: ${{ runner.temp }}/keepit-selftest
+        run: |
+          timeout 90 ./Keepit.app/Contents/MacOS/Keepit --selftest
+          cat selftest-output/report.txt
+
+      - name: Upload self-test snapshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: selftest-${{ github.sha }}
+          path: selftest-output/
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4

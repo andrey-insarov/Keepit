@@ -13,6 +13,11 @@ let package = Package(
                 .linkedFramework("Carbon"),
                 .linkedFramework("ServiceManagement"),
             ]
-        )
+        ),
+        .testTarget(
+            name: "KeepitTests",
+            dependencies: ["Keepit"],
+            path: "Tests/KeepitTests"
+        ),
     ]
 )

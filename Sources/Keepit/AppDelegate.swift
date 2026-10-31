@@ -66,6 +66,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         Storage.save(settings, to: Storage.settingsURL, encrypt: false)
         observeScreenLock()
 
+        if SelfTest.isActive {
+            SelfTest.run(app: self)
+            return
+        }
+
         if !Paster.isTrusted() {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
                 self?.showAccessibilityAlert()
@@ -262,7 +267,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 failed.append("\(hk.displayString) (\(t.displayName))")
             }
         }
-        if !failed.isEmpty {
+        if !failed.isEmpty, !SelfTest.isActive {
             // Report hot keys that could not be registered
             let a = NSAlert()
             a.messageText = "Hot key unavailable"
@@ -397,7 +402,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     // MARK: - Menu construction
 
-    private func buildHistoryMenu(includeTemplates: Bool, includeApp: Bool) -> NSMenu {
+    func buildHistoryMenu(includeTemplates: Bool, includeApp: Bool) -> NSMenu {
         let menu = NSMenu(title: "History")
         menu.autoenablesItems = false
 
@@ -506,6 +511,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             viewer = ViewerWindowController(app: self)
         }
         viewer?.show()
+    }
+
+    /// Windows currently open, for the self-test to snapshot.
+    var openWindows: [(name: String, window: NSWindow)] {
+        var out: [(String, NSWindow)] = []
+        if let w = viewer?.window { out.append(("viewer", w)) }
+        if let w = preferencesWindow?.window { out.append(("preferences", w)) }
+        return out
     }
 
     @objc private func grantAccessibility() {

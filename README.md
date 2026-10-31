@@ -111,6 +111,19 @@ unticking the option asks for the password and writes the files back as plain JS
 * While locked, nothing is decrypted and the hot keys do nothing. What is on the system
   clipboard itself is of course still readable by every app — that is outside Keep it's control.
 
+## Testing
+
+* `swift test` — unit tests (models, menu parsing, settings, history/template stores, vault
+  encryption and key zeroization). Runs on every push in GitHub Actions.
+* `Keepit --selftest` — end-to-end smoke test inside the real app: captures a clipboard change,
+  checks dedupe, inserts a template, builds the menus, opens the Viewer and Preferences and saves
+  PNG snapshots of them to `selftest-output/`, round-trips the vault. Set `KEEPIT_DATA_DIR` to a
+  temporary folder so your real data is untouched. CI runs it on every build and uploads the
+  snapshots as an artifact (Actions → run → *selftest-…*), so UI regressions can be eyeballed.
+* Hot keys, synthetic ⌘V and the caret lookup need the Accessibility permission and a real user
+  session, so they can't run on a CI runner — test those by hand (or let Claude do it on a
+  linked Mac) before tagging a release.
+
 ## Files
 
 ```

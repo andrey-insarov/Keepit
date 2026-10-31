@@ -2,16 +2,25 @@ import Foundation
 
 /// Files live in ~/Library/Application Support/Keepit/.
 enum Storage {
-    static let directory: URL = {
-        let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-        let dir = base.appendingPathComponent("Keepit", isDirectory: true)
+    /// Data folder. Tests and `--selftest` point this at a temporary directory
+    /// (also honoured from the environment: KEEPIT_DATA_DIR).
+    static var directory: URL = {
+        let dir: URL
+        if let env = ProcessInfo.processInfo.environment["KEEPIT_DATA_DIR"], !env.isEmpty {
+            dir = URL(fileURLWithPath: env, isDirectory: true)
+        } else {
+            let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+            dir = base.appendingPathComponent("Keepit", isDirectory: true)
+        }
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         return dir
-    }()
+    }() {
+        didSet { try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true) }
+    }
 
-    static let settingsURL  = directory.appendingPathComponent("settings.json")
-    static let historyURL   = directory.appendingPathComponent("history.json")
-    static let templatesURL = directory.appendingPathComponent("templates.json")
+    static var settingsURL: URL  { directory.appendingPathComponent("settings.json") }
+    static var historyURL: URL   { directory.appendingPathComponent("history.json") }
+    static var templatesURL: URL { directory.appendingPathComponent("templates.json") }
 
     private static let encoder: JSONEncoder = {
         let e = JSONEncoder()

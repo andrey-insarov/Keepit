@@ -53,7 +53,7 @@ enum Vault {
         var check: Data          // encrypt(okToken) with the key
     }
 
-    static let metaURL = Storage.directory.appendingPathComponent("vault.json")
+    static var metaURL: URL { Storage.directory.appendingPathComponent("vault.json") }
 
     static var isEnabled: Bool { FileManager.default.fileExists(atPath: metaURL.path) }
 
