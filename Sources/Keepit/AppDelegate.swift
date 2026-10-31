@@ -546,7 +546,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if includeTemplates {
             menu.addItem(.separator())
             let t = NSMenuItem(title: "Template", action: nil, keyEquivalent: "")
-            t.image = NSImage(systemSymbolName: "text.badge.star", accessibilityDescription: nil)
+            t.attributedTitle = NSAttributedString(string: "Template", attributes: [.foregroundColor: AppInfo.templateColor])
+            t.image = NSImage(systemSymbolName: "text.badge.star", accessibilityDescription: nil)?
+                .withSymbolConfiguration(.init(paletteColors: [AppInfo.templateColor]))
             t.submenu = menuBuilder.templateMenu(templates.root, target: self, action: #selector(templateChosen(_:)))
             menu.addItem(t)
         }

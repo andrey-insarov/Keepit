@@ -861,6 +861,20 @@ final class ViewerWindowController: NSWindowController,
 
     func outlineView(_ outlineView: NSOutlineView, shouldEdit tableColumn: NSTableColumn?, item: Any) -> Bool { false }
 
+    func outlineView(_ outlineView: NSOutlineView, willDisplayCell cell: Any, for tableColumn: NSTableColumn?, item: Any) {
+        guard let textCell = cell as? NSTextFieldCell, let n = vnode(item) else { return }
+        let isTemplate: Bool
+        switch n.kind {
+        case .templateRoot, .template: isTemplate = true
+        case .format: isTemplate = n.isInTemplate
+        default: isTemplate = false
+        }
+        let selected = outlineView.selectedRowIndexes.contains(outlineView.row(forItem: item)) && outlineView.window?.firstResponder === outlineView
+        textCell.textColor = isTemplate && !selected ? AppInfo.templateColor : .controlTextColor
+        if case .templateRoot = n.kind { textCell.font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize) }
+        else { textCell.font = NSFont.systemFont(ofSize: NSFont.systemFontSize) }
+    }
+
     func outlineViewSelectionDidChange(_ notification: Notification) {
         guard !suppressSelectionEvents else { return }
         textFormat.commit()
