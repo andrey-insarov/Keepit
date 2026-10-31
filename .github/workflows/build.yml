@@ -62,8 +62,9 @@ jobs:
         run: |
           echo "$APPSTORE_PRIVATE_KEY" > $RUNNER_TEMP/AuthKey.p8
           make notarize VERSION=$(cat VERSION) SIGN_ID="$SIGN_ID" APPSTORE_KEY_PATH=$RUNNER_TEMP/AuthKey.p8
-          make dist VERSION=$(cat VERSION) SIGN_ID="$SIGN_ID"    # re-zips the stapled app; dmg already built
           rm $RUNNER_TEMP/AuthKey.p8
+          # Zip the stapled app without rebuilding (make dist would re-sign and drop the ticket).
+          ditto -c -k --keepParent Keepit.app Keepit-$(cat VERSION).zip
 
       - name: UI smoke test (launches the app, snapshots windows)
         env:
