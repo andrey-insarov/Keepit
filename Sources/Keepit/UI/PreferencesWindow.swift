@@ -36,6 +36,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     private let touchID      = NSButton(checkboxWithTitle: "Unlock with Touch ID (password remains as fallback)", target: nil, action: nil)
     private let touchIDChange = NSButton(checkboxWithTitle: "Allow changing the password with Touch ID (off = always require the current password)", target: nil, action: nil)
     private let newPhrase    = NSButton(title: "New Recovery Phrase…", target: nil, action: nil)
+    private let phraseHint   = NSTextField(wrappingLabelWithString: "Issues a new 24-word phrase and invalidates the old one. Use it if the printed sheet was lost or seen by someone; you will then be offered to change the password too.")
     private let historyHK    = HotKeyRecorderView(frame: .zero)
     private let templateHK   = HotKeyRecorderView(frame: .zero)
     private let ignoreScroll = NSTextView.scrollableTextView()
@@ -121,11 +122,15 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
             [NSView(), touchID],
             [NSView(), touchIDChange],
             [NSView(), newPhrase],
+            [NSView(), phraseHint],
         ])
         changePw.target = self
         changePw.action = #selector(changePasswordTapped)
         newPhrase.target = self
         newPhrase.action = #selector(newPhraseTapped)
+        phraseHint.textColor = .secondaryLabelColor
+        phraseHint.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
+        phraseHint.preferredMaxLayoutWidth = 320
         grid.rowSpacing = 6
         grid.columnSpacing = 10
         grid.column(at: 0).xPlacement = .trailing

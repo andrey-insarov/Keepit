@@ -258,6 +258,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             RecoveryDialogs.present(words: words, title: "Your new recovery phrase (the old one no longer works)")
         } catch {
             Vault.error("Could not create the recovery phrase: \(error.localizedDescription)")
+            return
+        }
+        // If the old phrase leaked, whoever has it may already hold the current data key.
+        let a = NSAlert()
+        a.messageText = "Was the old phrase exposed?"
+        a.informativeText = "A leaked phrase reveals the current data key, so a new phrase alone is not enough. Changing the password now re-encrypts everything with a fresh key (the new phrase stays valid; the Touch ID entry is refreshed)."
+        a.addButton(withTitle: "Change Password Now")
+        a.addButton(withTitle: "No, Keep Password")
+        if a.runModal() == .alertFirstButtonReturn {
+            guard let pw = Vault.askPassword(title: "New password", message: "Enter the new password twice.", confirm: true) else { return }
+            rekey(with: pw)
+            pw.zero()
         }
     }
 
