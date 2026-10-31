@@ -15,7 +15,7 @@ endif
 # Notarization: NOTARY_PROFILE (xcrun notarytool store-credentials) or the APPSTORE_* env vars used by CI.
 NOTARY_PROFILE ?=
 
-.PHONY: build app run install clean dist dmg icon notarize
+.PHONY: build app run install clean dist dmg icon notarize appstore
 
 DMG      = $(APP)-$(VERSION).dmg
 DMG_VOL  = Keep it
@@ -53,6 +53,34 @@ endif
 	done
 	spctl -a -vv -t install $(DMG)
 	@echo "Notarized and stapled $(DMG)"
+
+# ---- Mac App Store build --------------------------------------------------------------------
+# Needs: "Apple Distribution: <Team>" (or "3rd Party Mac Developer Application") and
+# "3rd Party Mac Developer Installer" certificates, a Mac App Store provisioning profile for
+# com.it.keep saved as Resources/Keepit.provisionprofile, and the App ID registered in App Store Connect.
+#   make appstore APP_SIGN_ID="Apple Distribution: UK Intis Telecom LTD (TEAMID)" \
+#                 PKG_SIGN_ID="3rd Party Mac Developer Installer: UK Intis Telecom LTD (TEAMID)" TEAM_ID=TEAMID
+APP_SIGN_ID ?=
+PKG_SIGN_ID ?=
+TEAM_ID ?=
+PKG = $(APP)-$(VERSION)-appstore.pkg
+
+appstore: build
+	@test -n "$(APP_SIGN_ID)" -a -n "$(PKG_SIGN_ID)" -a -n "$(TEAM_ID)" || (echo "set APP_SIGN_ID, PKG_SIGN_ID and TEAM_ID"; exit 1)
+	@test -f Resources/Keepit.provisionprofile || (echo "missing Resources/Keepit.provisionprofile (Mac App Store profile for com.it.keep)"; exit 1)
+	rm -rf $(BUNDLE) $(PKG) .build/appstore.entitlements
+	mkdir -p $(CONTENTS)/MacOS $(CONTENTS)/Resources
+	cp $(BUILD)/$(APP) $(CONTENTS)/MacOS/$(APP)
+	sed -e 's/__VERSION__/$(VERSION)/' -e 's/__BUILD__/$(BUILD_NO)/' Resources/Info.plist > $(CONTENTS)/Info.plist
+	cp Resources/Icon/AppIcon.icns $(CONTENTS)/Resources/AppIcon.icns
+	cp Resources/Keepit.provisionprofile $(CONTENTS)/embedded.provisionprofile
+	echo -n 'APPL????' > $(CONTENTS)/PkgInfo
+	sed 's/__TEAM_ID__/$(TEAM_ID)/g' Resources/Keepit-AppStore.entitlements > .build/appstore.entitlements
+	codesign --force --deep --options runtime --timestamp --entitlements .build/appstore.entitlements --sign "$(APP_SIGN_ID)" $(BUNDLE)
+	codesign --verify --strict --verbose=2 $(BUNDLE)
+	codesign -d --entitlements - $(BUNDLE) | grep -q app-sandbox
+	productbuild --component $(BUNDLE) /Applications --sign "$(PKG_SIGN_ID)" $(PKG)
+	@echo "Built $(PKG) — upload with Transporter.app or: xcrun altool --upload-package (see RELEASING.md)"
 
 # Re-render Resources/Icon/AppIcon.icns from icon.svg (needs python3 + playwright, or use iconutil on a Mac).
 icon:

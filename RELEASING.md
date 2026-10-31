@@ -58,3 +58,51 @@ spctl -a -vv -t install Keepit-*.dmg      # should say "accepted, source=Notariz
   shows why; the usual causes are a missing `--timestamp`/hardened runtime (already set in the
   Makefile) or a stale certificate.
 * The Finder window layout step of `make dmg` is best effort and is silently skipped on CI.
+
+## Mac App Store
+
+The App Store build is sandboxed (`Resources/Keepit-AppStore.entitlements`) and packaged as a
+signed `.pkg` by `make appstore`. One-time setup:
+
+1. **App ID**: developer.apple.com → Identifiers → + → App IDs → macOS, bundle id `com.it.keep`,
+   no extra capabilities needed.
+2. **Certificates** (Xcode → Settings → Accounts → Manage Certificates, or developer.apple.com):
+   *Apple Distribution* (signs the app) and *Mac Installer Distribution* (signs the .pkg).
+3. **Provisioning profile**: developer.apple.com → Profiles → + → *Mac App Store Connect*,
+   select the App ID and the distribution certificate, download, save as
+   `Resources/Keepit.provisionprofile` (it is git-ignored).
+4. **App Store Connect record**: appstoreconnect.apple.com → My Apps → + → macOS, name
+   (note: "Keep It" is taken by another developer — use e.g. "Keepit" with subtitle
+   "Clipboard History & Templates"), primary language, bundle id `com.it.keep`, SKU `keepit-mac`.
+   Fill in: description, keywords, support URL, **privacy policy URL** (required), category
+   *Productivity*, screenshots (1280×800 or 1440×900 or 2560×1600, at least one), age rating,
+   App Privacy ("Data Not Collected" — Keep it sends nothing anywhere).
+
+Build and upload:
+
+```bash
+make appstore VERSION=$(cat VERSION) TEAM_ID=XXXXXXXXXX \
+  APP_SIGN_ID="Apple Distribution: UK Intis Telecom LTD (XXXXXXXXXX)" \
+  PKG_SIGN_ID="3rd Party Mac Developer Installer: UK Intis Telecom LTD (XXXXXXXXXX)"
+```
+
+Upload `Keepit-<version>-appstore.pkg` with **Transporter** (free, Mac App Store) — drag the
+.pkg in, Deliver — or from the terminal with the App Store Connect API key:
+
+```bash
+xcrun altool --upload-package Keepit-2.1.0-appstore.pkg --type macos \
+  --apple-id <App Store Connect app Apple ID> --bundle-id com.it.keep --bundle-version <build> \
+  --bundle-short-version-string 2.1.0 --apiKey XXXXXXXXXX --apiIssuer <issuer-uuid>
+```
+
+Then in App Store Connect: select the build under the version → *Submit for Review*.
+Each submission needs a new, higher `CFBundleVersion` (the commit count does that automatically).
+
+Review notes worth adding (App Review Information → Notes): Keep it is a clipboard history
+manager; it asks for the Accessibility permission only to paste the chosen item into the active
+app with ⌘V and to position the popup at the text cursor; without it the app still works
+(items are copied to the clipboard). Nothing leaves the Mac; history can be password-protected
+and is stored AES-GCM encrypted.
+
+Expect the sandbox to block one thing: the Viewer's "open file" from a FILE LIST item works only
+for files the user picked through a panel in this session; other paths open in Finder instead.
