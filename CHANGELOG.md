@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 2.3.0 — 2026-10-31
 
 - **Recovery phrase**: when protection is turned on, Keepit shows a 24-word phrase (BIP-39 word
   list, checksummed) that can unlock the data on any Mac if the password is forgotten; it can be
