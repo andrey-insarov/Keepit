@@ -1,10 +1,11 @@
 # Changelog
 
-## Unreleased
+## 2.2.0 — 2026-10-31
 
 - **Touch ID unlock** (Preferences → *Unlock with Touch ID*): the vault key is kept in the
-  Secure-Enclave-backed keychain behind a biometry-only access control; the password stays as
-  fallback. Needs a Team-ID-signed build.
+  Secure-Enclave-backed keychain behind a biometry-only access control (invalidated if
+  fingerprints change); the password stays as fallback on every prompt. Available in the signed
+  release build (it needs the embedded Developer ID provisioning profile).
 
 ## 2.1.2 — 2026-10-31 (security)
 
