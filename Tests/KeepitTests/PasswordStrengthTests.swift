@@ -10,7 +10,8 @@ final class PasswordStrengthTests: XCTestCase {
         XCTAssertEqual(level("password"), .weak)
         XCTAssertEqual(level("aaaaaaaaaaaa"), .weak)
         XCTAssertEqual(level("Tr0ub4dor"), .fair)
-        XCTAssertEqual(level("Correct-Horse-7"), .good)
+        XCTAssertEqual(level("Correct-7"), .good)
+        XCTAssertEqual(level("Correct-Horse-7"), .excellent)
         XCTAssertEqual(level("correct horse battery staple 2026!"), .excellent)
     }
 
