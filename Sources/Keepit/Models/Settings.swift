@@ -45,7 +45,7 @@ struct Settings: Codable, Equatable {
     // [menu]
     var titleLength = 60           // chars
     var showThumbnails = true      // menu.show_bitmap
-    var thumbnailSize = 32         // menu.bitmap_width / height
+    var thumbnailSize = 40         // thumbnail height in menus (width up to 4×)
     var showTooltips = true        // menu.show_tooltip
     var numberItems = true         // accelerator digits/letters like "&1 text"
     var showAtCaret = true         // action.caret — pop the menu at the text cursor if we can find it

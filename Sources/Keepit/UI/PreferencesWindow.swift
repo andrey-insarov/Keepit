@@ -95,7 +95,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
 
             header("Menu"),
             labeled("Title length (chars):", numField(titleLength)),
-            labeled("Thumbnail size (px):", numField(thumbSize)),
+            labeled("Thumbnail height (px):", numField(thumbSize)),
             [NSView(), showThumbs],
             [NSView(), showTips],
             [NSView(), numberItems],

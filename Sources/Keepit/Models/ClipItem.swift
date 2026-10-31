@@ -164,11 +164,15 @@ struct ClipItem: Codable, Identifiable, Equatable {
         }
     }
 
+    /// Menu thumbnail: fits a box `maxHeight` tall and up to 4× that wide, so wide screenshots
+    /// stay recognisable instead of collapsing into a sliver.
     func thumbnail(maxSide: CGFloat) -> NSImage? {
         guard let img = image else { return nil }
         let s = img.size
         guard s.width > 0, s.height > 0 else { return nil }
-        let scale = min(maxSide / s.width, maxSide / s.height, 1)
+        let maxHeight = maxSide
+        let maxWidth = maxSide * 4
+        let scale = min(maxWidth / s.width, maxHeight / s.height, 1)
         let newSize = NSSize(width: max(1, floor(s.width * scale)), height: max(1, floor(s.height * scale)))
         let thumb = NSImage(size: newSize)
         thumb.lockFocus()
