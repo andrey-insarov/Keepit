@@ -112,6 +112,7 @@ appstore:
 	cp Resources/Keepit.provisionprofile $(CONTENTS)/embedded.provisionprofile
 	echo -n 'APPL????' > $(CONTENTS)/PkgInfo
 	sed 's/__TEAM_ID__/$(TEAM_ID)/g' Resources/Keepit-AppStore.entitlements > .build/appstore.entitlements
+	xattr -cr $(BUNDLE)          # App Store rejects com.apple.quarantine etc. inside the bundle
 	codesign --force --deep --options runtime --timestamp --entitlements .build/appstore.entitlements --sign "$(APP_SIGN_ID)" $(BUNDLE)
 	codesign --verify --strict --verbose=2 $(BUNDLE)
 	codesign -d --entitlements - $(BUNDLE) | grep -q app-sandbox
@@ -152,6 +153,7 @@ app: build
 	  mkdir -p .build && sed 's/__TEAM_ID__/$(TEAM_ID)/g' Resources/Keepit.entitlements > .build/devid.entitlements; \
 	  cp $(DEVID_PROFILE) $(CONTENTS)/embedded.provisionprofile; echo "Embedding Developer ID profile (Touch ID enabled)"; \
 	else echo "No Developer ID profile at $(DEVID_PROFILE): Touch ID unlock disabled in this build"; fi
+	xattr -cr $(BUNDLE)
 	codesign --force --deep $(SIGN_FLAGS) --sign "$(SIGN_ID)" $(BUNDLE)
 	codesign --verify --strict --verbose=2 $(BUNDLE)
 	@echo "Built $(BUNDLE)"
