@@ -34,6 +34,8 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     private let changePw     = NSButton(title: "Change Password…", target: nil, action: nil)
     private let lockScreen   = NSButton(checkboxWithTitle: "Lock Keepit (wipe key, unload data) when the screen locks or the Mac sleeps", target: nil, action: nil)
     private let touchID      = NSButton(checkboxWithTitle: "Unlock with Touch ID (password remains as fallback)", target: nil, action: nil)
+    private let touchIDChange = NSButton(checkboxWithTitle: "Allow changing the password with Touch ID (off = always require the current password)", target: nil, action: nil)
+    private let newPhrase    = NSButton(title: "New Recovery Phrase…", target: nil, action: nil)
     private let historyHK    = HotKeyRecorderView(frame: .zero)
     private let templateHK   = HotKeyRecorderView(frame: .zero)
     private let ignoreScroll = NSTextView.scrollableTextView()
@@ -117,9 +119,13 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
             [NSView(), changePw],
             [NSView(), lockScreen],
             [NSView(), touchID],
+            [NSView(), touchIDChange],
+            [NSView(), newPhrase],
         ])
         changePw.target = self
         changePw.action = #selector(changePasswordTapped)
+        newPhrase.target = self
+        newPhrase.action = #selector(newPhraseTapped)
         grid.rowSpacing = 6
         grid.columnSpacing = 10
         grid.column(at: 0).xPlacement = .trailing
@@ -191,6 +197,9 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         lockScreen.state = s.lockWithScreen ? .on : .off
         touchID.state = s.biometricUnlock ? .on : .off
         touchID.isEnabled = Vault.isEnabled && BiometricUnlock.isAvailable
+        touchIDChange.state = s.biometricPasswordChange ? .on : .off
+        touchIDChange.isEnabled = touchID.isEnabled
+        newPhrase.isEnabled = Vault.isEnabled
         if !BiometricUnlock.isAvailable { touchID.title = "Unlock with Touch ID (no Touch ID on this Mac)" }
         historyHK.hotKey = s.historyHotKey
         templateHK.hotKey = s.templateHotKey
@@ -215,6 +224,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         s.launchAtLogin = loginItem.state == .on
         s.lockWithScreen = lockScreen.state == .on
         s.biometricUnlock = touchID.state == .on && Vault.isEnabled
+        s.biometricPasswordChange = touchIDChange.state == .on
         s.ignoreApps = ignoreApps.string
             .split(whereSeparator: { $0.isNewline })
             .map { $0.trimmingCharacters(in: .whitespaces) }
@@ -242,6 +252,10 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
 
     @objc private func changePasswordTapped() {
         app.changePassword()
+    }
+
+    @objc private func newPhraseTapped() {
+        app.regenerateRecoveryPhrase()
     }
 
     @objc private func cancelTapped() {

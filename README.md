@@ -108,6 +108,17 @@ password is always available as a fallback ("Use Password" on the prompt). Chang
 refreshes the entry; turning protection off removes it. Requires a Team-ID-signed build (release
 or `make install SIGN_ID=…`); ad-hoc builds say so and keep using the password.
 
+### Recovery phrase
+
+Turning protection on shows a 24-word recovery phrase (standard BIP-39 English list with
+checksum). A key derived from the phrase (HKDF) wraps the data key inside `vault.json`; the phrase
+itself is never stored. Print it (the dialog offers the system print panel, which can also save a
+PDF) and keep it offline — anyone holding it can read the history. If you forget the password,
+the unlock prompt's *Use Recovery Phrase…* unlocks the data and immediately asks for a new
+password. The phrase keeps working after password changes; *New Recovery Phrase…* in Preferences
+replaces it (the old sheet becomes useless). Lose both password and phrase and the data is
+unrecoverable — by design.
+
 ### Key handling and locking
 
 * The derived key lives in a dedicated `mlock`ed buffer (never swapped) and is wiped with

@@ -74,6 +74,8 @@ struct Settings: Codable, Equatable {
     var lockWithScreen = true
     /// Unlock with Touch ID instead of typing the password (password stays as fallback).
     var biometricUnlock = false
+    /// Let Touch ID stand in for the current password when changing it (off = always type the old password).
+    var biometricPasswordChange = true
 
     init() {}
 
@@ -103,6 +105,7 @@ struct Settings: Codable, Equatable {
         launchAtLogin    = try c.decodeIfPresent(Bool.self,   forKey: .launchAtLogin)    ?? d.launchAtLogin
         lockWithScreen   = try c.decodeIfPresent(Bool.self,   forKey: .lockWithScreen)   ?? d.lockWithScreen
         biometricUnlock  = try c.decodeIfPresent(Bool.self,   forKey: .biometricUnlock)  ?? d.biometricUnlock
+        biometricPasswordChange = try c.decodeIfPresent(Bool.self, forKey: .biometricPasswordChange) ?? d.biometricPasswordChange
     }
 
     func pasteKey(for bundleId: String?) -> PasteKey {

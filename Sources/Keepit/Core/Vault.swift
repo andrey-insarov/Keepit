@@ -54,9 +54,16 @@ enum Vault {
     private static let okToken = Data("KEEPIT-OK".utf8)
     private static let rounds: UInt32 = 200_000
 
+    struct Recovery: Codable {
+        var salt: Data            // HKDF salt for the phrase-derived key
+        var wrappedKey: Data      // data key, AES-GCM under the phrase-derived key
+        var wrappedEntropy: Data  // phrase entropy, AES-GCM under the data key (lets a password change re-wrap)
+    }
+
     struct Meta: Codable {
         var salt: Data
         var check: Data          // encrypt(okToken) with the key
+        var recovery: Recovery?  // optional: 24-word recovery phrase
     }
 
     static var metaURL: URL { Storage.directory.appendingPathComponent("vault.json") }
@@ -105,17 +112,90 @@ enum Vault {
 
     // MARK: Enable / verify / disable
 
-    /// Create the vault for a new password and return its key.
+    private static func readMeta() -> Meta? {
+        guard let data = try? Data(contentsOf: metaURL) else { return nil }
+        return try? JSONDecoder().decode(Meta.self, from: data)
+    }
+
+    private static func writeMeta(_ meta: Meta) throws {
+        let data = try JSONEncoder().encode(meta)
+        try data.write(to: metaURL, options: .atomic)
+    }
+
+    /// Create the vault for a new password and return its key. Any existing recovery block is
+    /// dropped (it wrapped the old key) — call `rewrapRecovery(from:to:)` afterwards to keep it.
     static func enable(password: SecureBuffer) throws -> SecureKey {
         var salt = Data(count: 16)
         _ = salt.withUnsafeMutableBytes { SecRandomCopyBytes(kSecRandomDefault, 16, $0.baseAddress!) }
         let key = deriveKey(password: password, salt: salt)
         let check = try encrypt(okToken, key: key)
-        let meta = Meta(salt: salt, check: check)
-        let data = try JSONEncoder().encode(meta)
-        try data.write(to: metaURL, options: .atomic)
+        try writeMeta(Meta(salt: salt, check: check, recovery: nil))
         return key
     }
+
+    // MARK: Recovery phrase
+
+    static var hasRecovery: Bool { readMeta()?.recovery != nil }
+
+    private static func recoveryKey(entropy: [UInt8], salt: Data) -> SecureKey {
+        let ikm = SymmetricKey(data: Data(entropy))
+        let derived = HKDF<SHA256>.deriveKey(inputKeyMaterial: ikm, salt: salt, info: Data("keepit-recovery-v1".utf8), outputByteCount: SecureKey.size)
+        return derived.withUnsafeBytes { SecureKey(bytes: $0) }
+    }
+
+    /// Generate a fresh 24-word phrase that can recover `key`, store its wrapped form, return the words.
+    static func createRecovery(for key: SecureKey) throws -> [String] {
+        guard var meta = readMeta() else { throw CocoaError(.fileNoSuchFile) }
+        var entropy = [UInt8](repeating: 0, count: Mnemonic.entropyBytes)
+        _ = SecRandomCopyBytes(kSecRandomDefault, entropy.count, &entropy)
+        defer { entropy.withUnsafeMutableBytes { _ = memset_s($0.baseAddress, $0.count, 0, $0.count) } }
+        var salt = Data(count: 16)
+        _ = salt.withUnsafeMutableBytes { SecRandomCopyBytes(kSecRandomDefault, 16, $0.baseAddress!) }
+        let rkey = recoveryKey(entropy: entropy, salt: salt)
+        defer { rkey.zero() }
+        var keyBytes = key.withBytes { Data($0) }
+        defer { keyBytes.resetBytes(in: 0..<keyBytes.count) }
+        let wrappedKey = try encrypt(keyBytes, key: rkey)
+        let wrappedEntropy = try encrypt(Data(entropy), key: key)
+        meta.recovery = Recovery(salt: salt, wrappedKey: wrappedKey, wrappedEntropy: wrappedEntropy)
+        try writeMeta(meta)
+        return Mnemonic.encode(entropy)
+    }
+
+    /// Recover the data key from the phrase; nil if the phrase is wrong or no recovery block exists.
+    static func unlockWithRecovery(words: [String]) -> SecureKey? {
+        guard let rec = readMeta()?.recovery, var entropy = Mnemonic.decode(words) else { return nil }
+        defer { entropy.withUnsafeMutableBytes { _ = memset_s($0.baseAddress, $0.count, 0, $0.count) } }
+        let rkey = recoveryKey(entropy: entropy, salt: rec.salt)
+        defer { rkey.zero() }
+        guard var keyBytes = try? decrypt(rec.wrappedKey, key: rkey), keyBytes.count == SecureKey.size else { return nil }
+        defer { keyBytes.resetBytes(in: 0..<keyBytes.count) }
+        let key = keyBytes.withUnsafeBytes { SecureKey(bytes: $0) }
+        guard verify(key) else { key.zero(); return nil }
+        return key
+    }
+
+    /// After the data key changed (password change / recovery), keep the same phrase valid.
+    /// `old` must be able to open the previous recovery block; returns false if there was none.
+    @discardableResult
+    static func rewrapRecovery(from old: SecureKey, to new: SecureKey, oldRecovery: Recovery?) throws -> Bool {
+        guard let rec = oldRecovery, var meta = readMeta() else { return false }
+        var entropyData = try decrypt(rec.wrappedEntropy, key: old)
+        defer { entropyData.resetBytes(in: 0..<entropyData.count) }
+        let entropy = [UInt8](entropyData)
+        let rkey = recoveryKey(entropy: entropy, salt: rec.salt)
+        defer { rkey.zero() }
+        var keyBytes = new.withBytes { Data($0) }
+        defer { keyBytes.resetBytes(in: 0..<keyBytes.count) }
+        meta.recovery = Recovery(salt: rec.salt,
+                                 wrappedKey: try encrypt(keyBytes, key: rkey),
+                                 wrappedEntropy: try encrypt(entropyData, key: new))
+        try writeMeta(meta)
+        return true
+    }
+
+    /// Snapshot of the current recovery block (take it before `enable` replaces the meta file).
+    static var currentRecovery: Recovery? { readMeta()?.recovery }
 
     /// Returns the key if the password matches, nil otherwise.
     static func unlock(password: SecureBuffer) -> SecureKey? {
@@ -131,9 +211,7 @@ enum Vault {
 
     /// Does this key open the vault? (Used for keys that came from Touch ID rather than a password.)
     static func verify(_ key: SecureKey) -> Bool {
-        guard let data = try? Data(contentsOf: metaURL),
-              let meta = try? JSONDecoder().decode(Meta.self, from: data),
-              let plain = try? decrypt(meta.check, key: key) else { return false }
+        guard let meta = readMeta(), let plain = try? decrypt(meta.check, key: key) else { return false }
         return plain == okToken
     }
 
@@ -143,10 +221,24 @@ enum Vault {
 
     // MARK: Dialogs
 
+    enum PromptResult {
+        case password(SecureBuffer)
+        case recovery
+        case cancel
+    }
+
     /// Modal password prompt built on SecurePasswordField. Returns the locked bytes, or nil on Cancel.
     /// `confirm` shows a second field and insists both match (constant-time compare).
     /// The caller must `zero()` the returned buffer when done.
     static func askPassword(title: String, message: String, confirm: Bool = false, cancelQuits: Bool = false) -> SecureBuffer? {
+        if case .password(let b) = prompt(title: title, message: message, confirm: confirm, cancelQuits: cancelQuits, offerRecovery: false) {
+            return b
+        }
+        return nil
+    }
+
+    /// Same prompt, optionally with a third "Use Recovery Phrase…" button.
+    static func prompt(title: String, message: String, confirm: Bool = false, cancelQuits: Bool = false, offerRecovery: Bool) -> PromptResult {
         while true {
             let a = NSAlert()
             a.messageText = title
@@ -168,14 +260,19 @@ enum Vault {
             a.accessoryView = box
             a.addButton(withTitle: "OK")
             a.addButton(withTitle: cancelQuits ? "Quit" : "Cancel")
+            if offerRecovery && hasRecovery { a.addButton(withTitle: "Use Recovery Phrase…") }
             a.window.initialFirstResponder = f1
 
             NSApp.activate(ignoringOtherApps: true)
             let result = a.runModal()
             defer { f2.buffer.zero() }
+            if result == .alertThirdButtonReturn {
+                f1.buffer.zero()
+                return .recovery
+            }
             guard result == .alertFirstButtonReturn else {
                 f1.buffer.zero()
-                return nil
+                return .cancel
             }
             if confirm {
                 if f1.buffer.isEmpty {
@@ -189,7 +286,7 @@ enum Vault {
                     continue
                 }
             }
-            return f1.buffer
+            return .password(f1.buffer)
         }
     }
 

@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+- **Recovery phrase**: when protection is turned on, Keepit shows a 24-word phrase (BIP-39 word
+  list, checksummed) that can unlock the data on any Mac if the password is forgotten; it can be
+  printed or saved as PDF, and the dialog requires acknowledging that losing both the password
+  and the phrase means the data is gone. The phrase stays valid across password changes;
+  Preferences → *New Recovery Phrase…* issues a new one. The unlock prompt offers
+  *Use Recovery Phrase…*, after which a new password must be set.
+- **Change password with Touch ID** (default on; Preferences → *Allow changing the password with
+  Touch ID* can be turned off to always require the current password).
+
 ## 2.2.0 — 2026-10-31
 
 - **Touch ID unlock** (Preferences → *Unlock with Touch ID*): the vault key is kept in the

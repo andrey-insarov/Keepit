@@ -44,6 +44,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         history = HistoryStore(settings: settings)
         templates = TemplateStore()
         monitor = ClipboardMonitor(settings: settings)
+        if needsPasswordReset { completeRecovery() }
 
         buildStatusItem()
 
@@ -130,6 +131,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         isLocked = false
         history.reload()
         templates.reload()
+        if needsPasswordReset { completeRecovery() }
         monitor.start()
         registerHotKeys()
         updateStatusIcon()
@@ -163,16 +165,100 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         for attempt in 1...3 {
             let msg = attempt == 1 ? "Enter the Keepit password to decrypt the history and templates."
                                    : "Wrong password (\(attempt - 1) of 3 attempts used)."
-            guard let pw = Vault.askPassword(title: "Keepit is locked", message: msg, cancelQuits: quitOnFailure) else { return false }
-            let key = Vault.unlock(password: pw)
-            pw.zero()
-            if let key = key {
-                Storage.key = key
-                return true
+            switch Vault.prompt(title: "Keepit is locked", message: msg, cancelQuits: quitOnFailure, offerRecovery: true) {
+            case .cancel:
+                return false
+            case .recovery:
+                if recoverWithPhrase() { return true }
+                continue
+            case .password(let pw):
+                let key = Vault.unlock(password: pw)
+                pw.zero()
+                if let key = key {
+                    Storage.key = key
+                    return true
+                }
             }
         }
         Vault.error(quitOnFailure ? "Too many wrong attempts. Keepit will quit." : "Too many wrong attempts. Keepit stays locked.")
         return false
+    }
+
+    // MARK: Recovery phrase
+
+    private var needsPasswordReset = false
+
+    /// Unlock with the 24 words; a new password must be set right after (the old one is unknown).
+    private func recoverWithPhrase() -> Bool {
+        guard let words = RecoveryDialogs.askPhrase() else { return false }
+        guard let key = Vault.unlockWithRecovery(words: words) else {
+            Vault.error("This phrase does not match the stored recovery data.")
+            return false
+        }
+        Storage.key = key
+        needsPasswordReset = true     // completed once the stores are (re)loaded with this key
+        return true
+    }
+
+    /// After a phrase recovery: force a new password, re-encrypt, keep the phrase valid.
+    private func completeRecovery() {
+        needsPasswordReset = false
+        var newPw: SecureBuffer?
+        while newPw == nil {
+            newPw = Vault.askPassword(title: "Set a new password",
+                                      message: "You unlocked with the recovery phrase. Choose a new password now; the recovery phrase stays valid.",
+                                      confirm: true)
+        }
+        rekey(with: newPw!)
+        newPw!.zero()
+    }
+
+    /// Replace the data key with one derived from `pw`, re-encrypt everything, keep recovery + Touch ID in sync.
+    private func rekey(with pw: SecureBuffer) {
+        guard let oldKey = Storage.key else { return }
+        let oldRecovery = Vault.currentRecovery
+        do {
+            let newKey = try Vault.enable(password: pw)
+            try Vault.rewrapRecovery(from: oldKey, to: newKey, oldRecovery: oldRecovery)
+            Storage.key = newKey                     // zeroes oldKey
+        } catch {
+            Vault.error("Could not change the password: \(error.localizedDescription)")
+            return
+        }
+        history.saveNow()
+        templates.saveNow()
+        syncBiometricKey()
+    }
+
+    /// Confirm identity for sensitive changes: Touch ID (if allowed) or the current password.
+    private func authenticateForChange(reason: String) -> Bool {
+        if settings.biometricUnlock, settings.biometricPasswordChange, BiometricUnlock.isAvailable, BiometricUnlock.isConfigured,
+           let k = BiometricUnlock.retrieve(reason: reason) {
+            let ok = Vault.verify(k)
+            k.zero()
+            if ok { return true }
+        }
+        guard let old = Vault.askPassword(title: "Confirm", message: "Enter the current password to \(reason).") else { return false }
+        let check = Vault.unlock(password: old)
+        old.zero()
+        guard let c = check else {
+            Vault.error("Wrong password.")
+            return false
+        }
+        c.zero()
+        return true
+    }
+
+    /// Preferences → "New Recovery Phrase…": invalidates the old sheet.
+    func regenerateRecoveryPhrase() {
+        guard Vault.isEnabled, let key = Storage.key else { return }
+        guard authenticateForChange(reason: "generate a new recovery phrase") else { return }
+        do {
+            let words = try Vault.createRecovery(for: key)
+            RecoveryDialogs.present(words: words, title: "Your new recovery phrase (the old one no longer works)")
+        } catch {
+            Vault.error("Could not create the recovery phrase: \(error.localizedDescription)")
+        }
     }
 
     /// Turn protection on: set a password, re-save data encrypted.
@@ -190,6 +276,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         history.saveNow()
         templates.saveNow()
         syncBiometricKey()
+        if let key = Storage.key, let words = try? Vault.createRecovery(for: key) {
+            RecoveryDialogs.present(words: words)
+        }
         return true
     }
 
@@ -227,26 +316,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     func changePassword() {
-        guard Vault.isEnabled else { return }
-        guard let old = Vault.askPassword(title: "Change password", message: "Enter the current password.") else { return }
-        let check = Vault.unlock(password: old)
-        old.zero()
-        guard check != nil else {
-            Vault.error("Wrong password.")
-            return
-        }
-        check?.zero()
+        guard Vault.isEnabled, Storage.key != nil else { return }
+        guard authenticateForChange(reason: "change the Keepit password") else { return }
         guard let pw = Vault.askPassword(title: "New password", message: "Enter the new password twice.", confirm: true) else { return }
         defer { pw.zero() }
-        do {
-            Storage.key = try Vault.enable(password: pw)
-        } catch {
-            Vault.error("Could not change password: \(error.localizedDescription)")
-            return
-        }
-        history.saveNow()
-        templates.saveNow()
-        syncBiometricKey()
+        rekey(with: pw)
     }
 
     // MARK: - Settings
