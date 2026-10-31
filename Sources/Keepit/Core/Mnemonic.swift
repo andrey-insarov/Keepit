@@ -148,7 +148,7 @@ enum Mnemonic {
     /// 32 random bytes → 24 words.
     static func encode(_ entropy: [UInt8]) -> [String] {
         precondition(entropy.count == entropyBytes)
-        let checksum = SHA256.hash(data: Data(entropy)).first!          // first 8 bits
+        let checksum = Array(SHA256.hash(data: Data(entropy)))[0]          // first 8 bits
         var bits: [Bool] = []
         bits.reserveCapacity(264)
         for b in entropy + [checksum] {
@@ -179,7 +179,7 @@ enum Mnemonic {
             bytes.append(v)
         }
         let entropy = Array(bytes[0..<entropyBytes])
-        let expected = SHA256.hash(data: Data(entropy)).first!
+        let expected = Array(SHA256.hash(data: Data(entropy)))[0]
         guard bytes[entropyBytes] == expected else { return nil }
         return entropy
     }

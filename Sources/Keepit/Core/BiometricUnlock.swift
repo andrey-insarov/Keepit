@@ -39,11 +39,17 @@ enum BiometricUnlock {
             kSecAttrService as String: service,
             kSecAttrAccount as String: account,
             kSecUseDataProtectionKeychain as String: true,
-            kSecUseAuthenticationUI as String: kSecUseAuthenticationUIFail,
+            kSecUseAuthenticationContext as String: silentContext(),
             kSecReturnData as String: false,
         ]
         let st = SecItemCopyMatching(q as CFDictionary, nil)
         return st == errSecSuccess || st == errSecInteractionNotAllowed
+    }
+
+    private static func silentContext() -> LAContext {
+        let ctx = LAContext()
+        ctx.interactionNotAllowed = true
+        return ctx
     }
 
     /// Store the data key behind Touch ID (replaces any previous entry).
