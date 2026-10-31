@@ -94,6 +94,10 @@ final class HistoryStore {
         if items.count > settings.historyMax {
             items.removeLast(items.count - settings.historyMax)
         }
+        var total = items.reduce(0) { $0 + $1.byteSize }
+        while total > settings.maxHistoryBytes, items.count > 1 {
+            total -= items.removeLast().byteSize
+        }
     }
 
     private func changed() {

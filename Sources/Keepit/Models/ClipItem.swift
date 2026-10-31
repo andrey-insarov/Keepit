@@ -194,6 +194,7 @@ struct ClipItem: Codable, Identifiable, Equatable {
         if let urls = pb.readObjects(forClasses: [NSURL.self],
                                      options: [.urlReadingFileURLsOnly: true]) as? [URL],
            !urls.isEmpty {
+            guard urls.count <= settings.maxFileListEntries else { return nil }
             let paths = urls.map { $0.path }
             if let d = try? JSONEncoder().encode(paths) {
                 formats[Format.files] = d
@@ -202,9 +203,11 @@ struct ClipItem: Codable, Identifiable, Equatable {
 
         if formats[Format.files] == nil {
             if let s = pb.string(forType: .string), !s.isEmpty {
-                formats[Format.text] = Data(s.utf8)
-                if let rtf = pb.data(forType: .rtf) { formats[Format.rtf] = rtf }
-                if let html = pb.data(forType: .html) { formats[Format.html] = html }
+                let text = Data(s.utf8)
+                guard text.count <= settings.maxTextBytes else { return nil }
+                formats[Format.text] = text
+                if let rtf = pb.data(forType: .rtf), rtf.count <= settings.maxTextBytes * 4 { formats[Format.rtf] = rtf }
+                if let html = pb.data(forType: .html), html.count <= settings.maxTextBytes * 4 { formats[Format.html] = html }
             }
 
             if let png = Self.pngData(from: pb), png.count <= settings.maxImageBytes {

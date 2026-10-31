@@ -123,6 +123,7 @@ final class SecurePasswordField: NSView {
         // event.characters is a transient system String of (usually) one character; we copy its UTF-8
         // bytes into the locked buffer and never concatenate characters anywhere else.
         guard let chars = event.characters, !chars.isEmpty else { return }
+        if charLengths.count >= Limits.passwordMaxChars { NSSound.beep(); return }
         for scalar in chars.unicodeScalars {
             guard scalar.value >= 0x20, scalar.value != 0x7F else { continue }   // skip control chars
             var utf8 = Array(String(scalar).utf8)

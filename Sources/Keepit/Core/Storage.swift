@@ -43,6 +43,11 @@ enum Storage {
     static func clearKey() { key = nil }
 
     static func load<T: Decodable>(_ type: T.Type, from url: URL) -> T? {
+        if let size = (try? FileManager.default.attributesOfItem(atPath: url.path)[.size] as? NSNumber)?.intValue,
+           size > Limits.dataFileMaxBytes {
+            NSLog("Keepit: refusing to load \(url.lastPathComponent): \(size) bytes exceeds the limit")
+            return nil
+        }
         guard var data = try? Data(contentsOf: url) else { return nil }
         if Vault.isEncrypted(data) {
             guard let k = key, let plain = try? Vault.decrypt(data, key: k) else {

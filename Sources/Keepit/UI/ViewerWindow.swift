@@ -274,9 +274,14 @@ final class ViewerWindowController: NSWindowController,
         }
     }
 
+    private func limitBeep() {
+        NSSound.beep()
+        statusBar.stringValue = "Limit reached: at most \(Limits.templateMaxCount) template items, \(Limits.templateMaxDepth) levels deep."
+    }
+
     @objc private func nameFieldChanged() {
         guard let t = selectedNode?.itemNode?.templateNode else { return }
-        let new = nameField.stringValue
+        let new = String(nameField.stringValue.prefix(Limits.templateNameMaxChars))
         guard new != t.name else { return }
         t.name = new
         templates.changed()
@@ -454,6 +459,12 @@ final class ViewerWindowController: NSWindowController,
 
     private func applyEdit(format: String, data: Data) {
         guard let n = editingNode, var c = clip(for: n) else { return }
+        guard data.count <= app.settings.maxTextBytes * 4 else {
+            NSSound.beep()
+            statusBar.stringValue = "Edit discarded: larger than the text limit (\(app.settings.maxTextBytes / 1024 / 1024) MB)."
+            showSelection()
+            return
+        }
         if format == ClipItem.Format.text {
             c.setText(String(decoding: data, as: UTF8.self))
         } else {
@@ -506,6 +517,7 @@ final class ViewerWindowController: NSWindowController,
         let copy = ClipItem(id: UUID(), date: Date(), formats: c.formats, sourceApp: c.sourceApp, contentHash: c.contentHash)
         let (folder, idx) = templateInsertionPoint()
         let t = TemplateNode(name: "", clip: copy)
+        guard templates.canInsert(t, under: folder) else { limitBeep(); return }
         folder.insert(t, at: idx)
         templates.changed()
         refresh()
@@ -532,6 +544,7 @@ final class ViewerWindowController: NSWindowController,
         } else {
             let (folder, idx) = templateInsertionPoint()
             let t = TemplateNode(name: "", clip: .text(""))
+            guard templates.canInsert(t, under: folder) else { limitBeep(); return }
             folder.insert(t, at: idx)
             templates.changed()
             refresh()
@@ -546,6 +559,7 @@ final class ViewerWindowController: NSWindowController,
         textFormat.commit()
         let (folder, idx) = templateInsertionPoint()
         let t = TemplateNode(name: "New Folder")
+        guard templates.canInsert(t, under: folder) else { limitBeep(); return }
         folder.insert(t, at: idx)
         templates.changed()
         refresh()
@@ -575,6 +589,7 @@ final class ViewerWindowController: NSWindowController,
         }
         let (folder, idx) = templateInsertionPoint()
         let t = TemplateNode(name: url.lastPathComponent, clip: clip)
+        guard templates.canInsert(t, under: folder) else { limitBeep(); return }
         folder.insert(t, at: idx)
         templates.changed()
         refresh()
@@ -615,7 +630,7 @@ final class ViewerWindowController: NSWindowController,
         a.addButton(withTitle: "Cancel")
         a.window.initialFirstResponder = field
         guard a.runModal() == .alertFirstButtonReturn else { return }
-        t.name = field.stringValue
+        t.name = String(field.stringValue.prefix(Limits.templateNameMaxChars))
         templates.changed()
         refresh()
     }
@@ -902,11 +917,14 @@ final class ViewerWindowController: NSWindowController,
             if let t = src.templateNode {
                 if let oldParent = t.parent, oldParent === folder,
                    let old = folder.children.firstIndex(where: { $0 === t }), old < at { at -= 1 }
+                guard folder.depth + 1 + (t.isFolder ? 1 : 0) < Limits.templateMaxDepth else { limitBeep(); return false }
                 t.removeFromParent()
                 folder.insert(t, at: at)
             } else if let id = src.historyId, let c = history.item(id: id) {
                 let copy = ClipItem(id: UUID(), date: Date(), formats: c.formats, sourceApp: c.sourceApp, contentHash: c.contentHash)
-                folder.insert(TemplateNode(name: "", clip: copy), at: at)
+                let t = TemplateNode(name: "", clip: copy)
+                guard templates.canInsert(t, under: folder) else { limitBeep(); return false }
+                folder.insert(t, at: at)
             } else { return false }
             templates.changed()
 

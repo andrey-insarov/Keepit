@@ -40,6 +40,10 @@ struct Settings: Codable, Equatable {
     var overlapCheck = true        // history.overlap_check — dedupe identical entries
     var moveToTopOnPaste = true    // pasted item moves to the top
     var maxImageBytes = 10 * 1024 * 1024
+    var maxTextBytes = 2 * 1024 * 1024          // larger clipboard texts are not recorded
+    var maxFileListEntries = 1_000              // larger file selections are not recorded
+    var maxHistoryBytes = 256 * 1024 * 1024     // total size of all history items; oldest are dropped
+    var menuMaxItems = 60                       // history entries shown in the popup menu
     var pollInterval: Double = 0.3 // macOS has no clipboard change notification, so we poll
 
     // [menu]
@@ -106,6 +110,26 @@ struct Settings: Codable, Equatable {
         lockWithScreen   = try c.decodeIfPresent(Bool.self,   forKey: .lockWithScreen)   ?? d.lockWithScreen
         biometricUnlock  = try c.decodeIfPresent(Bool.self,   forKey: .biometricUnlock)  ?? d.biometricUnlock
         biometricPasswordChange = try c.decodeIfPresent(Bool.self, forKey: .biometricPasswordChange) ?? d.biometricPasswordChange
+        maxTextBytes     = try c.decodeIfPresent(Int.self,    forKey: .maxTextBytes)     ?? d.maxTextBytes
+        maxFileListEntries = try c.decodeIfPresent(Int.self,  forKey: .maxFileListEntries) ?? d.maxFileListEntries
+        maxHistoryBytes  = try c.decodeIfPresent(Int.self,    forKey: .maxHistoryBytes)  ?? d.maxHistoryBytes
+        menuMaxItems     = try c.decodeIfPresent(Int.self,    forKey: .menuMaxItems)     ?? d.menuMaxItems
+        clamp()
+    }
+
+    /// Bring every numeric option back into a sane range (hand-edited settings.json, old versions).
+    mutating func clamp() {
+        historyMax = Limits.clamp(historyMax, 1, Limits.historyMaxCeiling)
+        titleLength = Limits.clamp(titleLength, 10, 500)
+        thumbnailSize = Limits.clamp(thumbnailSize, 16, 128)
+        pollInterval = Limits.clamp(pollInterval, 0.1, 5)
+        pasteDelay = Limits.clamp(pasteDelay, 0, 5)
+        maxImageBytes = Limits.clamp(maxImageBytes, 64 * 1024, 100 * 1024 * 1024)
+        maxTextBytes = Limits.clamp(maxTextBytes, 1024, 50 * 1024 * 1024)
+        maxFileListEntries = Limits.clamp(maxFileListEntries, 1, 10_000)
+        maxHistoryBytes = Limits.clamp(maxHistoryBytes, 1024 * 1024, 4 * 1024 * 1024 * 1024)
+        menuMaxItems = Limits.clamp(menuMaxItems, 1, Limits.menuMaxItemsCeiling)
+        ignoreApps = Array(ignoreApps.prefix(Limits.ignoreAppsMaxLines)).map { String($0.prefix(Limits.bundleIdMaxChars)) }
     }
 
     func pasteKey(for bundleId: String?) -> PasteKey {

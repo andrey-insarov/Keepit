@@ -234,6 +234,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
             .split(whereSeparator: { $0.isNewline })
             .map { $0.trimmingCharacters(in: .whitespaces) }
             .filter { !$0.isEmpty }
+        s.clamp()
         return s
     }
 

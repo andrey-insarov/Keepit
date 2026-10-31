@@ -10,6 +10,12 @@
   *Use Recovery Phrase…*, after which a new password must be set.
 - Password strength meter (Weak / Fair / Good / Excellent with a hint) under the new-password
   field, computed on the locked bytes — still no String of the password anywhere.
+- Input hardening: clipboard texts over 2 MB, file lists over 1000 entries and images over
+  10 MB are not recorded; the history is capped at 256 MB in total; the popup menu shows at most
+  60 history items; passwords are limited to 256 characters; wrong-password attempts are slowed
+  down (1/2/4 s) and locked out for 30 s after three misses; template names ≤ 200 chars,
+  tree depth ≤ 16, ≤ 5000 items, ≤ 50 template hot keys; data files over 512 MB are refused;
+  all numeric settings are clamped to sane ranges. (`Core/Limits.swift`)
 - **Change password with Touch ID** (default on; Preferences → *Allow changing the password with
   Touch ID* can be turned off to always require the current password).
 

@@ -49,7 +49,18 @@ final class TemplateNode: Codable {
         }
     }
 
+    var depth: Int {
+        var d = 0
+        var p = parent
+        while let cur = p { d += 1; p = cur.parent }
+        return d
+    }
+
+    /// Nodes in this subtree, including self.
+    var subtreeCount: Int { 1 + children.reduce(0) { $0 + $1.subtreeCount } }
+
     func insert(_ node: TemplateNode, at index: Int? = nil) {
+        node.name = String(node.name.prefix(Limits.templateNameMaxChars))
         node.parent = self
         if let i = index, i >= 0, i <= children.count {
             children.insert(node, at: i)

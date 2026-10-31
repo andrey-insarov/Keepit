@@ -23,7 +23,8 @@ final class MenuBuilder {
 
     func historyItems(_ items: [ClipItem], target: AnyObject, action: Selector) -> [NSMenuItem] {
         var out: [NSMenuItem] = []
-        for (i, item) in items.enumerated() {
+        let shown = items.prefix(settings.menuMaxItems)
+        for (i, item) in shown.enumerated() {
             let title = item.title(maxLength: settings.titleLength)
             let mi = NSMenuItem(title: title, action: action, keyEquivalent: "")
             mi.target = target
@@ -45,6 +46,11 @@ final class MenuBuilder {
                 mi.toolTip = tip
             }
             out.append(mi)
+        }
+        if items.count > shown.count {
+            let more = NSMenuItem(title: "… \(items.count - shown.count) more in the Viewer", action: nil, keyEquivalent: "")
+            more.isEnabled = false
+            out.append(more)
         }
         return out
     }

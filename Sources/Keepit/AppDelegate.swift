@@ -148,8 +148,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     // MARK: - Password / encryption
 
+    private var lockoutUntil = Date.distantPast
+
     /// Touch ID first (if enabled), then up to three password attempts; returns false on cancel / failure.
     private func unlockVault(quitOnFailure: Bool = true) -> Bool {
+        let wait = lockoutUntil.timeIntervalSinceNow
+        if wait > 0 {
+            Vault.error("Too many wrong attempts. Try again in \(Int(wait.rounded(.up))) s.")
+            return false
+        }
         if settings.biometricUnlock, BiometricUnlock.isAvailable, BiometricUnlock.isConfigured {
             NSApp.activate(ignoringOtherApps: true)
             if let key = BiometricUnlock.retrieve(reason: "unlock the clipboard history and templates") {
@@ -178,8 +185,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                     Storage.key = key
                     return true
                 }
+                // Slow down guessing: 1 s, 2 s, 4 s after each miss, then a 30 s lockout.
+                Thread.sleep(forTimeInterval: Limits.unlockBackoffSeconds[min(attempt - 1, Limits.unlockBackoffSeconds.count - 1)])
             }
         }
+        lockoutUntil = Date().addingTimeInterval(Limits.unlockLockoutSeconds)
         Vault.error(quitOnFailure ? "Too many wrong attempts. Keepit will quit." : "Too many wrong attempts. Keepit stays locked.")
         return false
     }
@@ -374,7 +384,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             failed.append(settings.templateHotKey.displayString)
         }
         // Per-template hot keys: paste the item directly, no menu ("Set Hot Key" on a template item).
-        for t in templates.allItems() {
+        for t in templates.allItems().filter({ $0.hotKey != nil }).prefix(Limits.templateHotKeysMax) {
             guard let hk = t.hotKey, t.clip != nil else { continue }
             let id = t.id
             if !hotKeys.register(hk, handler: { [weak self] in

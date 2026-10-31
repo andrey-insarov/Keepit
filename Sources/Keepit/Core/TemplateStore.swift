@@ -35,6 +35,12 @@ final class TemplateStore {
         onChange?()
     }
 
+    /// Would adding `node` under `parent` exceed the depth/count ceilings?
+    func canInsert(_ node: TemplateNode, under parent: TemplateNode) -> Bool {
+        guard parent.depth + 1 < Limits.templateMaxDepth else { return false }
+        return root.subtreeCount + node.subtreeCount <= Limits.templateMaxCount
+    }
+
     func changed() {
         onChange?()
         saver.schedule()

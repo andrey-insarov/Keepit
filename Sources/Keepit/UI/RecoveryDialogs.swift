@@ -80,7 +80,7 @@ enum RecoveryDialogs {
             a.window.initialFirstResponder = tv
             NSApp.activate(ignoringOtherApps: true)
             guard a.runModal() == .alertFirstButtonReturn else { return nil }
-            let words = Mnemonic.parse(tv.string)
+            let words = Mnemonic.parse(String(tv.string.prefix(Limits.recoveryInputMaxChars)))
             tv.string = ""
             if words.count != Mnemonic.wordCount {
                 Vault.error("That's \(words.count) word(s); the phrase has \(Mnemonic.wordCount).")
