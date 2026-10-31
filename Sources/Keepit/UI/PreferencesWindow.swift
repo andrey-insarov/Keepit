@@ -17,6 +17,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     private var draft: Settings
 
     private let historyMax   = NSTextField()
+    private let imageMax     = NSTextField()
     private let titleLength  = NSTextField()
     private let thumbSize    = NSTextField()
     private let pollInterval = NSTextField()
@@ -91,7 +92,8 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
 
         let grid = NSGridView(views: [
             header("History"),
-            labeled("Max items:", numField(historyMax)),
+            labeled("Text & file items:", numField(historyMax)),
+            labeled("Image items:", numField(imageMax)),
             [NSView(), overlap],
             [NSView(), saveHistory],
             [NSView(), concealed],
@@ -184,6 +186,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
 
     private func load(_ s: Settings) {
         historyMax.integerValue = s.historyMax
+        imageMax.integerValue = s.historyImageMax
         titleLength.integerValue = s.titleLength
         thumbSize.integerValue = s.thumbnailSize
         pollInterval.stringValue = String(format: "%.2f", s.pollInterval)
@@ -214,6 +217,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     private func collect() -> Settings {
         var s = draft
         s.historyMax = max(1, historyMax.integerValue)
+        s.historyImageMax = max(1, imageMax.integerValue)
         s.titleLength = max(10, titleLength.integerValue)
         s.thumbnailSize = max(16, min(128, thumbSize.integerValue))
         s.pollInterval = max(0.1, Double(pollInterval.stringValue.replacingOccurrences(of: ",", with: ".")) ?? s.pollInterval)

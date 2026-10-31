@@ -90,9 +90,20 @@ final class HistoryStore {
         changed()
     }
 
+    var textItems: [ClipItem] { items.filter { $0.kind != .image } }
+    var imageItems: [ClipItem] { items.filter { $0.kind == .image } }
+
+    /// Two independent rings: text/file items and image items, each dropping its oldest first.
     private func trim() {
-        if items.count > settings.historyMax {
-            items.removeLast(items.count - settings.historyMax)
+        var textSeen = 0, imageSeen = 0
+        items = items.filter { item in
+            if item.kind == .image {
+                imageSeen += 1
+                return imageSeen <= settings.historyImageMax
+            } else {
+                textSeen += 1
+                return textSeen <= settings.historyMax
+            }
         }
         var total = items.reduce(0) { $0 + $1.byteSize }
         while total > settings.maxHistoryBytes, items.count > 1 {

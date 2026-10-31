@@ -35,7 +35,8 @@ struct PasteKey: Codable, Equatable {
 /// Persisted user options.
 struct Settings: Codable, Equatable {
     // [history]
-    var historyMax = 30            // history.max
+    var historyMax = 100           // text & file items kept
+    var historyImageMax = 30       // image items kept (separate ring)
     var historySave = true         // history.save
     var overlapCheck = true        // history.overlap_check — dedupe identical entries
     var moveToTopOnPaste = true    // pasted item moves to the top
@@ -88,6 +89,7 @@ struct Settings: Codable, Equatable {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         let d = Settings()
         historyMax       = try c.decodeIfPresent(Int.self,    forKey: .historyMax)       ?? d.historyMax
+        historyImageMax  = try c.decodeIfPresent(Int.self,    forKey: .historyImageMax)  ?? d.historyImageMax
         historySave      = try c.decodeIfPresent(Bool.self,   forKey: .historySave)      ?? d.historySave
         overlapCheck     = try c.decodeIfPresent(Bool.self,   forKey: .overlapCheck)     ?? d.overlapCheck
         moveToTopOnPaste = try c.decodeIfPresent(Bool.self,   forKey: .moveToTopOnPaste) ?? d.moveToTopOnPaste
@@ -120,6 +122,7 @@ struct Settings: Codable, Equatable {
     /// Bring every numeric option back into a sane range (hand-edited settings.json, old versions).
     mutating func clamp() {
         historyMax = Limits.clamp(historyMax, 1, Limits.historyMaxCeiling)
+        historyImageMax = Limits.clamp(historyImageMax, 1, Limits.historyMaxCeiling)
         titleLength = Limits.clamp(titleLength, 10, 500)
         thumbnailSize = Limits.clamp(thumbnailSize, 16, 128)
         pollInterval = Limits.clamp(pollInterval, 0.1, 5)

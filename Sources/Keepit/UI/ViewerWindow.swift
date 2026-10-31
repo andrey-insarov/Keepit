@@ -7,6 +7,7 @@ import UniformTypeIdentifiers
 final class VNode {
     enum Kind {
         case clipboardRoot, historyRoot, templateRoot
+        case historyText, historyImages          // the two rings under History
         case clipboardItem
         case history(UUID)
         case template(TemplateNode)
@@ -25,7 +26,7 @@ final class VNode {
 
     var isRoot: Bool {
         switch kind {
-        case .clipboardRoot, .historyRoot, .templateRoot: return true
+        case .clipboardRoot, .historyRoot, .templateRoot, .historyText, .historyImages: return true
         default: return false
         }
     }
@@ -131,6 +132,8 @@ final class ViewerWindowController: NSWindowController,
         refresh()
         outline.expandItem(clipboardRoot)
         outline.expandItem(historyRoot)
+        outline.expandItem(nodes["hist:text"])
+        outline.expandItem(nodes["hist:images"])
         outline.expandItem(templateRoot)
     }
     required init?(coder: NSCoder) { fatalError() }
@@ -327,11 +330,18 @@ final class ViewerWindowController: NSWindowController,
         clipNode.children = formatChildren(of: clipNode, clip: currentClipboard)
         clipboardRoot.children = currentClipboard == nil ? [] : [clipNode]
 
-        historyRoot.children = history.items.map { item in
-            let n = node("h:\(item.id.uuidString)", .history(item.id), parent: historyRoot)
-            n.children = formatChildren(of: n, clip: item)
-            return n
+        let textGroup = node("hist:text", .historyText, parent: historyRoot)
+        let imageGroup = node("hist:images", .historyImages, parent: historyRoot)
+        func historyNodes(_ items: [ClipItem], parent: VNode) -> [VNode] {
+            items.map { item in
+                let n = node("h:\(item.id.uuidString)", .history(item.id), parent: parent)
+                n.children = formatChildren(of: n, clip: item)
+                return n
+            }
         }
+        textGroup.children = historyNodes(history.textItems, parent: textGroup)
+        imageGroup.children = historyNodes(history.imageItems, parent: imageGroup)
+        historyRoot.children = [textGroup, imageGroup]
         templateRoot.children = templates.root.children.map { buildTemplate($0, parent: templateRoot) }
 
         // Drop cache entries that are no longer in the tree.
@@ -392,7 +402,11 @@ final class ViewerWindowController: NSWindowController,
         case .clipboardRoot:
             info("Current contents of the clipboard (read-only).", status: "")
         case .historyRoot:
-            info("History — \(history.items.count) item(s), max \(app.settings.historyMax).", status: "")
+            info("History — \(history.textItems.count) text/file item(s) (max \(app.settings.historyMax)) and \(history.imageItems.count) image(s) (max \(app.settings.historyImageMax)). Each group drops its oldest entries first.", status: "")
+        case .historyText:
+            info("Text & files — \(history.textItems.count) of \(app.settings.historyMax).", status: "")
+        case .historyImages:
+            info("Images — \(history.imageItems.count) of \(app.settings.historyImageMax).", status: "")
         case .templateRoot:
             info("Template — \(templates.allItems().count) item(s). Drag history items here to register them.", status: "")
         case .template(let t) where t.isFolder:
@@ -829,7 +843,9 @@ final class ViewerWindowController: NSWindowController,
         guard let n = vnode(item) else { return nil }
         switch n.kind {
         case .clipboardRoot: return "Clipboard"
-        case .historyRoot: return "History (\(history.items.count))"
+        case .historyRoot: return "History"
+        case .historyText: return "Text & files (\(history.textItems.count))"
+        case .historyImages: return "Images (\(history.imageItems.count))"
         case .templateRoot: return "Template"
         case .clipboardItem: return currentClipboard?.title(maxLength: 60) ?? "(empty)"
         case .history(let id): return history.item(id: id)?.title(maxLength: 60) ?? "?"
@@ -880,7 +896,7 @@ final class ViewerWindowController: NSWindowController,
         if target.isFormat { return [] }
 
         switch target.kind {
-        case .historyRoot:
+        case .historyRoot, .historyText, .historyImages:
             return src.isInHistory ? .move : .copy
         case .templateRoot, .template:
             if let st = src.templateNode, let tt = target.templateNode, tt.isDescendant(of: st) { return [] }
@@ -897,9 +913,16 @@ final class ViewerWindowController: NSWindowController,
         guard let src = draggedNode(info), let target = vnode(item) else { return false }
 
         switch target.kind {
-        case .historyRoot:
+        case .historyRoot, .historyText, .historyImages:
+            // Index within the group → index within the full list.
+            let group: [ClipItem] = {
+                if case .historyImages = target.kind { return history.imageItems }
+                return history.textItems
+            }()
             let count = history.items.count
-            var at = index < 0 ? count : index
+            var at: Int
+            if index < 0 || index >= group.count { at = count }
+            else { at = history.items.firstIndex { $0.id == group[index].id } ?? count }
             if let id = src.historyId {
                 guard let old = history.items.firstIndex(where: { $0.id == id }) else { return false }
                 if old < at { at -= 1 }

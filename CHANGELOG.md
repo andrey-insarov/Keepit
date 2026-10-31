@@ -10,6 +10,9 @@
   *Use Recovery Phrase…*, after which a new password must be set.
 - Password strength meter (Weak / Fair / Good / Excellent with a hint) under the new-password
   field, computed on the locked bytes — still no String of the password anywhere.
+- History is two rings: text & files (default 100) and images (default 30), each dropping its
+  own oldest entries; the Viewer shows them as *Text & files* and *Images* groups and Preferences
+  has both limits.
 - Input hardening: clipboard texts over 2 MB, file lists over 1000 entries and images over
   10 MB are not recorded; the history is capped at 256 MB in total; the popup menu shows at most
   60 history items; passwords are limited to 256 characters; wrong-password attempts are slowed
