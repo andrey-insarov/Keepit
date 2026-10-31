@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 2.4.0 — 2026-10-31
 
 - Automatic updates via Sparkle 2 (daily check of GitHub Releases, *Check for Updates…* in the
   menu, EdDSA-signed downloads).
