@@ -42,6 +42,8 @@ Requirements: macOS 13+, Xcode Command Line Tools (`xcode-select --install`).
 make app        # → Keepit.app in the project folder
 make run        # build and launch
 make install    # copy to /Applications
+make dmg        # → Keepit-<version>.dmg (drag-and-drop installer with Applications shortcut)
+make dist       # → both the .dmg and a .zip, as attached to GitHub Releases
 ```
 
 Or in Xcode: `open Package.swift` and run the `Keepit` scheme (the `LSUIElement` key in
