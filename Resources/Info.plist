@@ -13,9 +13,9 @@
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
-    <string>Keep it</string>
+    <string>Keepit</string>
     <key>CFBundleDisplayName</key>
-    <string>Keep it</string>
+    <string>Keepit – Clipboard Manager</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>

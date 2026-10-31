@@ -32,7 +32,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     private let loginItem    = NSButton(checkboxWithTitle: "Launch at login", target: nil, action: nil)
     private let protect      = NSButton(checkboxWithTitle: "Require password at launch, encrypt history & templates", target: nil, action: nil)
     private let changePw     = NSButton(title: "Change Password…", target: nil, action: nil)
-    private let lockScreen   = NSButton(checkboxWithTitle: "Lock Keep it (wipe key, unload data) when the screen locks or the Mac sleeps", target: nil, action: nil)
+    private let lockScreen   = NSButton(checkboxWithTitle: "Lock Keepit (wipe key, unload data) when the screen locks or the Mac sleeps", target: nil, action: nil)
     private let historyHK    = HotKeyRecorderView(frame: .zero)
     private let templateHK   = HotKeyRecorderView(frame: .zero)
     private let ignoreApps   = NSTextView()
@@ -43,7 +43,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         let w = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 520, height: 620),
                          styleMask: [.titled, .closable, .miniaturizable],
                          backing: .buffered, defer: false)
-        w.title = "Keep it \(AppInfo.version) — Preferences"
+        w.title = "Keepit \(AppInfo.version) — Preferences"
         w.isReleasedWhenClosed = false
         super.init(window: w)
         w.delegate = self

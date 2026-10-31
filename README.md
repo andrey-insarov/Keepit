@@ -1,18 +1,18 @@
-# Keep it
+# Keepit – Clipboard Manager
 
-**Keep it** (https://keep.it.com) is a native macOS clipboard history / template manager — a fork and
+**Keepit – Clipboard Manager** (https://keep.it.com) is a native macOS clipboard history / template manager — a fork and
 port of [CLCL](https://github.com/nakkag/CLCL) by Ohno Tomoaki (nakka), the Windows original.
 History, hot-key popup menu, auto-paste, hierarchical templates, an Explorer-like Viewer with
 per-format editing, and optional password protection with encrypted storage.
 
-Keep it is not affiliated with or endorsed by the author of CLCL. The CLCL name and icons belong to
-him; Keep it reuses only the behaviour and settings model, under the MIT License (see `LICENSE`).
+Keepit is not affiliated with or endorsed by the author of CLCL. The CLCL name and icons belong to
+him; Keepit reuses only the behaviour and settings model, under the MIT License (see `LICENSE`).
 
 Written in Swift + AppKit, no Xcode project needed — builds with `swift build`.
 
 ## Features (what is ported)
 
-| CLCL (Windows)                               | Keep it (macOS)                                            |
+| CLCL (Windows)                               | Keepit (macOS)                                            |
 |----------------------------------------------|------------------------------------------------------------|
 | Tray icon, left click = menu, right = viewer | Menu-bar icon 📎, left click = history menu, right click = Viewer |
 | `Alt+C` history+template popup, pastes       | `⌥C` (configurable), pops at the text cursor, pastes with `⌘V` |
@@ -54,9 +54,9 @@ Or in Xcode: `open Package.swift` and run the `Keepit` scheme (the `LSUIElement`
 
 1. macOS will ask for the **Accessibility** permission (System Settings → Privacy & Security →
    Accessibility). It is required to send `⌘V` to the active app and to place the menu at the
-   text cursor. Without it Keep it still records history and copies the chosen item to the clipboard.
+   text cursor. Without it Keepit still records history and copies the chosen item to the clipboard.
 2. Press `⌥C` in any text field — the history menu appears; pick an item, it is pasted.
-3. Press `⌥T` for templates. Right-click the menu-bar icon (or `⌘L` in any Keep it window) to open the Viewer.
+3. Press `⌥T` for templates. Right-click the menu-bar icon (or `⌘L` in any Keepit window) to open the Viewer.
 
 ## Viewer
 
@@ -73,7 +73,7 @@ Or in Xcode: `open Package.swift` and run the `Keepit` scheme (the `LSUIElement`
 ### Accessibility permission resets after rebuild
 
 `make app` signs the bundle ad-hoc (`SIGN_ID=-`). macOS ties the Accessibility grant to the code
-signature, so after each rebuild you may need to toggle Keep it off/on in the Accessibility list.
+signature, so after each rebuild you may need to toggle Keepit off/on in the Accessibility list.
 To avoid that, create a self-signed "Code Signing" certificate in Keychain Access (e.g. named
 `Keepit Dev`) and build with:
 
@@ -84,7 +84,7 @@ make app SIGN_ID="Keepit Dev"
 ## Password protection (2.0)
 
 Preferences → *Require password at launch, encrypt history & templates*. You set a password once;
-from then on Keep it asks for it at every launch (three wrong attempts → quit) and nothing is loaded
+from then on Keepit asks for it at every launch (three wrong attempts → quit) and nothing is loaded
 until it is entered. `history.json` and `templates.json` are then stored as AES-256-GCM blobs
 (key = PBKDF2-HMAC-SHA256, 200 000 rounds, random 16-byte salt kept in `vault.json` together
 with a sealed verifier). The password itself is never written anywhere and there is no recovery.
@@ -94,7 +94,7 @@ unticking the option asks for the password and writes the files back as plain JS
 ### Key handling and locking
 
 * The derived key lives in a dedicated `mlock`ed buffer (never swapped) and is wiped with
-  `memset_s` when Keep it locks, when the password is changed/removed, and at quit. A CryptoKit
+  `memset_s` when Keepit locks, when the password is changed/removed, and at quit. A CryptoKit
   `SymmetricKey` is created only for the duration of one encrypt/decrypt call and its temporary
   copy is wiped afterwards. Password bytes and the PBKDF2 output buffer are wiped right after
   key derivation.
@@ -105,14 +105,14 @@ unticking the option asks for the password and writes the files back as plain JS
   the key is derived. Limitation: input methods / dead-key composition are not supported — type
   the password with a plain keyboard layout. (What remains outside our control is the one-character
   `NSEvent.characters` string macOS creates per key press.)
-* **Lock Keep it** (menu-bar icon → *Lock Keep it*, `⌘L`): wipes the key, unloads history and templates
+* **Lock Keepit** (menu-bar icon → *Lock Keepit*, `⌘L`): wipes the key, unloads history and templates
   from memory, stops watching the clipboard and unregisters hot keys. The icon turns into a lock;
-  click it → *Unlock Keep it…* to enter the password and resume. Pending edits are saved (encrypted)
+  click it → *Unlock Keepit…* to enter the password and resume. Pending edits are saved (encrypted)
   before the key is wiped.
-* *Lock Keep it when the screen locks or the Mac sleeps* (Preferences, on by default) does the same
+* *Lock Keepit when the screen locks or the Mac sleeps* (Preferences, on by default) does the same
   automatically on screen lock, fast user switch and sleep.
 * While locked, nothing is decrypted and the hot keys do nothing. What is on the system
-  clipboard itself is of course still readable by every app — that is outside Keep it's control.
+  clipboard itself is of course still readable by every app — that is outside Keepit's control.
 
 ## Testing
 
@@ -198,4 +198,4 @@ Sources/Keepit/
 ## License
 
 MIT, same as upstream CLCL. `LICENSE` carries the original copyright notice of Ohno Tomoaki
-as the license requires, plus `Copyright (c) 2026 UK Intis Telecom LTD (Andrey Insarov)` for the Keep it fork.
+as the license requires, plus `Copyright (c) 2026 UK Intis Telecom LTD (Andrey Insarov)` for the Keepit fork.

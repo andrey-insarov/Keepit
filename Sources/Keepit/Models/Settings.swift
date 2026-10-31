@@ -70,7 +70,7 @@ struct Settings: Codable, Equatable {
 
     var launchAtLogin = false
 
-    /// Lock Keep it (wipe key, unload data) when the screen locks or the Mac sleeps. Only matters with a password set.
+    /// Lock Keepit (wipe key, unload data) when the screen locks or the Mac sleeps. Only matters with a password set.
     var lockWithScreen = true
 
     init() {}

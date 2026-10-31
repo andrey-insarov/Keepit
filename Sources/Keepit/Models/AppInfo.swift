@@ -2,7 +2,8 @@ import Foundation
 
 /// Version info, read from the bundle (filled in by the Makefile from the VERSION file).
 enum AppInfo {
-    static let name = "Keep it"
+    static let name = "Keepit"
+    static let fullName = "Keepit – Clipboard Manager"
     static var version: String {
         Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "dev"
     }

@@ -138,10 +138,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     private func updateStatusIcon() {
         guard let b = statusItem?.button else { return }
-        b.image = NSImage(systemSymbolName: isLocked ? "lock.fill" : "paperclip", accessibilityDescription: "Keep it")
+        b.image = NSImage(systemSymbolName: isLocked ? "lock.fill" : "paperclip", accessibilityDescription: "Keepit")
         b.image?.isTemplate = true
-        b.toolTip = isLocked ? "Keep it — locked, click to unlock"
-                             : "Keep it — \(settings.historyHotKey.displayString) history, \(settings.templateHotKey.displayString) templates"
+        b.toolTip = isLocked ? "Keepit — locked, click to unlock"
+                             : "Keepit — \(settings.historyHotKey.displayString) history, \(settings.templateHotKey.displayString) templates"
     }
 
     // MARK: - Password / encryption
@@ -149,9 +149,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// Up to three attempts; returns false on cancel / failure.
     private func unlockVault(quitOnFailure: Bool = true) -> Bool {
         for attempt in 1...3 {
-            let msg = attempt == 1 ? "Enter the Keep it password to decrypt the history and templates."
+            let msg = attempt == 1 ? "Enter the Keepit password to decrypt the history and templates."
                                    : "Wrong password (\(attempt - 1) of 3 attempts used)."
-            guard let pw = Vault.askPassword(title: "Keep it is locked", message: msg, cancelQuits: quitOnFailure) else { return false }
+            guard let pw = Vault.askPassword(title: "Keepit is locked", message: msg, cancelQuits: quitOnFailure) else { return false }
             let key = Vault.unlock(password: pw)
             pw.zero()
             if let key = key {
@@ -159,14 +159,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 return true
             }
         }
-        Vault.error(quitOnFailure ? "Too many wrong attempts. Keep it will quit." : "Too many wrong attempts. Keep it stays locked.")
+        Vault.error(quitOnFailure ? "Too many wrong attempts. Keepit will quit." : "Too many wrong attempts. Keepit stays locked.")
         return false
     }
 
     /// Turn protection on: set a password, re-save data encrypted.
     func enableProtection() -> Bool {
-        guard let pw = Vault.askPassword(title: "Set Keep it password",
-                                         message: "You'll be asked for it every time Keep it starts. There is no recovery if you forget it.",
+        guard let pw = Vault.askPassword(title: "Set Keepit password",
+                                         message: "You'll be asked for it every time Keepit starts. There is no recovery if you forget it.",
                                          confirm: true) else { return false }
         defer { pw.zero() }
         do {
@@ -283,12 +283,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         let appItem = NSMenuItem()
         let appMenu = NSMenu()
-        appMenu.addItem(withTitle: "About Keep it", action: #selector(showAbout), keyEquivalent: "")
+        appMenu.addItem(withTitle: "About Keepit", action: #selector(showAbout), keyEquivalent: "")
         appMenu.addItem(.separator())
         appMenu.addItem(withTitle: "Viewer…", action: #selector(openViewer), keyEquivalent: "l")
         appMenu.addItem(withTitle: "Preferences…", action: #selector(openPreferences), keyEquivalent: ",")
         appMenu.addItem(.separator())
-        appMenu.addItem(withTitle: "Quit Keep it", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        appMenu.addItem(withTitle: "Quit Keepit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         appItem.submenu = appMenu
         main.addItem(appItem)
 
@@ -318,12 +318,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private func buildStatusItem() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         if let b = statusItem.button {
-            b.image = NSImage(systemSymbolName: "paperclip", accessibilityDescription: "Keep it")
+            b.image = NSImage(systemSymbolName: "paperclip", accessibilityDescription: "Keepit")
             b.image?.isTemplate = true
             b.target = self
             b.action = #selector(statusItemClicked(_:))
             b.sendAction(on: [.leftMouseUp, .rightMouseUp])
-            b.toolTip = "Keep it — \(settings.historyHotKey.displayString) history, \(settings.templateHotKey.displayString) templates"
+            b.toolTip = "Keepit — \(settings.historyHotKey.displayString) history, \(settings.templateHotKey.displayString) templates"
         }
     }
 
@@ -331,9 +331,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let isRight = NSApp.currentEvent?.type == .rightMouseUp
         if isLocked {
             let menu = NSMenu()
-            menu.addItem(withTitle: "Unlock Keep it…", action: #selector(unlock), keyEquivalent: "").target = self
+            menu.addItem(withTitle: "Unlock Keepit…", action: #selector(unlock), keyEquivalent: "").target = self
             menu.addItem(.separator())
-            menu.addItem(withTitle: "Quit Keep it", action: #selector(quit), keyEquivalent: "q").target = self
+            menu.addItem(withTitle: "Quit Keepit", action: #selector(quit), keyEquivalent: "q").target = self
             menu.delegate = self
             statusItem.menu = menu
             statusItem.button?.performClick(nil)
@@ -448,13 +448,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             item("Clear History", #selector(clearHistory)),
         ]
         if Vault.isEnabled {
-            out.append(item("Lock Keep it", #selector(lock), "l"))
+            out.append(item("Lock Keepit", #selector(lock), "l"))
         }
         if !Paster.isTrusted() {
             out.append(item("Grant Accessibility Permission…", #selector(grantAccessibility)))
         }
         out.append(.separator())
-        out.append(item("Quit Keep it", #selector(quit), "q"))
+        out.append(item("Quit Keepit", #selector(quit), "q"))
         return out
     }
 
@@ -534,7 +534,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             NSApp.applicationIconImage = icon
         }
         NSApp.orderFrontStandardAboutPanel(options: [
-            .applicationName: AppInfo.name,
+            .applicationName: AppInfo.fullName,
             .applicationVersion: AppInfo.version,
             .version: AppInfo.build,
             .credits: NSAttributedString(string: "\(AppInfo.homepage)\n\(AppInfo.copyright)\nMIT License"),
@@ -547,8 +547,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     private func showAccessibilityAlert() {
         let a = NSAlert()
-        a.messageText = "Keep it needs the Accessibility permission to paste"
-        a.informativeText = "Without it Keep it can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keep it."
+        a.messageText = "Keepit needs the Accessibility permission to paste"
+        a.informativeText = "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit."
         a.addButton(withTitle: "Open System Settings")
         a.addButton(withTitle: "Later")
         NSApp.activate(ignoringOtherApps: true)

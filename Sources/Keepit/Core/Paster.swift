@@ -12,7 +12,7 @@ enum Paster {
         AXIsProcessTrusted()
     }
 
-    /// Ask macOS to show the "allow Keep it to control your computer" prompt.
+    /// Ask macOS to show the "allow Keepit to control your computer" prompt.
     @discardableResult
     static func requestTrust() -> Bool {
         let key = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String

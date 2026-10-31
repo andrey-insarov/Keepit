@@ -116,7 +116,7 @@ final class ViewerWindowController: NSWindowController,
         let w = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 900, height: 560),
                          styleMask: [.titled, .closable, .miniaturizable, .resizable],
                          backing: .buffered, defer: false)
-        w.title = "Keep it — Viewer"
+        w.title = "Keepit — Viewer"
         w.isReleasedWhenClosed = false
         w.minSize = NSSize(width: 640, height: 360)
         w.setFrameAutosaveName("KeepitViewer")

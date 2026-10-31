@@ -18,7 +18,7 @@ NOTARY_PROFILE ?=
 .PHONY: build app run install clean dist dmg icon notarize appstore
 
 DMG      = $(APP)-$(VERSION).dmg
-DMG_VOL  = Keep it
+DMG_VOL  = Keepit
 DMG_TMP  = .build/dmg
 
 # Disk image with the app and an Applications shortcut (drag-and-drop install).

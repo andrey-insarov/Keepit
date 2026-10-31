@@ -25,8 +25,8 @@ enum SelfTest {
     }
 
     static func run(app: AppDelegate) {
-        log.append("Keep it \(AppInfo.version) (\(AppInfo.build)) self-test, data dir: \(Storage.directory.path)")
-        let marker = "Keep it self-test \(UUID().uuidString)"
+        log.append("Keepit \(AppInfo.version) (\(AppInfo.build)) self-test, data dir: \(Storage.directory.path)")
+        let marker = "Keepit self-test \(UUID().uuidString)"
 
         // 1. Clipboard capture → history
         NSPasteboard.general.clearContents()
@@ -51,7 +51,7 @@ enum SelfTest {
 
                 // 3. Menus
                 let menu = app.buildHistoryMenu(includeTemplates: true, includeApp: true)
-                check(menu.items.contains { $0.title.hasSuffix(marker.prefix(20)) || $0.title.contains("Keep it self-test") },
+                check(menu.items.contains { $0.title.hasSuffix(marker.prefix(20)) || $0.title.contains("Keepit self-test") },
                       "history menu lists the captured item")
                 check(menu.items.contains { $0.title == "Template" && $0.submenu != nil }, "history menu has Template submenu")
 
