@@ -107,7 +107,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
             [NSView(), pasteAfter],
             labeled("Paste delay (s):", numField(pasteDelay)),
 
-            header("Ignored apps (bundle IDs, one per line)"),
+            header("Ignored apps (bundle IDs, one per line; known password managers are always ignored)"),
             [ignoredPlaceholder, NSView()],
             header("General"),
             [NSView(), loginItem],

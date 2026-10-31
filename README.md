@@ -21,7 +21,7 @@ Written in Swift + AppKit, no Xcode project needed — builds with `swift build`
 | Bitmap thumbnails and tooltips in the menu   | Same (PNG thumbnails, text tooltips)                       |
 | Formats: TEXT, UNICODE, RTF, HTML, BITMAP, HDROP | plain text, RTF, HTML, PNG (TIFF converted), file URLs |
 | History max (30), overlap check, save/restore| Same, JSON in `~/Library/Application Support/CLCL/`        |
-| Window filter (ignore apps)                  | Ignore list by bundle id + `org.nspasteboard.ConcealedType` |
+| Window filter (ignore apps)                  | Built-in list of password managers (always ignored) + user ignore list + `org.nspasteboard.ConcealedType` |
 | Per-window paste key (`sendkey`)             | Per-bundle-id paste key in `settings.json` (`pasteKeys`)   |
 | Templates (hierarchical "Regist")            | Same: folders, any format (text/image/files), `-` separators, `&x` shortcuts, per-item hot key |
 | Viewer: tree Clipboard / History / Template  | Same tree; each item expands into its formats              |

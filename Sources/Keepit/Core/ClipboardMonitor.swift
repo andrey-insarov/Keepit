@@ -22,6 +22,29 @@ final class ClipboardMonitor {
         "de.petermaurer.TransientPasteboardType",
     ]
 
+    /// Password managers whose copies are never recorded, regardless of user settings.
+    /// Some of them (KeePassXC via Qt) don't manage to put org.nspasteboard.ConcealedType on the
+    /// macOS pasteboard, so the bundle id is the only reliable signal.
+    static let builtInIgnoredApps: Set<String> = [
+        "org.keepassxc.keepassxc",
+        "com.hicknhacksoftware.MacPass",
+        "com.markmcguill.strongbox.mac",
+        "net.antelle.keeweb",
+        "com.1password.1password",
+        "com.agilebits.onepassword7",
+        "com.agilebits.onepassword-osx",
+        "com.bitwarden.desktop",
+        "com.lastpass.LastPass",
+        "com.dashlane.Dashlane",
+        "in.sinew.Enpass-Desktop",
+        "com.keepersecurity.passwordmanager",
+        "com.nordpass.mac",
+        "com.roboform.RoboForm",
+        "com.apple.keychainaccess",
+        "com.apple.Passwords",
+        "com.apple.PasswordsMenuBarExtra",
+    ]
+
     init(settings: Settings) {
         self.settings = settings
         self.lastChangeCount = pb.changeCount
@@ -68,12 +91,16 @@ final class ClipboardMonitor {
         let frontApp = NSWorkspace.shared.frontmostApplication
         let bundleId = frontApp?.bundleIdentifier
 
-        // Ignore list by bundle id.
-        if let id = bundleId, settings.ignoreApps.contains(id) { return }
+        // Ignore list by bundle id: built-in password managers + the user's own list.
+        if let id = bundleId, Self.builtInIgnoredApps.contains(id) || settings.ignoreApps.contains(id) { return }
         if let id = bundleId, id == Bundle.main.bundleIdentifier { return }
 
         if settings.ignoreConcealed, let types = pb.types {
-            for t in types where Self.concealedTypes.contains(t.rawValue) { return }
+            for t in types {
+                let raw = t.rawValue
+                if Self.concealedTypes.contains(raw) || raw.localizedCaseInsensitiveContains("concealed")
+                    || raw.localizedCaseInsensitiveContains("password") { return }
+            }
         }
 
         guard let item = ClipItem.capture(from: pb, settings: settings, sourceApp: bundleId) else { return }
