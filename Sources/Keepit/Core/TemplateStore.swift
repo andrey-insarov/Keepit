@@ -1,0 +1,59 @@
+import Foundation
+
+/// Template tree persistence. Equivalent of CLCL's Regist.c.
+final class TemplateStore {
+    private(set) var root = TemplateNode(name: "Template")
+    var onChange: (() -> Void)?
+    private lazy var saver = DebouncedSaver(delay: 1.0) { [weak self] in self?.saveNow() }
+
+    init() {
+        reload()
+    }
+
+    /// (Re)load from disk — used at start and after unlocking.
+    func reload() {
+        if let loaded = Storage.load(TemplateNode.self, from: Storage.templatesURL) {
+            root = loaded
+            root.relink()
+        } else {
+            root = TemplateNode(name: "Template", children: [
+                TemplateNode(name: "Examples", children: [
+                    TemplateNode(name: "&Greeting", text: "Hello,\n\n"),
+                    TemplateNode(name: "-", text: ""),
+                    TemplateNode(name: "&Signature", text: "--\nBest regards"),
+                ]),
+            ])
+            saveNow()
+        }
+        onChange?()
+    }
+
+    /// Drop everything from memory without touching the disk (lock).
+    func purge() {
+        saver.flush()
+        root = TemplateNode(name: "Template")
+        onChange?()
+    }
+
+    func changed() {
+        onChange?()
+        saver.schedule()
+    }
+
+    func saveNow() {
+        Storage.save(root, to: Storage.templatesURL)
+    }
+
+    func flush() { saver.flush() }
+
+    /// Depth-first list of all text items (used for quick-add checks and searching).
+    func allItems() -> [TemplateNode] {
+        var out: [TemplateNode] = []
+        func walk(_ n: TemplateNode) {
+            if !n.isFolder { out.append(n) }
+            n.children.forEach(walk)
+        }
+        walk(root)
+        return out
+    }
+}

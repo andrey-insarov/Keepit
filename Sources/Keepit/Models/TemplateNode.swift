@@ -1,0 +1,97 @@
+import Foundation
+
+/// A node in the template tree (CLCL "Template"/"Regist" items): either a folder or an item.
+/// Since 2.0 an item holds a full ClipItem (any formats), not just text — like the original,
+/// where a template can be a bitmap or a file list.
+/// Class (not struct) so NSOutlineView can use object identity.
+final class TemplateNode: Codable {
+    var id: UUID
+    /// Display name. Empty → the content's own title is shown (CLCL "Clear Name").
+    /// "-" → rendered as a menu separator.
+    var name: String
+    /// nil → folder
+    var clip: ClipItem?
+    /// Optional direct hot key (CLCL "Set Hot key" on a template item).
+    var hotKey: HotKey?
+    var children: [TemplateNode]
+
+    /// Legacy 1.x field; migrated into `clip` by `relink()`.
+    private var text: String?
+
+    weak var parent: TemplateNode?
+
+    private enum CodingKeys: String, CodingKey { case id, name, clip, hotKey, children, text }
+
+    init(id: UUID = UUID(), name: String, clip: ClipItem? = nil, children: [TemplateNode] = []) {
+        self.id = id
+        self.name = name
+        self.clip = clip
+        self.children = children
+        for c in children { c.parent = self }
+    }
+
+    convenience init(name: String, text: String) {
+        self.init(name: name, clip: .text(text))
+    }
+
+    var isFolder: Bool { clip == nil }
+    var isSeparator: Bool { !isFolder && name == "-" }
+
+    /// Name shown in the tree and menus.
+    var displayName: String {
+        if !name.isEmpty { return name }
+        if let c = clip { return c.title(maxLength: 60) }
+        return "(Folder)"
+    }
+
+    /// Re-link `parent` pointers after decoding and migrate 1.x text-only items.
+    func relink() {
+        if clip == nil, let t = text {
+            clip = .text(t)
+            text = nil
+        }
+        for c in children {
+            c.parent = self
+            c.relink()
+        }
+    }
+
+    func insert(_ node: TemplateNode, at index: Int? = nil) {
+        node.parent = self
+        if let i = index, i >= 0, i <= children.count {
+            children.insert(node, at: i)
+        } else {
+            children.append(node)
+        }
+    }
+
+    func removeFromParent() {
+        guard let p = parent else { return }
+        p.children.removeAll { $0 === self }
+        parent = nil
+    }
+
+    func find(id: UUID) -> TemplateNode? {
+        if self.id == id { return self }
+        for c in children {
+            if let f = c.find(id: id) { return f }
+        }
+        return nil
+    }
+
+    func isDescendant(of other: TemplateNode) -> Bool {
+        var p: TemplateNode? = self
+        while let cur = p {
+            if cur === other { return true }
+            p = cur.parent
+        }
+        return false
+    }
+
+    /// Deep copy with fresh ids (used for drag-copy).
+    func duplicate() -> TemplateNode {
+        let n = TemplateNode(name: name, clip: clip, children: children.map { $0.duplicate() })
+        n.hotKey = nil
+        return n
+    }
+}
