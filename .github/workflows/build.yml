@@ -12,13 +12,13 @@ permissions:
 jobs:
   build:
     runs-on: macos-15
+    env:
+      # Signing/notarization only when the secrets exist (forks and PRs build ad-hoc).
+      HAS_SIGNING: ${{ secrets.MACOS_CERT_P12 != '' && secrets.APPSTORE_PRIVATE_KEY != '' }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0            # BUILD_NO = commit count
-
-      - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode_16.2.app || true
 
       - name: Swift version
         run: swift --version
@@ -29,8 +29,41 @@ jobs:
       - name: Unit tests
         run: swift test
 
-      - name: Package app
+      - name: Import Developer ID certificate
+        if: env.HAS_SIGNING == 'true'
+        env:
+          MACOS_CERT_P12: ${{ secrets.MACOS_CERT_P12 }}
+          MACOS_CERT_PASSWORD: ${{ secrets.MACOS_CERT_PASSWORD }}
+        run: |
+          KEYCHAIN=$RUNNER_TEMP/signing.keychain-db
+          KC_PASS=$(openssl rand -hex 16)
+          echo "$MACOS_CERT_P12" | base64 --decode > $RUNNER_TEMP/cert.p12
+          security create-keychain -p "$KC_PASS" "$KEYCHAIN"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN"
+          security unlock-keychain -p "$KC_PASS" "$KEYCHAIN"
+          security import $RUNNER_TEMP/cert.p12 -P "$MACOS_CERT_PASSWORD" -A -t cert -f pkcs12 -k "$KEYCHAIN"
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$KC_PASS" "$KEYCHAIN"
+          security list-keychains -d user -s "$KEYCHAIN" login.keychain-db
+          rm $RUNNER_TEMP/cert.p12
+          IDENTITY=$(security find-identity -v -p codesigning "$KEYCHAIN" | grep "Developer ID Application" | head -1 | sed -E 's/.*"(.*)".*/\1/')
+          echo "SIGN_ID=$IDENTITY" >> $GITHUB_ENV
+          echo "Using identity: $IDENTITY"
+
+      - name: Package app + DMG (ad-hoc)
+        if: env.HAS_SIGNING != 'true'
         run: make dist VERSION=$(cat VERSION)
+
+      - name: Package, notarize and staple (Developer ID)
+        if: env.HAS_SIGNING == 'true'
+        env:
+          APPSTORE_KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
+          APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
+          APPSTORE_PRIVATE_KEY: ${{ secrets.APPSTORE_PRIVATE_KEY }}
+        run: |
+          echo "$APPSTORE_PRIVATE_KEY" > $RUNNER_TEMP/AuthKey.p8
+          make notarize VERSION=$(cat VERSION) SIGN_ID="$SIGN_ID" APPSTORE_KEY_PATH=$RUNNER_TEMP/AuthKey.p8
+          make dist VERSION=$(cat VERSION) SIGN_ID="$SIGN_ID"    # re-zips the stapled app; dmg already built
+          rm $RUNNER_TEMP/AuthKey.p8
 
       - name: UI smoke test (launches the app, snapshots windows)
         env:

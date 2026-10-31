@@ -44,6 +44,7 @@ make run        # build and launch
 make install    # copy to /Applications
 make dmg        # → Keepit-<version>.dmg (drag-and-drop installer with Applications shortcut)
 make dist       # → both the .dmg and a .zip, as attached to GitHub Releases
+make notarize SIGN_ID="Developer ID Application: …" NOTARY_PROFILE=…   # signed + notarized (see RELEASING.md)
 ```
 
 Or in Xcode: `open Package.swift` and run the `Keepit` scheme (the `LSUIElement` key in
