@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Automatic updates via Sparkle 2 (daily check of GitHub Releases, *Check for Updates…* in the
+  menu, EdDSA-signed downloads).
+
 ## 2.3.0 — 2026-10-31
 
 - **Recovery phrase**: when protection is turned on, Keepit shows a 24-word phrase (BIP-39 word

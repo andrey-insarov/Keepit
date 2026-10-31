@@ -142,6 +142,12 @@ unrecoverable — by design.
 * While locked, nothing is decrypted and the hot keys do nothing. What is on the system
   clipboard itself is of course still readable by every app — that is outside Keepit's control.
 
+## Updates
+
+Releases outside the App Store update themselves through Sparkle: once a day Keepit checks the
+latest GitHub Release and offers the new version; *Check for Updates…* in the menu does it on
+demand. Downloads are EdDSA-signed in addition to the Developer ID signature (see RELEASING.md).
+
 ## Testing
 
 * `swift test` — unit tests (models, menu parsing, settings, history/template stores, vault

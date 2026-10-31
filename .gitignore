@@ -6,4 +6,6 @@
 Resources/Icon/AppIcon.iconset/
 Resources/Keepit.provisionprofile
 *.pkg
+appcast.xml
+SPARKLE_PUBLIC_KEY
 Resources/KeepitDevID.provisionprofile

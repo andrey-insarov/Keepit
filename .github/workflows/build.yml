@@ -15,6 +15,7 @@ jobs:
     env:
       # Signing/notarization only when the secrets exist (forks and PRs build ad-hoc).
       HAS_SIGNING: ${{ secrets.MACOS_CERT_P12 != '' && secrets.APPSTORE_PRIVATE_KEY != '' }}
+      SPARKLE_PUBLIC_KEY: ${{ vars.SPARKLE_PUBLIC_KEY }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -68,6 +69,16 @@ jobs:
           # Zip the stapled app without rebuilding (make dist would re-sign and drop the ticket).
           ditto -c -k --keepParent Keepit.app Keepit-$(cat VERSION).zip
 
+      - name: Sparkle appcast (EdDSA-signed)
+        if: env.HAS_SIGNING == 'true' && env.SPARKLE_PUBLIC_KEY != ''
+        env:
+          SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
+        run: |
+          echo "$SPARKLE_PRIVATE_KEY" > $RUNNER_TEMP/sparkle_ed25519
+          make appcast VERSION=$(cat VERSION) SPARKLE_PRIVATE_KEY_FILE=$RUNNER_TEMP/sparkle_ed25519
+          rm $RUNNER_TEMP/sparkle_ed25519
+          cat appcast.xml
+
       - name: UI smoke test (launches the app, snapshots windows)
         env:
           KEEPIT_DATA_DIR: ${{ runner.temp }}/keepit-selftest
@@ -89,6 +100,7 @@ jobs:
           path: |
             Keepit-*.zip
             Keepit-*.dmg
+            appcast.xml
 
       - name: Release
         if: startsWith(github.ref, 'refs/tags/v')
@@ -97,4 +109,5 @@ jobs:
           files: |
             Keepit-*.dmg
             Keepit-*.zip
+            appcast.xml
           generate_release_notes: true

@@ -11,6 +11,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private lazy var menuBuilder = MenuBuilder(settings: settings)
 
     private var statusItem: NSStatusItem!
+    private lazy var updater = Updater()
     private var preferencesWindow: PreferencesWindowController?
     private var viewer: ViewerWindowController?
 
@@ -66,6 +67,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         registerHotKeys()
         Storage.save(settings, to: Storage.settingsURL, encrypt: false)
         observeScreenLock()
+        _ = updater   // starts Sparkle's scheduled checks
 
         if SelfTest.isActive {
             SelfTest.run(app: self)
@@ -413,6 +415,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let appMenu = NSMenu()
         appMenu.addItem(withTitle: "About Keepit", action: #selector(showAbout), keyEquivalent: "")
         appMenu.addItem(.separator())
+        appMenu.addItem(withTitle: "Check for Updates…", action: #selector(checkForUpdates), keyEquivalent: "")
         appMenu.addItem(withTitle: "Viewer…", action: #selector(openViewer), keyEquivalent: "l")
         appMenu.addItem(withTitle: "Preferences…", action: #selector(openPreferences), keyEquivalent: ",")
         appMenu.addItem(.separator())
@@ -580,6 +583,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if Vault.isEnabled {
             out.append(item("Lock Keepit", #selector(lock), "l"))
         }
+        if updater.isConfigured {
+            out.append(item("Check for Updates…", #selector(checkForUpdates)))
+        }
         if !Paster.isTrusted() {
             out.append(item("Grant Accessibility Permission…", #selector(grantAccessibility)))
         }
@@ -694,6 +700,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             .version: AppInfo.build,
             .credits: NSAttributedString(string: "\(AppInfo.homepage)\n\(AppInfo.copyright)\nMIT License"),
         ])
+    }
+
+    @objc func checkForUpdates() {
+        menuSelectionMade = true
+        updater.checkForUpdates(nil)
     }
 
     @objc private func quit() {

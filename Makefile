@@ -1,5 +1,8 @@
 APP      = Keepit
 VERSION ?= $(shell cat VERSION)
+# Sparkle EdDSA public key (base64) — from `generate_keys`; empty disables the "Check for Updates" item.
+SPARKLE_PUBLIC_KEY ?= $(shell cat SPARKLE_PUBLIC_KEY 2>/dev/null)
+SPARKLE_FW = $(shell find .build -type d -name Sparkle.framework -path "*macos*" 2>/dev/null | head -1)
 BUILD_NO ?= $(shell git rev-list --count HEAD 2>/dev/null || echo 1)
 BUILD    = .build/release
 BUNDLE   = $(APP).app
@@ -27,7 +30,21 @@ endif
 # Notarization: NOTARY_PROFILE (xcrun notarytool store-credentials) or the APPSTORE_* env vars used by CI.
 NOTARY_PROFILE ?=
 
-.PHONY: build app run install clean dist dmg icon notarize appstore
+.PHONY: build app run install clean dist dmg icon notarize appstore appcast
+
+# Sign the DMG with the Sparkle EdDSA key and write appcast.xml next to it.
+#   make appcast SPARKLE_PRIVATE_KEY_FILE=path   (or the key in the keychain from generate_keys)
+SPARKLE_BIN = $(shell find .build -type d -name bin -path "*artifacts*parkle*" 2>/dev/null | head -1)
+SPARKLE_PRIVATE_KEY_FILE ?=
+appcast: 
+	@test -n "$(SPARKLE_BIN)" || (echo "Sparkle tools not found under .build/artifacts — run swift build first"; exit 1)
+	rm -rf .build/appcast && mkdir -p .build/appcast && cp $(DMG) .build/appcast/
+	$(SPARKLE_BIN)/generate_appcast $(if $(SPARKLE_PRIVATE_KEY_FILE),--ed-key-file $(SPARKLE_PRIVATE_KEY_FILE),) \
+	  --download-url-prefix "https://github.com/andrey-insarov/Keepit/releases/download/v$(VERSION)/" \
+	  --link "https://github.com/andrey-insarov/Keepit/releases" \
+	  --embed-release-notes .build/appcast
+	cp .build/appcast/appcast.xml appcast.xml
+	@echo "Wrote appcast.xml"
 
 DMG      = $(APP)-$(VERSION).dmg
 DMG_VOL  = Keepit
@@ -110,9 +127,20 @@ app: build
 	rm -rf $(BUNDLE)
 	mkdir -p $(CONTENTS)/MacOS $(CONTENTS)/Resources
 	cp $(BUILD)/$(APP) $(CONTENTS)/MacOS/$(APP)
-	sed -e 's/__VERSION__/$(VERSION)/' -e 's/__BUILD__/$(BUILD_NO)/' Resources/Info.plist > $(CONTENTS)/Info.plist
+	sed -e 's/__VERSION__/$(VERSION)/' -e 's/__BUILD__/$(BUILD_NO)/' -e 's|__SPARKLE_PUBLIC_KEY__|$(SPARKLE_PUBLIC_KEY)|' Resources/Info.plist > $(CONTENTS)/Info.plist
 	cp Resources/Icon/AppIcon.icns $(CONTENTS)/Resources/AppIcon.icns
 	echo -n 'APPL????' > $(CONTENTS)/PkgInfo
+	@test -n "$(SPARKLE_FW)" || (echo "Sparkle.framework not found under .build — run swift build first"; exit 1)
+	mkdir -p $(CONTENTS)/Frameworks
+	cp -R "$(SPARKLE_FW)" $(CONTENTS)/Frameworks/
+	install_name_tool -add_rpath @executable_path/../Frameworks $(CONTENTS)/MacOS/$(APP) 2>/dev/null || true
+	# Sparkle's nested helpers must be signed first (hardened runtime), then the framework, then the app.
+	@if [ "$(SIGN_ID)" != "-" ]; then \
+	  FW=$(CONTENTS)/Frameworks/Sparkle.framework/Versions/B; \
+	  codesign --force --options runtime --timestamp --sign "$(SIGN_ID)" $$FW/XPCServices/*.xpc 2>/dev/null || true; \
+	  codesign --force --options runtime --timestamp --sign "$(SIGN_ID)" $$FW/Autoupdate $$FW/Updater.app; \
+	  codesign --force --options runtime --timestamp --sign "$(SIGN_ID)" $(CONTENTS)/Frameworks/Sparkle.framework; \
+	fi
 	@if [ -n "$(HAVE_PROFILE)" ]; then \
 	  mkdir -p .build && sed 's/__TEAM_ID__/$(TEAM_ID)/g' Resources/Keepit.entitlements > .build/devid.entitlements; \
 	  cp $(DEVID_PROFILE) $(CONTENTS)/embedded.provisionprofile; echo "Embedding Developer ID profile (Touch ID enabled)"; \

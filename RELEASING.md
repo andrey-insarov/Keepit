@@ -76,6 +76,28 @@ spctl -a -vv -t install Keepit-*.dmg      # should say "accepted, source=Notariz
   Makefile) or a stale certificate.
 * The Finder window layout step of `make dmg` is best effort and is silently skipped on CI.
 
+## Sparkle auto-updates (GitHub Releases)
+
+Keepit checks `https://github.com/andrey-insarov/Keepit/releases/latest/download/appcast.xml`
+once a day (and via *Check for Updates…*). Each release's DMG is signed with a Sparkle EdDSA key
+and listed in `appcast.xml`, which CI attaches to the release.
+
+One-time setup:
+
+1. Build once so the Sparkle tools exist: `swift build`.
+2. Generate the key pair (stored in your login keychain):
+   `$(find .build -type d -name bin -path "*parkle*" | head -1)/generate_keys`
+   It prints the **public** key (base64). Put it in a file named `SPARKLE_PUBLIC_KEY` in the
+   project root (git-ignored) — `make app` injects it into Info.plist — and in GitHub →
+   Settings → Secrets and variables → Actions → **Variables** → `SPARKLE_PUBLIC_KEY`.
+3. Export the **private** key for CI: `…/generate_keys -x sparkle_ed25519` → contents of that
+   file → GitHub secret `SPARKLE_PRIVATE_KEY`. Delete the exported file afterwards.
+4. Tag a release. The *Sparkle appcast* step signs the DMG and attaches `appcast.xml`.
+
+A build without the public key simply has no *Check for Updates…* item. Apps already installed
+only learn about updates from the first release that ships an appcast, so the first Sparkle-enabled
+version has to be installed by hand once.
+
 ## Mac App Store
 
 The App Store build is sandboxed (`Resources/Keepit-AppStore.entitlements`) and packaged as a

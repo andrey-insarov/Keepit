@@ -29,6 +29,17 @@
     <true/>
     <key>NSHumanReadableCopyright</key>
     <string>© 2026 UK Intis Telecom LTD (Andrey Insarov) — keep.it.com. MIT License.</string>
+    <!-- Sparkle auto-updates: appcast is attached to every GitHub Release; "latest" redirects to the newest. -->
+    <key>SUFeedURL</key>
+    <string>https://github.com/andrey-insarov/Keepit/releases/latest/download/appcast.xml</string>
+    <key>SUPublicEDKey</key>
+    <string>__SPARKLE_PUBLIC_KEY__</string>
+    <key>SUEnableAutomaticChecks</key>
+    <true/>
+    <key>SUScheduledCheckInterval</key>
+    <integer>86400</integer>
+    <key>SUAutomaticallyUpdate</key>
+    <false/>
     <key>NSPrincipalClass</key>
     <string>NSApplication</string>
     <key>NSSupportsAutomaticTermination</key>
