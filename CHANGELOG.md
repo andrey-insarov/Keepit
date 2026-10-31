@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.1.2 — 2026-10-31 (security)
+
+- Copies made in known password managers (KeePassXC, MacPass, Strongbox, KeeWeb, 1Password,
+  Bitwarden, LastPass, Dashlane, Enpass, Keeper, NordPass, RoboForm, Keychain Access, Apple
+  Passwords) are never recorded, regardless of settings. KeePassXC's "concealed" marker does not
+  reach the macOS pasteboard in the standard form, so 2.1.1 and earlier recorded passwords copied
+  from it. **If you used an earlier version with a password manager, review and delete those
+  history entries in the Viewer.**
+- Pasteboard types whose name mentions "concealed" or "password" are also ignored.
+
 ## 2.1.1 — 2026-10-31
 
 Fixes from the first live test session.
