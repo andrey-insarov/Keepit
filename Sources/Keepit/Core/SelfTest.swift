@@ -97,7 +97,7 @@ enum SelfTest {
     }
 
     private static func snapshot(_ w: NSWindow, name: String) {
-        guard let v = w.contentView, let rep = v.bitmapImageRepForCachingDisplay(v.bounds) else {
+        guard let v = w.contentView, let rep = v.bitmapImageRepForCachingDisplay(in: v.bounds) else {
             check(false, "snapshot \(name)"); return
         }
         v.cacheDisplay(in: v.bounds, to: rep)
