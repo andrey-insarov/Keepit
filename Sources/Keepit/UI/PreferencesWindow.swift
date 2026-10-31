@@ -35,7 +35,8 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     private let lockScreen   = NSButton(checkboxWithTitle: "Lock Keepit (wipe key, unload data) when the screen locks or the Mac sleeps", target: nil, action: nil)
     private let historyHK    = HotKeyRecorderView(frame: .zero)
     private let templateHK   = HotKeyRecorderView(frame: .zero)
-    private let ignoreApps   = NSTextView()
+    private let ignoreScroll = NSTextView.scrollableTextView()
+    private var ignoreApps: NSTextView { ignoreScroll.documentView as! NSTextView }
 
     init(app: AppDelegate) {
         self.app = app
@@ -124,17 +125,11 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         grid.translatesAutoresizingMaskIntoConstraints = false
 
         // Ignored apps text view occupies its own row spanning both columns.
-        let scroll = NSScrollView()
+        let scroll = ignoreScroll
         scroll.hasVerticalScroller = true
         scroll.borderType = .bezelBorder
-        scroll.documentView = ignoreApps
         ignoreApps.isRichText = false
         ignoreApps.font = NSFont.monospacedSystemFont(ofSize: 12, weight: .regular)
-        ignoreApps.autoresizingMask = [.width]
-        ignoreApps.minSize = NSSize(width: 0, height: 0)
-        ignoreApps.maxSize = NSSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
-        ignoreApps.isVerticallyResizable = true
-        ignoreApps.textContainer?.widthTracksTextView = true
         scroll.translatesAutoresizingMaskIntoConstraints = false
         scroll.heightAnchor.constraint(equalToConstant: 80).isActive = true
         // Replace the placeholder row with the scroll view spanning both columns.

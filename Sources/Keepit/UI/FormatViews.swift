@@ -19,14 +19,17 @@ extension NSView {
 // MARK: - Text / RTF / HTML
 
 final class TextFormatView: NSView, NSTextViewDelegate {
-    private let scroll = NSScrollView()
-    let textView = NSTextView()
+    private let scroll: NSScrollView
+    let textView: NSTextView
     private var format = ClipItem.Format.text
     private var dirty = false
     /// Called when editing ends with the new bytes for `format`.
     var onCommit: ((String, Data) -> Void)?
 
     override init(frame: NSRect) {
+        // The factory wires up a text view that fills the whole scroll area (clicking anywhere focuses it).
+        scroll = NSTextView.scrollableTextView()
+        textView = scroll.documentView as! NSTextView
         super.init(frame: frame)
         textView.isRichText = false
         textView.allowsUndo = true
@@ -35,14 +38,7 @@ final class TextFormatView: NSView, NSTextViewDelegate {
         textView.isAutomaticDashSubstitutionEnabled = false
         textView.isAutomaticTextReplacementEnabled = false
         textView.isAutomaticSpellingCorrectionEnabled = false
-        textView.autoresizingMask = [.width]
-        textView.isVerticallyResizable = true
-        textView.isHorizontallyResizable = false
-        textView.minSize = .zero
-        textView.maxSize = NSSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
-        textView.textContainer?.widthTracksTextView = true
         textView.textContainerInset = NSSize(width: 6, height: 6)
-        scroll.documentView = textView
         scroll.hasVerticalScroller = true
         scroll.borderType = .noBorder
         addSubview(scroll)
@@ -192,22 +188,18 @@ final class FilesFormatView: NSView, NSTableViewDataSource, NSTableViewDelegate 
 // MARK: - Binary (hex dump)
 
 final class HexFormatView: NSView {
-    private let scroll = NSScrollView()
-    private let textView = NSTextView()
+    private let scroll: NSScrollView
+    private let textView: NSTextView
     private static let limit = 256 * 1024
 
     override init(frame: NSRect) {
+        scroll = NSTextView.scrollableTextView()
+        textView = scroll.documentView as! NSTextView
         super.init(frame: frame)
         textView.isEditable = false
         textView.isRichText = false
         textView.font = NSFont.monospacedSystemFont(ofSize: 12, weight: .regular)
-        textView.autoresizingMask = [.width]
-        textView.isVerticallyResizable = true
-        textView.minSize = .zero
-        textView.maxSize = NSSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
-        textView.textContainer?.widthTracksTextView = true
         textView.textContainerInset = NSSize(width: 6, height: 6)
-        scroll.documentView = textView
         scroll.hasVerticalScroller = true
         scroll.borderType = .noBorder
         addSubview(scroll)
