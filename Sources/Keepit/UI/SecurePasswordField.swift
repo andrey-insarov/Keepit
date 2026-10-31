@@ -71,6 +71,8 @@ final class SecurePasswordField: NSView {
     private var charLengths: [Int] = []
     var placeholder = "Password"
     var onTab: (() -> Void)?
+    /// Called after every edit (for a strength meter); receives the live buffer, must not copy it into a String.
+    var onChange: ((SecureBuffer) -> Void)?
 
     override var acceptsFirstResponder: Bool { true }
     override var focusRingType: NSFocusRingType { get { .exterior } set {} }
@@ -107,6 +109,7 @@ final class SecurePasswordField: NSView {
         case 51, 117:               // ⌫ / ⌦ — wipe last character
             if let n = charLengths.popLast() { buffer.removeLast(n) }
             needsDisplay = true
+            onChange?(buffer)
             return
         case 48:                    // ⇥ — move to the next field
             if let t = onTab { t() } else { window?.selectNextKeyView(nil) }
@@ -128,6 +131,7 @@ final class SecurePasswordField: NSView {
             if added > 0 { charLengths.append(added) }
         }
         needsDisplay = true
+        onChange?(buffer)
     }
 
     override func draw(_ dirtyRect: NSRect) {

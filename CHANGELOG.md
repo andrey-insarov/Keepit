@@ -8,6 +8,8 @@
   and the phrase means the data is gone. The phrase stays valid across password changes;
   Preferences → *New Recovery Phrase…* issues a new one (the old one stops working) and, since a leaked phrase exposes the current key, offers to change the password right away. The unlock prompt offers
   *Use Recovery Phrase…*, after which a new password must be set.
+- Password strength meter (Weak / Fair / Good / Excellent with a hint) under the new-password
+  field, computed on the locked bytes — still no String of the password anywhere.
 - **Change password with Touch ID** (default on; Preferences → *Allow changing the password with
   Touch ID* can be turned off to always require the current password).
 

@@ -246,13 +246,19 @@ enum Vault {
             a.alertStyle = .informational
             a.icon = NSImage(systemSymbolName: "lock.fill", accessibilityDescription: nil)
 
-            let width: CGFloat = 280
-            let f1 = SecurePasswordField(frame: NSRect(x: 0, y: confirm ? 30 : 0, width: width, height: 24))
+            let width: CGFloat = 300
+            // Layout (top → bottom): new password, strength meter, repeat password.
+            let meterHeight: CGFloat = confirm ? 26 : 0
+            let boxHeight: CGFloat = confirm ? 24 + 6 + meterHeight + 6 + 24 : 24
+            let f1 = SecurePasswordField(frame: NSRect(x: 0, y: boxHeight - 24, width: width, height: 24))
             let f2 = SecurePasswordField(frame: NSRect(x: 0, y: 0, width: width, height: 24))
             f2.placeholder = "Repeat password"
-            let box = NSView(frame: NSRect(x: 0, y: 0, width: width, height: confirm ? 54 : 24))
+            let box = NSView(frame: NSRect(x: 0, y: 0, width: width, height: boxHeight))
             box.addSubview(f1)
             if confirm {
+                let meter = PasswordStrengthView(frame: NSRect(x: 0, y: 24 + 6, width: width, height: meterHeight))
+                box.addSubview(meter)
+                f1.onChange = { [weak meter] buf in meter?.update(PasswordStrength.evaluate(buf)) }
                 box.addSubview(f2)
                 f1.onTab = { [weak f2] in f2?.window?.makeFirstResponder(f2) }
                 f2.onTab = { [weak f1] in f1?.window?.makeFirstResponder(f1) }
