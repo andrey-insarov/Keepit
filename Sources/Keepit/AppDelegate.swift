@@ -529,6 +529,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc func showAbout() {
         menuSelectionMade = true
         NSApp.activate(ignoringOtherApps: true)
+        if let iconURL = Bundle.main.url(forResource: "AppIcon", withExtension: "icns"),
+           let icon = NSImage(contentsOf: iconURL) {
+            NSApp.applicationIconImage = icon
+        }
         NSApp.orderFrontStandardAboutPanel(options: [
             .applicationName: AppInfo.name,
             .applicationVersion: AppInfo.version,

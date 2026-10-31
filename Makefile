@@ -7,7 +7,11 @@ CONTENTS = $(BUNDLE)/Contents
 # Ad-hoc signature by default. See README "Accessibility permission resets after rebuild".
 SIGN_ID ?= -
 
-.PHONY: build app run install clean dist
+.PHONY: build app run install clean dist icon
+
+# Re-render Resources/Icon/AppIcon.icns from icon.svg (needs python3 + playwright, or use iconutil on a Mac).
+icon:
+	python3 Resources/Icon/make_icns.py
 
 dist: app
 	rm -f $(APP)-$(VERSION).zip
@@ -22,6 +26,7 @@ app: build
 	mkdir -p $(CONTENTS)/MacOS $(CONTENTS)/Resources
 	cp $(BUILD)/$(APP) $(CONTENTS)/MacOS/$(APP)
 	sed -e 's/__VERSION__/$(VERSION)/' -e 's/__BUILD__/$(BUILD_NO)/' Resources/Info.plist > $(CONTENTS)/Info.plist
+	cp Resources/Icon/AppIcon.icns $(CONTENTS)/Resources/AppIcon.icns
 	echo -n 'APPL????' > $(CONTENTS)/PkgInfo
 	codesign --force --deep --sign "$(SIGN_ID)" $(BUNDLE)
 	@echo "Built $(BUNDLE)"

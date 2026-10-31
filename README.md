@@ -124,6 +124,12 @@ unticking the option asks for the password and writes the files back as plain JS
   session, so they can't run on a CI runner — test those by hand (or let Claude do it on a
   linked Mac) before tagging a release.
 
+## Icon
+
+`Resources/Icon/icon.svg` is the source; `make icon` re-renders `AppIcon.icns` (all sizes, PNG-packed)
+with the Playwright/Chromium script, or on a Mac render the PNGs any way you like and run
+`iconutil -c icns AppIcon.iconset`. The `.icns` is committed so the CI build doesn't need a renderer.
+
 ## Files
 
 ```
