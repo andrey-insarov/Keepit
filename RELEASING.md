@@ -35,6 +35,23 @@
 With all five secrets present the workflow signs + notarizes; without them it builds ad-hoc
 (forks and pull requests keep working).
 
+### C. Developer ID provisioning profile (for Touch ID unlock) → secret `MACOS_DEVID_PROFILE`
+
+Touch ID unlock stores the vault key in the data-protection keychain, which needs the
+`com.apple.application-identifier` / `keychain-access-groups` entitlements — and macOS only lets a
+Developer ID app carry those when a provisioning profile is embedded (otherwise launchd refuses to
+start it, "error 163").
+
+1. developer.apple.com → Identifiers → + → App IDs → macOS → bundle id `com.it.keep` (same App ID
+   the App Store build uses).
+2. Profiles → + → under *Distribution* choose **Developer ID** → select the App ID → select the
+   Developer ID Application certificate → name `Keepit Developer ID` → Generate → Download.
+3. Save it as `Resources/KeepitDevID.provisionprofile` (git-ignored). `make app`/`make install` with
+   a `SIGN_ID` now embeds it and enables Touch ID.
+4. For CI: `base64 -i Resources/KeepitDevID.provisionprofile | pbcopy` → secret `MACOS_DEVID_PROFILE`.
+
+Without the profile everything else works; Preferences explains that Touch ID needs the signed build.
+
 ### Local signed build
 
 ```bash

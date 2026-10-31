@@ -6,3 +6,4 @@
 Resources/Icon/AppIcon.iconset/
 Resources/Keepit.provisionprofile
 *.pkg
+Resources/KeepitDevID.provisionprofile

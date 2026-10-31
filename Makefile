@@ -7,12 +7,22 @@ CONTENTS = $(BUNDLE)/Contents
 # Ad-hoc signature by default. See README "Accessibility permission resets after rebuild".
 # For distribution: SIGN_ID="Developer ID Application: Name (TEAMID)" — adds hardened runtime + timestamp.
 SIGN_ID ?= -
+# Developer ID provisioning profile (developer.apple.com → Profiles → Developer ID). Optional: with it the
+# app carries Team-ID entitlements and Touch ID unlock works; without it the app still runs, minus Touch ID.
+DEVID_PROFILE ?= Resources/KeepitDevID.provisionprofile
 ifeq ($(SIGN_ID),-)
 SIGN_FLAGS =
+HAVE_PROFILE =
 else
 # Team ID is the part in parentheses of the identity name, e.g. "Developer ID Application: X (ABCDE12345)".
 TEAM_ID ?= $(shell echo '$(SIGN_ID)' | sed -E 's/.*\(([A-Z0-9]+)\).*/\1/')
+ifneq ($(wildcard $(DEVID_PROFILE)),)
+HAVE_PROFILE = 1
 SIGN_FLAGS = --options runtime --timestamp --entitlements .build/devid.entitlements
+else
+HAVE_PROFILE =
+SIGN_FLAGS = --options runtime --timestamp --entitlements Resources/Keepit-base.entitlements
+endif
 endif
 # Notarization: NOTARY_PROFILE (xcrun notarytool store-credentials) or the APPSTORE_* env vars used by CI.
 NOTARY_PROFILE ?=
@@ -103,7 +113,10 @@ app: build
 	sed -e 's/__VERSION__/$(VERSION)/' -e 's/__BUILD__/$(BUILD_NO)/' Resources/Info.plist > $(CONTENTS)/Info.plist
 	cp Resources/Icon/AppIcon.icns $(CONTENTS)/Resources/AppIcon.icns
 	echo -n 'APPL????' > $(CONTENTS)/PkgInfo
-	@if [ "$(SIGN_ID)" != "-" ]; then mkdir -p .build && sed 's/__TEAM_ID__/$(TEAM_ID)/g' Resources/Keepit.entitlements > .build/devid.entitlements; fi
+	@if [ -n "$(HAVE_PROFILE)" ]; then \
+	  mkdir -p .build && sed 's/__TEAM_ID__/$(TEAM_ID)/g' Resources/Keepit.entitlements > .build/devid.entitlements; \
+	  cp $(DEVID_PROFILE) $(CONTENTS)/embedded.provisionprofile; echo "Embedding Developer ID profile (Touch ID enabled)"; \
+	else echo "No Developer ID profile at $(DEVID_PROFILE): Touch ID unlock disabled in this build"; fi
 	codesign --force --deep $(SIGN_FLAGS) --sign "$(SIGN_ID)" $(BUNDLE)
 	codesign --verify --strict --verbose=2 $(BUNDLE)
 	@echo "Built $(BUNDLE)"
