@@ -146,8 +146,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     // MARK: - Password / encryption
 
-    /// Up to three attempts; returns false on cancel / failure.
+    /// Touch ID first (if enabled), then up to three password attempts; returns false on cancel / failure.
     private func unlockVault(quitOnFailure: Bool = true) -> Bool {
+        if settings.biometricUnlock, BiometricUnlock.isAvailable, BiometricUnlock.isConfigured {
+            NSApp.activate(ignoringOtherApps: true)
+            if let key = BiometricUnlock.retrieve(reason: "unlock the clipboard history and templates") {
+                if Vault.verify(key) {
+                    Storage.key = key
+                    return true
+                }
+                key.zero()
+                NSLog("Keepit: Touch ID key does not open the vault (password changed elsewhere?)")
+            }
+            // fall through to the password prompt
+        }
         for attempt in 1...3 {
             let msg = attempt == 1 ? "Enter the Keepit password to decrypt the history and templates."
                                    : "Wrong password (\(attempt - 1) of 3 attempts used)."
@@ -177,7 +189,22 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         history.saveNow()
         templates.saveNow()
+        syncBiometricKey()
         return true
+    }
+
+    /// Store / refresh / remove the Touch ID copy of the key according to settings.
+    func syncBiometricKey() {
+        guard Vault.isEnabled, let key = Storage.key else { BiometricUnlock.remove(); return }
+        if settings.biometricUnlock {
+            do { try BiometricUnlock.store(key) } catch {
+                Vault.error("Touch ID could not be set up: \(error.localizedDescription)")
+                settings.biometricUnlock = false
+                Storage.save(settings, to: Storage.settingsURL, encrypt: false)
+            }
+        } else {
+            BiometricUnlock.remove()
+        }
     }
 
     /// Turn protection off after verifying the password; data is re-saved as plain JSON.
@@ -193,6 +220,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         check?.zero()
         Storage.key = nil
         Vault.disable()
+        BiometricUnlock.remove()
         history.saveNow()
         templates.saveNow()
         return true
@@ -218,6 +246,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         history.saveNow()
         templates.saveNow()
+        syncBiometricKey()
     }
 
     // MARK: - Settings
@@ -235,6 +264,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         if old.launchAtLogin != new.launchAtLogin {
             setLaunchAtLogin(new.launchAtLogin)
+        }
+        if old.biometricUnlock != new.biometricUnlock {
+            syncBiometricKey()
         }
     }
 

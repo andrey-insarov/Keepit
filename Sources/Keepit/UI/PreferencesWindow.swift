@@ -33,6 +33,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     private let protect      = NSButton(checkboxWithTitle: "Require password at launch, encrypt history & templates", target: nil, action: nil)
     private let changePw     = NSButton(title: "Change Password…", target: nil, action: nil)
     private let lockScreen   = NSButton(checkboxWithTitle: "Lock Keepit (wipe key, unload data) when the screen locks or the Mac sleeps", target: nil, action: nil)
+    private let touchID      = NSButton(checkboxWithTitle: "Unlock with Touch ID (password remains as fallback)", target: nil, action: nil)
     private let historyHK    = HotKeyRecorderView(frame: .zero)
     private let templateHK   = HotKeyRecorderView(frame: .zero)
     private let ignoreScroll = NSTextView.scrollableTextView()
@@ -115,6 +116,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
             [NSView(), protect],
             [NSView(), changePw],
             [NSView(), lockScreen],
+            [NSView(), touchID],
         ])
         changePw.target = self
         changePw.action = #selector(changePasswordTapped)
@@ -187,6 +189,9 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         protect.state = Vault.isEnabled ? .on : .off
         changePw.isEnabled = Vault.isEnabled
         lockScreen.state = s.lockWithScreen ? .on : .off
+        touchID.state = s.biometricUnlock ? .on : .off
+        touchID.isEnabled = Vault.isEnabled && BiometricUnlock.isAvailable
+        if !BiometricUnlock.isAvailable { touchID.title = "Unlock with Touch ID (no Touch ID on this Mac)" }
         historyHK.hotKey = s.historyHotKey
         templateHK.hotKey = s.templateHotKey
         ignoreApps.string = s.ignoreApps.joined(separator: "\n")
@@ -209,6 +214,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         s.ignoreConcealed = concealed.state == .on
         s.launchAtLogin = loginItem.state == .on
         s.lockWithScreen = lockScreen.state == .on
+        s.biometricUnlock = touchID.state == .on && Vault.isEnabled
         s.ignoreApps = ignoreApps.string
             .split(whereSeparator: { $0.isNewline })
             .map { $0.trimmingCharacters(in: .whitespaces) }

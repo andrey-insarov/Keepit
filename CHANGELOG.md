@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- **Touch ID unlock** (Preferences → *Unlock with Touch ID*): the vault key is kept in the
+  Secure-Enclave-backed keychain behind a biometry-only access control; the password stays as
+  fallback. Needs a Team-ID-signed build.
+
 ## 2.1.2 — 2026-10-31 (security)
 
 - Copies made in known password managers (KeePassXC, MacPass, Strongbox, KeeWeb, 1Password,

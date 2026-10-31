@@ -26,6 +26,12 @@ final class SecureKey {
         return try body(SymmetricKey(data: tmp))
     }
 
+    /// Raw access for the keychain write; the caller must wipe any copy it makes.
+    func withBytes<T>(_ body: (UnsafeRawBufferPointer) throws -> T) rethrows -> T {
+        precondition(!isZeroed, "SecureKey used after zeroization")
+        return try body(UnsafeRawBufferPointer(start: ptr, count: SecureKey.size))
+    }
+
     func zero() {
         guard !isZeroed else { return }
         _ = memset_s(ptr, SecureKey.size, 0, SecureKey.size)
@@ -121,6 +127,14 @@ enum Vault {
             return nil
         }
         return key
+    }
+
+    /// Does this key open the vault? (Used for keys that came from Touch ID rather than a password.)
+    static func verify(_ key: SecureKey) -> Bool {
+        guard let data = try? Data(contentsOf: metaURL),
+              let meta = try? JSONDecoder().decode(Meta.self, from: data),
+              let plain = try? decrypt(meta.check, key: key) else { return false }
+        return plain == okToken
     }
 
     static func disable() {

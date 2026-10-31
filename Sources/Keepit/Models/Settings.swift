@@ -72,6 +72,8 @@ struct Settings: Codable, Equatable {
 
     /// Lock Keepit (wipe key, unload data) when the screen locks or the Mac sleeps. Only matters with a password set.
     var lockWithScreen = true
+    /// Unlock with Touch ID instead of typing the password (password stays as fallback).
+    var biometricUnlock = false
 
     init() {}
 
@@ -100,6 +102,7 @@ struct Settings: Codable, Equatable {
         ignoreConcealed  = try c.decodeIfPresent(Bool.self,   forKey: .ignoreConcealed)  ?? d.ignoreConcealed
         launchAtLogin    = try c.decodeIfPresent(Bool.self,   forKey: .launchAtLogin)    ?? d.launchAtLogin
         lockWithScreen   = try c.decodeIfPresent(Bool.self,   forKey: .lockWithScreen)   ?? d.lockWithScreen
+        biometricUnlock  = try c.decodeIfPresent(Bool.self,   forKey: .biometricUnlock)  ?? d.biometricUnlock
     }
 
     func pasteKey(for bundleId: String?) -> PasteKey {

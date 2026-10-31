@@ -99,6 +99,15 @@ with a sealed verifier). The password itself is never written anywhere and there
 `settings.json` stays in plain text (it holds no clipboard data). *Change Password…* re-encrypts;
 unticking the option asks for the password and writes the files back as plain JSON.
 
+### Touch ID
+
+Preferences → *Unlock with Touch ID*. The data key is stored in the data-protection keychain behind
+a `biometryCurrentSet` access control (Secure Enclave backed; invalidated if fingerprints change),
+so at launch or after *Lock* a fingerprint fetches the same key the password would derive — the
+password is always available as a fallback ("Use Password" on the prompt). Changing the password
+refreshes the entry; turning protection off removes it. Requires a Team-ID-signed build (release
+or `make install SIGN_ID=…`); ad-hoc builds say so and keep using the password.
+
 ### Key handling and locking
 
 * The derived key lives in a dedicated `mlock`ed buffer (never swapped) and is wiped with
