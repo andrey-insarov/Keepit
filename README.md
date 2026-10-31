@@ -1,14 +1,37 @@
-# Keepit – Clipboard Manager
+<p align="center">
+  <img src="Resources/Icon/preview-512.png" width="128" alt="Keepit icon">
+</p>
 
-**Keepit – Clipboard Manager** (https://keep.it.com) is a native macOS clipboard history / template manager — a fork and
-port of [CLCL](https://github.com/nakkag/CLCL) by Ohno Tomoaki (nakka), the Windows original.
-History, hot-key popup menu, auto-paste, hierarchical templates, an Explorer-like Viewer with
-per-format editing, and optional password protection with encrypted storage.
+<h1 align="center">Keepit – Clipboard Manager</h1>
 
-Keepit is not affiliated with or endorsed by the author of CLCL. The CLCL name and icons belong to
-him; Keepit reuses only the behaviour and settings model, under the MIT License (see `LICENSE`).
+<p align="center">
+  Everything you copy, one hot key away. History, templates, Touch ID lock and encrypted storage — all on your Mac, nothing in the cloud.<br>
+  <a href="https://keep.it.com"><b>keep.it.com</b></a> · <a href="https://github.com/andrey-insarov/Keepit/releases/latest">Download for macOS</a> · Free &amp; open source (MIT)
+</p>
 
-Written in Swift + AppKit, no Xcode project needed — builds with `swift build`.
+<p align="center">
+  <a href="https://github.com/andrey-insarov/Keepit/releases/latest"><img src="https://img.shields.io/github/v/release/andrey-insarov/Keepit?label=release" alt="release"></a>
+  <a href="https://github.com/andrey-insarov/Keepit/actions/workflows/build.yml"><img src="https://github.com/andrey-insarov/Keepit/actions/workflows/build.yml/badge.svg" alt="build"></a>
+  <img src="https://img.shields.io/badge/macOS-13%2B-blue" alt="macOS 13+">
+  <img src="https://img.shields.io/badge/license-MIT-green" alt="MIT">
+</p>
+
+**Keepit** is a native macOS clipboard history and template manager made by the team behind the
+[it.com](https://it.com) domain zone. Press `⌥C` in any app to paste anything you copied recently;
+`⌥T` for your templates. Images, files and rich text are kept too. Optional password protection
+stores everything AES-256 encrypted, unlocks with Touch ID, and comes with a 24-word recovery phrase.
+Copies from password managers are never recorded. No account, no cloud, no analytics.
+
+Keepit is a fork and port of [CLCL](https://github.com/nakkag/CLCL) by Ohno Tomoaki (nakka), the
+Windows original; it is not affiliated with or endorsed by him. The CLCL name and icons belong to
+him; Keepit reuses the behaviour and settings model under the MIT License (see `LICENSE`).
+
+## Install
+
+* **Download**: grab `Keepit-<version>.dmg` from the [latest release](https://github.com/andrey-insarov/Keepit/releases/latest),
+  open it and drag Keepit to Applications. Signed and notarized; updates itself.
+* **Mac App Store**: coming soon.
+* **Build it yourself**: see below.
 
 ## Features (what is ported)
 

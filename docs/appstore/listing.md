@@ -5,7 +5,8 @@
 **Category**: Productivity · **Secondary**: Utilities
 **Price**: — (your call)
 **Privacy policy URL**: https://keep.it.com/privacy
-**Support URL**: https://keep.it.com/support (or the GitHub Issues page)
+**Support URL**: https://keep.it.com/support
+**Marketing URL**: https://keep.it.com
 **Copyright**: © 2026 UK Intis Telecom LTD
 **Age rating**: 4+
 **App Privacy**: Data Not Collected
@@ -43,6 +44,9 @@ MADE FOR THE KEYBOARD
 • Launch at login; lives in the menu bar, out of your way.
 
 Keepit is inspired by the classic Windows clipboard tool CLCL and brings its workflow to macOS as a native app.
+
+FREE AND OPEN SOURCE
+Keepit is made by the team behind the it.com domain zone and is free, with no ads or in-app purchases. The source code is published on GitHub under the MIT license. Home: keep.it.com
 
 Keepit needs the Accessibility permission to paste for you; without it, chosen items are still copied to the clipboard.
 

@@ -700,7 +700,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             .applicationName: AppInfo.fullName,
             .applicationVersion: AppInfo.version,
             .version: AppInfo.build,
-            .credits: NSAttributedString(string: "\(AppInfo.homepage)\n\(AppInfo.copyright)\nMIT License"),
+            .credits: AppInfo.credits,
         ])
     }
 
