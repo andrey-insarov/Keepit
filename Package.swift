@@ -1,17 +1,23 @@
 // swift-tools-version:5.9
 import PackageDescription
+import Foundation
+
+// KEEPIT_APPSTORE=1 builds the Mac App Store variant: no Sparkle (the store forbids self-updating),
+// and the APPSTORE compile flag hides the "Check for Updates" UI.
+let appStore = ProcessInfo.processInfo.environment["KEEPIT_APPSTORE"] == "1"
 
 let package = Package(
     name: "Keepit",
     platforms: [.macOS(.v13)],
-    dependencies: [
+    dependencies: appStore ? [] : [
         .package(url: "https://github.com/sparkle-project/Sparkle", from: "2.6.0"),
     ],
     targets: [
         .executableTarget(
             name: "Keepit",
-            dependencies: [.product(name: "Sparkle", package: "Sparkle")],
+            dependencies: appStore ? [] : [.product(name: "Sparkle", package: "Sparkle")],
             path: "Sources/Keepit",
+            swiftSettings: appStore ? [.define("APPSTORE")] : [],
             linkerSettings: [
                 .linkedFramework("AppKit"),
                 .linkedFramework("Carbon"),

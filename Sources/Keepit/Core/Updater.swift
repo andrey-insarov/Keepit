@@ -1,9 +1,15 @@
 import AppKit
+#if !APPSTORE
 import Sparkle
+#endif
 
-/// Sparkle 2 wrapper. The feed lives on GitHub Releases; downloads are verified with the EdDSA
-/// public key in Info.plist (SUPublicEDKey) on top of the Developer ID signature.
+/// Update checks. Direct-download builds use Sparkle 2 (feed on GitHub Releases, EdDSA-verified);
+/// the Mac App Store build has no updater at all — the store handles updates.
 final class Updater {
+#if APPSTORE
+    var isConfigured: Bool { false }
+    @objc func checkForUpdates(_ sender: Any?) {}
+#else
     private let controller: SPUStandardUpdaterController
 
     init() {
@@ -20,6 +26,5 @@ final class Updater {
         NSApp.activate(ignoringOtherApps: true)
         controller.checkForUpdates(sender)
     }
-
-    var lastCheck: Date? { controller.updater.lastUpdateCheckDate }
+#endif
 }

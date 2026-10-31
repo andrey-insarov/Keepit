@@ -94,13 +94,20 @@ PKG_SIGN_ID ?=
 TEAM_ID ?=
 PKG = $(APP)-$(VERSION)-appstore.pkg
 
-appstore: build
+APPSTORE_BUILD = .build-appstore/release
+
+appstore:
 	@test -n "$(APP_SIGN_ID)" -a -n "$(PKG_SIGN_ID)" -a -n "$(TEAM_ID)" || (echo "set APP_SIGN_ID, PKG_SIGN_ID and TEAM_ID"; exit 1)
 	@test -f Resources/Keepit.provisionprofile || (echo "missing Resources/Keepit.provisionprofile (Mac App Store profile for com.it.keep)"; exit 1)
+	KEEPIT_APPSTORE=1 swift build -c release --build-path .build-appstore
 	rm -rf $(BUNDLE) $(PKG) .build/appstore.entitlements
 	mkdir -p $(CONTENTS)/MacOS $(CONTENTS)/Resources
-	cp $(BUILD)/$(APP) $(CONTENTS)/MacOS/$(APP)
-	sed -e 's/__VERSION__/$(VERSION)/' -e 's/__BUILD__/$(BUILD_NO)/' Resources/Info.plist > $(CONTENTS)/Info.plist
+	cp $(APPSTORE_BUILD)/$(APP) $(CONTENTS)/MacOS/$(APP)
+	# No Sparkle keys in the store build.
+	sed -e 's/__VERSION__/$(VERSION)/' -e 's/__BUILD__/$(BUILD_NO)/' Resources/Info.plist \
+	  | plutil -remove SUFeedURL -o - - | plutil -remove SUPublicEDKey -o - - | plutil -remove SUEnableAutomaticChecks -o - - \
+	  | plutil -remove SUScheduledCheckInterval -o - - | plutil -remove SUAutomaticallyUpdate -o - - > $(CONTENTS)/Info.plist
+	@! otool -L $(CONTENTS)/MacOS/$(APP) | grep -q Sparkle || (echo "App Store binary must not link Sparkle"; exit 1)
 	cp Resources/Icon/AppIcon.icns $(CONTENTS)/Resources/AppIcon.icns
 	cp Resources/Keepit.provisionprofile $(CONTENTS)/embedded.provisionprofile
 	echo -n 'APPL????' > $(CONTENTS)/PkgInfo
@@ -158,4 +165,4 @@ install: app
 	@echo "Installed to /Applications/$(BUNDLE)"
 
 clean:
-	rm -rf .build $(BUNDLE) $(APP)-*.zip $(APP)-*.dmg
+	rm -rf .build .build-appstore $(BUNDLE) $(APP)-*.zip $(APP)-*.dmg $(APP)-*.pkg
