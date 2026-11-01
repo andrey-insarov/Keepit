@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.7.2 — unreleased
+
+- *Delete Keepit and All Data* notices a Homebrew install and tells you how to clear brew's record
+  (`brew uninstall --cask --force keepit`), so a later `brew install` does not fail.
+
 ## 2.7.1 — 2026-11-01
 
 - Touch ID is always offered on first run and as soon as *Require password* is ticked in Preferences.

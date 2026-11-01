@@ -247,4 +247,5 @@ T = {
 '%@ — add to Templates': '%@ — do šablon',
 'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead.': 'Podržte ⇧ při výběru položky historie, aby se vložila jako prostý text (bez formátování); podržte ⌥, aby se místo toho přidala do šablon.',
 'Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password.': 'Touch ID teď nelze použít (zavřené víko, klávesnice spí nebo není zaregistrován otisk). Keepit ho zapne automaticky při příštím odemknutí heslem.',
+'Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit': 'Keepit byl nainstalován přes Homebrew; pro smazání záznamu spusťte: brew uninstall --cask --force keepit',
 }

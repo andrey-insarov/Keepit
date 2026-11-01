@@ -247,3 +247,4 @@
 "%@ — add to Templates" = "%@ — в шаблоны";
 "Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead." = "Удерживайте ⇧ при выборе элемента истории, чтобы вставить его как простой текст (без форматирования); удерживайте ⌥, чтобы вместо вставки добавить его в шаблоны.";
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "Touch ID сейчас недоступен (закрыта крышка, клавиатура спит или нет зарегистрированного отпечатка). Keepit включит его автоматически при следующей разблокировке паролем.";
+"Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit" = "Keepit был установлен через Homebrew; чтобы очистить его запись, выполните: brew uninstall --cask --force keepit";

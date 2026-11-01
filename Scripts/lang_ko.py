@@ -247,4 +247,5 @@ T = {
 '%@ — add to Templates': '%@ — 템플릿에 추가',
 'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead.': '기록 항목을 선택할 때 ⇧를 누르고 있으면 서식 없는 일반 텍스트로 붙여넣고, ⌥를 누르고 있으면 대신 템플릿에 추가합니다.',
 'Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password.': '지금은 Touch ID를 사용할 수 없습니다(덮개 닫힘, 키보드 잠자기 또는 등록된 지문 없음). 다음에 암호로 잠금 해제할 때 Keepit이 자동으로 활성화합니다.',
+'Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit': 'Keepit은 Homebrew로 설치되었습니다. 기록을 지우려면 다음을 실행하세요: brew uninstall --cask --force keepit',
 }

@@ -47,6 +47,9 @@ extension AppDelegate {
         // sandboxed App Store build; a failure is not fatal.
         resetAccessibilityGrant(bundleID: bundleID)
 
+        // Installed through Homebrew? Then brew still has a record of this version.
+        let viaBrew = ["/opt/homebrew/Caskroom/keepit", "/usr/local/Caskroom/keepit"].contains { fm.fileExists(atPath: $0) }
+
         NSWorkspace.shared.recycle([Bundle.main.bundleURL]) { _, error in
             DispatchQueue.main.async {
                 let a = NSAlert()
@@ -57,6 +60,9 @@ extension AppDelegate {
                 } else {
                     a.messageText = L("All Keepit data has been deleted.")
                     a.informativeText = L("Finish by dragging Keepit from the Applications folder to the Trash.")
+                }
+                if viaBrew {
+                    a.informativeText += "\n\n" + L("Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit")
                 }
                 a.addButton(withTitle: L("Quit"))
                 a.runModal()
