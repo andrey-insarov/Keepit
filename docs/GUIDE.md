@@ -72,7 +72,7 @@ Keepit starts at login by default — *Preferences → General* switches that of
 
 ### The history menu
 
-Press **⌥C** in any app, or click the 📎 icon. The menu opens at your text cursor when Keepit can
+Press **⌥M** in any app, or click the 📎 icon. The menu opens at your text cursor when Keepit can
 find it, otherwise at the mouse pointer.
 
 Each line is one clip, newest first. The newest one is **bold** — it is what is on the clipboard
@@ -84,9 +84,10 @@ menu shows. Images show a thumbnail, file lists show the file names.
 To paste an item: click it, or move to it with ↑ ↓ and press Return, or press its number with
 **⌃⌥** — `⌃⌥3` pastes item 3. The same key works from anywhere, without opening the menu.
 
-Below the history: the *Template* submenu, the Viewer, Preferences, *Clear History*, *Pause
-Recording for 10 Minutes* (for typing something you do not want recorded), *Lock Keepit* when a
-password is set, and the updater. **⌥T** opens the template menu on its own.
+Below the history: the *Template* submenu, the Viewer (⌥V), Preferences (⌥S), *Clear History* (⌥C),
+*Pause Recording for 10 Minutes* (⌥P — for typing something you do not want recorded), *Lock Keepit*
+(⌥L) when a password is set, and the updater. **⌥T** opens the template menu on its own; every one
+of these keys also works without the menu.
 
 ### Search and preview
 
@@ -250,10 +251,10 @@ it.
 ![Preferences → Hot keys](site/img/guide/prefs-hotkeys.png)
 
 On the **Hot keys** tab click a field and press a combination; ⌫ switches a key off; *Reset to
-Defaults* brings back ⌥C, ⌥T, ⌥⇧V and ⌃⌥. *Paste item by number* and *Actions on the latest item*
+Defaults* brings back the ⌥-letter set (⌥M history, ⌥T templates, ⌥V Viewer, ⌥S Preferences, ⌥C Clear History, ⌥P pause, ⌥L lock, ⌥Q quit), ⌥⇧V and ⌃⌥. *Paste item by number* and *Actions on the latest item*
 take only modifiers — the digit or letter is added by Keepit. Two of your own keys on the same
 combination are refused on Save; if macOS or another app already owns one, Keepit says so when it
-starts. *Viewer*, *Preferences*, *Clear History*, *Pause / resume recording*, *Lock Keepit* and *Quit Keepit* have no key until you set one; whatever you set is shown next to the command in the menu.
+starts. *Viewer* ⌥V, *Preferences* ⌥S, *Clear History* ⌥C, *Pause / resume recording* ⌥P, *Lock Keepit* ⌥L and *Quit Keepit* ⌥Q work from any app and are shown next to their commands in the menu. On a US layout ⌥+letter normally types a special character (⌥S = ß, ⌥C = ç …); if you need one of those, move the key.
 
 ---
 
@@ -263,7 +264,7 @@ starts. *Viewer*, *Preferences*, *Clear History*, *Pause / resume recording*, *L
 
 *Preferences → Security → Require password at launch* encrypts the history and templates with
 AES-256-GCM. The key is derived from your password (PBKDF2, 200 000 rounds) and lives only in
-memory; it is wiped when Keepit locks — *Lock Keepit* (`⌘L` in the menu), on quit, and optionally
+memory; it is wiped when Keepit locks — *Lock Keepit* (`⌥L`), on quit, and optionally
 when the screen locks or the Mac sleeps.
 
 ![Setting the password: layout indicator and strength meter](site/img/guide/set-password.png)
@@ -367,7 +368,7 @@ Still stuck? [GitHub Issues](https://github.com/andrey-insarov/Keepit/issues) ·
 
 | Keys | Action |
 |------|--------|
-| `⌥C` | History menu — type to search |
+| `⌥M` | History menu — type to search |
 | `⌥T` | Template menu |
 | `⌃⌥1` … `⌃⌥0` | Paste item 1–10 (in the menu and anywhere) |
 | `⇧` in the menu | Extended menu: all actions per item |
@@ -377,7 +378,7 @@ Still stuck? [GitHub Issues](https://github.com/andrey-insarov/Keepit/issues) ·
 | `⌃⌥W` `⌃⌥J` | Trimmed / single line |
 | `⌃⌥A` | Add the clipboard to Templates |
 | `⌃⌥⌫` | Delete the newest item |
-| `⌘L` in the menu | Lock Keepit |
+| `⌥V` `⌥S` `⌥C` `⌥P` `⌥L` `⌥Q` | Viewer · Preferences · Clear History · Pause / resume · Lock · Quit |
 | `⌘F` in the Viewer | Search |
 | `⌘,` | Preferences |
 

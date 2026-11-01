@@ -7,8 +7,10 @@ struct HotKey: Codable, Equatable {
     var keyCode: UInt32
     var modifiers: UInt32   // cmdKey | shiftKey | optionKey | controlKey
 
-    static let optionC = HotKey(keyCode: UInt32(kVK_ANSI_C), modifiers: UInt32(optionKey))
-    static let optionT = HotKey(keyCode: UInt32(kVK_ANSI_T), modifiers: UInt32(optionKey))
+    static func option(_ key: Int) -> HotKey { HotKey(keyCode: UInt32(key), modifiers: UInt32(optionKey)) }
+    static let optionC = option(kVK_ANSI_C)
+    static let optionT = option(kVK_ANSI_T)
+    static let optionM = option(kVK_ANSI_M)
     static let optionShiftV = HotKey(keyCode: UInt32(kVK_ANSI_V), modifiers: UInt32(optionKey | shiftKey))
     /// Letters of the "actions on the latest item" hot keys (<mods> + letter), shared by the menu and the registry.
     enum LatestAction: CaseIterable {
@@ -114,17 +116,17 @@ struct Settings: Codable, Equatable {
     var showAtCaret = true         // action.caret — pop the menu at the text cursor if we can find it
 
     // [action]
-    var historyHotKey = HotKey.optionC
+    var historyHotKey = HotKey.optionM
     var templateHotKey = HotKey.optionT
     var previousHotKey: HotKey? = HotKey.optionShiftV   // paste history item #2 directly, no menu
     var numberPasteModifiers: UInt32? = HotKey.controlOption   // <mods>+1…9,0 paste item N; nil = off
     var latestActionModifiers: UInt32? = HotKey.controlOption  // <mods>+V/U/L/T/S/W/J/A/⌫ act on item #1; nil = off
-    var lockHotKey: HotKey? = nil                        // global "Lock Keepit"
-    var pauseHotKey: HotKey? = nil                       // global "Pause recording for 10 minutes"
-    var viewerHotKey: HotKey? = nil                      // global "Viewer…"
-    var preferencesHotKey: HotKey? = nil                 // global "Preferences…"
-    var clearHistoryHotKey: HotKey? = nil                // global "Clear History"
-    var quitHotKey: HotKey? = nil                        // global "Quit Keepit"
+    var lockHotKey: HotKey? = HotKey.option(kVK_ANSI_L)         // global "Lock Keepit"
+    var pauseHotKey: HotKey? = HotKey.option(kVK_ANSI_P)        // global "Pause recording for 10 minutes"
+    var viewerHotKey: HotKey? = HotKey.option(kVK_ANSI_V)       // global "Viewer…"
+    var preferencesHotKey: HotKey? = HotKey.option(kVK_ANSI_S)  // global "Preferences…"
+    var clearHistoryHotKey: HotKey? = HotKey.option(kVK_ANSI_C) // global "Clear History"
+    var quitHotKey: HotKey? = HotKey.option(kVK_ANSI_Q)         // global "Quit Keepit"
     var pasteAfterSelect = true    // action.paste
 
     // [sendkey]
@@ -221,12 +223,26 @@ struct Settings: Codable, Equatable {
         previousHotKey   = c.contains(.previousHotKey) ? try c.decodeIfPresent(HotKey.self, forKey: .previousHotKey) : d.previousHotKey
         numberPasteModifiers = c.contains(.numberPasteModifiers) ? try c.decodeIfPresent(UInt32.self, forKey: .numberPasteModifiers) : d.numberPasteModifiers
         latestActionModifiers = c.contains(.latestActionModifiers) ? try c.decodeIfPresent(UInt32.self, forKey: .latestActionModifiers) : d.latestActionModifiers
-        lockHotKey       = try c.decodeIfPresent(HotKey.self, forKey: .lockHotKey)
-        pauseHotKey      = try c.decodeIfPresent(HotKey.self, forKey: .pauseHotKey)
-        viewerHotKey     = try c.decodeIfPresent(HotKey.self, forKey: .viewerHotKey)
-        preferencesHotKey = try c.decodeIfPresent(HotKey.self, forKey: .preferencesHotKey)
-        clearHistoryHotKey = try c.decodeIfPresent(HotKey.self, forKey: .clearHistoryHotKey)
-        quitHotKey       = try c.decodeIfPresent(HotKey.self, forKey: .quitHotKey)
+        // Optional keys: absent → default, explicit null → off.
+        lockHotKey       = c.contains(.lockHotKey) ? try c.decodeIfPresent(HotKey.self, forKey: .lockHotKey) : d.lockHotKey
+        pauseHotKey      = c.contains(.pauseHotKey) ? try c.decodeIfPresent(HotKey.self, forKey: .pauseHotKey) : d.pauseHotKey
+        viewerHotKey     = c.contains(.viewerHotKey) ? try c.decodeIfPresent(HotKey.self, forKey: .viewerHotKey) : d.viewerHotKey
+        preferencesHotKey = c.contains(.preferencesHotKey) ? try c.decodeIfPresent(HotKey.self, forKey: .preferencesHotKey) : d.preferencesHotKey
+        clearHistoryHotKey = c.contains(.clearHistoryHotKey) ? try c.decodeIfPresent(HotKey.self, forKey: .clearHistoryHotKey) : d.clearHistoryHotKey
+        quitHotKey       = c.contains(.quitHotKey) ? try c.decodeIfPresent(HotKey.self, forKey: .quitHotKey) : d.quitHotKey
+        // New defaults must not shadow keys an older settings file already uses (history was ⌥C before 2.9.1).
+        for key in [CodingKeys.viewerHotKey, .preferencesHotKey, .clearHistoryHotKey, .pauseHotKey, .lockHotKey, .quitHotKey]
+        where !c.contains(key) {
+            switch key {
+            case .viewerHotKey:       if isTaken(viewerHotKey) { viewerHotKey = nil }
+            case .preferencesHotKey:  if isTaken(preferencesHotKey) { preferencesHotKey = nil }
+            case .clearHistoryHotKey: if isTaken(clearHistoryHotKey) { clearHistoryHotKey = nil }
+            case .pauseHotKey:        if isTaken(pauseHotKey) { pauseHotKey = nil }
+            case .lockHotKey:         if isTaken(lockHotKey) { lockHotKey = nil }
+            case .quitHotKey:         if isTaken(quitHotKey) { quitHotKey = nil }
+            default: break
+            }
+        }
         pasteAfterSelect = try c.decodeIfPresent(Bool.self,   forKey: .pasteAfterSelect) ?? d.pasteAfterSelect
         pasteDelay       = try c.decodeIfPresent(Double.self, forKey: .pasteDelay)       ?? d.pasteDelay
         pasteKeys        = try c.decodeIfPresent([String: PasteKey].self, forKey: .pasteKeys) ?? d.pasteKeys
@@ -288,6 +304,14 @@ struct Settings: Codable, Equatable {
         try c.encode(maxFileListEntries, forKey: .maxFileListEntries)
         try c.encode(maxHistoryBytes, forKey: .maxHistoryBytes)
         try c.encode(menuMaxItems, forKey: .menuMaxItems)
+    }
+
+    /// True when `hk` is already used by another hot key of these settings (duplicates counted once).
+    private func isTaken(_ hk: HotKey?) -> Bool {
+        guard let hk else { return false }
+        let all: [HotKey?] = [historyHotKey, templateHotKey, previousHotKey, viewerHotKey, preferencesHotKey,
+                              clearHistoryHotKey, pauseHotKey, lockHotKey, quitHotKey]
+        return all.compactMap { $0 }.filter { $0 == hk }.count > 1
     }
 
     /// Bring every numeric option back into a sane range (hand-edited settings.json, old versions).

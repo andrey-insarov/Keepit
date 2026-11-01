@@ -17,7 +17,7 @@
 </p>
 
 **Keepit** is a native macOS clipboard history and template manager made by the team behind the
-[it.com](https://it.com) domain zone. Press `⌥C` in any app to paste anything you copied recently;
+[it.com](https://it.com) domain zone. Press `⌥M` in any app to paste anything you copied recently;
 `⌥T` for your templates. Images, files and rich text are kept too. Optional password protection
 stores everything AES-256 encrypted, unlocks with Touch ID, and comes with a 24-word recovery phrase.
 Copies from password managers are never recorded. No account, no cloud, no analytics.
@@ -50,12 +50,12 @@ Or the DMG:
 | CLCL (Windows)                               | Keepit (macOS)                                            |
 |----------------------------------------------|------------------------------------------------------------|
 | Tray icon, left click = menu, right = viewer | Menu-bar icon 📎, left click = history menu, right click = Viewer |
-| `Alt+C` history+template popup, pastes       | `⌥C` (configurable), pops at the text cursor, pastes with `⌘V` |
+| `Alt+C` history+template popup, pastes       | `⌥M` (configurable), pops at the text cursor, pastes with `⌘V` |
 | `Alt+T` template popup                       | `⌥T` (configurable)                                        |
 | Numbered menu items `&1 … &9 &0 &A …`        | Items are numbered; `⌃⌥1 … ⌃⌥0` paste item 1–10 — inside the menu and from any app (configurable; menu-only `1-9/0/A-Z` when the global keys are off) |
 | —                                            | Search field at the top of the history menu: typing filters in place, Return pastes the first match |
 | —                                            | Extended menu: hold `⇧` and every item gets a submenu — paste as plain text, UPPERCASE / lowercase / Title Case / Sentence case / trimmed / single line, copy only, add to Templates, show in Viewer, delete |
-| —                                            | Global hot keys on the latest item (the clipboard): `⌃⌥V` plain text, `⌃⌥U/L/T/S/W/J` transformations, `⌃⌥A` add to Templates, `⌃⌥⌫` delete; `⌥⇧V` pastes the previous item (swap). All of them on the *Hot keys* tab of Preferences |
+| —                                            | Global hot keys on the latest item (the clipboard): `⌃⌥V` plain text, `⌃⌥U/L/T/S/W/J` transformations, `⌃⌥A` add to Templates, `⌃⌥⌫` delete; `⌥⇧V` pastes the previous item (swap); `⌥V` Viewer, `⌥S` Preferences, `⌥C` Clear History, `⌥P` pause, `⌥L` lock, `⌥Q` quit. All of them on the *Hot keys* tab of Preferences |
 | Bitmap thumbnails and tooltips in the menu   | Same (PNG thumbnails, text tooltips) plus a preview panel next to the highlighted item and the source app's icon |
 | Formats: TEXT, UNICODE, RTF, HTML, BITMAP, HDROP | plain text, RTF, HTML, PNG (TIFF converted), file URLs |
 | History max (30), overlap check, save/restore| Separate rings: 1000 text/file items + 30 images by default, JSON in `~/Library/Application Support/Keepit/` |
@@ -96,7 +96,7 @@ Or in Xcode: `open Package.swift` and run the `Keepit` scheme (the `LSUIElement`
 1. macOS will ask for the **Accessibility** permission (System Settings → Privacy & Security →
    Accessibility). It is required to send `⌘V` to the active app and to place the menu at the
    text cursor. Without it Keepit still records history and copies the chosen item to the clipboard.
-2. Press `⌥C` in any text field — the history menu appears; pick an item, it is pasted.
+2. Press `⌥M` in any text field — the history menu appears; pick an item, it is pasted.
 3. Press `⌥T` for templates. Right-click the menu-bar icon (or `⌘L` in any Keepit window) to open the Viewer.
 
 ## Viewer

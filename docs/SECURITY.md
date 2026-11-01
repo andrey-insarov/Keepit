@@ -60,7 +60,7 @@ Turn on *Require password at launch* and the history and templates files are enc
 - **Key in memory**: the 32 key bytes live in a page-locked (`mlock`) buffer that is never swapped
   out and is overwritten with `memset_s` when Keepit locks or quits. A CryptoKit key object is built
   only for the duration of one call and discarded.
-- **Locking**: *Lock Keepit* (`⌘L` in the menu), quitting, and — on by default — the screen locking
+- **Locking**: *Lock Keepit* (`⌥L`), quitting, and — on by default — the screen locking
   or the Mac sleeping wipe the key and unload the decrypted history and templates. After that nothing
   readable is in memory until you unlock again.
 - **Password strength**: the password dialog shows an entropy estimate and explains it; Keepit does

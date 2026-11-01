@@ -149,6 +149,17 @@ final class HotKeySettingsTests: XCTestCase {
         let back = try JSONDecoder().decode(Settings.self, from: Data("{}".utf8))
         XCTAssertEqual(back.numberPasteModifiers, HotKey.controlOption)
         XCTAssertEqual(back.previousHotKey, HotKey.optionShiftV)
+        XCTAssertEqual(back.historyHotKey, HotKey.optionM)
+        XCTAssertEqual(back.clearHistoryHotKey, HotKey.option(kVK_ANSI_C))
+    }
+
+    func testMigrationDropsNewDefaultsThatCollideWithOldKeys() throws {
+        // A 2.9.0 settings file: history on ⌥C, none of the 2.9.1 keys present.
+        let json = Data(#"{"historyHotKey":{"keyCode":8,"modifiers":2048}}"#.utf8)
+        let s = try JSONDecoder().decode(Settings.self, from: json)
+        XCTAssertEqual(s.historyHotKey, HotKey.optionC)
+        XCTAssertNil(s.clearHistoryHotKey, "⌥C already taken by the history menu")
+        XCTAssertEqual(s.viewerHotKey, HotKey.option(kVK_ANSI_V), "unaffected defaults still apply")
     }
 
     func testLatestActionKeyCodesAreDistinct() {

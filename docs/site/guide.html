@@ -69,7 +69,7 @@ explains how it works. <em>Not Now</em> keeps everything unencrypted on disk.</p
 <hr />
 <h2 id="part-2-everyday-use">Part 2 — Everyday use</h2>
 <h3 id="the-history-menu">The history menu</h3>
-<p>Press <strong>⌥C</strong> in any app, or click the 📎 icon. The menu opens at your text cursor when Keepit can
+<p>Press <strong>⌥M</strong> in any app, or click the 📎 icon. The menu opens at your text cursor when Keepit can
 find it, otherwise at the mouse pointer.</p>
 <p>Each line is one clip, newest first. The newest one is <strong>bold</strong> — it is what is on the clipboard
 right now. The icon shows the app you copied from; a title ending in <code>…</code> has more lines than the
@@ -77,9 +77,10 @@ menu shows. Images show a thumbnail, file lists show the file names.</p>
 <figure class="shot" style="max-width:1198px"><a href="img/guide/menu-image.png" class="zoom" title="Open full size"><img src="img/guide/menu-image.png" alt="An image in the history: thumbnail in the menu, full picture in the preview" width="1198" height="680" loading="lazy"></a><figcaption>An image in the history: thumbnail in the menu, full picture in the preview</figcaption></figure>
 <p>To paste an item: click it, or move to it with ↑ ↓ and press Return, or press its number with
 <strong>⌃⌥</strong> — <code>⌃⌥3</code> pastes item 3. The same key works from anywhere, without opening the menu.</p>
-<p>Below the history: the <em>Template</em> submenu, the Viewer, Preferences, <em>Clear History</em>, <em>Pause
-Recording for 10 Minutes</em> (for typing something you do not want recorded), <em>Lock Keepit</em> when a
-password is set, and the updater. <strong>⌥T</strong> opens the template menu on its own.</p>
+<p>Below the history: the <em>Template</em> submenu, the Viewer (⌥V), Preferences (⌥S), <em>Clear History</em> (⌥C),
+<em>Pause Recording for 10 Minutes</em> (⌥P — for typing something you do not want recorded), <em>Lock Keepit</em>
+(⌥L) when a password is set, and the updater. <strong>⌥T</strong> opens the template menu on its own; every one
+of these keys also works without the menu.</p>
 <h3 id="search-and-preview">Search and preview</h3>
 <p><strong>Search.</strong> Start typing while the menu is open: the field at the top filters the list by title and
 by full text, so a line in the middle of a long clip is found too. Return pastes the first match;
@@ -295,16 +296,16 @@ it.</p>
 </table>
 <figure class="shot" style="max-width:549px"><a href="img/guide/prefs-hotkeys.png" class="zoom" title="Open full size"><img src="img/guide/prefs-hotkeys.png" alt="Preferences → Hot keys" width="549" height="435" loading="lazy"></a><figcaption>Preferences → Hot keys</figcaption></figure>
 <p>On the <strong>Hot keys</strong> tab click a field and press a combination; ⌫ switches a key off; <em>Reset to
-Defaults</em> brings back ⌥C, ⌥T, ⌥⇧V and ⌃⌥. <em>Paste item by number</em> and <em>Actions on the latest item</em>
+Defaults</em> brings back the ⌥-letter set (⌥M history, ⌥T templates, ⌥V Viewer, ⌥S Preferences, ⌥C Clear History, ⌥P pause, ⌥L lock, ⌥Q quit), ⌥⇧V and ⌃⌥. <em>Paste item by number</em> and <em>Actions on the latest item</em>
 take only modifiers — the digit or letter is added by Keepit. Two of your own keys on the same
 combination are refused on Save; if macOS or another app already owns one, Keepit says so when it
-starts. <em>Viewer</em>, <em>Preferences</em>, <em>Clear History</em>, <em>Pause / resume recording</em>, <em>Lock Keepit</em> and <em>Quit Keepit</em> have no key until you set one; whatever you set is shown next to the command in the menu.</p>
+starts. <em>Viewer</em> ⌥V, <em>Preferences</em> ⌥S, <em>Clear History</em> ⌥C, <em>Pause / resume recording</em> ⌥P, <em>Lock Keepit</em> ⌥L and <em>Quit Keepit</em> ⌥Q work from any app and are shown next to their commands in the menu. On a US layout ⌥+letter normally types a special character (⌥S = ß, ⌥C = ç …); if you need one of those, move the key.</p>
 <hr />
 <h2 id="part-6-security">Part 6 — Security</h2>
 <h3 id="password-and-encryption">Password and encryption</h3>
 <p><em>Preferences → Security → Require password at launch</em> encrypts the history and templates with
 AES-256-GCM. The key is derived from your password (PBKDF2, 200 000 rounds) and lives only in
-memory; it is wiped when Keepit locks — <em>Lock Keepit</em> (<code>⌘L</code> in the menu), on quit, and optionally
+memory; it is wiped when Keepit locks — <em>Lock Keepit</em> (<code>⌥L</code>), on quit, and optionally
 when the screen locks or the Mac sleeps.</p>
 <figure class="shot" style="max-width:372px"><a href="img/guide/set-password.png" class="zoom" title="Open full size"><img src="img/guide/set-password.png" alt="Setting the password: layout indicator and strength meter" width="372" height="380" loading="lazy"></a><figcaption>Setting the password: layout indicator and strength meter</figcaption></figure>
 <p>The password dialogs show the current keyboard layout and warn about Caps Lock, so a rejected
@@ -410,7 +411,7 @@ keyboard). Keepit keeps the setting and asks for the fingerprint as soon as a se
 </thead>
 <tbody>
 <tr>
-<td><code>⌥C</code></td>
+<td><code>⌥M</code></td>
 <td>History menu — type to search</td>
 </tr>
 <tr>
@@ -450,8 +451,8 @@ keyboard). Keepit keeps the setting and asks for the fingerprint as soon as a se
 <td>Delete the newest item</td>
 </tr>
 <tr>
-<td><code>⌘L</code> in the menu</td>
-<td>Lock Keepit</td>
+<td><code>⌥V</code> <code>⌥S</code> <code>⌥C</code> <code>⌥P</code> <code>⌥L</code> <code>⌥Q</code></td>
+<td>Viewer · Preferences · Clear History · Pause / resume · Lock · Quit</td>
 </tr>
 <tr>
 <td><code>⌘F</code> in the Viewer</td>

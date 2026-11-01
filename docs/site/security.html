@@ -96,7 +96,7 @@ on the clipboard did not mark it. Use the pause, or the ignore list, for such ap
 <li><strong>Key in memory</strong>: the 32 key bytes live in a page-locked (<code>mlock</code>) buffer that is never swapped
   out and is overwritten with <code>memset_s</code> when Keepit locks or quits. A CryptoKit key object is built
   only for the duration of one call and discarded.</li>
-<li><strong>Locking</strong>: <em>Lock Keepit</em> (<code>⌘L</code> in the menu), quitting, and — on by default — the screen locking
+<li><strong>Locking</strong>: <em>Lock Keepit</em> (<code>⌥L</code>), quitting, and — on by default — the screen locking
   or the Mac sleeping wipe the key and unload the decrypted history and templates. After that nothing
   readable is in memory until you unlock again.</li>
 <li><strong>Password strength</strong>: the password dialog shows an entropy estimate and explains it; Keepit does
