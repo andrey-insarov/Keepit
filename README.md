@@ -43,7 +43,7 @@ him; Keepit reuses the behaviour and settings model under the MIT License (see `
 | Numbered menu items `&1 … &9 &0 &A …`        | Same: press `1-9`, `0`, `A-Z` while the menu is open       |
 | Bitmap thumbnails and tooltips in the menu   | Same (PNG thumbnails, text tooltips)                       |
 | Formats: TEXT, UNICODE, RTF, HTML, BITMAP, HDROP | plain text, RTF, HTML, PNG (TIFF converted), file URLs |
-| History max (30), overlap check, save/restore| Same, JSON in `~/Library/Application Support/CLCL/`        |
+| History max (30), overlap check, save/restore| Same, JSON in `~/Library/Application Support/Keepit/`        |
 | Window filter (ignore apps)                  | Built-in list of password managers (always ignored) + user ignore list + `org.nspasteboard.ConcealedType` |
 | Per-window paste key (`sendkey`)             | Per-bundle-id paste key in `settings.json` (`pasteKeys`)   |
 | Templates (hierarchical "Regist")            | Same: folders, any format (text/image/files), `-` separators, `&x` shortcuts, per-item hot key |
@@ -53,6 +53,8 @@ him; Keepit reuses the behaviour and settings model under the MIT License (see `
 | Viewer drag & drop                           | History → Template (copy), Template → History (copy), reorder within each |
 | Status bar                                   | Date, source app, format, size, hot key                    |
 | Options dialog (CLCLSet)                     | Preferences window with hot-key recorder                   |
+| —                                            | Export / Import Backup: one password-encrypted `.keepit` file (history, templates, preferences); Merge or Replace on import |
+| —                                            | 10 interface languages (en, ru, uk, de, fr, es, it, ja, zh-Hans, ar) |
 
 Still not ported: plugins/tools, format filter/priority option pages, importing Windows
 `history.dat` / `regist.dat`, the `%0d`-style menu numbering format.

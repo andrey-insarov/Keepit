@@ -84,6 +84,29 @@ final class HistoryStore {
         changed()
     }
 
+    /// Backup import, "Replace": the imported list becomes the history (trimmed to the limits).
+    func replaceAll(_ newItems: [ClipItem]) {
+        items = newItems
+        trim()
+        changed()
+    }
+
+    /// Backup import, "Merge": append imported items whose content is not already present,
+    /// keeping the current items newest. Returns how many were added.
+    @discardableResult
+    func merge(_ newItems: [ClipItem]) -> Int {
+        var seen = Set(items.map(\.contentHash))
+        var added = 0
+        for it in newItems where !seen.contains(it.contentHash) {
+            seen.insert(it.contentHash)
+            items.append(it)
+            added += 1
+        }
+        trim()
+        changed()
+        return added
+    }
+
     func updateSettings(_ s: Settings) {
         settings = s
         trim()

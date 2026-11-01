@@ -2,6 +2,11 @@
 
 ## 2.5.0 — 2026-11-01
 
+- **Backup export / import** (menu → *Export Backup…* / *Import Backup…*): history, templates and
+  optionally preferences in one `.keepit` file, LZFSE-compressed and AES-256-GCM encrypted with a
+  password you choose at export time (PBKDF2, independent of the vault password). Import can
+  *Merge* (adds what is missing; templates land in an “Imported <date>” folder) or *Replace*.
+  This is also the way to move data between the App Store and direct-download editions.
 - **Localization**: Russian, Ukrainian, German, French, Spanish, Italian, Japanese, Simplified Chinese and Arabic. Keepit
   follows the macOS system language; English remains the base. `Scripts/gen_strings.py` holds the
   translation table and regenerates the `.lproj` files.

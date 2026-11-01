@@ -195,3 +195,26 @@
 "unlock the clipboard history and templates" = "unlock the clipboard history and templates";
 "~%d bits — brute force is impractical" = "~%d bits — brute force is impractical";
 "… %d more in the Viewer" = "… %d more in the Viewer";
+
+/* Backup export / import */
+"Export Backup…" = "Export Backup…";
+"Import Backup…" = "Import Backup…";
+"Export Backup" = "Export Backup";
+"Import Backup" = "Import Backup";
+"Backup password" = "Backup password";
+"This password protects the backup file. You will need it to import the file; it is not stored anywhere." = "This password protects the backup file. You will need it to import the file; it is not stored anywhere.";
+"Backup saved: %d history item(s), %d template item(s)." = "Backup saved: %d history item(s), %d template item(s).";
+"Could not export the backup: %@" = "Could not export the backup: %@";
+"Enter the password this backup was exported with." = "Enter the password this backup was exported with.";
+"Too many wrong attempts." = "Too many wrong attempts.";
+"Could not read the backup: %@" = "Could not read the backup: %@";
+"This is not a Keepit backup file." = "This is not a Keepit backup file.";
+"The backup was made with a newer version of Keepit." = "The backup was made with a newer version of Keepit.";
+"The backup file is too large." = "The backup file is too large.";
+"The backup file is damaged." = "The backup file is damaged.";
+"Created %@ with %@ — %d history item(s), %d template item(s).\n\nMerge adds what is not already there (templates go into a new folder). Replace discards the current history and templates first." = "Created %@ with %@ — %d history item(s), %d template item(s).\n\nMerge adds what is not already there (templates go into a new folder). Replace discards the current history and templates first.";
+"Also restore preferences (hot keys, limits, options)" = "Also restore preferences (hot keys, limits, options)";
+"Merge" = "Merge";
+"Replace" = "Replace";
+"Imported %@" = "Imported %@";
+"Import finished — history: %d item(s), templates: %d item(s)." = "Import finished — history: %d item(s), templates: %d item(s).";

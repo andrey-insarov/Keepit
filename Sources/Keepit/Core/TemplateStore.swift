@@ -41,6 +41,24 @@ final class TemplateStore {
         return root.subtreeCount + node.subtreeCount <= Limits.templateMaxCount
     }
 
+    /// Backup import, "Replace".
+    func replaceRoot(_ node: TemplateNode) {
+        root = node
+        root.relink()
+        changed()
+    }
+
+    /// Backup import, "Merge": the imported tree goes into a new folder under the root.
+    /// Returns false (and changes nothing) if that would exceed the template limits.
+    func mergeImported(_ node: TemplateNode, folderName: String) -> Bool {
+        let folder = TemplateNode(name: folderName, children: node.children)
+        guard canInsert(folder, under: root) else { return false }
+        root.insert(folder)
+        root.relink()
+        changed()
+        return true
+    }
+
     func changed() {
         onChange?()
         saver.schedule()

@@ -22,13 +22,13 @@ enum Storage {
     static var historyURL: URL   { directory.appendingPathComponent("history.json") }
     static var templatesURL: URL { directory.appendingPathComponent("templates.json") }
 
-    private static let encoder: JSONEncoder = {
+    static let encoder: JSONEncoder = {
         let e = JSONEncoder()
         e.outputFormatting = [.prettyPrinted, .sortedKeys]
         e.dateEncodingStrategy = .iso8601
         return e
     }()
-    private static let decoder: JSONDecoder = {
+    static let decoder: JSONDecoder = {
         let d = JSONDecoder()
         d.dateDecodingStrategy = .iso8601
         return d

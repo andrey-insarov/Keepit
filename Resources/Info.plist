@@ -30,6 +30,22 @@
     <string>public.app-category.productivity</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
+    <key>UTExportedTypeDeclarations</key>
+    <array>
+        <dict>
+            <key>UTTypeIdentifier</key>
+            <string>com.it.keep.backup</string>
+            <key>UTTypeDescription</key>
+            <string>Keepit backup</string>
+            <key>UTTypeConformsTo</key>
+            <array><string>public.data</string></array>
+            <key>UTTypeTagSpecification</key>
+            <dict>
+                <key>public.filename-extension</key>
+                <array><string>keepit</string></array>
+            </dict>
+        </dict>
+    </array>
     <key>LSMinimumSystemVersion</key>
     <string>13.0</string>
     <!-- Menu-bar only app: no Dock icon, no app switcher entry (like the Windows tray icon). -->

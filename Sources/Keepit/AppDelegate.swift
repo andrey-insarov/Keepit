@@ -421,6 +421,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         appMenu.addItem(withTitle: L("Viewer…"), action: #selector(openViewer), keyEquivalent: "l")
         appMenu.addItem(withTitle: L("Preferences…"), action: #selector(openPreferences), keyEquivalent: ",")
         appMenu.addItem(.separator())
+        appMenu.addItem(withTitle: L("Export Backup…"), action: #selector(exportBackup), keyEquivalent: "")
+        appMenu.addItem(withTitle: L("Import Backup…"), action: #selector(importBackup), keyEquivalent: "")
+        appMenu.addItem(.separator())
         appMenu.addItem(withTitle: L("Quit Keepit"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         appItem.submenu = appMenu
         main.addItem(appItem)
@@ -579,6 +582,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             item(L("Viewer…"), #selector(openViewer)),
             item(L("Add Clipboard to Templates"), #selector(addClipboardToTemplates)),
             item(L("Preferences…"), #selector(openPreferences), ","),
+            .separator(),
+            item(L("Export Backup…"), #selector(exportBackup)),
+            item(L("Import Backup…"), #selector(importBackup)),
             .separator(),
             item(L("Clear History"), #selector(clearHistory)),
         ]
