@@ -141,6 +141,8 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
 
         // Ignored apps text view occupies its own row spanning both columns.
         let scroll = ignoreScroll
+        scroll.focusRingType = .none
+        ignoreApps.focusRingType = .none
         scroll.hasVerticalScroller = true
         scroll.borderType = .bezelBorder
         ignoreApps.isRichText = false

@@ -200,6 +200,8 @@ final class ViewerWindowController: NSWindowController,
         leftScroll.documentView = outline
         leftScroll.hasVerticalScroller = true
         leftScroll.borderType = .noBorder
+        leftScroll.focusRingType = .none          // no thick blue focus ring around the whole tree
+        outline.focusRingType = .none
 
         // Right side: "Name" row (template items/folders only) above the content.
         let nameLabel = NSTextField(labelWithString: L("Name:"))

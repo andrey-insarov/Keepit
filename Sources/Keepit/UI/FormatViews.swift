@@ -31,6 +31,8 @@ final class TextFormatView: NSView, NSTextViewDelegate {
         scroll = NSTextView.scrollableTextView()
         textView = scroll.documentView as! NSTextView
         super.init(frame: frame)
+        scroll.focusRingType = .none
+        textView.focusRingType = .none
         textView.isRichText = false
         textView.allowsUndo = true
         textView.delegate = self
@@ -148,6 +150,8 @@ final class FilesFormatView: NSView, NSTableViewDataSource, NSTableViewDelegate 
         col.resizingMask = .autoresizingMask
         table.addTableColumn(col)
         table.columnAutoresizingStyle = .lastColumnOnlyAutoresizingStyle
+        table.focusRingType = .none
+        scroll.focusRingType = .none
         table.headerView = nil
         table.dataSource = self
         table.delegate = self
@@ -196,6 +200,8 @@ final class HexFormatView: NSView {
         scroll = NSTextView.scrollableTextView()
         textView = scroll.documentView as! NSTextView
         super.init(frame: frame)
+        scroll.focusRingType = .none
+        textView.focusRingType = .none
         textView.isEditable = false
         textView.isRichText = false
         textView.font = NSFont.monospacedSystemFont(ofSize: 12, weight: .regular)
