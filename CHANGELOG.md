@@ -2,8 +2,11 @@
 
 ## 2.9.1 — unreleased
 
-- Viewer: a (?) button in the toolbar opens the Placeholders & Automation reference — the Help menu was unreachable, menu-bar apps have no menu bar
-- User guide at keep.it.com/guide.html (docs/GUIDE.md)
+- Viewer: **Insert ▾** in the toolbar lists every template placeholder with a description and puts the chosen one at the cursor; **?** opens the online user guide. Up/Down and the hex dump moved to the context menu; the toolbar has no gaps
+- Fix: a template with `{input:…}` / `{choice:…}` was expanded but not pasted — the target app now gets time to come back after the dialog
+- Fix: the Help menu added in 2.9.0 was unreachable (a menu-bar app has no menu bar); the in-app placeholder reference window is gone, the guide replaces it
+- The placeholder dialog shows the template name without the `&` shortcut marker; *Show in Viewer* clears the Viewer search first
+- User guide and security page: keep.it.com/guide.html, keep.it.com/security.html (docs/GUIDE.md, docs/SECURITY.md)
 
 ## 2.9.0 — 2026-11-01
 
@@ -11,8 +14,8 @@
 - **Hot keys tab** in Preferences with every global shortcut in one place and *Reset to Defaults*; conflicts between them are caught on Save
 - New global hot keys: **⌃⌥1–9, 0 — paste history item 1–10 directly**; **⌃⌥ + V/U/L/T/S/W/J/A/⌫ — act on the latest item** (plain text, UPPERCASE, lowercase, Title Case, Sentence case, trim, single line, add to Templates, delete); optional *Lock Keepit* and *Pause / resume recording* (off by default). The menu shows exactly these keys: a shortcut is either always available or not shown, so the menu-only ⌥/⌃ alternates are gone (the extended menu covers them)
 - Export/Import Backup moved out of the menus into Preferences → Security
-- **`keepit://` URL scheme** for Shortcuts, Raycast, Alfred and scripts: `keepit://paste/2`, `keepit://copy/3`, `keepit://template/Name`, `keepit://add?text=…`, `keepit://add-template?text=…&name=…`, `keepit://history`, `keepit://pause` … (Help → Placeholders & Automation…)
-- **Placeholders in templates** — `{date}`, `{date+7d:EEEE}`, `{time}`, `{clipboard}`, `{clipboard:2|upper}`, `{input:Name}`, `{choice:A|B}`, `{cursor}`, `{user}`, `{uuid}`, `{random:1-100}` and more (Help → Template Placeholders…); `{input}`/`{choice}` ask for values before pasting, `{cursor}` places the caret
+- **`keepit://` URL scheme** for Shortcuts, Raycast, Alfred and scripts: `keepit://paste/2`, `keepit://copy/3`, `keepit://template/Name`, `keepit://add?text=…`, `keepit://add-template?text=…&name=…`, `keepit://history`, `keepit://pause` … (see the user guide)
+- **Placeholders in templates** — `{date}`, `{date+7d:EEEE}`, `{time}`, `{clipboard}`, `{clipboard:2|upper}`, `{input:Name}`, `{choice:A|B}`, `{cursor}`, `{user}`, `{uuid}`, `{random:1-100}` and more (see the user guide); `{input}`/`{choice}` ask for values before pasting, `{cursor}` places the caret
 - **Extended menu (hold ⇧)**: every history item gets a submenu with all actions for it — Paste, Paste as plain text, Copy only, *Paste as* UPPERCASE / lowercase / Title Case / Sentence case / trimmed / single line, Add to Templates, Show in Viewer, Delete — with single-letter shortcuts. The ⇧ “plain text” alternate is folded into it (⌥ and ⌃ alternates stay)
 - New hot key **⌥⇧V — Paste previous item**: pastes history item #2 without opening the menu (press again to swap back); changeable or switchable off on the General tab
 - Preview panel no longer pops up for short single-line text (the menu line already shows it all)

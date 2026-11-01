@@ -809,6 +809,7 @@ final class ViewerWindowController: NSWindowController,
 
     /// Reveal a history item (used by "Show in Viewer" in the history menu).
     func reveal(historyId: UUID) {
+        if !query.isEmpty { searchField.stringValue = ""; query = "" }   // a filter could hide the item
         refresh()
         select(key: "h:\(historyId.uuidString)")
     }
