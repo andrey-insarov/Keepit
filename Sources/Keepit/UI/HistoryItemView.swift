@@ -2,7 +2,7 @@ import AppKit
 
 /// Custom view for a history entry in the popup menu. AppKit draws nothing for an item with a view, so this
 /// reproduces the native look (highlight, icon, accelerator column) and, in return, owns the mouse:
-/// a click pastes, a right click opens the per-item action menu.
+/// a click pastes (right clicks are handled by the app delegate via RightClickWatch).
 final class HistoryItemView: NSView {
     static let rowHeight: CGFloat = 22
     static let font = NSFont.menuFont(ofSize: 0)
@@ -15,8 +15,6 @@ final class HistoryItemView: NSView {
     var imageSize = NSSize(width: 16, height: 16)
     var isDimmed = false               // disabled look ("… N more in the Viewer")
     var accessibilityHint: String?
-    /// Right-click handler: receives this view; return the menu to show as the row's context menu (nil = nothing).
-    var actionMenu: ((HistoryItemView) -> NSMenu?)?
 
     // Layout
     private let hPad: CGFloat = 14     // native menu text inset
@@ -96,29 +94,6 @@ final class HistoryItemView: NSView {
         guard idx >= 0 else { return }
         menu.cancelTracking()
         DispatchQueue.main.async { menu.performActionForItem(at: idx) }
-    }
-
-    override func rightMouseDown(with event: NSEvent) {
-        guard let mi = enclosingMenuItem, mi.isEnabled else { return }
-        showActions(with: event)
-    }
-
-    override func rightMouseUp(with event: NSEvent) {}
-
-    /// Right click: the per-item action menu as a context menu of this row.
-    /// `popUpContextMenu` blocks until the menu closes; if it returns at once the nested menu did not open
-    /// (menu tracking refused it) — then close the history menu and show the actions at the row instead.
-    private func showActions(with event: NSEvent) {
-        guard let mi = enclosingMenuItem, let menu = mi.menu, let ctx = actionMenu?(self) else { return }
-        let rowOnScreen = window.map { $0.convertToScreen(convert(bounds, to: nil)) } ?? NSRect(origin: NSEvent.mouseLocation, size: .zero)
-        let t0 = Date()
-        NSMenu.popUpContextMenu(ctx, with: event, for: self)
-        if Date().timeIntervalSince(t0) < 0.1 {
-            menu.cancelTracking()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                ctx.popUp(positioning: nil, at: NSPoint(x: rowOnScreen.maxX - 4, y: rowOnScreen.maxY), in: nil)
-            }
-        }
     }
 
     // MARK: Accessibility
