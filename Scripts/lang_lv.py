@@ -317,5 +317,5 @@ T = {
 'Paste as': 'Ielīmēt kā',
 'Paste as plain text': 'Ielīmēt kā vienkāršu tekstu',
 'Show in Viewer': 'Rādīt skatītājā',
-'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …).': 'Izvēloties vēstures vienumu, turiet ⇧, lai ielīmētu kā vienkāršu tekstu (bez formatējuma), ⌥ — pievienot Veidnēm, ⌃ — dzēst. Ar peles labo pogu noklikšķiniet uz vienuma, lai atvērtu pilno darbību izvēlni (ielīmēt ar LIELAJIEM BURTIEM, viena rinda, tikai kopēt, …).',
+'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Hold ⌘ for the extended menu: every item gets a submenu with all actions (Paste as UPPERCASE, single line, Copy only, …).': 'Izvēloties vēstures vienumu, turiet ⇧, lai ielīmētu kā vienkāršu tekstu (bez formatējuma), ⌥ — pievienot Veidnēm, ⌃ — dzēst. Turiet ⌘ paplašinātajai izvēlnei: katrs vienums iegūst apakšizvēlni ar visām darbībām (ielīmēt ar LIELAJIEM BURTIEM, viena rinda, tikai kopēt, …).',
 }

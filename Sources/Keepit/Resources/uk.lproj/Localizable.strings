@@ -317,4 +317,4 @@
 "Paste as" = "Вставити як";
 "Paste as plain text" = "Вставити як простий текст";
 "Show in Viewer" = "Показати в Перегляді";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Утримуйте ⇧ під час вибору елемента історії, щоб вставити його як простий текст (без форматування), ⌥ — додати до Шаблонів, ⌃ — видалити. Правий клік по елементу відкриває повне меню дій (вставити ВЕЛИКИМИ, в один рядок, лише скопіювати, …).";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Hold ⌘ for the extended menu: every item gets a submenu with all actions (Paste as UPPERCASE, single line, Copy only, …)." = "Утримуйте ⇧ під час вибору елемента історії, щоб вставити його як простий текст (без форматування), ⌥ — додати до Шаблонів, ⌃ — видалити. Утримуйте ⌘ для розширеного меню: у кожного елемента з’являється підменю з усіма діями (вставити ВЕЛИКИМИ, в один рядок, лише скопіювати, …).";

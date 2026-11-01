@@ -317,4 +317,4 @@
 "Paste as" = "変換してペースト";
 "Paste as plain text" = "書式なしテキストとしてペースト";
 "Show in Viewer" = "ビューアで表示";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "履歴の項目を選ぶときに ⇧ を押すと書式なしのテキストとしてペースト、⌥ でテンプレートに追加、⌃ で削除します。項目を右クリックすると、すべての操作のメニュー（大文字でペースト、1 行、コピーのみ、…）が開きます。";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Hold ⌘ for the extended menu: every item gets a submenu with all actions (Paste as UPPERCASE, single line, Copy only, …)." = "履歴の項目を選ぶときに ⇧ を押すと書式なしのテキストとしてペースト、⌥ でテンプレートに追加、⌃ で削除します。⌘ を押し続けると拡張メニューになり、各項目にすべての操作のサブメニュー（大文字でペースト、1 行、コピーのみ、…）が付きます。";

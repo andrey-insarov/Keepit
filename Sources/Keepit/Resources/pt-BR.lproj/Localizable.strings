@@ -317,4 +317,4 @@
 "Paste as" = "Colar como";
 "Paste as plain text" = "Colar como texto simples";
 "Show in Viewer" = "Mostrar no Visualizador";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Segure ⇧ ao escolher um item do histórico para colá-lo como texto simples (sem formatação), ⌥ para adicioná-lo aos Modelos, ⌃ para excluí-lo. Clique com o botão direito em um item para o menu completo de ações (colar em MAIÚSCULAS, uma linha, só copiar, …).";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Hold ⌘ for the extended menu: every item gets a submenu with all actions (Paste as UPPERCASE, single line, Copy only, …)." = "Segure ⇧ ao escolher um item do histórico para colá-lo como texto simples (sem formatação), ⌥ para adicioná-lo aos Modelos, ⌃ para excluí-lo. Segure ⌘ para o menu estendido: cada item recebe um submenu com todas as ações (colar em MAIÚSCULAS, uma linha, só copiar, …).";

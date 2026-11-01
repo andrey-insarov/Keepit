@@ -636,35 +636,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func menuWillOpen(_ menu: NSMenu) {
         if let s = historySearchItem, menu.items.first === s { s.focus() }
         if menu.items.contains(where: { $0.tag == MenuBuilder.historyTag }) {
-            RightClickWatch.shared.watch(menu) { [weak self] item in self?.showActionMenu(for: item, in: menu) }
-        }
-    }
-
-    /// Right click on a history row: close the list and open the action menu in the row's place.
-    private func showActionMenu(for mi: NSMenuItem, in menu: NSMenu) {
-        guard let id = mi.representedObject as? UUID, let ctx = actionMenu(for: id) else { return }
-        var at = NSEvent.mouseLocation
-        if let v = mi.view, let w = v.window {
-            let r = w.convertToScreen(v.convert(v.bounds, to: nil))
-            at = NSPoint(x: r.minX + 24, y: r.maxY)
-        }
-        menuSelectionMade = true            // keep the paste target through the switch
-        let wasPopup = popupActive
-        RightClickWatch.shared.stop(menu)
-        menu.cancelTracking()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
-            guard let self else { return }
-            // Wait for the right button to be released so the release cannot dismiss the new menu.
-            func open(_ tries: Int) {
-                if NSEvent.pressedMouseButtons & 2 != 0, tries > 0 {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) { open(tries - 1) }; return
-                }
-                self.menuSelectionMade = false
-                self.popupActive = wasPopup
-                ctx.popUp(positioning: nil, at: at, in: nil)
+            ExtendedMenuWatch.shared.watch(menu) { [weak self] mi in
+                guard let id = mi.representedObject as? UUID else { return nil }
+                return self?.actionMenu(for: id)
             }
-            open(150)
         }
+        if menu.title == Self.actionMenuTitle { ExtendedMenuWatch.shared.submenuOpened() }
     }
 
     func menuDidClose(_ menu: NSMenu) {

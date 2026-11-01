@@ -317,5 +317,5 @@ T = {
 'Paste as': 'Wklej jako',
 'Paste as plain text': 'Wklej jako zwykły tekst',
 'Show in Viewer': 'Pokaż w Przeglądarce',
-'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …).': 'Przytrzymaj ⇧ przy wybieraniu elementu historii, aby wkleić go jako zwykły tekst (bez formatowania), ⌥ — dodać do Szablonów, ⌃ — usunąć. Kliknij element prawym przyciskiem, aby otworzyć pełne menu działań (wklej WIELKIMI LITERAMI, jedna linia, tylko kopiuj, …).',
+'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Hold ⌘ for the extended menu: every item gets a submenu with all actions (Paste as UPPERCASE, single line, Copy only, …).': 'Przytrzymaj ⇧ przy wybieraniu elementu historii, aby wkleić go jako zwykły tekst (bez formatowania), ⌥ — dodać do Szablonów, ⌃ — usunąć. Przytrzymaj ⌘, aby włączyć rozszerzone menu: każdy element dostaje podmenu ze wszystkimi działaniami (wklej WIELKIMI LITERAMI, jedna linia, tylko kopiuj, …).',
 }

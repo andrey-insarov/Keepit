@@ -317,4 +317,4 @@
 "Paste as" = "粘贴为";
 "Paste as plain text" = "以纯文本粘贴";
 "Show in Viewer" = "在查看器中显示";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "选择历史记录项时按住 ⇧ 以纯文本粘贴（去除格式），⌥ 添加到模板，⌃ 删除。右键点击项目可打开完整操作菜单（以大写粘贴、单行、仅复制、…）。";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Hold ⌘ for the extended menu: every item gets a submenu with all actions (Paste as UPPERCASE, single line, Copy only, …)." = "选择历史记录项时按住 ⇧ 以纯文本粘贴（去除格式），⌥ 添加到模板，⌃ 删除。按住 ⌘ 显示扩展菜单：每个项目都会有包含全部操作的子菜单（以大写粘贴、单行、仅复制、…）。";

@@ -317,5 +317,5 @@ T = {
 'Paste as': 'Vložit jako',
 'Paste as plain text': 'Vložit jako prostý text',
 'Show in Viewer': 'Zobrazit v Prohlížeči',
-'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …).': 'Při výběru položky historie podržte ⇧ pro vložení jako prostý text (bez formátování), ⌥ pro přidání do Šablon, ⌃ pro smazání. Kliknutím pravým tlačítkem na položku otevřete úplnou nabídku akcí (vložit VELKÝMI PÍSMENY, jeden řádek, jen zkopírovat, …).',
+'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Hold ⌘ for the extended menu: every item gets a submenu with all actions (Paste as UPPERCASE, single line, Copy only, …).': 'Při výběru položky historie podržte ⇧ pro vložení jako prostý text (bez formátování), ⌥ pro přidání do Šablon, ⌃ pro smazání. Podržením ⌘ zapnete rozšířenou nabídku: každá položka dostane podnabídku se všemi akcemi (vložit VELKÝMI PÍSMENY, jeden řádek, jen zkopírovat, …).',
 }

@@ -317,4 +317,4 @@
 "Paste as" = "Pegar como";
 "Paste as plain text" = "Pegar como texto sin formato";
 "Show in Viewer" = "Mostrar en el Visor";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Mantén ⇧ al elegir un elemento del historial para pegarlo como texto sin formato, ⌥ para añadirlo a Plantillas, ⌃ para eliminarlo. Haz clic derecho en un elemento para el menú completo de acciones (pegar en MAYÚSCULAS, una línea, solo copiar, …).";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Hold ⌘ for the extended menu: every item gets a submenu with all actions (Paste as UPPERCASE, single line, Copy only, …)." = "Mantén ⇧ al elegir un elemento del historial para pegarlo como texto sin formato, ⌥ para añadirlo a Plantillas, ⌃ para eliminarlo. Mantén ⌘ para el menú ampliado: cada elemento recibe un submenú con todas las acciones (pegar en MAYÚSCULAS, una línea, solo copiar, …).";

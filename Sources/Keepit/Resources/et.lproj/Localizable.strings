@@ -317,4 +317,4 @@
 "Paste as" = "Kleebi kui";
 "Paste as plain text" = "Kleebi vormindamata tekstina";
 "Show in Viewer" = "Näita vaaturis";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Ajaloo üksust valides hoia ⇧, et kleepida see vormindamata tekstina, ⌥ lisab Mallidesse, ⌃ kustutab. Paremklõps üksusel avab täieliku toimingute menüü (kleebi SUURTÄHTEDEGA, üks rida, ainult kopeeri, …).";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Hold ⌘ for the extended menu: every item gets a submenu with all actions (Paste as UPPERCASE, single line, Copy only, …)." = "Ajaloo üksust valides hoia ⇧, et kleepida see vormindamata tekstina, ⌥ lisab Mallidesse, ⌃ kustutab. Hoia ⌘ laiendatud menüü jaoks: iga üksus saab alammenüü kõigi toimingutega (kleebi SUURTÄHTEDEGA, üks rida, ainult kopeeri, …).";

@@ -317,5 +317,5 @@ T = {
 'Paste as': 'הדבק בתור',
 'Paste as plain text': 'הדבק כטקסט פשוט',
 'Show in Viewer': 'הצג במציג',
-'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …).': 'החזק ⇧ בעת בחירת פריט מההיסטוריה כדי להדביקו כטקסט פשוט (ללא עיצוב), ⌥ להוספה לתבניות, ⌃ למחיקה. לחיצה ימנית על פריט פותחת את תפריט הפעולות המלא (הדבקה באותיות גדולות, שורה אחת, העתקה בלבד, …).',
+'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Hold ⌘ for the extended menu: every item gets a submenu with all actions (Paste as UPPERCASE, single line, Copy only, …).': 'החזק ⇧ בעת בחירת פריט מההיסטוריה כדי להדביקו כטקסט פשוט (ללא עיצוב), ⌥ להוספה לתבניות, ⌃ למחיקה. החזק ⌘ לתפריט המורחב: כל פריט מקבל תת־תפריט עם כל הפעולות (הדבקה באותיות גדולות, שורה אחת, העתקה בלבד, …).',
 }

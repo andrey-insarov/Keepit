@@ -317,5 +317,5 @@ T = {
 'Paste as': '貼上為',
 'Paste as plain text': '以純文字貼上',
 'Show in Viewer': '在檢視器中顯示',
-'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …).': '選擇歷史記錄項目時按住 ⇧ 以純文字貼上（去除格式），⌥ 加入範本，⌃ 刪除。在項目上按右鍵可開啟完整動作選單（以大寫貼上、單行、僅拷貝、…）。',
+'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Hold ⌘ for the extended menu: every item gets a submenu with all actions (Paste as UPPERCASE, single line, Copy only, …).': '選擇歷史記錄項目時按住 ⇧ 以純文字貼上（去除格式），⌥ 加入範本，⌃ 刪除。按住 ⌘ 顯示延伸選單：每個項目都會有包含全部動作的子選單（以大寫貼上、單行、僅拷貝、…）。',
 }

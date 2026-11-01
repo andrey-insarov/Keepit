@@ -2,7 +2,7 @@ import AppKit
 
 /// Custom view for a history entry in the popup menu. AppKit draws nothing for an item with a view, so this
 /// reproduces the native look (highlight, icon, accelerator column) and, in return, owns the mouse:
-/// a click pastes (right clicks are handled by the app delegate via RightClickWatch).
+/// a click pastes; with ⌘ held the app delegate attaches the action submenu (ExtendedMenuWatch).
 final class HistoryItemView: NSView {
     static let rowHeight: CGFloat = 22
     static let font = NSFont.menuFont(ofSize: 0)
@@ -69,6 +69,7 @@ final class HistoryItemView: NSView {
             x += imageSize.width + gap
         }
         var keyW: CGFloat = 0
+        let keyLabel = enclosingMenuItem?.submenu == nil ? self.keyLabel : ""
         if !keyLabel.isEmpty {
             let a: [NSAttributedString.Key: Any] = [.font: Self.keyFont, .foregroundColor: dimColor]
             let sz = (keyLabel as NSString).size(withAttributes: a)

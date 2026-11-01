@@ -317,5 +317,5 @@ T = {
 'Paste as': 'Įklijuoti kaip',
 'Paste as plain text': 'Įklijuoti kaip paprastą tekstą',
 'Show in Viewer': 'Rodyti peržiūroje',
-'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …).': 'Renkantis istorijos elementą laikykite ⇧, kad įklijuotumėte kaip paprastą tekstą (be formatavimo), ⌥ — pridėti į Šablonus, ⌃ — ištrinti. Dešiniu pelės klavišu spustelėkite elementą — atsidarys visas veiksmų meniu (įklijuoti DIDŽIOSIOMIS, viena eilutė, tik kopijuoti, …).',
+'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Hold ⌘ for the extended menu: every item gets a submenu with all actions (Paste as UPPERCASE, single line, Copy only, …).': 'Renkantis istorijos elementą laikykite ⇧, kad įklijuotumėte kaip paprastą tekstą (be formatavimo), ⌥ — pridėti į Šablonus, ⌃ — ištrinti. Laikykite ⌘ išplėstiniam meniu: kiekvienas elementas gauna submeniu su visais veiksmais (įklijuoti DIDŽIOSIOMIS, viena eilutė, tik kopijuoti, …).',
 }
