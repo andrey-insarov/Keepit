@@ -285,10 +285,14 @@ Sources/Keepit/
    server, the provider only ever sees ciphertext.
 2. **Paste queue** — copy several things, then ⌘V pastes them one after another (⌘V interception
    while a queue is active, or a dedicated key; Esc / timeout / a new copy ends the queue).
+3. **Import from other managers** — only open, documented formats; closed CloudKit-backed stores
+   (Paste, Pastebot, PastePal) are left alone. History: Maccy (SQLite), Alfred (`clipboard.alfdb`),
+   Flycut (plist), CLCL (`history.dat`). Snippets → templates, with placeholder conversion: Alfred
+   (`.alfredsnippets`), Raycast (JSON export), Clipy/ClipMenu (XML), TextExpander / aText / Espanso,
+   CLCL (`regist.dat`). *Viewer → Import…* detects what is installed and offers it in one click.
 
 **Later**
 
-- Import of Windows CLCL `history.dat` / `regist.dat`.
 - Format filter & priority pages (which formats to keep / show first).
 - Tools/plugin equivalents (shell scripts or AppleScript on an item, from the menu).
 
