@@ -824,10 +824,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         // and the history menu stays open until something in the submenu (or outside) is clicked.
         mi.action = nil
         mi.submenu = ctx
-        LongPress.nudgePointer()
-        // The release of the long press makes AppKit close the submenu again; reopen it with another nudge.
-        LongPress.shared.onRelease = {
+        // The tracking session that began with the press would treat the release as a click on the item and
+        // close everything. Restart tracking: close the menu and reopen the same menu in the same place with
+        // the button still down — AppKit then handles the release like "press on File, drag to Open Recent ▸,
+        // release": the submenu stays open.
+        menuSelectionMade = true            // don't hand focus back to the target app in menuDidClose
+        let wasPopup = popupActive
+        let origin = menuTopLeft
+        menu.cancelTracking()
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.menuSelectionMade = false
+            self.popupActive = wasPopup
+            self.menuTopLeft = origin
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.08) { LongPress.nudgePointer() }
+            menu.popUp(positioning: menu.items.first, at: origin, in: nil)
         }
     }
 
