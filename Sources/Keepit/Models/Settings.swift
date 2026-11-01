@@ -73,7 +73,7 @@ struct Settings: Codable, Equatable {
     ]
     var ignoreConcealed = true     // honour org.nspasteboard.ConcealedType (password managers)
 
-    var launchAtLogin = false
+    var launchAtLogin = true           // new installs start at login; existing settings files keep their value
 
     /// Lock Keepit (wipe key, unload data) when the screen locks or the Mac sleeps. Only matters with a password set.
     var lockWithScreen = true

@@ -231,3 +231,10 @@
 "The app has been moved to the Trash. If an Accessibility entry for Keepit remains in System Settings, you can remove it there." = "نُقل التطبيق إلى سلة المهملات. إن بقي إدخال لـ Keepit في تسهيلات الاستخدام ضمن إعدادات النظام، يمكنك إزالته من هناك.";
 "All Keepit data has been deleted." = "تم حذف جميع بيانات Keepit.";
 "Finish by dragging Keepit from the Applications folder to the Trash." = "أكمل بسحب Keepit من مجلد التطبيقات إلى سلة المهملات.";
+"Protect your clipboard history with a password?" = "هل تريد حماية سجل الحافظة بكلمة مرور؟";
+"Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts. You will also get a 24-word recovery phrase in case you forget the password." = "يمكن لـ Keepit تشفير السجل والقوالب (AES-256) وطلب كلمة المرور — أو Touch ID — عند بدء التشغيل. ستحصل أيضًا على عبارة استرداد من 24 كلمة تحسبًا لنسيان كلمة المرور.";
+"Set Password…" = "تعيين كلمة مرور…";
+"Not Now" = "ليس الآن";
+"Your data will not be encrypted" = "لن يتم تشفير بياناتك";
+"Without a password Keepit stores history and templates unencrypted in your user Library. You can turn protection on at any time in Preferences → Security." = "بدون كلمة مرور يخزّن Keepit السجل والقوالب دون تشفير في مكتبة المستخدم. يمكنك تفعيل الحماية في أي وقت من التفضيلات ← الأمن.";
+"Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "بدونه يستمر Keepit في تسجيل السجل ونسخ العناصر إلى الحافظة، لكنه لا يستطيع إرسال ⌘V إلى التطبيق النشط أو وضع القائمة عند مؤشر النص.\n\nإعدادات النظام ← الخصوصية والأمن ← تسهيلات الاستخدام ← تفعيل Keepit.";

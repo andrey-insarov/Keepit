@@ -231,3 +231,10 @@
 "The app has been moved to the Trash. If an Accessibility entry for Keepit remains in System Settings, you can remove it there." = "Приложение перемещено в Корзину. Если в Системных настройках осталась запись Keepit в Универсальном доступе, её можно удалить там.";
 "All Keepit data has been deleted." = "Все данные Keepit удалены.";
 "Finish by dragging Keepit from the Applications folder to the Trash." = "Завершите удаление, перетащив Keepit из папки «Программы» в Корзину.";
+"Protect your clipboard history with a password?" = "Защитить историю буфера обмена паролем?";
+"Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts. You will also get a 24-word recovery phrase in case you forget the password." = "Keepit может шифровать историю и шаблоны (AES-256) и запрашивать пароль — или Touch ID — при запуске. Вы также получите фразу восстановления из 24 слов на случай, если забудете пароль.";
+"Set Password…" = "Задать пароль…";
+"Not Now" = "Не сейчас";
+"Your data will not be encrypted" = "Ваши данные не будут зашифрованы";
+"Without a password Keepit stores history and templates unencrypted in your user Library. You can turn protection on at any time in Preferences → Security." = "Без пароля Keepit хранит историю и шаблоны в незашифрованном виде в вашей пользовательской библиотеке. Защиту можно включить в любой момент в Настройках → Безопасность.";
+"Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "Без него Keepit по-прежнему будет записывать историю и копировать элементы в буфер обмена, но не сможет отправлять ⌘V в активное приложение и показывать меню у текстового курсора.\n\nСистемные настройки → Конфиденциальность и безопасность → Универсальный доступ → включить Keepit.";

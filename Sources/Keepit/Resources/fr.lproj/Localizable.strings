@@ -231,3 +231,10 @@
 "The app has been moved to the Trash. If an Accessibility entry for Keepit remains in System Settings, you can remove it there." = "L’app a été placée dans la Corbeille. S’il reste une entrée Accessibilité pour Keepit dans Réglages Système, vous pouvez la supprimer là.";
 "All Keepit data has been deleted." = "Toutes les données de Keepit ont été supprimées.";
 "Finish by dragging Keepit from the Applications folder to the Trash." = "Terminez en glissant Keepit du dossier Applications vers la Corbeille.";
+"Protect your clipboard history with a password?" = "Protéger l’historique du presse-papiers par un mot de passe ?";
+"Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts. You will also get a 24-word recovery phrase in case you forget the password." = "Keepit peut chiffrer l’historique et les modèles (AES-256) et demander le mot de passe — ou Touch ID — au lancement. Vous recevrez aussi une phrase de récupération de 24 mots au cas où vous oublieriez le mot de passe.";
+"Set Password…" = "Définir un mot de passe…";
+"Not Now" = "Pas maintenant";
+"Your data will not be encrypted" = "Vos données ne seront pas chiffrées";
+"Without a password Keepit stores history and templates unencrypted in your user Library. You can turn protection on at any time in Preferences → Security." = "Sans mot de passe, Keepit stocke l’historique et les modèles en clair dans votre bibliothèque utilisateur. Vous pouvez activer la protection à tout moment dans Préférences → Sécurité.";
+"Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "Sans elle, Keepit enregistre toujours l’historique et copie les éléments dans le presse-papiers, mais ne peut pas envoyer ⌘V à l’app active ni placer le menu au curseur de texte.\n\nRéglages Système → Confidentialité et sécurité → Accessibilité → activer Keepit.";

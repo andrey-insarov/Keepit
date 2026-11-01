@@ -6,7 +6,13 @@
   app. Requires the password or Touch ID (when protection is on), then typing `DELETE` and ticking
   the acknowledgement. Removes the data folder, the Touch ID keychain item, the defaults domain
   (Sparkle state), caches, the login item and the Accessibility grant, and moves the app to the Trash.
-- Preferences window scrolls when taller than the display.
+- Preferences window scrolls when taller than the display; related numeric fields and the two hot
+  keys now share a row.
+- First launch: Keepit offers to set a password right away and says plainly that without one the
+  data is stored unencrypted; *Launch at login* is on by default for new installs.
+- Accessibility: Keepit no longer triggers the system “would like to control this Mac” sheet (it
+  stayed on screen after the switch was flipped and had to be dismissed with *Deny*). The button
+  opens the Accessibility pane directly, with Keepit already listed.
 
 ## 2.5.2 — 2026-11-01
 

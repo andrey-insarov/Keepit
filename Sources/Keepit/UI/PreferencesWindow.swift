@@ -76,6 +76,19 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         return [l, view]
     }
 
+    /// Two label/field pairs on one grid row: `label1 [field1]   label2 [field2]`.
+    private func pair(_ text1: String, _ view1: NSView, _ text2: String, _ view2: NSView) -> [NSView] {
+        let l1 = NSTextField(labelWithString: text1)
+        l1.alignment = .right
+        let l2 = NSTextField(labelWithString: text2)
+        let row = NSStackView(views: [view1, l2, view2])
+        row.orientation = .horizontal
+        row.alignment = .firstBaseline
+        row.spacing = 6
+        row.setCustomSpacing(18, after: view1)
+        return [l1, row]
+    }
+
     private func numField(_ f: NSTextField, width: CGFloat = 70) -> NSTextField {
         f.alignment = .right
         f.widthAnchor.constraint(equalToConstant: width).isActive = true
@@ -94,26 +107,22 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
 
         let grid = NSGridView(views: [
             header(L("History")),
-            labeled(L("Text & file items:"), numField(historyMax)),
-            labeled(L("Image items:"), numField(imageMax)),
+            pair(L("Text & file items:"), numField(historyMax), L("Image items:"), numField(imageMax)),
             [NSView(), overlap],
             [NSView(), saveHistory],
             [NSView(), concealed],
-            labeled(L("Poll interval (s):"), numField(pollInterval)),
 
             header(L("Menu")),
-            labeled(L("Title length (chars):"), numField(titleLength)),
-            labeled(L("Thumbnail height (px):"), numField(thumbSize)),
+            pair(L("Title length (chars):"), numField(titleLength), L("Thumbnail height (px):"), numField(thumbSize)),
             [NSView(), showThumbs],
             [NSView(), showTips],
             [NSView(), numberItems],
             [NSView(), showAtCaret],
 
             header(L("Hot keys & paste")),
-            labeled(L("History menu:"), historyHK),
-            labeled(L("Template menu:"), templateHK),
+            pair(L("History menu:"), historyHK, L("Template menu:"), templateHK),
             [NSView(), pasteAfter],
-            labeled(L("Paste delay (s):"), numField(pasteDelay)),
+            pair(L("Paste delay (s):"), numField(pasteDelay), L("Poll interval (s):"), numField(pollInterval)),
 
             header(L("Ignored apps (bundle IDs, one per line; known password managers are always ignored)")),
             [ignoredPlaceholder, NSView()],

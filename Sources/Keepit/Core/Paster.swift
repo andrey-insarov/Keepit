@@ -12,11 +12,16 @@ enum Paster {
         AXIsProcessTrusted()
     }
 
-    /// Ask macOS to show the "allow Keepit to control your computer" prompt.
-    @discardableResult
-    static func requestTrust() -> Bool {
-        let key = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String
-        return AXIsProcessTrustedWithOptions([key: true] as CFDictionary)
+    /// Open System Settings → Privacy & Security → Accessibility with Keepit already in the list.
+    /// We deliberately do not use kAXTrustedCheckOptionPrompt: that system sheet stays on screen even
+    /// after the user flips the switch and has to be dismissed with "Deny", which is confusing. A denied
+    /// AX query is enough to make TCC list the app, and the pane does the rest.
+    static func openAccessibilitySettings() {
+        var focused: CFTypeRef?
+        _ = AXUIElementCopyAttributeValue(AXUIElementCreateSystemWide(), kAXFocusedUIElementAttribute as CFString, &focused)
+        if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") {
+            NSWorkspace.shared.open(url)
+        }
     }
 
     // MARK: Paste

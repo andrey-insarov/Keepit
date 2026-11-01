@@ -28,8 +28,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// True while the vault key is wiped and data is unloaded (password set, not yet entered).
     private(set) var isLocked = false
 
+    /// No settings file yet → first launch (onboarding, login item).
+    private let isFirstRun: Bool
+
     override init() {
-        settings = Storage.load(Settings.self, from: Storage.settingsURL) ?? Settings()
+        let stored = Storage.load(Settings.self, from: Storage.settingsURL)
+        isFirstRun = stored == nil
+        settings = stored ?? Settings()
         super.init()
     }
 
@@ -76,11 +81,40 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             return
         }
 
-        if !Paster.isTrusted() {
+        if isFirstRun {
+            if settings.launchAtLogin { setLaunchAtLogin(true) }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.offerPasswordOnFirstRun()
+                if !Paster.isTrusted() { self?.showAccessibilityAlert() }
+            }
+        } else if !Paster.isTrusted() {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
                 self?.showAccessibilityAlert()
             }
         }
+    }
+
+    /// First launch: suggest turning protection on; be explicit about what "no" means.
+    private func offerPasswordOnFirstRun() {
+        guard !Vault.isEnabled else { return }
+        let a = NSAlert()
+        a.alertStyle = .informational
+        a.icon = NSImage(systemSymbolName: "lock.shield", accessibilityDescription: nil)
+        a.messageText = L("Protect your clipboard history with a password?")
+        a.informativeText = L("Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts. You will also get a 24-word recovery phrase in case you forget the password.")
+        a.addButton(withTitle: L("Set Password…"))
+        a.addButton(withTitle: L("Not Now"))
+        NSApp.activate(ignoringOtherApps: true)
+        if a.runModal() == .alertFirstButtonReturn, enableProtection() {
+            updateStatusIcon()
+            return
+        }
+        let b = NSAlert()
+        b.alertStyle = .warning
+        b.messageText = L("Your data will not be encrypted")
+        b.informativeText = L("Without a password Keepit stores history and templates unencrypted in your user Library. You can turn protection on at any time in Preferences → Security.")
+        b.addButton(withTitle: L("OK"))
+        b.runModal()
     }
 
     func applicationWillTerminate(_ notification: Notification) {
@@ -635,10 +669,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             a.addButton(withTitle: L("Later"))
             NSApp.activate(ignoringOtherApps: true)
             if a.runModal() == .alertFirstButtonReturn {
-                Paster.requestTrust()
-                if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") {
-                    NSWorkspace.shared.open(url)
-                }
+                Paster.openAccessibilitySettings()
             }
             self?.pasteTarget?.activate(options: [])
         }
@@ -700,7 +731,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     @objc private func grantAccessibility() {
         menuSelectionMade = true
-        Paster.requestTrust()
+        Paster.openAccessibilitySettings()
     }
 
     @objc func showAbout() {
@@ -720,15 +751,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private func showAccessibilityAlert() {
         let a = NSAlert()
         a.messageText = L("Keepit needs the Accessibility permission to paste")
-        a.informativeText = "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit."
+        a.informativeText = L("Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit.")
         a.addButton(withTitle: L("Open System Settings"))
         a.addButton(withTitle: L("Later"))
         NSApp.activate(ignoringOtherApps: true)
         if a.runModal() == .alertFirstButtonReturn {
-            Paster.requestTrust()
-            if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") {
-                NSWorkspace.shared.open(url)
-            }
+            Paster.openAccessibilitySettings()
         }
     }
 }
