@@ -243,3 +243,5 @@
 "Search history…" = "搜索历史记录…";
 "(no matches)" = "(无匹配项)";
 "Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "历史记录菜单中的搜索框（输入即过滤；快捷键改为 ⌘1–⌘0）";
+"%@ — plain text" = "%@ — 纯文本";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped)." = "选择历史记录项时按住 ⇧，可以纯文本形式粘贴（去除格式）。";

@@ -243,4 +243,6 @@ T = {
 'Search history…': 'Hledat v historii…',
 '(no matches)': '(žádné shody)',
 'Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)': 'Vyhledávací pole v nabídce historie (psaní filtruje; zkratky se změní na ⌘1–⌘0)',
+'%@ — plain text': '%@ — prostý text',
+'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped).': 'Podržte ⇧ při výběru položky historie, aby se vložila jako prostý text (bez formátování).',
 }

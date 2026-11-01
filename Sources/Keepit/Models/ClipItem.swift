@@ -112,6 +112,15 @@ struct ClipItem: Codable, Identifiable, Equatable {
         return String(data: d, encoding: .utf8)
     }
 
+    /// True when the item carries text plus richer formats (RTF/HTML) — i.e. "paste as plain text" changes something.
+    var hasRichText: Bool { formats[Format.text] != nil && (formats[Format.rtf] != nil || formats[Format.html] != nil) }
+
+    /// Same item reduced to its plain-text format only (same id, so history bookkeeping still matches).
+    func plainTextOnly() -> ClipItem? {
+        guard let d = formats[Format.text] else { return nil }
+        return ClipItem(id: id, date: date, formats: [Format.text: d], sourceApp: sourceApp, contentHash: contentHash)
+    }
+
     var filePaths: [String] {
         guard let d = formats[Format.files],
               let arr = try? JSONDecoder().decode([String].self, from: d) else { return [] }

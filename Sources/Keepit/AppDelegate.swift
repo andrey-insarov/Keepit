@@ -612,7 +612,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             }
             search.onReturn = { [weak self, weak menu] in
                 guard let self, let menu else { return }
-                if let first = menu.items.first(where: { $0.tag == MenuBuilder.historyTag && $0.isEnabled && $0.action != nil }) {
+                if let first = menu.items.first(where: { $0.tag == MenuBuilder.historyTag && $0.isEnabled && $0.action != nil && !$0.isAlternate }) {
                     menu.cancelTracking()
                     self.historyChosen(first)
                 }
@@ -623,7 +623,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             historySearchItem = nil
         }
 
-        let items = menuBuilder.historyItems(history.items, target: self, action: #selector(historyChosen(_:)), commandAccelerators: searching)
+        let items = menuBuilder.historyItems(history.items, target: self, action: #selector(historyChosen(_:)),
+                                             plainAction: #selector(historyChosenPlain(_:)), commandAccelerators: searching)
         if items.isEmpty {
             let e = NSMenuItem(title: L("(History is empty)"), action: nil, keyEquivalent: "")
             e.isEnabled = false
@@ -656,7 +657,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let firstIndex = menu.items.firstIndex { $0.tag == MenuBuilder.historyTag } ?? 1
         for mi in menu.items where mi.tag == MenuBuilder.historyTag { menu.removeItem(mi) }
         let matches = MenuBuilder.filter(history.items, query: query)
-        var fresh = menuBuilder.historyItems(matches, target: self, action: #selector(historyChosen(_:)), commandAccelerators: true)
+        var fresh = menuBuilder.historyItems(matches, target: self, action: #selector(historyChosen(_:)),
+                                             plainAction: #selector(historyChosenPlain(_:)), commandAccelerators: true)
         if fresh.isEmpty {
             let none = NSMenuItem(title: L("(no matches)"), action: nil, keyEquivalent: "")
             none.isEnabled = false
@@ -701,11 +703,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // MARK: - Actions
 
     @objc private func historyChosen(_ sender: NSMenuItem) {
+        chooseHistoryItem(sender, plainText: false)
+    }
+
+    /// ⇧ alternate: paste the text without RTF/HTML formatting.
+    @objc private func historyChosenPlain(_ sender: NSMenuItem) {
+        chooseHistoryItem(sender, plainText: true)
+    }
+
+    private func chooseHistoryItem(_ sender: NSMenuItem, plainText: Bool) {
         menuSelectionMade = true
         guard let id = sender.representedObject as? UUID,
               let item = history.items.first(where: { $0.id == id }) else { return }
         history.touch(item)
-        Paster.paste(item, into: pasteTarget, monitor: monitor, settings: settings, sendKey: settings.pasteAfterSelect)
+        Paster.paste(item, into: pasteTarget, monitor: monitor, settings: settings, sendKey: settings.pasteAfterSelect, plainText: plainText)
         nudgeAccessibilityIfNeeded()
     }
 

@@ -243,3 +243,5 @@
 "Search history…" = "Otsi ajaloost…";
 "(no matches)" = "(vasteid pole)";
 "Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "Otsinguväli ajaloo menüüs (tippimine filtreerib; kiirklahvid muutuvad ⌘1–⌘0)";
+"%@ — plain text" = "%@ — lihttekst";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped)." = "Hoia ajaloo üksuse valimisel all ⇧, et kleepida see lihttekstina (vorminguta).";

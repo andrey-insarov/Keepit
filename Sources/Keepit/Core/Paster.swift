@@ -30,13 +30,16 @@ enum Paster {
     ///   - item: what to paste
     ///   - target: the app that was frontmost before our menu appeared (nil = whatever is frontmost now)
     ///   - sendKey: false → only copy to the pasteboard (no key stroke)
+    ///   - plainText: put only the plain-text representation on the pasteboard (strip RTF/HTML)
     static func paste(_ item: ClipItem,
                       into target: NSRunningApplication?,
                       monitor: ClipboardMonitor,
                       settings: Settings,
-                      sendKey: Bool) {
+                      sendKey: Bool,
+                      plainText: Bool = false) {
+        let payload = plainText ? (item.plainTextOnly() ?? item) : item
         monitor.performIgnoringChange {
-            item.write(to: NSPasteboard.general)
+            payload.write(to: NSPasteboard.general)
         }
         guard sendKey else { return }
 

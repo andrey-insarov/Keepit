@@ -243,3 +243,5 @@
 "Search history…" = "Cerca nella cronologia…";
 "(no matches)" = "(nessun risultato)";
 "Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "Campo di ricerca nel menu Cronologia (digita per filtrare; le scorciatoie diventano ⌘1–⌘0)";
+"%@ — plain text" = "%@ — testo semplice";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped)." = "Tieni premuto ⇧ mentre scegli un elemento della cronologia per incollarlo come testo semplice (senza formattazione).";

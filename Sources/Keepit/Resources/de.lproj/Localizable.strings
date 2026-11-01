@@ -243,3 +243,5 @@
 "Search history…" = "Verlauf durchsuchen …";
 "(no matches)" = "(keine Treffer)";
 "Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "Suchfeld im Verlaufsmenü (Tippen filtert; Kürzel werden zu ⌘1–⌘0)";
+"%@ — plain text" = "%@ – reiner Text";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped)." = "Halten Sie ⇧ beim Auswählen eines Verlaufseintrags, um ihn als reinen Text einzufügen (ohne Formatierung).";

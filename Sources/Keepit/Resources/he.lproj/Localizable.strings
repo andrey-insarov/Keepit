@@ -243,3 +243,5 @@
 "Search history…" = "חיפוש בהיסטוריה…";
 "(no matches)" = "(אין התאמות)";
 "Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "שדה חיפוש בתפריט ההיסטוריה (הקלדה מסננת; הקיצורים הופכים ל‑⌘1–⌘0)";
+"%@ — plain text" = "%@ — טקסט רגיל";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped)." = "החזק ⇧ בעת בחירת פריט מההיסטוריה כדי להדביק אותו כטקסט רגיל (ללא עיצוב).";

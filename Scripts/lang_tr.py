@@ -243,4 +243,6 @@ T = {
 'Search history…': 'Geçmişte ara…',
 '(no matches)': '(eşleşme yok)',
 'Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)': 'Geçmiş menüsünde arama alanı (yazarak filtrele; kısayollar ⌘1–⌘0 olur)',
+'%@ — plain text': '%@ — düz metin',
+'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped).': 'Bir geçmiş öğesini seçerken ⇧ tuşunu basılı tutarsanız düz metin olarak (biçimlendirmesiz) yapıştırılır.',
 }

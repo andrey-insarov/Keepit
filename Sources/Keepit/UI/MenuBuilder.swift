@@ -26,10 +26,14 @@ final class MenuBuilder {
 
     /// - Parameter commandAccelerators: with the search field in the menu, plain letters go into the
     ///   field, so item shortcuts become ⌘1…⌘0 (letters are dropped).
-    func historyItems(_ items: [ClipItem], target: AnyObject, action: Selector, commandAccelerators: Bool = false) -> [NSMenuItem] {
+    /// - Parameter plainAction: when given, every text item gets a ⇧ alternate ("… — plain text") that
+    ///   calls it instead; hold ⇧ while clicking or add ⇧ to the shortcut.
+    func historyItems(_ items: [ClipItem], target: AnyObject, action: Selector, plainAction: Selector? = nil,
+                      commandAccelerators: Bool = false) -> [NSMenuItem] {
         var out: [NSMenuItem] = []
         let shown = items.prefix(settings.menuMaxItems)
         let accels = commandAccelerators ? Array(Self.accelerators.prefix(10)) : Self.accelerators
+        let baseMask: NSEvent.ModifierFlags = commandAccelerators ? [.command] : []
         for (i, item) in shown.enumerated() {
             let title = item.title(maxLength: settings.titleLength)
             let mi = NSMenuItem(title: title, action: action, keyEquivalent: "")
@@ -37,12 +41,24 @@ final class MenuBuilder {
             mi.representedObject = item.id
             mi.tag = Self.historyTag
 
+            var prefix = ""
             if settings.numberItems, i < accels.count {
                 let ch = accels[i]
                 mi.keyEquivalent = String(ch).lowercased()
-                mi.keyEquivalentModifierMask = commandAccelerators ? [.command] : []
+                mi.keyEquivalentModifierMask = baseMask
                 // Visible prefix "1  text" (the key equivalent column shows it too).
-                mi.title = "\(ch)  \(title)"
+                prefix = "\(ch)  "
+                mi.title = prefix + title
+            }
+            var alternates: [NSMenuItem] = []
+            if let plain = plainAction, item.plainText != nil, item.kind == .text {
+                let alt = NSMenuItem(title: prefix + LF("%@ — plain text", title), action: plain, keyEquivalent: mi.keyEquivalent)
+                alt.target = target
+                alt.representedObject = item.id
+                alt.tag = Self.historyTag
+                alt.isAlternate = true
+                alt.keyEquivalentModifierMask = baseMask.union(.shift)
+                alternates.append(alt)
             }
             if settings.showThumbnails, item.kind == .image {
                 mi.image = thumbnail(for: item)
@@ -53,6 +69,7 @@ final class MenuBuilder {
                 mi.toolTip = tip
             }
             out.append(mi)
+            out.append(contentsOf: alternates)   // alternates must directly follow their item
         }
         if items.count > shown.count {
             let more = NSMenuItem(title: LF("… %d more in the Viewer", items.count - shown.count), action: nil, keyEquivalent: "")

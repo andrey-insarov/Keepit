@@ -266,6 +266,8 @@ T = {
 'Search history…': ('Поиск в истории…', 'Verlauf durchsuchen …', 'Rechercher dans l’historique…', 'Buscar en el historial…', '履歴を検索…', '搜索历史记录…'),
 '(no matches)': ('(ничего не найдено)', '(keine Treffer)', '(aucun résultat)', '(sin coincidencias)', '(一致なし)', '(无匹配项)'),
 'Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)': ('Поле поиска в меню истории (ввод фильтрует список; быстрые клавиши становятся ⌘1–⌘0)', 'Suchfeld im Verlaufsmenü (Tippen filtert; Kürzel werden zu ⌘1–⌘0)', 'Champ de recherche dans le menu Historique (la saisie filtre ; raccourcis ⌘1–⌘0)', 'Campo de búsqueda en el menú de historial (escribe para filtrar; los atajos pasan a ⌘1–⌘0)', '履歴メニューに検索フィールド（入力で絞り込み。ショートカットは ⌘1〜⌘0 に）', '历史记录菜单中的搜索框（输入即过滤；快捷键改为 ⌘1–⌘0）'),
+'%@ — plain text': ('%@ — простой текст', '%@ – reiner Text', '%@ — texte brut', '%@: texto sin formato', '%@ — プレーンテキスト', '%@ — 纯文本'),
+'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped).': ('Удерживайте ⇧ при выборе элемента истории, чтобы вставить его как простой текст (без форматирования).', 'Halten Sie ⇧ beim Auswählen eines Verlaufseintrags, um ihn als reinen Text einzufügen (ohne Formatierung).', 'Maintenez ⇧ en choisissant un élément de l’historique pour le coller en texte brut (sans mise en forme).', 'Mantén ⇧ al elegir un elemento del historial para pegarlo como texto sin formato.', '履歴の項目を選ぶときに ⇧ を押したままにすると、書式なしのプレーンテキストとして貼り付けます。', '选择历史记录项时按住 ⇧，可以纯文本形式粘贴（去除格式）。'),
 }
 
 PH = re.compile(r"%[@d]")

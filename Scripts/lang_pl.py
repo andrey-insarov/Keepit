@@ -243,4 +243,6 @@ T = {
 'Search history…': 'Szukaj w historii…',
 '(no matches)': '(brak wyników)',
 'Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)': 'Pole wyszukiwania w menu historii (pisanie filtruje; skróty stają się ⌘1–⌘0)',
+'%@ — plain text': '%@ — zwykły tekst',
+'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped).': 'Przytrzymaj ⇧ podczas wybierania elementu historii, aby wkleić go jako zwykły tekst (bez formatowania).',
 }

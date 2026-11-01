@@ -243,3 +243,5 @@
 "Search history…" = "Поиск в истории…";
 "(no matches)" = "(ничего не найдено)";
 "Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "Поле поиска в меню истории (ввод фильтрует список; быстрые клавиши становятся ⌘1–⌘0)";
+"%@ — plain text" = "%@ — простой текст";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped)." = "Удерживайте ⇧ при выборе элемента истории, чтобы вставить его как простой текст (без форматирования).";

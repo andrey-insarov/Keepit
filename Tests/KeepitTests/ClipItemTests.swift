@@ -57,3 +57,16 @@ final class ClipItemTests: XCTestCase {
         XCTAssertEqual(item.orderedFormats, [ClipItem.Format.png, ClipItem.Format.text])
     }
 }
+
+extension ClipItemTests {
+    func testPlainTextOnlyStripsRichFormats() {
+        var item = ClipItem.text("hello")
+        item.formats[ClipItem.Format.rtf] = Data("{\\rtf1 hello}".utf8)
+        XCTAssertTrue(item.hasRichText)
+        let plain = item.plainTextOnly()
+        XCTAssertEqual(plain?.formats.count, 1)
+        XCTAssertEqual(plain?.plainText, "hello")
+        XCTAssertEqual(plain?.id, item.id)
+        XCTAssertNil(ClipItem(id: UUID(), date: Date(), formats: [ClipItem.Format.png: Data()], sourceApp: nil, contentHash: "x").plainTextOnly())
+    }
+}
