@@ -70,7 +70,6 @@
 "Hot key for “%@”" = "Горячая клавиша для «%@»";
 "Hot key unavailable" = "Горячая клавиша недоступна";
 "Hot key: %@" = "Горячая клавиша: %@";
-"Hot keys & paste" = "Горячие клавиши и вставка";
 "I understand that if I lose both the password and this recovery phrase, my data is lost forever." = "Я понимаю, что если потеряю и пароль, и эту фразу восстановления, мои данные будут утрачены навсегда.";
 "I've saved it" = "Я сохранил(а)";
 "Image items:" = "Изображений:";
@@ -318,3 +317,16 @@
 "Paste as plain text" = "Вставить как простой текст";
 "Show in Viewer" = "Показать в Просмотре";
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "Удерживайте ⇧ для расширенного меню: у каждого элемента истории появляется подменю со всеми действиями — вставить как простой текст, в ВЕРХНЕМ РЕГИСТРЕ, в одну строку, только скопировать, …. Удерживайте ⌥ при выборе элемента, чтобы добавить его в Шаблоны, ⌃ — удалить.";
+"%@ and %@ use the same hot key (%@)." = "«%@» и «%@» используют одно сочетание (%@).";
+"Hot key conflict" = "Конфликт сочетаний";
+"Hot keys" = "Сочетания";
+"Lock Keepit:" = "Заблокировать Keepit:";
+"Menus" = "Меню";
+"Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "Модификаторы, которые вместе с 1–9 и 0 сразу вставляют элемент истории 1–10. Кликните поле и нажмите модификаторы с любой цифрой; ⌫ выключает.";
+"Other" = "Другое";
+"Paste item by number:" = "Вставить элемент по номеру:";
+"Paste latest as plain text:" = "Вставить последний как простой текст:";
+"Paste without the menu" = "Вставка без меню";
+"Pastes the most recent item with formatting stripped." = "Вставляет самый свежий элемент без форматирования.";
+"Pause / resume recording:" = "Пауза / возобновить запись:";
+"Reset to Defaults" = "Сбросить по умолчанию";

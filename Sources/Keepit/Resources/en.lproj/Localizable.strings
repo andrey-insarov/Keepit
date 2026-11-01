@@ -70,7 +70,6 @@
 "Hot key for “%@”" = "Hot key for “%@”";
 "Hot key unavailable" = "Hot key unavailable";
 "Hot key: %@" = "Hot key: %@";
-"Hot keys & paste" = "Hot keys & paste";
 "I understand that if I lose both the password and this recovery phrase, my data is lost forever." = "I understand that if I lose both the password and this recovery phrase, my data is lost forever.";
 "I've saved it" = "I've saved it";
 "Image items:" = "Image items:";
@@ -347,3 +346,17 @@
 
 
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it.";
+
+"%@ and %@ use the same hot key (%@)." = "%@ and %@ use the same hot key (%@).";
+"Hot key conflict" = "Hot key conflict";
+"Hot keys" = "Hot keys";
+"Lock Keepit:" = "Lock Keepit:";
+"Menus" = "Menus";
+"Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off.";
+"Other" = "Other";
+"Paste item by number:" = "Paste item by number:";
+"Paste latest as plain text:" = "Paste latest as plain text:";
+"Paste without the menu" = "Paste without the menu";
+"Pastes the most recent item with formatting stripped." = "Pastes the most recent item with formatting stripped.";
+"Pause / resume recording:" = "Pause / resume recording:";
+"Reset to Defaults" = "Reset to Defaults";

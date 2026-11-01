@@ -70,7 +70,6 @@
 "Hot key for “%@”" = "Tecla de atalho para “%@”";
 "Hot key unavailable" = "Tecla de atalho indisponível";
 "Hot key: %@" = "Tecla de atalho: %@";
-"Hot keys & paste" = "Teclas de atalho e colar";
 "I understand that if I lose both the password and this recovery phrase, my data is lost forever." = "Entendo que, se eu perder a senha e esta frase de recuperação, meus dados serão perdidos para sempre.";
 "I've saved it" = "Já guardei";
 "Image items:" = "Itens de imagem:";
@@ -318,3 +317,16 @@
 "Paste as plain text" = "Colar como texto simples";
 "Show in Viewer" = "Mostrar no Visualizador";
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "Segure ⇧ para o menu estendido: cada item do histórico recebe um submenu com todas as ações — colar como texto simples, MAIÚSCULAS, uma linha, só copiar, …. Segure ⌥ ao escolher um item para adicioná-lo aos Modelos, ⌃ para excluí-lo.";
+"%@ and %@ use the same hot key (%@)." = "“%@” e “%@” usam a mesma tecla de atalho (%@).";
+"Hot key conflict" = "Conflito de teclas de atalho";
+"Hot keys" = "Atalhos";
+"Lock Keepit:" = "Bloquear o Keepit:";
+"Menus" = "Menus";
+"Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "Modificadores que, junto com 1–9 e 0, colam diretamente o item 1–10 do histórico. Clique no campo e pressione os modificadores com qualquer dígito; ⌫ desativa.";
+"Other" = "Outros";
+"Paste item by number:" = "Colar item por número:";
+"Paste latest as plain text:" = "Colar o mais recente como texto simples:";
+"Paste without the menu" = "Colar sem o menu";
+"Pastes the most recent item with formatting stripped." = "Cola o item mais recente sem formatação.";
+"Pause / resume recording:" = "Pausar / retomar a gravação:";
+"Reset to Defaults" = "Restaurar padrões";

@@ -70,7 +70,6 @@
 "Hot key for “%@”" = "Īsinājumtaustiņš “%@”";
 "Hot key unavailable" = "Īsinājumtaustiņš nav pieejams";
 "Hot key: %@" = "Īsinājumtaustiņš: %@";
-"Hot keys & paste" = "Īsinājumtaustiņi un ielīmēšana";
 "I understand that if I lose both the password and this recovery phrase, my data is lost forever." = "Es saprotu, ka, pazaudējot gan paroli, gan šo atkopšanas frāzi, mani dati tiks zaudēti uz visiem laikiem.";
 "I've saved it" = "Esmu saglabājis(-usi)";
 "Image items:" = "Attēli:";
@@ -318,3 +317,16 @@
 "Paste as plain text" = "Ielīmēt kā vienkāršu tekstu";
 "Show in Viewer" = "Rādīt skatītājā";
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "Turiet ⇧ paplašinātajai izvēlnei: katrs vēstures vienums iegūst apakšizvēlni ar visām darbībām — ielīmēt kā vienkāršu tekstu, LIELIE BURTI, viena rinda, tikai kopēt, …. Izvēloties vienumu, turiet ⌥, lai pievienotu Veidnēm, ⌃ — dzēst.";
+"%@ and %@ use the same hot key (%@)." = "“%@” un “%@” izmanto vienu un to pašu taustiņu kombināciju (%@).";
+"Hot key conflict" = "Taustiņu kombināciju konflikts";
+"Hot keys" = "Taustiņu kombinācijas";
+"Lock Keepit:" = "Bloķēt Keepit:";
+"Menus" = "Izvēlnes";
+"Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "Modifikatori, kas kopā ar 1–9 un 0 uzreiz ielīmē vēstures vienumu 1–10. Noklikšķiniet laukā un nospiediet modifikatorus ar jebkuru ciparu; ⌫ izslēdz.";
+"Other" = "Cits";
+"Paste item by number:" = "Ielīmēt vienumu pēc numura:";
+"Paste latest as plain text:" = "Ielīmēt jaunāko kā vienkāršu tekstu:";
+"Paste without the menu" = "Ielīmēšana bez izvēlnes";
+"Pastes the most recent item with formatting stripped." = "Ielīmē jaunāko vienumu bez formatējuma.";
+"Pause / resume recording:" = "Pauzēt / atsākt ierakstīšanu:";
+"Reset to Defaults" = "Atiestatīt uz noklusējumu";

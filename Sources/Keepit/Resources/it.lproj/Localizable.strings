@@ -70,7 +70,6 @@
 "Hot key for “%@”" = "Tasto rapido per “%@”";
 "Hot key unavailable" = "Tasto rapido non disponibile";
 "Hot key: %@" = "Tasto rapido: %@";
-"Hot keys & paste" = "Tasti rapidi e incolla";
 "I understand that if I lose both the password and this recovery phrase, my data is lost forever." = "Capisco che se perdo sia la password sia questa frase di recupero, i miei dati sono persi per sempre.";
 "I've saved it" = "L’ho salvata";
 "Image items:" = "Elementi immagine:";
@@ -318,3 +317,16 @@
 "Paste as plain text" = "Incolla come testo semplice";
 "Show in Viewer" = "Mostra nel Visualizzatore";
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "Tieni premuto ⇧ per il menu esteso: ogni elemento della cronologia riceve un sottomenu con tutte le azioni — incolla come testo semplice, MAIUSCOLO, una riga, solo copia, …. Tieni premuto ⌥ scegliendo un elemento per aggiungerlo ai Modelli, ⌃ per eliminarlo.";
+"%@ and %@ use the same hot key (%@)." = "«%@» e «%@» usano la stessa scorciatoia (%@).";
+"Hot key conflict" = "Conflitto di scorciatoie";
+"Hot keys" = "Scorciatoie";
+"Lock Keepit:" = "Blocca Keepit:";
+"Menus" = "Menu";
+"Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "Modificatori che, insieme a 1–9 e 0, incollano direttamente l’elemento 1–10 della cronologia. Fai clic sul campo e premi i modificatori con una cifra qualsiasi; ⌫ disattiva.";
+"Other" = "Altro";
+"Paste item by number:" = "Incolla elemento per numero:";
+"Paste latest as plain text:" = "Incolla l’ultimo come testo semplice:";
+"Paste without the menu" = "Incolla senza il menu";
+"Pastes the most recent item with formatting stripped." = "Incolla l’elemento più recente senza formattazione.";
+"Pause / resume recording:" = "Sospendi / riprendi la registrazione:";
+"Reset to Defaults" = "Ripristina predefiniti";

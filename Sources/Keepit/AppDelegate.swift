@@ -435,7 +435,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         monitor.updateSettings(new)
         menuBuilder.settings = new
         menuBuilder.invalidateThumbnails()
-        if old.historyHotKey != new.historyHotKey || old.templateHotKey != new.templateHotKey || old.previousHotKey != new.previousHotKey {
+        if old.historyHotKey != new.historyHotKey || old.templateHotKey != new.templateHotKey || old.previousHotKey != new.previousHotKey
+            || old.plainHotKey != new.plainHotKey || old.numberPasteModifiers != new.numberPasteModifiers
+            || old.lockHotKey != new.lockHotKey || old.pauseHotKey != new.pauseHotKey {
             registerHotKeys()
         }
         if old.launchAtLogin != new.launchAtLogin {
@@ -466,6 +468,27 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if let prev = settings.previousHotKey,
            !hotKeys.register(prev, handler: { [weak self] in self?.pastePreviousItem() }) {
             failed.append(prev.displayString)
+        }
+        if let plain = settings.plainHotKey,
+           !hotKeys.register(plain, handler: { [weak self] in self?.pasteItem(at: 0, plainText: true) }) {
+            failed.append(plain.displayString)
+        }
+        if let mods = settings.numberPasteModifiers {
+            for (i, code) in HotKey.digitKeyCodes.enumerated() {
+                let hk = HotKey(keyCode: code, modifiers: mods)
+                if !hotKeys.register(hk, handler: { [weak self] in self?.pasteItem(at: i, plainText: false) }) {
+                    failed.append(hk.displayString)
+                }
+            }
+        }
+        if let hk = settings.lockHotKey, !hotKeys.register(hk, handler: { [weak self] in self?.lock() }) {
+            failed.append(hk.displayString)
+        }
+        if let hk = settings.pauseHotKey, !hotKeys.register(hk, handler: { [weak self] in
+            guard let self else { return }
+            if let until = self.pausedUntil, until > Date() { self.resumeRecording() } else { self.pauseRecording() }
+        }) {
+            failed.append(hk.displayString)
         }
         // Per-template hot keys: paste the item directly, no menu ("Set Hot Key" on a template item).
         for t in templates.allItems().filter({ $0.hotKey != nil }).prefix(Limits.templateHotKeysMax) {
@@ -502,9 +525,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         appMenu.addItem(withTitle: L("Viewer…"), action: #selector(openViewer), keyEquivalent: "l")
         appMenu.addItem(withTitle: L("Preferences…"), action: #selector(openPreferences), keyEquivalent: ",")
-        appMenu.addItem(.separator())
-        appMenu.addItem(withTitle: L("Export Backup…"), action: #selector(exportBackup), keyEquivalent: "")
-        appMenu.addItem(withTitle: L("Import Backup…"), action: #selector(importBackup), keyEquivalent: "")
         appMenu.addItem(.separator())
         appMenu.addItem(withTitle: L("Quit Keepit"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         appItem.submenu = appMenu
@@ -745,9 +765,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             item(L("Add Clipboard to Templates"), #selector(addClipboardToTemplates)),
             item(L("Preferences…"), #selector(openPreferences), ","),
             .separator(),
-            item(L("Export Backup…"), #selector(exportBackup)),
-            item(L("Import Backup…"), #selector(importBackup)),
-            .separator(),
             item(L("Clear History"), #selector(clearHistory)),
         ]
         if let until = pausedUntil, until > Date() {
@@ -778,9 +795,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// again and goes to the top, so pressing the key repeatedly swaps between the two latest clips.
     func pastePreviousItem() {
         guard !history.items.isEmpty else { NSSound.beep(); return }
-        let item = history.items.count > 1 ? history.items[1] : history.items[0]
+        pasteItem(at: history.items.count > 1 ? 1 : 0, plainText: false)
+    }
+
+    /// Global hot keys: paste history item at `index` into the front app without the menu.
+    func pasteItem(at index: Int, plainText: Bool) {
+        guard !isLocked, index >= 0, index < history.items.count else { NSSound.beep(); return }
+        let item = history.items[index]
         let target = NSWorkspace.shared.frontmostApplication
-        Paster.paste(item, into: target, monitor: monitor, settings: settings, sendKey: settings.pasteAfterSelect)
+        Paster.paste(item, into: target, monitor: monitor, settings: settings, sendKey: settings.pasteAfterSelect, plainText: plainText)
     }
 
     @objc private func historyChosen(_ sender: NSMenuItem) {

@@ -9,6 +9,22 @@ struct HotKey: Codable, Equatable {
     static let optionC = HotKey(keyCode: UInt32(kVK_ANSI_C), modifiers: UInt32(optionKey))
     static let optionT = HotKey(keyCode: UInt32(kVK_ANSI_T), modifiers: UInt32(optionKey))
     static let optionShiftV = HotKey(keyCode: UInt32(kVK_ANSI_V), modifiers: UInt32(optionKey | shiftKey))
+    static let controlOptionV = HotKey(keyCode: UInt32(kVK_ANSI_V), modifiers: UInt32(controlKey | optionKey))
+    /// Default modifier set for "paste item N by number" (⌃⌥ + 1–9, 0).
+    static let controlOption = UInt32(controlKey | optionKey)
+
+    /// Key codes of 1…9, 0 — the digits used for direct paste.
+    static let digitKeyCodes: [UInt32] = [kVK_ANSI_1, kVK_ANSI_2, kVK_ANSI_3, kVK_ANSI_4, kVK_ANSI_5,
+                                          kVK_ANSI_6, kVK_ANSI_7, kVK_ANSI_8, kVK_ANSI_9, kVK_ANSI_0].map { UInt32($0) }
+
+    static func modifierString(_ modifiers: UInt32) -> String {
+        var s = ""
+        if modifiers & UInt32(controlKey) != 0 { s += "⌃" }
+        if modifiers & UInt32(optionKey)  != 0 { s += "⌥" }
+        if modifiers & UInt32(shiftKey)   != 0 { s += "⇧" }
+        if modifiers & UInt32(cmdKey)     != 0 { s += "⌘" }
+        return s
+    }
 
     var displayString: String {
         var s = ""
@@ -64,6 +80,10 @@ struct Settings: Codable, Equatable {
     var historyHotKey = HotKey.optionC
     var templateHotKey = HotKey.optionT
     var previousHotKey: HotKey? = HotKey.optionShiftV   // paste history item #2 directly, no menu
+    var plainHotKey: HotKey? = HotKey.controlOptionV     // paste the latest item as plain text, no menu
+    var numberPasteModifiers: UInt32? = HotKey.controlOption   // <mods>+1…9,0 paste item N; nil = off
+    var lockHotKey: HotKey? = nil                        // global "Lock Keepit"
+    var pauseHotKey: HotKey? = nil                       // global "Pause recording for 10 minutes"
     var pasteAfterSelect = true    // action.paste
 
     // [sendkey]
@@ -114,6 +134,10 @@ struct Settings: Codable, Equatable {
         historyHotKey    = try c.decodeIfPresent(HotKey.self, forKey: .historyHotKey)    ?? d.historyHotKey
         templateHotKey   = try c.decodeIfPresent(HotKey.self, forKey: .templateHotKey)   ?? d.templateHotKey
         previousHotKey   = c.contains(.previousHotKey) ? try c.decodeIfPresent(HotKey.self, forKey: .previousHotKey) : d.previousHotKey
+        plainHotKey      = c.contains(.plainHotKey) ? try c.decodeIfPresent(HotKey.self, forKey: .plainHotKey) : d.plainHotKey
+        numberPasteModifiers = c.contains(.numberPasteModifiers) ? try c.decodeIfPresent(UInt32.self, forKey: .numberPasteModifiers) : d.numberPasteModifiers
+        lockHotKey       = try c.decodeIfPresent(HotKey.self, forKey: .lockHotKey)
+        pauseHotKey      = try c.decodeIfPresent(HotKey.self, forKey: .pauseHotKey)
         pasteAfterSelect = try c.decodeIfPresent(Bool.self,   forKey: .pasteAfterSelect) ?? d.pasteAfterSelect
         pasteDelay       = try c.decodeIfPresent(Double.self, forKey: .pasteDelay)       ?? d.pasteDelay
         pasteKeys        = try c.decodeIfPresent([String: PasteKey].self, forKey: .pasteKeys) ?? d.pasteKeys

@@ -70,7 +70,6 @@
 "Hot key for “%@”" = "Tastenkürzel für „%@“";
 "Hot key unavailable" = "Tastenkürzel nicht verfügbar";
 "Hot key: %@" = "Tastenkürzel: %@";
-"Hot keys & paste" = "Tastenkürzel & Einfügen";
 "I understand that if I lose both the password and this recovery phrase, my data is lost forever." = "Mir ist klar: Verliere ich sowohl das Passwort als auch diese Wiederherstellungsphrase, sind meine Daten für immer verloren.";
 "I've saved it" = "Ich habe sie gesichert";
 "Image items:" = "Bildeinträge:";
@@ -318,3 +317,16 @@
 "Paste as plain text" = "Als reinen Text einfügen";
 "Show in Viewer" = "Im Viewer anzeigen";
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "⇧ halten für das erweiterte Menü: jeder Verlaufseintrag erhält ein Untermenü mit allen Aktionen – als reinen Text einfügen, GROSSBUCHSTABEN, eine Zeile, nur kopieren, …. Beim Auswählen ⌥ halten, um den Eintrag zu Vorlagen hinzuzufügen, ⌃ zum Löschen.";
+"%@ and %@ use the same hot key (%@)." = "„%@“ und „%@“ verwenden dasselbe Tastenkürzel (%@).";
+"Hot key conflict" = "Tastenkürzel-Konflikt";
+"Hot keys" = "Tastenkürzel";
+"Lock Keepit:" = "Keepit sperren:";
+"Menus" = "Menüs";
+"Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "Modifiertasten, die zusammen mit 1–9 und 0 den Verlaufseintrag 1–10 direkt einfügen. Ins Feld klicken und die Modifier mit einer beliebigen Ziffer drücken; ⌫ schaltet ab.";
+"Other" = "Sonstiges";
+"Paste item by number:" = "Eintrag nach Nummer einfügen:";
+"Paste latest as plain text:" = "Neuesten als reinen Text einfügen:";
+"Paste without the menu" = "Einfügen ohne Menü";
+"Pastes the most recent item with formatting stripped." = "Fügt den neuesten Eintrag ohne Formatierung ein.";
+"Pause / resume recording:" = "Aufzeichnung pausieren / fortsetzen:";
+"Reset to Defaults" = "Auf Standard zurücksetzen";

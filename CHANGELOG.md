@@ -2,6 +2,9 @@
 
 ## 2.9.0 — unreleased
 
+- **Hot keys tab** in Preferences with every global shortcut in one place and *Reset to Defaults*; conflicts between them are caught on Save
+- New global hot keys: **⌃⌥1–9, 0 — paste history item 1–10 directly**, **⌃⌥V — paste the latest item as plain text**; optional *Lock Keepit* and *Pause / resume recording* (off by default)
+- Export/Import Backup moved out of the menus into Preferences → Security
 - **`keepit://` URL scheme** for Shortcuts, Raycast, Alfred and scripts: `keepit://paste/2`, `keepit://copy/3`, `keepit://template/Name`, `keepit://add?text=…`, `keepit://add-template?text=…&name=…`, `keepit://history`, `keepit://pause` … (Help → Placeholders & Automation…)
 - **Placeholders in templates** — `{date}`, `{date+7d:EEEE}`, `{time}`, `{clipboard}`, `{clipboard:2|upper}`, `{input:Name}`, `{choice:A|B}`, `{cursor}`, `{user}`, `{uuid}`, `{random:1-100}` and more (Help → Template Placeholders…); `{input}`/`{choice}` ask for values before pasting, `{cursor}` places the caret
 - **Extended menu (hold ⇧)**: every history item gets a submenu with all actions for it — Paste, Paste as plain text, Copy only, *Paste as* UPPERCASE / lowercase / Title Case / Sentence case / trimmed / single line, Add to Templates, Show in Viewer, Delete — with single-letter shortcuts. The ⇧ “plain text” alternate is folded into it (⌥ and ⌃ alternates stay)

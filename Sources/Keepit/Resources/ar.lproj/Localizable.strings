@@ -70,7 +70,6 @@
 "Hot key for “%@”" = "مفتاح الاختصار لـ ”%@“";
 "Hot key unavailable" = "مفتاح الاختصار غير متاح";
 "Hot key: %@" = "مفتاح الاختصار: %@";
-"Hot keys & paste" = "مفاتيح الاختصار واللصق";
 "I understand that if I lose both the password and this recovery phrase, my data is lost forever." = "أفهم أنني إذا فقدت كلمة المرور وعبارة الاسترداد هذه معًا، فستُفقد بياناتي إلى الأبد.";
 "I've saved it" = "لقد حفظتها";
 "Image items:" = "عناصر الصور:";
@@ -318,3 +317,16 @@
 "Paste as plain text" = "لصق كنص عادي";
 "Show in Viewer" = "إظهار في العارض";
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "اضغط ⇧ باستمرار للقائمة الموسّعة: يحصل كل عنصر في السجل على قائمة فرعية بكل الإجراءات — لصق كنص عادي، أحرف كبيرة، سطر واحد، نسخ فقط، …. اضغط ⌥ مع اختيار عنصر لإضافته إلى القوالب، و⌃ لحذفه.";
+"%@ and %@ use the same hot key (%@)." = "يستخدم «%@» و«%@» الاختصار نفسه (%@).";
+"Hot key conflict" = "تعارض في الاختصارات";
+"Hot keys" = "الاختصارات";
+"Lock Keepit:" = "قفل Keepit:";
+"Menus" = "القوائم";
+"Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "مفاتيح التعديل التي تلصق مباشرة العنصر 1–10 من السجل مع 1–9 و0. انقر الحقل واضغط مفاتيح التعديل مع أي رقم؛ ⌫ يوقفه.";
+"Other" = "أخرى";
+"Paste item by number:" = "لصق عنصر بالرقم:";
+"Paste latest as plain text:" = "لصق الأحدث كنص عادي:";
+"Paste without the menu" = "اللصق دون القائمة";
+"Pastes the most recent item with formatting stripped." = "يلصق أحدث عنصر بدون تنسيق.";
+"Pause / resume recording:" = "إيقاف / استئناف التسجيل:";
+"Reset to Defaults" = "إعادة التعيين إلى الافتراضي";

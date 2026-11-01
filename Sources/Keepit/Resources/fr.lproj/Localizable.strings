@@ -70,7 +70,6 @@
 "Hot key for “%@”" = "Raccourci pour « %@ »";
 "Hot key unavailable" = "Raccourci indisponible";
 "Hot key: %@" = "Raccourci : %@";
-"Hot keys & paste" = "Raccourcis et collage";
 "I understand that if I lose both the password and this recovery phrase, my data is lost forever." = "Je comprends que si je perds à la fois le mot de passe et cette phrase de récupération, mes données sont perdues pour toujours.";
 "I've saved it" = "Je l’ai sauvegardée";
 "Image items:" = "Éléments image :";
@@ -318,3 +317,16 @@
 "Paste as plain text" = "Coller en texte brut";
 "Show in Viewer" = "Afficher dans la Visionneuse";
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "Maintenez ⇧ pour le menu étendu : chaque élément de l’historique reçoit un sous-menu avec toutes les actions — coller en texte brut, MAJUSCULES, une ligne, copier seulement, …. Maintenez ⌥ en choisissant un élément pour l’ajouter aux Modèles, ⌃ pour le supprimer.";
+"%@ and %@ use the same hot key (%@)." = "« %@ » et « %@ » utilisent le même raccourci (%@).";
+"Hot key conflict" = "Conflit de raccourcis";
+"Hot keys" = "Raccourcis";
+"Lock Keepit:" = "Verrouiller Keepit :";
+"Menus" = "Menus";
+"Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "Touches de modification qui, avec 1–9 et 0, collent directement l’élément 1–10 de l’historique. Cliquez le champ et appuyez sur les modificateurs avec un chiffre ; ⌫ désactive.";
+"Other" = "Autre";
+"Paste item by number:" = "Coller l’élément par numéro :";
+"Paste latest as plain text:" = "Coller le dernier en texte brut :";
+"Paste without the menu" = "Coller sans le menu";
+"Pastes the most recent item with formatting stripped." = "Colle l’élément le plus récent sans mise en forme.";
+"Pause / resume recording:" = "Suspendre / reprendre l’enregistrement :";
+"Reset to Defaults" = "Rétablir les valeurs par défaut";

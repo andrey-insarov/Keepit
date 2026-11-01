@@ -70,7 +70,6 @@
 "Hot key for “%@”" = "「%@」的快速鍵";
 "Hot key unavailable" = "快速鍵無法使用";
 "Hot key: %@" = "快速鍵：%@";
-"Hot keys & paste" = "快速鍵與貼上";
 "I understand that if I lose both the password and this recovery phrase, my data is lost forever." = "我了解若同時遺失密碼和這組復原助記詞，我的資料將永久遺失。";
 "I've saved it" = "我已儲存";
 "Image items:" = "影像項目：";
@@ -318,3 +317,16 @@
 "Paste as plain text" = "以純文字貼上";
 "Show in Viewer" = "在檢視器中顯示";
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "按住 ⇧ 顯示延伸選單：每個歷史記錄項目都會有包含全部動作的子選單 — 以純文字貼上、大寫、單行、僅拷貝、…。選擇項目時按住 ⌥ 加入範本，⌃ 刪除。";
+"%@ and %@ use the same hot key (%@)." = "「%@」和「%@」使用相同的快速鍵（%@）。";
+"Hot key conflict" = "快速鍵衝突";
+"Hot keys" = "快速鍵";
+"Lock Keepit:" = "鎖定 Keepit：";
+"Menus" = "選單";
+"Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "與 1–9 和 0 組合可直接貼上歷史記錄第 1–10 項的修飾鍵。按一下欄位並按下修飾鍵加任意數字；⌫ 關閉。";
+"Other" = "其他";
+"Paste item by number:" = "依編號貼上項目：";
+"Paste latest as plain text:" = "以純文字貼上最新項目：";
+"Paste without the menu" = "不經選單貼上";
+"Pastes the most recent item with formatting stripped." = "貼上最新項目並去除格式。";
+"Pause / resume recording:" = "暫停 / 恢復記錄：";
+"Reset to Defaults" = "重設為預設值";

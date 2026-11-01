@@ -70,7 +70,6 @@
 "Hot key for “%@”" = "מקש קיצור עבור ”%@“";
 "Hot key unavailable" = "מקש הקיצור אינו זמין";
 "Hot key: %@" = "מקש קיצור: %@";
-"Hot keys & paste" = "מקשי קיצור והדבקה";
 "I understand that if I lose both the password and this recovery phrase, my data is lost forever." = "אני מבין/ה שאם אאבד גם את הסיסמה וגם את משפט השחזור הזה, הנתונים שלי יאבדו לנצח.";
 "I've saved it" = "שמרתי";
 "Image items:" = "פריטי תמונה:";
@@ -318,3 +317,16 @@
 "Paste as plain text" = "הדבק כטקסט פשוט";
 "Show in Viewer" = "הצג במציג";
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "החזק ⇧ לתפריט המורחב: כל פריט בהיסטוריה מקבל תת־תפריט עם כל הפעולות — הדבקה כטקסט פשוט, אותיות גדולות, שורה אחת, העתקה בלבד, …. החזק ⌥ בעת בחירת פריט להוספה לתבניות, ⌃ למחיקה.";
+"%@ and %@ use the same hot key (%@)." = "‏«%@» ו‑«%@» משתמשים באותו קיצור (%@).";
+"Hot key conflict" = "התנגשות קיצורים";
+"Hot keys" = "קיצורים";
+"Lock Keepit:" = "נעל את Keepit:";
+"Menus" = "תפריטים";
+"Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "מקשי שינוי שיחד עם 1–9 ו‑0 מדביקים ישירות את פריט 1–10 בהיסטוריה. לחץ על השדה והקש את מקשי השינוי עם ספרה כלשהי; ⌫ מכבה.";
+"Other" = "אחר";
+"Paste item by number:" = "הדבק פריט לפי מספר:";
+"Paste latest as plain text:" = "הדבק את האחרון כטקסט פשוט:";
+"Paste without the menu" = "הדבקה ללא התפריט";
+"Pastes the most recent item with formatting stripped." = "מדביק את הפריט האחרון ללא עיצוב.";
+"Pause / resume recording:" = "השהה / המשך הקלטה:";
+"Reset to Defaults" = "אפס לברירת מחדל";

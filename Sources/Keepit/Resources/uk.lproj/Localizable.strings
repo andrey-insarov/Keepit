@@ -70,7 +70,6 @@
 "Hot key for “%@”" = "Гаряча клавіша для «%@»";
 "Hot key unavailable" = "Гаряча клавіша недоступна";
 "Hot key: %@" = "Гаряча клавіша: %@";
-"Hot keys & paste" = "Гарячі клавіші та вставлення";
 "I understand that if I lose both the password and this recovery phrase, my data is lost forever." = "Я розумію, що якщо втрачу і пароль, і цю фразу відновлення, мої дані буде втрачено назавжди.";
 "I've saved it" = "Я зберіг(ла)";
 "Image items:" = "Зображень:";
@@ -318,3 +317,16 @@
 "Paste as plain text" = "Вставити як простий текст";
 "Show in Viewer" = "Показати в Перегляді";
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "Утримуйте ⇧ для розширеного меню: у кожного елемента історії з’являється підменю з усіма діями — вставити як простий текст, ВЕЛИКИМИ, в один рядок, лише скопіювати, …. Утримуйте ⌥ під час вибору елемента, щоб додати його до Шаблонів, ⌃ — видалити.";
+"%@ and %@ use the same hot key (%@)." = "«%@» і «%@» використовують одне сполучення (%@).";
+"Hot key conflict" = "Конфлікт сполучень";
+"Hot keys" = "Сполучення";
+"Lock Keepit:" = "Заблокувати Keepit:";
+"Menus" = "Меню";
+"Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "Модифікатори, які разом із 1–9 та 0 одразу вставляють елемент історії 1–10. Клацніть поле й натисніть модифікатори з будь-якою цифрою; ⌫ вимикає.";
+"Other" = "Інше";
+"Paste item by number:" = "Вставити елемент за номером:";
+"Paste latest as plain text:" = "Вставити останній як простий текст:";
+"Paste without the menu" = "Вставлення без меню";
+"Pastes the most recent item with formatting stripped." = "Вставляє найновіший елемент без форматування.";
+"Pause / resume recording:" = "Пауза / відновити запис:";
+"Reset to Defaults" = "Скинути до типових";

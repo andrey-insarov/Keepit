@@ -70,7 +70,6 @@
 "Hot key for “%@”" = "“%@” 단축키";
 "Hot key unavailable" = "단축키를 사용할 수 없음";
 "Hot key: %@" = "단축키: %@";
-"Hot keys & paste" = "단축키 및 붙여넣기";
 "I understand that if I lose both the password and this recovery phrase, my data is lost forever." = "암호와 이 복구 문구를 모두 잃으면 데이터를 영구히 잃게 된다는 것을 이해합니다.";
 "I've saved it" = "저장했습니다";
 "Image items:" = "이미지 항목:";
@@ -318,3 +317,16 @@
 "Paste as plain text" = "서식 없는 텍스트로 붙여넣기";
 "Show in Viewer" = "뷰어에서 보기";
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "⇧를 누르고 있으면 확장 메뉴가 되어 모든 기록 항목에 전체 동작 하위 메뉴(서식 없는 텍스트로 붙여넣기, 대문자, 한 줄, 복사만, …)가 생깁니다. 항목을 선택할 때 ⌥는 템플릿에 추가, ⌃는 삭제합니다.";
+"%@ and %@ use the same hot key (%@)." = "“%@”과(와) “%@”이(가) 같은 단축키(%@)를 사용합니다.";
+"Hot key conflict" = "단축키 충돌";
+"Hot keys" = "단축키";
+"Lock Keepit:" = "Keepit 잠그기:";
+"Menus" = "메뉴";
+"Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "1–9, 0과 함께 기록 항목 1–10을 바로 붙여넣는 수정자 키입니다. 필드를 클릭하고 수정자 키와 아무 숫자나 누르세요. ⌫는 끕니다.";
+"Other" = "기타";
+"Paste item by number:" = "번호로 항목 붙여넣기:";
+"Paste latest as plain text:" = "최신 항목을 서식 없이 붙여넣기:";
+"Paste without the menu" = "메뉴 없이 붙여넣기";
+"Pastes the most recent item with formatting stripped." = "최신 항목을 서식 없이 붙여넣습니다.";
+"Pause / resume recording:" = "기록 일시 중지 / 재개:";
+"Reset to Defaults" = "기본값으로 재설정";

@@ -70,7 +70,6 @@
 "Hot key for “%@”" = "“%@” için kısayol tuşu";
 "Hot key unavailable" = "Kısayol tuşu kullanılamıyor";
 "Hot key: %@" = "Kısayol tuşu: %@";
-"Hot keys & paste" = "Kısayol tuşları ve yapıştırma";
 "I understand that if I lose both the password and this recovery phrase, my data is lost forever." = "Hem parolayı hem de bu kurtarma ifadesini kaybedersem verilerimin sonsuza dek kaybolacağını anlıyorum.";
 "I've saved it" = "Kaydettim";
 "Image items:" = "Görüntü öğeleri:";
@@ -318,3 +317,16 @@
 "Paste as plain text" = "Düz metin olarak yapıştır";
 "Show in Viewer" = "Görüntüleyicide göster";
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "Genişletilmiş menü için ⇧ basılı tutun: her geçmiş öğesi tüm eylemleri içeren bir alt menü alır — düz metin olarak yapıştır, BÜYÜK HARF, tek satır, yalnızca kopyala, …. Bir öğeyi seçerken ⌥ ile Şablonlara ekleyin, ⌃ ile silin.";
+"%@ and %@ use the same hot key (%@)." = "“%@” ve “%@” aynı kısayolu kullanıyor (%@).";
+"Hot key conflict" = "Kısayol çakışması";
+"Hot keys" = "Kısayollar";
+"Lock Keepit:" = "Keepit'i kilitle:";
+"Menus" = "Menüler";
+"Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "1–9 ve 0 ile birlikte geçmiş öğesi 1–10'u doğrudan yapıştıran değiştiriciler. Alana tıklayıp değiştiricilere herhangi bir rakamla basın; ⌫ kapatır.";
+"Other" = "Diğer";
+"Paste item by number:" = "Öğeyi numarayla yapıştır:";
+"Paste latest as plain text:" = "En sonunu düz metin olarak yapıştır:";
+"Paste without the menu" = "Menü olmadan yapıştırma";
+"Pastes the most recent item with formatting stripped." = "En son öğeyi biçimlendirmesiz yapıştırır.";
+"Pause / resume recording:" = "Kaydı duraklat / sürdür:";
+"Reset to Defaults" = "Varsayılanlara sıfırla";

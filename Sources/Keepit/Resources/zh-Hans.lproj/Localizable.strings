@@ -70,7 +70,6 @@
 "Hot key for “%@”" = "“%@”的快捷键";
 "Hot key unavailable" = "快捷键不可用";
 "Hot key: %@" = "快捷键：%@";
-"Hot keys & paste" = "快捷键与粘贴";
 "I understand that if I lose both the password and this recovery phrase, my data is lost forever." = "我明白，如果同时丢失密码和此恢复助记词，我的数据将永久丢失。";
 "I've saved it" = "我已保存";
 "Image items:" = "图片项：";
@@ -318,3 +317,16 @@
 "Paste as plain text" = "以纯文本粘贴";
 "Show in Viewer" = "在查看器中显示";
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "按住 ⇧ 显示扩展菜单：每个历史记录项都会有包含全部操作的子菜单 — 以纯文本粘贴、大写、单行、仅复制、…。选择项目时按住 ⌥ 添加到模板，⌃ 删除。";
+"%@ and %@ use the same hot key (%@)." = "“%@”和“%@”使用相同的热键（%@）。";
+"Hot key conflict" = "热键冲突";
+"Hot keys" = "热键";
+"Lock Keepit:" = "锁定 Keepit：";
+"Menus" = "菜单";
+"Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "与 1–9 和 0 组合可直接粘贴历史记录第 1–10 项的修饰键。点击该字段并按下修饰键加任意数字；⌫ 关闭。";
+"Other" = "其他";
+"Paste item by number:" = "按编号粘贴项目：";
+"Paste latest as plain text:" = "以纯文本粘贴最新项：";
+"Paste without the menu" = "不经菜单粘贴";
+"Pastes the most recent item with formatting stripped." = "粘贴最新项并去除格式。";
+"Pause / resume recording:" = "暂停 / 恢复记录：";
+"Reset to Defaults" = "恢复默认";

@@ -70,7 +70,6 @@
 "Hot key for “%@”" = "Spartusis klavišas „%@“";
 "Hot key unavailable" = "Spartusis klavišas negalimas";
 "Hot key: %@" = "Spartusis klavišas: %@";
-"Hot keys & paste" = "Spartieji klavišai ir įklijavimas";
 "I understand that if I lose both the password and this recovery phrase, my data is lost forever." = "Suprantu, kad praradus ir slaptažodį, ir šią atkūrimo frazę mano duomenys bus prarasti visam laikui.";
 "I've saved it" = "Išsaugojau";
 "Image items:" = "Vaizdai:";
@@ -318,3 +317,16 @@
 "Paste as plain text" = "Įklijuoti kaip paprastą tekstą";
 "Show in Viewer" = "Rodyti peržiūroje";
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "Laikykite ⇧ išplėstiniam meniu: kiekvienas istorijos elementas gauna submeniu su visais veiksmais — įklijuoti kaip paprastą tekstą, DIDŽIOSIOMIS, viena eilutė, tik kopijuoti, …. Renkantis elementą laikykite ⌥, kad pridėtumėte į Šablonus, ⌃ — ištrinti.";
+"%@ and %@ use the same hot key (%@)." = "„%@“ ir „%@“ naudoja tą patį spartųjį klavišą (%@).";
+"Hot key conflict" = "Sparčiųjų klavišų konfliktas";
+"Hot keys" = "Spartieji klavišai";
+"Lock Keepit:" = "Užrakinti „Keepit“:";
+"Menus" = "Meniu";
+"Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "Modifikatoriai, kurie kartu su 1–9 ir 0 iš karto įklijuoja istorijos elementą 1–10. Spustelėkite lauką ir paspauskite modifikatorius su bet kuriuo skaitmeniu; ⌫ išjungia.";
+"Other" = "Kita";
+"Paste item by number:" = "Įklijuoti elementą pagal numerį:";
+"Paste latest as plain text:" = "Įklijuoti naujausią kaip paprastą tekstą:";
+"Paste without the menu" = "Įklijavimas be meniu";
+"Pastes the most recent item with formatting stripped." = "Įklijuoja naujausią elementą be formatavimo.";
+"Pause / resume recording:" = "Pristabdyti / tęsti įrašymą:";
+"Reset to Defaults" = "Atkurti numatytuosius";

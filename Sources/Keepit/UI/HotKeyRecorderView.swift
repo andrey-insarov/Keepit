@@ -9,6 +9,8 @@ final class HotKeyRecorderView: NSControl {
     var onChange: ((HotKey?) -> Void)?
     /// Allow ⌫ while recording to remove the hot key (shown as “—”).
     var allowsClear = false
+    /// Record only the modifiers (for "<mods> + 1–0"): the key pressed with them is ignored.
+    var modifiersOnly = false
     private var recording = false {
         didSet { needsDisplay = true }
     }
@@ -74,7 +76,7 @@ final class HotKeyRecorderView: NSControl {
         // Require at least one non-shift modifier, like the original (plain letters would break typing).
         guard mods & ~UInt32(shiftKey) != 0 else { NSSound.beep(); return true }
 
-        let hk = HotKey(keyCode: UInt32(event.keyCode), modifiers: mods)
+        let hk = HotKey(keyCode: modifiersOnly ? UInt32(kVK_ANSI_1) : UInt32(event.keyCode), modifiers: mods)
         hotKey = hk
         recording = false
         window?.makeFirstResponder(nil)
@@ -90,7 +92,8 @@ final class HotKeyRecorderView: NSControl {
         NSColor.separatorColor.setStroke()
         path.stroke()
 
-        let text = recording ? L("Press keys… (⎋ cancels)") : (hotKey?.displayString ?? (allowsClear ? L("Off — click to set") : L("Click to set")))
+        let set: String? = hotKey.map { modifiersOnly ? HotKey.modifierString($0.modifiers) + " 1–0" : $0.displayString }
+        let text = recording ? L("Press keys… (⎋ cancels)") : (set ?? (allowsClear ? L("Off — click to set") : L("Click to set")))
         let attrs: [NSAttributedString.Key: Any] = [
             .font: NSFont.systemFont(ofSize: NSFont.systemFontSize),
             .foregroundColor: recording ? NSColor.secondaryLabelColor : NSColor.labelColor,

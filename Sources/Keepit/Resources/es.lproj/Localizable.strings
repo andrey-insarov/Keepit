@@ -70,7 +70,6 @@
 "Hot key for “%@”" = "Atajo para “%@”";
 "Hot key unavailable" = "Atajo no disponible";
 "Hot key: %@" = "Atajo: %@";
-"Hot keys & paste" = "Atajos y pegado";
 "I understand that if I lose both the password and this recovery phrase, my data is lost forever." = "Entiendo que si pierdo tanto la contraseña como esta frase de recuperación, mis datos se perderán para siempre.";
 "I've saved it" = "La he guardado";
 "Image items:" = "Elementos de imagen:";
@@ -318,3 +317,16 @@
 "Paste as plain text" = "Pegar como texto sin formato";
 "Show in Viewer" = "Mostrar en el Visor";
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "Mantén ⇧ para el menú ampliado: cada elemento del historial recibe un submenú con todas las acciones: pegar como texto sin formato, MAYÚSCULAS, una línea, solo copiar, …. Mantén ⌥ al elegir un elemento para añadirlo a Plantillas, ⌃ para eliminarlo.";
+"%@ and %@ use the same hot key (%@)." = "«%@» y «%@» usan el mismo atajo (%@).";
+"Hot key conflict" = "Conflicto de atajos";
+"Hot keys" = "Atajos";
+"Lock Keepit:" = "Bloquear Keepit:";
+"Menus" = "Menús";
+"Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "Modificadores que, junto con 1–9 y 0, pegan directamente el elemento 1–10 del historial. Haz clic en el campo y pulsa los modificadores con cualquier dígito; ⌫ lo desactiva.";
+"Other" = "Otros";
+"Paste item by number:" = "Pegar elemento por número:";
+"Paste latest as plain text:" = "Pegar el último como texto sin formato:";
+"Paste without the menu" = "Pegar sin el menú";
+"Pastes the most recent item with formatting stripped." = "Pega el elemento más reciente sin formato.";
+"Pause / resume recording:" = "Pausar / reanudar la grabación:";
+"Reset to Defaults" = "Restablecer valores predeterminados";

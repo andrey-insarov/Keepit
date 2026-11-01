@@ -70,7 +70,6 @@
 "Hot key for “%@”" = "「%@」のホットキー";
 "Hot key unavailable" = "ホットキーを使用できません";
 "Hot key: %@" = "ホットキー: %@";
-"Hot keys & paste" = "ホットキーと貼り付け";
 "I understand that if I lose both the password and this recovery phrase, my data is lost forever." = "パスワードとこのリカバリーフレーズの両方を失うと、データは永久に失われることを理解しました。";
 "I've saved it" = "保存しました";
 "Image items:" = "画像項目:";
@@ -318,3 +317,16 @@
 "Paste as plain text" = "書式なしテキストとしてペースト";
 "Show in Viewer" = "ビューアで表示";
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "⇧ を押し続けると拡張メニューになり、履歴の各項目にすべての操作のサブメニュー（書式なしでペースト、大文字、1 行、コピーのみ、…）が付きます。項目を選ぶときに ⌥ でテンプレートに追加、⌃ で削除します。";
+"%@ and %@ use the same hot key (%@)." = "「%@」と「%@」に同じホットキー（%@）が設定されています。";
+"Hot key conflict" = "ホットキーの競合";
+"Hot keys" = "ホットキー";
+"Lock Keepit:" = "Keepit をロック:";
+"Menus" = "メニュー";
+"Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "1〜9 と 0 と組み合わせて履歴の 1〜10 番目を直接ペーストする修飾キー。フィールドをクリックし、修飾キーと任意の数字を押します。⌫ でオフ。";
+"Other" = "その他";
+"Paste item by number:" = "番号で項目をペースト:";
+"Paste latest as plain text:" = "最新の項目を書式なしでペースト:";
+"Paste without the menu" = "メニューを開かずにペースト";
+"Pastes the most recent item with formatting stripped." = "最新の項目を書式を取り除いてペーストします。";
+"Pause / resume recording:" = "記録を一時停止 / 再開:";
+"Reset to Defaults" = "デフォルトに戻す";
