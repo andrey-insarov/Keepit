@@ -88,6 +88,8 @@ has more lines than the menu shows.
   works from anywhere, without opening the menu (see the next section).
 * Images show a thumbnail instead of a title; files show their names.
 
+![An image in the history: thumbnail in the menu, full picture in the preview](site/img/guide/menu-image.png)
+
 **Searching.** Just start typing: the field at the top of the menu filters the list as you type —
 by title and by the full text, so you can find a line in the middle of a long clip. Return pastes the
 first match, Esc clears the field (press it again to close the menu).
@@ -129,7 +131,9 @@ Hold **⇧** while the history menu is open and every item gets a `▸` submenu 
 that item: Paste, Paste as plain text, Copy only (put it on the clipboard without pasting), the
 *Paste as* transformations, Add to Templates, Show in Viewer, Delete.
 
-<!-- screenshot: history menu with ⇧ held, submenu open -->
+![Hold ⇧: every item gets a submenu; for the newest item it shows the global hot keys](site/img/guide/extended-menu.png)
+
+![For other items the same actions, without shortcuts](site/img/guide/extended-menu-item2.png)
 
 Point at an item (or press →) and the submenu opens beside the list; you can let go of ⇧ once it is
 open. For the newest item the submenu also lists the global hot keys from the table above — they do
@@ -142,7 +146,7 @@ Templates are clips you keep permanently: signatures, addresses, canned replies,
 image you paste often. They live in a tree with folders and show up in the *Template* submenu of the
 history menu and under **⌥T**.
 
-<!-- screenshot: template menu with a folder, separator and shortcut letters -->
+![The template menu: folders open as submenus, &-letters become shortcuts](site/img/guide/template-menu-letters.png)
 
 **Adding a template**
 
@@ -164,10 +168,10 @@ editor, or *Rename* / *Clear Name* in the context menu.
 ## 7. Placeholders — templates as a text expander
 
 Text templates can contain `{…}` placeholders that are filled in when the template is pasted. Put
-them anywhere in the text; everything without braces is pasted unchanged. *Help → Placeholders &
-Automation…* in the Viewer's menu bar lists them all.
+them anywhere in the text; everything without braces is pasted unchanged. The **?** button at the
+right end of the Viewer's toolbar opens a reference of all of them.
 
-<!-- screenshot: Help → Placeholders & Automation window -->
+<!-- screenshot: the Placeholders & Automation window (? button in the Viewer) -->
 
 | Placeholder | Result |
 |-------------|--------|
@@ -292,7 +296,7 @@ data between the direct download and the App Store edition.
 ## 12. Automation: the keepit:// URL scheme
 
 Shortcuts, Raycast, Alfred, Keyboard Maestro or a shell `open` can drive Keepit through URLs
-(*Help → Placeholders & Automation…* lists them in the app):
+(the **?** button in the Viewer lists them in the app):
 
 | URL | Effect |
 |-----|--------|

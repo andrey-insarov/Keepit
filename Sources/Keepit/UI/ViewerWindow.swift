@@ -107,6 +107,7 @@ final class ViewerWindowController: NSWindowController,
     private let templateRoot: VNode
     private var currentClipboard: ClipItem?
     private let searchField = NSSearchField()
+    private let helpButton = NSButton(title: "", target: nil, action: nil)
     private var query = ""   // lower-cased, trimmed; empty = no filter
     private var editingNode: VNode?
     private var showBinary = false
@@ -175,7 +176,13 @@ final class ViewerWindowController: NSWindowController,
             btn(L("Down"), #selector(moveDownAction), symbol: "arrow.down"),
             Spacer(),
             binaryButton,
+            helpButton,
         ])
+        helpButton.bezelStyle = .helpButton
+        helpButton.title = ""
+        helpButton.toolTip = L("Placeholders & Automation")
+        helpButton.target = self
+        helpButton.action = #selector(showHelp)
         searchField.placeholderString = L("Search")
         searchField.sendsSearchStringImmediately = true
         searchField.sendsWholeSearchString = false
@@ -344,6 +351,11 @@ final class ViewerWindowController: NSWindowController,
         query = searchField.stringValue.trimmingCharacters(in: .whitespaces).lowercased()
         refresh()
         if !query.isEmpty { outline.expandItem(nil, expandChildren: true) }
+    }
+
+    /// The (?) toolbar button: the app has no menu bar (accessory app), so the reference lives here.
+    @objc private func showHelp() {
+        PlaceholderReferenceWindow.show()
     }
 
     /// Edit → Find (⌘F) while the Viewer is key.

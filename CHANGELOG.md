@@ -1,6 +1,11 @@
 # Changelog
 
-## 2.9.0 — unreleased
+## 2.9.1 — unreleased
+
+- Viewer: a (?) button in the toolbar opens the Placeholders & Automation reference — the Help menu was unreachable, menu-bar apps have no menu bar
+- User guide at keep.it.com/guide.html (docs/GUIDE.md)
+
+## 2.9.0 — 2026-11-01
 
 - Viewer: search field (⌘F) filtering history and templates; bold section titles and clipboard item, heavier disclosure chevrons. The latest item is bold in the history menu
 - **Hot keys tab** in Preferences with every global shortcut in one place and *Reset to Defaults*; conflicts between them are caught on Save

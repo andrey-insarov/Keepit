@@ -1,6 +1,6 @@
 import AppKit
 
-/// Help → Template Placeholders…: the list of `{…}` tokens understood in template text.
+/// The (?) button in the Viewer toolbar: the list of `{…}` tokens understood in template text.
 enum PlaceholderReferenceWindow {
     private static var window: NSWindow?
 
