@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.7.1 — unreleased
+
+- Touch ID is offered whenever the Mac has a sensor (also when no fingerprint is enrolled yet or
+  biometry is temporarily locked), on first run and when turning protection on in Preferences —
+  the Touch ID checkboxes there become active as soon as *Require password* is ticked.
+- Homebrew cask: current `depends_on macos:` syntax (no more deprecation warning).
+
 ## 2.7.0 — 2026-11-01
 
 - **Pin in one move**: hold ⌥ while choosing a history item to add it to Templates (root level)

@@ -103,7 +103,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         a.messageText = L("Protect your clipboard history with a password?")
         a.informativeText = L("Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts. You will also get a 24-word recovery phrase in case you forget the password.")
         let touchID = NSButton(checkboxWithTitle: L("Also unlock with Touch ID (the password stays as fallback)"), target: nil, action: nil)
-        if BiometricUnlock.isAvailable {
+        if BiometricUnlock.hasSensor {
             touchID.state = .on
             touchID.sizeToFit()
             a.accessoryView = touchID
@@ -114,7 +114,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if a.runModal() == .alertFirstButtonReturn {
             // Decide Touch ID before enabling: enableProtection() stores the key for it right away.
             var s = settings
-            s.biometricUnlock = BiometricUnlock.isAvailable && touchID.state == .on
+            s.biometricUnlock = BiometricUnlock.hasSensor && touchID.state == .on
             s.biometricPasswordChange = s.biometricUnlock
             apply(settings: s)
             if enableProtection() {

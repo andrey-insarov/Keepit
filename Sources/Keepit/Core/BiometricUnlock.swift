@@ -26,10 +26,19 @@ enum BiometricUnlock {
         }
     }
 
-    /// Hardware + enrolled fingerprints present.
+    /// Hardware + enrolled fingerprints present (and usable right now).
     static var isAvailable: Bool {
         var err: NSError?
         return LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &err)
+    }
+
+    /// The Mac has a biometric sensor, even if it cannot be used this second (no fingerprint enrolled
+    /// yet, temporarily locked out). Used to decide whether to *offer* Touch ID at all.
+    static var hasSensor: Bool {
+        var err: NSError?
+        if LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &err) { return true }
+        guard let code = err.map({ LAError.Code(rawValue: $0.code) }) ?? nil else { return false }
+        return code == .biometryNotEnrolled || code == .biometryLockout
     }
 
     /// A key is stored for this app (checked without prompting).

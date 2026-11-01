@@ -35,6 +35,9 @@ brew tap andrey-insarov/keepit https://github.com/andrey-insarov/Keepit
 brew install --cask andrey-insarov/keepit/keepit
 ```
 
+(If Keepit was installed by hand before, Homebrew refuses to overwrite `/Applications/Keepit.app` — quit
+Keepit and move that copy to the Trash first, or add `--force`.)
+
 Or the DMG:
 
 * **Download**: grab `Keepit-<version>.dmg` from the [latest release](https://github.com/andrey-insarov/Keepit/releases/latest),
