@@ -18,66 +18,78 @@
 </style>
 </head>
 <body>
-<nav><a href="index.html">← keep.it.com</a></nav>
-<h1>Keepit – Clipboard Manager — Privacy Policy</h1>
+<nav><a href="/">← keep.it.com</a></nav>
+<h1>Privacy Policy — Keepit – Clipboard Manager</h1>
 
-<p><em>Effective: 1 November 2026. Publisher: UK Intis Telecom LTD, <a href="https://keep.it.com">https://keep.it.com</a></em></p>
+<p><em>Version 1.1, effective 1 November 2026.</em></p>
 
-<p><strong>Summary: Keepit does not collect, transmit, or share any data. Everything it stores stays on your Mac.</strong></p>
+<p><strong>In short: Keepit does not collect, transmit, sell or share any personal data. Everything the app stores stays on your Mac, under your control.</strong></p>
 
-<h2>What Keepit does with your data</h2>
+<h2>1. Who we are</h2>
 
-<p>Keepit records what you copy to the clipboard (text, images, file references) so that you can paste it</p>
-<p>again later, and stores the templates you create. This data is kept <strong>only on your computer</strong>, in</p>
-<p><code>~/Library/Application Support/Keepit/</code>. It is never sent to us or to anyone else.</p>
+<p>Keepit – Clipboard Manager ("Keepit", "the app") is published by <strong>UK Intis Telecom LTD</strong>, a company registered in England and Wales under company number <strong>[COMPANY NUMBER]</strong>, registered office <strong>[REGISTERED ADDRESS]</strong> ("we", "us"). We are the data controller for the purposes of the UK GDPR and the EU GDPR to the extent any personal data is processed in connection with Keepit — which, as explained below, we do not do.</p>
 
-<h2>Encryption and access control</h2>
+<p>Privacy contact: <strong>[PRIVACY EMAIL]</strong></p>
 
-<p>If you enable password protection, the clipboard history and templates are stored encrypted with</p>
-<p>AES-256-GCM using a key derived from your password (PBKDF2-HMAC-SHA256). The password itself is never</p>
-<p>stored. Optional Touch ID unlock keeps a copy of that key in the macOS keychain, protected by the</p>
-<p>Secure Enclave. Optional recovery phrases are generated on your Mac and shown to you once; Keepit does</p>
-<p>not keep them. We cannot recover your data if you lose both the password and the recovery phrase.</p>
+<h2>2. What Keepit does with your data</h2>
 
-<h2>Password managers and sensitive content</h2>
+<p>Keepit records what you copy to the macOS clipboard — text, images and file references — so that you can paste it again later, and stores the templates you create. This content may contain personal data (yours or other people's), depending on what you copy.</p>
 
-<p>Keepit never records clipboard contents marked as concealed by the copying application, and it</p>
-<p>ignores copies made from known password managers (1Password, Bitwarden, KeePassXC, Keychain Access,</p>
-<p>Apple Passwords and others). You can add further applications to the ignore list.</p>
+<p>All of it is stored <strong>only on your computer</strong>, in <code>~/Library/Application Support/Keepit/</code> (App Store edition: inside the app's sandbox container, <code>~/Library/Containers/com.it.keep/</code>). It is never uploaded to us or to anyone else, and we have no access to it. You can delete it at any time from the Viewer, with *Clear History*, or by removing the folder.</p>
 
-<h2>Permissions</h2>
+<h2>3. What Keepit does not do</h2>
 
 <ul>
-<li><strong>Accessibility</strong>: used only to paste the chosen item into the active application with ⌘V and to</li>
+<li>No account, sign-up or login.</li>
+<li>No analytics, telemetry, crash reporting, advertising or tracking of any kind.</li>
+<li>No third-party SDKs that collect data.</li>
+<li>No network connections, with the single exception described in section 6.</li>
+<li>No background reading of other applications' content: Keepit only observes the system clipboard, which applications write to deliberately when you copy.</li>
 </ul>
-<p>  position the popup menu at the text cursor. Keepit does not read or monitor the contents of other</p>
-<p>  applications.</p>
+
+<h2>4. Security of locally stored data</h2>
+
+<p>If you enable password protection, history and templates are stored encrypted with AES-256-GCM using a key derived from your password (PBKDF2-HMAC-SHA256, 200 000 rounds, random salt). The password is never stored. The key is wiped from memory when Keepit locks (manually, when the screen locks, or when the Mac sleeps).</p>
+
+<p>Optional Touch ID unlock keeps a copy of that key in the macOS keychain, protected by the Secure Enclave and bound to your current fingerprints. The optional 24-word recovery phrase is generated and displayed on your Mac once; Keepit does not store it and we never see it. <strong>If you lose both the password and the recovery phrase, the encrypted data cannot be recovered by anyone, including us.</strong></p>
+
+<h2>5. Password managers and concealed content</h2>
+
+<p>Keepit never records clipboard content marked as concealed or transient by the copying application, and ignores copies made from known password managers (1Password, Bitwarden, KeePassXC, Keychain Access, Apple Passwords and others). You can add any application to the ignore list in Preferences.</p>
+
+<h2>6. Network connections and third parties</h2>
+
 <ul>
-<li><strong>Login item</strong> (optional): starts Keepit when you log in.</li>
+<li><strong>Updates (direct-download edition only).</strong> The edition downloaded from keep.it.com / GitHub checks for new versions by downloading a small file (<code>appcast.xml</code>) from GitHub Releases, by default once a day and whenever you choose *Check for Updates…*. This request carries no personal data, but, like any HTTPS request, exposes your IP address and user agent to GitHub, Inc., whose <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">privacy statement</a> applies. Downloads of the app itself come from GitHub as well.</li>
+<li><strong>Mac App Store edition.</strong> Contains no update checker at all. Installation and updates are handled by Apple; Apple's <a href="https://www.apple.com/legal/privacy/">privacy policy</a> governs that process. We receive only Apple's aggregated, anonymised download statistics.</li>
+<li><strong>This website (keep.it.com).</strong> Static pages served through Cloudflare, Inc. Cloudflare may process connection metadata (IP address, request headers) to deliver and protect the site; see Cloudflare's <a href="https://www.cloudflare.com/privacypolicy/">privacy policy</a>. We do not set cookies and do not run analytics on the site.</li>
 </ul>
 
-<h2>Network</h2>
+<p>No other third parties are involved. We do not sell, rent or share personal data.</p>
 
-<p>Keepit makes no network connections. (The direct-download edition distributed outside the App Store</p>
-<p>checks GitHub Releases for updates once a day; the App Store edition does not even do that.)</p>
+<h2>7. Legal basis</h2>
 
-<h2>Analytics, advertising, tracking</h2>
+<p>Because Keepit processes your clipboard content only on your device and we never receive it, we do not process your personal data in the sense of the UK GDPR / EU GDPR in the course of providing the app. Where incidental connection metadata reaches GitHub, Apple or Cloudflare as described in section 6, those providers act under their own policies; our interest is the legitimate interest of distributing and updating the software (Art. 6(1)(f) GDPR).</p>
 
-<p>None. Keepit contains no analytics, crash reporting, advertising or tracking code, and no third-party</p>
-<p>SDKs that collect data.</p>
+<h2>8. Your rights</h2>
 
-<h2>Children</h2>
+<p>Under the UK GDPR / EU GDPR you have rights of access, rectification, erasure, restriction, portability and objection, and the right to complain to a supervisory authority (in the UK, the Information Commissioner's Office, ico.org.uk). Since we hold no personal data about Keepit users, there is in practice nothing for us to access, correct or erase — the data is on your Mac and you control it directly. If you contact us by email, we keep that correspondence only as long as needed to answer you.</p>
 
-<p>Keepit is a general-purpose utility and is not directed at children.</p>
+<h2>9. Children</h2>
 
-<h2>Changes</h2>
+<p>Keepit is a general-purpose utility, not directed at children under 13 (16 in some jurisdictions), and we do not knowingly collect data from children — or from anyone.</p>
 
-<p>If this policy ever changes, the new version will be published at <a href="https://keep.it.com/privacy">https://keep.it.com/privacy</a> with a</p>
-<p>new effective date.</p>
+<h2>10. International transfers</h2>
 
-<h2>Contact</h2>
+<p>We do not transfer your data anywhere, because we do not receive it. GitHub, Apple and Cloudflare may process connection metadata in the United States and elsewhere under their own safeguards.</p>
 
-<p>insarov@intistele.com — UK Intis Telecom LTD</p>
+<h2>11. Changes to this policy</h2>
+
+<p>We may update this policy when the app or the law changes. The current version is always at <a href="https://keep.it.com/privacy,">https://keep.it.com/privacy,</a> with its version number and effective date at the top; material changes will also be noted in the app's release notes.</p>
+
+<h2>12. Contact</h2>
+
+<p>UK Intis Telecom LTD · [REGISTERED ADDRESS] · <strong>[PRIVACY EMAIL]</strong> · <a href="https://keep.it.com">https://keep.it.com</a></p>
 
 </body>
 </html>
