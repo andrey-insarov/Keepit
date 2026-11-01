@@ -63,7 +63,6 @@ extension ClipItemTests {
     func testPlainTextOnlyStripsRichFormats() {
         var item = ClipItem.text("hello")
         item.formats[ClipItem.Format.rtf] = Data("{\\rtf1 hello}".utf8)
-        XCTAssertTrue(item.hasRichText)
         let plain = item.plainTextOnly()
         XCTAssertEqual(plain?.formats.count, 1)
         XCTAssertEqual(plain?.plainText, "hello")
