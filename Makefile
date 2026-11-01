@@ -101,7 +101,7 @@ dmg: app
 	done; test -f $(DMG_TMP)/rw.dmg
 	# Mount read-write to set the volume icon flag and Finder window layout, then convert to compressed read-only.
 	# Cosmetic only — if the image cannot be mounted (CI runners occasionally fail here), skip it.
-	ATTACH=$$(hdiutil attach -readwrite -noverify -nobrowse $(DMG_TMP)/rw.dmg 2>/dev/null); \
+	ATTACH=$$(hdiutil attach -readwrite -noverify $(DMG_TMP)/rw.dmg 2>/dev/null); \
 	DEV=$$(echo "$$ATTACH" | grep -o '^/dev/disk[0-9]*' | head -1); \
 	MOUNT=$$(echo "$$ATTACH" | grep -o '/Volumes/.*' | head -1); \
 	if [ -n "$$MOUNT" ] && [ -d "$$MOUNT" ]; then \
