@@ -642,7 +642,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     func menuDidClose(_ menu: NSMenu) {
-        if menu.title == Self.actionMenuTitle { detachActionMenu(menu); return }
+        if menu.title == Self.actionMenuTitle { return }   // action menu: the history menu's own close handles focus
         PreviewPanel.shared.hide()
         if statusItem.menu === menu { statusItem.menu = nil }
         let wasPopup = popupActive

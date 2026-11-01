@@ -115,16 +115,10 @@ final class HistoryItemView: NSView {
         pressToken += 1
         if enclosingMenuItem?.submenu != nil { longPressFired = false; isArmed = false; needsDisplay = true; return }   // AppKit opens the submenu
         if longPressFired {
-            // Released after a long press: the action menu becomes this item's submenu (AppKit opens it like
-            // any submenu, beside the row, with the history menu still open). A tiny synthetic pointer move
-            // makes it open right away; without Accessibility it opens on the next real move or with →.
             longPressFired = false
-            guard let mi = enclosingMenuItem, mi.submenu == nil, let ctx = onLongPress?(self) else { return }
-            mi.action = nil
-            mi.submenu = ctx
             isArmed = false
             needsDisplay = true
-            Self.clickPointer()     // a click on a submenu parent opens the submenu at once
+            showActions(with: event)
             return
         }
         guard let mi = enclosingMenuItem, mi.isEnabled, let menu = mi.menu else { return }
@@ -142,13 +136,25 @@ final class HistoryItemView: NSView {
         needsDisplay = true
     }
 
-    /// Synthetic left click at the current pointer position (needs Accessibility; otherwise the submenu
-    /// opens on the next real click or pointer movement).
-    static func clickPointer() {
-        guard Paster.isTrusted(), let cur = CGEvent(source: nil)?.location else { return }
-        DispatchQueue.global().asyncAfter(deadline: .now() + 0.06) {
-            for t in [CGEventType.leftMouseDown, .leftMouseUp] {
-                CGEvent(mouseEventSource: nil, mouseType: t, mouseCursorPosition: cur, mouseButton: .left)?.post(tap: .cghidEventTap)
+    override func rightMouseDown(with event: NSEvent) {
+        guard let mi = enclosingMenuItem, mi.isEnabled else { return }
+        showActions(with: event)
+    }
+
+    override func rightMouseUp(with event: NSEvent) {}
+
+    /// Right click / long press: the per-item action menu as a context menu of this row.
+    /// `popUpContextMenu` blocks until the menu closes; if it returns at once the nested menu did not open
+    /// (menu tracking refused it) — then close the history menu and show the actions at the row instead.
+    private func showActions(with event: NSEvent) {
+        guard let mi = enclosingMenuItem, let menu = mi.menu, let ctx = onLongPress?(self) else { return }
+        let rowOnScreen = window.map { $0.convertToScreen(convert(bounds, to: nil)) } ?? NSRect(origin: NSEvent.mouseLocation, size: .zero)
+        let t0 = Date()
+        NSMenu.popUpContextMenu(ctx, with: event, for: self)
+        if Date().timeIntervalSince(t0) < 0.1 {
+            menu.cancelTracking()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                ctx.popUp(positioning: nil, at: NSPoint(x: rowOnScreen.maxX - 4, y: rowOnScreen.maxY), in: nil)
             }
         }
     }
