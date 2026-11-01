@@ -2,13 +2,23 @@
 
 1. Bump the version: edit `VERSION` (e.g. `2.2.0`), commit.
 2. Tag and push: `git tag -a v2.2.0 -m "Keepit 2.2.0" && git push origin main v2.2.0`.
-3. GitHub Actions builds, signs with Developer ID, notarizes with Apple, staples the ticket and
-   attaches `Keepit-2.2.0.dmg` and `Keepit-2.2.0.zip` to the GitHub Release for the tag.
+3. GitHub Actions runs the `build` job (tests, ad-hoc build, UI smoke test), then the `release` job
+   waits for approval: Actions → the run → **Review deployments** → `release` → Approve.
+4. The release job signs with Developer ID, notarizes with Apple, staples the ticket, signs the
+   Sparkle appcast and attaches `Keepit-2.2.0.dmg`, `.zip`, `.dmg.sig`, `SHA256SUMS` and
+   `appcast.xml` to the GitHub Release for the tag, then bumps the Homebrew cask on `main`.
 
 `CFBundleShortVersionString` comes from `VERSION`; `CFBundleVersion` is the commit count
 (`git rev-list --count HEAD`), so every build has a unique, increasing build number.
 
 ## One-time setup for signing and notarization (Apple Developer account)
+
+All secrets below live in the GitHub **environment `release`** (Settings → Environments), never as
+repository secrets: only `v*` tags may deploy to it, it requires a reviewer, and the `build` job that
+runs on every push and pull request cannot read them. Add a secret with
+`gh secret set NAME --env release -R andrey-insarov/Keepit` (reads the value from stdin or a prompt).
+Keep the originals (`.p12` + its password, `.p8` + Key ID + Issuer ID, the Sparkle private key) in a
+password manager — GitHub cannot show a secret again once it is stored.
 
 ### A. Developer ID Application certificate → secret `MACOS_CERT_P12`
 
@@ -17,9 +27,8 @@
    Application, upload a CSR from Keychain Access.)
 2. Keychain Access → *My Certificates* → right-click **Developer ID Application: Your Name (TEAMID)**
    → *Export…* → format `.p12`, set an export password.
-3. `base64 -i DeveloperID.p12 | pbcopy` → GitHub repo → Settings → Secrets and variables → Actions →
-   *New repository secret*:
-   * `MACOS_CERT_P12` — the base64 text
+3. Environment secrets:
+   * `MACOS_CERT_P12` — `gh secret set MACOS_CERT_P12 --env release < <(base64 -i DeveloperID.p12)`
    * `MACOS_CERT_PASSWORD` — the export password
 
 ### B. App Store Connect API key (for `notarytool`) → secrets `APPSTORE_*`
@@ -32,8 +41,8 @@
    * `APPSTORE_ISSUER_ID` — the Issuer ID at the top of that page (UUID)
    * `APPSTORE_PRIVATE_KEY` — the full contents of the `.p8` file, including the BEGIN/END lines
 
-With all five secrets present the workflow signs + notarizes; without them it builds ad-hoc
-(forks and pull requests keep working).
+The `release` job needs all five; the `build` job never signs, so forks and pull requests keep
+working without any secrets.
 
 ### C. Developer ID provisioning profile (for Touch ID unlock) → secret `MACOS_DEVID_PROFILE`
 
@@ -48,7 +57,7 @@ start it, "error 163").
    Developer ID Application certificate → name `Keepit Developer ID` → Generate → Download.
 3. Save it as `Resources/KeepitDevID.provisionprofile` (git-ignored). `make app`/`make install` with
    a `SIGN_ID` now embeds it and enables Touch ID.
-4. For CI: `base64 -i Resources/KeepitDevID.provisionprofile | pbcopy` → secret `MACOS_DEVID_PROFILE`.
+4. For CI: `gh secret set MACOS_DEVID_PROFILE --env release < <(base64 -i Resources/KeepitDevID.provisionprofile)`.
 
 Without the profile everything else works; Preferences explains that Touch ID needs the signed build.
 
@@ -102,9 +111,11 @@ One-time setup:
    `$(find .build -type d -name bin -path "*parkle*" | head -1)/generate_keys`
    It prints the **public** key (base64). Put it in a file named `SPARKLE_PUBLIC_KEY` in the
    project root (git-ignored) — `make app` injects it into Info.plist — and in GitHub →
-   Settings → Secrets and variables → Actions → **Variables** → `SPARKLE_PUBLIC_KEY`.
+   `gh variable set SPARKLE_PUBLIC_KEY --env release --body "<public key>"`.
 3. Export the **private** key for CI: `…/generate_keys -x sparkle_ed25519` → contents of that
-   file → GitHub secret `SPARKLE_PRIVATE_KEY`. Delete the exported file afterwards.
+   file → `gh secret set SPARKLE_PRIVATE_KEY --env release < file`. Delete the exported file afterwards
+   (the private key is the one thing that cannot be replaced: installed copies only accept updates
+   signed by it, so keep it in a password manager).
 4. Tag a release. The *Sparkle appcast* step signs the DMG and attaches `appcast.xml`.
 
 A build without the public key simply has no *Check for Updates…* item. Apps already installed
