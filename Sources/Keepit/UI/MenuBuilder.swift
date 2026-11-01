@@ -68,11 +68,12 @@ final class MenuBuilder {
         let mask = latestMods.map { Self.flags($0) }
         func add(_ title: String, _ sel: Selector, key: HotKey.LatestAction?, symbol: String? = nil, object: Any? = item.id, enabled: Bool = true) {
             let keyChar = (mask != nil && key != nil) ? key!.keyChar : ""
-            // With a key: a second, ⇧ alternate copy so the shortcut also works while ⇧ (extended menu) is held.
+            // With a key: a second, hidden copy with ⇧ added so the shortcut also works while ⇧ (which opened
+            // the extended menu) is still held. Hidden items stay out of sight but their key equivalents work.
             for extra in [NSEvent.ModifierFlags(), [.shift]] {
                 let mi = NSMenuItem(title: title, action: sel, keyEquivalent: keyChar)
                 mi.keyEquivalentModifierMask = (mask ?? []).union(extra)
-                mi.isAlternate = extra == [.shift]
+                mi.isHidden = extra == [.shift]
                 mi.isEnabled = enabled
                 mi.target = target
                 mi.representedObject = object
