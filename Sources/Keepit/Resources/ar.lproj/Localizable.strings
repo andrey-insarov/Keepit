@@ -244,4 +244,5 @@
 "(no matches)" = "(لا نتائج)";
 "Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "حقل بحث في قائمة السجل (الكتابة تُرشّح؛ تصبح الاختصارات ⌘1–⌘0)";
 "%@ — plain text" = "%@ — نص عادي";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped)." = "اضغط باستمرار على ⇧ أثناء اختيار عنصر من السجل للصقه كنص عادي (بدون تنسيق).";
+"%@ — add to Templates" = "%@ — إضافة إلى القوالب";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead." = "اضغط باستمرار على ⇧ أثناء اختيار عنصر من السجل للصقه كنص عادي (بدون تنسيق)؛ واضغط ⌥ لإضافته إلى القوالب بدلًا من ذلك.";

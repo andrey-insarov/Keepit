@@ -244,4 +244,5 @@
 "(no matches)" = "(нічого не знайдено)";
 "Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "Поле пошуку в меню історії (введення фільтрує список; швидкі клавіші стають ⌘1–⌘0)";
 "%@ — plain text" = "%@ — простий текст";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped)." = "Утримуйте ⇧ під час вибору елемента історії, щоб вставити його як простий текст (без форматування).";
+"%@ — add to Templates" = "%@ — до шаблонів";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead." = "Утримуйте ⇧ під час вибору елемента історії, щоб вставити його як простий текст (без форматування); утримуйте ⌥, щоб натомість додати його до шаблонів.";

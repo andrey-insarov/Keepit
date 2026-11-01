@@ -244,4 +244,5 @@
 "(no matches)" = "(geen resultaten)";
 "Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "Zoekveld in het geschiedenismenu (typen filtert; sneltoetsen worden ⌘1–⌘0)";
 "%@ — plain text" = "%@ — platte tekst";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped)." = "Houd ⇧ ingedrukt bij het kiezen van een geschiedenisitem om het als platte tekst te plakken (zonder opmaak).";
+"%@ — add to Templates" = "%@ — naar sjablonen";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead." = "Houd ⇧ ingedrukt bij het kiezen van een geschiedenisitem om het als platte tekst te plakken (zonder opmaak); houd ⌥ ingedrukt om het in plaats daarvan aan de sjablonen toe te voegen.";

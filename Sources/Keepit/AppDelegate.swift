@@ -624,7 +624,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
 
         let items = menuBuilder.historyItems(history.items, target: self, action: #selector(historyChosen(_:)),
-                                             plainAction: #selector(historyChosenPlain(_:)), commandAccelerators: searching)
+                                             plainAction: #selector(historyChosenPlain(_:)), pinAction: #selector(historyPinned(_:)),
+                                             commandAccelerators: searching)
         if items.isEmpty {
             let e = NSMenuItem(title: L("(History is empty)"), action: nil, keyEquivalent: "")
             e.isEnabled = false
@@ -658,7 +659,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         for mi in menu.items where mi.tag == MenuBuilder.historyTag { menu.removeItem(mi) }
         let matches = MenuBuilder.filter(history.items, query: query)
         var fresh = menuBuilder.historyItems(matches, target: self, action: #selector(historyChosen(_:)),
-                                             plainAction: #selector(historyChosenPlain(_:)), commandAccelerators: true)
+                                             plainAction: #selector(historyChosenPlain(_:)), pinAction: #selector(historyPinned(_:)),
+                                             commandAccelerators: true)
         if fresh.isEmpty {
             let none = NSMenuItem(title: L("(no matches)"), action: nil, keyEquivalent: "")
             none.isEnabled = false
@@ -709,6 +711,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// ⇧ alternate: paste the text without RTF/HTML formatting.
     @objc private func historyChosenPlain(_ sender: NSMenuItem) {
         chooseHistoryItem(sender, plainText: true)
+    }
+
+    /// ⌥ alternate: keep the item permanently — copy it into the Template tree (root level).
+    @objc private func historyPinned(_ sender: NSMenuItem) {
+        menuSelectionMade = true
+        guard let id = sender.representedObject as? UUID,
+              let item = history.items.first(where: { $0.id == id }) else { return }
+        let node = TemplateNode(name: "", clip: item)
+        guard templates.canInsert(node, under: templates.root) else {
+            Vault.error(LF("Limit reached: at most %d template items, %d levels deep.", Limits.templateMaxCount, Limits.templateMaxDepth))
+            return
+        }
+        templates.root.insert(node)
+        templates.changed()
+        viewer?.refresh()
     }
 
     private func chooseHistoryItem(_ sender: NSMenuItem, plainText: Bool) {

@@ -244,4 +244,5 @@
 "(no matches)" = "(一致なし)";
 "Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "履歴メニューに検索フィールド（入力で絞り込み。ショートカットは ⌘1〜⌘0 に）";
 "%@ — plain text" = "%@ — プレーンテキスト";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped)." = "履歴の項目を選ぶときに ⇧ を押したままにすると、書式なしのプレーンテキストとして貼り付けます。";
+"%@ — add to Templates" = "%@ — テンプレートに追加";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead." = "履歴の項目を選ぶときに ⇧ を押したままにすると書式なしで貼り付け、⌥ を押したままにすると代わりにテンプレートに追加します。";

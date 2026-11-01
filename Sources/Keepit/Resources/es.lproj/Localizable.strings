@@ -244,4 +244,5 @@
 "(no matches)" = "(sin coincidencias)";
 "Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "Campo de búsqueda en el menú de historial (escribe para filtrar; los atajos pasan a ⌘1–⌘0)";
 "%@ — plain text" = "%@: texto sin formato";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped)." = "Mantén ⇧ al elegir un elemento del historial para pegarlo como texto sin formato.";
+"%@ — add to Templates" = "%@: añadir a plantillas";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead." = "Mantén ⇧ al elegir un elemento del historial para pegarlo como texto sin formato; mantén ⌥ para añadirlo a las plantillas en su lugar.";

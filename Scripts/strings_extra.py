@@ -255,5 +255,6 @@ T2 = {
 '(no matches)': ('(нічого не знайдено)', '(لا نتائج)', '(nessun risultato)'),
 'Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)': ('Поле пошуку в меню історії (введення фільтрує список; швидкі клавіші стають ⌘1–⌘0)', 'حقل بحث في قائمة السجل (الكتابة تُرشّح؛ تصبح الاختصارات ⌘1–⌘0)', 'Campo di ricerca nel menu Cronologia (digita per filtrare; le scorciatoie diventano ⌘1–⌘0)'),
 '%@ — plain text': ('%@ — простий текст', '%@ — نص عادي', '%@ — testo semplice'),
-'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped).': ('Утримуйте ⇧ під час вибору елемента історії, щоб вставити його як простий текст (без форматування).', 'اضغط باستمرار على ⇧ أثناء اختيار عنصر من السجل للصقه كنص عادي (بدون تنسيق).', 'Tieni premuto ⇧ mentre scegli un elemento della cronologia per incollarlo come testo semplice (senza formattazione).'),
+'%@ — add to Templates': ('%@ — до шаблонів', '%@ — إضافة إلى القوالب', '%@ — aggiungi ai modelli'),
+'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead.': ('Утримуйте ⇧ під час вибору елемента історії, щоб вставити його як простий текст (без форматування); утримуйте ⌥, щоб натомість додати його до шаблонів.', 'اضغط باستمرار على ⇧ أثناء اختيار عنصر من السجل للصقه كنص عادي (بدون تنسيق)؛ واضغط ⌥ لإضافته إلى القوالب بدلًا من ذلك.', 'Tieni premuto ⇧ mentre scegli un elemento della cronologia per incollarlo come testo semplice (senza formattazione); tieni premuto ⌥ per aggiungerlo invece ai modelli.'),
 }

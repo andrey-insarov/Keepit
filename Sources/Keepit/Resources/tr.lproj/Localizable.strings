@@ -244,4 +244,5 @@
 "(no matches)" = "(eşleşme yok)";
 "Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "Geçmiş menüsünde arama alanı (yazarak filtrele; kısayollar ⌘1–⌘0 olur)";
 "%@ — plain text" = "%@ — düz metin";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped)." = "Bir geçmiş öğesini seçerken ⇧ tuşunu basılı tutarsanız düz metin olarak (biçimlendirmesiz) yapıştırılır.";
+"%@ — add to Templates" = "%@ — şablonlara ekle";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead." = "Bir geçmiş öğesini seçerken ⇧ tuşunu basılı tutarsanız düz metin olarak (biçimlendirmesiz) yapıştırılır; ⌥ tuşunu basılı tutarsanız bunun yerine şablonlara eklenir.";

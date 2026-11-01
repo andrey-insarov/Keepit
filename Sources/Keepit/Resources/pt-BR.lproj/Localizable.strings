@@ -244,4 +244,5 @@
 "(no matches)" = "(nenhum resultado)";
 "Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "Campo de busca no menu de histórico (digite para filtrar; os atalhos passam a ⌘1–⌘0)";
 "%@ — plain text" = "%@ — texto simples";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped)." = "Segure ⇧ ao escolher um item do histórico para colá-lo como texto simples (sem formatação).";
+"%@ — add to Templates" = "%@ — adicionar aos modelos";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead." = "Segure ⇧ ao escolher um item do histórico para colá-lo como texto simples (sem formatação); segure ⌥ para adicioná-lo aos modelos em vez disso.";

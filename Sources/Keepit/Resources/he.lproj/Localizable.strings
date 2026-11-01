@@ -244,4 +244,5 @@
 "(no matches)" = "(אין התאמות)";
 "Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "שדה חיפוש בתפריט ההיסטוריה (הקלדה מסננת; הקיצורים הופכים ל‑⌘1–⌘0)";
 "%@ — plain text" = "%@ — טקסט רגיל";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped)." = "החזק ⇧ בעת בחירת פריט מההיסטוריה כדי להדביק אותו כטקסט רגיל (ללא עיצוב).";
+"%@ — add to Templates" = "%@ — הוסף לתבניות";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead." = "החזק ⇧ בעת בחירת פריט מההיסטוריה כדי להדביק אותו כטקסט רגיל (ללא עיצוב); החזק ⌥ כדי להוסיף אותו לתבניות במקום זאת.";

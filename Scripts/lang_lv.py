@@ -244,5 +244,6 @@ T = {
 '(no matches)': '(nav atbilstību)',
 'Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)': 'Meklēšanas lauks vēstures izvēlnē (rakstot filtrē; saīsnes kļūst par ⌘1–⌘0)',
 '%@ — plain text': '%@ — vienkāršs teksts',
-'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped).': 'Turiet ⇧, izvēloties vēstures vienumu, lai to ielīmētu kā vienkāršu tekstu (bez formatējuma).',
+'%@ — add to Templates': '%@ — uz veidnēm',
+'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead.': 'Turiet ⇧, izvēloties vēstures vienumu, lai to ielīmētu kā vienkāršu tekstu (bez formatējuma); turiet ⌥, lai tā vietā to pievienotu veidnēm.',
 }

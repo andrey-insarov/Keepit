@@ -244,5 +244,6 @@ T = {
 '(no matches)': '(일치 항목 없음)',
 'Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)': '기록 메뉴에 검색 필드(입력하여 필터링, 단축키는 ⌘1–⌘0으로)',
 '%@ — plain text': '%@ — 일반 텍스트',
-'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped).': '기록 항목을 선택할 때 ⇧를 누르고 있으면 서식 없는 일반 텍스트로 붙여넣습니다.',
+'%@ — add to Templates': '%@ — 템플릿에 추가',
+'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead.': '기록 항목을 선택할 때 ⇧를 누르고 있으면 서식 없는 일반 텍스트로 붙여넣고, ⌥를 누르고 있으면 대신 템플릿에 추가합니다.',
 }

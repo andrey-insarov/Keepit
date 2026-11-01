@@ -244,4 +244,5 @@
 "(no matches)" = "(nessun risultato)";
 "Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "Campo di ricerca nel menu Cronologia (digita per filtrare; le scorciatoie diventano ⌘1–⌘0)";
 "%@ — plain text" = "%@ — testo semplice";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped)." = "Tieni premuto ⇧ mentre scegli un elemento della cronologia per incollarlo come testo semplice (senza formattazione).";
+"%@ — add to Templates" = "%@ — aggiungi ai modelli";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead." = "Tieni premuto ⇧ mentre scegli un elemento della cronologia per incollarlo come testo semplice (senza formattazione); tieni premuto ⌥ per aggiungerlo invece ai modelli.";

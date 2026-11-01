@@ -254,4 +254,6 @@
 "Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)";
 
 "%@ — plain text" = "%@ — plain text";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped)." = "Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped).";
+
+"%@ — add to Templates" = "%@ — add to Templates";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead." = "Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead.";

@@ -25,7 +25,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     private let showThumbs   = NSButton(checkboxWithTitle: L("Show image thumbnails in menu"), target: nil, action: nil)
     private let showTips     = NSButton(checkboxWithTitle: L("Show tooltips with item contents"), target: nil, action: nil)
     private let numberItems  = NSButton(checkboxWithTitle: L("Number items (press 1-9, 0, A-Z to pick)"), target: nil, action: nil)
-    private let plainHint    = NSTextField(wrappingLabelWithString: L("Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped)."))
+    private let plainHint    = NSTextField(wrappingLabelWithString: L("Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead."))
     private let searchMenu   = NSButton(checkboxWithTitle: L("Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)"), target: nil, action: nil)
     private let pasteAfter   = NSButton(checkboxWithTitle: L("Paste into the active app after choosing"), target: nil, action: nil)
     private let showAtCaret  = NSButton(checkboxWithTitle: L("Open menu at text cursor when possible"), target: nil, action: nil)

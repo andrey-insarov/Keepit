@@ -244,4 +244,5 @@
 "(no matches)" = "(沒有符合項目)";
 "Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "歷史記錄選單中的搜尋欄位（輸入即篩選；快速鍵改為 ⌘1–⌘0）";
 "%@ — plain text" = "%@ — 純文字";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped)." = "選擇歷史記錄項目時按住 ⇧，可以純文字形式貼上（移除格式）。";
+"%@ — add to Templates" = "%@ — 加入範本";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead." = "選擇歷史記錄項目時按住 ⇧ 以純文字貼上（移除格式）；按住 ⌥ 則改為加入範本。";

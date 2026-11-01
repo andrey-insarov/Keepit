@@ -244,4 +244,5 @@
 "(no matches)" = "(atitikmenų nėra)";
 "Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "Paieškos laukas istorijos meniu (rašant filtruojama; spartieji klavišai tampa ⌘1–⌘0)";
 "%@ — plain text" = "%@ — paprastas tekstas";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped)." = "Renkantis istorijos elementą laikykite ⇧, kad jis būtų įklijuotas kaip paprastas tekstas (be formatavimo).";
+"%@ — add to Templates" = "%@ — į šablonus";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead." = "Renkantis istorijos elementą laikykite ⇧, kad jis būtų įklijuotas kaip paprastas tekstas (be formatavimo); laikykite ⌥, kad vietoj to jis būtų pridėtas prie šablonų.";
