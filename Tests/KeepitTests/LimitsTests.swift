@@ -44,7 +44,7 @@ final class LimitsTests: XCTestCase {
         s.historyMax = 100
         let b = MenuBuilder(settings: s)
         let items = (0..<10).map { ClipItem.text("item \($0)") }
-        let menu = b.historyItems(items, target: self, action: #selector(noop))
+        let menu = b.historyItems(items, target: self, action: #selector(noop), numberMods: nil)
         XCTAssertEqual(menu.count, 4)                       // 3 items + "… 7 more"
         XCTAssertFalse(menu.last!.isEnabled)
     }
