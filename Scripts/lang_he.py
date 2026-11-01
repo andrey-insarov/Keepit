@@ -312,10 +312,10 @@ T = {
 'Add text to the history or as a new template': 'הוסף טקסט להיסטוריה או כתבנית חדשה',
 'Open the menus and windows': 'פתח את התפריטים והחלונות',
 'Pause recording for 10 minutes / resume': 'השהה הקלטה ל‑10 דקות / המשך',
-'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …).': 'החזק ⇧ בעת בחירת פריט מההיסטוריה כדי להדביקו כטקסט פשוט (ללא עיצוב), ⌥ להוספה לתבניות, ⌃ למחיקה. לחץ והחזק פריט חצי שנייה לתפריט הפעולות המלא (הדבקה באותיות גדולות, שורה אחת, העתקה בלבד, …).',
 'Add to Templates': 'הוסף לתבניות',
 'Copy only': 'העתק בלבד',
 'Paste as': 'הדבק בתור',
 'Paste as plain text': 'הדבק כטקסט פשוט',
 'Show in Viewer': 'הצג במציג',
+'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …).': 'החזק ⇧ בעת בחירת פריט מההיסטוריה כדי להדביקו כטקסט פשוט (ללא עיצוב), ⌥ להוספה לתבניות, ⌃ למחיקה. לחיצה ימנית על פריט פותחת את תפריט הפעולות המלא (הדבקה באותיות גדולות, שורה אחת, העתקה בלבד, …).',
 }

@@ -312,10 +312,10 @@ T = {
 'Add text to the history or as a new template': 'Pievienot tekstu vēsturei vai kā jaunu veidni',
 'Open the menus and windows': 'Atvērt izvēlnes un logus',
 'Pause recording for 10 minutes / resume': 'Pauzēt ierakstīšanu uz 10 minūtēm / atsākt',
-'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …).': 'Izvēloties vēstures vienumu, turiet ⇧, lai ielīmētu kā vienkāršu tekstu (bez formatējuma), ⌥ — pievienot Veidnēm, ⌃ — dzēst. Turiet vienumu nospiestu pussekundi, lai atvērtu pilno darbību izvēlni (ielīmēt ar LIELAJIEM BURTIEM, viena rinda, tikai kopēt, …).',
 'Add to Templates': 'Pievienot Veidnēm',
 'Copy only': 'Tikai kopēt',
 'Paste as': 'Ielīmēt kā',
 'Paste as plain text': 'Ielīmēt kā vienkāršu tekstu',
 'Show in Viewer': 'Rādīt skatītājā',
+'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …).': 'Izvēloties vēstures vienumu, turiet ⇧, lai ielīmētu kā vienkāršu tekstu (bez formatējuma), ⌥ — pievienot Veidnēm, ⌃ — dzēst. Ar peles labo pogu noklikšķiniet uz vienuma, lai atvērtu pilno darbību izvēlni (ielīmēt ar LIELAJIEM BURTIEM, viena rinda, tikai kopēt, …).',
 }

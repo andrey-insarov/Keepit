@@ -312,10 +312,10 @@ T = {
 'Add text to the history or as a new template': '텍스트를 기록에 추가하거나 새 템플릿으로 추가',
 'Open the menus and windows': '메뉴와 윈도우 열기',
 'Pause recording for 10 minutes / resume': '10분간 기록 일시 중지 / 재개',
-'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …).': '기록 항목을 선택할 때 ⇧를 누르면 서식 없는 텍스트로 붙여넣고, ⌥는 템플릿에 추가, ⌃는 삭제합니다. 항목을 0.5초간 길게 누르면 전체 동작 메뉴(대문자로 붙여넣기, 한 줄, 복사만, …)가 열립니다.',
 'Add to Templates': '템플릿에 추가',
 'Copy only': '복사만',
 'Paste as': '다음으로 붙여넣기',
 'Paste as plain text': '서식 없는 텍스트로 붙여넣기',
 'Show in Viewer': '뷰어에서 보기',
+'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …).': '기록 항목을 선택할 때 ⇧를 누르면 서식 없는 텍스트로 붙여넣고, ⌥는 템플릿에 추가, ⌃는 삭제합니다. 항목을 오른쪽 클릭하면 전체 동작 메뉴(대문자로 붙여넣기, 한 줄, 복사만, …)가 열립니다.',
 }

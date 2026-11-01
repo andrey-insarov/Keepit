@@ -312,10 +312,10 @@ T = {
 'Add text to the history or as a new template': 'Tekst aan de geschiedenis toevoegen of als nieuw sjabloon',
 'Open the menus and windows': "De menu's en vensters openen",
 'Pause recording for 10 minutes / resume': 'Opname 10 minuten pauzeren / hervatten',
-'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …).': 'Houd ⇧ ingedrukt bij het kiezen van een geschiedenisitem om het als platte tekst te plakken (zonder opmaak), ⌥ om het aan Sjablonen toe te voegen, ⌃ om het te verwijderen. Houd een item een halve seconde ingedrukt voor het volledige actiemenu (plakken in HOOFDLETTERS, één regel, alleen kopiëren, …).',
 'Add to Templates': 'Aan Sjablonen toevoegen',
 'Copy only': 'Alleen kopiëren',
 'Paste as': 'Plakken als',
 'Paste as plain text': 'Als platte tekst plakken',
 'Show in Viewer': 'Toon in Weergave',
+'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …).': 'Houd ⇧ ingedrukt bij het kiezen van een geschiedenisitem om het als platte tekst te plakken (zonder opmaak), ⌥ om het aan Sjablonen toe te voegen, ⌃ om het te verwijderen. Klik met de rechtermuisknop op een item voor het volledige actiemenu (plakken in HOOFDLETTERS, één regel, alleen kopiëren, …).',
 }

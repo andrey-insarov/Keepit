@@ -2,9 +2,8 @@ import AppKit
 
 /// Custom view for a history entry in the popup menu. AppKit draws nothing for an item with a view, so this
 /// reproduces the native look (highlight, icon, accelerator column) and, in return, owns the mouse:
-/// a click pastes, a long press (0.5 s) opens the per-item action menu beside the row.
+/// a click pastes, a right click opens the per-item action menu.
 final class HistoryItemView: NSView {
-    static let longPress: TimeInterval = 0.5
     static let rowHeight: CGFloat = 22
     static let font = NSFont.menuFont(ofSize: 0)
     static let keyFont = NSFont.menuFont(ofSize: 0)
@@ -16,13 +15,8 @@ final class HistoryItemView: NSView {
     var imageSize = NSSize(width: 16, height: 16)
     var isDimmed = false               // disabled look ("… N more in the Viewer")
     var accessibilityHint: String?
-    /// Long-press handler: receives this view; return the menu to pop up beside the row (nil = nothing).
-    var onLongPress: ((HistoryItemView) -> NSMenu?)?
-
-    private var pressToken = 0
-    private var pressOrigin = NSPoint.zero
-    private var longPressFired = false
-    private var isArmed = false
+    /// Right-click handler: receives this view; return the menu to show as the row's context menu (nil = nothing).
+    var actionMenu: ((HistoryItemView) -> NSMenu?)?
 
     // Layout
     private let hPad: CGFloat = 14     // native menu text inset
@@ -77,9 +71,8 @@ final class HistoryItemView: NSView {
             x += imageSize.width + gap
         }
         var keyW: CGFloat = 0
-        let keyLabel = isArmed ? "▸" : (enclosingMenuItem?.submenu != nil ? "" : self.keyLabel)
         if !keyLabel.isEmpty {
-            let a: [NSAttributedString.Key: Any] = [.font: Self.keyFont, .foregroundColor: isArmed ? textColor : dimColor]
+            let a: [NSAttributedString.Key: Any] = [.font: Self.keyFont, .foregroundColor: dimColor]
             let sz = (keyLabel as NSString).size(withAttributes: a)
             keyW = ceil(sz.width)
             (keyLabel as NSString).draw(at: NSPoint(x: bounds.maxX - hPad - keyW, y: midY - sz.height / 2), withAttributes: a)
@@ -94,46 +87,15 @@ final class HistoryItemView: NSView {
 
     // MARK: Mouse
 
-    override func mouseDown(with event: NSEvent) {
-        guard let mi = enclosingMenuItem, mi.isEnabled else { return }
-        pressToken += 1
-        let token = pressToken
-        pressOrigin = NSEvent.mouseLocation
-        longPressFired = false
-        // Menu tracking starves ordinary timers; a GCD timer hopped back into the tracking run-loop mode is reliable.
-        DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + Self.longPress) { [weak self] in
-            RunLoop.main.perform(inModes: [.eventTracking, .default, .modalPanel]) { self?.longPressElapsed(token) }
-        }
-    }
-
-    override func mouseDragged(with event: NSEvent) {
-        let p = NSEvent.mouseLocation
-        if abs(p.x - pressOrigin.x) > 4 || abs(p.y - pressOrigin.y) > 4 { pressToken += 1 }   // moved: not a long press
-    }
+    override func mouseDown(with event: NSEvent) {}
 
     override func mouseUp(with event: NSEvent) {
-        pressToken += 1
-        if enclosingMenuItem?.submenu != nil { longPressFired = false; isArmed = false; needsDisplay = true; return }   // AppKit opens the submenu
-        if longPressFired {
-            longPressFired = false
-            isArmed = false
-            needsDisplay = true
-            showActions(with: event)
-            return
-        }
         guard let mi = enclosingMenuItem, mi.isEnabled, let menu = mi.menu else { return }
         guard bounds.contains(convert(event.locationInWindow, from: nil)) else { return }
         let idx = menu.index(of: mi)
         guard idx >= 0 else { return }
         menu.cancelTracking()
         DispatchQueue.main.async { menu.performActionForItem(at: idx) }
-    }
-
-    private func longPressElapsed(_ token: Int) {
-        guard token == pressToken, NSEvent.pressedMouseButtons & 1 != 0, let mi = enclosingMenuItem, mi.isEnabled else { return }
-        longPressFired = true
-        isArmed = true          // visual cue: the row shows "▸" until the button is released
-        needsDisplay = true
     }
 
     override func rightMouseDown(with event: NSEvent) {
@@ -143,11 +105,11 @@ final class HistoryItemView: NSView {
 
     override func rightMouseUp(with event: NSEvent) {}
 
-    /// Right click / long press: the per-item action menu as a context menu of this row.
+    /// Right click: the per-item action menu as a context menu of this row.
     /// `popUpContextMenu` blocks until the menu closes; if it returns at once the nested menu did not open
     /// (menu tracking refused it) — then close the history menu and show the actions at the row instead.
     private func showActions(with event: NSEvent) {
-        guard let mi = enclosingMenuItem, let menu = mi.menu, let ctx = onLongPress?(self) else { return }
+        guard let mi = enclosingMenuItem, let menu = mi.menu, let ctx = actionMenu?(self) else { return }
         let rowOnScreen = window.map { $0.convertToScreen(convert(bounds, to: nil)) } ?? NSRect(origin: NSEvent.mouseLocation, size: .zero)
         let t0 = Date()
         NSMenu.popUpContextMenu(ctx, with: event, for: self)

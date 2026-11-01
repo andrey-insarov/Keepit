@@ -312,9 +312,9 @@
 "Add text to the history or as a new template" = "Додати текст до історії або як новий шаблон";
 "Open the menus and windows" = "Відкрити меню та вікна";
 "Pause recording for 10 minutes / resume" = "Призупинити запис на 10 хвилин / відновити";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Утримуйте ⇧ під час вибору елемента історії, щоб вставити його як простий текст (без форматування), ⌥ — додати до Шаблонів, ⌃ — видалити. Натисніть і утримуйте елемент пів секунди — відкриється повне меню дій (вставити ВЕЛИКИМИ, в один рядок, лише скопіювати, …).";
 "Add to Templates" = "Додати до Шаблонів";
 "Copy only" = "Лише скопіювати";
 "Paste as" = "Вставити як";
 "Paste as plain text" = "Вставити як простий текст";
 "Show in Viewer" = "Показати в Перегляді";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Утримуйте ⇧ під час вибору елемента історії, щоб вставити його як простий текст (без форматування), ⌥ — додати до Шаблонів, ⌃ — видалити. Правий клік по елементу відкриває повне меню дій (вставити ВЕЛИКИМИ, в один рядок, лише скопіювати, …).";

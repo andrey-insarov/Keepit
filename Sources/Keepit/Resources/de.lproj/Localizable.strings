@@ -312,9 +312,9 @@
 "Add text to the history or as a new template" = "Text zum Verlauf oder als neue Vorlage hinzufügen";
 "Open the menus and windows" = "Menüs und Fenster öffnen";
 "Pause recording for 10 minutes / resume" = "Aufzeichnung 10 Minuten pausieren / fortsetzen";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Beim Auswählen eines Verlaufseintrags ⇧ halten, um ihn als reinen Text einzufügen (ohne Formatierung), ⌥ für „zu Vorlagen hinzufügen“, ⌃ zum Löschen. Einen Eintrag eine halbe Sekunde gedrückt halten öffnet das vollständige Aktionsmenü (als GROSSBUCHSTABEN einfügen, eine Zeile, nur kopieren, …).";
 "Add to Templates" = "Zu Vorlagen hinzufügen";
 "Copy only" = "Nur kopieren";
 "Paste as" = "Einfügen als";
 "Paste as plain text" = "Als reinen Text einfügen";
 "Show in Viewer" = "Im Viewer anzeigen";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Beim Auswählen eines Verlaufseintrags ⇧ halten, um ihn als reinen Text einzufügen (ohne Formatierung), ⌥ für „zu Vorlagen hinzufügen“, ⌃ zum Löschen. Rechtsklick auf einen Eintrag öffnet das vollständige Aktionsmenü (als GROSSBUCHSTABEN einfügen, eine Zeile, nur kopieren, …).";

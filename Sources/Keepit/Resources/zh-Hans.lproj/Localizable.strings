@@ -312,9 +312,9 @@
 "Add text to the history or as a new template" = "将文本添加到历史记录或作为新模板";
 "Open the menus and windows" = "打开菜单和窗口";
 "Pause recording for 10 minutes / resume" = "暂停记录 10 分钟 / 恢复";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "选择历史记录项时按住 ⇧ 以纯文本粘贴（去除格式），⌥ 添加到模板，⌃ 删除。按住项目半秒可打开完整操作菜单（以大写粘贴、单行、仅复制、…）。";
 "Add to Templates" = "添加到模板";
 "Copy only" = "仅复制";
 "Paste as" = "粘贴为";
 "Paste as plain text" = "以纯文本粘贴";
 "Show in Viewer" = "在查看器中显示";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "选择历史记录项时按住 ⇧ 以纯文本粘贴（去除格式），⌥ 添加到模板，⌃ 删除。右键点击项目可打开完整操作菜单（以大写粘贴、单行、仅复制、…）。";

@@ -312,9 +312,9 @@
 "Add text to the history or as a new template" = "Metni geçmişe veya yeni şablon olarak ekle";
 "Open the menus and windows" = "Menüleri ve pencereleri aç";
 "Pause recording for 10 minutes / resume" = "Kaydı 10 dakika duraklat / sürdür";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Bir geçmiş öğesini seçerken ⇧ basılı tutarak düz metin olarak yapıştırın (biçimlendirme olmadan), ⌥ ile Şablonlara ekleyin, ⌃ ile silin. Tam eylem menüsü için (BÜYÜK HARF olarak yapıştır, tek satır, yalnızca kopyala, …) bir öğeyi yarım saniye basılı tutun.";
 "Add to Templates" = "Şablonlara ekle";
 "Copy only" = "Yalnızca kopyala";
 "Paste as" = "Şu şekilde yapıştır";
 "Paste as plain text" = "Düz metin olarak yapıştır";
 "Show in Viewer" = "Görüntüleyicide göster";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Bir geçmiş öğesini seçerken ⇧ basılı tutarak düz metin olarak yapıştırın (biçimlendirme olmadan), ⌥ ile Şablonlara ekleyin, ⌃ ile silin. Tam eylem menüsü için (BÜYÜK HARF olarak yapıştır, tek satır, yalnızca kopyala, …) bir öğeye sağ tıklayın.";

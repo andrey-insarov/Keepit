@@ -338,9 +338,10 @@
 "Open the menus and windows" = "Open the menus and windows";
 "Pause recording for 10 minutes / resume" = "Pause recording for 10 minutes / resume";
 
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …).";
 "Add to Templates" = "Add to Templates";
 "Copy only" = "Copy only";
 "Paste as" = "Paste as";
 "Paste as plain text" = "Paste as plain text";
 "Show in Viewer" = "Show in Viewer";
+
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …).";

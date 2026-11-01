@@ -312,9 +312,9 @@
 "Add text to the history or as a new template" = "Aggiungi testo alla cronologia o come nuovo modello";
 "Open the menus and windows" = "Apri i menu e le finestre";
 "Pause recording for 10 minutes / resume" = "Sospendi la registrazione per 10 minuti / riprendi";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Tieni premuto ⇧ scegliendo un elemento della cronologia per incollarlo come testo semplice (senza formattazione), ⌥ per aggiungerlo ai Modelli, ⌃ per eliminarlo. Tieni premuto un elemento per mezzo secondo per il menu completo delle azioni (incolla in MAIUSCOLO, una riga, solo copia, …).";
 "Add to Templates" = "Aggiungi ai Modelli";
 "Copy only" = "Solo copia";
 "Paste as" = "Incolla come";
 "Paste as plain text" = "Incolla come testo semplice";
 "Show in Viewer" = "Mostra nel Visualizzatore";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Tieni premuto ⇧ scegliendo un elemento della cronologia per incollarlo come testo semplice (senza formattazione), ⌥ per aggiungerlo ai Modelli, ⌃ per eliminarlo. Fai clic destro su un elemento per il menu completo delle azioni (incolla in MAIUSCOLO, una riga, solo copia, …).";

@@ -57,7 +57,7 @@ final class MenuBuilder {
         var delete: Selector
     }
 
-    /// Submenu attached to a history item after a long press: all actions for that one item, with single-letter shortcuts.
+    /// Context menu of a history row (right click): all actions for that one item, with single-letter shortcuts.
     func contextMenu(for item: ClipItem, target: AnyObject, actions a: ContextActions) -> NSMenu {
         let m = NSMenu()
         m.autoenablesItems = false
@@ -91,8 +91,8 @@ final class MenuBuilder {
         return m
     }
 
-    /// Builds the long-press action menu for a history entry (set by the app delegate).
-    var longPressMenu: ((UUID) -> NSMenu?)?
+    /// Builds the right-click action menu for a history entry (set by the app delegate).
+    var actionMenu: ((UUID) -> NSMenu?)?
 
     func historyItems(_ items: [ClipItem], target: AnyObject, action: Selector, plainAction: Selector? = nil,
                       pinAction: Selector? = nil, deleteAction: Selector? = nil, commandAccelerators: Bool = false) -> [NSMenuItem] {
@@ -118,7 +118,7 @@ final class MenuBuilder {
             v.keyLabel = keyLabel
             v.image = image
             v.imageSize = imageSize
-            v.onLongPress = { [weak self] _ in self?.longPressMenu?(item.id) }
+            v.actionMenu = { [weak self] _ in self?.actionMenu?(item.id) }
             if settings.showTooltips, !settings.showPreview, let tip = item.tooltip { v.toolTip = tip }
             mi.view = v
             views.append(v)

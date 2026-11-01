@@ -312,9 +312,9 @@
 "Add text to the history or as a new template" = "Dodaj tekst do historii lub jako nowy szablon";
 "Open the menus and windows" = "Otwórz menu i okna";
 "Pause recording for 10 minutes / resume" = "Wstrzymaj zapisywanie na 10 minut / wznów";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Przytrzymaj ⇧ przy wybieraniu elementu historii, aby wkleić go jako zwykły tekst (bez formatowania), ⌥ — dodać do Szablonów, ⌃ — usunąć. Przytrzymaj element pół sekundy, aby otworzyć pełne menu działań (wklej WIELKIMI LITERAMI, jedna linia, tylko kopiuj, …).";
 "Add to Templates" = "Dodaj do Szablonów";
 "Copy only" = "Tylko kopiuj";
 "Paste as" = "Wklej jako";
 "Paste as plain text" = "Wklej jako zwykły tekst";
 "Show in Viewer" = "Pokaż w Przeglądarce";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Przytrzymaj ⇧ przy wybieraniu elementu historii, aby wkleić go jako zwykły tekst (bez formatowania), ⌥ — dodać do Szablonów, ⌃ — usunąć. Kliknij element prawym przyciskiem, aby otworzyć pełne menu działań (wklej WIELKIMI LITERAMI, jedna linia, tylko kopiuj, …).";

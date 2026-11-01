@@ -312,10 +312,10 @@ T = {
 'Add text to the history or as a new template': 'Pridėti tekstą į istoriją arba kaip naują šabloną',
 'Open the menus and windows': 'Atidaryti meniu ir langus',
 'Pause recording for 10 minutes / resume': 'Pristabdyti įrašymą 10 minučių / tęsti',
-'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …).': 'Renkantis istorijos elementą laikykite ⇧, kad įklijuotumėte kaip paprastą tekstą (be formatavimo), ⌥ — pridėti į Šablonus, ⌃ — ištrinti. Palaikykite elementą pusę sekundės — atsidarys visas veiksmų meniu (įklijuoti DIDŽIOSIOMIS, viena eilutė, tik kopijuoti, …).',
 'Add to Templates': 'Pridėti į Šablonus',
 'Copy only': 'Tik kopijuoti',
 'Paste as': 'Įklijuoti kaip',
 'Paste as plain text': 'Įklijuoti kaip paprastą tekstą',
 'Show in Viewer': 'Rodyti peržiūroje',
+'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …).': 'Renkantis istorijos elementą laikykite ⇧, kad įklijuotumėte kaip paprastą tekstą (be formatavimo), ⌥ — pridėti į Šablonus, ⌃ — ištrinti. Dešiniu pelės klavišu spustelėkite elementą — atsidarys visas veiksmų meniu (įklijuoti DIDŽIOSIOMIS, viena eilutė, tik kopijuoti, …).',
 }

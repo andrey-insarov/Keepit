@@ -312,9 +312,9 @@
 "Add text to the history or as a new template" = "テキストを履歴に追加、または新しいテンプレートとして追加";
 "Open the menus and windows" = "メニューとウインドウを開く";
 "Pause recording for 10 minutes / resume" = "記録を 10 分間一時停止 / 再開";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "履歴の項目を選ぶときに ⇧ を押すと書式なしのテキストとしてペースト、⌥ でテンプレートに追加、⌃ で削除します。項目を 0.5 秒長押しすると、すべての操作のメニュー（大文字でペースト、1 行、コピーのみ、…）が開きます。";
 "Add to Templates" = "テンプレートに追加";
 "Copy only" = "コピーのみ";
 "Paste as" = "変換してペースト";
 "Paste as plain text" = "書式なしテキストとしてペースト";
 "Show in Viewer" = "ビューアで表示";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "履歴の項目を選ぶときに ⇧ を押すと書式なしのテキストとしてペースト、⌥ でテンプレートに追加、⌃ で削除します。項目を右クリックすると、すべての操作のメニュー（大文字でペースト、1 行、コピーのみ、…）が開きます。";

@@ -11,7 +11,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     let hotKeys = HotKeyManager()
     private lazy var menuBuilder: MenuBuilder = {
         let b = MenuBuilder(settings: settings)
-        b.longPressMenu = { [weak self] id in self?.actionMenu(for: id) }
+        b.actionMenu = { [weak self] id in self?.actionMenu(for: id) }
         return b
     }()
 
@@ -814,7 +814,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     // MARK: - Long-press context menu
 
-    /// Action menu for a history entry (long press on its row).
+    /// Action menu for a history entry (right click on its row).
     func actionMenu(for id: UUID) -> NSMenu? {
         guard let item = history.item(id: id) else { return nil }
         PreviewPanel.shared.hide()
@@ -828,15 +828,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
     private static let actionMenuTitle = "keepit.actions"
 
-    /// Once an action submenu has closed, detach it so the row is a plain item again (⇧/⌥/⌃ alternates only
-    /// swap in for items without submenus).
-    private func detachActionMenu(_ m: NSMenu) {
-        guard let parent = m.supermenu, let mi = parent.items.first(where: { $0.submenu === m }) else { return }
-        DispatchQueue.main.async {
-            mi.submenu = nil
-            mi.action = #selector(self.historyChosen(_:))
-            mi.view?.needsDisplay = true
-        }
     }
 
     /// Context menu: put the item on the clipboard without pasting.

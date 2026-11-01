@@ -312,9 +312,9 @@
 "Add text to the history or as a new template" = "Ajouter du texte à l’historique ou comme nouveau modèle";
 "Open the menus and windows" = "Ouvrir les menus et fenêtres";
 "Pause recording for 10 minutes / resume" = "Suspendre l’enregistrement 10 minutes / reprendre";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Maintenez ⇧ en choisissant un élément de l’historique pour le coller en texte brut (sans mise en forme), ⌥ pour l’ajouter aux Modèles, ⌃ pour le supprimer. Maintenez un élément enfoncé une demi-seconde pour le menu complet des actions (coller en MAJUSCULES, une ligne, copier seulement, …).";
 "Add to Templates" = "Ajouter aux Modèles";
 "Copy only" = "Copier seulement";
 "Paste as" = "Coller en";
 "Paste as plain text" = "Coller en texte brut";
 "Show in Viewer" = "Afficher dans la Visionneuse";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Maintenez ⇧ en choisissant un élément de l’historique pour le coller en texte brut (sans mise en forme), ⌥ pour l’ajouter aux Modèles, ⌃ pour le supprimer. Un clic droit sur un élément ouvre le menu complet des actions (coller en MAJUSCULES, une ligne, copier seulement, …).";

@@ -312,10 +312,10 @@ T = {
 'Add text to the history or as a new template': 'Lisa tekst ajalukku või uue mallina',
 'Open the menus and windows': 'Ava menüüd ja aknad',
 'Pause recording for 10 minutes / resume': 'Peata salvestamine 10 minutiks / jätka',
-'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …).': 'Ajaloo üksust valides hoia ⇧, et kleepida see vormindamata tekstina, ⌥ lisab Mallidesse, ⌃ kustutab. Hoia üksust pool sekundit all, et avada täielik toimingute menüü (kleebi SUURTÄHTEDEGA, üks rida, ainult kopeeri, …).',
 'Add to Templates': 'Lisa Mallidesse',
 'Copy only': 'Ainult kopeeri',
 'Paste as': 'Kleebi kui',
 'Paste as plain text': 'Kleebi vormindamata tekstina',
 'Show in Viewer': 'Näita vaaturis',
+'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Right-click an item for the full action menu (Paste as UPPERCASE, single line, Copy only, …).': 'Ajaloo üksust valides hoia ⇧, et kleepida see vormindamata tekstina, ⌥ lisab Mallidesse, ⌃ kustutab. Paremklõps üksusel avab täieliku toimingute menüü (kleebi SUURTÄHTEDEGA, üks rida, ainult kopeeri, …).',
 }
