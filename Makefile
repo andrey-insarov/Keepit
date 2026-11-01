@@ -109,6 +109,7 @@ appstore:
 	  | plutil -remove SUScheduledCheckInterval -o - - | plutil -remove SUAutomaticallyUpdate -o - - > $(CONTENTS)/Info.plist
 	@! otool -L $(CONTENTS)/MacOS/$(APP) | grep -q Sparkle || (echo "App Store binary must not link Sparkle"; exit 1)
 	cp Resources/Icon/AppIcon.icns $(CONTENTS)/Resources/AppIcon.icns
+	cp -R $(APPSTORE_BUILD)/Keepit_Keepit.bundle $(CONTENTS)/Resources/
 	cp Resources/Keepit.provisionprofile $(CONTENTS)/embedded.provisionprofile
 	echo -n 'APPL????' > $(CONTENTS)/PkgInfo
 	sed 's/__TEAM_ID__/$(TEAM_ID)/g' Resources/Keepit-AppStore.entitlements > .build/appstore.entitlements
@@ -137,6 +138,7 @@ app: build
 	cp $(BUILD)/$(APP) $(CONTENTS)/MacOS/$(APP)
 	sed -e 's/__VERSION__/$(VERSION)/' -e 's/__BUILD__/$(BUILD_NO)/' -e 's|__SPARKLE_PUBLIC_KEY__|$(SPARKLE_PUBLIC_KEY)|' Resources/Info.plist > $(CONTENTS)/Info.plist
 	cp Resources/Icon/AppIcon.icns $(CONTENTS)/Resources/AppIcon.icns
+	cp -R $(BUILD)/Keepit_Keepit.bundle $(CONTENTS)/Resources/      # localized strings (SwiftPM resource bundle)
 	echo -n 'APPL????' > $(CONTENTS)/PkgInfo
 	@test -n "$(SPARKLE_FW)" || (echo "Sparkle.framework not found under .build — run swift build first"; exit 1)
 	mkdir -p $(CONTENTS)/Frameworks

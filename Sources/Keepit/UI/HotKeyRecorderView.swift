@@ -80,7 +80,7 @@ final class HotKeyRecorderView: NSControl {
         NSColor.separatorColor.setStroke()
         path.stroke()
 
-        let text = recording ? "Press keys… (⎋ cancels)" : (hotKey?.displayString ?? "Click to set")
+        let text = recording ? L("Press keys… (⎋ cancels)") : (hotKey?.displayString ?? L("Click to set"))
         let attrs: [NSAttributedString.Key: Any] = [
             .font: NSFont.systemFont(ofSize: NSFont.systemFontSize),
             .foregroundColor: recording ? NSColor.secondaryLabelColor : NSColor.labelColor,

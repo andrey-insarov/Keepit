@@ -48,7 +48,7 @@ final class MenuBuilder {
             out.append(mi)
         }
         if items.count > shown.count {
-            let more = NSMenuItem(title: "… \(items.count - shown.count) more in the Viewer", action: nil, keyEquivalent: "")
+            let more = NSMenuItem(title: LF("… %d more in the Viewer", items.count - shown.count), action: nil, keyEquivalent: "")
             more.isEnabled = false
             out.append(more)
         }
@@ -61,7 +61,7 @@ final class MenuBuilder {
         let menu = NSMenu(title: node.name)
         menu.autoenablesItems = false
         if node.children.isEmpty {
-            let empty = NSMenuItem(title: "(Empty)", action: nil, keyEquivalent: "")
+            let empty = NSMenuItem(title: L("(Empty)"), action: nil, keyEquivalent: "")
             empty.isEnabled = false
             menu.addItem(empty)
         }

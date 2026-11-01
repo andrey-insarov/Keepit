@@ -11,7 +11,7 @@ final class Spacer: NSView {
     required init?(coder: NSCoder) { fatalError() }
 }
 
-/// Options window. Edits a copy of Settings and applies on "Save".
+/// Options window. Edits a copy of Settings and applies on L("Save").
 final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     private unowned let app: AppDelegate
     private var draft: Settings
@@ -22,22 +22,22 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     private let thumbSize    = NSTextField()
     private let pollInterval = NSTextField()
     private let pasteDelay   = NSTextField()
-    private let showThumbs   = NSButton(checkboxWithTitle: "Show image thumbnails in menu", target: nil, action: nil)
-    private let showTips     = NSButton(checkboxWithTitle: "Show tooltips with item contents", target: nil, action: nil)
-    private let numberItems  = NSButton(checkboxWithTitle: "Number items (press 1-9, 0, A-Z to pick)", target: nil, action: nil)
-    private let pasteAfter   = NSButton(checkboxWithTitle: "Paste into the active app after choosing", target: nil, action: nil)
-    private let showAtCaret  = NSButton(checkboxWithTitle: "Open menu at text cursor when possible", target: nil, action: nil)
-    private let overlap      = NSButton(checkboxWithTitle: "Remove duplicates (keep newest)", target: nil, action: nil)
-    private let saveHistory  = NSButton(checkboxWithTitle: "Save history on quit, restore on start", target: nil, action: nil)
-    private let concealed    = NSButton(checkboxWithTitle: "Ignore concealed clipboard data (password managers)", target: nil, action: nil)
-    private let loginItem    = NSButton(checkboxWithTitle: "Launch at login", target: nil, action: nil)
-    private let protect      = NSButton(checkboxWithTitle: "Require password at launch, encrypt history & templates", target: nil, action: nil)
-    private let changePw     = NSButton(title: "Change Password…", target: nil, action: nil)
-    private let lockScreen   = NSButton(checkboxWithTitle: "Lock Keepit (wipe key, unload data) when the screen locks or the Mac sleeps", target: nil, action: nil)
-    private let touchID      = NSButton(checkboxWithTitle: "Unlock with Touch ID (password remains as fallback)", target: nil, action: nil)
-    private let touchIDChange = NSButton(checkboxWithTitle: "Allow changing the password with Touch ID (off = always require the current password)", target: nil, action: nil)
-    private let newPhrase    = NSButton(title: "New Recovery Phrase…", target: nil, action: nil)
-    private let phraseHint   = NSTextField(wrappingLabelWithString: "Issues a new 24-word phrase and invalidates the old one. Use it if the printed sheet was lost or seen by someone; you will then be offered to change the password too.")
+    private let showThumbs   = NSButton(checkboxWithTitle: L("Show image thumbnails in menu"), target: nil, action: nil)
+    private let showTips     = NSButton(checkboxWithTitle: L("Show tooltips with item contents"), target: nil, action: nil)
+    private let numberItems  = NSButton(checkboxWithTitle: L("Number items (press 1-9, 0, A-Z to pick)"), target: nil, action: nil)
+    private let pasteAfter   = NSButton(checkboxWithTitle: L("Paste into the active app after choosing"), target: nil, action: nil)
+    private let showAtCaret  = NSButton(checkboxWithTitle: L("Open menu at text cursor when possible"), target: nil, action: nil)
+    private let overlap      = NSButton(checkboxWithTitle: L("Remove duplicates (keep newest)"), target: nil, action: nil)
+    private let saveHistory  = NSButton(checkboxWithTitle: L("Save history on quit, restore on start"), target: nil, action: nil)
+    private let concealed    = NSButton(checkboxWithTitle: L("Ignore concealed clipboard data (password managers)"), target: nil, action: nil)
+    private let loginItem    = NSButton(checkboxWithTitle: L("Launch at login"), target: nil, action: nil)
+    private let protect      = NSButton(checkboxWithTitle: L("Require password at launch, encrypt history & templates"), target: nil, action: nil)
+    private let changePw     = NSButton(title: L("Change Password…"), target: nil, action: nil)
+    private let lockScreen   = NSButton(checkboxWithTitle: L("Lock Keepit (wipe key, unload data) when the screen locks or the Mac sleeps"), target: nil, action: nil)
+    private let touchID      = NSButton(checkboxWithTitle: L("Unlock with Touch ID (password remains as fallback)"), target: nil, action: nil)
+    private let touchIDChange = NSButton(checkboxWithTitle: L("Allow changing the password with Touch ID (off = always require the current password)"), target: nil, action: nil)
+    private let newPhrase    = NSButton(title: L("New Recovery Phrase…"), target: nil, action: nil)
+    private let phraseHint   = NSTextField(wrappingLabelWithString: L("Issues a new 24-word phrase and invalidates the old one. Use it if the printed sheet was lost or seen by someone; you will then be offered to change the password too."))
     private let historyHK    = HotKeyRecorderView(frame: .zero)
     private let templateHK   = HotKeyRecorderView(frame: .zero)
     private let ignoreScroll = NSTextView.scrollableTextView()
@@ -49,7 +49,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         let w = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 520, height: 620),
                          styleMask: [.titled, .closable, .miniaturizable],
                          backing: .buffered, defer: false)
-        w.title = "Keepit \(AppInfo.version) — Preferences"
+        w.title = LF("Keepit %@ — Preferences", AppInfo.version)
         w.isReleasedWhenClosed = false
         super.init(window: w)
         w.delegate = self
@@ -91,33 +91,33 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         let ignoredPlaceholder = NSView()
 
         let grid = NSGridView(views: [
-            header("History"),
-            labeled("Text & file items:", numField(historyMax)),
-            labeled("Image items:", numField(imageMax)),
+            header(L("History")),
+            labeled(L("Text & file items:"), numField(historyMax)),
+            labeled(L("Image items:"), numField(imageMax)),
             [NSView(), overlap],
             [NSView(), saveHistory],
             [NSView(), concealed],
-            labeled("Poll interval (s):", numField(pollInterval)),
+            labeled(L("Poll interval (s):"), numField(pollInterval)),
 
-            header("Menu"),
-            labeled("Title length (chars):", numField(titleLength)),
-            labeled("Thumbnail height (px):", numField(thumbSize)),
+            header(L("Menu")),
+            labeled(L("Title length (chars):"), numField(titleLength)),
+            labeled(L("Thumbnail height (px):"), numField(thumbSize)),
             [NSView(), showThumbs],
             [NSView(), showTips],
             [NSView(), numberItems],
             [NSView(), showAtCaret],
 
-            header("Hot keys & paste"),
-            labeled("History menu:", historyHK),
-            labeled("Template menu:", templateHK),
+            header(L("Hot keys & paste")),
+            labeled(L("History menu:"), historyHK),
+            labeled(L("Template menu:"), templateHK),
             [NSView(), pasteAfter],
-            labeled("Paste delay (s):", numField(pasteDelay)),
+            labeled(L("Paste delay (s):"), numField(pasteDelay)),
 
-            header("Ignored apps (bundle IDs, one per line; known password managers are always ignored)"),
+            header(L("Ignored apps (bundle IDs, one per line; known password managers are always ignored)")),
             [ignoredPlaceholder, NSView()],
-            header("General"),
+            header(L("General")),
             [NSView(), loginItem],
-            header("Security"),
+            header(L("Security")),
             [NSView(), protect],
             [NSView(), changePw],
             [NSView(), lockScreen],
@@ -152,11 +152,11 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         grid.mergeCells(inHorizontalRange: NSRange(location: 0, length: 2), verticalRange: NSRange(location: ignoredRowIndex, length: 1))
         grid.cell(atColumnIndex: 0, rowIndex: ignoredRowIndex).contentView = scroll
 
-        let save = NSButton(title: "Save", target: self, action: #selector(saveTapped))
+        let save = NSButton(title: L("Save"), target: self, action: #selector(saveTapped))
         save.keyEquivalent = "\r"
-        let cancel = NSButton(title: "Cancel", target: self, action: #selector(cancelTapped))
+        let cancel = NSButton(title: L("Cancel"), target: self, action: #selector(cancelTapped))
         cancel.keyEquivalent = "\u{1b}"
-        let reveal = NSButton(title: "Open Data Folder", target: self, action: #selector(revealData))
+        let reveal = NSButton(title: L("Open Data Folder"), target: self, action: #selector(revealData))
         let buttons = NSStackView(views: [reveal, Spacer(), cancel, save])
         buttons.orientation = .horizontal
         buttons.distribution = .fill
@@ -208,7 +208,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         touchIDChange.state = s.biometricPasswordChange ? .on : .off
         touchIDChange.isEnabled = touchID.isEnabled
         newPhrase.isEnabled = Vault.isEnabled
-        if !BiometricUnlock.isAvailable { touchID.title = "Unlock with Touch ID (no Touch ID on this Mac)" }
+        if !BiometricUnlock.isAvailable { touchID.title = L("Unlock with Touch ID (no Touch ID on this Mac)") }
         historyHK.hotKey = s.historyHotKey
         templateHK.hotKey = s.templateHotKey
         ignoreApps.string = s.ignoreApps.joined(separator: "\n")

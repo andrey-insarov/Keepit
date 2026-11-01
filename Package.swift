@@ -8,6 +8,7 @@ let appStore = ProcessInfo.processInfo.environment["KEEPIT_APPSTORE"] == "1"
 
 let package = Package(
     name: "Keepit",
+    defaultLocalization: "en",
     platforms: [.macOS(.v13)],
     dependencies: appStore ? [] : [
         .package(url: "https://github.com/sparkle-project/Sparkle", from: "2.6.0"),
@@ -17,6 +18,7 @@ let package = Package(
             name: "Keepit",
             dependencies: appStore ? [] : [.product(name: "Sparkle", package: "Sparkle")],
             path: "Sources/Keepit",
+            resources: [.process("Resources")],
             swiftSettings: appStore ? [.define("APPSTORE")] : [],
             linkerSettings: [
                 .linkedFramework("AppKit"),

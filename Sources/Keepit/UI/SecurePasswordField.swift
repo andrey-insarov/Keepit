@@ -69,7 +69,7 @@ final class SecurePasswordField: NSView {
     let buffer: SecureBuffer
     /// Byte length of each entered character (for backspace over multi-byte UTF-8).
     private var charLengths: [Int] = []
-    var placeholder = "Password"
+    var placeholder = L("Password")
     var onTab: (() -> Void)?
     /// Called after every edit (for a strength meter); receives the live buffer, must not copy it into a String.
     var onChange: ((SecureBuffer) -> Void)?

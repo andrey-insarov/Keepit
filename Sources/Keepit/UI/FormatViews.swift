@@ -55,7 +55,7 @@ final class TextFormatView: NSView, NSTextViewDelegate {
         switch format {
         case ClipItem.Format.rtf:
             textView.isRichText = true
-            let attr = NSAttributedString(rtf: data, documentAttributes: nil) ?? NSAttributedString(string: "(unreadable RTF)")
+            let attr = NSAttributedString(rtf: data, documentAttributes: nil) ?? NSAttributedString(string: L("(unreadable RTF)"))
             textView.textStorage?.setAttributedString(attr)
         default:
             textView.isRichText = false
@@ -123,12 +123,12 @@ final class ImageFormatView: NSView {
     func load(data: Data) {
         guard let img = NSImage(data: data) else {
             imageView.image = nil
-            info.stringValue = "(unreadable image)"
+            info.stringValue = L("(unreadable image)")
             return
         }
         var px = ""
         if let rep = img.representations.first { px = "\(rep.pixelsWide)×\(rep.pixelsHigh) px, " }
-        info.stringValue = "\(px)\(ByteCountFormatter.string(fromByteCount: Int64(data.count), countStyle: .file))"
+        info.stringValue = px + ByteCountFormatter.string(fromByteCount: Int64(data.count), countStyle: .file)
         imageView.image = img
         imageView.frame = NSRect(origin: .zero, size: img.size)
     }
@@ -144,7 +144,7 @@ final class FilesFormatView: NSView, NSTableViewDataSource, NSTableViewDelegate 
     override init(frame: NSRect) {
         super.init(frame: frame)
         let col = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("path"))
-        col.title = "Path"
+        col.title = L("Path")
         col.resizingMask = .autoresizingMask
         table.addTableColumn(col)
         table.columnAutoresizingStyle = .lastColumnOnlyAutoresizingStyle
@@ -181,7 +181,7 @@ final class FilesFormatView: NSView, NSTableViewDataSource, NSTableViewDelegate 
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
         let p = paths[row]
         let exists = FileManager.default.fileExists(atPath: p)
-        return exists ? p : "\(p)  (missing)"
+        return exists ? p : p + "  " + L("(missing)")
     }
 }
 

@@ -16,10 +16,10 @@ enum BiometricUnlock {
         var errorDescription: String? {
             switch self {
             case .notAvailable:
-                return "Touch ID is not available on this Mac."
+                return L("Touch ID is not available on this Mac.")
             case .keychain(let s):
                 if s == -34018 {   // errSecMissingEntitlement
-                    return "This build is not signed with a Team ID, so it cannot use the protected keychain. Touch ID works in the signed release build."
+                    return L("This build is not signed with a Team ID, so it cannot use the protected keychain. Touch ID works in the signed release build.")
                 }
                 return "Keychain error \(s): \(SecCopyErrorMessageString(s, nil) as String? ?? "")"
             }
@@ -82,7 +82,7 @@ enum BiometricUnlock {
     static func retrieve(reason: String) -> SecureKey? {
         let ctx = LAContext()
         ctx.localizedReason = reason
-        ctx.localizedCancelTitle = "Use Password"
+        ctx.localizedCancelTitle = L("Use Password")
         let q: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,

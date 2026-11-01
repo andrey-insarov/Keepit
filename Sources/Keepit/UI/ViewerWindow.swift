@@ -120,7 +120,7 @@ final class ViewerWindowController: NSWindowController,
         let w = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 900, height: 560),
                          styleMask: [.titled, .closable, .miniaturizable, .resizable],
                          backing: .buffered, defer: false)
-        w.title = "Keepit — Viewer"
+        w.title = L("Keepit — Viewer")
         w.isReleasedWhenClosed = false
         w.minSize = NSSize(width: 640, height: 360)
         w.setFrameAutosaveName("KeepitViewer")
@@ -158,18 +158,18 @@ final class ViewerWindowController: NSWindowController,
             b.imagePosition = .imageLeading
             return b
         }
-        binaryButton = btn("Binary", #selector(toggleBinary), symbol: "number")
+        binaryButton = btn(L("Binary"), #selector(toggleBinary), symbol: "number")
         binaryButton.setButtonType(.pushOnPushOff)
         let bar = NSStackView(views: [
-            btn("Send to Clipboard", #selector(sendToClipboard), symbol: "doc.on.clipboard"),
-            btn("Paste", #selector(pasteItem), symbol: "arrow.right.doc.on.clipboard"),
-            btn("Add to Template", #selector(addToTemplate), symbol: "text.badge.plus"),
+            btn(L("Send to Clipboard"), #selector(sendToClipboard), symbol: "doc.on.clipboard"),
+            btn(L("Paste"), #selector(pasteItem), symbol: "arrow.right.doc.on.clipboard"),
+            btn(L("Add to Template"), #selector(addToTemplate), symbol: "text.badge.plus"),
             Spacer(),
-            btn("New Item", #selector(newItem), symbol: "plus"),
-            btn("New Folder", #selector(newFolder), symbol: "folder.badge.plus"),
-            btn("Delete", #selector(deleteSelected), symbol: "trash"),
-            btn("Up", #selector(moveUpAction), symbol: "arrow.up"),
-            btn("Down", #selector(moveDownAction), symbol: "arrow.down"),
+            btn(L("New Item"), #selector(newItem), symbol: "plus"),
+            btn(L("New Folder"), #selector(newFolder), symbol: "folder.badge.plus"),
+            btn(L("Delete"), #selector(deleteSelected), symbol: "trash"),
+            btn(L("Up"), #selector(moveUpAction), symbol: "arrow.up"),
+            btn(L("Down"), #selector(moveDownAction), symbol: "arrow.down"),
             Spacer(),
             binaryButton,
         ])
@@ -201,9 +201,9 @@ final class ViewerWindowController: NSWindowController,
         leftScroll.hasVerticalScroller = true
         leftScroll.borderType = .noBorder
 
-        // Right side: "Name" row (template items/folders only) above the content.
-        let nameLabel = NSTextField(labelWithString: "Name:")
-        nameField.placeholderString = "Empty = show contents · “-” = separator · &x = menu shortcut"
+        // Right side: L("Name") row (template items/folders only) above the content.
+        let nameLabel = NSTextField(labelWithString: L("Name:"))
+        nameField.placeholderString = L("Empty = show contents · “-” = separator · &x = menu shortcut")
         nameField.target = self
         nameField.action = #selector(nameFieldChanged)
         (nameField.cell as? NSTextFieldCell)?.sendsActionOnEndEditing = true   // commit on focus loss, not only ↩
@@ -255,7 +255,7 @@ final class ViewerWindowController: NSWindowController,
         ])
         split.setPosition(300, ofDividerAt: 0)
         showPane(infoFormat)
-        infoFormat.load("Select an item in the tree.")
+        infoFormat.load(L("Select an item in the tree."))
     }
 
     private func showPane(_ v: NSView) {
@@ -279,7 +279,7 @@ final class ViewerWindowController: NSWindowController,
 
     private func limitBeep() {
         NSSound.beep()
-        statusBar.stringValue = "Limit reached: at most \(Limits.templateMaxCount) template items, \(Limits.templateMaxDepth) levels deep."
+        statusBar.stringValue = LF("Limit reached: at most %d template items, %d levels deep.", Limits.templateMaxCount, Limits.templateMaxDepth)
     }
 
     @objc private func nameFieldChanged() {
@@ -394,29 +394,29 @@ final class ViewerWindowController: NSWindowController,
         updateNameRow(for: selectedNode)
         guard let n = selectedNode else {
             showPane(infoFormat)
-            infoFormat.load("Select an item in the tree.")
+            infoFormat.load(L("Select an item in the tree."))
             statusBar.stringValue = ""
             return
         }
         switch n.kind {
         case .clipboardRoot:
-            info("Current contents of the clipboard (read-only).", status: "")
+            info(L("Current contents of the clipboard (read-only)."), status: "")
         case .historyRoot:
-            info("History — \(history.textItems.count) text/file item(s) (max \(app.settings.historyMax)) and \(history.imageItems.count) image(s) (max \(app.settings.historyImageMax)). Each group drops its oldest entries first.", status: "")
+            info(LF("History — %d text/file item(s) (max %d) and %d image(s) (max %d). Each group drops its oldest entries first.", history.textItems.count, app.settings.historyMax, history.imageItems.count, app.settings.historyImageMax), status: "")
         case .historyText:
-            info("Text & files — \(history.textItems.count) of \(app.settings.historyMax).", status: "")
+            info(LF("Text & files — %d of %d.", history.textItems.count, app.settings.historyMax), status: "")
         case .historyImages:
-            info("Images — \(history.imageItems.count) of \(app.settings.historyImageMax).", status: "")
+            info(LF("Images — %d of %d.", history.imageItems.count, app.settings.historyImageMax), status: "")
         case .templateRoot:
-            info("Template — \(templates.allItems().count) item(s). Drag history items here to register them.", status: "")
+            info(LF("Template — %d item(s). Drag history items here to register them.", templates.allItems().count), status: "")
         case .template(let t) where t.isFolder:
-            info("Folder “\(t.displayName)” — \(t.children.count) item(s).", status: "")
+            info(LF("Folder “%@” — %d item(s).", t.displayName, t.children.count), status: "")
         case .format(let f):
-            guard let c = clip(for: n), let d = c.formats[f] else { info("(no data)", status: ""); return }
+            guard let c = clip(for: n), let d = c.formats[f] else { info(L("(no data)"), status: ""); return }
             showFormat(f, data: d, clip: c, node: n)
         default:
             guard let c = clip(for: n), let f = c.primaryFormat, let d = c.formats[f] else {
-                info("(empty item)", status: ""); return
+                info(L("(empty item)"), status: ""); return
             }
             showFormat(f, data: d, clip: c, node: n)
         }
@@ -465,9 +465,9 @@ final class ViewerWindowController: NSWindowController,
         parts.append(df.string(from: c.date))
         if let s = c.sourceApp { parts.append(s) }
         parts.append("\(ClipItem.displayName(for: f)) · \(ByteCountFormatter.string(fromByteCount: Int64(data.count), countStyle: .file))")
-        parts.append("\(c.formats.count) format(s)")
-        if let t = n.itemNode?.templateNode, let hk = t.hotKey { parts.append("Hot key: \(hk.displayString)") }
-        if !editable { parts.append("read-only") }
+        parts.append(LF("%d format(s)", c.formats.count))
+        if let t = n.itemNode?.templateNode, let hk = t.hotKey { parts.append(LF("Hot key: %@", hk.displayString)) }
+        if !editable { parts.append(L("read-only")) }
         statusBar.stringValue = parts.joined(separator: "  ·  ")
     }
 
@@ -475,7 +475,7 @@ final class ViewerWindowController: NSWindowController,
         guard let n = editingNode, var c = clip(for: n) else { return }
         guard data.count <= app.settings.maxTextBytes * 4 else {
             NSSound.beep()
-            statusBar.stringValue = "Edit discarded: larger than the text limit (\(app.settings.maxTextBytes / 1024 / 1024) MB)."
+            statusBar.stringValue = LF("Edit discarded: larger than the text limit (%d MB).", app.settings.maxTextBytes / 1024 / 1024)
             showSelection()
             return
         }
@@ -538,7 +538,7 @@ final class ViewerWindowController: NSWindowController,
         select(key: "t:\(t.id.uuidString)")
     }
 
-    /// Where "New …" goes in the template tree: selected folder, after selected item, or root.
+    /// Where L("New …") goes in the template tree: selected folder, after selected item, or root.
     private func templateInsertionPoint() -> (TemplateNode, Int?) {
         guard let n = selectedNode?.itemNode, let t = n.templateNode else { return (templates.root, nil) }
         if t.isFolder { return (t, nil) }
@@ -572,7 +572,7 @@ final class ViewerWindowController: NSWindowController,
     @objc private func newFolder() {
         textFormat.commit()
         let (folder, idx) = templateInsertionPoint()
-        let t = TemplateNode(name: "New Folder")
+        let t = TemplateNode(name: L("New Folder"))
         guard templates.canInsert(t, under: folder) else { limitBeep(); return }
         folder.insert(t, at: idx)
         templates.changed()
@@ -586,7 +586,7 @@ final class ViewerWindowController: NSWindowController,
         let panel = NSOpenPanel()
         panel.allowsMultipleSelection = false
         panel.canChooseDirectories = false
-        panel.message = "Create a template item from a file"
+        panel.message = L("Create a template item from a file")
         guard panel.runModal() == .OK, let url = panel.url, let data = try? Data(contentsOf: url) else { return }
         var clip: ClipItem
         if let type = UTType(filenameExtension: url.pathExtension), type.conforms(to: .image),
@@ -635,13 +635,13 @@ final class ViewerWindowController: NSWindowController,
     @objc private func rename() {
         guard let t = selectedNode?.itemNode?.templateNode else { NSSound.beep(); return }
         let a = NSAlert()
-        a.messageText = "Rename"
-        a.informativeText = "Use “-” for a menu separator, “&x” to make x the menu shortcut, “&&” for a literal &."
+        a.messageText = L("Rename")
+        a.informativeText = L("Use “-” for a menu separator, “&x” to make x the menu shortcut, “&&” for a literal &.")
         let field = NSTextField(frame: NSRect(x: 0, y: 0, width: 300, height: 24))
         field.stringValue = t.name
         a.accessoryView = field
-        a.addButton(withTitle: "OK")
-        a.addButton(withTitle: "Cancel")
+        a.addButton(withTitle: L("OK"))
+        a.addButton(withTitle: L("Cancel"))
         a.window.initialFirstResponder = field
         guard a.runModal() == .alertFirstButtonReturn else { return }
         t.name = String(field.stringValue.prefix(Limits.templateNameMaxChars))
@@ -659,14 +659,14 @@ final class ViewerWindowController: NSWindowController,
     @objc private func setHotKey() {
         guard let t = selectedNode?.itemNode?.templateNode, !t.isFolder else { NSSound.beep(); return }
         let a = NSAlert()
-        a.messageText = "Hot key for “\(t.displayName)”"
-        a.informativeText = "Pressing it sends the item to the clipboard and pastes it without showing the menu."
+        a.messageText = LF("Hot key for “%@”", t.displayName)
+        a.informativeText = L("Pressing it sends the item to the clipboard and pastes it without showing the menu.")
         let rec = HotKeyRecorderView(frame: NSRect(x: 0, y: 0, width: 200, height: 26))
         rec.hotKey = t.hotKey
         a.accessoryView = rec
-        a.addButton(withTitle: "OK")
-        a.addButton(withTitle: "Clear")
-        a.addButton(withTitle: "Cancel")
+        a.addButton(withTitle: L("OK"))
+        a.addButton(withTitle: L("Clear"))
+        a.addButton(withTitle: L("Cancel"))
         let r = a.runModal()
         if r == .alertFirstButtonReturn {
             t.hotKey = rec.hotKey
@@ -700,9 +700,9 @@ final class ViewerWindowController: NSWindowController,
         case .template(let t):
             if t.isFolder, !t.children.isEmpty {
                 let a = NSAlert()
-                a.messageText = "Delete folder “\(t.displayName)” and its \(t.children.count) item(s)?"
-                a.addButton(withTitle: "Delete")
-                a.addButton(withTitle: "Cancel")
+                a.messageText = LF("Delete folder “%@” and its %d item(s)?", t.displayName, t.children.count)
+                a.addButton(withTitle: L("Delete"))
+                a.addButton(withTitle: L("Cancel"))
                 guard a.runModal() == .alertFirstButtonReturn else { return }
             }
             t.removeFromParent()
@@ -718,10 +718,10 @@ final class ViewerWindowController: NSWindowController,
 
     @objc private func clearHistory() {
         let a = NSAlert()
-        a.messageText = "Clear clipboard history?"
-        a.informativeText = "\(history.items.count) item(s) will be removed."
-        a.addButton(withTitle: "Clear")
-        a.addButton(withTitle: "Cancel")
+        a.messageText = L("Clear clipboard history?")
+        a.informativeText = LF("%d item(s) will be removed.", history.items.count)
+        a.addButton(withTitle: L("Clear"))
+        a.addButton(withTitle: L("Cancel"))
         if a.runModal() == .alertFirstButtonReturn {
             history.clear()
             refresh()
@@ -779,39 +779,39 @@ final class ViewerWindowController: NSWindowController,
         let hasItem = clip(for: n) != nil
 
         if hasItem {
-            add("Send to Clipboard", #selector(sendToClipboard), "\r")
-            add("Paste", #selector(pasteItem))
+            add(L("Send to Clipboard"), #selector(sendToClipboard), "\r")
+            add(L("Paste"), #selector(pasteItem))
             menu.addItem(.separator())
         }
         if n?.isInHistory == true || n?.kind.isClipboardSide == true, hasItem {
-            add("Add to Template", #selector(addToTemplate))
+            add(L("Add to Template"), #selector(addToTemplate))
         }
         if n?.isInTemplate == true {
-            add("New Item", #selector(newItem))
-            add("New Folder", #selector(newFolder))
-            add("New Item from File…", #selector(importFromFile))
+            add(L("New Item"), #selector(newItem))
+            add(L("New Folder"), #selector(newFolder))
+            add(L("New Item from File…"), #selector(importFromFile))
             if let t = t {
-                add("Rename…", #selector(rename))
+                add(L("Rename…"), #selector(rename))
                 if !t.isFolder {
-                    add("Clear Name", #selector(clearName))
-                    add("Set Hot Key…", #selector(setHotKey))
+                    add(L("Clear Name"), #selector(clearName))
+                    add(L("Set Hot Key…"), #selector(setHotKey))
                 }
             }
         } else if n?.isInHistory == true {
-            add("New Item", #selector(newItem))
-            add("Clear History…", #selector(clearHistory))
+            add(L("New Item"), #selector(newItem))
+            add(L("Clear History…"), #selector(clearHistory))
         }
         if hasItem {
-            add("Save Format to File…", #selector(saveToFile))
+            add(L("Save Format to File…"), #selector(saveToFile))
         }
         if let n = n, !n.isRoot {
             menu.addItem(.separator())
-            add("Up", #selector(moveUpAction))
-            add("Down", #selector(moveDownAction))
-            add("Delete", #selector(deleteSelected))
+            add(L("Up"), #selector(moveUpAction))
+            add(L("Down"), #selector(moveDownAction))
+            add(L("Delete"), #selector(deleteSelected))
         }
         if menu.items.isEmpty {
-            let mi = NSMenuItem(title: "(no actions)", action: nil, keyEquivalent: "")
+            let mi = NSMenuItem(title: L("(no actions)"), action: nil, keyEquivalent: "")
             mi.isEnabled = false
             menu.addItem(mi)
         }
@@ -842,12 +842,12 @@ final class ViewerWindowController: NSWindowController,
     func outlineView(_ outlineView: NSOutlineView, objectValueFor tableColumn: NSTableColumn?, byItem item: Any?) -> Any? {
         guard let n = vnode(item) else { return nil }
         switch n.kind {
-        case .clipboardRoot: return "Clipboard"
-        case .historyRoot: return "History"
-        case .historyText: return "Text & files (\(history.textItems.count))"
-        case .historyImages: return "Images (\(history.imageItems.count))"
-        case .templateRoot: return "Template"
-        case .clipboardItem: return currentClipboard?.title(maxLength: 60) ?? "(empty)"
+        case .clipboardRoot: return L("Clipboard")
+        case .historyRoot: return L("History")
+        case .historyText: return LF("Text & files (%d)", history.textItems.count)
+        case .historyImages: return LF("Images (%d)", history.imageItems.count)
+        case .templateRoot: return L("Template")
+        case .clipboardItem: return currentClipboard?.title(maxLength: 60) ?? L("(empty)")
         case .history(let id): return history.item(id: id)?.title(maxLength: 60) ?? "?"
         case .template(let t):
             if t.isFolder { return "📁 \(t.displayName)" }

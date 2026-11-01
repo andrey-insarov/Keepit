@@ -144,8 +144,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         guard let b = statusItem?.button else { return }
         b.image = NSImage(systemSymbolName: isLocked ? "lock.fill" : "paperclip", accessibilityDescription: "Keepit")
         b.image?.isTemplate = true
-        b.toolTip = isLocked ? "Keepit — locked, click to unlock"
-                             : "Keepit — \(settings.historyHotKey.displayString) history, \(settings.templateHotKey.displayString) templates"
+        b.toolTip = isLocked ? L("Keepit — locked, click to unlock")
+                             : LF("Keepit — %@ history, %@ templates", settings.historyHotKey.displayString, settings.templateHotKey.displayString)
     }
 
     // MARK: - Password / encryption
@@ -156,12 +156,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private func unlockVault(quitOnFailure: Bool = true) -> Bool {
         let wait = lockoutUntil.timeIntervalSinceNow
         if wait > 0 {
-            Vault.error("Too many wrong attempts. Try again in \(Int(wait.rounded(.up))) s.")
+            Vault.error(LF("Too many wrong attempts. Try again in %d s.", Int(wait.rounded(.up))))
             return false
         }
         if settings.biometricUnlock, BiometricUnlock.isAvailable, BiometricUnlock.isConfigured {
             NSApp.activate(ignoringOtherApps: true)
-            if let key = BiometricUnlock.retrieve(reason: "unlock the clipboard history and templates") {
+            if let key = BiometricUnlock.retrieve(reason: L("unlock the clipboard history and templates")) {
                 if Vault.verify(key) {
                     Storage.key = key
                     return true
@@ -172,9 +172,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             // fall through to the password prompt
         }
         for attempt in 1...3 {
-            let msg = attempt == 1 ? "Enter the Keepit password to decrypt the history and templates."
-                                   : "Wrong password (\(attempt - 1) of 3 attempts used)."
-            switch Vault.prompt(title: "Keepit is locked", message: msg, cancelQuits: quitOnFailure, offerRecovery: true) {
+            let msg = attempt == 1 ? L("Enter the Keepit password to decrypt the history and templates.")
+                                   : LF("Wrong password (%d of 3 attempts used).", attempt - 1)
+            switch Vault.prompt(title: L("Keepit is locked"), message: msg, cancelQuits: quitOnFailure, offerRecovery: true) {
             case .cancel:
                 return false
             case .recovery:
@@ -192,7 +192,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             }
         }
         lockoutUntil = Date().addingTimeInterval(Limits.unlockLockoutSeconds)
-        Vault.error(quitOnFailure ? "Too many wrong attempts. Keepit will quit." : "Too many wrong attempts. Keepit stays locked.")
+        Vault.error(quitOnFailure ? L("Too many wrong attempts. Keepit will quit.") : L("Too many wrong attempts. Keepit stays locked."))
         return false
     }
 
@@ -204,7 +204,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private func recoverWithPhrase() -> Bool {
         guard let words = RecoveryDialogs.askPhrase() else { return false }
         guard let key = Vault.unlockWithRecovery(words: words) else {
-            Vault.error("This phrase does not match the stored recovery data.")
+            Vault.error(L("This phrase does not match the stored recovery data."))
             return false
         }
         Storage.key = key
@@ -217,8 +217,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         needsPasswordReset = false
         var newPw: SecureBuffer?
         while newPw == nil {
-            newPw = Vault.askPassword(title: "Set a new password",
-                                      message: "You unlocked with the recovery phrase. Choose a new password now; the recovery phrase stays valid.",
+            newPw = Vault.askPassword(title: L("Set a new password"),
+                                      message: L("You unlocked with the recovery phrase. Choose a new password now; the recovery phrase stays valid."),
                                       confirm: true)
         }
         rekey(with: newPw!)
@@ -234,7 +234,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             try Vault.rewrapRecovery(from: oldKey, to: newKey, oldRecovery: oldRecovery)
             Storage.key = newKey                     // zeroes oldKey
         } catch {
-            Vault.error("Could not change the password: \(error.localizedDescription)")
+            Vault.error(LF("Could not change the password: %@", error.localizedDescription))
             return
         }
         history.saveNow()
@@ -250,36 +250,36 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             k.zero()
             if ok { return true }
         }
-        guard let old = Vault.askPassword(title: "Confirm", message: "Enter the current password to \(reason).") else { return false }
+        guard let old = Vault.askPassword(title: L("Confirm"), message: LF("Enter the current password to %@.", reason)) else { return false }
         let check = Vault.unlock(password: old)
         old.zero()
         guard let c = check else {
-            Vault.error("Wrong password.")
+            Vault.error(L("Wrong password."))
             return false
         }
         c.zero()
         return true
     }
 
-    /// Preferences → "New Recovery Phrase…": invalidates the old sheet.
+    /// Preferences → L("New Recovery Phrase…"): invalidates the old sheet.
     func regenerateRecoveryPhrase() {
         guard Vault.isEnabled, let key = Storage.key else { return }
-        guard authenticateForChange(reason: "generate a new recovery phrase") else { return }
+        guard authenticateForChange(reason: L("generate a new recovery phrase")) else { return }
         do {
             let words = try Vault.createRecovery(for: key)
-            RecoveryDialogs.present(words: words, title: "Your new recovery phrase (the old one no longer works)")
+            RecoveryDialogs.present(words: words, title: L("Your new recovery phrase (the old one no longer works)"))
         } catch {
-            Vault.error("Could not create the recovery phrase: \(error.localizedDescription)")
+            Vault.error(LF("Could not create the recovery phrase: %@", error.localizedDescription))
             return
         }
         // If the old phrase leaked, whoever has it may already hold the current data key.
         let a = NSAlert()
-        a.messageText = "Was the old phrase exposed?"
-        a.informativeText = "A leaked phrase reveals the current data key, so a new phrase alone is not enough. Changing the password now re-encrypts everything with a fresh key (the new phrase stays valid; the Touch ID entry is refreshed)."
-        a.addButton(withTitle: "Change Password Now")
-        a.addButton(withTitle: "No, Keep Password")
+        a.messageText = L("Was the old phrase exposed?")
+        a.informativeText = L("A leaked phrase reveals the current data key, so a new phrase alone is not enough. Changing the password now re-encrypts everything with a fresh key (the new phrase stays valid; the Touch ID entry is refreshed).")
+        a.addButton(withTitle: L("Change Password Now"))
+        a.addButton(withTitle: L("No, Keep Password"))
         if a.runModal() == .alertFirstButtonReturn {
-            guard let pw = Vault.askPassword(title: "New password", message: "Enter the new password twice.", confirm: true) else { return }
+            guard let pw = Vault.askPassword(title: L("New password"), message: L("Enter the new password twice."), confirm: true) else { return }
             rekey(with: pw)
             pw.zero()
         }
@@ -287,14 +287,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     /// Turn protection on: set a password, re-save data encrypted.
     func enableProtection() -> Bool {
-        guard let pw = Vault.askPassword(title: "Set Keepit password",
-                                         message: "You'll be asked for it every time Keepit starts. There is no recovery if you forget it.",
+        guard let pw = Vault.askPassword(title: L("Set Keepit password"),
+                                         message: L("You'll be asked for it every time Keepit starts. There is no recovery if you forget it."),
                                          confirm: true) else { return false }
         defer { pw.zero() }
         do {
             Storage.key = try Vault.enable(password: pw)
         } catch {
-            Vault.error("Could not enable protection: \(error.localizedDescription)")
+            Vault.error(LF("Could not enable protection: %@", error.localizedDescription))
             return false
         }
         history.saveNow()
@@ -311,7 +311,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         guard Vault.isEnabled, let key = Storage.key else { BiometricUnlock.remove(); return }
         if settings.biometricUnlock {
             do { try BiometricUnlock.store(key) } catch {
-                Vault.error("Touch ID could not be set up: \(error.localizedDescription)")
+                Vault.error(LF("Touch ID could not be set up: %@", error.localizedDescription))
                 settings.biometricUnlock = false
                 Storage.save(settings, to: Storage.settingsURL, encrypt: false)
             }
@@ -322,12 +322,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     /// Turn protection off after verifying the password; data is re-saved as plain JSON.
     func disableProtection() -> Bool {
-        guard let pw = Vault.askPassword(title: "Disable password protection",
-                                         message: "Enter the current password. History and templates will be stored unencrypted.") else { return false }
+        guard let pw = Vault.askPassword(title: L("Disable password protection"),
+                                         message: L("Enter the current password. History and templates will be stored unencrypted.")) else { return false }
         let check = Vault.unlock(password: pw)
         pw.zero()
         guard check != nil else {
-            Vault.error("Wrong password.")
+            Vault.error(L("Wrong password."))
             return false
         }
         check?.zero()
@@ -341,8 +341,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     func changePassword() {
         guard Vault.isEnabled, Storage.key != nil else { return }
-        guard authenticateForChange(reason: "change the Keepit password") else { return }
-        guard let pw = Vault.askPassword(title: "New password", message: "Enter the new password twice.", confirm: true) else { return }
+        guard authenticateForChange(reason: L("change the Keepit password")) else { return }
+        guard let pw = Vault.askPassword(title: L("New password"), message: L("Enter the new password twice."), confirm: true) else { return }
         defer { pw.zero() }
         rekey(with: pw)
     }
@@ -385,7 +385,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if !hotKeys.register(settings.templateHotKey, handler: { [weak self] in self?.showTemplatePopup() }) {
             failed.append(settings.templateHotKey.displayString)
         }
-        // Per-template hot keys: paste the item directly, no menu ("Set Hot Key" on a template item).
+        // Per-template hot keys: paste the item directly, no menu (L("Set Hot Key") on a template item).
         for t in templates.allItems().filter({ $0.hotKey != nil }).prefix(Limits.templateHotKeysMax) {
             guard let hk = t.hotKey, t.clip != nil else { continue }
             let id = t.id
@@ -400,8 +400,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if !failed.isEmpty, !SelfTest.isActive {
             // Report hot keys that could not be registered
             let a = NSAlert()
-            a.messageText = "Hot key unavailable"
-            a.informativeText = "Could not register: \(failed.joined(separator: ", ")). Another app or macOS is using it. Change it in Preferences."
+            a.messageText = L("Hot key unavailable")
+            a.informativeText = LF("Could not register: %@. Another app or macOS is using it. Change it in Preferences.", failed.joined(separator: ", "))
             a.runModal()
         }
     }
@@ -413,33 +413,33 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         let appItem = NSMenuItem()
         let appMenu = NSMenu()
-        appMenu.addItem(withTitle: "About Keepit", action: #selector(showAbout), keyEquivalent: "")
+        appMenu.addItem(withTitle: L("About Keepit"), action: #selector(showAbout), keyEquivalent: "")
         appMenu.addItem(.separator())
         if updater.isConfigured {
-            appMenu.addItem(withTitle: "Check for Updates…", action: #selector(checkForUpdates), keyEquivalent: "")
+            appMenu.addItem(withTitle: L("Check for Updates…"), action: #selector(checkForUpdates), keyEquivalent: "")
         }
-        appMenu.addItem(withTitle: "Viewer…", action: #selector(openViewer), keyEquivalent: "l")
-        appMenu.addItem(withTitle: "Preferences…", action: #selector(openPreferences), keyEquivalent: ",")
+        appMenu.addItem(withTitle: L("Viewer…"), action: #selector(openViewer), keyEquivalent: "l")
+        appMenu.addItem(withTitle: L("Preferences…"), action: #selector(openPreferences), keyEquivalent: ",")
         appMenu.addItem(.separator())
-        appMenu.addItem(withTitle: "Quit Keepit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        appMenu.addItem(withTitle: L("Quit Keepit"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         appItem.submenu = appMenu
         main.addItem(appItem)
 
         let editItem = NSMenuItem()
-        let edit = NSMenu(title: "Edit")
-        edit.addItem(withTitle: "Undo", action: Selector(("undo:")), keyEquivalent: "z")
-        edit.addItem(withTitle: "Redo", action: Selector(("redo:")), keyEquivalent: "Z")
+        let edit = NSMenu(title: L("Edit"))
+        edit.addItem(withTitle: L("Undo"), action: Selector(("undo:")), keyEquivalent: "z")
+        edit.addItem(withTitle: L("Redo"), action: Selector(("redo:")), keyEquivalent: "Z")
         edit.addItem(.separator())
-        edit.addItem(withTitle: "Cut", action: #selector(NSText.cut(_:)), keyEquivalent: "x")
-        edit.addItem(withTitle: "Copy", action: #selector(NSText.copy(_:)), keyEquivalent: "c")
-        edit.addItem(withTitle: "Paste", action: #selector(NSText.paste(_:)), keyEquivalent: "v")
-        edit.addItem(withTitle: "Select All", action: #selector(NSText.selectAll(_:)), keyEquivalent: "a")
+        edit.addItem(withTitle: L("Cut"), action: #selector(NSText.cut(_:)), keyEquivalent: "x")
+        edit.addItem(withTitle: L("Copy"), action: #selector(NSText.copy(_:)), keyEquivalent: "c")
+        edit.addItem(withTitle: L("Paste"), action: #selector(NSText.paste(_:)), keyEquivalent: "v")
+        edit.addItem(withTitle: L("Select All"), action: #selector(NSText.selectAll(_:)), keyEquivalent: "a")
         editItem.submenu = edit
         main.addItem(editItem)
 
         let windowItem = NSMenuItem()
-        let window = NSMenu(title: "Window")
-        window.addItem(withTitle: "Close", action: #selector(NSWindow.performClose(_:)), keyEquivalent: "w")
+        let window = NSMenu(title: L("Window"))
+        window.addItem(withTitle: L("Close"), action: #selector(NSWindow.performClose(_:)), keyEquivalent: "w")
         windowItem.submenu = window
         main.addItem(windowItem)
 
@@ -456,7 +456,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             b.target = self
             b.action = #selector(statusItemClicked(_:))
             b.sendAction(on: [.leftMouseUp, .rightMouseUp])
-            b.toolTip = "Keepit — \(settings.historyHotKey.displayString) history, \(settings.templateHotKey.displayString) templates"
+            b.toolTip = LF("Keepit — %@ history, %@ templates", settings.historyHotKey.displayString, settings.templateHotKey.displayString)
         }
     }
 
@@ -464,9 +464,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let isRight = NSApp.currentEvent?.type == .rightMouseUp
         if isLocked {
             let menu = NSMenu()
-            menu.addItem(withTitle: "Unlock Keepit…", action: #selector(unlock), keyEquivalent: "").target = self
+            menu.addItem(withTitle: L("Unlock Keepit…"), action: #selector(unlock), keyEquivalent: "").target = self
             menu.addItem(.separator())
-            menu.addItem(withTitle: "Quit Keepit", action: #selector(quit), keyEquivalent: "q").target = self
+            menu.addItem(withTitle: L("Quit Keepit"), action: #selector(quit), keyEquivalent: "q").target = self
             menu.delegate = self
             statusItem.menu = menu
             statusItem.button?.performClick(nil)
@@ -497,7 +497,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private func showTemplatePopup() {
         let menu = menuBuilder.templateMenu(templates.root, target: self, action: #selector(templateChosen(_:)))
         menu.addItem(.separator())
-        menu.addItem(withTitle: "Viewer…", action: #selector(openViewer), keyEquivalent: "").target = self
+        menu.addItem(withTitle: L("Viewer…"), action: #selector(openViewer), keyEquivalent: "").target = self
         popUp(menu)
     }
 
@@ -536,12 +536,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // MARK: - Menu construction
 
     func buildHistoryMenu(includeTemplates: Bool, includeApp: Bool) -> NSMenu {
-        let menu = NSMenu(title: "History")
+        let menu = NSMenu(title: L("History"))
         menu.autoenablesItems = false
 
         let items = menuBuilder.historyItems(history.items, target: self, action: #selector(historyChosen(_:)))
         if items.isEmpty {
-            let e = NSMenuItem(title: "(History is empty)", action: nil, keyEquivalent: "")
+            let e = NSMenuItem(title: L("(History is empty)"), action: nil, keyEquivalent: "")
             e.isEnabled = false
             menu.addItem(e)
         } else {
@@ -550,8 +550,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         if includeTemplates {
             menu.addItem(.separator())
-            let t = NSMenuItem(title: "Template", action: nil, keyEquivalent: "")
-            t.attributedTitle = NSAttributedString(string: "Template", attributes: [.foregroundColor: AppInfo.templateColor])
+            let t = NSMenuItem(title: L("Template"), action: nil, keyEquivalent: "")
+            t.attributedTitle = NSAttributedString(string: L("Template"), attributes: [.foregroundColor: AppInfo.templateColor])
             t.image = NSImage(systemSymbolName: "text.badge.star", accessibilityDescription: nil)?
                 .withSymbolConfiguration(.init(paletteColors: [AppInfo.templateColor]))
             t.submenu = menuBuilder.templateMenu(templates.root, target: self, action: #selector(templateChosen(_:)))
@@ -576,23 +576,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         var out: [NSMenuItem] = [
             versionItem,
             .separator(),
-            item("Viewer…", #selector(openViewer)),
-            item("Add Clipboard to Templates", #selector(addClipboardToTemplates)),
-            item("Preferences…", #selector(openPreferences), ","),
+            item(L("Viewer…"), #selector(openViewer)),
+            item(L("Add Clipboard to Templates"), #selector(addClipboardToTemplates)),
+            item(L("Preferences…"), #selector(openPreferences), ","),
             .separator(),
-            item("Clear History", #selector(clearHistory)),
+            item(L("Clear History"), #selector(clearHistory)),
         ]
         if Vault.isEnabled {
-            out.append(item("Lock Keepit", #selector(lock), "l"))
+            out.append(item(L("Lock Keepit"), #selector(lock), "l"))
         }
         if updater.isConfigured {
-            out.append(item("Check for Updates…", #selector(checkForUpdates)))
+            out.append(item(L("Check for Updates…"), #selector(checkForUpdates)))
         }
         if !Paster.isTrusted() {
-            out.append(item("Grant Accessibility Permission…", #selector(grantAccessibility)))
+            out.append(item(L("Grant Accessibility Permission…"), #selector(grantAccessibility)))
         }
         out.append(.separator())
-        out.append(item("Quit Keepit", #selector(quit), "q"))
+        out.append(item(L("Quit Keepit"), #selector(quit), "q"))
         return out
     }
 
@@ -615,10 +615,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         accessibilityNudgeShown = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
             let a = NSAlert()
-            a.messageText = "Copied to the clipboard — but Keepit can't paste for you yet"
-            a.informativeText = "Press ⌘V to paste now. To paste automatically, allow Keepit in System Settings → Privacy & Security → Accessibility. If Keepit is already listed, turn it off and on again (macOS forgets the grant when the app is rebuilt with a different signature)."
-            a.addButton(withTitle: "Open System Settings")
-            a.addButton(withTitle: "Later")
+            a.messageText = L("Copied to the clipboard — but Keepit can't paste for you yet")
+            a.informativeText = L("Press ⌘V to paste now. To paste automatically, allow Keepit in System Settings → Privacy & Security → Accessibility. If Keepit is already listed, turn it off and on again (macOS forgets the grant when the app is rebuilt with a different signature).")
+            a.addButton(withTitle: L("Open System Settings"))
+            a.addButton(withTitle: L("Later"))
             NSApp.activate(ignoringOtherApps: true)
             if a.runModal() == .alertFirstButtonReturn {
                 Paster.requestTrust()
@@ -641,10 +641,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc private func clearHistory() {
         menuSelectionMade = true
         let a = NSAlert()
-        a.messageText = "Clear clipboard history?"
-        a.informativeText = "\(history.items.count) item(s) will be removed. Templates are not affected."
-        a.addButton(withTitle: "Clear")
-        a.addButton(withTitle: "Cancel")
+        a.messageText = L("Clear clipboard history?")
+        a.informativeText = LF("%d item(s) will be removed. Templates are not affected.", history.items.count)
+        a.addButton(withTitle: L("Clear"))
+        a.addButton(withTitle: L("Cancel"))
         NSApp.activate(ignoringOtherApps: true)
         if a.runModal() == .alertFirstButtonReturn { history.clear() }
     }
@@ -715,10 +715,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     private func showAccessibilityAlert() {
         let a = NSAlert()
-        a.messageText = "Keepit needs the Accessibility permission to paste"
+        a.messageText = L("Keepit needs the Accessibility permission to paste")
         a.informativeText = "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit."
-        a.addButton(withTitle: "Open System Settings")
-        a.addButton(withTitle: "Later")
+        a.addButton(withTitle: L("Open System Settings"))
+        a.addButton(withTitle: L("Later"))
         NSApp.activate(ignoringOtherApps: true)
         if a.runModal() == .alertFirstButtonReturn {
             Paster.requestTrust()

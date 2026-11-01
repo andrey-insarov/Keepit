@@ -6,10 +6,10 @@ enum PasswordStrength {
 
         var title: String {
             switch self {
-            case .weak: return "Weak"
-            case .fair: return "Fair"
-            case .good: return "Good"
-            case .excellent: return "Excellent"
+            case .weak: return L("Weak")
+            case .fair: return L("Fair")
+            case .good: return L("Good")
+            case .excellent: return L("Excellent")
             }
         }
         var color: NSColor {
@@ -68,12 +68,12 @@ enum PasswordStrength {
             }
             var hint: String
             switch level {
-            case .weak: hint = length < 8 ? "Use at least 8 characters" : "Mix letters, digits and symbols"
-            case .fair: hint = "Longer is better — try a phrase of several words"
-            case .good: hint = "Solid. A few more characters make it excellent"
-            case .excellent: hint = "~\(Int(bits)) bits — brute force is impractical"
+            case .weak: hint = length < 8 ? L("Use at least 8 characters") : L("Mix letters, digits and symbols")
+            case .fair: hint = L("Longer is better — try a phrase of several words")
+            case .good: hint = L("Solid. A few more characters make it excellent")
+            case .excellent: hint = LF("~%d bits — brute force is impractical", Int(bits))
             }
-            if repeats + runs > length / 3 { hint = "Repeated or sequential characters weaken it" }
+            if repeats + runs > length / 3 { hint = L("Repeated or sequential characters weaken it") }
             return Result(level: level, bits: bits, hint: hint)
         }
     }
@@ -118,13 +118,13 @@ final class PasswordStrengthView: NSView {
     func update(_ r: PasswordStrength.Result?) {
         guard let r = r else {
             fillWidth.constant = 0
-            label.stringValue = "Strength: —"
+            label.stringValue = L("Strength: —")
             return
         }
         let fraction = CGFloat(r.level.rawValue + 1) / 4
         fillWidth.constant = bounds.width * fraction
         fill.layer?.backgroundColor = r.level.color.cgColor
-        label.stringValue = "Strength: \(r.level.title) — \(r.hint)"
+        label.stringValue = LF("Strength: %@ — %@", r.level.title, r.hint)
     }
 
     override func layout() {

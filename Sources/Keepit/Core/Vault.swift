@@ -237,7 +237,7 @@ enum Vault {
         return nil
     }
 
-    /// Same prompt, optionally with a third "Use Recovery Phrase…" button.
+    /// Same prompt, optionally with a third L("Use Recovery Phrase…") button.
     static func prompt(title: String, message: String, confirm: Bool = false, cancelQuits: Bool = false, offerRecovery: Bool) -> PromptResult {
         while true {
             let a = NSAlert()
@@ -252,7 +252,7 @@ enum Vault {
             let boxHeight: CGFloat = confirm ? 24 + 6 + meterHeight + 6 + 24 : 24
             let f1 = SecurePasswordField(frame: NSRect(x: 0, y: boxHeight - 24, width: width, height: 24))
             let f2 = SecurePasswordField(frame: NSRect(x: 0, y: 0, width: width, height: 24))
-            f2.placeholder = "Repeat password"
+            f2.placeholder = L("Repeat password")
             let box = NSView(frame: NSRect(x: 0, y: 0, width: width, height: boxHeight))
             box.addSubview(f1)
             if confirm {
@@ -264,9 +264,9 @@ enum Vault {
                 f2.onTab = { [weak f1] in f1?.window?.makeFirstResponder(f1) }
             }
             a.accessoryView = box
-            a.addButton(withTitle: "OK")
-            a.addButton(withTitle: cancelQuits ? "Quit" : "Cancel")
-            if offerRecovery && hasRecovery { a.addButton(withTitle: "Use Recovery Phrase…") }
+            a.addButton(withTitle: L("OK"))
+            a.addButton(withTitle: cancelQuits ? L("Quit") : L("Cancel"))
+            if offerRecovery && hasRecovery { a.addButton(withTitle: L("Use Recovery Phrase…")) }
             a.window.initialFirstResponder = f1
 
             NSApp.activate(ignoringOtherApps: true)
@@ -283,12 +283,12 @@ enum Vault {
             if confirm {
                 if f1.buffer.isEmpty {
                     f1.buffer.zero()
-                    error("Password cannot be empty.")
+                    error(L("Password cannot be empty."))
                     continue
                 }
                 if !SecureBuffer.equal(f1.buffer, f2.buffer) {
                     f1.buffer.zero()
-                    error("Passwords do not match.")
+                    error(L("Passwords do not match."))
                     continue
                 }
             }

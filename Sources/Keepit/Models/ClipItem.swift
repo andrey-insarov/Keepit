@@ -129,12 +129,12 @@ struct ClipItem: Codable, Identifiable, Equatable {
         switch kind {
         case .files:
             let names = filePaths.map { ($0 as NSString).lastPathComponent }
-            raw = names.isEmpty ? "(Files)" : names.joined(separator: ", ")
+            raw = names.isEmpty ? L("(Files)") : names.joined(separator: ", ")
         case .image:
             if let img = image, let rep = img.representations.first {
-                raw = "(Image \(rep.pixelsWide)×\(rep.pixelsHigh))"
+                raw = LF("(Image %d×%d)", rep.pixelsWide, rep.pixelsHigh)
             } else {
-                raw = "(Image)"
+                raw = L("(Image)")
             }
         case .text:
             let t = plainText ?? ""
@@ -143,7 +143,7 @@ struct ClipItem: Codable, Identifiable, Equatable {
                 .map { $0.trimmingCharacters(in: .whitespaces) }
                 .first { !$0.isEmpty } ?? ""
             let collapsed = firstLine.split(whereSeparator: { $0.isWhitespace }).joined(separator: " ")
-            raw = collapsed.isEmpty ? "(Empty text)" : collapsed
+            raw = collapsed.isEmpty ? L("(Empty text)") : collapsed
         }
         if raw.count > maxLength {
             return String(raw.prefix(max(1, maxLength - 1))) + "…"

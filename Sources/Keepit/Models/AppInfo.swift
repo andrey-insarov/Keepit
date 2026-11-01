@@ -14,14 +14,14 @@ enum AppInfo {
     static var versionLine: String { "\(name) \(version) (\(build))" }
     static let homepage = "https://keep.it.com"
 
-    /// Accent for everything "Template": navy in light mode, a readable lighter navy in dark mode.
+    /// Accent for everything L("Template"): navy in light mode, a readable lighter navy in dark mode.
     static let templateColor = NSColor(name: "keepit.template") { appearance in
         appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
             ? NSColor(srgbRed: 0.56, green: 0.66, blue: 1.0, alpha: 1)
             : NSColor(srgbRed: 0.0, green: 0.0, blue: 0.50, alpha: 1)
     }
     static let copyright = "© 2026 UK Intis Telecom LTD (Andrey Insarov)"
-    static let tagline = "Free and open source. Made by the team behind the it.com domain zone."
+    static let tagline = L("Free and open source. Made by the team behind the it.com domain zone.")
     static let sourceURL = "https://github.com/andrey-insarov/Keepit"
 
     /// Credits for the About panel: tagline, clickable links, license.
@@ -36,7 +36,7 @@ enum AppInfo {
         }
         line(tagline)
         line(homepage, link: homepage, bold: true)
-        line("Source code on GitHub (MIT License)", link: sourceURL)
+        line(L("Source code on GitHub (MIT License)"), link: sourceURL)
         line(copyright)
         return s
     }

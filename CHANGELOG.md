@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.5.0 — unreleased
+
+- **Localization**: Russian, German, French, Spanish, Japanese and Simplified Chinese. Keepit
+  follows the macOS system language; English remains the base. `Scripts/gen_strings.py` holds the
+  translation table and regenerates the `.lproj` files.
+
 ## 2.4.0 — 2026-10-31
 
 - Automatic updates via Sparkle 2 (daily check of GitHub Releases, *Check for Updates…* in the

@@ -1,17 +1,17 @@
 import Foundation
 
-/// A node in the template tree ("Template" items): either a folder or an item.
+/// A node in the template tree (L("Template") items): either a folder or an item.
 /// Since 2.0 an item holds a full ClipItem (any formats), not just text — like the original,
 /// where a template can be a bitmap or a file list.
 /// Class (not struct) so NSOutlineView can use object identity.
 final class TemplateNode: Codable {
     var id: UUID
-    /// Display name. Empty → the content's own title is shown ("Clear Name" in the Viewer).
+    /// Display name. Empty → the content's own title is shown (L("Clear Name") in the Viewer).
     /// "-" → rendered as a menu separator.
     var name: String
     /// nil → folder
     var clip: ClipItem?
-    /// Optional direct hot key ("Set Hot Key" in the Viewer).
+    /// Optional direct hot key (L("Set Hot Key") in the Viewer).
     var hotKey: HotKey?
     var children: [TemplateNode]
 
@@ -38,7 +38,7 @@ final class TemplateNode: Codable {
     var displayName: String {
         if !name.isEmpty { return name }
         if let c = clip { return c.title(maxLength: 60) }
-        return "(Folder)"
+        return L("(Folder)")
     }
 
     /// Re-link `parent` pointers after decoding.

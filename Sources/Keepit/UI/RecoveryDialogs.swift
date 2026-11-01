@@ -4,13 +4,13 @@ import AppKit
 enum RecoveryDialogs {
 
     /// Show a freshly generated phrase. The user must tick the disclaimer before continuing.
-    /// There is deliberately no "Copy" button: Keepit itself would record the phrase in its history.
-    static func present(words: [String], title: String = "Your recovery phrase") {
+    /// There is deliberately no L("Copy") button: Keepit itself would record the phrase in its history.
+    static func present(words: [String], title: String = L("Your recovery phrase")) {
         let a = NSAlert()
         a.messageText = title
-        a.informativeText = "Write these 24 words down or print them and keep the sheet somewhere safe. "
-            + "They can unlock your history and templates if you forget the password (on any Mac). "
-            + "Keepit never stores the phrase itself."
+        a.informativeText = L("Write these 24 words down or print them and keep the sheet somewhere safe. ")
+            + L("They can unlock your history and templates if you forget the password (on any Mac). ")
+            + L("Keepit never stores the phrase itself.")
         a.icon = NSImage(systemSymbolName: "key.fill", accessibilityDescription: nil)
 
         let grid = NSGridView(numberOfColumns: 3, rows: 0)
@@ -28,9 +28,9 @@ enum RecoveryDialogs {
             grid.addRow(with: cells)
         }
 
-        let printButton = NSButton(title: "Print…", target: nil, action: nil)
+        let printButton = NSButton(title: L("Print…"), target: nil, action: nil)
         let disclaimer = NSButton(checkboxWithTitle:
-            "I understand that if I lose both the password and this recovery phrase, my data is lost forever.",
+            L("I understand that if I lose both the password and this recovery phrase, my data is lost forever."),
             target: nil, action: nil)
         disclaimer.lineBreakMode = .byWordWrapping
 
@@ -43,7 +43,7 @@ enum RecoveryDialogs {
         disclaimer.widthAnchor.constraint(equalToConstant: 440).isActive = true
         a.accessoryView = stack
 
-        a.addButton(withTitle: "I've saved it")
+        a.addButton(withTitle: L("I've saved it"))
         let ok = a.buttons[0]
         ok.isEnabled = false
 
@@ -63,8 +63,8 @@ enum RecoveryDialogs {
     static func askPhrase() -> [String]? {
         while true {
             let a = NSAlert()
-            a.messageText = "Enter your recovery phrase"
-            a.informativeText = "Type the 24 words in order, separated by spaces or line breaks. Numbers are ignored."
+            a.messageText = L("Enter your recovery phrase")
+            a.informativeText = L("Type the 24 words in order, separated by spaces or line breaks. Numbers are ignored.")
             let scroll = NSTextView.scrollableTextView()
             let tv = scroll.documentView as! NSTextView
             tv.font = NSFont.monospacedSystemFont(ofSize: 13, weight: .regular)
@@ -75,19 +75,19 @@ enum RecoveryDialogs {
             scroll.borderType = .bezelBorder
             scroll.frame = NSRect(x: 0, y: 0, width: 460, height: 110)
             a.accessoryView = scroll
-            a.addButton(withTitle: "Unlock")
-            a.addButton(withTitle: "Cancel")
+            a.addButton(withTitle: L("Unlock"))
+            a.addButton(withTitle: L("Cancel"))
             a.window.initialFirstResponder = tv
             NSApp.activate(ignoringOtherApps: true)
             guard a.runModal() == .alertFirstButtonReturn else { return nil }
             let words = Mnemonic.parse(String(tv.string.prefix(Limits.recoveryInputMaxChars)))
             tv.string = ""
             if words.count != Mnemonic.wordCount {
-                Vault.error("That's \(words.count) word(s); the phrase has \(Mnemonic.wordCount).")
+                Vault.error(LF("That's %d word(s); the phrase has %d.", words.count, Mnemonic.wordCount))
                 continue
             }
             if Mnemonic.decode(words) == nil {
-                Vault.error("The phrase doesn't check out — a word is misspelled or out of order.")
+                Vault.error(L("The phrase doesn't check out — a word is misspelled or out of order."))
                 continue
             }
             return words
@@ -109,7 +109,7 @@ enum RecoveryDialogs {
         @objc func fire() {
             let page = NSTextView(frame: NSRect(x: 0, y: 0, width: 468, height: 648))  // US Letter minus margins
             page.isEditable = false
-            var text = "Keepit — recovery phrase\n\(DateFormatter.localizedString(from: Date(), dateStyle: .long, timeStyle: .short))\n\n"
+            var text = L("Keepit — recovery phrase") + "\n" + DateFormatter.localizedString(from: Date(), dateStyle: .long, timeStyle: .short) + "\n\n"
             for (i, w) in words.enumerated() { text += String(format: "%2d. %@\n", i + 1, w) }
             text += "\nKeep this sheet private. Anyone with these words can read your clipboard history."
             page.string = text
