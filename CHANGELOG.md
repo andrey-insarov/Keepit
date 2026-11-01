@@ -10,7 +10,6 @@
 - **Placeholders in templates** — `{date}`, `{date+7d:EEEE}`, `{time}`, `{clipboard}`, `{clipboard:2|upper}`, `{input:Name}`, `{choice:A|B}`, `{cursor}`, `{user}`, `{uuid}`, `{random:1-100}` and more (Help → Template Placeholders…); `{input}`/`{choice}` ask for values before pasting, `{cursor}` places the caret
 - **Extended menu (hold ⇧)**: every history item gets a submenu with all actions for it — Paste, Paste as plain text, Copy only, *Paste as* UPPERCASE / lowercase / Title Case / Sentence case / trimmed / single line, Add to Templates, Show in Viewer, Delete — with single-letter shortcuts. The ⇧ “plain text” alternate is folded into it (⌥ and ⌃ alternates stay)
 - New hot key **⌥⇧V — Paste previous item**: pastes history item #2 without opening the menu (press again to swap back); changeable or switchable off on the General tab
-- Preview panel no longer pops up for short single-line text (the menu line already shows it all)
 - Short checkbox labels with (?) help buttons that open explanations in a popover; ignored-apps field aligned with the other rows
 - Preferences reorganised into five tabs — General, History, Menu, Security, Advanced — in a
   fixed-size window; Export/Import Backup also live on the Security tab, *Open Data Folder* and
