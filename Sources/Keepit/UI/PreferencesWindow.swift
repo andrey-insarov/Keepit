@@ -119,12 +119,20 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     }
 
     /// `view` followed by a small (?) button that opens a popover with `text`.
+    private var helpPopover: NSPopover?
+
     private func withHelp(_ view: NSView, _ text: String) -> NSView {
         let b = NSButton(title: "", target: self, action: #selector(helpTapped(_:)))
         b.bezelStyle = .helpButton
         b.controlSize = .small
         b.toolTip = text
         b.identifier = NSUserInterfaceItemIdentifier(text)
+        b.translatesAutoresizingMaskIntoConstraints = false
+        let side = b.intrinsicContentSize.height
+        NSLayoutConstraint.activate([b.widthAnchor.constraint(equalToConstant: side),
+                                     b.heightAnchor.constraint(equalToConstant: side)])
+        b.setContentHuggingPriority(.required, for: .vertical)
+        b.setContentHuggingPriority(.required, for: .horizontal)
         let row = NSStackView(views: [view, b])
         row.orientation = .horizontal
         row.alignment = .centerY
@@ -134,7 +142,9 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
 
     @objc private func helpTapped(_ sender: NSButton) {
         guard let text = sender.identifier?.rawValue else { return }
+        if let open = helpPopover, open.isShown { open.close() }
         let pop = NSPopover()
+        helpPopover = pop
         pop.behavior = .transient
         let vc = NSViewController()
         let label = NSTextField(wrappingLabelWithString: text)
@@ -150,7 +160,12 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
             label.bottomAnchor.constraint(equalTo: v.bottomAnchor, constant: -10),
             v.widthAnchor.constraint(lessThanOrEqualToConstant: 344),
         ])
+        v.translatesAutoresizingMaskIntoConstraints = false
+        label.preferredMaxLayoutWidth = 320
+        v.layoutSubtreeIfNeeded()
+        let h = label.sizeThatFits(NSSize(width: 320, height: 1000)).height
         vc.view = v
+        pop.contentSize = NSSize(width: 344, height: h + 20)
         pop.contentViewController = vc
         pop.show(relativeTo: sender.bounds, of: sender, preferredEdge: .maxY)
     }
