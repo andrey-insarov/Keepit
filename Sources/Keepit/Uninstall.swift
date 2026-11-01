@@ -77,20 +77,22 @@ enum UninstallDialog {
         a.messageText = L("Delete Keepit and all its data?")
         a.informativeText = L("This removes the app, your clipboard history, templates, settings, the Touch ID key and Keepit's permissions. There is no undo. If you have not exported a backup, the data cannot be recovered.")
 
-        let prompt = NSTextField(labelWithString: LF("Type %@ (in capitals) to confirm:", token))
-        let field = NSTextField(frame: NSRect(x: 0, y: 0, width: 300, height: 24))
-        field.placeholderString = token
+        // NSAlert wants a frame-based accessory view: lay it out by hand (top → bottom).
+        let width: CGFloat = 300
         let ack = NSButton(checkboxWithTitle: L("I understand that Keepit's data will be deleted forever and, without a backup, cannot be recovered."), target: nil, action: nil)
         ack.lineBreakMode = .byWordWrapping
-        ack.translatesAutoresizingMaskIntoConstraints = false
-        ack.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        let stack = NSStackView(views: [prompt, field, ack])
-        stack.orientation = .vertical
-        stack.alignment = .leading
-        stack.spacing = 8
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        a.accessoryView = stack
+        ack.frame = NSRect(x: 0, y: 0, width: width, height: 10)
+        let ackHeight = max(ack.sizeThatFits(NSSize(width: width, height: 200)).height, 34)
+        ack.frame = NSRect(x: 0, y: 0, width: width, height: ackHeight)
+        let field = NSTextField(frame: NSRect(x: 0, y: ackHeight + 8, width: width, height: 24))
+        field.placeholderString = token
+        let prompt = NSTextField(labelWithString: LF("Type %@ (in capitals) to confirm:", token))
+        prompt.frame = NSRect(x: 0, y: ackHeight + 8 + 24 + 6, width: width, height: 18)
+        let box = NSView(frame: NSRect(x: 0, y: 0, width: width, height: ackHeight + 8 + 24 + 6 + 18))
+        box.addSubview(prompt)
+        box.addSubview(field)
+        box.addSubview(ack)
+        a.accessoryView = box
 
         let delete = a.addButton(withTitle: L("Delete Everything"))
         delete.hasDestructiveAction = true
