@@ -54,6 +54,7 @@ struct Settings: Codable, Equatable {
     var showTooltips = true        // menu.show_tooltip
     var numberItems = true         // accelerator digits/letters like "&1 text"
     var searchInMenu = true        // search field at the top of the history menu (type to filter)
+    var showPreview = true         // floating preview panel next to the highlighted history item
     var showAtCaret = true         // action.caret — pop the menu at the text cursor if we can find it
 
     // [action]
@@ -102,6 +103,7 @@ struct Settings: Codable, Equatable {
         showTooltips     = try c.decodeIfPresent(Bool.self,   forKey: .showTooltips)     ?? d.showTooltips
         numberItems      = try c.decodeIfPresent(Bool.self,   forKey: .numberItems)      ?? d.numberItems
         searchInMenu     = try c.decodeIfPresent(Bool.self,   forKey: .searchInMenu)     ?? d.searchInMenu
+        showPreview      = try c.decodeIfPresent(Bool.self,   forKey: .showPreview)      ?? d.showPreview
         showAtCaret      = try c.decodeIfPresent(Bool.self,   forKey: .showAtCaret)      ?? d.showAtCaret
         historyHotKey    = try c.decodeIfPresent(HotKey.self, forKey: .historyHotKey)    ?? d.historyHotKey
         templateHotKey   = try c.decodeIfPresent(HotKey.self, forKey: .templateHotKey)   ?? d.templateHotKey

@@ -250,4 +250,5 @@ T = {
 'Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit': 'Keepit zainstalowano przez Homebrew; aby wyczyścić jego wpis, uruchom: brew uninstall --cask --force keepit',
 'Layout: %@': 'Układ: %@',
 'CAPS LOCK': 'CAPS LOCK',
+'Show a preview panel next to the highlighted item (replaces tooltips)': 'Pokazuj panel podglądu obok podświetlonego elementu (zastępuje podpowiedzi)',
 }

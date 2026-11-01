@@ -250,4 +250,5 @@ T = {
 'Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit': 'Keepit 是透過 Homebrew 安裝的；要清除其記錄，請執行：brew uninstall --cask --force keepit',
 'Layout: %@': '鍵盤配置：%@',
 'CAPS LOCK': '大寫鎖定',
+'Show a preview panel next to the highlighted item (replaces tooltips)': '在高亮顯示的項目旁顯示預覽面板（取代工具提示）',
 }

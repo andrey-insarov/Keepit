@@ -76,8 +76,8 @@ final class MenuBuilder {
             } else if item.kind == .files {
                 mi.image = NSImage(systemSymbolName: "doc.on.doc", accessibilityDescription: nil)
             }
-            if settings.showTooltips, let tip = item.tooltip {
-                mi.toolTip = tip
+            if settings.showTooltips, !settings.showPreview, let tip = item.tooltip {
+                mi.toolTip = tip    // the preview panel replaces tooltips when it is on
             }
             out.append(mi)
             out.append(contentsOf: alternates)   // alternates must directly follow their item

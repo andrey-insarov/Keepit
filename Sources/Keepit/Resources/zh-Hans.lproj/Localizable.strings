@@ -250,3 +250,4 @@
 "Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit" = "Keepit 是通过 Homebrew 安装的；要清除其记录，请运行：brew uninstall --cask --force keepit";
 "Layout: %@" = "键盘布局：%@";
 "CAPS LOCK" = "大写锁定";
+"Show a preview panel next to the highlighted item (replaces tooltips)" = "在高亮项旁显示预览面板（取代工具提示）";

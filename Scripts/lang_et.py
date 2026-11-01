@@ -250,4 +250,5 @@ T = {
 'Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit': 'Keepit paigaldati Homebrew abil; kirje kustutamiseks käivita: brew uninstall --cask --force keepit',
 'Layout: %@': 'Paigutus: %@',
 'CAPS LOCK': 'CAPS LOCK',
+'Show a preview panel next to the highlighted item (replaces tooltips)': 'Näita esiletõstetud üksuse kõrval eelvaatepaneeli (asendab kohtspikrid)',
 }

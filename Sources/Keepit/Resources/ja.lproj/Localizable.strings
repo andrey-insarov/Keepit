@@ -250,3 +250,4 @@
 "Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit" = "Keepit は Homebrew でインストールされています。記録を消すには次を実行してください: brew uninstall --cask --force keepit";
 "Layout: %@" = "入力ソース: %@";
 "CAPS LOCK" = "CAPS LOCK";
+"Show a preview panel next to the highlighted item (replaces tooltips)" = "ハイライトした項目の横にプレビューパネルを表示（ツールチップの代わり）";

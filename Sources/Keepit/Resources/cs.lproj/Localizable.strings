@@ -250,3 +250,4 @@
 "Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit" = "Keepit byl nainstalován přes Homebrew; pro smazání záznamu spusťte: brew uninstall --cask --force keepit";
 "Layout: %@" = "Rozložení: %@";
 "CAPS LOCK" = "CAPS LOCK";
+"Show a preview panel next to the highlighted item (replaces tooltips)" = "Zobrazovat panel náhledu vedle zvýrazněné položky (nahrazuje tipy)";

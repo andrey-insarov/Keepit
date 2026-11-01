@@ -553,6 +553,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         menuSelectionMade = false
         popupActive = false
         // Attach temporarily so NSStatusItem positions/highlights it, then detach in menuDidClose.
+        if let b = statusItem.button, let w = b.window {
+            let f = w.convertToScreen(b.convert(b.bounds, to: nil))
+            menuTopLeft = NSPoint(x: f.minX, y: f.minY)
+        }
         statusItem.menu = menu
         statusItem.button?.performClick(nil)
     }
@@ -583,15 +587,32 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         // Menus need a key window to get keyboard navigation; activating us is the price.
         NSApp.activate(ignoringOtherApps: true)
+        menuTopLeft = point
         menu.popUp(positioning: nil, at: point, in: nil)
     }
 
+    /// Top-left corner of the menu on screen (for the preview panel); set just before it opens.
+    private var menuTopLeft = NSPoint.zero
+
     // NSMenuDelegate
+    func menu(_ menu: NSMenu, willHighlight item: NSMenuItem?) {
+        guard settings.showPreview, !isLocked else { return }
+        guard let mi = item, mi.tag == MenuBuilder.historyTag, let id = mi.representedObject as? UUID,
+              let clip = history.item(id: id) else {
+            PreviewPanel.shared.hide()
+            return
+        }
+        let size = menu.size
+        let frame = NSRect(x: menuTopLeft.x, y: menuTopLeft.y - size.height, width: size.width, height: size.height)
+        PreviewPanel.shared.schedule(clip, besides: frame)
+    }
+
     func menuWillOpen(_ menu: NSMenu) {
         if let s = historySearchItem, menu.items.first === s { s.focus() }
     }
 
     func menuDidClose(_ menu: NSMenu) {
+        PreviewPanel.shared.hide()
         if statusItem.menu === menu { statusItem.menu = nil }
         let wasPopup = popupActive
         popupActive = false

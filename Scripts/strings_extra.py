@@ -261,4 +261,5 @@ T2 = {
 'Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit': ('Keepit було встановлено через Homebrew; щоб очистити його запис, виконайте: brew uninstall --cask --force keepit', 'تم تثبيت Keepit عبر Homebrew؛ لمسح سجله نفّذ: brew uninstall --cask --force keepit', 'Keepit è stato installato con Homebrew; per cancellarne il record esegui: brew uninstall --cask --force keepit'),
 'Layout: %@': ('Розкладка: %@', 'التخطيط: %@', 'Layout: %@'),
 'CAPS LOCK': ('CAPS LOCK', 'CAPS LOCK', 'BLOC MAIUSC'),
+'Show a preview panel next to the highlighted item (replaces tooltips)': ('Показувати панель попереднього перегляду поруч із виділеним елементом (замість підказок)', 'عرض لوحة معاينة بجوار العنصر المحدد (بدلًا من التلميحات)', 'Mostra un pannello di anteprima accanto all’elemento evidenziato (sostituisce i suggerimenti)'),
 }

@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.8.0 — unreleased
+
+- **Preview panel**: hovering a history item shows the full image or the first lines of the text in a
+  floating panel beside the menu, with source app, date and size. Replaces tooltips while on
+  (Preferences → Menu).
+
 ## 2.7.2 — unreleased
 
 - Password prompts show the current keyboard layout (EN, RU, …) and a red Caps Lock warning, live.

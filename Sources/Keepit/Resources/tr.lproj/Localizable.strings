@@ -250,3 +250,4 @@
 "Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit" = "Keepit Homebrew ile yüklendi; kaydını temizlemek için şunu çalıştırın: brew uninstall --cask --force keepit";
 "Layout: %@" = "Düzen: %@";
 "CAPS LOCK" = "CAPS LOCK";
+"Show a preview panel next to the highlighted item (replaces tooltips)" = "Vurgulanan öğenin yanında önizleme paneli göster (ipuçlarının yerine geçer)";

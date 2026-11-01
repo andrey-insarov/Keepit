@@ -250,3 +250,4 @@
 "Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit" = "Keepit은 Homebrew로 설치되었습니다. 기록을 지우려면 다음을 실행하세요: brew uninstall --cask --force keepit";
 "Layout: %@" = "입력 소스: %@";
 "CAPS LOCK" = "CAPS LOCK";
+"Show a preview panel next to the highlighted item (replaces tooltips)" = "강조된 항목 옆에 미리보기 패널 표시(툴팁 대체)";

@@ -250,3 +250,4 @@
 "Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit" = "Keepit se instaló con Homebrew; para borrar su registro ejecuta: brew uninstall --cask --force keepit";
 "Layout: %@" = "Distribución: %@";
 "CAPS LOCK" = "BLOQ MAYÚS";
+"Show a preview panel next to the highlighted item (replaces tooltips)" = "Mostrar un panel de vista previa junto al elemento resaltado (sustituye a los consejos)";

@@ -264,3 +264,5 @@
 
 "Layout: %@" = "Layout: %@";
 "CAPS LOCK" = "CAPS LOCK";
+
+"Show a preview panel next to the highlighted item (replaces tooltips)" = "Show a preview panel next to the highlighted item (replaces tooltips)";

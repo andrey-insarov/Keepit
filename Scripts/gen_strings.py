@@ -273,6 +273,7 @@ T = {
 'Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit': ('Keepit был установлен через Homebrew; чтобы очистить его запись, выполните: brew uninstall --cask --force keepit', 'Keepit wurde mit Homebrew installiert; zum Löschen des Eintrags ausführen: brew uninstall --cask --force keepit', 'Keepit a été installé avec Homebrew ; pour effacer son enregistrement, exécutez : brew uninstall --cask --force keepit', 'Keepit se instaló con Homebrew; para borrar su registro ejecuta: brew uninstall --cask --force keepit', 'Keepit は Homebrew でインストールされています。記録を消すには次を実行してください: brew uninstall --cask --force keepit', 'Keepit 是通过 Homebrew 安装的；要清除其记录，请运行：brew uninstall --cask --force keepit'),
 'Layout: %@': ('Раскладка: %@', 'Belegung: %@', 'Clavier : %@', 'Distribución: %@', '入力ソース: %@', '键盘布局：%@'),
 'CAPS LOCK': ('CAPS LOCK', 'CAPS LOCK', 'VERR. MAJ', 'BLOQ MAYÚS', 'CAPS LOCK', '大写锁定'),
+'Show a preview panel next to the highlighted item (replaces tooltips)': ('Показывать панель предпросмотра рядом с выделенным элементом (вместо подсказок)', 'Vorschaufenster neben dem markierten Eintrag anzeigen (ersetzt Tooltips)', 'Afficher un panneau d’aperçu à côté de l’élément surligné (remplace les infobulles)', 'Mostrar un panel de vista previa junto al elemento resaltado (sustituye a los consejos)', 'ハイライトした項目の横にプレビューパネルを表示（ツールチップの代わり）', '在高亮项旁显示预览面板（取代工具提示）'),
 }
 
 PH = re.compile(r"%[@d]")

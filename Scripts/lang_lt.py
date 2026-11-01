@@ -250,4 +250,5 @@ T = {
 'Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit': '„Keepit“ įdiegta per „Homebrew“; įrašui išvalyti įvykdykite: brew uninstall --cask --force keepit',
 'Layout: %@': 'Išdėstymas: %@',
 'CAPS LOCK': 'CAPS LOCK',
+'Show a preview panel next to the highlighted item (replaces tooltips)': 'Rodyti peržiūros skydelį šalia pažymėto elemento (vietoj patarimų)',
 }
