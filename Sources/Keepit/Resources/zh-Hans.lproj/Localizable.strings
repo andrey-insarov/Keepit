@@ -279,9 +279,6 @@
 "Paste previous item:" = "粘贴上一项：";
 "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "不打开菜单，直接粘贴历史记录中的第二项 — 便于在最近两条之间切换。点击该字段并按 ⌫ 可关闭。";
 "Off — click to set" = "关闭 — 点击设置";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it, ⇧⌥ to paste it transformed (UPPERCASE, single line, …)." = "选择历史记录项时按住 ⇧ 以纯文本粘贴（去除格式），⌥ 添加到模板，⌃ 删除，⇧⌥ 转换后粘贴（大写、单行、…）。";
-"%@ — paste as" = "%@ — 粘贴为";
-"Paste latest as" = "将最新项粘贴为";
 "UPPERCASE" = "大写";
 "lowercase" = "小写";
 "Title Case" = "每个单词首字母大写";
@@ -315,3 +312,9 @@
 "Add text to the history or as a new template" = "将文本添加到历史记录或作为新模板";
 "Open the menus and windows" = "打开菜单和窗口";
 "Pause recording for 10 minutes / resume" = "暂停记录 10 分钟 / 恢复";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "选择历史记录项时按住 ⇧ 以纯文本粘贴（去除格式），⌥ 添加到模板，⌃ 删除。按住项目半秒可打开完整操作菜单（以大写粘贴、单行、仅复制、…）。";
+"Add to Templates" = "添加到模板";
+"Copy only" = "仅复制";
+"Paste as" = "粘贴为";
+"Paste as plain text" = "以纯文本粘贴";
+"Show in Viewer" = "在查看器中显示";

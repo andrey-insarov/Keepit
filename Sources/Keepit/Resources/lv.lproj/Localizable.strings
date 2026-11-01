@@ -279,9 +279,6 @@
 "Paste previous item:" = "Ielīmēt iepriekšējo vienumu:";
 "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "Uzreiz ielīmē vēstures otro vienumu bez izvēlnes — ērti pārslēgties starp divām jaunākajām kopijām. Lai izslēgtu, noklikšķiniet laukā un nospiediet ⌫.";
 "Off — click to set" = "Izslēgts — noklikšķiniet, lai iestatītu";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it, ⇧⌥ to paste it transformed (UPPERCASE, single line, …)." = "Izvēloties vēstures vienumu, turiet ⇧, lai ielīmētu kā vienkāršu tekstu (bez formatējuma), ⌥ — pievienot Veidnēm, ⌃ — dzēst, ⇧⌥ — ielīmēt pārveidotu (LIELIE BURTI, viena rinda, …).";
-"%@ — paste as" = "%@ — ielīmēt kā";
-"Paste latest as" = "Ielīmēt jaunāko kā";
 "UPPERCASE" = "LIELIE BURTI";
 "lowercase" = "mazie burti";
 "Title Case" = "Katrs Vārds Ar Lielo";
@@ -315,3 +312,9 @@
 "Add text to the history or as a new template" = "Pievienot tekstu vēsturei vai kā jaunu veidni";
 "Open the menus and windows" = "Atvērt izvēlnes un logus";
 "Pause recording for 10 minutes / resume" = "Pauzēt ierakstīšanu uz 10 minūtēm / atsākt";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Izvēloties vēstures vienumu, turiet ⇧, lai ielīmētu kā vienkāršu tekstu (bez formatējuma), ⌥ — pievienot Veidnēm, ⌃ — dzēst. Turiet vienumu nospiestu pussekundi, lai atvērtu pilno darbību izvēlni (ielīmēt ar LIELAJIEM BURTIEM, viena rinda, tikai kopēt, …).";
+"Add to Templates" = "Pievienot Veidnēm";
+"Copy only" = "Tikai kopēt";
+"Paste as" = "Ielīmēt kā";
+"Paste as plain text" = "Ielīmēt kā vienkāršu tekstu";
+"Show in Viewer" = "Rādīt skatītājā";

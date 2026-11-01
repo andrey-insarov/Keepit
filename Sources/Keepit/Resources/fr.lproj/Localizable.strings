@@ -279,9 +279,6 @@
 "Paste previous item:" = "Coller l’élément précédent :";
 "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "Colle directement le deuxième élément de l’historique, sans le menu — pratique pour alterner entre les deux derniers clips. Cliquez le champ et appuyez sur ⌫ pour désactiver.";
 "Off — click to set" = "Désactivé — cliquez pour définir";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it, ⇧⌥ to paste it transformed (UPPERCASE, single line, …)." = "Maintenez ⇧ en choisissant un élément de l’historique pour le coller en texte brut (sans mise en forme), ⌥ pour l’ajouter aux Modèles, ⌃ pour le supprimer, ⇧⌥ pour le coller transformé (MAJUSCULES, une ligne, …).";
-"%@ — paste as" = "%@ — coller en";
-"Paste latest as" = "Coller le dernier en";
 "UPPERCASE" = "MAJUSCULES";
 "lowercase" = "minuscules";
 "Title Case" = "Chaque Mot En Majuscule";
@@ -315,3 +312,9 @@
 "Add text to the history or as a new template" = "Ajouter du texte à l’historique ou comme nouveau modèle";
 "Open the menus and windows" = "Ouvrir les menus et fenêtres";
 "Pause recording for 10 minutes / resume" = "Suspendre l’enregistrement 10 minutes / reprendre";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Maintenez ⇧ en choisissant un élément de l’historique pour le coller en texte brut (sans mise en forme), ⌥ pour l’ajouter aux Modèles, ⌃ pour le supprimer. Maintenez un élément enfoncé une demi-seconde pour le menu complet des actions (coller en MAJUSCULES, une ligne, copier seulement, …).";
+"Add to Templates" = "Ajouter aux Modèles";
+"Copy only" = "Copier seulement";
+"Paste as" = "Coller en";
+"Paste as plain text" = "Coller en texte brut";
+"Show in Viewer" = "Afficher dans la Visionneuse";

@@ -279,9 +279,6 @@
 "Paste previous item:" = "Vorherigen Eintrag einfügen:";
 "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "Fügt den zweiten Verlaufseintrag sofort ein, ohne Menü – praktisch zum Wechseln zwischen den zwei letzten Clips. Zum Abschalten ins Feld klicken und ⌫ drücken.";
 "Off — click to set" = "Aus – klicken zum Festlegen";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it, ⇧⌥ to paste it transformed (UPPERCASE, single line, …)." = "Beim Auswählen eines Verlaufseintrags ⇧ halten, um ihn als reinen Text einzufügen (ohne Formatierung), ⌥ für „zu Vorlagen hinzufügen“, ⌃ zum Löschen, ⇧⌥ für transformiertes Einfügen (GROSSBUCHSTABEN, eine Zeile, …).";
-"%@ — paste as" = "%@ – einfügen als";
-"Paste latest as" = "Neuesten einfügen als";
 "UPPERCASE" = "GROSSBUCHSTABEN";
 "lowercase" = "kleinbuchstaben";
 "Title Case" = "Jedes Wort Groß";
@@ -315,3 +312,9 @@
 "Add text to the history or as a new template" = "Text zum Verlauf oder als neue Vorlage hinzufügen";
 "Open the menus and windows" = "Menüs und Fenster öffnen";
 "Pause recording for 10 minutes / resume" = "Aufzeichnung 10 Minuten pausieren / fortsetzen";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Beim Auswählen eines Verlaufseintrags ⇧ halten, um ihn als reinen Text einzufügen (ohne Formatierung), ⌥ für „zu Vorlagen hinzufügen“, ⌃ zum Löschen. Einen Eintrag eine halbe Sekunde gedrückt halten öffnet das vollständige Aktionsmenü (als GROSSBUCHSTABEN einfügen, eine Zeile, nur kopieren, …).";
+"Add to Templates" = "Zu Vorlagen hinzufügen";
+"Copy only" = "Nur kopieren";
+"Paste as" = "Einfügen als";
+"Paste as plain text" = "Als reinen Text einfügen";
+"Show in Viewer" = "Im Viewer anzeigen";

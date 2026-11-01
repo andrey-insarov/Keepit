@@ -279,9 +279,6 @@
 "Paste previous item:" = "Вставить предыдущий:";
 "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "Сразу вставляет второй элемент истории, без меню — удобно переключаться между двумя последними копиями. Чтобы выключить, кликните поле и нажмите ⌫.";
 "Off — click to set" = "Выкл. — кликните, чтобы задать";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it, ⇧⌥ to paste it transformed (UPPERCASE, single line, …)." = "Удерживайте ⇧ при выборе элемента истории, чтобы вставить его как простой текст (без форматирования), ⌥ — добавить в Шаблоны, ⌃ — удалить, ⇧⌥ — вставить с преобразованием (ВЕРХНИЙ РЕГИСТР, одна строка, …).";
-"%@ — paste as" = "%@ — вставить как";
-"Paste latest as" = "Вставить последний как";
 "UPPERCASE" = "ВЕРХНИЙ РЕГИСТР";
 "lowercase" = "нижний регистр";
 "Title Case" = "Каждое Слово С Заглавной";
@@ -315,3 +312,9 @@
 "Add text to the history or as a new template" = "Добавить текст в историю или как новый шаблон";
 "Open the menus and windows" = "Открыть меню и окна";
 "Pause recording for 10 minutes / resume" = "Приостановить запись на 10 минут / возобновить";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Удерживайте ⇧ при выборе элемента истории, чтобы вставить его как простой текст (без форматирования), ⌥ — добавить в Шаблоны, ⌃ — удалить. Нажмите и удерживайте элемент полсекунды — откроется полное меню действий (вставить в ВЕРХНЕМ РЕГИСТРЕ, в одну строку, только скопировать, …).";
+"Add to Templates" = "Добавить в Шаблоны";
+"Copy only" = "Только скопировать";
+"Paste as" = "Вставить как";
+"Paste as plain text" = "Вставить как простой текст";
+"Show in Viewer" = "Показать в Просмотре";

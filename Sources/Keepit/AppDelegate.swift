@@ -632,9 +632,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     func menuWillOpen(_ menu: NSMenu) {
         if let s = historySearchItem, menu.items.first === s { s.focus() }
+        if menu.items.contains(where: { $0.tag == MenuBuilder.historyTag }) { LongPress.shared.watch(menu) { [weak self] item in
+            self?.showContextMenu(for: item, in: menu)
+        } }
     }
 
     func menuDidClose(_ menu: NSMenu) {
+        LongPress.shared.stop(menu)
         PreviewPanel.shared.hide()
         if statusItem.menu === menu { statusItem.menu = nil }
         let wasPopup = popupActive
@@ -678,21 +682,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         let items = menuBuilder.historyItems(history.items, target: self, action: #selector(historyChosen(_:)),
                                              plainAction: #selector(historyChosenPlain(_:)), pinAction: #selector(historyPinned(_:)),
-                                             deleteAction: #selector(historyDeleted(_:)), transformAction: #selector(historyTransformed(_:)),
-                                             commandAccelerators: searching)
+                                             deleteAction: #selector(historyDeleted(_:)), commandAccelerators: searching)
         if items.isEmpty {
             let e = NSMenuItem(title: L("(History is empty)"), action: nil, keyEquivalent: "")
             e.isEnabled = false
             menu.addItem(e)
         } else {
             for mi in items { menu.addItem(mi) }
-            // "Paste latest as ▸" — the transformations for the most recent text item, visible without modifiers.
-            if let latest = history.items.first, latest.kind == .text, latest.plainText != nil {
-                let p = NSMenuItem(title: L("Paste latest as"), action: nil, keyEquivalent: "")
-                p.image = NSImage(systemSymbolName: "textformat", accessibilityDescription: nil)
-                p.submenu = menuBuilder.transformMenu(for: latest, target: self, action: #selector(historyTransformed(_:)))
-                menu.addItem(p)
-            }
         }
 
         if includeTemplates {
@@ -721,8 +717,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let matches = MenuBuilder.filter(history.items, query: query)
         var fresh = menuBuilder.historyItems(matches, target: self, action: #selector(historyChosen(_:)),
                                              plainAction: #selector(historyChosenPlain(_:)), pinAction: #selector(historyPinned(_:)),
-                                             deleteAction: #selector(historyDeleted(_:)), transformAction: #selector(historyTransformed(_:)),
-                                             commandAccelerators: true)
+                                             deleteAction: #selector(historyDeleted(_:)), commandAccelerators: true)
         if fresh.isEmpty {
             let none = NSMenuItem(title: L("(no matches)"), action: nil, keyEquivalent: "")
             none.isEnabled = false
@@ -813,7 +808,45 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         viewer?.refresh()
     }
 
-    /// "Paste as ▸" entry: paste a transformed copy of the item (UPPERCASE, single line, …).
+    // MARK: - Long-press context menu
+
+    /// Close the history menu and open the per-item action menu under the mouse (the disabled header sits
+    /// under the pointer, so releasing the button right away chooses nothing).
+    private func showContextMenu(for mi: NSMenuItem, in menu: NSMenu) {
+        guard let id = mi.representedObject as? UUID, let item = history.item(id: id) else { return }
+        menuSelectionMade = true          // keep the paste target; the context menu continues the interaction
+        let wasPopup = popupActive
+        menu.cancelTracking()
+        PreviewPanel.shared.hide()
+        let ctx = menuBuilder.contextMenu(for: item, target: self, actions: .init(
+            paste: #selector(historyChosen(_:)), pastePlain: #selector(historyChosenPlain(_:)),
+            copyOnly: #selector(historyCopied(_:)), transform: #selector(historyTransformed(_:)),
+            pin: #selector(historyPinned(_:)), reveal: #selector(historyRevealed(_:)), delete: #selector(historyDeleted(_:))))
+        ctx.delegate = self
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
+            guard let self else { return }
+            self.menuSelectionMade = false
+            self.popupActive = wasPopup
+            ctx.popUp(positioning: ctx.items.first, at: NSEvent.mouseLocation, in: nil)
+        }
+    }
+
+    /// Context menu: put the item on the clipboard without pasting.
+    @objc private func historyCopied(_ sender: NSMenuItem) {
+        menuSelectionMade = true
+        guard let id = sender.representedObject as? UUID, let item = history.item(id: id) else { return }
+        history.touch(item)
+        Paster.paste(item, into: nil, monitor: monitor, settings: settings, sendKey: false)
+    }
+
+    /// Context menu: open the Viewer with the item selected.
+    @objc private func historyRevealed(_ sender: NSMenuItem) {
+        guard let id = sender.representedObject as? UUID else { return }
+        openViewer()
+        viewer?.reveal(historyId: id)
+    }
+
+    /// Context menu "Paste as": paste a transformed copy of the item (UPPERCASE, single line, …).
     @objc private func historyTransformed(_ sender: NSMenuItem) {
         menuSelectionMade = true
         guard let choice = sender.representedObject as? MenuBuilder.TransformChoice,

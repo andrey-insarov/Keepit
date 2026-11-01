@@ -279,9 +279,6 @@
 "Paste previous item:" = "Vorig item plakken:";
 "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "Plakt meteen het tweede item uit de geschiedenis, zonder menu — handig om tussen de twee laatste clips te wisselen. Klik op het veld en druk op ⌫ om het uit te zetten.";
 "Off — click to set" = "Uit — klik om in te stellen";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it, ⇧⌥ to paste it transformed (UPPERCASE, single line, …)." = "Houd ⇧ ingedrukt bij het kiezen van een geschiedenisitem om het als platte tekst te plakken (zonder opmaak), ⌥ om het aan Sjablonen toe te voegen, ⌃ om het te verwijderen, ⇧⌥ om het getransformeerd te plakken (HOOFDLETTERS, één regel, …).";
-"%@ — paste as" = "%@ — plakken als";
-"Paste latest as" = "Nieuwste plakken als";
 "UPPERCASE" = "HOOFDLETTERS";
 "lowercase" = "kleine letters";
 "Title Case" = "Elk Woord Met Hoofdletter";
@@ -315,3 +312,9 @@
 "Add text to the history or as a new template" = "Tekst aan de geschiedenis toevoegen of als nieuw sjabloon";
 "Open the menus and windows" = "De menu's en vensters openen";
 "Pause recording for 10 minutes / resume" = "Opname 10 minuten pauzeren / hervatten";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Houd ⇧ ingedrukt bij het kiezen van een geschiedenisitem om het als platte tekst te plakken (zonder opmaak), ⌥ om het aan Sjablonen toe te voegen, ⌃ om het te verwijderen. Houd een item een halve seconde ingedrukt voor het volledige actiemenu (plakken in HOOFDLETTERS, één regel, alleen kopiëren, …).";
+"Add to Templates" = "Aan Sjablonen toevoegen";
+"Copy only" = "Alleen kopiëren";
+"Paste as" = "Plakken als";
+"Paste as plain text" = "Als platte tekst plakken";
+"Show in Viewer" = "Toon in Weergave";

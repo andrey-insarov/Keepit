@@ -279,9 +279,6 @@
 "Paste previous item:" = "Вставити попередній:";
 "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "Одразу вставляє другий елемент історії, без меню — зручно перемикатися між двома останніми копіями. Щоб вимкнути, клацніть поле й натисніть ⌫.";
 "Off — click to set" = "Вимк. — клацніть, щоб задати";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it, ⇧⌥ to paste it transformed (UPPERCASE, single line, …)." = "Утримуйте ⇧ під час вибору елемента історії, щоб вставити його як простий текст (без форматування), ⌥ — додати до Шаблонів, ⌃ — видалити, ⇧⌥ — вставити з перетворенням (ВЕЛИКІ ЛІТЕРИ, один рядок, …).";
-"%@ — paste as" = "%@ — вставити як";
-"Paste latest as" = "Вставити останній як";
 "UPPERCASE" = "ВЕЛИКІ ЛІТЕРИ";
 "lowercase" = "малі літери";
 "Title Case" = "Кожне Слово З Великої";
@@ -315,3 +312,9 @@
 "Add text to the history or as a new template" = "Додати текст до історії або як новий шаблон";
 "Open the menus and windows" = "Відкрити меню та вікна";
 "Pause recording for 10 minutes / resume" = "Призупинити запис на 10 хвилин / відновити";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Утримуйте ⇧ під час вибору елемента історії, щоб вставити його як простий текст (без форматування), ⌥ — додати до Шаблонів, ⌃ — видалити. Натисніть і утримуйте елемент пів секунди — відкриється повне меню дій (вставити ВЕЛИКИМИ, в один рядок, лише скопіювати, …).";
+"Add to Templates" = "Додати до Шаблонів";
+"Copy only" = "Лише скопіювати";
+"Paste as" = "Вставити як";
+"Paste as plain text" = "Вставити як простий текст";
+"Show in Viewer" = "Показати в Перегляді";

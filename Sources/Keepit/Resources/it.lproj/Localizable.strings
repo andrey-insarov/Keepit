@@ -279,9 +279,6 @@
 "Paste previous item:" = "Incolla elemento precedente:";
 "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "Incolla subito il secondo elemento della cronologia, senza menu: comodo per alternare le due clip più recenti. Fai clic sul campo e premi ⌫ per disattivarlo.";
 "Off — click to set" = "Disattivato — fai clic per impostare";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it, ⇧⌥ to paste it transformed (UPPERCASE, single line, …)." = "Tieni premuto ⇧ scegliendo un elemento della cronologia per incollarlo come testo semplice (senza formattazione), ⌥ per aggiungerlo ai Modelli, ⌃ per eliminarlo, ⇧⌥ per incollarlo trasformato (MAIUSCOLO, una riga, …).";
-"%@ — paste as" = "%@ — incolla come";
-"Paste latest as" = "Incolla l’ultimo come";
 "UPPERCASE" = "MAIUSCOLO";
 "lowercase" = "minuscolo";
 "Title Case" = "Iniziali Maiuscole";
@@ -315,3 +312,9 @@
 "Add text to the history or as a new template" = "Aggiungi testo alla cronologia o come nuovo modello";
 "Open the menus and windows" = "Apri i menu e le finestre";
 "Pause recording for 10 minutes / resume" = "Sospendi la registrazione per 10 minuti / riprendi";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Tieni premuto ⇧ scegliendo un elemento della cronologia per incollarlo come testo semplice (senza formattazione), ⌥ per aggiungerlo ai Modelli, ⌃ per eliminarlo. Tieni premuto un elemento per mezzo secondo per il menu completo delle azioni (incolla in MAIUSCOLO, una riga, solo copia, …).";
+"Add to Templates" = "Aggiungi ai Modelli";
+"Copy only" = "Solo copia";
+"Paste as" = "Incolla come";
+"Paste as plain text" = "Incolla come testo semplice";
+"Show in Viewer" = "Mostra nel Visualizzatore";

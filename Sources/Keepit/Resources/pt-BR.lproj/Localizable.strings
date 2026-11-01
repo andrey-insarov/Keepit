@@ -279,9 +279,6 @@
 "Paste previous item:" = "Colar item anterior:";
 "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "Cola imediatamente o segundo item do histórico, sem o menu — útil para alternar entre os dois clipes mais recentes. Clique no campo e pressione ⌫ para desativar.";
 "Off — click to set" = "Desligado — clique para definir";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it, ⇧⌥ to paste it transformed (UPPERCASE, single line, …)." = "Segure ⇧ ao escolher um item do histórico para colá-lo como texto simples (sem formatação), ⌥ para adicioná-lo aos Modelos, ⌃ para excluí-lo, ⇧⌥ para colá-lo transformado (MAIÚSCULAS, uma linha, …).";
-"%@ — paste as" = "%@ — colar como";
-"Paste latest as" = "Colar o mais recente como";
 "UPPERCASE" = "MAIÚSCULAS";
 "lowercase" = "minúsculas";
 "Title Case" = "Iniciais Maiúsculas";
@@ -315,3 +312,9 @@
 "Add text to the history or as a new template" = "Adicionar texto ao histórico ou como novo modelo";
 "Open the menus and windows" = "Abrir os menus e janelas";
 "Pause recording for 10 minutes / resume" = "Pausar a gravação por 10 minutos / retomar";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Segure ⇧ ao escolher um item do histórico para colá-lo como texto simples (sem formatação), ⌥ para adicioná-lo aos Modelos, ⌃ para excluí-lo. Pressione e segure um item por meio segundo para o menu completo de ações (colar em MAIÚSCULAS, uma linha, só copiar, …).";
+"Add to Templates" = "Adicionar aos Modelos";
+"Copy only" = "Só copiar";
+"Paste as" = "Colar como";
+"Paste as plain text" = "Colar como texto simples";
+"Show in Viewer" = "Mostrar no Visualizador";

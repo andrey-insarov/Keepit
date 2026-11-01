@@ -302,9 +302,6 @@
 "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off.";
 "Off — click to set" = "Off — click to set";
 
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it, ⇧⌥ to paste it transformed (UPPERCASE, single line, …)." = "Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it, ⇧⌥ to paste it transformed (UPPERCASE, single line, …).";
-"%@ — paste as" = "%@ — paste as";
-"Paste latest as" = "Paste latest as";
 "UPPERCASE" = "UPPERCASE";
 "lowercase" = "lowercase";
 "Title Case" = "Title Case";
@@ -340,3 +337,10 @@
 "Add text to the history or as a new template" = "Add text to the history or as a new template";
 "Open the menus and windows" = "Open the menus and windows";
 "Pause recording for 10 minutes / resume" = "Pause recording for 10 minutes / resume";
+
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …).";
+"Add to Templates" = "Add to Templates";
+"Copy only" = "Copy only";
+"Paste as" = "Paste as";
+"Paste as plain text" = "Paste as plain text";
+"Show in Viewer" = "Show in Viewer";

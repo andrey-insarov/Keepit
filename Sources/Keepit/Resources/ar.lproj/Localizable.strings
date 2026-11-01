@@ -279,9 +279,6 @@
 "Paste previous item:" = "لصق العنصر السابق:";
 "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "يلصق العنصر الثاني من السجل فورًا دون القائمة — مفيد للتبديل بين آخر نسختين. انقر الحقل واضغط ⌫ لإيقافه.";
 "Off — click to set" = "إيقاف — انقر للتعيين";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it, ⇧⌥ to paste it transformed (UPPERCASE, single line, …)." = "اضغط ⇧ مع اختيار عنصر من السجل للصقه كنص عادي (بدون تنسيق)، و⌥ لإضافته إلى القوالب، و⌃ لحذفه، و⇧⌥ للصقه محوَّلًا (أحرف كبيرة، سطر واحد، …).";
-"%@ — paste as" = "%@ — لصق كـ";
-"Paste latest as" = "لصق الأحدث كـ";
 "UPPERCASE" = "أحرف كبيرة";
 "lowercase" = "أحرف صغيرة";
 "Title Case" = "حرف كبير في بداية كل كلمة";
@@ -315,3 +312,9 @@
 "Add text to the history or as a new template" = "إضافة نص إلى السجل أو كقالب جديد";
 "Open the menus and windows" = "فتح القوائم والنوافذ";
 "Pause recording for 10 minutes / resume" = "إيقاف التسجيل مؤقتًا 10 دقائق / استئناف";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Press and hold an item for half a second for the full action menu (Paste as UPPERCASE, single line, Copy only, …)." = "اضغط ⇧ مع اختيار عنصر من السجل للصقه كنص عادي (بدون تنسيق)، و⌥ لإضافته إلى القوالب، و⌃ لحذفه. اضغط مطولًا على عنصر لنصف ثانية لفتح قائمة الإجراءات الكاملة (لصق بأحرف كبيرة، سطر واحد، نسخ فقط، …).";
+"Add to Templates" = "إضافة إلى القوالب";
+"Copy only" = "نسخ فقط";
+"Paste as" = "لصق كـ";
+"Paste as plain text" = "لصق كنص عادي";
+"Show in Viewer" = "إظهار في العارض";

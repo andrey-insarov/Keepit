@@ -754,6 +754,12 @@ final class ViewerWindowController: NSWindowController,
 
     @objc private func openPreferences() { app.openPreferences() }
 
+    /// Reveal a history item (used by "Show in Viewer" in the history menu).
+    func reveal(historyId: UUID) {
+        refresh()
+        select(key: "h:\(historyId.uuidString)")
+    }
+
     private func select(key: String) {
         guard let n = nodes[key] else { return }
         var chain: [VNode] = []
