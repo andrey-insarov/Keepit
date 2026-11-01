@@ -1,0 +1,13 @@
+# Weekly dependency bumps: Sparkle (SwiftPM) and the GitHub Actions used by the release workflow.
+version: 2
+updates:
+  - package-ecosystem: swift
+    directory: /
+    schedule:
+      interval: weekly
+    labels: [dependencies]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    labels: [dependencies]

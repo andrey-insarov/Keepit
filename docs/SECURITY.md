@@ -161,5 +161,6 @@ ID and a typed confirmation. Deleting the app by hand leaves the data folder in 
 
 ## Reporting a vulnerability
 
-Please write to dp@intistele.com rather than opening a public issue. You will get an answer within a
+Please use GitHub's private vulnerability reporting (*Security → Report a vulnerability* on the
+repository) or write to dp@intistele.com rather than opening a public issue. You will get an answer within a
 few days, and a fix is released as soon as it is ready; credit is given if you want it.
