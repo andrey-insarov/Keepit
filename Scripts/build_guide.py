@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render docs/GUIDE.md into docs/site/guide.html (run after editing the guide or its images).
+"""Render docs/GUIDE.md → docs/site/guide.html and docs/SECURITY.md → docs/site/security.html.
 
 Every screenshot is a 2× Retina capture; it is shown at half its pixel width so all of them share one
 physical scale, and a click opens the full-size file in a lightbox.
@@ -9,8 +9,14 @@ from PIL import Image
 
 root = pathlib.Path(__file__).resolve().parent.parent
 site = root / "docs/site"
-md = (root / "docs/GUIDE.md").read_text(encoding="utf-8")
-body = markdown.markdown(md, extensions=["tables", "fenced_code", "toc"])
+PAGES = [("GUIDE.md", "guide.html", "User guide — Keepit",
+          "How to use Keepit, the clipboard manager for macOS: history menu, hot keys, templates and placeholders, the Viewer, security, automation."),
+         ("SECURITY.md", "security.html", "Security — Keepit",
+          "What Keepit stores, where, how it is encrypted, which permissions it needs and why, and how to verify a download.")]
+
+def render(src_name, out_name, title, description):
+    md = (root / "docs" / src_name).read_text(encoding="utf-8")
+    body = markdown.markdown(md, extensions=["tables", "fenced_code", "toc"])
 
 def figure(m):
     src, alt = m.group(1), m.group(2)
@@ -25,14 +31,13 @@ def figure(m):
             f'<img src="{path}" alt="{alt}" width="{css_w}" height="{h // 2}" loading="lazy"></a>'
             f'<figcaption>{alt}</figcaption></figure>')
 
-body = re.sub(r'<p><img alt="(?P<alt>[^"]*)" src="(?P<src>[^"]+)"\s*/?></p>',
-              lambda m: figure(type("M", (), {"group": lambda self, i: {1: m.group("src"), 2: m.group("alt")}[i]})()),
-              body)
-body = re.sub(r"<!-- screenshot: (.*?) -->", r'<p class="slot">Screenshot: \1</p>', body)
-
-html = f"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>User guide — Keepit</title><link rel="icon" href="img/icon.png">
-<meta name="description" content="How to use Keepit, the clipboard manager for macOS: history menu, hot keys, templates and placeholders, the Viewer, security, automation.">
+    body = re.sub(r'<p><img alt="(?P<alt>[^"]*)" src="(?P<src>[^"]+)"\s*/?></p>',
+                  lambda m: figure(type("M", (), {"group": lambda self, i: {1: m.group("src"), 2: m.group("alt")}[i]})()),
+                  body)
+    body = re.sub(r"<!-- screenshot: (.*?) -->", r'<p class="slot">Screenshot: \1</p>', body)
+    html = f"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title}</title><link rel="icon" href="img/icon.png">
+<meta name="description" content="{description}">
 <style>
 :root{{color-scheme:light dark;--accent:#2F4FD1;--muted:#6b7280;--line:rgba(127,127,127,.25)}}
 body{{font:17px/1.6 -apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;max-width:880px;margin:0 auto;padding:40px 24px 96px}}
@@ -51,7 +56,7 @@ nav.top a{{margin-right:16px}}
 #lb{{position:fixed;inset:0;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;padding:24px;z-index:10;cursor:zoom-out}}
 #lb.on{{display:flex}}#lb img{{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 30px 80px rgba(0,0,0,.5)}}
 </style></head>
-<body><nav class="top"><a href="index.html">← keep.it.com</a><a href="support.html">Support</a><a href="https://github.com/andrey-insarov/Keepit">GitHub</a></nav>
+<body><nav class="top"><a href="index.html">← keep.it.com</a><a href="guide.html">Guide</a><a href="security.html">Security</a><a href="support.html">Support</a><a href="https://github.com/andrey-insarov/Keepit">GitHub</a></nav>
 {body}
 <div id="lb" role="dialog" aria-label="Full-size screenshot"><img alt=""></div>
 <script>
@@ -63,5 +68,8 @@ nav.top a{{margin-right:16px}}
 }})();
 </script>
 </body></html>"""
-(site / "guide.html").write_text(html, encoding="utf-8")
-print("docs/site/guide.html", len(html), "bytes;", body.count('class="shot"'), "figures")
+    (site / out_name).write_text(html, encoding="utf-8")
+    print(out_name, len(html), "bytes;", body.count('class="shot"'), "figures")
+
+for page in PAGES:
+    render(*page)
