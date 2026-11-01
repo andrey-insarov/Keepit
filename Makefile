@@ -70,7 +70,10 @@ appcast:
 	  --link "https://github.com/andrey-insarov/Keepit/releases" \
 	  --embed-release-notes .build/appcast
 	cp .build/appcast/appcast.xml appcast.xml
-	@echo "Wrote appcast.xml"
+	# Detached EdDSA signature (same Sparkle key) and checksums, for manual verification of downloads.
+	$(SPARKLE_BIN)/sign_update $(if $(SPARKLE_PRIVATE_KEY_FILE),--ed-key-file $(SPARKLE_PRIVATE_KEY_FILE),) -p $(DMG) > $(DMG).sig
+	shasum -a 256 $(DMG) $(APP)-$(VERSION).zip > SHA256SUMS
+	@echo "Wrote appcast.xml, $(DMG).sig and SHA256SUMS"
 
 DMG      = $(APP)-$(VERSION).dmg
 DMG_VOL  = Keepit
@@ -150,7 +153,7 @@ icon:
 	python3 Resources/Icon/make_icns.py
 
 dist: app dmg
-	rm -f $(APP)-$(VERSION).zip
+	rm -f $(APP)-$(VERSION).zip $(DMG).sig SHA256SUMS
 	ditto -c -k --keepParent $(BUNDLE) $(APP)-$(VERSION).zip
 	@echo "Packaged $(APP)-$(VERSION).zip and $(DMG)"
 

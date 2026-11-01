@@ -10,6 +10,7 @@
 - **Localization**: Russian, Ukrainian, German, French, Spanish, Italian, Japanese, Simplified Chinese and Arabic. Keepit
   follows the macOS system language; English remains the base. `Scripts/gen_strings.py` holds the
   translation table and regenerates the `.lproj` files.
+- Releases now include a detached EdDSA signature (`.dmg.sig`) and `SHA256SUMS`.
 - New *About Keepit* window (icon, version with git commit and build date, Help, link to
   keep.it.com); the menu-bar menu lists it after *Check for Updates…* instead of the version line.
 - Distribution builds (DMG, App Store) are now universal (Apple silicon + Intel); earlier

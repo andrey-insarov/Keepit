@@ -173,6 +173,18 @@ Releases outside the App Store update themselves through Sparkle: once a day Kee
 latest GitHub Release and offers the new version; *Check for Updates…* in the menu does it on
 demand. Downloads are EdDSA-signed in addition to the Developer ID signature (see RELEASING.md).
 
+### Verifying a download
+
+Every release ships `Keepit-<version>.dmg.sig` (detached Sparkle EdDSA signature, same key the
+updater trusts) and `SHA256SUMS`:
+
+```bash
+shasum -a 256 -c SHA256SUMS                       # checksum
+spctl -a -vv -t install Keepit-<version>.dmg      # Developer ID + notarization
+# EdDSA: Sparkle's `sign_update --verify` or any Ed25519 tool with the public key
+# SNDhdllyP4tjshG0ke1rJ3YkGSqsdS0G0ZG7SBtXu7E=
+```
+
 ## Testing
 
 * `swift test` — unit tests (models, menu parsing, settings, history/template stores, vault

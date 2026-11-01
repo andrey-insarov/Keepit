@@ -108,6 +108,8 @@ jobs:
         with:
           files: |
             Keepit-*.dmg
+            Keepit-*.dmg.sig
             Keepit-*.zip
+            SHA256SUMS
             appcast.xml
           generate_release_notes: true

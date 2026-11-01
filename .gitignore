@@ -9,3 +9,5 @@ Resources/Keepit.provisionprofile
 appcast.xml
 SPARKLE_PUBLIC_KEY
 Resources/KeepitDevID.provisionprofile
+*.sig
+SHA256SUMS
