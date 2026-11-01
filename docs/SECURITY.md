@@ -142,6 +142,10 @@ spctl -a -vv -t install Keepit-2.9.1.dmg      # "accepted, source=Notarized Deve
 
 Homebrew installs the same DMG from the same release.
 
+The signing keys never leave GitHub's `release` environment: only `v*` tags can deploy to it, the
+build-and-test job that runs on every push and pull request has no access to secrets, and every
+third-party action in the workflow is pinned to a commit hash rather than a movable tag.
+
 ## Uninstalling and data removal
 
 *Preferences → Advanced → Delete Keepit and All Data…* removes the app bundle, the data folder, the

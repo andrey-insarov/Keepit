@@ -6,18 +6,19 @@ on:
     tags: ["v*"]
   pull_request:
 
+# Least privilege by default; the release job raises it explicitly.
 permissions:
-  contents: write
+  contents: read
+
+# Third-party actions are pinned to commit SHAs (Dependabot keeps them fresh)
+# so a moved tag can't inject code into a job that holds signing secrets.
 
 jobs:
+  # Every push and PR: build, test, ad-hoc package, UI smoke test. No secrets.
   build:
     runs-on: macos-15
-    env:
-      # Signing/notarization only when the secrets exist (forks and PRs build ad-hoc).
-      HAS_SIGNING: ${{ secrets.MACOS_CERT_P12 != '' && secrets.APPSTORE_PRIVATE_KEY != '' }}
-      SPARKLE_PUBLIC_KEY: ${{ vars.SPARKLE_PUBLIC_KEY }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           fetch-depth: 0            # BUILD_NO = commit count
 
@@ -30,8 +31,49 @@ jobs:
       - name: Unit tests
         run: swift test
 
+      - name: Package app + DMG (ad-hoc)
+        run: make dist VERSION=$(cat VERSION)
+
+      - name: UI smoke test (launches the app, snapshots windows)
+        env:
+          KEEPIT_DATA_DIR: ${{ runner.temp }}/keepit-selftest
+        run: |
+          perl -e 'alarm 120; exec @ARGV' ./Keepit.app/Contents/MacOS/Keepit --selftest
+          cat selftest-output/report.txt
+
+      - name: Upload self-test snapshots
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: selftest-${{ github.sha }}
+          path: selftest-output/
+
+      - name: Upload ad-hoc build
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: Keepit-adhoc-${{ github.sha }}
+          path: |
+            Keepit-*.zip
+            Keepit-*.dmg
+
+  # Tags only: signed, notarized, stapled build + Sparkle appcast + GitHub release.
+  # Secrets live in the "release" environment, which only v* tags may deploy to
+  # (and, if configured, only after manual approval), so no other run can read them.
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: macos-15
+    environment: release
+    permissions:
+      contents: write           # upload release assets, push the cask bump to main
+    env:
+      SPARKLE_PUBLIC_KEY: ${{ vars.SPARKLE_PUBLIC_KEY }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0
+
       - name: Import Developer ID certificate
-        if: env.HAS_SIGNING == 'true'
         env:
           MACOS_CERT_P12: ${{ secrets.MACOS_CERT_P12 }}
           MACOS_CERT_PASSWORD: ${{ secrets.MACOS_CERT_PASSWORD }}
@@ -50,12 +92,7 @@ jobs:
           echo "SIGN_ID=$IDENTITY" >> $GITHUB_ENV
           echo "Using identity: $IDENTITY"
 
-      - name: Package app + DMG (ad-hoc)
-        if: env.HAS_SIGNING != 'true'
-        run: make dist VERSION=$(cat VERSION)
-
       - name: Package, notarize and staple (Developer ID)
-        if: env.HAS_SIGNING == 'true'
         env:
           APPSTORE_KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
           APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
@@ -70,7 +107,6 @@ jobs:
           ditto -c -k --keepParent Keepit.app Keepit-$(cat VERSION).zip
 
       - name: Sparkle appcast (EdDSA-signed)
-        if: env.HAS_SIGNING == 'true' && env.SPARKLE_PUBLIC_KEY != ''
         env:
           SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
         run: |
@@ -79,22 +115,12 @@ jobs:
           rm $RUNNER_TEMP/sparkle_ed25519
           cat appcast.xml
 
-      - name: UI smoke test (launches the app, snapshots windows)
-        env:
-          KEEPIT_DATA_DIR: ${{ runner.temp }}/keepit-selftest
-        run: |
-          perl -e 'alarm 120; exec @ARGV' ./Keepit.app/Contents/MacOS/Keepit --selftest
-          cat selftest-output/report.txt
-
-      - name: Upload self-test snapshots
+      - name: Delete signing keychain
         if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: selftest-${{ github.sha }}
-          path: selftest-output/
+        run: security delete-keychain $RUNNER_TEMP/signing.keychain-db || true
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload release build
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: Keepit-${{ github.sha }}
           path: |
@@ -103,8 +129,7 @@ jobs:
             appcast.xml
 
       - name: Release
-        if: startsWith(github.ref, 'refs/tags/v')
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2.6.2
         with:
           files: |
             Keepit-*.dmg
@@ -115,7 +140,6 @@ jobs:
           generate_release_notes: true
 
       - name: Update Homebrew cask (version + sha256) on main
-        if: startsWith(github.ref, 'refs/tags/v') && env.HAS_SIGNING == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

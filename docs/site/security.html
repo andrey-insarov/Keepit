@@ -181,6 +181,9 @@ Intis Telecom LTD, notarized by Apple and stapled. The release page carries, for
 spctl -a -vv -t install Keepit-2.9.1.dmg      # &quot;accepted, source=Notarized Developer ID&quot;
 </code></pre>
 <p>Homebrew installs the same DMG from the same release.</p>
+<p>The signing keys never leave GitHub's <code>release</code> environment: only <code>v*</code> tags can deploy to it, the
+build-and-test job that runs on every push and pull request has no access to secrets, and every
+third-party action in the workflow is pinned to a commit hash rather than a movable tag.</p>
 <h2 id="uninstalling-and-data-removal">Uninstalling and data removal</h2>
 <p><em>Preferences → Advanced → Delete Keepit and All Data…</em> removes the app bundle, the data folder, the
 keychain entry, the login item and the Accessibility grant, after asking for the password or Touch
