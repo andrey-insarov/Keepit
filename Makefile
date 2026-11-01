@@ -4,7 +4,18 @@ VERSION ?= $(shell cat VERSION)
 SPARKLE_PUBLIC_KEY ?= $(shell cat SPARKLE_PUBLIC_KEY 2>/dev/null)
 SPARKLE_FW = $(shell find .build -type d -name Sparkle.framework -path "*macos*" 2>/dev/null | head -1)
 BUILD_NO ?= $(shell git rev-list --count HEAD 2>/dev/null || echo 1)
+# Universal (arm64 + x86_64) for distribution builds; single-arch for quick ad-hoc builds.
+# `swift build --arch a --arch b` writes to <build-path>/apple/Products/Release.
+UNIVERSAL ?= $(if $(filter -,$(SIGN_ID)),0,1)
+ifeq ($(UNIVERSAL),1)
+ARCH_FLAGS = --arch arm64 --arch x86_64
+BUILD    = .build/apple/Products/Release
+APPSTORE_BUILD = .build-appstore/apple/Products/Release
+else
+ARCH_FLAGS =
 BUILD    = .build/release
+APPSTORE_BUILD = .build-appstore/release
+endif
 BUNDLE   = $(APP).app
 CONTENTS = $(BUNDLE)/Contents
 # Ad-hoc signature by default. See README "Accessibility permission resets after rebuild".
@@ -94,15 +105,14 @@ PKG_SIGN_ID ?=
 TEAM_ID ?=
 PKG = $(APP)-$(VERSION)-appstore.pkg
 
-APPSTORE_BUILD = .build-appstore/release
-
 appstore:
 	@test -n "$(APP_SIGN_ID)" -a -n "$(PKG_SIGN_ID)" -a -n "$(TEAM_ID)" || (echo "set APP_SIGN_ID, PKG_SIGN_ID and TEAM_ID"; exit 1)
 	@test -f Resources/Keepit.provisionprofile || (echo "missing Resources/Keepit.provisionprofile (Mac App Store profile for com.it.keep)"; exit 1)
-	KEEPIT_APPSTORE=1 swift build -c release --build-path .build-appstore
+	KEEPIT_APPSTORE=1 swift build -c release $(ARCH_FLAGS) --build-path .build-appstore
 	rm -rf $(BUNDLE) $(PKG) .build/appstore.entitlements
 	mkdir -p $(CONTENTS)/MacOS $(CONTENTS)/Resources
 	cp $(APPSTORE_BUILD)/$(APP) $(CONTENTS)/MacOS/$(APP)
+	@if [ "$(UNIVERSAL)" = "1" ]; then lipo -archs $(CONTENTS)/MacOS/$(APP) | grep -q x86_64 && lipo -archs $(CONTENTS)/MacOS/$(APP) | grep -q arm64 || (echo "expected a universal binary"; exit 1); fi
 	# No Sparkle keys in the store build.
 	sed -e 's/__VERSION__/$(VERSION)/' -e 's/__BUILD__/$(BUILD_NO)/' Resources/Info.plist \
 	  | plutil -remove SUFeedURL -o - - | plutil -remove SUPublicEDKey -o - - | plutil -remove SUEnableAutomaticChecks -o - - \
@@ -130,12 +140,13 @@ dist: app dmg
 	@echo "Packaged $(APP)-$(VERSION).zip and $(DMG)"
 
 build:
-	swift build -c release
+	swift build -c release $(ARCH_FLAGS)
 
 app: build
 	rm -rf $(BUNDLE)
 	mkdir -p $(CONTENTS)/MacOS $(CONTENTS)/Resources
 	cp $(BUILD)/$(APP) $(CONTENTS)/MacOS/$(APP)
+	@if [ "$(UNIVERSAL)" = "1" ]; then lipo -archs $(CONTENTS)/MacOS/$(APP) | grep -q x86_64 && lipo -archs $(CONTENTS)/MacOS/$(APP) | grep -q arm64 || (echo "expected a universal binary"; exit 1); fi
 	sed -e 's/__VERSION__/$(VERSION)/' -e 's/__BUILD__/$(BUILD_NO)/' -e 's|__SPARKLE_PUBLIC_KEY__|$(SPARKLE_PUBLIC_KEY)|' Resources/Info.plist > $(CONTENTS)/Info.plist
 	cp Resources/Icon/AppIcon.icns $(CONTENTS)/Resources/AppIcon.icns
 	cp -R $(BUILD)/Keepit_Keepit.bundle $(CONTENTS)/Resources/      # localized strings (SwiftPM resource bundle)

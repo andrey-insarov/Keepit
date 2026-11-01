@@ -10,6 +10,8 @@
 - **Localization**: Russian, Ukrainian, German, French, Spanish, Italian, Japanese, Simplified Chinese and Arabic. Keepit
   follows the macOS system language; English remains the base. `Scripts/gen_strings.py` holds the
   translation table and regenerates the `.lproj` files.
+- Distribution builds (DMG, App Store) are now universal (Apple silicon + Intel); earlier
+  releases were arm64-only. Ad-hoc local builds stay single-arch (`make app UNIVERSAL=1` to force).
 - Fixed the app icon showing as colour noise in the Touch ID dialog (16/32 px `icp4`/`icp5`
   entries removed from the `.icns`; macOS scales the Retina variants instead).
 
