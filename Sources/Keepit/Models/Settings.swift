@@ -53,6 +53,7 @@ struct Settings: Codable, Equatable {
     var thumbnailSize = 40         // thumbnail height in menus (width up to 4×)
     var showTooltips = true        // menu.show_tooltip
     var numberItems = true         // accelerator digits/letters like "&1 text"
+    var searchInMenu = true        // search field at the top of the history menu (type to filter)
     var showAtCaret = true         // action.caret — pop the menu at the text cursor if we can find it
 
     // [action]
@@ -100,6 +101,7 @@ struct Settings: Codable, Equatable {
         thumbnailSize    = try c.decodeIfPresent(Int.self,    forKey: .thumbnailSize)    ?? d.thumbnailSize
         showTooltips     = try c.decodeIfPresent(Bool.self,   forKey: .showTooltips)     ?? d.showTooltips
         numberItems      = try c.decodeIfPresent(Bool.self,   forKey: .numberItems)      ?? d.numberItems
+        searchInMenu     = try c.decodeIfPresent(Bool.self,   forKey: .searchInMenu)     ?? d.searchInMenu
         showAtCaret      = try c.decodeIfPresent(Bool.self,   forKey: .showAtCaret)      ?? d.showAtCaret
         historyHotKey    = try c.decodeIfPresent(HotKey.self, forKey: .historyHotKey)    ?? d.historyHotKey
         templateHotKey   = try c.decodeIfPresent(HotKey.self, forKey: .templateHotKey)   ?? d.templateHotKey

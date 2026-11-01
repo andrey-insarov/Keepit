@@ -240,3 +240,6 @@
 "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "Bez něj Keepit stále zaznamenává historii a kopíruje položky do schránky, ale nemůže odeslat ⌘V aktivní aplikaci ani umístit nabídku k textovému kurzoru.\n\nNastavení systému → Soukromí a zabezpečení → Zpřístupnění → zapněte Keepit.";
 "Keepit removes its Accessibility permission." = "Keepit odstraňuje své oprávnění Zpřístupnění.";
 "Also unlock with Touch ID (the password stays as fallback)" = "Odemykat také pomocí Touch ID (heslo zůstává jako záloha)";
+"Search history…" = "Hledat v historii…";
+"(no matches)" = "(žádné shody)";
+"Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "Vyhledávací pole v nabídce historie (psaní filtruje; zkratky se změní na ⌘1–⌘0)";

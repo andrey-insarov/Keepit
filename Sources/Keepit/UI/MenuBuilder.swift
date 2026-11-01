@@ -21,19 +21,26 @@ final class MenuBuilder {
 
     // MARK: History
 
-    func historyItems(_ items: [ClipItem], target: AnyObject, action: Selector) -> [NSMenuItem] {
+    /// Tag on every history entry so the menu can swap them out while filtering.
+    static let historyTag = 7
+
+    /// - Parameter commandAccelerators: with the search field in the menu, plain letters go into the
+    ///   field, so item shortcuts become ⌘1…⌘0 (letters are dropped).
+    func historyItems(_ items: [ClipItem], target: AnyObject, action: Selector, commandAccelerators: Bool = false) -> [NSMenuItem] {
         var out: [NSMenuItem] = []
         let shown = items.prefix(settings.menuMaxItems)
+        let accels = commandAccelerators ? Array(Self.accelerators.prefix(10)) : Self.accelerators
         for (i, item) in shown.enumerated() {
             let title = item.title(maxLength: settings.titleLength)
             let mi = NSMenuItem(title: title, action: action, keyEquivalent: "")
             mi.target = target
             mi.representedObject = item.id
+            mi.tag = Self.historyTag
 
-            if settings.numberItems, i < Self.accelerators.count {
-                let ch = Self.accelerators[i]
+            if settings.numberItems, i < accels.count {
+                let ch = accels[i]
                 mi.keyEquivalent = String(ch).lowercased()
-                mi.keyEquivalentModifierMask = []
+                mi.keyEquivalentModifierMask = commandAccelerators ? [.command] : []
                 // Visible prefix "1  text" (the key equivalent column shows it too).
                 mi.title = "\(ch)  \(title)"
             }
@@ -50,9 +57,21 @@ final class MenuBuilder {
         if items.count > shown.count {
             let more = NSMenuItem(title: LF("… %d more in the Viewer", items.count - shown.count), action: nil, keyEquivalent: "")
             more.isEnabled = false
+            more.tag = Self.historyTag
             out.append(more)
         }
         return out
+    }
+
+    /// Case-insensitive substring filter over titles and text contents.
+    static func filter(_ items: [ClipItem], query: String) -> [ClipItem] {
+        let q = query.trimmingCharacters(in: .whitespaces)
+        guard !q.isEmpty else { return items }
+        return items.filter { item in
+            if item.title(maxLength: 10_000).localizedCaseInsensitiveContains(q) { return true }
+            if let t = item.plainText, t.localizedCaseInsensitiveContains(q) { return true }
+            return false
+        }
     }
 
     // MARK: Templates

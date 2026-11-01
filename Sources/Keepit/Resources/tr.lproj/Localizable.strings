@@ -240,3 +240,6 @@
 "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "Bu izin olmadan Keepit yine de geçmişi kaydeder ve öğeleri panoya kopyalar, ancak etkin uygulamaya ⌘V gönderemez veya menüyü metin imlecinde açamaz.\n\nSistem Ayarları → Gizlilik ve Güvenlik → Erişilebilirlik → Keepit'i etkinleştirin.";
 "Keepit removes its Accessibility permission." = "Keepit, Erişilebilirlik iznini kaldırıyor.";
 "Also unlock with Touch ID (the password stays as fallback)" = "Touch ID ile de kilidi aç (parola yedek olarak kalır)";
+"Search history…" = "Geçmişte ara…";
+"(no matches)" = "(eşleşme yok)";
+"Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "Geçmiş menüsünde arama alanı (yazarak filtrele; kısayollar ⌘1–⌘0 olur)";

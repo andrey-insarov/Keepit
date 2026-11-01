@@ -240,4 +240,7 @@ T = {
 "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit.": "沒有該權限，Keepit 仍能記錄歷史並將項目拷貝到剪貼板，但無法向目前的 App 送出 ⌘V，也無法在文字游標處顯示選單。\n\n系統設定 → 隱私權與安全性 → 輔助使用 → 啟用 Keepit。",
 "Keepit removes its Accessibility permission.": "Keepit 正在移除其輔助使用權限。",
 "Also unlock with Touch ID (the password stays as fallback)": "同時使用 Touch ID 解鎖（密碼仍可作為備用）",
+'Search history…': '搜尋歷史記錄⋯',
+'(no matches)': '(沒有符合項目)',
+'Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)': '歷史記錄選單中的搜尋欄位（輸入即篩選；快速鍵改為 ⌘1–⌘0）',
 }

@@ -240,3 +240,6 @@
 "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "Bez tās Keepit joprojām ieraksta vēsturi un kopē vienumus starpliktuvē, bet nevar nosūtīt ⌘V aktīvajai lietotnei vai atvērt izvēlni pie teksta kursora.\n\nSistēmas iestatījumi → Privātums un drošība → Pieejamība → ieslēdziet Keepit (System Settings → Privacy & Security → Accessibility).";
 "Keepit removes its Accessibility permission." = "Keepit noņem savu pieejamības atļauju.";
 "Also unlock with Touch ID (the password stays as fallback)" = "Atbloķēt arī ar Touch ID (parole paliek kā rezerves variants)";
+"Search history…" = "Meklēt vēsturē…";
+"(no matches)" = "(nav atbilstību)";
+"Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "Meklēšanas lauks vēstures izvēlnē (rakstot filtrē; saīsnes kļūst par ⌘1–⌘0)";

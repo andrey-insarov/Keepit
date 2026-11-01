@@ -240,3 +240,6 @@
 "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "بدونه يستمر Keepit في تسجيل السجل ونسخ العناصر إلى الحافظة، لكنه لا يستطيع إرسال ⌘V إلى التطبيق النشط أو وضع القائمة عند مؤشر النص.\n\nإعدادات النظام ← الخصوصية والأمن ← تسهيلات الاستخدام ← تفعيل Keepit.";
 "Keepit removes its Accessibility permission." = "يزيل Keepit إذن تسهيلات الاستخدام الخاص به.";
 "Also unlock with Touch ID (the password stays as fallback)" = "إلغاء القفل أيضًا عبر Touch ID (تبقى كلمة المرور كبديل)";
+"Search history…" = "البحث في السجل…";
+"(no matches)" = "(لا نتائج)";
+"Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "حقل بحث في قائمة السجل (الكتابة تُرشّح؛ تصبح الاختصارات ⌘1–⌘0)";

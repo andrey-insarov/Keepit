@@ -240,3 +240,6 @@
 "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "권한이 없어도 Keepit은 기록을 저장하고 항목을 클립보드에 복사할 수 있지만, 활성 앱에 ⌘V를 보내거나 텍스트 커서 위치에 메뉴를 열 수는 없습니다.\n\n시스템 설정 → 개인정보 보호 및 보안 → 손쉬운 사용 → Keepit 켜기.";
 "Keepit removes its Accessibility permission." = "Keepit이 손쉬운 사용 권한을 제거합니다.";
 "Also unlock with Touch ID (the password stays as fallback)" = "Touch ID로도 잠금 해제(암호는 대체 수단으로 유지)";
+"Search history…" = "기록 검색…";
+"(no matches)" = "(일치 항목 없음)";
+"Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "기록 메뉴에 검색 필드(입력하여 필터링, 단축키는 ⌘1–⌘0으로)";

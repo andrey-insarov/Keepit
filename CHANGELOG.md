@@ -2,6 +2,9 @@
 
 ## 2.7.0 — unreleased
 
+- **Search in the history menu**: a search field at the top of the menu; typing filters the list in
+  place, Return pastes the first match, ⌘1–⌘0 pick by number. Can be turned off in Preferences →
+  Menu (then the old 1-9/0/A-Z shortcuts are back).
 - Default text/file history raised from 100 to 1000 items for new installs (≈10–30 MB; the
   image ring stays at 30). Existing settings are not changed.
 - 11 more interface languages: Brazilian Portuguese, Korean, Traditional Chinese, Turkish, Polish,

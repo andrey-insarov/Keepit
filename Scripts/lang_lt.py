@@ -240,4 +240,7 @@ T = {
 "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit.": "Be jo „Keepit“ vis tiek įrašo istoriją ir kopijuoja elementus į iškarpinę, bet negali siųsti ⌘V aktyviai programai ar atverti meniu ties teksto žymekliu.\n\nSistemos nuostatos → Privatumas ir saugumas → Pritaikymas neįgaliesiems → įjunkite „Keepit“ (System Settings → Privacy & Security → Accessibility).",
 "Keepit removes its Accessibility permission.": "„Keepit“ pašalina savo pritaikymo neįgaliesiems leidimą.",
 "Also unlock with Touch ID (the password stays as fallback)": "Taip pat atrakinti naudojant „Touch ID“ (slaptažodis lieka kaip atsarginis)",
+'Search history…': 'Ieškoti istorijoje…',
+'(no matches)': '(atitikmenų nėra)',
+'Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)': 'Paieškos laukas istorijos meniu (rašant filtruojama; spartieji klavišai tampa ⌘1–⌘0)',
 }

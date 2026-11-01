@@ -578,6 +578,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     // NSMenuDelegate
+    func menuWillOpen(_ menu: NSMenu) {
+        if let s = historySearchItem, menu.items.first === s { s.focus() }
+    }
+
     func menuDidClose(_ menu: NSMenu) {
         if statusItem.menu === menu { statusItem.menu = nil }
         let wasPopup = popupActive
@@ -599,7 +603,27 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let menu = NSMenu(title: L("History"))
         menu.autoenablesItems = false
 
-        let items = menuBuilder.historyItems(history.items, target: self, action: #selector(historyChosen(_:)))
+        let searching = settings.searchInMenu && !history.items.isEmpty
+        if searching {
+            let search = MenuSearchItem()
+            search.onChange = { [weak self, weak menu] q in
+                guard let self, let menu else { return }
+                self.refilterHistoryMenu(menu, query: q)
+            }
+            search.onReturn = { [weak self, weak menu] in
+                guard let self, let menu else { return }
+                if let first = menu.items.first(where: { $0.tag == MenuBuilder.historyTag && $0.isEnabled && $0.action != nil }) {
+                    menu.cancelTracking()
+                    self.historyChosen(first)
+                }
+            }
+            menu.addItem(search)
+            historySearchItem = search
+        } else {
+            historySearchItem = nil
+        }
+
+        let items = menuBuilder.historyItems(history.items, target: self, action: #selector(historyChosen(_:)), commandAccelerators: searching)
         if items.isEmpty {
             let e = NSMenuItem(title: L("(History is empty)"), action: nil, keyEquivalent: "")
             e.isEnabled = false
@@ -623,6 +647,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             for mi in appMenuItems() { menu.addItem(mi) }
         }
         return menu
+    }
+
+    private var historySearchItem: MenuSearchItem?
+
+    /// Swap the history entries of an open menu for the ones matching `query` (the rest of the menu stays).
+    private func refilterHistoryMenu(_ menu: NSMenu, query: String) {
+        let firstIndex = menu.items.firstIndex { $0.tag == MenuBuilder.historyTag } ?? 1
+        for mi in menu.items where mi.tag == MenuBuilder.historyTag { menu.removeItem(mi) }
+        let matches = MenuBuilder.filter(history.items, query: query)
+        var fresh = menuBuilder.historyItems(matches, target: self, action: #selector(historyChosen(_:)), commandAccelerators: true)
+        if fresh.isEmpty {
+            let none = NSMenuItem(title: L("(no matches)"), action: nil, keyEquivalent: "")
+            none.isEnabled = false
+            none.tag = MenuBuilder.historyTag
+            fresh = [none]
+        }
+        for (i, mi) in fresh.enumerated() { menu.insertItem(mi, at: firstIndex + i) }
     }
 
     private func appMenuItems() -> [NSMenuItem] {

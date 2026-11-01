@@ -240,4 +240,7 @@ T = {
 "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit.": "Ilma selleta salvestab Keepit endiselt ajalugu ja kopeerib üksusi lõikelauale, kuid ei saa saata ⌘V aktiivsesse rakendusse ega avada menüüd tekstikursori juures.\n\nSüsteemiseaded → Privaatsus ja turvalisus → Ligipääsetavus → luba Keepit (System Settings → Privacy & Security → Accessibility).",
 "Keepit removes its Accessibility permission.": "Keepit eemaldab oma ligipääsetavuse loa.",
 "Also unlock with Touch ID (the password stays as fallback)": "Ava ka Touch ID-ga (parool jääb varuvariandiks)",
+'Search history…': 'Otsi ajaloost…',
+'(no matches)': '(vasteid pole)',
+'Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)': 'Otsinguväli ajaloo menüüs (tippimine filtreerib; kiirklahvid muutuvad ⌘1–⌘0)',
 }

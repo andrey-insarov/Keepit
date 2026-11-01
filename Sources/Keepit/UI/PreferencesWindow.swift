@@ -25,6 +25,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     private let showThumbs   = NSButton(checkboxWithTitle: L("Show image thumbnails in menu"), target: nil, action: nil)
     private let showTips     = NSButton(checkboxWithTitle: L("Show tooltips with item contents"), target: nil, action: nil)
     private let numberItems  = NSButton(checkboxWithTitle: L("Number items (press 1-9, 0, A-Z to pick)"), target: nil, action: nil)
+    private let searchMenu   = NSButton(checkboxWithTitle: L("Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)"), target: nil, action: nil)
     private let pasteAfter   = NSButton(checkboxWithTitle: L("Paste into the active app after choosing"), target: nil, action: nil)
     private let showAtCaret  = NSButton(checkboxWithTitle: L("Open menu at text cursor when possible"), target: nil, action: nil)
     private let overlap      = NSButton(checkboxWithTitle: L("Remove duplicates (keep newest)"), target: nil, action: nil)
@@ -117,6 +118,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
             [NSView(), showThumbs],
             [NSView(), showTips],
             [NSView(), numberItems],
+            [NSView(), searchMenu],
             [NSView(), showAtCaret],
 
             header(L("Hot keys & paste")),
@@ -233,6 +235,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         showThumbs.state = s.showThumbnails ? .on : .off
         showTips.state = s.showTooltips ? .on : .off
         numberItems.state = s.numberItems ? .on : .off
+        searchMenu.state = s.searchInMenu ? .on : .off
         pasteAfter.state = s.pasteAfterSelect ? .on : .off
         showAtCaret.state = s.showAtCaret ? .on : .off
         overlap.state = s.overlapCheck ? .on : .off
@@ -264,6 +267,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         s.showThumbnails = showThumbs.state == .on
         s.showTooltips = showTips.state == .on
         s.numberItems = numberItems.state == .on
+        s.searchInMenu = searchMenu.state == .on
         s.pasteAfterSelect = pasteAfter.state == .on
         s.showAtCaret = showAtCaret.state == .on
         s.overlapCheck = overlap.state == .on

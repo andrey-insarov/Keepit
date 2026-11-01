@@ -240,3 +240,6 @@
 "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "Ohne sie zeichnet Keepit weiterhin den Verlauf auf und kopiert Einträge in die Zwischenablage, kann aber kein ⌘V an die aktive App senden und das Menü nicht am Textcursor öffnen.\n\nSystemeinstellungen → Datenschutz & Sicherheit → Bedienungshilfen → Keepit aktivieren.";
 "Keepit removes its Accessibility permission." = "Keepit entfernt seine Bedienungshilfen-Berechtigung.";
 "Also unlock with Touch ID (the password stays as fallback)" = "Auch mit Touch ID entsperren (Passwort bleibt als Ersatz)";
+"Search history…" = "Verlauf durchsuchen …";
+"(no matches)" = "(keine Treffer)";
+"Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "Suchfeld im Verlaufsmenü (Tippen filtert; Kürzel werden zu ⌘1–⌘0)";
