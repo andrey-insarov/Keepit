@@ -251,4 +251,5 @@ T = {
 'Layout: %@': 'Izkārtojums: %@',
 'CAPS LOCK': 'CAPS LOCK',
 'Show a preview panel next to the highlighted item (replaces tooltips)': 'Rādīt priekšskatījuma paneli blakus iezīmētajam vienumam (aizstāj padomus)',
+'Show the icon of the app each item was copied from': 'Rādīt tās lietotnes ikonu, no kuras vienums nokopēts',
 }

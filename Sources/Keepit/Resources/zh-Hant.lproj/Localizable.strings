@@ -251,3 +251,4 @@
 "Layout: %@" = "鍵盤配置：%@";
 "CAPS LOCK" = "大寫鎖定";
 "Show a preview panel next to the highlighted item (replaces tooltips)" = "在高亮顯示的項目旁顯示預覽面板（取代工具提示）";
+"Show the icon of the app each item was copied from" = "顯示每個項目來源 App 的圖示";

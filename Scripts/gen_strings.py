@@ -274,6 +274,7 @@ T = {
 'Layout: %@': ('Раскладка: %@', 'Belegung: %@', 'Clavier : %@', 'Distribución: %@', '入力ソース: %@', '键盘布局：%@'),
 'CAPS LOCK': ('CAPS LOCK', 'CAPS LOCK', 'VERR. MAJ', 'BLOQ MAYÚS', 'CAPS LOCK', '大写锁定'),
 'Show a preview panel next to the highlighted item (replaces tooltips)': ('Показывать панель предпросмотра рядом с выделенным элементом (вместо подсказок)', 'Vorschaufenster neben dem markierten Eintrag anzeigen (ersetzt Tooltips)', 'Afficher un panneau d’aperçu à côté de l’élément surligné (remplace les infobulles)', 'Mostrar un panel de vista previa junto al elemento resaltado (sustituye a los consejos)', 'ハイライトした項目の横にプレビューパネルを表示（ツールチップの代わり）', '在高亮项旁显示预览面板（取代工具提示）'),
+'Show the icon of the app each item was copied from': ('Показывать иконку приложения, из которого скопирован элемент', 'Symbol der App anzeigen, aus der ein Eintrag kopiert wurde', 'Afficher l’icône de l’app d’où chaque élément a été copié', 'Mostrar el icono de la app desde la que se copió cada elemento', '項目のコピー元アプリのアイコンを表示', '显示每个项目来源应用的图标'),
 }
 
 PH = re.compile(r"%[@d]")

@@ -251,3 +251,4 @@
 "Layout: %@" = "Išdėstymas: %@";
 "CAPS LOCK" = "CAPS LOCK";
 "Show a preview panel next to the highlighted item (replaces tooltips)" = "Rodyti peržiūros skydelį šalia pažymėto elemento (vietoj patarimų)";
+"Show the icon of the app each item was copied from" = "Rodyti programos, iš kurios nukopijuotas elementas, piktogramą";

@@ -251,4 +251,5 @@ T = {
 'Layout: %@': 'Düzen: %@',
 'CAPS LOCK': 'CAPS LOCK',
 'Show a preview panel next to the highlighted item (replaces tooltips)': 'Vurgulanan öğenin yanında önizleme paneli göster (ipuçlarının yerine geçer)',
+'Show the icon of the app each item was copied from': 'Her öğenin kopyalandığı uygulamanın simgesini göster',
 }

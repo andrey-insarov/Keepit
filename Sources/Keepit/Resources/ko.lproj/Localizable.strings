@@ -251,3 +251,4 @@
 "Layout: %@" = "입력 소스: %@";
 "CAPS LOCK" = "CAPS LOCK";
 "Show a preview panel next to the highlighted item (replaces tooltips)" = "강조된 항목 옆에 미리보기 패널 표시(툴팁 대체)";
+"Show the icon of the app each item was copied from" = "각 항목을 복사한 앱의 아이콘 표시";

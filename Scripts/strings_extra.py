@@ -262,4 +262,5 @@ T2 = {
 'Layout: %@': ('Розкладка: %@', 'التخطيط: %@', 'Layout: %@'),
 'CAPS LOCK': ('CAPS LOCK', 'CAPS LOCK', 'BLOC MAIUSC'),
 'Show a preview panel next to the highlighted item (replaces tooltips)': ('Показувати панель попереднього перегляду поруч із виділеним елементом (замість підказок)', 'عرض لوحة معاينة بجوار العنصر المحدد (بدلًا من التلميحات)', 'Mostra un pannello di anteprima accanto all’elemento evidenziato (sostituisce i suggerimenti)'),
+'Show the icon of the app each item was copied from': ('Показувати іконку програми, з якої скопійовано елемент', 'عرض أيقونة التطبيق الذي نُسخ منه كل عنصر', 'Mostra l’icona dell’app da cui è stato copiato ogni elemento'),
 }

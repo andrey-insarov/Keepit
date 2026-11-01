@@ -266,3 +266,5 @@
 "CAPS LOCK" = "CAPS LOCK";
 
 "Show a preview panel next to the highlighted item (replaces tooltips)" = "Show a preview panel next to the highlighted item (replaces tooltips)";
+
+"Show the icon of the app each item was copied from" = "Show the icon of the app each item was copied from";

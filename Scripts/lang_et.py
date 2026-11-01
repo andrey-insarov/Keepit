@@ -251,4 +251,5 @@ T = {
 'Layout: %@': 'Paigutus: %@',
 'CAPS LOCK': 'CAPS LOCK',
 'Show a preview panel next to the highlighted item (replaces tooltips)': 'Näita esiletõstetud üksuse kõrval eelvaatepaneeli (asendab kohtspikrid)',
+'Show the icon of the app each item was copied from': 'Näita selle rakenduse ikooni, kust üksus kopeeriti',
 }

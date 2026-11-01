@@ -251,3 +251,4 @@
 "Layout: %@" = "Belegung: %@";
 "CAPS LOCK" = "CAPS LOCK";
 "Show a preview panel next to the highlighted item (replaces tooltips)" = "Vorschaufenster neben dem markierten Eintrag anzeigen (ersetzt Tooltips)";
+"Show the icon of the app each item was copied from" = "Symbol der App anzeigen, aus der ein Eintrag kopiert wurde";

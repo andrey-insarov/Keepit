@@ -251,3 +251,4 @@
 "Layout: %@" = "التخطيط: %@";
 "CAPS LOCK" = "CAPS LOCK";
 "Show a preview panel next to the highlighted item (replaces tooltips)" = "عرض لوحة معاينة بجوار العنصر المحدد (بدلًا من التلميحات)";
+"Show the icon of the app each item was copied from" = "عرض أيقونة التطبيق الذي نُسخ منه كل عنصر";

@@ -24,6 +24,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     private let pasteDelay   = NSTextField()
     private let showThumbs   = NSButton(checkboxWithTitle: L("Show image thumbnails in menu"), target: nil, action: nil)
     private let showPreview  = NSButton(checkboxWithTitle: L("Show a preview panel next to the highlighted item (replaces tooltips)"), target: nil, action: nil)
+    private let showSource   = NSButton(checkboxWithTitle: L("Show the icon of the app each item was copied from"), target: nil, action: nil)
     private let showTips     = NSButton(checkboxWithTitle: L("Show tooltips with item contents"), target: nil, action: nil)
     private let numberItems  = NSButton(checkboxWithTitle: L("Number items (press 1-9, 0, A-Z to pick)"), target: nil, action: nil)
     private let plainHint    = NSTextField(wrappingLabelWithString: L("Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead."))
@@ -120,6 +121,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
             [NSView(), showThumbs],
             [NSView(), showTips],
             [NSView(), showPreview],
+            [NSView(), showSource],
             [NSView(), numberItems],
             [NSView(), searchMenu],
             [NSView(), plainHint],
@@ -242,6 +244,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         showThumbs.state = s.showThumbnails ? .on : .off
         showTips.state = s.showTooltips ? .on : .off
         showPreview.state = s.showPreview ? .on : .off
+        showSource.state = s.showSourceIcons ? .on : .off
         numberItems.state = s.numberItems ? .on : .off
         searchMenu.state = s.searchInMenu ? .on : .off
         pasteAfter.state = s.pasteAfterSelect ? .on : .off
@@ -277,6 +280,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         s.showThumbnails = showThumbs.state == .on
         s.showTooltips = showTips.state == .on
         s.showPreview = showPreview.state == .on
+        s.showSourceIcons = showSource.state == .on
         s.numberItems = numberItems.state == .on
         s.searchInMenu = searchMenu.state == .on
         s.pasteAfterSelect = pasteAfter.state == .on

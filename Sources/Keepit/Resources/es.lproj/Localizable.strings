@@ -251,3 +251,4 @@
 "Layout: %@" = "Distribución: %@";
 "CAPS LOCK" = "BLOQ MAYÚS";
 "Show a preview panel next to the highlighted item (replaces tooltips)" = "Mostrar un panel de vista previa junto al elemento resaltado (sustituye a los consejos)";
+"Show the icon of the app each item was copied from" = "Mostrar el icono de la app desde la que se copió cada elemento";

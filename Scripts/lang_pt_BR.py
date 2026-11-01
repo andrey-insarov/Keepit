@@ -251,4 +251,5 @@ T = {
 'Layout: %@': 'Leiaute: %@',
 'CAPS LOCK': 'CAPS LOCK',
 'Show a preview panel next to the highlighted item (replaces tooltips)': 'Mostrar um painel de pré-visualização ao lado do item destacado (substitui as dicas)',
+'Show the icon of the app each item was copied from': 'Mostrar o ícone do app de onde cada item foi copiado',
 }

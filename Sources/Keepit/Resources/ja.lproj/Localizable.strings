@@ -251,3 +251,4 @@
 "Layout: %@" = "入力ソース: %@";
 "CAPS LOCK" = "CAPS LOCK";
 "Show a preview panel next to the highlighted item (replaces tooltips)" = "ハイライトした項目の横にプレビューパネルを表示（ツールチップの代わり）";
+"Show the icon of the app each item was copied from" = "項目のコピー元アプリのアイコンを表示";

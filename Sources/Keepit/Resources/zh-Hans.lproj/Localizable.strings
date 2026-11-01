@@ -251,3 +251,4 @@
 "Layout: %@" = "键盘布局：%@";
 "CAPS LOCK" = "大写锁定";
 "Show a preview panel next to the highlighted item (replaces tooltips)" = "在高亮项旁显示预览面板（取代工具提示）";
+"Show the icon of the app each item was copied from" = "显示每个项目来源应用的图标";

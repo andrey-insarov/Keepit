@@ -2,6 +2,8 @@
 
 ## 2.8.0 — unreleased
 
+- **Source app icons**: text and file items in the history menu carry the icon of the app they were
+  copied from (Preferences → Menu).
 - **Preview panel**: hovering a history item shows the full image or the first lines of the text in a
   floating panel beside the menu, with source app, date and size. Replaces tooltips while on
   (Preferences → Menu).

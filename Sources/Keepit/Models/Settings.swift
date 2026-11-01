@@ -55,6 +55,7 @@ struct Settings: Codable, Equatable {
     var numberItems = true         // accelerator digits/letters like "&1 text"
     var searchInMenu = true        // search field at the top of the history menu (type to filter)
     var showPreview = true         // floating preview panel next to the highlighted history item
+    var showSourceIcons = true     // icon of the app the item was copied from, in the history menu
     var showAtCaret = true         // action.caret — pop the menu at the text cursor if we can find it
 
     // [action]
@@ -104,6 +105,7 @@ struct Settings: Codable, Equatable {
         numberItems      = try c.decodeIfPresent(Bool.self,   forKey: .numberItems)      ?? d.numberItems
         searchInMenu     = try c.decodeIfPresent(Bool.self,   forKey: .searchInMenu)     ?? d.searchInMenu
         showPreview      = try c.decodeIfPresent(Bool.self,   forKey: .showPreview)      ?? d.showPreview
+        showSourceIcons  = try c.decodeIfPresent(Bool.self,   forKey: .showSourceIcons)  ?? d.showSourceIcons
         showAtCaret      = try c.decodeIfPresent(Bool.self,   forKey: .showAtCaret)      ?? d.showAtCaret
         historyHotKey    = try c.decodeIfPresent(HotKey.self, forKey: .historyHotKey)    ?? d.historyHotKey
         templateHotKey   = try c.decodeIfPresent(HotKey.self, forKey: .templateHotKey)   ?? d.templateHotKey

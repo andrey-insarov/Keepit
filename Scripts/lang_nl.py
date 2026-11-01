@@ -251,4 +251,5 @@ T = {
 'Layout: %@': 'Indeling: %@',
 'CAPS LOCK': 'CAPS LOCK',
 'Show a preview panel next to the highlighted item (replaces tooltips)': 'Toon een voorvertoningspaneel naast het gemarkeerde item (vervangt knopinfo)',
+'Show the icon of the app each item was copied from': 'Toon het symbool van de app waaruit elk item is gekopieerd',
 }

@@ -251,3 +251,4 @@
 "Layout: %@" = "Розкладка: %@";
 "CAPS LOCK" = "CAPS LOCK";
 "Show a preview panel next to the highlighted item (replaces tooltips)" = "Показувати панель попереднього перегляду поруч із виділеним елементом (замість підказок)";
+"Show the icon of the app each item was copied from" = "Показувати іконку програми, з якої скопійовано елемент";

@@ -12,6 +12,19 @@ final class MenuBuilder {
 
     func invalidateThumbnails() { thumbCache.removeAll() }
 
+    private var appIconCache: [String: NSImage] = [:]
+
+    /// 16-pt icon of the app the item was copied from (by bundle id), cached; nil if the app is gone.
+    func appIcon(for bundleID: String?) -> NSImage? {
+        guard let id = bundleID, !id.isEmpty else { return nil }
+        if let i = appIconCache[id] { return i }
+        guard let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: id) else { return nil }
+        let icon = NSWorkspace.shared.icon(forFile: url.path)
+        icon.size = NSSize(width: 16, height: 16)
+        appIconCache[id] = icon
+        return icon
+    }
+
     func thumbnail(for item: ClipItem) -> NSImage? {
         if let t = thumbCache[item.id] { return t }
         guard let t = item.thumbnail(maxSide: CGFloat(settings.thumbnailSize)) else { return nil }
@@ -73,6 +86,8 @@ final class MenuBuilder {
             }
             if settings.showThumbnails, item.kind == .image {
                 mi.image = thumbnail(for: item)
+            } else if settings.showSourceIcons, let icon = appIcon(for: item.sourceApp) {
+                mi.image = icon
             } else if item.kind == .files {
                 mi.image = NSImage(systemSymbolName: "doc.on.doc", accessibilityDescription: nil)
             }

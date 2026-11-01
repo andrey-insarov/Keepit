@@ -251,4 +251,5 @@ T = {
 'Layout: %@': 'Rozložení: %@',
 'CAPS LOCK': 'CAPS LOCK',
 'Show a preview panel next to the highlighted item (replaces tooltips)': 'Zobrazovat panel náhledu vedle zvýrazněné položky (nahrazuje tipy)',
+'Show the icon of the app each item was copied from': 'Zobrazovat ikonu aplikace, ze které byla položka zkopírována',
 }
