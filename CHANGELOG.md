@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.6.0 — unreleased
+## 2.6.0 — 2026-11-01
 
 - Preferences → **Danger zone → Delete Keepit and All Data…**: a complete uninstall from inside the
   app. Requires the password or Touch ID (when protection is on), then typing `DELETE` and ticking
