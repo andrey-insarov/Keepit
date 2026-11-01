@@ -6,7 +6,7 @@
 
 <p align="center">
   Everything you copy, one hot key away. History, templates, Touch ID lock and encrypted storage — all on your Mac, nothing in the cloud.<br>
-  <a href="https://keep.it.com"><b>keep.it.com</b></a> · <a href="https://github.com/andrey-insarov/Keepit/releases/latest">Download for macOS</a> · Free &amp; open source (MIT)
+  <a href="https://keep.it.com"><b>keep.it.com</b></a> · <a href="docs/GUIDE.md">User guide</a> · <a href="https://github.com/andrey-insarov/Keepit/releases/latest">Download for macOS</a> · Free &amp; open source (MIT)
 </p>
 
 <p align="center">
