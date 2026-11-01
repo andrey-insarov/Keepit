@@ -79,10 +79,11 @@ enum BiometricUnlock {
     }
 
     /// Prompt for Touch ID and return the key; nil if the user cancelled, failed, or nothing is stored.
-    static func retrieve(reason: String) -> SecureKey? {
+    /// `reasonKey` is a Localizable.strings key; it is shown in the system language (see `LSys`).
+    static func retrieve(reasonKey: String) -> SecureKey? {
         let ctx = LAContext()
-        ctx.localizedReason = reason
-        ctx.localizedCancelTitle = L("Use Password")
+        ctx.localizedReason = LSys(reasonKey)
+        ctx.localizedCancelTitle = LSys("Use Password")
         let q: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,

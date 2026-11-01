@@ -39,6 +39,11 @@ final class LocalizationTests: XCTestCase {
         XCTAssertTrue(LF("%d item(s)", 3).contains("3"))
     }
 
+    func testSystemLanguageLookupFallsBackToKey() {
+        XCTAssertEqual(LSys("no such key 456"), "no such key 456")
+        XCTAssertFalse(LSys("Use Password").isEmpty)
+    }
+
     func testRussianTableIsUsed() throws {
         let ru = try table("ru")
         XCTAssertEqual(ru["Cancel"], "Отмена")

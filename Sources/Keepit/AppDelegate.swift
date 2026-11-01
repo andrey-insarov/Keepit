@@ -161,7 +161,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         if settings.biometricUnlock, BiometricUnlock.isAvailable, BiometricUnlock.isConfigured {
             NSApp.activate(ignoringOtherApps: true)
-            if let key = BiometricUnlock.retrieve(reason: L("unlock the clipboard history and templates")) {
+            if let key = BiometricUnlock.retrieve(reasonKey: "unlock the clipboard history and templates") {
                 if Vault.verify(key) {
                     Storage.key = key
                     return true
@@ -243,14 +243,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     /// Confirm identity for sensitive changes: Touch ID (if allowed) or the current password.
-    private func authenticateForChange(reason: String) -> Bool {
+    private func authenticateForChange(reasonKey: String) -> Bool {
         if settings.biometricUnlock, settings.biometricPasswordChange, BiometricUnlock.isAvailable, BiometricUnlock.isConfigured,
-           let k = BiometricUnlock.retrieve(reason: reason) {
+           let k = BiometricUnlock.retrieve(reasonKey: reasonKey) {
             let ok = Vault.verify(k)
             k.zero()
             if ok { return true }
         }
-        guard let old = Vault.askPassword(title: L("Confirm"), message: LF("Enter the current password to %@.", reason)) else { return false }
+        guard let old = Vault.askPassword(title: L("Confirm"), message: LF("Enter the current password to %@.", L(reasonKey))) else { return false }
         let check = Vault.unlock(password: old)
         old.zero()
         guard let c = check else {
@@ -264,7 +264,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// Preferences → L("New Recovery Phrase…"): invalidates the old sheet.
     func regenerateRecoveryPhrase() {
         guard Vault.isEnabled, let key = Storage.key else { return }
-        guard authenticateForChange(reason: L("generate a new recovery phrase")) else { return }
+        guard authenticateForChange(reasonKey: "generate a new recovery phrase") else { return }
         do {
             let words = try Vault.createRecovery(for: key)
             RecoveryDialogs.present(words: words, title: L("Your new recovery phrase (the old one no longer works)"))
@@ -341,7 +341,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     func changePassword() {
         guard Vault.isEnabled, Storage.key != nil else { return }
-        guard authenticateForChange(reason: L("change the Keepit password")) else { return }
+        guard authenticateForChange(reasonKey: "change the Keepit password") else { return }
         guard let pw = Vault.askPassword(title: L("New password"), message: L("Enter the new password twice."), confirm: true) else { return }
         defer { pw.zero() }
         rekey(with: pw)
