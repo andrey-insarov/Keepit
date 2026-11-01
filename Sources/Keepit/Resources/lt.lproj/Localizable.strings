@@ -64,7 +64,7 @@
 "Free and open source. Made by the team behind the it.com domain zone." = "Nemokama ir atvirojo kodo. Sukūrė it.com domenų zonos komanda.";
 "General" = "Bendra";
 "Good" = "Geras";
-"Grant Accessibility Permission…" = "Suteikti pritaikymo neįgaliesiems leidimą…";
+"Grant Accessibility Permission…" = "Suteikti pritaikymo neįgaliesiems leidimą (Accessibility)…";
 "History" = "Istorija";
 "History menu:" = "Istorijos meniu:";
 "History — %d text/file item(s) (max %d) and %d image(s) (max %d). Each group drops its oldest entries first." = "Istorija — tekstas / failai: %d (daugiausia %d), vaizdai: %d (daugiausia %d). Kiekviena grupė pirmiausia šalina seniausius įrašus.";
@@ -120,11 +120,11 @@
 "Poll interval (s):" = "Tikrinimo intervalas (s):";
 "Preferences…" = "Nuostatos…";
 "Press keys… (⎋ cancels)" = "Spauskite klavišus… (⎋ atšaukia)";
-"Press ⌘V to paste now. To paste automatically, allow Keepit in System Settings → Privacy & Security → Accessibility. If Keepit is already listed, turn it off and on again (macOS forgets the grant when the app is rebuilt with a different signature)." = "Spauskite ⌘V, kad įklijuotumėte dabar. Kad būtų įklijuojama automatiškai, leiskite „Keepit“ skiltyje Sistemos nuostatos → Privatumas ir saugumas → Pritaikymas neįgaliesiems. Jei „Keepit“ jau sąraše, išjunkite ir vėl įjunkite („macOS“ pamiršta leidimą, kai programa perkompiliuojama su kitu parašu).";
+"Press ⌘V to paste now. To paste automatically, allow Keepit in System Settings → Privacy & Security → Accessibility. If Keepit is already listed, turn it off and on again (macOS forgets the grant when the app is rebuilt with a different signature)." = "Spauskite ⌘V, kad įklijuotumėte dabar. Kad būtų įklijuojama automatiškai, leiskite „Keepit“ skiltyje Sistemos nuostatos → Privatumas ir saugumas → Pritaikymas neįgaliesiems (System Settings → Privacy & Security → Accessibility). Jei „Keepit“ jau sąraše, išjunkite ir vėl įjunkite („macOS“ pamiršta leidimą, kai programa perkompiliuojama su kitu parašu).";
 "Pressing it sends the item to the clipboard and pastes it without showing the menu." = "Paspaudus elementas siunčiamas į iškarpinę ir įklijuojamas nerodant meniu.";
 "Print…" = "Spausdinti…";
-"Quit" = "Baigti";
-"Quit Keepit" = "Baigti „Keepit“";
+"Quit" = "Išeiti";
+"Quit Keepit" = "Išeiti iš „Keepit“";
 "Redo" = "Pakartoti";
 "Remove duplicates (keep newest)" = "Šalinti dublikatus (palikti naujausią)";
 "Rename" = "Pervadinti";
@@ -163,7 +163,7 @@
 "Thumbnail height (px):" = "Miniatiūros aukštis (px):";
 "Title length (chars):" = "Pavadinimo ilgis (simb.):";
 "Too many wrong attempts. Keepit stays locked." = "Per daug klaidingų bandymų. „Keepit“ lieka užrakinta.";
-"Too many wrong attempts. Keepit will quit." = "Per daug klaidingų bandymų. „Keepit“ bus išjungta.";
+"Too many wrong attempts. Keepit will quit." = "Per daug klaidingų bandymų. „Keepit“ bus uždaryta.";
 "Too many wrong attempts. Try again in %d s." = "Per daug klaidingų bandymų. Bandykite dar kartą po %d s.";
 "Touch ID could not be set up: %@" = "Nepavyko nustatyti „Touch ID“: %@";
 "Touch ID is not available on this Mac." = "Šiame „Mac“ „Touch ID“ negalimas.";
@@ -237,6 +237,6 @@
 "Not Now" = "Ne dabar";
 "Your data will not be encrypted" = "Jūsų duomenys nebus šifruojami";
 "Without a password Keepit stores history and templates unencrypted in your user Library. You can turn protection on at any time in Preferences → Security." = "Be slaptažodžio „Keepit“ saugo istoriją ir šablonus neužšifruotus jūsų naudotojo bibliotekoje. Apsaugą galite įjungti bet kada skiltyje Nuostatos → Saugumas.";
-"Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "Be jo „Keepit“ vis tiek įrašo istoriją ir kopijuoja elementus į iškarpinę, bet negali siųsti ⌘V aktyviai programai ar atverti meniu ties teksto žymekliu.\n\nSistemos nuostatos → Privatumas ir saugumas → Pritaikymas neįgaliesiems → įjunkite „Keepit“.";
+"Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "Be jo „Keepit“ vis tiek įrašo istoriją ir kopijuoja elementus į iškarpinę, bet negali siųsti ⌘V aktyviai programai ar atverti meniu ties teksto žymekliu.\n\nSistemos nuostatos → Privatumas ir saugumas → Pritaikymas neįgaliesiems → įjunkite „Keepit“ (System Settings → Privacy & Security → Accessibility).";
 "Keepit removes its Accessibility permission." = "„Keepit“ pašalina savo pritaikymo neįgaliesiems leidimą.";
 "Also unlock with Touch ID (the password stays as fallback)" = "Taip pat atrakinti naudojant „Touch ID“ (slaptažodis lieka kaip atsarginis)";

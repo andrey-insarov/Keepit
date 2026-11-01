@@ -28,11 +28,11 @@
 "Change Password Now" = "Cambiar la contraseña ahora";
 "Change Password…" = "Cambiar contraseña…";
 "Check for Updates…" = "Buscar actualizaciones…";
-"Clear" = "Vaciar";
-"Clear History" = "Vaciar historial";
-"Clear History…" = "Vaciar historial…";
+"Clear" = "Borrar";
+"Clear History" = "Borrar historial";
+"Clear History…" = "Borrar historial…";
 "Clear Name" = "Borrar nombre";
-"Clear clipboard history?" = "¿Vaciar el historial del portapapeles?";
+"Clear clipboard history?" = "¿Borrar el historial del portapapeles?";
 "Click to set" = "Clic para definir";
 "Clipboard" = "Portapapeles";
 "Close" = "Cerrar";

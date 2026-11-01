@@ -28,11 +28,11 @@
 "Change Password Now" = "Passwort jetzt ändern";
 "Change Password…" = "Passwort ändern …";
 "Check for Updates…" = "Nach Updates suchen …";
-"Clear" = "Leeren";
-"Clear History" = "Verlauf leeren";
-"Clear History…" = "Verlauf leeren …";
+"Clear" = "Löschen";
+"Clear History" = "Verlauf löschen";
+"Clear History…" = "Verlauf löschen …";
 "Clear Name" = "Namen löschen";
-"Clear clipboard history?" = "Zwischenablage-Verlauf leeren?";
+"Clear clipboard history?" = "Zwischenablage-Verlauf löschen?";
 "Click to set" = "Klicken zum Festlegen";
 "Clipboard" = "Zwischenablage";
 "Close" = "Schließen";

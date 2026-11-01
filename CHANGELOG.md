@@ -3,7 +3,10 @@
 ## 2.7.0 — unreleased
 
 - 11 more interface languages: Brazilian Portuguese, Korean, Traditional Chinese, Turkish, Polish,
-  Dutch, Hebrew, Czech, Lithuanian, Latvian and Estonian (21 in total).
+  Dutch, Hebrew, Czech, Lithuanian, Latvian and Estonian (21 in total). Terminology cross-checked
+  against community-localized macOS apps (Maccy, Rectangle) and Apple's own wording; *Clear History*
+  now follows Safari's term in German, Spanish, Italian and Simplified Chinese. Baltic languages name
+  the System Settings panes in English too, since macOS has no UI in those languages.
 
 ## 2.6.0 — 2026-11-01
 
