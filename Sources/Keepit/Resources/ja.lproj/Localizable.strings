@@ -303,8 +303,15 @@
 "Literal braces" = "波かっこそのもの";
 "Put these tokens into the text of a template; they are replaced when the template is pasted. Plain text without braces is pasted unchanged." = "これらのトークンをテンプレートのテキストに入れると、ペースト時に置き換えられます。波かっこのないテキストはそのままペーストされます。";
 "Shifted date: +/- number and d (days), w (weeks), m (months), y (years), h (hours)" = "日付のずらし: +/- 数値と d（日）、w（週）、m（月）、y（年）、h（時間）";
-"Template Placeholders" = "テンプレートのプレースホルダ";
-"Template Placeholders…" = "テンプレートのプレースホルダ…";
 "Today's date / current time, in the system format" = "今日の日付 / 現在時刻（システム形式）";
 "Values for the placeholders in this template:" = "このテンプレートのプレースホルダの値:";
 "Where the text cursor ends up after pasting" = "ペースト後にテキストカーソルが置かれる位置";
+"Placeholders & Automation" = "プレースホルダと自動化";
+"Placeholders & Automation…" = "プレースホルダと自動化…";
+"Automation — keepit:// URLs (Shortcuts “Open URL”, Raycast, Alfred, the open command)" = "自動化 — keepit:// URL（ショートカット「URL を開く」、Raycast、Alfred、open コマンド）";
+"Paste history item N into the front app" = "履歴の N 番目の項目を最前面のアプリにペースト";
+"Put item N on the clipboard without pasting" = "N 番目の項目をペーストせずにクリップボードへ";
+"Paste (or copy) a template by name or folder path" = "名前またはフォルダパスでテンプレートをペースト（またはコピー）";
+"Add text to the history or as a new template" = "テキストを履歴に追加、または新しいテンプレートとして追加";
+"Open the menus and windows" = "メニューとウインドウを開く";
+"Pause recording for 10 minutes / resume" = "記録を 10 分間一時停止 / 再開";

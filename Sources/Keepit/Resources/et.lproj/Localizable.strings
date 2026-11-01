@@ -303,8 +303,15 @@
 "Literal braces" = "Looksulud tekstina";
 "Put these tokens into the text of a template; they are replaced when the template is pasted. Plain text without braces is pasted unchanged." = "Pane need märgised malli teksti; malli kleepimisel need asendatakse. Looksulgudeta tavaline tekst kleebitakse muutmata.";
 "Shifted date: +/- number and d (days), w (weeks), m (months), y (years), h (hours)" = "Nihutatud kuupäev: +/- arv ja d (päevad), w (nädalad), m (kuud), y (aastad), h (tunnid)";
-"Template Placeholders" = "Malli kohatäited";
-"Template Placeholders…" = "Malli kohatäited…";
 "Today's date / current time, in the system format" = "Tänane kuupäev / praegune kellaaeg süsteemi vormingus";
 "Values for the placeholders in this template:" = "Selle malli kohatäitjate väärtused:";
 "Where the text cursor ends up after pasting" = "Kuhu tekstikursor pärast kleepimist jääb";
+"Placeholders & Automation" = "Kohatäited ja automatiseerimine";
+"Placeholders & Automation…" = "Kohatäited ja automatiseerimine…";
+"Automation — keepit:// URLs (Shortcuts “Open URL”, Raycast, Alfred, the open command)" = "Automatiseerimine — keepit:// URL-id (Otseteed „Ava URL”, Raycast, Alfred, käsk open)";
+"Paste history item N into the front app" = "Kleebi ajaloo üksus N esiplaanil olevasse rakendusse";
+"Put item N on the clipboard without pasting" = "Pane üksus N lõikelauale ilma kleepimata";
+"Paste (or copy) a template by name or folder path" = "Kleebi (või kopeeri) mall nime või kaustatee järgi";
+"Add text to the history or as a new template" = "Lisa tekst ajalukku või uue mallina";
+"Open the menus and windows" = "Ava menüüd ja aknad";
+"Pause recording for 10 minutes / resume" = "Peata salvestamine 10 minutiks / jätka";

@@ -303,8 +303,15 @@
 "Literal braces" = "Accolades littérales";
 "Put these tokens into the text of a template; they are replaced when the template is pasted. Plain text without braces is pasted unchanged." = "Placez ces jetons dans le texte d’un modèle ; ils sont remplacés au moment de coller. Le texte sans accolades est collé tel quel.";
 "Shifted date: +/- number and d (days), w (weeks), m (months), y (years), h (hours)" = "Date décalée : +/- nombre et d (jours), w (semaines), m (mois), y (années), h (heures)";
-"Template Placeholders" = "Jetons de modèle";
-"Template Placeholders…" = "Jetons de modèle…";
 "Today's date / current time, in the system format" = "Date du jour / heure actuelle, au format système";
 "Values for the placeholders in this template:" = "Valeurs des jetons de ce modèle :";
 "Where the text cursor ends up after pasting" = "Où se trouve le curseur après le collage";
+"Placeholders & Automation" = "Jetons et automatisation";
+"Placeholders & Automation…" = "Jetons et automatisation…";
+"Automation — keepit:// URLs (Shortcuts “Open URL”, Raycast, Alfred, the open command)" = "Automatisation — URL keepit:// (Raccourcis « Ouvrir l’URL », Raycast, Alfred, commande open)";
+"Paste history item N into the front app" = "Coller l’élément N de l’historique dans l’app au premier plan";
+"Put item N on the clipboard without pasting" = "Mettre l’élément N dans le presse-papiers sans coller";
+"Paste (or copy) a template by name or folder path" = "Coller (ou copier) un modèle par nom ou chemin de dossier";
+"Add text to the history or as a new template" = "Ajouter du texte à l’historique ou comme nouveau modèle";
+"Open the menus and windows" = "Ouvrir les menus et fenêtres";
+"Pause recording for 10 minutes / resume" = "Suspendre l’enregistrement 10 minutes / reprendre";

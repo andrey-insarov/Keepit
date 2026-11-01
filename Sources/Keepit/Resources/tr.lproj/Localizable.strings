@@ -303,8 +303,15 @@
 "Literal braces" = "Düz süslü parantezler";
 "Put these tokens into the text of a template; they are replaced when the template is pasted. Plain text without braces is pasted unchanged." = "Bu belirteçleri bir şablonun metnine koyun; şablon yapıştırıldığında değiştirilirler. Süslü parantez içermeyen düz metin olduğu gibi yapıştırılır.";
 "Shifted date: +/- number and d (days), w (weeks), m (months), y (years), h (hours)" = "Kaydırılmış tarih: +/- sayı ve d (gün), w (hafta), m (ay), y (yıl), h (saat)";
-"Template Placeholders" = "Şablon yer tutucuları";
-"Template Placeholders…" = "Şablon yer tutucuları…";
 "Today's date / current time, in the system format" = "Bugünün tarihi / geçerli saat, sistem biçiminde";
 "Values for the placeholders in this template:" = "Bu şablondaki yer tutucuların değerleri:";
 "Where the text cursor ends up after pasting" = "Yapıştırdıktan sonra metin imlecinin konumu";
+"Placeholders & Automation" = "Yer tutucular ve otomasyon";
+"Placeholders & Automation…" = "Yer tutucular ve otomasyon…";
+"Automation — keepit:// URLs (Shortcuts “Open URL”, Raycast, Alfred, the open command)" = "Otomasyon — keepit:// URL'leri (Kestirmeler “URL Aç”, Raycast, Alfred, open komutu)";
+"Paste history item N into the front app" = "Geçmiş öğesi N'yi öndeki uygulamaya yapıştır";
+"Put item N on the clipboard without pasting" = "N. öğeyi yapıştırmadan panoya koy";
+"Paste (or copy) a template by name or folder path" = "Ada veya klasör yoluna göre bir şablonu yapıştır (veya kopyala)";
+"Add text to the history or as a new template" = "Metni geçmişe veya yeni şablon olarak ekle";
+"Open the menus and windows" = "Menüleri ve pencereleri aç";
+"Pause recording for 10 minutes / resume" = "Kaydı 10 dakika duraklat / sürdür";

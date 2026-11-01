@@ -303,8 +303,15 @@
 "Literal braces" = "Літеральні фігурні дужки";
 "Put these tokens into the text of a template; they are replaced when the template is pasted. Plain text without braces is pasted unchanged." = "Вставте ці токени в текст шаблону; вони замінюються під час вставки шаблону. Звичайний текст без фігурних дужок вставляється як є.";
 "Shifted date: +/- number and d (days), w (weeks), m (months), y (years), h (hours)" = "Зсув дати: +/- число та d (дні), w (тижні), m (місяці), y (роки), h (години)";
-"Template Placeholders" = "Плейсхолдери шаблонів";
-"Template Placeholders…" = "Плейсхолдери шаблонів…";
 "Today's date / current time, in the system format" = "Сьогоднішня дата / поточний час у системному форматі";
 "Values for the placeholders in this template:" = "Значення плейсхолдерів цього шаблону:";
 "Where the text cursor ends up after pasting" = "Куди стане текстовий курсор після вставки";
+"Placeholders & Automation" = "Плейсхолдери й автоматизація";
+"Placeholders & Automation…" = "Плейсхолдери й автоматизація…";
+"Automation — keepit:// URLs (Shortcuts “Open URL”, Raycast, Alfred, the open command)" = "Автоматизація — URL keepit:// (Shortcuts «Відкрити URL», Raycast, Alfred, команда open)";
+"Paste history item N into the front app" = "Вставити елемент історії N в активну програму";
+"Put item N on the clipboard without pasting" = "Покласти елемент N у буфер без вставки";
+"Paste (or copy) a template by name or folder path" = "Вставити (або скопіювати) шаблон за іменем або шляхом теки";
+"Add text to the history or as a new template" = "Додати текст до історії або як новий шаблон";
+"Open the menus and windows" = "Відкрити меню та вікна";
+"Pause recording for 10 minutes / resume" = "Призупинити запис на 10 хвилин / відновити";

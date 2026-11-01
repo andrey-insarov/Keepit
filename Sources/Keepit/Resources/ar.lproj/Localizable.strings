@@ -303,8 +303,15 @@
 "Literal braces" = "أقواس معقوفة حرفية";
 "Put these tokens into the text of a template; they are replaced when the template is pasted. Plain text without braces is pasted unchanged." = "ضع هذه الرموز في نص القالب؛ تُستبدل عند لصق القالب. النص العادي بدون أقواس معقوفة يُلصق كما هو.";
 "Shifted date: +/- number and d (days), w (weeks), m (months), y (years), h (hours)" = "تاريخ مُزاح: +/- رقم و d (أيام)، w (أسابيع)، m (أشهر)، y (سنوات)، h (ساعات)";
-"Template Placeholders" = "عناصر القوالب النائبة";
-"Template Placeholders…" = "عناصر القوالب النائبة…";
 "Today's date / current time, in the system format" = "تاريخ اليوم / الوقت الحالي بتنسيق النظام";
 "Values for the placeholders in this template:" = "قيم العناصر النائبة في هذا القالب:";
 "Where the text cursor ends up after pasting" = "المكان الذي يستقر فيه مؤشر النص بعد اللصق";
+"Placeholders & Automation" = "العناصر النائبة والأتمتة";
+"Placeholders & Automation…" = "العناصر النائبة والأتمتة…";
+"Automation — keepit:// URLs (Shortcuts “Open URL”, Raycast, Alfred, the open command)" = "الأتمتة — عناوين keepit:// (الاختصارات «فتح URL»، Raycast، Alfred، الأمر open)";
+"Paste history item N into the front app" = "لصق العنصر N من السجل في التطبيق الأمامي";
+"Put item N on the clipboard without pasting" = "وضع العنصر N في الحافظة دون لصق";
+"Paste (or copy) a template by name or folder path" = "لصق (أو نسخ) قالب بالاسم أو بمسار المجلد";
+"Add text to the history or as a new template" = "إضافة نص إلى السجل أو كقالب جديد";
+"Open the menus and windows" = "فتح القوائم والنوافذ";
+"Pause recording for 10 minutes / resume" = "إيقاف التسجيل مؤقتًا 10 دقائق / استئناف";

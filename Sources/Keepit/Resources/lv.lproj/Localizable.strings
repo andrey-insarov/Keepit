@@ -303,8 +303,15 @@
 "Literal braces" = "Figūriekavas kā teksts";
 "Put these tokens into the text of a template; they are replaced when the template is pasted. Plain text without braces is pasted unchanged." = "Ievietojiet šos marķierus veidnes tekstā; ielīmējot veidni, tie tiek aizstāti. Vienkāršs teksts bez figūriekavām tiek ielīmēts nemainīts.";
 "Shifted date: +/- number and d (days), w (weeks), m (months), y (years), h (hours)" = "Nobīdīts datums: +/- skaitlis un d (dienas), w (nedēļas), m (mēneši), y (gadi), h (stundas)";
-"Template Placeholders" = "Veidņu vietturi";
-"Template Placeholders…" = "Veidņu vietturi…";
 "Today's date / current time, in the system format" = "Šodienas datums / pašreizējais laiks sistēmas formātā";
 "Values for the placeholders in this template:" = "Šīs veidnes vietturu vērtības:";
 "Where the text cursor ends up after pasting" = "Kur pēc ielīmēšanas atradīsies teksta kursors";
+"Placeholders & Automation" = "Vietturi un automatizācija";
+"Placeholders & Automation…" = "Vietturi un automatizācija…";
+"Automation — keepit:// URLs (Shortcuts “Open URL”, Raycast, Alfred, the open command)" = "Automatizācija — keepit:// URL (Shortcuts “Atvērt URL”, Raycast, Alfred, komanda open)";
+"Paste history item N into the front app" = "Ielīmēt vēstures vienumu N priekšplāna lietotnē";
+"Put item N on the clipboard without pasting" = "Ievietot vienumu N starpliktuvē bez ielīmēšanas";
+"Paste (or copy) a template by name or folder path" = "Ielīmēt (vai kopēt) veidni pēc nosaukuma vai mapes ceļa";
+"Add text to the history or as a new template" = "Pievienot tekstu vēsturei vai kā jaunu veidni";
+"Open the menus and windows" = "Atvērt izvēlnes un logus";
+"Pause recording for 10 minutes / resume" = "Pauzēt ierakstīšanu uz 10 minūtēm / atsākt";

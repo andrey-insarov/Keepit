@@ -327,8 +327,16 @@
 "Literal braces" = "Literal braces";
 "Put these tokens into the text of a template; they are replaced when the template is pasted. Plain text without braces is pasted unchanged." = "Put these tokens into the text of a template; they are replaced when the template is pasted. Plain text without braces is pasted unchanged.";
 "Shifted date: +/- number and d (days), w (weeks), m (months), y (years), h (hours)" = "Shifted date: +/- number and d (days), w (weeks), m (months), y (years), h (hours)";
-"Template Placeholders" = "Template Placeholders";
-"Template Placeholders…" = "Template Placeholders…";
 "Today's date / current time, in the system format" = "Today's date / current time, in the system format";
 "Values for the placeholders in this template:" = "Values for the placeholders in this template:";
 "Where the text cursor ends up after pasting" = "Where the text cursor ends up after pasting";
+
+"Placeholders & Automation" = "Placeholders & Automation";
+"Placeholders & Automation…" = "Placeholders & Automation…";
+"Automation — keepit:// URLs (Shortcuts “Open URL”, Raycast, Alfred, the open command)" = "Automation — keepit:// URLs (Shortcuts “Open URL”, Raycast, Alfred, the open command)";
+"Paste history item N into the front app" = "Paste history item N into the front app";
+"Put item N on the clipboard without pasting" = "Put item N on the clipboard without pasting";
+"Paste (or copy) a template by name or folder path" = "Paste (or copy) a template by name or folder path";
+"Add text to the history or as a new template" = "Add text to the history or as a new template";
+"Open the menus and windows" = "Open the menus and windows";
+"Pause recording for 10 minutes / resume" = "Pause recording for 10 minutes / resume";

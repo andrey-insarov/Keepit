@@ -303,8 +303,15 @@
 "Literal braces" = "Parentesi graffe letterali";
 "Put these tokens into the text of a template; they are replaced when the template is pasted. Plain text without braces is pasted unchanged." = "Inserisci questi token nel testo di un modello; vengono sostituiti quando il modello viene incollato. Il testo senza graffe viene incollato invariato.";
 "Shifted date: +/- number and d (days), w (weeks), m (months), y (years), h (hours)" = "Data spostata: +/- numero e d (giorni), w (settimane), m (mesi), y (anni), h (ore)";
-"Template Placeholders" = "Segnaposto dei modelli";
-"Template Placeholders…" = "Segnaposto dei modelli…";
 "Today's date / current time, in the system format" = "Data di oggi / ora attuale, nel formato di sistema";
 "Values for the placeholders in this template:" = "Valori dei segnaposto di questo modello:";
 "Where the text cursor ends up after pasting" = "Dove finisce il cursore dopo l’incolla";
+"Placeholders & Automation" = "Segnaposto e automazione";
+"Placeholders & Automation…" = "Segnaposto e automazione…";
+"Automation — keepit:// URLs (Shortcuts “Open URL”, Raycast, Alfred, the open command)" = "Automazione — URL keepit:// (Comandi rapidi «Apri URL», Raycast, Alfred, il comando open)";
+"Paste history item N into the front app" = "Incolla l’elemento N della cronologia nell’app in primo piano";
+"Put item N on the clipboard without pasting" = "Mettere l’elemento N negli appunti senza incollare";
+"Paste (or copy) a template by name or folder path" = "Incolla (o copia) un modello per nome o percorso cartella";
+"Add text to the history or as a new template" = "Aggiungi testo alla cronologia o come nuovo modello";
+"Open the menus and windows" = "Apri i menu e le finestre";
+"Pause recording for 10 minutes / resume" = "Sospendi la registrazione per 10 minuti / riprendi";

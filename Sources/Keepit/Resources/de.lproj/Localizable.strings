@@ -303,8 +303,15 @@
 "Literal braces" = "Geschweifte Klammern als Text";
 "Put these tokens into the text of a template; they are replaced when the template is pasted. Plain text without braces is pasted unchanged." = "Diese Platzhalter in den Text einer Vorlage setzen; sie werden beim Einfügen der Vorlage ersetzt. Text ohne geschweifte Klammern wird unverändert eingefügt.";
 "Shifted date: +/- number and d (days), w (weeks), m (months), y (years), h (hours)" = "Verschobenes Datum: +/- Zahl und d (Tage), w (Wochen), m (Monate), y (Jahre), h (Stunden)";
-"Template Placeholders" = "Platzhalter in Vorlagen";
-"Template Placeholders…" = "Platzhalter in Vorlagen …";
 "Today's date / current time, in the system format" = "Heutiges Datum / aktuelle Uhrzeit im Systemformat";
 "Values for the placeholders in this template:" = "Werte für die Platzhalter dieser Vorlage:";
 "Where the text cursor ends up after pasting" = "Wo der Textcursor nach dem Einfügen steht";
+"Placeholders & Automation" = "Platzhalter & Automation";
+"Placeholders & Automation…" = "Platzhalter & Automation …";
+"Automation — keepit:// URLs (Shortcuts “Open URL”, Raycast, Alfred, the open command)" = "Automation – keepit://-URLs (Kurzbefehle „URL öffnen“, Raycast, Alfred, der Befehl open)";
+"Paste history item N into the front app" = "Verlaufseintrag N in die vorderste App einfügen";
+"Put item N on the clipboard without pasting" = "Eintrag N in die Zwischenablage legen, ohne einzufügen";
+"Paste (or copy) a template by name or folder path" = "Vorlage nach Name oder Ordnerpfad einfügen (oder kopieren)";
+"Add text to the history or as a new template" = "Text zum Verlauf oder als neue Vorlage hinzufügen";
+"Open the menus and windows" = "Menüs und Fenster öffnen";
+"Pause recording for 10 minutes / resume" = "Aufzeichnung 10 Minuten pausieren / fortsetzen";

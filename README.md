@@ -59,6 +59,7 @@ Or the DMG:
 | Window filter (ignore apps)                  | Built-in list of password managers (always ignored) + user ignore list + `org.nspasteboard.ConcealedType` |
 | Per-window paste key (`sendkey`)             | Per-bundle-id paste key in `settings.json` (`pasteKeys`)   |
 | Templates (hierarchical "Regist")            | Same: folders, any format (text/image/files), `-` separators, `&x` shortcuts, per-item hot key, `{date}`/`{clipboard}`/`{input:…}`/`{cursor}` placeholders |
+| Automation                                   | `keepit://` URL scheme: `paste/N`, `copy/N`, `template/Name`, `add?text=`, `add-template?text=&name=`, `history`, `pause` — use from Shortcuts (“Open URL”), Raycast, Alfred or `open` |
 | Viewer: tree Clipboard / History / Template  | Same tree; each item expands into its formats              |
 | Viewer: edit text, bitmap view, file list, binary view | Text/RTF/HTML editing (applied when focus leaves), image view, file list (double-click opens), hex dump toggle |
 | Viewer context menu                          | Send to Clipboard, Paste, Add to Template, New Item/Folder, New Item from File, Rename, Clear Name, Set Hot Key, Save Format to File, Up/Down, Delete |

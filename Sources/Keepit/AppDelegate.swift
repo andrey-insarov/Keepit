@@ -530,7 +530,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         let helpItem = NSMenuItem()
         let help = NSMenu(title: L("Help"))
-        help.addItem(withTitle: L("Template Placeholders…"), action: #selector(showPlaceholderReference), keyEquivalent: "")
+        help.addItem(withTitle: L("Placeholders & Automation…"), action: #selector(showPlaceholderReference), keyEquivalent: "")
         helpItem.submenu = help
         main.addItem(helpItem)
         NSApp.helpMenu = help
@@ -586,11 +586,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     // MARK: - Popups on hot key
 
-    private func showHistoryPopup() {
+    func showHistoryPopup() {
         popUp(buildHistoryMenu(includeTemplates: true, includeApp: false))
     }
 
-    private func showTemplatePopup() {
+    func showTemplatePopup() {
         let menu = menuBuilder.templateMenu(templates.root, target: self, action: #selector(templateChosen(_:)))
         menu.addItem(.separator())
         menu.addItem(withTitle: L("Viewer…"), action: #selector(openViewer), keyEquivalent: "").target = self
@@ -893,7 +893,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     /// Stop watching the clipboard for a while (typing something sensitive); the icon shows it.
-    @objc private func pauseRecording() {
+    @objc func pauseRecording() {
         menuSelectionMade = true
         let until = Date().addingTimeInterval(10 * 60)
         pausedUntil = until

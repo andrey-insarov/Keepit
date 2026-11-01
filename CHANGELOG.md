@@ -2,6 +2,7 @@
 
 ## 2.9.0 — unreleased
 
+- **`keepit://` URL scheme** for Shortcuts, Raycast, Alfred and scripts: `keepit://paste/2`, `keepit://copy/3`, `keepit://template/Name`, `keepit://add?text=…`, `keepit://add-template?text=…&name=…`, `keepit://history`, `keepit://pause` … (Help → Placeholders & Automation…)
 - **Placeholders in templates** — `{date}`, `{date+7d:EEEE}`, `{time}`, `{clipboard}`, `{clipboard:2|upper}`, `{input:Name}`, `{choice:A|B}`, `{cursor}`, `{user}`, `{uuid}`, `{random:1-100}` and more (Help → Template Placeholders…); `{input}`/`{choice}` ask for values before pasting, `{cursor}` places the caret
 - **Paste as ▸** text transformations: UPPERCASE, lowercase, Title Case, Sentence case, trim, single line, plain text — hold ⇧⌥ on any history item, or use *Paste latest as* at the bottom of the history list
 - New hot key **⌥⇧V — Paste previous item**: pastes history item #2 without opening the menu (press again to swap back); changeable or switchable off on the General tab

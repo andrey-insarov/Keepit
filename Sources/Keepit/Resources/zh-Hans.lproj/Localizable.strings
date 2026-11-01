@@ -303,8 +303,15 @@
 "Literal braces" = "字面大括号";
 "Put these tokens into the text of a template; they are replaced when the template is pasted. Plain text without braces is pasted unchanged." = "将这些标记放入模板文本中，粘贴模板时会被替换。不含大括号的纯文本原样粘贴。";
 "Shifted date: +/- number and d (days), w (weeks), m (months), y (years), h (hours)" = "日期偏移：+/- 数字加 d（天）、w（周）、m（月）、y（年）、h（小时）";
-"Template Placeholders" = "模板占位符";
-"Template Placeholders…" = "模板占位符…";
 "Today's date / current time, in the system format" = "今天的日期 / 当前时间（系统格式）";
 "Values for the placeholders in this template:" = "此模板中占位符的值：";
 "Where the text cursor ends up after pasting" = "粘贴后文本光标所在的位置";
+"Placeholders & Automation" = "占位符与自动化";
+"Placeholders & Automation…" = "占位符与自动化…";
+"Automation — keepit:// URLs (Shortcuts “Open URL”, Raycast, Alfred, the open command)" = "自动化 — keepit:// URL（快捷指令“打开 URL”、Raycast、Alfred、open 命令）";
+"Paste history item N into the front app" = "将历史记录第 N 项粘贴到前台应用";
+"Put item N on the clipboard without pasting" = "将第 N 项放入剪贴板而不粘贴";
+"Paste (or copy) a template by name or folder path" = "按名称或文件夹路径粘贴（或复制）模板";
+"Add text to the history or as a new template" = "将文本添加到历史记录或作为新模板";
+"Open the menus and windows" = "打开菜单和窗口";
+"Pause recording for 10 minutes / resume" = "暂停记录 10 分钟 / 恢复";

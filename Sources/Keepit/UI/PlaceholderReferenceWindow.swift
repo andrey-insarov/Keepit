@@ -19,11 +19,20 @@ enum PlaceholderReferenceWindow {
         ("{{  }}", L("Literal braces")),
     ]
 
+    static let automation: [(String, String)] = [
+        ("keepit://paste/2   keepit://paste/latest   keepit://paste/previous", L("Paste history item N into the front app")),
+        ("keepit://copy/3", L("Put item N on the clipboard without pasting")),
+        ("keepit://template/Signature   keepit://template/Work/Reply?copy=1", L("Paste (or copy) a template by name or folder path")),
+        ("keepit://add?text=…   keepit://add-template?text=…&name=…", L("Add text to the history or as a new template")),
+        ("keepit://history   keepit://templates   keepit://viewer   keepit://preferences", L("Open the menus and windows")),
+        ("keepit://pause   keepit://resume", L("Pause recording for 10 minutes / resume")),
+    ]
+
     static func show() {
         if let w = window { w.makeKeyAndOrderFront(nil); NSApp.activate(ignoringOtherApps: true); return }
         let w = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 640, height: 480),
                          styleMask: [.titled, .closable, .resizable], backing: .buffered, defer: false)
-        w.title = L("Template Placeholders")
+        w.title = L("Placeholders & Automation")
         w.isReleasedWhenClosed = false
         w.center()
 
@@ -51,6 +60,13 @@ enum PlaceholderReferenceWindow {
         text.append(NSAttributedString(string: example, attributes: [.font: body, .foregroundColor: NSColor.labelColor]))
         text.append(NSAttributedString(string: "Hi {input:Name},\n\nthanks for your message of {date-1d}. I'll get back to you by {date+3d:EEEE}.\n{cursor}\n{user}\n",
                                        attributes: [.font: mono, .foregroundColor: NSColor.labelColor]))
+
+        text.append(NSAttributedString(string: "\n" + L("Automation — keepit:// URLs (Shortcuts “Open URL”, Raycast, Alfred, the open command)") + "\n\n",
+                                       attributes: [.font: NSFont.boldSystemFont(ofSize: 14), .foregroundColor: NSColor.labelColor]))
+        for (token, desc) in automation {
+            text.append(NSAttributedString(string: token + "\n", attributes: [.font: mono, .foregroundColor: NSColor.labelColor]))
+            text.append(NSAttributedString(string: "    " + desc + "\n\n", attributes: [.font: body, .foregroundColor: NSColor.secondaryLabelColor]))
+        }
         tv.textStorage?.setAttributedString(text)
         scroll.documentView = tv
         w.contentView?.addSubview(scroll)

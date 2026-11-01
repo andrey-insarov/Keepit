@@ -303,8 +303,15 @@
 "Literal braces" = "Nawiasy klamrowe jako tekst";
 "Put these tokens into the text of a template; they are replaced when the template is pasted. Plain text without braces is pasted unchanged." = "Umieść te tokeny w tekście szablonu; są zastępowane przy wklejaniu szablonu. Zwykły tekst bez nawiasów klamrowych jest wklejany bez zmian.";
 "Shifted date: +/- number and d (days), w (weeks), m (months), y (years), h (hours)" = "Przesunięta data: +/- liczba i d (dni), w (tygodnie), m (miesiące), y (lata), h (godziny)";
-"Template Placeholders" = "Symbole zastępcze szablonów";
-"Template Placeholders…" = "Symbole zastępcze szablonów…";
 "Today's date / current time, in the system format" = "Dzisiejsza data / bieżąca godzina w formacie systemowym";
 "Values for the placeholders in this template:" = "Wartości symboli zastępczych w tym szablonie:";
 "Where the text cursor ends up after pasting" = "Gdzie znajdzie się kursor tekstowy po wklejeniu";
+"Placeholders & Automation" = "Symbole zastępcze i automatyzacja";
+"Placeholders & Automation…" = "Symbole zastępcze i automatyzacja…";
+"Automation — keepit:// URLs (Shortcuts “Open URL”, Raycast, Alfred, the open command)" = "Automatyzacja — adresy keepit:// (Skróty „Otwórz URL”, Raycast, Alfred, polecenie open)";
+"Paste history item N into the front app" = "Wklej element N historii do aktywnej aplikacji";
+"Put item N on the clipboard without pasting" = "Umieść element N w schowku bez wklejania";
+"Paste (or copy) a template by name or folder path" = "Wklej (lub skopiuj) szablon po nazwie lub ścieżce folderu";
+"Add text to the history or as a new template" = "Dodaj tekst do historii lub jako nowy szablon";
+"Open the menus and windows" = "Otwórz menu i okna";
+"Pause recording for 10 minutes / resume" = "Wstrzymaj zapisywanie na 10 minut / wznów";

@@ -303,8 +303,15 @@
 "Literal braces" = "Letterlijke accolades";
 "Put these tokens into the text of a template; they are replaced when the template is pasted. Plain text without braces is pasted unchanged." = "Zet deze tokens in de tekst van een sjabloon; ze worden vervangen bij het plakken. Tekst zonder accolades wordt ongewijzigd geplakt.";
 "Shifted date: +/- number and d (days), w (weeks), m (months), y (years), h (hours)" = "Verschoven datum: +/- getal en d (dagen), w (weken), m (maanden), y (jaren), h (uren)";
-"Template Placeholders" = "Sjabloon-plaatshouders";
-"Template Placeholders…" = "Sjabloon-plaatshouders…";
 "Today's date / current time, in the system format" = "Datum van vandaag / huidige tijd, in systeemnotatie";
 "Values for the placeholders in this template:" = "Waarden voor de plaatshouders in dit sjabloon:";
 "Where the text cursor ends up after pasting" = "Waar de tekstcursor na het plakken staat";
+"Placeholders & Automation" = "Plaatshouders & automatisering";
+"Placeholders & Automation…" = "Plaatshouders & automatisering…";
+"Automation — keepit:// URLs (Shortcuts “Open URL”, Raycast, Alfred, the open command)" = "Automatisering — keepit://-URL's (Opdrachten ‘Open URL’, Raycast, Alfred, het open-commando)";
+"Paste history item N into the front app" = "Geschiedenisitem N in de voorste app plakken";
+"Put item N on the clipboard without pasting" = "Item N op het klembord zetten zonder te plakken";
+"Paste (or copy) a template by name or folder path" = "Een sjabloon plakken (of kopiëren) op naam of mappad";
+"Add text to the history or as a new template" = "Tekst aan de geschiedenis toevoegen of als nieuw sjabloon";
+"Open the menus and windows" = "De menu's en vensters openen";
+"Pause recording for 10 minutes / resume" = "Opname 10 minuten pauzeren / hervatten";
