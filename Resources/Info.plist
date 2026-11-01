@@ -28,6 +28,8 @@
     <string>__BUILD__</string>
     <key>LSApplicationCategoryType</key>
     <string>public.app-category.productivity</string>
+    <key>ITSAppUsesNonExemptEncryption</key>
+    <false/>
     <key>LSMinimumSystemVersion</key>
     <string>13.0</string>
     <!-- Menu-bar only app: no Dock icon, no app switcher entry (like the Windows tray icon). -->
