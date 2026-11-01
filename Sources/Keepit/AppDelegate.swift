@@ -650,19 +650,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         menuSelectionMade = true            // keep the paste target through the switch
         let wasPopup = popupActive
+        RightClickWatch.shared.stop(menu)
         menu.cancelTracking()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
             guard let self else { return }
             // Wait for the right button to be released so the release cannot dismiss the new menu.
             func open(_ tries: Int) {
                 if NSEvent.pressedMouseButtons & 2 != 0, tries > 0 {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.03) { open(tries - 1) }; return
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) { open(tries - 1) }; return
                 }
                 self.menuSelectionMade = false
                 self.popupActive = wasPopup
                 ctx.popUp(positioning: nil, at: at, in: nil)
             }
-            open(100)
+            open(150)
         }
     }
 
