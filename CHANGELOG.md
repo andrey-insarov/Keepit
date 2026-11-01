@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.9.1 — unreleased
+## 2.9.1 — 2026-11-01
 
 - Viewer: **Insert ▾** in the toolbar lists every template placeholder with a description and puts the chosen one at the cursor; **?** opens the online user guide. Up/Down and the hex dump moved to the context menu; the toolbar has no gaps
 - Fix: a template with `{input:…}` / `{choice:…}` was expanded but not pasted — the target app now gets time to come back after the dialog
