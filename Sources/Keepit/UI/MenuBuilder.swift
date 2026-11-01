@@ -133,6 +133,11 @@ final class MenuBuilder {
                 mi.keyEquivalentModifierMask = mask
                 mi.title = "\(ch)  " + title     // visible prefix "1  text"
             }
+            if i == 0 {
+                // The latest item = the clipboard: bold, like the current item in a Finder path.
+                let bold = NSFontManager.shared.convert(NSFont.menuFont(ofSize: 0), toHaveTrait: .boldFontMask)
+                mi.attributedTitle = NSAttributedString(string: mi.title, attributes: [.font: bold])
+            }
             if settings.showThumbnails, item.kind == .image {
                 mi.image = thumbnail(for: item)
             } else if settings.showSourceIcons, let icon = appIcon(for: item.sourceApp) {

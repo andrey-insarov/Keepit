@@ -327,3 +327,5 @@
 "Actions on the latest item:" = "最新の項目への操作:";
 "Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu." = "文字と組み合わせて最新の項目（クリップボード）に作用する修飾キー: V 書式なし、U 大文字、L 小文字、T 各単語の先頭を大文字、S 文頭のみ大文字、W 前後の空白を削除、J 1 行、A テンプレートに追加、⌫ 削除。同じキーが項目の拡張メニューに表示されます。";
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "⇧ を押し続けると拡張メニューになり、履歴の各項目にすべての操作のサブメニュー（書式なし、大文字、1 行、コピーのみ、テンプレートに追加、削除、…）が付きます。最新の項目では、メニューなしで同じ操作を行うグローバルホットキーも表示されます。";
+"Search" = "検索";
+"Find…" = "検索…";

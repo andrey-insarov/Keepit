@@ -327,3 +327,5 @@
 "Actions on the latest item:" = "Дії з останнім елементом:";
 "Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu." = "Модифікатори, які з літерою діють на останній елемент (буфер): V — простий текст, U — ВЕЛИКІ, L — малі, T — Кожне Слово, S — як у реченні, W — прибрати пробіли, J — в один рядок, A — до Шаблонів, ⌫ — видалити. Ті самі клавіші показані в розширеному меню елемента.";
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "Утримуйте ⇧ для розширеного меню: у кожного елемента історії з’являється підменю з усіма діями — простий текст, ВЕЛИКІ, в один рядок, лише скопіювати, до Шаблонів, видалити, …. Для останнього елемента підменю показує й глобальні сполучення, що роблять те саме без меню.";
+"Search" = "Пошук";
+"Find…" = "Знайти…";

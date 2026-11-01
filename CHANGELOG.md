@@ -2,6 +2,7 @@
 
 ## 2.9.0 — unreleased
 
+- Viewer: search field (⌘F) filtering history and templates; bold section titles and clipboard item, heavier disclosure chevrons. The latest item is bold in the history menu
 - **Hot keys tab** in Preferences with every global shortcut in one place and *Reset to Defaults*; conflicts between them are caught on Save
 - New global hot keys: **⌃⌥1–9, 0 — paste history item 1–10 directly**; **⌃⌥ + V/U/L/T/S/W/J/A/⌫ — act on the latest item** (plain text, UPPERCASE, lowercase, Title Case, Sentence case, trim, single line, add to Templates, delete); optional *Lock Keepit* and *Pause / resume recording* (off by default). The menu shows exactly these keys: a shortcut is either always available or not shown, so the menu-only ⌥/⌃ alternates are gone (the extended menu covers them)
 - Export/Import Backup moved out of the menus into Preferences → Security

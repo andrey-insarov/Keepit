@@ -327,3 +327,5 @@
 "Actions on the latest item:" = "إجراءات على أحدث عنصر:";
 "Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu." = "مفاتيح التعديل التي تعمل مع حرف على أحدث عنصر (الحافظة): V نص عادي، U أحرف كبيرة، L أحرف صغيرة، T حرف كبير لكل كلمة، S بداية الجملة، W إزالة المسافات، J سطر واحد، A إضافة إلى القوالب، ⌫ حذف. تظهر المفاتيح نفسها في القائمة الموسّعة للعنصر.";
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "اضغط ⇧ باستمرار للقائمة الموسّعة: يحصل كل عنصر في السجل على قائمة فرعية بكل الإجراءات — نص عادي، أحرف كبيرة، سطر واحد، نسخ فقط، إلى القوالب، حذف، …. لأحدث عنصر تُظهر القائمة الفرعية أيضًا الاختصارات العامة التي تفعل الشيء نفسه دون القائمة.";
+"Search" = "بحث";
+"Find…" = "بحث…";

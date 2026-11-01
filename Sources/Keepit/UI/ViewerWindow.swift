@@ -106,6 +106,8 @@ final class ViewerWindowController: NSWindowController,
     private let historyRoot: VNode
     private let templateRoot: VNode
     private var currentClipboard: ClipItem?
+    private let searchField = NSSearchField()
+    private var query = ""   // lower-cased, trimmed; empty = no filter
     private var editingNode: VNode?
     private var showBinary = false
     private var suppressSelectionEvents = false
@@ -172,7 +174,14 @@ final class ViewerWindowController: NSWindowController,
             btn(L("Down"), #selector(moveDownAction), symbol: "arrow.down"),
             Spacer(),
             binaryButton,
+            searchField,
         ])
+        searchField.placeholderString = L("Search")
+        searchField.sendsSearchStringImmediately = true
+        searchField.sendsWholeSearchString = false
+        searchField.target = self
+        searchField.action = #selector(searchChanged)
+        searchField.widthAnchor.constraint(equalToConstant: 180).isActive = true
         bar.orientation = .horizontal
         bar.spacing = 6
         bar.translatesAutoresizingMaskIntoConstraints = false
@@ -312,14 +321,35 @@ final class ViewerWindowController: NSWindowController,
         return c.orderedFormats.map { node("\(parent.key)/\($0)", .format($0), parent: parent) }
     }
 
-    private func buildTemplate(_ t: TemplateNode, parent: VNode) -> VNode {
+    /// nil = pruned by the search (an item that does not match, or a folder with no matching descendants).
+    private func buildTemplate(_ t: TemplateNode, parent: VNode) -> VNode? {
         let n = node("t:\(t.id.uuidString)", .template(t), parent: parent)
         if t.isFolder {
-            n.children = t.children.map { buildTemplate($0, parent: n) }
+            n.children = t.children.compactMap { buildTemplate($0, parent: n) }
+            if !query.isEmpty, n.children.isEmpty, !t.displayName.lowercased().contains(query) { return nil }
         } else {
+            if !query.isEmpty, !t.displayName.lowercased().contains(query),
+               !(t.clip.flatMap { Self.matches($0, query) } ?? false) { return nil }
             n.children = formatChildren(of: n, clip: t.clip)
         }
         return n
+    }
+
+    private static func matches(_ item: ClipItem, _ q: String) -> Bool {
+        if item.title(maxLength: 10_000).lowercased().contains(q) { return true }
+        if let t = item.plainText, t.lowercased().contains(q) { return true }
+        return false
+    }
+
+    @objc private func searchChanged() {
+        query = searchField.stringValue.trimmingCharacters(in: .whitespaces).lowercased()
+        refresh()
+        if !query.isEmpty { outline.expandItem(nil, expandChildren: true) }
+    }
+
+    /// Edit → Find (⌘F) while the Viewer is key.
+    @objc func focusSearch(_ sender: Any?) {
+        window?.makeFirstResponder(searchField)
     }
 
     /// Rebuild the tree from the stores and reload the outline. Safe to call often.
@@ -341,10 +371,12 @@ final class ViewerWindowController: NSWindowController,
                 return n
             }
         }
-        textGroup.children = historyNodes(history.textItems, parent: textGroup)
-        imageGroup.children = historyNodes(history.imageItems, parent: imageGroup)
+        let q = query
+        let filtered: ([ClipItem]) -> [ClipItem] = { q.isEmpty ? $0 : $0.filter { Self.matches($0, q) } }
+        textGroup.children = historyNodes(filtered(history.textItems), parent: textGroup)
+        imageGroup.children = historyNodes(filtered(history.imageItems), parent: imageGroup)
         historyRoot.children = [textGroup, imageGroup]
-        templateRoot.children = templates.root.children.map { buildTemplate($0, parent: templateRoot) }
+        templateRoot.children = templates.root.children.compactMap { buildTemplate($0, parent: templateRoot) }
 
         // Drop cache entries that are no longer in the tree.
         var live = Set<String>()
@@ -879,8 +911,21 @@ final class ViewerWindowController: NSWindowController,
         }
         let selected = outlineView.selectedRowIndexes.contains(outlineView.row(forItem: item)) && outlineView.window?.firstResponder === outlineView
         textCell.textColor = isTemplate && !selected ? AppInfo.templateColor : .controlTextColor
-        if case .templateRoot = n.kind { textCell.font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize) }
-        else { textCell.font = NSFont.systemFont(ofSize: NSFont.systemFontSize) }
+        switch n.kind {
+        case .clipboardRoot, .historyRoot, .templateRoot, .clipboardItem:
+            textCell.font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
+        default:
+            textCell.font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
+        }
+    }
+
+    /// Heavier disclosure chevrons (the stock ones are hairline-thin next to bold labels).
+    func outlineView(_ outlineView: NSOutlineView, willDisplayOutlineCell cell: Any, for tableColumn: NSTableColumn?, item: Any) {
+        guard let c = cell as? NSButtonCell else { return }
+        let cfg = NSImage.SymbolConfiguration(pointSize: 11, weight: .bold)
+        c.image = NSImage(systemSymbolName: "chevron.right", accessibilityDescription: nil)?.withSymbolConfiguration(cfg)
+        c.alternateImage = NSImage(systemSymbolName: "chevron.down", accessibilityDescription: nil)?.withSymbolConfiguration(cfg)
+        c.imagePosition = .imageOnly
     }
 
     func outlineViewSelectionDidChange(_ notification: Notification) {

@@ -327,4 +327,6 @@ T = {
 'Actions on the latest item:': 'פעולות על הפריט האחרון:',
 "Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu.": 'מקשי שינוי שעם אות פועלים על הפריט האחרון (הלוח): V טקסט פשוט, U אותיות גדולות, L אותיות קטנות, T אות גדולה בכל מילה, S תחילת משפט, W הסרת רווחים, J שורה אחת, A לתבניות, ⌫ מחיקה. אותם מקשים מוצגים בתפריט המורחב של הפריט.',
 'Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu.': 'החזק ⇧ לתפריט המורחב: כל פריט בהיסטוריה מקבל תת־תפריט עם כל הפעולות — טקסט פשוט, אותיות גדולות, שורה אחת, העתקה בלבד, לתבניות, מחיקה, …. עבור הפריט האחרון תת־התפריט מציג גם את הקיצורים הגלובליים שעושים את אותו הדבר ללא התפריט.',
+'Search': 'חיפוש',
+'Find…': 'חפש…',
 }

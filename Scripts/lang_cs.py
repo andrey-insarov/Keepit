@@ -327,4 +327,6 @@ T = {
 'Actions on the latest item:': 'Akce s nejnovější položkou:',
 "Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu.": 'Modifikátory, které s písmenem působí na nejnovější položku (schránku): V prostý text, U VELKÁ PÍSMENA, L malá písmena, T Každé Slovo, S jako věta, W odstranit mezery, J jeden řádek, A do Šablon, ⌫ smazat. Stejné klávesy se zobrazují v rozšířené nabídce položky.',
 'Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu.': 'Podržením ⇧ zapnete rozšířenou nabídku: každá položka historie dostane podnabídku se všemi akcemi — prostý text, VELKÁ PÍSMENA, jeden řádek, jen zkopírovat, do Šablon, smazat, …. U nejnovější položky podnabídka ukazuje i globální zkratky, které dělají totéž bez nabídky.',
+'Search': 'Hledat',
+'Find…': 'Najít…',
 }

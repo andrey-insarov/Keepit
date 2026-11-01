@@ -327,3 +327,5 @@
 "Actions on the latest item:" = "En son öğe için eylemler:";
 "Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu." = "Bir harfle birlikte en son öğeye (panoya) etki eden değiştiriciler: V düz metin, U BÜYÜK HARF, L küçük harf, T Her Kelime Büyük, S cümle düzeni, W boşlukları kırp, J tek satır, A Şablonlara ekle, ⌫ sil. Aynı tuşlar öğenin genişletilmiş menüsünde gösterilir.";
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "Genişletilmiş menü için ⇧ basılı tutun: her geçmiş öğesi tüm eylemleri içeren bir alt menü alır — düz metin, BÜYÜK HARF, tek satır, yalnızca kopyala, Şablonlara ekle, sil, …. En son öğe için alt menü, aynı işi menüsüz yapan genel kısayolları da gösterir.";
+"Search" = "Ara";
+"Find…" = "Bul…";

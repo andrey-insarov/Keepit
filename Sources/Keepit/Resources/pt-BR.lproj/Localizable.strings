@@ -327,3 +327,5 @@
 "Actions on the latest item:" = "Ações no item mais recente:";
 "Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu." = "Modificadores que, com uma letra, atuam no item mais recente (a área de transferência): V texto simples, U MAIÚSCULAS, L minúsculas, T Iniciais Maiúsculas, S frase, W espaços, J uma linha, A aos Modelos, ⌫ excluir. As mesmas teclas aparecem no menu estendido do item.";
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "Segure ⇧ para o menu estendido: cada item do histórico recebe um submenu com todas as ações — texto simples, MAIÚSCULAS, uma linha, só copiar, aos Modelos, excluir, …. Para o item mais recente, o submenu também mostra os atalhos globais que fazem o mesmo sem o menu.";
+"Search" = "Buscar";
+"Find…" = "Buscar…";

@@ -327,4 +327,6 @@ T = {
 'Actions on the latest item:': '최신 항목에 대한 동작:',
 "Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu.": '문자와 함께 최신 항목(클립보드)에 작용하는 수정자 키: V 서식 없음, U 대문자, L 소문자, T 단어 첫 글자 대문자, S 문장 첫 글자 대문자, W 공백 제거, J 한 줄, A 템플릿에 추가, ⌫ 삭제. 같은 키가 항목의 확장 메뉴에 표시됩니다.',
 'Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu.': '⇧를 누르고 있으면 확장 메뉴가 되어 모든 기록 항목에 전체 동작 하위 메뉴(서식 없음, 대문자, 한 줄, 복사만, 템플릿에 추가, 삭제, …)가 생깁니다. 최신 항목의 하위 메뉴에는 메뉴 없이 같은 동작을 하는 전역 단축키도 표시됩니다.',
+'Search': '검색',
+'Find…': '찾기…',
 }

@@ -327,3 +327,5 @@
 "Actions on the latest item:" = "对最新项的操作：";
 "Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu." = "与字母组合对最新项（剪贴板）执行操作的修饰键：V 纯文本、U 大写、L 小写、T 每词首字母大写、S 句首大写、W 去除首尾空白、J 单行、A 添加到模板、⌫ 删除。相同的按键显示在该项的扩展菜单中。";
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "按住 ⇧ 显示扩展菜单：每个历史记录项都会有包含全部操作的子菜单 — 纯文本、大写、单行、仅复制、添加到模板、删除、…。对于最新项，子菜单还会显示无需菜单即可执行相同操作的全局热键。";
+"Search" = "搜索";
+"Find…" = "查找…";

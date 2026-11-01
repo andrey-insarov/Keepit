@@ -327,4 +327,6 @@ T = {
 'Actions on the latest item:': '對最新項目的動作：',
 "Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu.": '與字母組合對最新項目（剪貼板）執行動作的修飾鍵：V 純文字、U 大寫、L 小寫、T 每字首字母大寫、S 句首大寫、W 去除首尾空白、J 單行、A 加入範本、⌫ 刪除。相同的按鍵會顯示在該項目的延伸選單中。',
 'Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu.': '按住 ⇧ 顯示延伸選單：每個歷史記錄項目都會有包含全部動作的子選單 — 純文字、大寫、單行、僅拷貝、加入範本、刪除、…。對於最新項目，子選單還會顯示無需選單即可執行相同動作的全域快速鍵。',
+'Search': '搜尋',
+'Find…': '尋找…',
 }

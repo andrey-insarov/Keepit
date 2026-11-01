@@ -327,4 +327,6 @@ T = {
 'Actions on the latest item:': 'Toimingud uusima üksusega:',
 "Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu.": 'Muuteklahvid, mis koos tähega toimivad uusima üksusega (lõikelauaga): V vormindamata tekst, U SUURTÄHED, L väiketähed, T Iga Sõna, S nagu lause, W eemalda tühikud, J üks rida, A Mallidesse, ⌫ kustuta. Samad klahvid on näha üksuse laiendatud menüüs.',
 'Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu.': 'Hoia ⇧ laiendatud menüü jaoks: iga ajaloo üksus saab alammenüü kõigi toimingutega — vormindamata tekst, SUURTÄHED, üks rida, ainult kopeeri, Mallidesse, kustuta, …. Uusima üksuse alammenüü näitab ka globaalseid kiirklahve, mis teevad sama ilma menüüta.',
+'Search': 'Otsi',
+'Find…': 'Otsi…',
 }

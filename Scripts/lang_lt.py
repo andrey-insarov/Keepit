@@ -327,4 +327,6 @@ T = {
 'Actions on the latest item:': 'Veiksmai su naujausiu elementu:',
 "Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu.": 'Modifikatoriai, kurie su raide veikia naujausią elementą (iškarpinę): V paprastas tekstas, U DIDŽIOSIOS, L mažosios, T Kiekvienas Žodis, S kaip sakinys, W pašalinti tarpus, J viena eilutė, A į Šablonus, ⌫ ištrinti. Tie patys klavišai rodomi elemento išplėstiniame meniu.',
 'Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu.': 'Laikykite ⇧ išplėstiniam meniu: kiekvienas istorijos elementas gauna submeniu su visais veiksmais — paprastas tekstas, DIDŽIOSIOS, viena eilutė, tik kopijuoti, į Šablonus, ištrinti, …. Naujausiam elementui submeniu rodo ir globalius sparčiuosius klavišus, kurie daro tą patį be meniu.',
+'Search': 'Ieškoti',
+'Find…': 'Ieškoti…',
 }
