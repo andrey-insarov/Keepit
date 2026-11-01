@@ -17,6 +17,8 @@ final class LongPress {
     private var downSince: Date?
     private var origin = NSPoint.zero
     private var consumed = false
+    /// Called (on the main run loop, in the menu tracking modes) when the button is released after a long press.
+    var onRelease: (() -> Void)?
 
     func watch(_ menu: NSMenu, onLongPress: @escaping (NSMenuItem) -> Void) {
         stopAll()
@@ -39,6 +41,7 @@ final class LongPress {
         timer = nil
         menu = nil
         fire = nil
+        onRelease = nil
         downSince = nil
         consumed = false
     }
@@ -49,7 +52,14 @@ final class LongPress {
         let p = NSEvent.mouseLocation
         if !down {
             downSince = nil
-            consumed = false
+            if consumed {
+                consumed = false
+                RunLoop.main.perform(inModes: [.eventTracking, .default, .modalPanel]) { [weak self] in
+                    let cb = self?.onRelease
+                    self?.onRelease = nil
+                    cb?()
+                }
+            }
             return
         }
         guard let since = downSince else {

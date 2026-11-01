@@ -810,9 +810,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     // MARK: - Long-press context menu
 
-    /// Attach the per-item action menu as a submenu of the pressed item, so it opens beside the history
-    /// menu like any submenu (the history menu stays open). A one-pixel synthetic mouse move makes AppKit
-    /// notice the new submenu right away; without Accessibility the submenu opens on the next mouse move.
+    /// Long press on a history item. AppKit treats the release after a long hold as a click on the item,
+    /// which would paste it or (with a submenu attached) close everything. So: while the button is still
+    /// down the item is disabled (a release over a disabled item does nothing and the menu stays open);
+    /// as soon as it is released the item is re-enabled with the action submenu attached, and a one-pixel
+    /// synthetic pointer move makes the menu open that submenu beside the list.
     private func showContextMenu(for mi: NSMenuItem, in menu: NSMenu) {
         guard mi.submenu == nil, let id = mi.representedObject as? UUID, let item = history.item(id: id) else { return }
         PreviewPanel.shared.hide()
@@ -820,25 +822,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             paste: #selector(historyChosen(_:)), pastePlain: #selector(historyChosenPlain(_:)),
             copyOnly: #selector(historyCopied(_:)), transform: #selector(historyTransformed(_:)),
             pin: #selector(historyPinned(_:)), reveal: #selector(historyRevealed(_:)), delete: #selector(historyDeleted(_:))))
-        // The item becomes a plain submenu parent: releasing the button over it must not paste,
-        // and the history menu stays open until something in the submenu (or outside) is clicked.
         mi.action = nil
-        mi.submenu = ctx
-        // The tracking session that began with the press would treat the release as a click on the item and
-        // close everything. Restart tracking: close the menu and reopen the same menu in the same place with
-        // the button still down — AppKit then handles the release like "press on File, drag to Open Recent ▸,
-        // release": the submenu stays open.
-        menuSelectionMade = true            // don't hand focus back to the target app in menuDidClose
-        let wasPopup = popupActive
-        let origin = menuTopLeft
-        menu.cancelTracking()
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            self.menuSelectionMade = false
-            self.popupActive = wasPopup
-            self.menuTopLeft = origin
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.08) { LongPress.nudgePointer() }
-            menu.popUp(positioning: menu.items.first, at: origin, in: nil)
+        mi.isEnabled = false
+        LongPress.shared.onRelease = { [weak mi] in
+            guard let mi else { return }
+            mi.isEnabled = true
+            mi.submenu = ctx
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { LongPress.nudgePointer() }
         }
     }
 
