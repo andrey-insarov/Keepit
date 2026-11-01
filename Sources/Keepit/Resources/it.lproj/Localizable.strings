@@ -260,3 +260,6 @@
 "30 days" = "30 giorni";
 "%@ — delete" = "%@ — elimina";
 "Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it." = "Mentre scegli un elemento della cronologia tieni premuto ⇧ per incollarlo come testo semplice (senza formattazione), ⌥ per aggiungerlo ai modelli, ⌃ per eliminarlo.";
+"Pause Recording for 10 Minutes" = "Sospendi la registrazione per 10 minuti";
+"Resume Recording (paused until %@)" = "Riprendi la registrazione (in pausa fino alle %@)";
+"Keepit — recording paused" = "Keepit — registrazione in pausa";

@@ -260,4 +260,7 @@ T = {
 '30 days': '30 יום',
 '%@ — delete': '%@ — מחק',
 'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it.': 'בעת בחירת פריט מההיסטוריה החזק ⇧ כדי להדביק כטקסט רגיל (ללא עיצוב), ⌥ כדי להוסיף לתבניות, ⌃ כדי למחוק.',
+'Pause Recording for 10 Minutes': 'השהה הקלטה ל‑10 דקות',
+'Resume Recording (paused until %@)': 'המשך הקלטה (מושהה עד %@)',
+'Keepit — recording paused': 'Keepit — ההקלטה מושהית',
 }

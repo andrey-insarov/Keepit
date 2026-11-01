@@ -260,4 +260,7 @@ T = {
 '30 days': '30 dní',
 '%@ — delete': '%@ — smazat',
 'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it.': 'Při výběru položky historie podržte ⇧ pro vložení jako prostý text (bez formátování), ⌥ pro přidání do šablon, ⌃ pro smazání.',
+'Pause Recording for 10 Minutes': 'Pozastavit zaznamenávání na 10 minut',
+'Resume Recording (paused until %@)': 'Pokračovat v zaznamenávání (pozastaveno do %@)',
+'Keepit — recording paused': 'Keepit — zaznamenávání pozastaveno',
 }

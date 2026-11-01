@@ -271,4 +271,7 @@ T2 = {
 '30 days': ('30 днів', '30 يومًا', '30 giorni'),
 '%@ — delete': ('%@ — видалити', '%@ — حذف', '%@ — elimina'),
 'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it.': ('Утримуйте ⇧ під час вибору елемента історії, щоб вставити його як простий текст (без форматування), ⌥ — щоб додати до шаблонів, ⌃ — щоб видалити.', 'أثناء اختيار عنصر من السجل اضغط باستمرار ⇧ للصقه كنص عادي (بدون تنسيق)، و⌥ لإضافته إلى القوالب، و⌃ لحذفه.', 'Mentre scegli un elemento della cronologia tieni premuto ⇧ per incollarlo come testo semplice (senza formattazione), ⌥ per aggiungerlo ai modelli, ⌃ per eliminarlo.'),
+'Pause Recording for 10 Minutes': ('Призупинити запис на 10 хвилин', 'إيقاف التسجيل مؤقتًا لمدة 10 دقائق', 'Sospendi la registrazione per 10 minuti'),
+'Resume Recording (paused until %@)': ('Відновити запис (пауза до %@)', 'استئناف التسجيل (متوقف حتى %@)', 'Riprendi la registrazione (in pausa fino alle %@)'),
+'Keepit — recording paused': ('Keepit — запис призупинено', 'Keepit — التسجيل متوقف مؤقتًا', 'Keepit — registrazione in pausa'),
 }

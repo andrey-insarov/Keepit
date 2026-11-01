@@ -260,3 +260,6 @@
 "30 days" = "30일";
 "%@ — delete" = "%@ — 삭제";
 "Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it." = "기록 항목을 선택할 때 ⇧를 누르면 서식 없는 일반 텍스트로 붙여넣고, ⌥는 템플릿에 추가, ⌃는 삭제합니다.";
+"Pause Recording for 10 Minutes" = "10분간 기록 일시 정지";
+"Resume Recording (paused until %@)" = "기록 재개(%@까지 일시 정지)";
+"Keepit — recording paused" = "Keepit — 기록 일시 정지됨";

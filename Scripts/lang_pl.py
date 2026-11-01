@@ -260,4 +260,7 @@ T = {
 '30 days': '30 dni',
 '%@ — delete': '%@ — usuń',
 'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it.': 'Podczas wybierania elementu historii przytrzymaj ⇧, aby wkleić go jako zwykły tekst (bez formatowania), ⌥, aby dodać do szablonów, ⌃, aby usunąć.',
+'Pause Recording for 10 Minutes': 'Wstrzymaj zapisywanie na 10 minut',
+'Resume Recording (paused until %@)': 'Wznów zapisywanie (wstrzymane do %@)',
+'Keepit — recording paused': 'Keepit — zapisywanie wstrzymane',
 }

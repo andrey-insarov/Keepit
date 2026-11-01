@@ -2,6 +2,8 @@
 
 ## 2.8.0 — unreleased
 
+- **Pause Recording for 10 Minutes** in the menu (the menu-bar icon turns into ⏸); *Resume Recording*
+  ends it early. Survives lock/unlock.
 - **Delete from the menu**: hold ⌃ while choosing a history item to remove it (⌃1, or ⌃⌘1 with
   the search field).
 - **Auto-expiry**: Preferences → History → *Forget items older than* 1 h / 6 h / 1 day / 1 week /

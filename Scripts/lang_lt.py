@@ -260,4 +260,7 @@ T = {
 '30 days': '30 dienų',
 '%@ — delete': '%@ — ištrinti',
 'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it.': 'Renkantis istorijos elementą laikykite ⇧, kad įklijuotumėte kaip paprastą tekstą (be formatavimo), ⌥ — kad pridėtumėte prie šablonų, ⌃ — kad ištrintumėte.',
+'Pause Recording for 10 Minutes': 'Pristabdyti įrašymą 10 minučių',
+'Resume Recording (paused until %@)': 'Tęsti įrašymą (pristabdyta iki %@)',
+'Keepit — recording paused': '„Keepit“ — įrašymas pristabdytas',
 }

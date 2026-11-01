@@ -16,6 +16,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var viewer: ViewerWindowController?
     /// Set by the uninstaller: nothing may be written to disk any more (see Uninstall.swift).
     var uninstalling = false
+    /// Recording paused until this moment (Pause for 10 Minutes); nil = recording.
+    private(set) var pausedUntil: Date?
+    private var pauseTimer: Timer?
 
     /// Most recently active app other than us — the Viewer pastes into it (the original remembered the previous window).
     private(set) var lastExternalApp: NSRunningApplication?
@@ -196,7 +199,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         history.reload()
         templates.reload()
         if needsPasswordReset { completeRecovery() }
-        monitor.start()
+        if !(pausedUntil.map { $0 > Date() } ?? false) { monitor.start() }   // keep a running pause
         registerHotKeys()
         updateStatusIcon()
         return true
@@ -204,10 +207,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     private func updateStatusIcon() {
         guard let b = statusItem?.button else { return }
-        b.image = NSImage(systemSymbolName: isLocked ? "lock.fill" : "paperclip", accessibilityDescription: "Keepit")
+        let paused = pausedUntil.map { $0 > Date() } ?? false
+        let symbol = isLocked ? "lock.fill" : (paused ? "pause.circle" : "paperclip")
+        b.image = NSImage(systemSymbolName: symbol, accessibilityDescription: "Keepit")
         b.image?.isTemplate = true
         b.toolTip = isLocked ? L("Keepit — locked, click to unlock")
-                             : LF("Keepit — %@ history, %@ templates", settings.historyHotKey.displayString, settings.templateHotKey.displayString)
+                  : paused ? L("Keepit — recording paused")
+                  : LF("Keepit — %@ history, %@ templates", settings.historyHotKey.displayString, settings.templateHotKey.displayString)
     }
 
     // MARK: - Password / encryption
@@ -721,6 +727,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             .separator(),
             item(L("Clear History"), #selector(clearHistory)),
         ]
+        if let until = pausedUntil, until > Date() {
+            let f = DateFormatter(); f.timeStyle = .short
+            out.append(item(LF("Resume Recording (paused until %@)", f.string(from: until)), #selector(resumeRecording)))
+        } else {
+            out.append(item(L("Pause Recording for 10 Minutes"), #selector(pauseRecording)))
+        }
         if Vault.isEnabled {
             out.append(item(L("Lock Keepit"), #selector(lock), "l"))
         }
@@ -806,6 +818,26 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
               let node = templates.root.find(id: id), let clip = node.clip else { return }
         Paster.paste(clip, into: pasteTarget, monitor: monitor, settings: settings, sendKey: settings.pasteAfterSelect)
         nudgeAccessibilityIfNeeded()
+    }
+
+    /// Stop watching the clipboard for a while (typing something sensitive); the icon shows it.
+    @objc private func pauseRecording() {
+        menuSelectionMade = true
+        let until = Date().addingTimeInterval(10 * 60)
+        pausedUntil = until
+        monitor.stop()
+        pauseTimer?.invalidate()
+        pauseTimer = Timer.scheduledTimer(withTimeInterval: 10 * 60, repeats: false) { [weak self] _ in self?.resumeRecording() }
+        updateStatusIcon()
+    }
+
+    @objc func resumeRecording() {
+        menuSelectionMade = true
+        pauseTimer?.invalidate()
+        pauseTimer = nil
+        pausedUntil = nil
+        if !isLocked { monitor.start() }
+        updateStatusIcon()
     }
 
     @objc private func clearHistory() {

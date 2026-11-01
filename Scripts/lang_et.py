@@ -260,4 +260,7 @@ T = {
 '30 days': '30 päeva',
 '%@ — delete': '%@ — kustuta',
 'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it.': 'Ajaloo üksuse valimisel hoia all ⇧, et kleepida lihttekstina (vorminguta), ⌥, et lisada mallidesse, ⌃, et kustutada.',
+'Pause Recording for 10 Minutes': 'Peata salvestamine 10 minutiks',
+'Resume Recording (paused until %@)': 'Jätka salvestamist (peatatud kuni %@)',
+'Keepit — recording paused': 'Keepit — salvestamine peatatud',
 }

@@ -260,4 +260,7 @@ T = {
 '30 days': '30 dienas',
 '%@ — delete': '%@ — dzēst',
 'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it.': 'Izvēloties vēstures vienumu, turiet ⇧, lai ielīmētu kā vienkāršu tekstu (bez formatējuma), ⌥ — lai pievienotu veidnēm, ⌃ — lai dzēstu.',
+'Pause Recording for 10 Minutes': 'Apturēt ierakstīšanu uz 10 minūtēm',
+'Resume Recording (paused until %@)': 'Turpināt ierakstīšanu (apturēts līdz %@)',
+'Keepit — recording paused': 'Keepit — ierakstīšana apturēta',
 }

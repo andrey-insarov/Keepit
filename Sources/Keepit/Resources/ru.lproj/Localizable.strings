@@ -260,3 +260,6 @@
 "30 days" = "30 дней";
 "%@ — delete" = "%@ — удалить";
 "Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it." = "Удерживайте ⇧ при выборе элемента истории, чтобы вставить его как простой текст (без форматирования), ⌥ — чтобы добавить в шаблоны, ⌃ — чтобы удалить.";
+"Pause Recording for 10 Minutes" = "Приостановить запись на 10 минут";
+"Resume Recording (paused until %@)" = "Возобновить запись (пауза до %@)";
+"Keepit — recording paused" = "Keepit — запись приостановлена";

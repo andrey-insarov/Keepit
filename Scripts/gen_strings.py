@@ -283,6 +283,9 @@ T = {
 '30 days': ('30 дней', '30 Tage', '30 jours', '30 días', '30 日', '30 天'),
 '%@ — delete': ('%@ — удалить', '%@ – löschen', '%@ — supprimer', '%@: eliminar', '%@ — 削除', '%@ — 删除'),
 'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it.': ('Удерживайте ⇧ при выборе элемента истории, чтобы вставить его как простой текст (без форматирования), ⌥ — чтобы добавить в шаблоны, ⌃ — чтобы удалить.', 'Halten Sie beim Auswählen eines Verlaufseintrags ⇧, um ihn als reinen Text einzufügen (ohne Formatierung), ⌥, um ihn zu den Vorlagen hinzuzufügen, ⌃, um ihn zu löschen.', 'En choisissant un élément de l’historique, maintenez ⇧ pour le coller en texte brut (sans mise en forme), ⌥ pour l’ajouter aux modèles, ⌃ pour le supprimer.', 'Al elegir un elemento del historial, mantén ⇧ para pegarlo como texto sin formato, ⌥ para añadirlo a las plantillas, ⌃ para eliminarlo.', '履歴の項目を選ぶときに ⇧ で書式なし貼り付け、⌥ でテンプレートに追加、⌃ で削除します。', '选择历史记录项时按住 ⇧ 以纯文本粘贴（去除格式），⌥ 添加到模板，⌃ 删除。'),
+'Pause Recording for 10 Minutes': ('Приостановить запись на 10 минут', 'Aufzeichnung 10 Minuten pausieren', 'Suspendre l’enregistrement 10 minutes', 'Pausar la grabación 10 minutos', '記録を 10 分間一時停止', '暂停记录 10 分钟'),
+'Resume Recording (paused until %@)': ('Возобновить запись (пауза до %@)', 'Aufzeichnung fortsetzen (pausiert bis %@)', 'Reprendre l’enregistrement (suspendu jusqu’à %@)', 'Reanudar la grabación (en pausa hasta las %@)', '記録を再開（%@ まで一時停止中）', '恢复记录（已暂停至 %@）'),
+'Keepit — recording paused': ('Keepit — запись приостановлена', 'Keepit – Aufzeichnung pausiert', 'Keepit — enregistrement suspendu', 'Keepit: grabación en pausa', 'Keepit — 記録を一時停止中', 'Keepit — 记录已暂停'),
 }
 
 PH = re.compile(r"%[@d]")

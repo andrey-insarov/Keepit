@@ -260,3 +260,6 @@
 "30 days" = "30 日";
 "%@ — delete" = "%@ — 削除";
 "Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it." = "履歴の項目を選ぶときに ⇧ で書式なし貼り付け、⌥ でテンプレートに追加、⌃ で削除します。";
+"Pause Recording for 10 Minutes" = "記録を 10 分間一時停止";
+"Resume Recording (paused until %@)" = "記録を再開（%@ まで一時停止中）";
+"Keepit — recording paused" = "Keepit — 記録を一時停止中";

@@ -260,3 +260,6 @@
 "30 days" = "30 天";
 "%@ — delete" = "%@ — 刪除";
 "Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it." = "選擇歷史記錄項目時按住 ⇧ 以純文字貼上（移除格式），⌥ 加入範本，⌃ 刪除。";
+"Pause Recording for 10 Minutes" = "暫停記錄 10 分鐘";
+"Resume Recording (paused until %@)" = "恢復記錄（已暫停至 %@）";
+"Keepit — recording paused" = "Keepit — 記錄已暫停";

@@ -260,4 +260,7 @@ T = {
 '30 days': '30 gün',
 '%@ — delete': '%@ — sil',
 'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it.': 'Bir geçmiş öğesini seçerken ⇧ düz metin olarak (biçimlendirmesiz) yapıştırır, ⌥ şablonlara ekler, ⌃ siler.',
+'Pause Recording for 10 Minutes': 'Kaydı 10 Dakika Duraklat',
+'Resume Recording (paused until %@)': 'Kaydı Sürdür (%@ saatine kadar duraklatıldı)',
+'Keepit — recording paused': 'Keepit — kayıt duraklatıldı',
 }

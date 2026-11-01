@@ -278,3 +278,7 @@
 
 "%@ — delete" = "%@ — delete";
 "Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it." = "Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it.";
+
+"Pause Recording for 10 Minutes" = "Pause Recording for 10 Minutes";
+"Resume Recording (paused until %@)" = "Resume Recording (paused until %@)";
+"Keepit — recording paused" = "Keepit — recording paused";

@@ -260,3 +260,6 @@
 "30 days" = "30 يومًا";
 "%@ — delete" = "%@ — حذف";
 "Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it." = "أثناء اختيار عنصر من السجل اضغط باستمرار ⇧ للصقه كنص عادي (بدون تنسيق)، و⌥ لإضافته إلى القوالب، و⌃ لحذفه.";
+"Pause Recording for 10 Minutes" = "إيقاف التسجيل مؤقتًا لمدة 10 دقائق";
+"Resume Recording (paused until %@)" = "استئناف التسجيل (متوقف حتى %@)";
+"Keepit — recording paused" = "Keepit — التسجيل متوقف مؤقتًا";
