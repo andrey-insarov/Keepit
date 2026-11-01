@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.5.0 — unreleased
+## 2.5.0 — 2026-11-01
 
 - **Localization**: Russian, Ukrainian, German, French, Spanish, Italian, Japanese, Simplified Chinese and Arabic. Keepit
   follows the macOS system language; English remains the base. `Scripts/gen_strings.py` holds the
