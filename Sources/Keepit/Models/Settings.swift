@@ -132,6 +132,46 @@ struct Settings: Codable, Equatable {
     /// Let Touch ID stand in for the current password when changing it (off = always type the old password).
     var biometricPasswordChange = true
 
+    enum CodingKeys: String, CodingKey {
+        case historyMax
+        case historyImageMax
+        case historyMaxAge
+        case historySave
+        case overlapCheck
+        case moveToTopOnPaste
+        case maxImageBytes
+        case pollInterval
+        case titleLength
+        case showThumbnails
+        case thumbnailSize
+        case showTooltips
+        case numberItems
+        case searchInMenu
+        case showPreview
+        case showSourceIcons
+        case showAtCaret
+        case historyHotKey
+        case templateHotKey
+        case previousHotKey
+        case numberPasteModifiers
+        case latestActionModifiers
+        case lockHotKey
+        case pauseHotKey
+        case pasteAfterSelect
+        case pasteDelay
+        case pasteKeys
+        case ignoreApps
+        case ignoreConcealed
+        case launchAtLogin
+        case lockWithScreen
+        case biometricUnlock
+        case biometricPasswordChange
+        case maxTextBytes
+        case maxFileListEntries
+        case maxHistoryBytes
+        case menuMaxItems
+    }
+
     init() {}
 
     // Tolerant decoding: any missing key falls back to its default, so old settings files keep working.
