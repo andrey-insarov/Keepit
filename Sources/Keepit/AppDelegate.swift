@@ -689,7 +689,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
 
         let items = menuBuilder.historyItems(history.items, target: self, action: #selector(historyChosen(_:)),
-                                             plainAction: #selector(historyChosenPlain(_:)), pinAction: #selector(historyPinned(_:)),
+                                             pinAction: #selector(historyPinned(_:)),
                                              deleteAction: #selector(historyDeleted(_:)), commandAccelerators: searching)
         if items.isEmpty {
             let e = NSMenuItem(title: L("(History is empty)"), action: nil, keyEquivalent: "")
@@ -724,7 +724,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         for mi in menu.items where mi.tag == MenuBuilder.historyTag { menu.removeItem(mi) }
         let matches = MenuBuilder.filter(history.items, query: query)
         var fresh = menuBuilder.historyItems(matches, target: self, action: #selector(historyChosen(_:)),
-                                             plainAction: #selector(historyChosenPlain(_:)), pinAction: #selector(historyPinned(_:)),
+                                             pinAction: #selector(historyPinned(_:)),
                                              deleteAction: #selector(historyDeleted(_:)), commandAccelerators: true)
         if fresh.isEmpty {
             let none = NSMenuItem(title: L("(no matches)"), action: nil, keyEquivalent: "")

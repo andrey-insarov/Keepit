@@ -317,4 +317,4 @@
 "Paste as" = "Şu şekilde yapıştır";
 "Paste as plain text" = "Düz metin olarak yapıştır";
 "Show in Viewer" = "Görüntüleyicide göster";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Hold ⌘ for the extended menu: every item gets a submenu with all actions (Paste as UPPERCASE, single line, Copy only, …)." = "Bir geçmiş öğesini seçerken ⇧ basılı tutarak düz metin olarak yapıştırın (biçimlendirme olmadan), ⌥ ile Şablonlara ekleyin, ⌃ ile silin. Genişletilmiş menü için ⌘ basılı tutun: her öğe tüm eylemleri içeren bir alt menü alır (BÜYÜK HARF olarak yapıştır, tek satır, yalnızca kopyala, …).";
+"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "Genişletilmiş menü için ⇧ basılı tutun: her geçmiş öğesi tüm eylemleri içeren bir alt menü alır — düz metin olarak yapıştır, BÜYÜK HARF, tek satır, yalnızca kopyala, …. Bir öğeyi seçerken ⌥ ile Şablonlara ekleyin, ⌃ ile silin.";

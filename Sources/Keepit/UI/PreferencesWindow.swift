@@ -245,7 +245,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
             [NSView(), showSource],
             [NSView(), showThumbs],
             pair(L("Title length (chars):"), numField(titleLength), L("Thumbnail height (px):"), numField(thumbSize)),
-            [NSView(), withHelp(modifiers, L("Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Hold ⌘ for the extended menu: every item gets a submenu with all actions (Paste as UPPERCASE, single line, Copy only, …)."))],
+            [NSView(), withHelp(modifiers, L("Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it."))],
         ])
         modifiers.textColor = .secondaryLabelColor
 

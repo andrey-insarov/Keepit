@@ -317,5 +317,5 @@ T = {
 'Paste as': '다음으로 붙여넣기',
 'Paste as plain text': '서식 없는 텍스트로 붙여넣기',
 'Show in Viewer': '뷰어에서 보기',
-'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Hold ⌘ for the extended menu: every item gets a submenu with all actions (Paste as UPPERCASE, single line, Copy only, …).': '기록 항목을 선택할 때 ⇧를 누르면 서식 없는 텍스트로 붙여넣고, ⌥는 템플릿에 추가, ⌃는 삭제합니다. ⌘를 누르고 있으면 확장 메뉴가 되어 모든 항목에 전체 동작 하위 메뉴(대문자로 붙여넣기, 한 줄, 복사만, …)가 생깁니다.',
+'Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it.': '⇧를 누르고 있으면 확장 메뉴가 되어 모든 기록 항목에 전체 동작 하위 메뉴(서식 없는 텍스트로 붙여넣기, 대문자, 한 줄, 복사만, …)가 생깁니다. 항목을 선택할 때 ⌥는 템플릿에 추가, ⌃는 삭제합니다.',
 }

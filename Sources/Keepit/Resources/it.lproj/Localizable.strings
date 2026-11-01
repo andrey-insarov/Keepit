@@ -317,4 +317,4 @@
 "Paste as" = "Incolla come";
 "Paste as plain text" = "Incolla come testo semplice";
 "Show in Viewer" = "Mostra nel Visualizzatore";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Hold ⌘ for the extended menu: every item gets a submenu with all actions (Paste as UPPERCASE, single line, Copy only, …)." = "Tieni premuto ⇧ scegliendo un elemento della cronologia per incollarlo come testo semplice (senza formattazione), ⌥ per aggiungerlo ai Modelli, ⌃ per eliminarlo. Tieni premuto ⌘ per il menu esteso: ogni elemento riceve un sottomenu con tutte le azioni (incolla in MAIUSCOLO, una riga, solo copia, …).";
+"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "Tieni premuto ⇧ per il menu esteso: ogni elemento della cronologia riceve un sottomenu con tutte le azioni — incolla come testo semplice, MAIUSCOLO, una riga, solo copia, …. Tieni premuto ⌥ scegliendo un elemento per aggiungerlo ai Modelli, ⌃ per eliminarlo.";

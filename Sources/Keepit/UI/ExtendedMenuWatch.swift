@@ -1,12 +1,12 @@
 import AppKit
 
-/// "Hold ⌘ for the extended menu": while a history menu is open, a background timer watches the modifier
-/// flags (menu tracking starves ordinary timers and local event monitors). When ⌘ goes down every history
-/// row gets its action submenu (AppKit shows ▸ and opens it on hover or →); when ⌘ goes up the submenus
+/// "Hold ⇧ for the extended menu": while a history menu is open, a background timer watches the modifier
+/// flags (menu tracking starves ordinary timers and local event monitors). When ⇧ goes down every history
+/// row gets its action submenu (the row draws › and AppKit opens it on hover or →); when ⇧ goes up the submenus
 /// are removed again — after the open one, if any, has closed.
 final class ExtendedMenuWatch {
     static let shared = ExtendedMenuWatch()
-    static let modifier: NSEvent.ModifierFlags = .command
+    static let modifier: NSEvent.ModifierFlags = .shift
 
     private var timer: DispatchSourceTimer?
     private weak var menu: NSMenu?

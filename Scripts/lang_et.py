@@ -317,5 +317,5 @@ T = {
 'Paste as': 'Kleebi kui',
 'Paste as plain text': 'Kleebi vormindamata tekstina',
 'Show in Viewer': 'Näita vaaturis',
-'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it. Hold ⌘ for the extended menu: every item gets a submenu with all actions (Paste as UPPERCASE, single line, Copy only, …).': 'Ajaloo üksust valides hoia ⇧, et kleepida see vormindamata tekstina, ⌥ lisab Mallidesse, ⌃ kustutab. Hoia ⌘ laiendatud menüü jaoks: iga üksus saab alammenüü kõigi toimingutega (kleebi SUURTÄHTEDEGA, üks rida, ainult kopeeri, …).',
+'Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it.': 'Hoia ⇧ laiendatud menüü jaoks: iga ajaloo üksus saab alammenüü kõigi toimingutega — kleebi vormindamata tekstina, SUURTÄHED, üks rida, ainult kopeeri, …. Üksust valides hoia ⌥, et lisada Mallidesse, ⌃ kustutab.',
 }
