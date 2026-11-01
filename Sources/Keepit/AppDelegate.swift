@@ -645,7 +645,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     func menuDidClose(_ menu: NSMenu) {
-        RightClickWatch.shared.stop(menu)
+        if menu.title == Self.actionMenuTitle { ExtendedMenuWatch.shared.submenuClosed(); return }
+        ExtendedMenuWatch.shared.stop(menu)
         PreviewPanel.shared.hide()
         if statusItem.menu === menu { statusItem.menu = nil }
         let wasPopup = popupActive
