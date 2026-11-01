@@ -828,7 +828,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             guard let mi else { return }
             mi.isEnabled = true
             mi.submenu = ctx
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { LongPress.nudgePointer() }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { LongPress.nudgePointer(excursion: 22) }
         }
     }
 

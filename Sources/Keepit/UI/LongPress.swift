@@ -81,14 +81,17 @@ final class LongPress {
 
     /// Move the pointer by one pixel and back so the menu re-evaluates the highlighted item (opens a submenu
     /// attached while tracking). Needs Accessibility; silently does nothing without it.
-    static func nudgePointer() {
+    /// - Parameter excursion: how far (points, downwards) the pointer leaves before coming back. 1 is enough
+    ///   while the button is held; after a release the highlight must actually change, so use an item height.
+    static func nudgePointer(excursion: CGFloat = 1, settle: TimeInterval = 0.04) {
         guard Paster.isTrusted(), let cur = CGEvent(source: nil)?.location else { return }
         let down = NSEvent.pressedMouseButtons & 1 != 0
         let type: CGEventType = down ? .leftMouseDragged : .mouseMoved
-        for dx: CGFloat in [1, 0] {
-            let p = CGPoint(x: cur.x + dx, y: cur.y)
+        func post(_ p: CGPoint) {
             CGEvent(mouseEventSource: nil, mouseType: type, mouseCursorPosition: p, mouseButton: .left)?.post(tap: .cghidEventTap)
         }
+        post(CGPoint(x: cur.x + 1, y: cur.y + excursion))
+        DispatchQueue.main.asyncAfter(deadline: .now() + settle) { post(cur) }
     }
 
     private func fired() {
