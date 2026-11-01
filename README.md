@@ -290,6 +290,10 @@ Sources/Keepit/
    Flycut (plist), CLCL (`history.dat`). Snippets → templates, with placeholder conversion: Alfred
    (`.alfredsnippets`), Raycast (JSON export), Clipy/ClipMenu (XML), TextExpander / aText / Espanso,
    CLCL (`regist.dat`). *Viewer → Import…* detects what is installed and offers it in one click.
+4. **`KeepitCore` package** — the data model, vault (AES-256-GCM, recovery phrase), `.keepit` backup
+   format and placeholder engine split out of the app, so a separate iOS companion (templates
+   keyboard, history viewer, Share Sheet; reads the same encrypted backup from iCloud Drive) can be
+   built as its own project that stays compatible with Keepit.
 
 **Later**
 
