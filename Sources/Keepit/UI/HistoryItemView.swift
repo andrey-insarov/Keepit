@@ -56,7 +56,7 @@ final class HistoryItemView: NSView {
         let hl = highlighted
         if hl {
             let r = bounds.insetBy(dx: highlightInset, dy: 0)
-            NSColor.selectedContentBackgroundColor.setFill()
+            NSColor.controlAccentColor.setFill()
             NSBezierPath(roundedRect: r, xRadius: 5, yRadius: 5).fill()
         }
         let textColor: NSColor = hl ? .selectedMenuItemTextColor : (isDimmed ? .disabledControlTextColor : .labelColor)
@@ -77,7 +77,7 @@ final class HistoryItemView: NSView {
             x += imageSize.width + gap
         }
         var keyW: CGFloat = 0
-        let keyLabel = isArmed ? "▸" : self.keyLabel
+        let keyLabel = isArmed ? "▸" : (enclosingMenuItem?.submenu != nil ? "" : self.keyLabel)
         if !keyLabel.isEmpty {
             let a: [NSAttributedString.Key: Any] = [.font: Self.keyFont, .foregroundColor: isArmed ? textColor : dimColor]
             let sz = (keyLabel as NSString).size(withAttributes: a)
@@ -114,12 +114,14 @@ final class HistoryItemView: NSView {
     override func mouseUp(with event: NSEvent) {
         pressToken += 1
         if longPressFired {
-            // Released after a long press: pop the action menu beside the row, inside the still-open history menu.
+            // Released after a long press: the action menu becomes this item's submenu (AppKit opens it like
+            // any submenu, beside the row, with the history menu still open). A tiny synthetic pointer move
+            // makes it open right away; without Accessibility it opens on the next real move or with →.
             longPressFired = false
-            isArmed = false
-            needsDisplay = true
-            guard let ctx = onLongPress?(self) else { return }
-            ctx.popUp(positioning: nil, at: NSPoint(x: bounds.maxX - 2, y: bounds.maxY), in: self)
+            guard let mi = enclosingMenuItem, mi.submenu == nil, let ctx = onLongPress?(self) else { return }
+            mi.action = nil
+            mi.submenu = ctx
+            Self.nudgePointer()
             return
         }
         guard let mi = enclosingMenuItem, mi.isEnabled, let menu = mi.menu else { return }
@@ -135,6 +137,16 @@ final class HistoryItemView: NSView {
         longPressFired = true
         isArmed = true          // visual cue: the row shows "▸" until the button is released
         needsDisplay = true
+    }
+
+    /// One-pixel pointer excursion so the menu re-evaluates the highlighted item and opens its new submenu.
+    static func nudgePointer() {
+        guard Paster.isTrusted(), let cur = CGEvent(source: nil)?.location else { return }
+        func post(_ p: CGPoint) {
+            CGEvent(mouseEventSource: nil, mouseType: .mouseMoved, mouseCursorPosition: p, mouseButton: .left)?.post(tap: .cghidEventTap)
+        }
+        post(CGPoint(x: cur.x + 1, y: cur.y + 1))
+        DispatchQueue.global().asyncAfter(deadline: .now() + 0.05) { post(cur) }
     }
 
     // MARK: Accessibility
