@@ -952,7 +952,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let prompts = Snippets.prompts(in: text)
         var extra: TimeInterval = 0
         if !prompts.isEmpty {
-            guard let answers = SnippetPromptDialog.ask(prompts, templateName: name) else { return }
+            guard let answers = SnippetPromptDialog.ask(prompts, templateName: MenuBuilder.parseAmpersand(name).title) else { return }
             ctx.answers = answers
             extra = 0.35      // the modal dialog took the focus; the target app needs a moment to get it back
         }
