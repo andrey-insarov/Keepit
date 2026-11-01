@@ -113,6 +113,7 @@ final class HistoryItemView: NSView {
 
     override func mouseUp(with event: NSEvent) {
         pressToken += 1
+        if enclosingMenuItem?.submenu != nil { longPressFired = false; isArmed = false; needsDisplay = true; return }   // AppKit opens the submenu
         if longPressFired {
             // Released after a long press: the action menu becomes this item's submenu (AppKit opens it like
             // any submenu, beside the row, with the history menu still open). A tiny synthetic pointer move
@@ -121,7 +122,9 @@ final class HistoryItemView: NSView {
             guard let mi = enclosingMenuItem, mi.submenu == nil, let ctx = onLongPress?(self) else { return }
             mi.action = nil
             mi.submenu = ctx
-            Self.nudgePointer()
+            isArmed = false
+            needsDisplay = true
+            Self.clickPointer()     // a click on a submenu parent opens the submenu at once
             return
         }
         guard let mi = enclosingMenuItem, mi.isEnabled, let menu = mi.menu else { return }
@@ -139,14 +142,15 @@ final class HistoryItemView: NSView {
         needsDisplay = true
     }
 
-    /// One-pixel pointer excursion so the menu re-evaluates the highlighted item and opens its new submenu.
-    static func nudgePointer() {
+    /// Synthetic left click at the current pointer position (needs Accessibility; otherwise the submenu
+    /// opens on the next real click or pointer movement).
+    static func clickPointer() {
         guard Paster.isTrusted(), let cur = CGEvent(source: nil)?.location else { return }
-        func post(_ p: CGPoint) {
-            CGEvent(mouseEventSource: nil, mouseType: .mouseMoved, mouseCursorPosition: p, mouseButton: .left)?.post(tap: .cghidEventTap)
+        DispatchQueue.global().asyncAfter(deadline: .now() + 0.06) {
+            for t in [CGEventType.leftMouseDown, .leftMouseUp] {
+                CGEvent(mouseEventSource: nil, mouseType: t, mouseCursorPosition: cur, mouseButton: .left)?.post(tap: .cghidEventTap)
+            }
         }
-        post(CGPoint(x: cur.x + 1, y: cur.y + 1))
-        DispatchQueue.global().asyncAfter(deadline: .now() + 0.05) { post(cur) }
     }
 
     // MARK: Accessibility

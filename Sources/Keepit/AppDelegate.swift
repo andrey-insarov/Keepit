@@ -642,6 +642,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     func menuDidClose(_ menu: NSMenu) {
+        if menu.title == Self.actionMenuTitle { detachActionMenu(menu); return }
         PreviewPanel.shared.hide()
         if statusItem.menu === menu { statusItem.menu = nil }
         let wasPopup = popupActive
@@ -817,10 +818,25 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func actionMenu(for id: UUID) -> NSMenu? {
         guard let item = history.item(id: id) else { return nil }
         PreviewPanel.shared.hide()
-        return menuBuilder.contextMenu(for: item, target: self, actions: .init(
+        let m = menuBuilder.contextMenu(for: item, target: self, actions: .init(
             paste: #selector(historyChosen(_:)), pastePlain: #selector(historyChosenPlain(_:)),
             copyOnly: #selector(historyCopied(_:)), transform: #selector(historyTransformed(_:)),
             pin: #selector(historyPinned(_:)), reveal: #selector(historyRevealed(_:)), delete: #selector(historyDeleted(_:))))
+        m.delegate = self
+        m.title = Self.actionMenuTitle
+        return m
+    }
+    private static let actionMenuTitle = "keepit.actions"
+
+    /// Once an action submenu has closed, detach it so the row is a plain item again (⇧/⌥/⌃ alternates only
+    /// swap in for items without submenus).
+    private func detachActionMenu(_ m: NSMenu) {
+        guard let parent = m.supermenu, let mi = parent.items.first(where: { $0.submenu === m }) else { return }
+        DispatchQueue.main.async {
+            mi.submenu = nil
+            mi.action = #selector(self.historyChosen(_:))
+            mi.view?.needsDisplay = true
+        }
     }
 
     /// Context menu: put the item on the clipboard without pasting.
