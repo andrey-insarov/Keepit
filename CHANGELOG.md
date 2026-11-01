@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.7.1 — unreleased
+## 2.7.1 — 2026-11-01
 
 - Touch ID is always offered on first run and as soon as *Require password* is ticked in Preferences.
   A closed MacBook lid or a sleeping Magic Keyboard makes macOS report Touch ID as unavailable for a
