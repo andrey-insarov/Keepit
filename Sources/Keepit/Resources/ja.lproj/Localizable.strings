@@ -239,3 +239,4 @@
 "Without a password Keepit stores history and templates unencrypted in your user Library. You can turn protection on at any time in Preferences → Security." = "パスワードなしの場合、Keepit は履歴とテンプレートをユーザーライブラリに暗号化せずに保存します。保護は環境設定 → セキュリティでいつでも有効にできます。";
 "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "許可がなくても Keepit は履歴を記録し、項目をクリップボードにコピーできますが、アクティブなアプリに ⌘V を送ったり、テキストカーソル位置にメニューを表示したりできません。\n\nシステム設定 → プライバシーとセキュリティ → アクセシビリティ → Keepit を有効にしてください。";
 "Keepit removes its Accessibility permission." = "Keepit がアクセシビリティの許可を削除します。";
+"Also unlock with Touch ID (the password stays as fallback)" = "Touch ID でもロック解除（パスワードは代替手段として残ります）";

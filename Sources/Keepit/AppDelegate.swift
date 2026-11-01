@@ -102,12 +102,25 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         a.icon = NSImage(systemSymbolName: "lock.shield", accessibilityDescription: nil)
         a.messageText = L("Protect your clipboard history with a password?")
         a.informativeText = L("Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts. You will also get a 24-word recovery phrase in case you forget the password.")
+        let touchID = NSButton(checkboxWithTitle: L("Also unlock with Touch ID (the password stays as fallback)"), target: nil, action: nil)
+        if BiometricUnlock.isAvailable {
+            touchID.state = .on
+            touchID.sizeToFit()
+            a.accessoryView = touchID
+        }
         a.addButton(withTitle: L("Set Password…"))
         a.addButton(withTitle: L("Not Now"))
         NSApp.activate(ignoringOtherApps: true)
-        if a.runModal() == .alertFirstButtonReturn, enableProtection() {
-            updateStatusIcon()
-            return
+        if a.runModal() == .alertFirstButtonReturn {
+            // Decide Touch ID before enabling: enableProtection() stores the key for it right away.
+            var s = settings
+            s.biometricUnlock = BiometricUnlock.isAvailable && touchID.state == .on
+            s.biometricPasswordChange = s.biometricUnlock
+            apply(settings: s)
+            if enableProtection() {
+                updateStatusIcon()
+                return
+            }
         }
         let b = NSAlert()
         b.alertStyle = .warning
