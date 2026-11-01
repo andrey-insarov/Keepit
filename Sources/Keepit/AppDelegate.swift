@@ -14,7 +14,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var statusItem: NSStatusItem!
     private lazy var updater = Updater()
     private var preferencesWindow: PreferencesWindowController?
-    private var viewer: ViewerWindowController?
+    private(set) var viewer: ViewerWindowController?
     /// Set by the uninstaller: nothing may be written to disk any more (see Uninstall.swift).
     var uninstalling = false
     /// Recording paused until this moment (Pause for 10 Minutes); nil = recording.
