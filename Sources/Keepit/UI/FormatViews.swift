@@ -249,12 +249,15 @@ final class InfoView: NSView {
     override init(frame: NSRect) {
         super.init(frame: frame)
         label.textColor = .secondaryLabelColor
+        label.alignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         addSubview(label)
         NSLayoutConstraint.activate([
-            label.topAnchor.constraint(equalTo: topAnchor, constant: 12),
-            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
-            label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
+            label.centerXAnchor.constraint(equalTo: centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: centerYAnchor),
+            label.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 24),
+            label.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -24),
+            label.widthAnchor.constraint(lessThanOrEqualToConstant: 520),
         ])
     }
     required init?(coder: NSCoder) { fatalError() }

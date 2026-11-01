@@ -170,6 +170,7 @@ final class ViewerWindowController: NSWindowController,
             btn(L("New Folder"), #selector(newFolder), symbol: "folder.badge.plus"),
             btn(L("Delete"), #selector(deleteSelected), symbol: "trash"),
             insertButton,
+            Spacer(),
             helpButton,
         ])
         insertButton.bezelStyle = .rounded
