@@ -4,7 +4,6 @@
 *.zip
 .DS_Store
 .swiftpm/
-Resources/Icon/AppIcon.iconset/
 Resources/Keepit.provisionprofile
 *.pkg
 appcast.xml

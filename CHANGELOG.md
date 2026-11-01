@@ -14,8 +14,9 @@
   keep.it.com); the menu-bar menu lists it after *Check for Updates…* instead of the version line.
 - Distribution builds (DMG, App Store) are now universal (Apple silicon + Intel); earlier
   releases were arm64-only. Ad-hoc local builds stay single-arch (`make app UNIVERSAL=1` to force).
-- Fixed the app icon showing as colour noise in the Touch ID dialog (16/32 px `icp4`/`icp5`
-  entries removed from the `.icns`; macOS scales the Retina variants instead).
+- Fixed the app icon showing as colour noise in the Touch ID dialog: the `.icns` now has Apple's
+  canonical layout (ARGB `ic04`/`ic05` + Retina PNGs, no legacy `icp*` entries) and on a Mac
+  it is built with `iconutil` from the committed iconset.
 
 ## 2.4.0 — 2026-10-31
 

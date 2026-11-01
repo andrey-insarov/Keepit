@@ -47,6 +47,12 @@ HAVE_PROFILE =
 SIGN_FLAGS = --options runtime --timestamp --entitlements Resources/Keepit-base.entitlements
 endif
 endif
+# App icon: on a Mac build the .icns with Apple's iconutil from the committed iconset (canonical
+# layout); elsewhere fall back to the committed Resources/Icon/AppIcon.icns (made by make_icns.py).
+ICNS = $(if $(shell command -v iconutil 2>/dev/null),.build/AppIcon.icns,Resources/Icon/AppIcon.icns)
+.build/AppIcon.icns: $(wildcard Resources/Icon/AppIcon.iconset/*.png)
+	mkdir -p .build && iconutil -c icns -o $@ Resources/Icon/AppIcon.iconset
+
 # Notarization: NOTARY_PROFILE (xcrun notarytool store-credentials) or the APPSTORE_* env vars used by CI.
 NOTARY_PROFILE ?=
 
@@ -114,7 +120,7 @@ PKG_SIGN_ID ?=
 TEAM_ID ?=
 PKG = $(APP)-$(VERSION)-appstore.pkg
 
-appstore:
+appstore: $(ICNS)
 	@test -n "$(APP_SIGN_ID)" -a -n "$(PKG_SIGN_ID)" -a -n "$(TEAM_ID)" || (echo "set APP_SIGN_ID, PKG_SIGN_ID and TEAM_ID"; exit 1)
 	@test -f Resources/Keepit.provisionprofile || (echo "missing Resources/Keepit.provisionprofile (Mac App Store profile for com.it.keep)"; exit 1)
 	KEEPIT_APPSTORE=1 swift build -c release $(ARCH_FLAGS) --build-path .build-appstore
@@ -127,7 +133,7 @@ appstore:
 	  | plutil -remove SUFeedURL -o - - | plutil -remove SUPublicEDKey -o - - | plutil -remove SUEnableAutomaticChecks -o - - \
 	  | plutil -remove SUScheduledCheckInterval -o - - | plutil -remove SUAutomaticallyUpdate -o - - > $(CONTENTS)/Info.plist
 	@! otool -L $(CONTENTS)/MacOS/$(APP) | grep -q Sparkle || (echo "App Store binary must not link Sparkle"; exit 1)
-	cp Resources/Icon/AppIcon.icns $(CONTENTS)/Resources/AppIcon.icns
+	cp $(ICNS) $(CONTENTS)/Resources/AppIcon.icns
 	cp -R $(APPSTORE_BUILD)/Keepit_Keepit.bundle $(CONTENTS)/Resources/
 	cp Resources/Keepit.provisionprofile $(CONTENTS)/embedded.provisionprofile
 	echo -n 'APPL????' > $(CONTENTS)/PkgInfo
@@ -151,13 +157,13 @@ dist: app dmg
 build:
 	swift build -c release $(ARCH_FLAGS)
 
-app: build
+app: build $(ICNS)
 	rm -rf $(BUNDLE)
 	mkdir -p $(CONTENTS)/MacOS $(CONTENTS)/Resources
 	cp $(BUILD)/$(APP) $(CONTENTS)/MacOS/$(APP)
 	$(CHECK_UNIVERSAL)
 	sed $(PLIST_SUBST) -e 's|__SPARKLE_PUBLIC_KEY__|$(SPARKLE_PUBLIC_KEY)|' Resources/Info.plist > $(CONTENTS)/Info.plist
-	cp Resources/Icon/AppIcon.icns $(CONTENTS)/Resources/AppIcon.icns
+	cp $(ICNS) $(CONTENTS)/Resources/AppIcon.icns
 	cp -R $(BUILD)/Keepit_Keepit.bundle $(CONTENTS)/Resources/      # localized strings (SwiftPM resource bundle)
 	echo -n 'APPL????' > $(CONTENTS)/PkgInfo
 	@test -n "$(SPARKLE_FW)" || (echo "Sparkle.framework not found under .build — run swift build first"; exit 1)
