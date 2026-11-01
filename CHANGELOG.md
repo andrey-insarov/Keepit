@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.7.0 — unreleased
+## 2.7.0 — 2026-11-01
 
 - **Pin in one move**: hold ⌥ while choosing a history item to add it to Templates (root level)
   instead of pasting it.
