@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.2 — 2026-11-01
+
+- Menu: separator before *Check for Updates…* / *About Keepit*.
+
 ## 2.5.1 — 2026-11-01
 
 - Fixed Sparkle updates failing with “An error occurred while running the updater” (launchd 163):

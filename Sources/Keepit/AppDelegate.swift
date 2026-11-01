@@ -587,6 +587,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if Vault.isEnabled {
             out.append(item(L("Lock Keepit"), #selector(lock), "l"))
         }
+        out.append(.separator())
         if updater.isConfigured {
             out.append(item(L("Check for Updates…"), #selector(checkForUpdates)))
         }
