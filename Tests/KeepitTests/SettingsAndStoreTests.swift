@@ -84,3 +84,47 @@ final class TextTransformTests: XCTestCase {
         XCTAssertNotEqual(out.contentHash, item.contentHash)
     }
 }
+
+final class SnippetTests: XCTestCase {
+    func testDetectsPlaceholders() {
+        XCTAssertTrue(Snippets.containsPlaceholders("x {date} y"))
+        XCTAssertFalse(Snippets.containsPlaceholders("json {\"a\":1}"))
+        XCTAssertFalse(Snippets.containsPlaceholders("no braces"))
+    }
+
+    func testExpandsDatesClipboardAndFilters() {
+        var ctx = Snippets.Context()
+        var comps = DateComponents(); comps.year = 2026; comps.month = 11; comps.day = 1; comps.hour = 12
+        ctx.now = Calendar(identifier: .gregorian).date(from: comps)!
+        ctx.locale = Locale(identifier: "en_US_POSIX")
+        ctx.clipboard = { n in ["  first\nline ", "second"][safe: n - 1] }
+        ctx.userName = "Ann"; ctx.shortUserName = "ann"; ctx.hostName = "mac"
+        let e = Snippets.expand("{date:yyyy-MM-dd} {date+7d:yyyy-MM-dd} {date-1m:MM} {year} [{clipboard|trim|oneline|upper}] [{clipboard:2}] [{clipboard:9}] {user}/{username}@{host} {{x}} {unknown}", context: ctx)
+        XCTAssertEqual(e.text, "2026-11-01 2026-11-08 10 2026 [FIRST LINE] [second] [] Ann/ann@mac {x} {unknown}")
+        XCTAssertNil(e.charsAfterCursor)
+    }
+
+    func testPromptsAndCursor() {
+        let s = "Hi {input:Name=Bob}, {choice:Tone=warm|cold} {input:Name}!{cursor}tail"
+        let p = Snippets.prompts(in: s)
+        XCTAssertEqual(p, [Snippets.Prompt(name: "Name", defaultValue: "Bob", choices: []),
+                           Snippets.Prompt(name: "Tone", defaultValue: "warm", choices: ["warm", "cold"])])
+        var ctx = Snippets.Context()
+        ctx.answers = ["Name": "Zoë", "Tone": "cold"]
+        let e = Snippets.expand(s, context: ctx)
+        XCTAssertEqual(e.text, "Hi Zoë, cold Zoë!tail")
+        XCTAssertEqual(e.charsAfterCursor, 4)
+    }
+
+    func testShift() {
+        let cal = Calendar(identifier: .gregorian)
+        let d = Date(timeIntervalSince1970: 0)
+        XCTAssertEqual(Snippets.shifted(d, by: "+2d", calendar: cal), cal.date(byAdding: .day, value: 2, to: d))
+        XCTAssertNil(Snippets.shifted(d, by: "+2x", calendar: cal))
+        XCTAssertNil(Snippets.shifted(d, by: "line", calendar: cal))
+    }
+}
+
+private extension Array {
+    subscript(safe i: Int) -> Element? { indices.contains(i) ? self[i] : nil }
+}

@@ -74,6 +74,10 @@ enum Paster {
         }
     }
 
+    static func sendKeyStroke(_ k: PasteKey, times: Int) {
+        for _ in 0..<max(0, times) { sendKeyStroke(k) }
+    }
+
     static func sendKeyStroke(_ k: PasteKey) {
         guard let src = CGEventSource(stateID: .combinedSessionState) else { return }
         var flags: CGEventFlags = []

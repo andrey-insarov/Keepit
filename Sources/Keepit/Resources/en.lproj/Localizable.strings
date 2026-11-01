@@ -312,3 +312,23 @@
 "Trim whitespace" = "Trim whitespace";
 "Single line" = "Single line";
 "Plain text (no formatting)" = "Plain text (no formatting)";
+
+"A new UUID; a random number in the range" = "A new UUID; a random number in the range";
+"Asks for a value before pasting; the same name is asked once" = "Asks for a value before pasting; the same name is asked once";
+"Asks to pick one of the options" = "Asks to pick one of the options";
+"Choice" = "Choice";
+"Current clipboard (history item #1) or item N" = "Current clipboard (history item #1) or item N";
+"Custom format (Unicode date patterns: yyyy MM dd EEEE HH mm …)" = "Custom format (Unicode date patterns: yyyy MM dd EEEE HH mm …)";
+"Day name, month name, year, ISO 8601 timestamp, Unix time" = "Day name, month name, year, ISO 8601 timestamp, Unix time";
+"Example:" = "Example:";
+"Fill in the template" = "Fill in the template";
+"Filters: upper, lower, title, trim, oneline, url — can be chained" = "Filters: upper, lower, title, trim, oneline, url — can be chained";
+"Full name, account name, computer name" = "Full name, account name, computer name";
+"Literal braces" = "Literal braces";
+"Put these tokens into the text of a template; they are replaced when the template is pasted. Plain text without braces is pasted unchanged." = "Put these tokens into the text of a template; they are replaced when the template is pasted. Plain text without braces is pasted unchanged.";
+"Shifted date: +/- number and d (days), w (weeks), m (months), y (years), h (hours)" = "Shifted date: +/- number and d (days), w (weeks), m (months), y (years), h (hours)";
+"Template Placeholders" = "Template Placeholders";
+"Template Placeholders…" = "Template Placeholders…";
+"Today's date / current time, in the system format" = "Today's date / current time, in the system format";
+"Values for the placeholders in this template:" = "Values for the placeholders in this template:";
+"Where the text cursor ends up after pasting" = "Where the text cursor ends up after pasting";

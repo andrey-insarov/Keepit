@@ -1,4 +1,5 @@
 import AppKit
+import Carbon.HIToolbox
 import ServiceManagement
 
 final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
@@ -473,7 +474,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             if !hotKeys.register(hk, handler: { [weak self] in
                 guard let self = self, let node = self.templates.root.find(id: id), let clip = node.clip else { return }
                 let target = NSWorkspace.shared.frontmostApplication
-                Paster.paste(clip, into: target, monitor: self.monitor, settings: self.settings, sendKey: self.settings.pasteAfterSelect)
+                self.pasteTemplate(clip, named: node.displayName, into: target)
             }) {
                 failed.append("\(hk.displayString) (\(t.displayName))")
             }
@@ -526,6 +527,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         window.addItem(withTitle: L("Close"), action: #selector(NSWindow.performClose(_:)), keyEquivalent: "w")
         windowItem.submenu = window
         main.addItem(windowItem)
+
+        let helpItem = NSMenuItem()
+        let help = NSMenu(title: L("Help"))
+        help.addItem(withTitle: L("Template Placeholders…"), action: #selector(showPlaceholderReference), keyEquivalent: "")
+        helpItem.submenu = help
+        main.addItem(helpItem)
+        NSApp.helpMenu = help
 
         NSApp.mainMenu = main
     }
@@ -848,8 +856,40 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         menuSelectionMade = true
         guard let id = sender.representedObject as? UUID,
               let node = templates.root.find(id: id), let clip = node.clip else { return }
-        Paster.paste(clip, into: pasteTarget, monitor: monitor, settings: settings, sendKey: settings.pasteAfterSelect)
+        pasteTemplate(clip, named: node.displayName, into: pasteTarget)
         nudgeAccessibilityIfNeeded()
+    }
+
+    @objc func showPlaceholderReference() {
+        PlaceholderReferenceWindow.show()
+    }
+
+    /// Paste a template; text templates with `{placeholders}` are expanded first (asking for `{input:…}` values).
+    func pasteTemplate(_ clip: ClipItem, named name: String, into target: NSRunningApplication?) {
+        guard clip.kind == .text, let text = clip.plainText, Snippets.containsPlaceholders(text) else {
+            Paster.paste(clip, into: target, monitor: monitor, settings: settings, sendKey: settings.pasteAfterSelect)
+            return
+        }
+        var ctx = Snippets.Context()
+        ctx.clipboard = { [weak self] n in
+            guard let items = self?.history.items, n >= 1, n <= items.count else { return nil }
+            return items[n - 1].plainText
+        }
+        let prompts = Snippets.prompts(in: text)
+        if !prompts.isEmpty {
+            guard let answers = SnippetPromptDialog.ask(prompts, templateName: name) else { return }
+            ctx.answers = answers
+        }
+        let exp = Snippets.expand(text, context: ctx)
+        let out = ClipItem.text(exp.text)
+        let sendKey = settings.pasteAfterSelect
+        Paster.paste(out, into: target, monitor: monitor, settings: settings, sendKey: sendKey)
+        if sendKey, Paster.isTrusted(), let back = exp.charsAfterCursor, back > 0 {
+            // Move the caret to the {cursor} mark once the paste has landed.
+            DispatchQueue.main.asyncAfter(deadline: .now() + settings.pasteDelay + 0.25) {
+                Paster.sendKeyStroke(PasteKey(keyCode: UInt16(kVK_LeftArrow), command: false), times: back)
+            }
+        }
     }
 
     /// Stop watching the clipboard for a while (typing something sensitive); the icon shows it.
