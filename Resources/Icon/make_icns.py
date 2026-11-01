@@ -8,7 +8,9 @@ from playwright.async_api import async_playwright
 HERE = pathlib.Path(__file__).parent
 SIZES = [16, 32, 64, 128, 256, 512, 1024]
 # ICNS type codes for PNG payloads (sizes are the pixel sizes of the PNG).
-TYPES = {16: b"icp4", 32: b"icp5", 64: b"icp6", 128: b"ic07", 256: b"ic08", 512: b"ic09", 1024: b"ic10",
+# No icp4/icp5 (16/32 px): some system components (e.g. the Touch ID dialog) read those two
+# types as raw 24-bit RGB and render PNG payloads as noise. macOS downscales ic11 instead.
+TYPES = {64: b"icp6", 128: b"ic07", 256: b"ic08", 512: b"ic09", 1024: b"ic10",
          "32@2x": b"ic11", "64@2x": b"ic12", "256@2x": b"ic13", "512@2x": b"ic14"}
 
 async def render():
