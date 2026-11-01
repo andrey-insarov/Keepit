@@ -820,6 +820,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             paste: #selector(historyChosen(_:)), pastePlain: #selector(historyChosenPlain(_:)),
             copyOnly: #selector(historyCopied(_:)), transform: #selector(historyTransformed(_:)),
             pin: #selector(historyPinned(_:)), reveal: #selector(historyRevealed(_:)), delete: #selector(historyDeleted(_:))))
+        // The item becomes a plain submenu parent: releasing the button over it must not paste,
+        // and the history menu stays open until something in the submenu (or outside) is clicked.
+        mi.action = nil
         mi.submenu = ctx
         LongPress.nudgePointer()
     }
