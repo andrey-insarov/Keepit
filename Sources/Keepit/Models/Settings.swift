@@ -178,6 +178,49 @@ struct Settings: Codable, Equatable {
         clamp()
     }
 
+    /// Explicit encoding so that an optional set to nil (a hot key switched off) is written as `null`
+    /// instead of being omitted — an omitted key would come back as its default on the next launch.
+    func encode(to encoder: Encoder) throws {
+        var c = encoder.container(keyedBy: CodingKeys.self)
+        try c.encode(historyMax, forKey: .historyMax)
+        try c.encode(historyImageMax, forKey: .historyImageMax)
+        try c.encode(historyMaxAge, forKey: .historyMaxAge)
+        try c.encode(historySave, forKey: .historySave)
+        try c.encode(overlapCheck, forKey: .overlapCheck)
+        try c.encode(moveToTopOnPaste, forKey: .moveToTopOnPaste)
+        try c.encode(maxImageBytes, forKey: .maxImageBytes)
+        try c.encode(pollInterval, forKey: .pollInterval)
+        try c.encode(titleLength, forKey: .titleLength)
+        try c.encode(showThumbnails, forKey: .showThumbnails)
+        try c.encode(thumbnailSize, forKey: .thumbnailSize)
+        try c.encode(showTooltips, forKey: .showTooltips)
+        try c.encode(numberItems, forKey: .numberItems)
+        try c.encode(searchInMenu, forKey: .searchInMenu)
+        try c.encode(showPreview, forKey: .showPreview)
+        try c.encode(showSourceIcons, forKey: .showSourceIcons)
+        try c.encode(showAtCaret, forKey: .showAtCaret)
+        try c.encode(historyHotKey, forKey: .historyHotKey)
+        try c.encode(templateHotKey, forKey: .templateHotKey)
+        try c.encode(previousHotKey, forKey: .previousHotKey)
+        try c.encode(numberPasteModifiers, forKey: .numberPasteModifiers)
+        try c.encode(latestActionModifiers, forKey: .latestActionModifiers)
+        try c.encode(lockHotKey, forKey: .lockHotKey)
+        try c.encode(pauseHotKey, forKey: .pauseHotKey)
+        try c.encode(pasteAfterSelect, forKey: .pasteAfterSelect)
+        try c.encode(pasteDelay, forKey: .pasteDelay)
+        try c.encode(pasteKeys, forKey: .pasteKeys)
+        try c.encode(ignoreApps, forKey: .ignoreApps)
+        try c.encode(ignoreConcealed, forKey: .ignoreConcealed)
+        try c.encode(launchAtLogin, forKey: .launchAtLogin)
+        try c.encode(lockWithScreen, forKey: .lockWithScreen)
+        try c.encode(biometricUnlock, forKey: .biometricUnlock)
+        try c.encode(biometricPasswordChange, forKey: .biometricPasswordChange)
+        try c.encode(maxTextBytes, forKey: .maxTextBytes)
+        try c.encode(maxFileListEntries, forKey: .maxFileListEntries)
+        try c.encode(maxHistoryBytes, forKey: .maxHistoryBytes)
+        try c.encode(menuMaxItems, forKey: .menuMaxItems)
+    }
+
     /// Bring every numeric option back into a sane range (hand-edited settings.json, old versions).
     mutating func clamp() {
         historyMax = Limits.clamp(historyMax, 1, Limits.historyMaxCeiling)
