@@ -248,7 +248,6 @@
 "1 week" = "1 неделя";
 "30 days" = "30 дней";
 "%@ — delete" = "%@ — удалить";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it." = "Удерживайте ⇧ при выборе элемента истории, чтобы вставить его как простой текст (без форматирования), ⌥ — чтобы добавить в шаблоны, ⌃ — чтобы удалить.";
 "Pause Recording for 10 Minutes" = "Приостановить запись на 10 минут";
 "Resume Recording (paused until %@)" = "Возобновить запись (пауза до %@)";
 "Keepit — recording paused" = "Keepit — запись приостановлена";
@@ -280,3 +279,13 @@
 "Paste previous item:" = "Вставить предыдущий:";
 "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "Сразу вставляет второй элемент истории, без меню — удобно переключаться между двумя последними копиями. Чтобы выключить, кликните поле и нажмите ⌫.";
 "Off — click to set" = "Выкл. — кликните, чтобы задать";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it, ⇧⌥ to paste it transformed (UPPERCASE, single line, …)." = "Удерживайте ⇧ при выборе элемента истории, чтобы вставить его как простой текст (без форматирования), ⌥ — добавить в Шаблоны, ⌃ — удалить, ⇧⌥ — вставить с преобразованием (ВЕРХНИЙ РЕГИСТР, одна строка, …).";
+"%@ — paste as" = "%@ — вставить как";
+"Paste latest as" = "Вставить последний как";
+"UPPERCASE" = "ВЕРХНИЙ РЕГИСТР";
+"lowercase" = "нижний регистр";
+"Title Case" = "Каждое Слово С Заглавной";
+"Sentence case" = "Как в предложении";
+"Trim whitespace" = "Убрать пробелы по краям";
+"Single line" = "В одну строку";
+"Plain text (no formatting)" = "Простой текст (без форматирования)";

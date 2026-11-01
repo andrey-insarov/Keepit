@@ -43,8 +43,25 @@ final class MenuBuilder {
     ///   calls it instead; hold ⇧ while clicking or add ⇧ to the shortcut.
     /// - Parameter pinAction: when given, every item gets an ⌥ alternate ("… — add to Templates").
     /// - Parameter deleteAction: when given, every item gets a ⌃ alternate ("… — delete").
+    /// Represented object of a "Paste as ▸" entry: the item id and the transformation.
+    struct TransformChoice { let id: UUID; let transform: TextTransform }
+
+    /// Submenu with one entry per `TextTransform`, each carrying a `TransformChoice`.
+    func transformMenu(for item: ClipItem, target: AnyObject, action: Selector) -> NSMenu {
+        let m = NSMenu()
+        for t in TextTransform.allCases {
+            if t == .stripFormatting, !item.hasRichText { continue }
+            let mi = NSMenuItem(title: t.title, action: action, keyEquivalent: "")
+            mi.target = target
+            mi.representedObject = TransformChoice(id: item.id, transform: t)
+            m.addItem(mi)
+        }
+        return m
+    }
+
     func historyItems(_ items: [ClipItem], target: AnyObject, action: Selector, plainAction: Selector? = nil,
-                      pinAction: Selector? = nil, deleteAction: Selector? = nil, commandAccelerators: Bool = false) -> [NSMenuItem] {
+                      pinAction: Selector? = nil, deleteAction: Selector? = nil, transformAction: Selector? = nil,
+                      commandAccelerators: Bool = false) -> [NSMenuItem] {
         var out: [NSMenuItem] = []
         let shown = items.prefix(settings.menuMaxItems)
         let accels = commandAccelerators ? Array(Self.accelerators.prefix(10)) : Self.accelerators
@@ -93,6 +110,17 @@ final class MenuBuilder {
                 alt.isAlternate = true
                 alt.keyEquivalentModifierMask = baseMask.union(.control)
                 alt.image = NSImage(systemSymbolName: "trash", accessibilityDescription: nil)
+                alternates.append(alt)
+            }
+            if let tr = transformAction, item.kind == .text, item.plainText != nil {
+                // ⇧⌥ alternate: "… — paste as ▸" with the transformations as a submenu.
+                let alt = NSMenuItem(title: prefix + LF("%@ — paste as", title), action: nil, keyEquivalent: mi.keyEquivalent)
+                alt.representedObject = item.id
+                alt.tag = Self.historyTag
+                alt.isAlternate = true
+                alt.keyEquivalentModifierMask = baseMask.union([.shift, .option])
+                alt.image = NSImage(systemSymbolName: "textformat", accessibilityDescription: nil)
+                alt.submenu = transformMenu(for: item, target: target, action: tr)
                 alternates.append(alt)
             }
             if settings.showThumbnails, item.kind == .image {

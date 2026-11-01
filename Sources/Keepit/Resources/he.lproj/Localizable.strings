@@ -248,7 +248,6 @@
 "1 week" = "שבוע";
 "30 days" = "30 יום";
 "%@ — delete" = "%@ — מחק";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it." = "בעת בחירת פריט מההיסטוריה החזק ⇧ כדי להדביק כטקסט רגיל (ללא עיצוב), ⌥ כדי להוסיף לתבניות, ⌃ כדי למחוק.";
 "Pause Recording for 10 Minutes" = "השהה הקלטה ל‑10 דקות";
 "Resume Recording (paused until %@)" = "המשך הקלטה (מושהה עד %@)";
 "Keepit — recording paused" = "Keepit — ההקלטה מושהית";
@@ -280,3 +279,13 @@
 "Paste previous item:" = "הדבק פריט קודם:";
 "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "מדביק מיד את הפריט השני בהיסטוריה, ללא התפריט — נוח להחלפה בין שני הפריטים האחרונים. לחץ על השדה והקש ⌫ כדי לכבות.";
 "Off — click to set" = "כבוי — לחץ כדי להגדיר";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it, ⇧⌥ to paste it transformed (UPPERCASE, single line, …)." = "החזק ⇧ בעת בחירת פריט מההיסטוריה כדי להדביקו כטקסט פשוט (ללא עיצוב), ⌥ להוספה לתבניות, ⌃ למחיקה, ⇧⌥ להדבקה לאחר המרה (אותיות גדולות, שורה אחת, …).";
+"%@ — paste as" = "%@ — הדבק בתור";
+"Paste latest as" = "הדבק את האחרון בתור";
+"UPPERCASE" = "אותיות גדולות";
+"lowercase" = "אותיות קטנות";
+"Title Case" = "אות גדולה בתחילת כל מילה";
+"Sentence case" = "אות גדולה בתחילת משפט";
+"Trim whitespace" = "הסר רווחים בקצוות";
+"Single line" = "שורה אחת";
+"Plain text (no formatting)" = "טקסט פשוט (ללא עיצוב)";

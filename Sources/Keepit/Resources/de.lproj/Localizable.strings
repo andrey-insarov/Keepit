@@ -248,7 +248,6 @@
 "1 week" = "1 Woche";
 "30 days" = "30 Tage";
 "%@ — delete" = "%@ – löschen";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it." = "Halten Sie beim Auswählen eines Verlaufseintrags ⇧, um ihn als reinen Text einzufügen (ohne Formatierung), ⌥, um ihn zu den Vorlagen hinzuzufügen, ⌃, um ihn zu löschen.";
 "Pause Recording for 10 Minutes" = "Aufzeichnung 10 Minuten pausieren";
 "Resume Recording (paused until %@)" = "Aufzeichnung fortsetzen (pausiert bis %@)";
 "Keepit — recording paused" = "Keepit – Aufzeichnung pausiert";
@@ -280,3 +279,13 @@
 "Paste previous item:" = "Vorherigen Eintrag einfügen:";
 "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "Fügt den zweiten Verlaufseintrag sofort ein, ohne Menü – praktisch zum Wechseln zwischen den zwei letzten Clips. Zum Abschalten ins Feld klicken und ⌫ drücken.";
 "Off — click to set" = "Aus – klicken zum Festlegen";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it, ⇧⌥ to paste it transformed (UPPERCASE, single line, …)." = "Beim Auswählen eines Verlaufseintrags ⇧ halten, um ihn als reinen Text einzufügen (ohne Formatierung), ⌥ für „zu Vorlagen hinzufügen“, ⌃ zum Löschen, ⇧⌥ für transformiertes Einfügen (GROSSBUCHSTABEN, eine Zeile, …).";
+"%@ — paste as" = "%@ – einfügen als";
+"Paste latest as" = "Neuesten einfügen als";
+"UPPERCASE" = "GROSSBUCHSTABEN";
+"lowercase" = "kleinbuchstaben";
+"Title Case" = "Jedes Wort Groß";
+"Sentence case" = "Satzanfang groß";
+"Trim whitespace" = "Leerraum entfernen";
+"Single line" = "Eine Zeile";
+"Plain text (no formatting)" = "Reiner Text (ohne Formatierung)";

@@ -248,7 +248,6 @@
 "1 week" = "1 тиждень";
 "30 days" = "30 днів";
 "%@ — delete" = "%@ — видалити";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it." = "Утримуйте ⇧ під час вибору елемента історії, щоб вставити його як простий текст (без форматування), ⌥ — щоб додати до шаблонів, ⌃ — щоб видалити.";
 "Pause Recording for 10 Minutes" = "Призупинити запис на 10 хвилин";
 "Resume Recording (paused until %@)" = "Відновити запис (пауза до %@)";
 "Keepit — recording paused" = "Keepit — запис призупинено";
@@ -280,3 +279,13 @@
 "Paste previous item:" = "Вставити попередній:";
 "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "Одразу вставляє другий елемент історії, без меню — зручно перемикатися між двома останніми копіями. Щоб вимкнути, клацніть поле й натисніть ⌫.";
 "Off — click to set" = "Вимк. — клацніть, щоб задати";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it, ⇧⌥ to paste it transformed (UPPERCASE, single line, …)." = "Утримуйте ⇧ під час вибору елемента історії, щоб вставити його як простий текст (без форматування), ⌥ — додати до Шаблонів, ⌃ — видалити, ⇧⌥ — вставити з перетворенням (ВЕЛИКІ ЛІТЕРИ, один рядок, …).";
+"%@ — paste as" = "%@ — вставити як";
+"Paste latest as" = "Вставити останній як";
+"UPPERCASE" = "ВЕЛИКІ ЛІТЕРИ";
+"lowercase" = "малі літери";
+"Title Case" = "Кожне Слово З Великої";
+"Sentence case" = "Як у реченні";
+"Trim whitespace" = "Прибрати пробіли по краях";
+"Single line" = "В один рядок";
+"Plain text (no formatting)" = "Простий текст (без форматування)";

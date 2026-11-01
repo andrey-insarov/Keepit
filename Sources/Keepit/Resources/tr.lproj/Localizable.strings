@@ -248,7 +248,6 @@
 "1 week" = "1 hafta";
 "30 days" = "30 gün";
 "%@ — delete" = "%@ — sil";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it." = "Bir geçmiş öğesini seçerken ⇧ düz metin olarak (biçimlendirmesiz) yapıştırır, ⌥ şablonlara ekler, ⌃ siler.";
 "Pause Recording for 10 Minutes" = "Kaydı 10 Dakika Duraklat";
 "Resume Recording (paused until %@)" = "Kaydı Sürdür (%@ saatine kadar duraklatıldı)";
 "Keepit — recording paused" = "Keepit — kayıt duraklatıldı";
@@ -280,3 +279,13 @@
 "Paste previous item:" = "Önceki öğeyi yapıştır:";
 "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "Menü olmadan geçmişin ikinci öğesini hemen yapıştırır; son iki kopya arasında geçiş için kullanışlıdır. Kapatmak için alana tıklayıp ⌫ tuşuna basın.";
 "Off — click to set" = "Kapalı — ayarlamak için tıklayın";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it, ⇧⌥ to paste it transformed (UPPERCASE, single line, …)." = "Bir geçmiş öğesini seçerken ⇧ basılı tutarak düz metin olarak yapıştırın (biçimlendirme olmadan), ⌥ ile Şablonlara ekleyin, ⌃ ile silin, ⇧⌥ ile dönüştürerek yapıştırın (BÜYÜK HARF, tek satır, …).";
+"%@ — paste as" = "%@ — şu şekilde yapıştır";
+"Paste latest as" = "En sonunu şu şekilde yapıştır";
+"UPPERCASE" = "BÜYÜK HARF";
+"lowercase" = "küçük harf";
+"Title Case" = "Her Kelime Büyük";
+"Sentence case" = "Cümle düzeni";
+"Trim whitespace" = "Kenar boşluklarını kırp";
+"Single line" = "Tek satır";
+"Plain text (no formatting)" = "Düz metin (biçimlendirme yok)";

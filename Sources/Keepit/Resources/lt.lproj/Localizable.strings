@@ -248,7 +248,6 @@
 "1 week" = "1 savaitė";
 "30 days" = "30 dienų";
 "%@ — delete" = "%@ — ištrinti";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it." = "Renkantis istorijos elementą laikykite ⇧, kad įklijuotumėte kaip paprastą tekstą (be formatavimo), ⌥ — kad pridėtumėte prie šablonų, ⌃ — kad ištrintumėte.";
 "Pause Recording for 10 Minutes" = "Pristabdyti įrašymą 10 minučių";
 "Resume Recording (paused until %@)" = "Tęsti įrašymą (pristabdyta iki %@)";
 "Keepit — recording paused" = "„Keepit“ — įrašymas pristabdytas";
@@ -280,3 +279,13 @@
 "Paste previous item:" = "Įklijuoti ankstesnį elementą:";
 "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "Iš karto įklijuoja antrą istorijos elementą be meniu — patogu keistis tarp dviejų naujausių kopijų. Norėdami išjungti, spustelėkite lauką ir paspauskite ⌫.";
 "Off — click to set" = "Išjungta — spustelėkite, kad nustatytumėte";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it, ⇧⌥ to paste it transformed (UPPERCASE, single line, …)." = "Renkantis istorijos elementą laikykite ⇧, kad įklijuotumėte kaip paprastą tekstą (be formatavimo), ⌥ — pridėti į Šablonus, ⌃ — ištrinti, ⇧⌥ — įklijuoti transformuotą (DIDŽIOSIOS, viena eilutė, …).";
+"%@ — paste as" = "%@ — įklijuoti kaip";
+"Paste latest as" = "Įklijuoti naujausią kaip";
+"UPPERCASE" = "DIDŽIOSIOS RAIDĖS";
+"lowercase" = "mažosios raidės";
+"Title Case" = "Kiekvienas Žodis Didžiąja";
+"Sentence case" = "Kaip sakinys";
+"Trim whitespace" = "Pašalinti tarpus kraštuose";
+"Single line" = "Viena eilutė";
+"Plain text (no formatting)" = "Paprastas tekstas (be formatavimo)";

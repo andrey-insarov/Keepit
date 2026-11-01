@@ -248,7 +248,6 @@
 "1 week" = "1 nädal";
 "30 days" = "30 päeva";
 "%@ — delete" = "%@ — kustuta";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it." = "Ajaloo üksuse valimisel hoia all ⇧, et kleepida lihttekstina (vorminguta), ⌥, et lisada mallidesse, ⌃, et kustutada.";
 "Pause Recording for 10 Minutes" = "Peata salvestamine 10 minutiks";
 "Resume Recording (paused until %@)" = "Jätka salvestamist (peatatud kuni %@)";
 "Keepit — recording paused" = "Keepit — salvestamine peatatud";
@@ -280,3 +279,13 @@
 "Paste previous item:" = "Kleebi eelmine üksus:";
 "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "Kleebib kohe ajaloo teise üksuse ilma menüüta — mugav kahe viimase lõike vahel vahetamiseks. Väljalülitamiseks klõpsa väljal ja vajuta ⌫.";
 "Off — click to set" = "Väljas — klõpsa seadmiseks";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it, ⇧⌥ to paste it transformed (UPPERCASE, single line, …)." = "Ajaloo üksust valides hoia ⇧, et kleepida see vormindamata tekstina, ⌥ lisab Mallidesse, ⌃ kustutab, ⇧⌥ kleebib teisendatult (SUURTÄHED, üks rida, …).";
+"%@ — paste as" = "%@ — kleebi kui";
+"Paste latest as" = "Kleebi uusim kui";
+"UPPERCASE" = "SUURTÄHED";
+"lowercase" = "väiketähed";
+"Title Case" = "Iga Sõna Suurtähega";
+"Sentence case" = "Nagu lause";
+"Trim whitespace" = "Eemalda servade tühikud";
+"Single line" = "Üks rida";
+"Plain text (no formatting)" = "Vormindamata tekst";

@@ -63,3 +63,24 @@ final class SettingsAndStoreTests: XCTestCase {
         XCTAssertEqual(store.root.find(id: n.id)?.clip?.plainText, "t")
     }
 }
+
+final class TextTransformTests: XCTestCase {
+    func testTransforms() {
+        XCTAssertEqual(TextTransform.upper.apply("héllo wörld"), "HÉLLO WÖRLD")
+        XCTAssertEqual(TextTransform.lower.apply("ABC Def"), "abc def")
+        XCTAssertEqual(TextTransform.title.apply("the quick brown fox"), "The Quick Brown Fox")
+        XCTAssertEqual(TextTransform.sentence.apply("HELLO there. how ARE you? fine!"), "Hello there. How are you? Fine!")
+        XCTAssertEqual(TextTransform.trim.apply("  a b \n"), "a b")
+        XCTAssertEqual(TextTransform.singleLine.apply("one\n  two\r\n\nthree"), "one two three")
+    }
+
+    func testTransformedItemIsNewTextOnlyContent() {
+        let item = ClipItem(id: UUID(), date: Date(), formats: [ClipItem.Format.text: Data("abc".utf8), ClipItem.Format.rtf: Data("x".utf8)],
+                            sourceApp: nil, contentHash: "h")
+        let out = item.transformed(.upper)!
+        XCTAssertEqual(out.plainText, "ABC")
+        XCTAssertNil(out.formats[ClipItem.Format.rtf])
+        XCTAssertNotEqual(out.id, item.id)
+        XCTAssertNotEqual(out.contentHash, item.contentHash)
+    }
+}

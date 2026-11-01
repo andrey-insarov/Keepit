@@ -248,7 +248,6 @@
 "1 week" = "1 semaine";
 "30 days" = "30 jours";
 "%@ — delete" = "%@ — supprimer";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it." = "En choisissant un élément de l’historique, maintenez ⇧ pour le coller en texte brut (sans mise en forme), ⌥ pour l’ajouter aux modèles, ⌃ pour le supprimer.";
 "Pause Recording for 10 Minutes" = "Suspendre l’enregistrement 10 minutes";
 "Resume Recording (paused until %@)" = "Reprendre l’enregistrement (suspendu jusqu’à %@)";
 "Keepit — recording paused" = "Keepit — enregistrement suspendu";
@@ -280,3 +279,13 @@
 "Paste previous item:" = "Coller l’élément précédent :";
 "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "Colle directement le deuxième élément de l’historique, sans le menu — pratique pour alterner entre les deux derniers clips. Cliquez le champ et appuyez sur ⌫ pour désactiver.";
 "Off — click to set" = "Désactivé — cliquez pour définir";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it, ⇧⌥ to paste it transformed (UPPERCASE, single line, …)." = "Maintenez ⇧ en choisissant un élément de l’historique pour le coller en texte brut (sans mise en forme), ⌥ pour l’ajouter aux Modèles, ⌃ pour le supprimer, ⇧⌥ pour le coller transformé (MAJUSCULES, une ligne, …).";
+"%@ — paste as" = "%@ — coller en";
+"Paste latest as" = "Coller le dernier en";
+"UPPERCASE" = "MAJUSCULES";
+"lowercase" = "minuscules";
+"Title Case" = "Chaque Mot En Majuscule";
+"Sentence case" = "Comme une phrase";
+"Trim whitespace" = "Supprimer les espaces aux extrémités";
+"Single line" = "Une seule ligne";
+"Plain text (no formatting)" = "Texte brut (sans mise en forme)";

@@ -248,7 +248,6 @@
 "1 week" = "1 周";
 "30 days" = "30 天";
 "%@ — delete" = "%@ — 删除";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it." = "选择历史记录项时按住 ⇧ 以纯文本粘贴（去除格式），⌥ 添加到模板，⌃ 删除。";
 "Pause Recording for 10 Minutes" = "暂停记录 10 分钟";
 "Resume Recording (paused until %@)" = "恢复记录（已暂停至 %@）";
 "Keepit — recording paused" = "Keepit — 记录已暂停";
@@ -280,3 +279,13 @@
 "Paste previous item:" = "粘贴上一项：";
 "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "不打开菜单，直接粘贴历史记录中的第二项 — 便于在最近两条之间切换。点击该字段并按 ⌫ 可关闭。";
 "Off — click to set" = "关闭 — 点击设置";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it, ⇧⌥ to paste it transformed (UPPERCASE, single line, …)." = "选择历史记录项时按住 ⇧ 以纯文本粘贴（去除格式），⌥ 添加到模板，⌃ 删除，⇧⌥ 转换后粘贴（大写、单行、…）。";
+"%@ — paste as" = "%@ — 粘贴为";
+"Paste latest as" = "将最新项粘贴为";
+"UPPERCASE" = "大写";
+"lowercase" = "小写";
+"Title Case" = "每个单词首字母大写";
+"Sentence case" = "句首字母大写";
+"Trim whitespace" = "去除首尾空白";
+"Single line" = "合并为单行";
+"Plain text (no formatting)" = "纯文本（无格式）";

@@ -248,7 +248,6 @@
 "1 week" = "1 週間";
 "30 days" = "30 日";
 "%@ — delete" = "%@ — 削除";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it." = "履歴の項目を選ぶときに ⇧ で書式なし貼り付け、⌥ でテンプレートに追加、⌃ で削除します。";
 "Pause Recording for 10 Minutes" = "記録を 10 分間一時停止";
 "Resume Recording (paused until %@)" = "記録を再開（%@ まで一時停止中）";
 "Keepit — recording paused" = "Keepit — 記録を一時停止中";
@@ -280,3 +279,13 @@
 "Paste previous item:" = "前の項目をペースト:";
 "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "メニューを開かずに履歴の 2 番目の項目をすぐにペーストします。直近 2 つのクリップを入れ替えるのに便利です。オフにするにはフィールドをクリックして ⌫ を押します。";
 "Off — click to set" = "オフ — クリックして設定";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it, ⇧⌥ to paste it transformed (UPPERCASE, single line, …)." = "履歴の項目を選ぶときに ⇧ を押すと書式なしのテキストとしてペースト、⌥ でテンプレートに追加、⌃ で削除、⇧⌥ で変換してペースト（大文字、1 行、…）します。";
+"%@ — paste as" = "%@ — 変換してペースト";
+"Paste latest as" = "最新の項目を変換してペースト";
+"UPPERCASE" = "大文字";
+"lowercase" = "小文字";
+"Title Case" = "各単語の先頭を大文字";
+"Sentence case" = "文頭のみ大文字";
+"Trim whitespace" = "前後の空白を削除";
+"Single line" = "1 行にまとめる";
+"Plain text (no formatting)" = "書式なしテキスト";

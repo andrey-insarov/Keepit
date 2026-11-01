@@ -248,7 +248,6 @@
 "1 week" = "1 semana";
 "30 days" = "30 días";
 "%@ — delete" = "%@: eliminar";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it." = "Al elegir un elemento del historial, mantén ⇧ para pegarlo como texto sin formato, ⌥ para añadirlo a las plantillas, ⌃ para eliminarlo.";
 "Pause Recording for 10 Minutes" = "Pausar la grabación 10 minutos";
 "Resume Recording (paused until %@)" = "Reanudar la grabación (en pausa hasta las %@)";
 "Keepit — recording paused" = "Keepit: grabación en pausa";
@@ -280,3 +279,13 @@
 "Paste previous item:" = "Pegar elemento anterior:";
 "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "Pega directamente el segundo elemento del historial, sin menú: útil para alternar entre los dos últimos clips. Haz clic en el campo y pulsa ⌫ para desactivarlo.";
 "Off — click to set" = "Desactivado — haz clic para definir";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it, ⇧⌥ to paste it transformed (UPPERCASE, single line, …)." = "Mantén ⇧ al elegir un elemento del historial para pegarlo como texto sin formato, ⌥ para añadirlo a Plantillas, ⌃ para eliminarlo, ⇧⌥ para pegarlo transformado (MAYÚSCULAS, una línea, …).";
+"%@ — paste as" = "%@ — pegar como";
+"Paste latest as" = "Pegar el último como";
+"UPPERCASE" = "MAYÚSCULAS";
+"lowercase" = "minúsculas";
+"Title Case" = "Cada Palabra En Mayúscula";
+"Sentence case" = "Como una oración";
+"Trim whitespace" = "Quitar espacios en los extremos";
+"Single line" = "Una sola línea";
+"Plain text (no formatting)" = "Texto sin formato";

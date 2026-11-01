@@ -670,13 +670,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         let items = menuBuilder.historyItems(history.items, target: self, action: #selector(historyChosen(_:)),
                                              plainAction: #selector(historyChosenPlain(_:)), pinAction: #selector(historyPinned(_:)),
-                                             deleteAction: #selector(historyDeleted(_:)), commandAccelerators: searching)
+                                             deleteAction: #selector(historyDeleted(_:)), transformAction: #selector(historyTransformed(_:)),
+                                             commandAccelerators: searching)
         if items.isEmpty {
             let e = NSMenuItem(title: L("(History is empty)"), action: nil, keyEquivalent: "")
             e.isEnabled = false
             menu.addItem(e)
         } else {
             for mi in items { menu.addItem(mi) }
+            // "Paste latest as ▸" — the transformations for the most recent text item, visible without modifiers.
+            if let latest = history.items.first, latest.kind == .text, latest.plainText != nil {
+                let p = NSMenuItem(title: L("Paste latest as"), action: nil, keyEquivalent: "")
+                p.image = NSImage(systemSymbolName: "textformat", accessibilityDescription: nil)
+                p.submenu = menuBuilder.transformMenu(for: latest, target: self, action: #selector(historyTransformed(_:)))
+                menu.addItem(p)
+            }
         }
 
         if includeTemplates {
@@ -705,7 +713,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let matches = MenuBuilder.filter(history.items, query: query)
         var fresh = menuBuilder.historyItems(matches, target: self, action: #selector(historyChosen(_:)),
                                              plainAction: #selector(historyChosenPlain(_:)), pinAction: #selector(historyPinned(_:)),
-                                             deleteAction: #selector(historyDeleted(_:)), commandAccelerators: true)
+                                             deleteAction: #selector(historyDeleted(_:)), transformAction: #selector(historyTransformed(_:)),
+                                             commandAccelerators: true)
         if fresh.isEmpty {
             let none = NSMenuItem(title: L("(no matches)"), action: nil, keyEquivalent: "")
             none.isEnabled = false
@@ -794,6 +803,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         guard let id = sender.representedObject as? UUID else { return }
         history.remove(id: id)
         viewer?.refresh()
+    }
+
+    /// "Paste as ▸" entry: paste a transformed copy of the item (UPPERCASE, single line, …).
+    @objc private func historyTransformed(_ sender: NSMenuItem) {
+        menuSelectionMade = true
+        guard let choice = sender.representedObject as? MenuBuilder.TransformChoice,
+              let item = history.items.first(where: { $0.id == choice.id }),
+              let out = item.transformed(choice.transform) else { return }
+        Paster.paste(out, into: pasteTarget, monitor: monitor, settings: settings, sendKey: settings.pasteAfterSelect)
+        nudgeAccessibilityIfNeeded()
     }
 
     private func chooseHistoryItem(_ sender: NSMenuItem, plainText: Bool) {

@@ -266,7 +266,6 @@
 "30 days" = "30 days";
 
 "%@ — delete" = "%@ — delete";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it." = "Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it.";
 
 "Pause Recording for 10 Minutes" = "Pause Recording for 10 Minutes";
 "Resume Recording (paused until %@)" = "Resume Recording (paused until %@)";
@@ -302,3 +301,14 @@
 "Paste previous item:" = "Paste previous item:";
 "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off.";
 "Off — click to set" = "Off — click to set";
+
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it, ⇧⌥ to paste it transformed (UPPERCASE, single line, …)." = "Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it, ⇧⌥ to paste it transformed (UPPERCASE, single line, …).";
+"%@ — paste as" = "%@ — paste as";
+"Paste latest as" = "Paste latest as";
+"UPPERCASE" = "UPPERCASE";
+"lowercase" = "lowercase";
+"Title Case" = "Title Case";
+"Sentence case" = "Sentence case";
+"Trim whitespace" = "Trim whitespace";
+"Single line" = "Single line";
+"Plain text (no formatting)" = "Plain text (no formatting)";

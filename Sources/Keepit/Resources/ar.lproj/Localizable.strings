@@ -248,7 +248,6 @@
 "1 week" = "أسبوع واحد";
 "30 days" = "30 يومًا";
 "%@ — delete" = "%@ — حذف";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it." = "أثناء اختيار عنصر من السجل اضغط باستمرار ⇧ للصقه كنص عادي (بدون تنسيق)، و⌥ لإضافته إلى القوالب، و⌃ لحذفه.";
 "Pause Recording for 10 Minutes" = "إيقاف التسجيل مؤقتًا لمدة 10 دقائق";
 "Resume Recording (paused until %@)" = "استئناف التسجيل (متوقف حتى %@)";
 "Keepit — recording paused" = "Keepit — التسجيل متوقف مؤقتًا";
@@ -280,3 +279,13 @@
 "Paste previous item:" = "لصق العنصر السابق:";
 "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "يلصق العنصر الثاني من السجل فورًا دون القائمة — مفيد للتبديل بين آخر نسختين. انقر الحقل واضغط ⌫ لإيقافه.";
 "Off — click to set" = "إيقاف — انقر للتعيين";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it, ⇧⌥ to paste it transformed (UPPERCASE, single line, …)." = "اضغط ⇧ مع اختيار عنصر من السجل للصقه كنص عادي (بدون تنسيق)، و⌥ لإضافته إلى القوالب، و⌃ لحذفه، و⇧⌥ للصقه محوَّلًا (أحرف كبيرة، سطر واحد، …).";
+"%@ — paste as" = "%@ — لصق كـ";
+"Paste latest as" = "لصق الأحدث كـ";
+"UPPERCASE" = "أحرف كبيرة";
+"lowercase" = "أحرف صغيرة";
+"Title Case" = "حرف كبير في بداية كل كلمة";
+"Sentence case" = "حرف كبير في بداية الجملة";
+"Trim whitespace" = "إزالة المسافات من الطرفين";
+"Single line" = "سطر واحد";
+"Plain text (no formatting)" = "نص عادي (بدون تنسيق)";
