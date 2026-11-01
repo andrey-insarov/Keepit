@@ -294,6 +294,10 @@ Sources/Keepit/
    format and placeholder engine split out of the app, so a separate iOS companion (templates
    keyboard, history viewer, Share Sheet; reads the same encrypted backup from iCloud Drive) can be
    built as its own project that stays compatible with Keepit.
+5. **Open `.keepit` format** — a published specification of the backup file plus a small reference
+   CLI (read, write, inspect) so other tools on any platform can import or export Keepit data; and
+   template export to Espanso (cross-platform, open source), so snippets travel to Windows and Linux
+   without a Keepit port.
 
 **Later**
 
