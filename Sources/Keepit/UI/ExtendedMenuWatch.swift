@@ -2,7 +2,7 @@ import AppKit
 
 /// "Hold ⇧ for the extended menu": while a history menu is open, a background timer watches the modifier
 /// flags (menu tracking starves ordinary timers and local event monitors). When ⇧ goes down every history
-/// row gets its action submenu (the row draws › and AppKit opens it on hover or →); when ⇧ goes up the submenus
+/// row gets its action submenu (AppKit shows ▸ and opens it on hover or →); when ⇧ goes up the submenus
 /// are removed again — after the open one, if any, has closed.
 final class ExtendedMenuWatch {
     static let shared = ExtendedMenuWatch()
@@ -61,7 +61,6 @@ final class ExtendedMenuWatch {
         attached = true
         for mi in menu.items where mi.tag == MenuBuilder.historyTag && mi.isEnabled && !mi.isAlternate && mi.submenu == nil {
             mi.submenu = build(mi)
-            mi.view?.needsDisplay = true
         }
     }
 
@@ -70,7 +69,6 @@ final class ExtendedMenuWatch {
         attached = false
         for mi in menu.items where mi.tag == MenuBuilder.historyTag && mi.submenu != nil {
             mi.submenu = nil
-            mi.view?.needsDisplay = true
         }
     }
 }

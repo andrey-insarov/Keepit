@@ -619,9 +619,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     // NSMenuDelegate
     func menu(_ menu: NSMenu, willHighlight item: NSMenuItem?) {
-        // Custom row views draw their own highlight: repaint the old and the new one.
-        menu.highlightedItem?.view?.needsDisplay = true
-        item?.view?.needsDisplay = true
         guard settings.showPreview, !isLocked else { return }
         guard let mi = item, mi.tag == MenuBuilder.historyTag, let id = mi.representedObject as? UUID,
               let clip = history.item(id: id), !clip.fitsInTitle(maxLength: settings.titleLength) else {
