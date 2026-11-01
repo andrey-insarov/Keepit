@@ -261,7 +261,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         return true
     }
 
-    /// Preferences → L("New Recovery Phrase…"): invalidates the old sheet.
+    /// Preferences → "New Recovery Phrase…": invalidates the old sheet.
     func regenerateRecoveryPhrase() {
         guard Vault.isEnabled, let key = Storage.key else { return }
         guard authenticateForChange(reasonKey: "generate a new recovery phrase") else { return }
@@ -385,7 +385,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if !hotKeys.register(settings.templateHotKey, handler: { [weak self] in self?.showTemplatePopup() }) {
             failed.append(settings.templateHotKey.displayString)
         }
-        // Per-template hot keys: paste the item directly, no menu (L("Set Hot Key") on a template item).
+        // Per-template hot keys: paste the item directly, no menu ("Set Hot Key" on a template item).
         for t in templates.allItems().filter({ $0.hotKey != nil }).prefix(Limits.templateHotKeysMax) {
             guard let hk = t.hotKey, t.clip != nil else { continue }
             let id = t.id

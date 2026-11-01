@@ -61,6 +61,19 @@ xcrun notarytool store-credentials "keepit-notary" --key AuthKey_XXXXXXXXXX.p8 -
 make notarize SIGN_ID="Developer ID Application: Your Name (TEAMID)" NOTARY_PROFILE=keepit-notary
 make dist     SIGN_ID="Developer ID Application: Your Name (TEAMID)"
 spctl -a -vv -t install Keepit-*.dmg      # should say "accepted, source=Notarized Developer ID"
+
+# day-to-day: pull and install a signed build into /Applications
+git pull && make install SIGN_ID="Developer ID Application: Your Name (TEAMID)"
+```
+
+Signed and App Store builds are **universal** (arm64 + x86_64; `UNIVERSAL=0` for a quick
+single-arch build). The Makefile asks SwiftPM for the product path (`--show-bin-path`), so it
+works across toolchains. On CI a non-universal result fails the build; locally it only warns.
+
+Convenient alias for `~/.zshrc`:
+
+```bash
+alias keepit-build='cd ~/keepit && git pull && make install SIGN_ID="Developer ID Application: UK Intis Telecom LTD (WQ66955SW2)"'
 ```
 
 ### What the signed build changes for users

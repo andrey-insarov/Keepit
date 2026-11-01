@@ -4,7 +4,7 @@ import AppKit
 enum RecoveryDialogs {
 
     /// Show a freshly generated phrase. The user must tick the disclaimer before continuing.
-    /// There is deliberately no L("Copy") button: Keepit itself would record the phrase in its history.
+    /// There is deliberately no "Copy" button: Keepit itself would record the phrase in its history.
     static func present(words: [String], title: String = L("Your recovery phrase")) {
         let a = NSAlert()
         a.messageText = title

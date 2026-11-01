@@ -201,7 +201,7 @@ final class ViewerWindowController: NSWindowController,
         leftScroll.hasVerticalScroller = true
         leftScroll.borderType = .noBorder
 
-        // Right side: L("Name") row (template items/folders only) above the content.
+        // Right side: "Name" row (template items/folders only) above the content.
         let nameLabel = NSTextField(labelWithString: L("Name:"))
         nameField.placeholderString = L("Empty = show contents · “-” = separator · &x = menu shortcut")
         nameField.target = self
@@ -538,7 +538,7 @@ final class ViewerWindowController: NSWindowController,
         select(key: "t:\(t.id.uuidString)")
     }
 
-    /// Where L("New …") goes in the template tree: selected folder, after selected item, or root.
+    /// Where "New …" goes in the template tree: selected folder, after selected item, or root.
     private func templateInsertionPoint() -> (TemplateNode, Int?) {
         guard let n = selectedNode?.itemNode, let t = n.templateNode else { return (templates.root, nil) }
         if t.isFolder { return (t, nil) }

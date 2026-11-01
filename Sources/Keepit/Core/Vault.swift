@@ -237,7 +237,7 @@ enum Vault {
         return nil
     }
 
-    /// Same prompt, optionally with a third L("Use Recovery Phrase…") button.
+    /// Same prompt, optionally with a third "Use Recovery Phrase…" button.
     static func prompt(title: String, message: String, confirm: Bool = false, cancelQuits: Bool = false, offerRecovery: Bool) -> PromptResult {
         while true {
             let a = NSAlert()

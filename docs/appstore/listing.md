@@ -53,6 +53,13 @@ Keepit needs the Accessibility permission to paste for you; without it, chosen i
 ## Keywords (100 chars, comma-separated)
 clipboard,history,paste,copy,snippets,templates,manager,clip,text expander,productivity
 
+## What's new (version 2.5.0)
+• Keepit now speaks 10 languages: English, Russian, Ukrainian, German, French, Spanish, Italian, Japanese, Simplified Chinese and Arabic — it follows your macOS language.
+• Export / Import Backup: move your history, templates and preferences to another Mac in one password-encrypted file.
+• New About window.
+• Universal app: native on Apple silicon and Intel.
+• Fixes: app icon in the Touch ID dialog; Touch ID prompt now always in the system language.
+
 ## What's new (version 2.4.0)
 First App Store release.
 

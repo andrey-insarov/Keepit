@@ -14,6 +14,7 @@ final class AboutWindow: NSWindowController {
         w.standardWindowButton(.miniaturizeButton)?.isHidden = true
         w.standardWindowButton(.zoomButton)?.isHidden = true
         w.isReleasedWhenClosed = false
+        w.hidesOnDeactivate = false   // NSPanel default would hide it when another app comes forward
         super.init(window: w)
         w.contentView = makeContent()
         w.center()

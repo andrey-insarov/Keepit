@@ -25,7 +25,7 @@ enum AppInfo {
     static let supportURL = "https://keep.it.com/support"
     static let homepage = "https://keep.it.com"
 
-    /// Accent for everything L("Template"): navy in light mode, a readable lighter navy in dark mode.
+    /// Accent for everything "Template": navy in light mode, a readable lighter navy in dark mode.
     static let templateColor = NSColor(name: "keepit.template") { appearance in
         appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
             ? NSColor(srgbRed: 0.56, green: 0.66, blue: 1.0, alpha: 1)
