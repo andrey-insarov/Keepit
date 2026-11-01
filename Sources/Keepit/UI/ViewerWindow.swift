@@ -163,6 +163,7 @@ final class ViewerWindowController: NSWindowController,
         binaryButton = btn(L("Binary"), #selector(toggleBinary), symbol: "number")
         binaryButton.setButtonType(.pushOnPushOff)
         let bar = NSStackView(views: [
+            searchField,
             btn(L("Send to Clipboard"), #selector(sendToClipboard), symbol: "doc.on.clipboard"),
             btn(L("Paste"), #selector(pasteItem), symbol: "arrow.right.doc.on.clipboard"),
             btn(L("Add to Template"), #selector(addToTemplate), symbol: "text.badge.plus"),
@@ -174,7 +175,6 @@ final class ViewerWindowController: NSWindowController,
             btn(L("Down"), #selector(moveDownAction), symbol: "arrow.down"),
             Spacer(),
             binaryButton,
-            searchField,
         ])
         searchField.placeholderString = L("Search")
         searchField.sendsSearchStringImmediately = true
@@ -316,10 +316,9 @@ final class ViewerWindowController: NSWindowController,
         return n
     }
 
-    private func formatChildren(of parent: VNode, clip: ClipItem?) -> [VNode] {
-        guard let c = clip else { return [] }
-        return c.orderedFormats.map { node("\(parent.key)/\($0)", .format($0), parent: parent) }
-    }
+    /// Items are leaves: the pane shows the primary format (text / image / files) directly. The other
+    /// formats (RTF, HTML) are kept for pasting but not listed — one level less to click through.
+    private func formatChildren(of parent: VNode, clip: ClipItem?) -> [VNode] { [] }
 
     /// nil = pruned by the search (an item that does not match, or a folder with no matching descendants).
     private func buildTemplate(_ t: TemplateNode, parent: VNode) -> VNode? {
@@ -916,6 +915,17 @@ final class ViewerWindowController: NSWindowController,
             textCell.font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
         default:
             textCell.font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
+        }
+        // Search: highlight the matching part of the label in yellow.
+        if !query.isEmpty, !n.isRoot {
+            let text = textCell.stringValue
+            let attr = NSMutableAttributedString(string: text, attributes: [.font: textCell.font!, .foregroundColor: textCell.textColor ?? .controlTextColor])
+            var search = text.startIndex
+            while let r = text.range(of: query, options: [.caseInsensitive, .diacriticInsensitive], range: search..<text.endIndex) {
+                attr.addAttributes([.backgroundColor: NSColor.systemYellow.withAlphaComponent(0.6), .foregroundColor: NSColor.black], range: NSRange(r, in: text))
+                search = r.upperBound
+            }
+            textCell.attributedStringValue = attr
         }
     }
 

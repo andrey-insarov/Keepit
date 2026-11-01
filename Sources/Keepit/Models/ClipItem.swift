@@ -161,6 +161,9 @@ struct ClipItem: Codable, Identifiable, Equatable {
                 .first { !$0.isEmpty } ?? ""
             let collapsed = firstLine.split(whereSeparator: { $0.isWhitespace }).joined(separator: " ")
             raw = collapsed.isEmpty ? L("(Empty text)") : collapsed
+            // More lines after the first one: say so, so a one-liner and a wall of text look different.
+            let trimmed = t.trimmingCharacters(in: .whitespacesAndNewlines)
+            if raw.count <= maxLength, trimmed.contains(where: { $0.isNewline }) { return raw + " …" }
         }
         if raw.count > maxLength {
             return String(raw.prefix(max(1, maxLength - 1))) + "…"
