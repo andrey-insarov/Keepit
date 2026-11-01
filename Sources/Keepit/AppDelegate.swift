@@ -813,8 +813,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// Long press on a history item. AppKit treats the release after a long hold as a click on the item,
     /// which would paste it or (with a submenu attached) close everything. So: while the button is still
     /// down the item is disabled (a release over a disabled item does nothing and the menu stays open);
-    /// as soon as it is released the item is re-enabled with the action submenu attached, and a one-pixel
-    /// synthetic pointer move makes the menu open that submenu beside the list.
+    /// as soon as it is released the item is re-enabled with the action submenu attached (▸ appears), which
+    /// opens on the next pointer movement or with the → key.
     private func showContextMenu(for mi: NSMenuItem, in menu: NSMenu) {
         guard mi.submenu == nil, let id = mi.representedObject as? UUID, let item = history.item(id: id) else { return }
         PreviewPanel.shared.hide()
@@ -828,7 +828,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             guard let mi else { return }
             mi.isEnabled = true
             mi.submenu = ctx
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { LongPress.nudgePointer(excursion: 22) }
         }
     }
 
