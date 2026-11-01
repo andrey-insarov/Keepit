@@ -135,7 +135,7 @@ final class HotKeySettingsTests: XCTestCase {
         var s = Settings()
         XCTAssertEqual(s.numberPasteModifiers, HotKey.controlOption)
         XCTAssertEqual(s.latestActionModifiers, HotKey.controlOption)
-        XCTAssertNil(s.lockHotKey)
+        XCTAssertEqual(s.lockHotKey, HotKey.option(kVK_ANSI_L))
         s.numberPasteModifiers = nil                      // explicitly off must survive a round trip
         s.lockHotKey = HotKey(keyCode: UInt32(kVK_ANSI_L), modifiers: UInt32(cmdKey | controlKey))
         let data = try JSONEncoder().encode(s)
