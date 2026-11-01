@@ -1,0 +1,4 @@
+# Translation tables and site builder are tooling, not the product: keep GitHub language stats on Swift.
+Scripts/** linguist-documentation
+docs/** linguist-documentation
+Sources/Keepit/Resources/*.lproj/* linguist-generated
