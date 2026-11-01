@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.8.0 — unreleased
+## 2.8.0 — 2026-11-01
 
 - **Pause Recording for 10 Minutes** in the menu (the menu-bar icon turns into ⏸); *Resume Recording*
   ends it early. Survives lock/unlock.
@@ -13,9 +13,6 @@
 - **Preview panel**: hovering a history item shows the full image or the first lines of the text in a
   floating panel beside the menu, with source app, date and size. Replaces tooltips while on
   (Preferences → Menu).
-
-## 2.7.2 — unreleased
-
 - Password prompts show the current keyboard layout (EN, RU, …) and a red Caps Lock warning, live.
 - The password-strength hint no longer gets cut off.
 - *Delete Keepit and All Data* notices a Homebrew install and tells you how to clear brew's record
