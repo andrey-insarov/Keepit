@@ -4,7 +4,8 @@ import XCTest
 final class ClipItemTests: XCTestCase {
     func testTitleUsesFirstMeaningfulLineAndCollapsesWhitespace() {
         let item = ClipItem.text("\n\n   hello    big\tworld  \nsecond line")
-        XCTAssertEqual(item.title(maxLength: 60), "hello big world")
+        XCTAssertEqual(item.title(maxLength: 60), "hello big world …")   // "…" = more lines follow
+        XCTAssertEqual(ClipItem.text("  single  ").title(maxLength: 60), "single")
     }
 
     func testTitleIsTruncatedWithEllipsis() {

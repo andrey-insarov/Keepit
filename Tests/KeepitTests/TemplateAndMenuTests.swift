@@ -18,7 +18,7 @@ final class TemplateAndMenuTests: XCTestCase {
 
     func testDisplayNameFallsBackToContent() {
         let n = TemplateNode(name: "", text: "first line\nsecond")
-        XCTAssertEqual(n.displayName, "first line")
+        XCTAssertEqual(n.displayName, "first line …")
         XCTAssertTrue(TemplateNode(name: "-", text: "").isSeparator)
         XCTAssertTrue(TemplateNode(name: "F").isFolder)
     }
