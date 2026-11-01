@@ -11,3 +11,9 @@ SPARKLE_PUBLIC_KEY
 Resources/KeepitDevID.provisionprofile
 *.sig
 SHA256SUMS
+
+# Signing material — never commit (lives in KeePass + the GitHub "release" environment)
+*.p12
+*.p8
+*.provisionprofile
+sparkle_private_key*
