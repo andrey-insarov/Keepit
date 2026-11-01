@@ -22,7 +22,6 @@
 "About Keepit" = "About Keepit";
 "Add Clipboard to Templates" = "Add Clipboard to Templates";
 "Add to Template" = "Add to Template";
-"Allow changing the password with Touch ID (off = always require the current password)" = "Allow changing the password with Touch ID (off = always require the current password)";
 "Binary" = "Binary";
 "Cancel" = "Cancel";
 "Change Password Now" = "Change Password Now";
@@ -74,8 +73,6 @@
 "Hot keys & paste" = "Hot keys & paste";
 "I understand that if I lose both the password and this recovery phrase, my data is lost forever." = "I understand that if I lose both the password and this recovery phrase, my data is lost forever.";
 "I've saved it" = "I've saved it";
-"Ignore concealed clipboard data (password managers)" = "Ignore concealed clipboard data (password managers)";
-"Ignored apps (bundle IDs, one per line; known password managers are always ignored)" = "Ignored apps (bundle IDs, one per line; known password managers are always ignored)";
 "Image items:" = "Image items:";
 "Images (%d)" = "Images (%d)";
 "Images — %d of %d." = "Images — %d of %d.";
@@ -92,7 +89,6 @@
 "Launch at login" = "Launch at login";
 "Limit reached: at most %d template items, %d levels deep." = "Limit reached: at most %d template items, %d levels deep.";
 "Lock Keepit" = "Lock Keepit";
-"Lock Keepit (wipe key, unload data) when the screen locks or the Mac sleeps" = "Lock Keepit (wipe key, unload data) when the screen locks or the Mac sleeps";
 "Longer is better — try a phrase of several words" = "Longer is better — try a phrase of several words";
 "Menu" = "Menu";
 "Mix letters, digits and symbols" = "Mix letters, digits and symbols";
@@ -105,7 +101,6 @@
 "New password" = "New password";
 "New …" = "New …";
 "No, Keep Password" = "No, Keep Password";
-"Number items (press 1-9, 0, A-Z to pick)" = "Number items (press 1-9, 0, A-Z to pick)";
 "OK" = "OK";
 "Open Data Folder" = "Open Data Folder";
 "Open System Settings" = "Open System Settings";
@@ -126,12 +121,10 @@
 "Quit" = "Quit";
 "Quit Keepit" = "Quit Keepit";
 "Redo" = "Redo";
-"Remove duplicates (keep newest)" = "Remove duplicates (keep newest)";
 "Rename" = "Rename";
 "Rename…" = "Rename…";
 "Repeat password" = "Repeat password";
 "Repeated or sequential characters weaken it" = "Repeated or sequential characters weaken it";
-"Require password at launch, encrypt history & templates" = "Require password at launch, encrypt history & templates";
 "Save" = "Save";
 "Save Format to File…" = "Save Format to File…";
 "Save history on quit, restore on start" = "Save history on quit, restore on start";
@@ -172,7 +165,6 @@
 "Unlock" = "Unlock";
 "Unlock Keepit…" = "Unlock Keepit…";
 "Unlock with Touch ID (no Touch ID on this Mac)" = "Unlock with Touch ID (no Touch ID on this Mac)";
-"Unlock with Touch ID (password remains as fallback)" = "Unlock with Touch ID (password remains as fallback)";
 "Up" = "Up";
 "Use Password" = "Use Password";
 "Use Recovery Phrase…" = "Use Recovery Phrase…";
@@ -251,7 +243,6 @@
 
 "Search history…" = "Search history…";
 "(no matches)" = "(no matches)";
-"Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)";
 
 "%@ — plain text" = "%@ — plain text";
 
@@ -264,9 +255,7 @@
 "Layout: %@" = "Layout: %@";
 "CAPS LOCK" = "CAPS LOCK";
 
-"Show a preview panel next to the highlighted item (replaces tooltips)" = "Show a preview panel next to the highlighted item (replaces tooltips)";
 
-"Show the icon of the app each item was copied from" = "Show the icon of the app each item was copied from";
 
 "Forget items older than:" = "Forget items older than:";
 "Never" = "Never";
@@ -285,3 +274,27 @@
 
 "Advanced" = "Advanced";
 "Backup" = "Backup";
+
+"Remove duplicates" = "Remove duplicates";
+"When the same content is copied again, the older copy is removed and the new one goes to the top." = "When the same content is copied again, the older copy is removed and the new one goes to the top.";
+"Ignore concealed clipboard data" = "Ignore concealed clipboard data";
+"Password managers mark what they copy as concealed; such items are never recorded. Known password managers are ignored in any case." = "Password managers mark what they copy as concealed; such items are never recorded. Known password managers are ignored in any case.";
+"Ignored apps:" = "Ignored apps:";
+"Bundle identifiers, one per line, e.g. com.example.app. Nothing copied in these apps is recorded. Known password managers are always ignored." = "Bundle identifiers, one per line, e.g. com.example.app. Nothing copied in these apps is recorded. Known password managers are always ignored.";
+"Search field in the history menu" = "Search field in the history menu";
+"A search field at the top of the history menu: typing filters the list in place, Return pastes the first match. Item shortcuts then become ⌘1–⌘0 instead of 1-9/0/A-Z." = "A search field at the top of the history menu: typing filters the list in place, Return pastes the first match. Item shortcuts then become ⌘1–⌘0 instead of 1-9/0/A-Z.";
+"Number items" = "Number items";
+"Prefix items with 1-9, 0, A-Z; pressing the key pastes the item without the mouse." = "Prefix items with 1-9, 0, A-Z; pressing the key pastes the item without the mouse.";
+"Show preview panel" = "Show preview panel";
+"Hovering a history item shows the full image or the first lines of text in a panel beside the menu. Tooltips are not shown while this is on." = "Hovering a history item shows the full image or the first lines of text in a panel beside the menu. Tooltips are not shown while this is on.";
+"Show source app icons" = "Show source app icons";
+"Modifier keys while choosing an item" = "Modifier keys while choosing an item";
+"Require password at launch" = "Require password at launch";
+"History and templates are stored AES-256 encrypted; the key is derived from the password and asked for every time Keepit starts." = "History and templates are stored AES-256 encrypted; the key is derived from the password and asked for every time Keepit starts.";
+"Unlock with Touch ID" = "Unlock with Touch ID";
+"Unlock with a fingerprint instead of typing the password. The password always remains as fallback." = "Unlock with a fingerprint instead of typing the password. The password always remains as fallback.";
+"Allow changing the password with Touch ID" = "Allow changing the password with Touch ID";
+"Let Touch ID stand in for the current password when changing it. Off = always type the current password first." = "Let Touch ID stand in for the current password when changing it. Off = always type the current password first.";
+"Lock when the screen locks or the Mac sleeps" = "Lock when the screen locks or the Mac sleeps";
+"Wipes the key from memory and unloads history and templates when the screen locks or the Mac sleeps; unlock with Touch ID or the password afterwards." = "Wipes the key from memory and unloads history and templates when the screen locks or the Mac sleeps; unlock with Touch ID or the password afterwards.";
+"One password-encrypted .keepit file with history, templates and preferences — for moving to another Mac or between the App Store and direct editions." = "One password-encrypted .keepit file with history, templates and preferences — for moving to another Mac or between the App Store and direct editions.";

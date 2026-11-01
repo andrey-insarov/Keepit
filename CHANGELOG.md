@@ -2,6 +2,7 @@
 
 ## 2.9.0 — unreleased
 
+- Short checkbox labels with (?) help buttons that open explanations in a popover; ignored-apps field aligned with the other rows
 - Preferences reorganised into five tabs — General, History, Menu, Security, Advanced — in a
   fixed-size window; Export/Import Backup also live on the Security tab, *Open Data Folder* and
   the Danger zone on Advanced.

@@ -23,12 +23,11 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     private let pollInterval = NSTextField()
     private let pasteDelay   = NSTextField()
     private let showThumbs   = NSButton(checkboxWithTitle: L("Show image thumbnails in menu"), target: nil, action: nil)
-    private let showPreview  = NSButton(checkboxWithTitle: L("Show a preview panel next to the highlighted item (replaces tooltips)"), target: nil, action: nil)
-    private let showSource   = NSButton(checkboxWithTitle: L("Show the icon of the app each item was copied from"), target: nil, action: nil)
+    private let showPreview  = NSButton(checkboxWithTitle: L("Show preview panel"), target: nil, action: nil)
+    private let showSource   = NSButton(checkboxWithTitle: L("Show source app icons"), target: nil, action: nil)
     private let showTips     = NSButton(checkboxWithTitle: L("Show tooltips with item contents"), target: nil, action: nil)
-    private let numberItems  = NSButton(checkboxWithTitle: L("Number items (press 1-9, 0, A-Z to pick)"), target: nil, action: nil)
-    private let plainHint    = NSTextField(wrappingLabelWithString: L("Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it."))
-    private let searchMenu   = NSButton(checkboxWithTitle: L("Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)"), target: nil, action: nil)
+    private let numberItems  = NSButton(checkboxWithTitle: L("Number items"), target: nil, action: nil)
+    private let searchMenu   = NSButton(checkboxWithTitle: L("Search field in the history menu"), target: nil, action: nil)
     private let pasteAfter   = NSButton(checkboxWithTitle: L("Paste into the active app after choosing"), target: nil, action: nil)
     private let showAtCaret  = NSButton(checkboxWithTitle: L("Open menu at text cursor when possible"), target: nil, action: nil)
     private let maxAge       = NSPopUpButton(frame: .zero, pullsDown: false)
@@ -37,19 +36,17 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         (0, L("Never")), (3600, L("1 hour")), (6 * 3600, L("6 hours")), (86400, L("1 day")),
         (7 * 86400, L("1 week")), (30 * 86400, L("30 days")),
     ]
-    private let overlap      = NSButton(checkboxWithTitle: L("Remove duplicates (keep newest)"), target: nil, action: nil)
+    private let overlap      = NSButton(checkboxWithTitle: L("Remove duplicates"), target: nil, action: nil)
     private let saveHistory  = NSButton(checkboxWithTitle: L("Save history on quit, restore on start"), target: nil, action: nil)
-    private let concealed    = NSButton(checkboxWithTitle: L("Ignore concealed clipboard data (password managers)"), target: nil, action: nil)
+    private let concealed    = NSButton(checkboxWithTitle: L("Ignore concealed clipboard data"), target: nil, action: nil)
     private let loginItem    = NSButton(checkboxWithTitle: L("Launch at login"), target: nil, action: nil)
-    private let protect      = NSButton(checkboxWithTitle: L("Require password at launch, encrypt history & templates"), target: nil, action: nil)
+    private let protect      = NSButton(checkboxWithTitle: L("Require password at launch"), target: nil, action: nil)
     private let changePw     = NSButton(title: L("Change Password…"), target: nil, action: nil)
-    private let lockScreen   = NSButton(checkboxWithTitle: L("Lock Keepit (wipe key, unload data) when the screen locks or the Mac sleeps"), target: nil, action: nil)
-    private let touchID      = NSButton(checkboxWithTitle: L("Unlock with Touch ID (password remains as fallback)"), target: nil, action: nil)
-    private let touchIDChange = NSButton(checkboxWithTitle: L("Allow changing the password with Touch ID (off = always require the current password)"), target: nil, action: nil)
+    private let lockScreen   = NSButton(checkboxWithTitle: L("Lock when the screen locks or the Mac sleeps"), target: nil, action: nil)
+    private let touchID      = NSButton(checkboxWithTitle: L("Unlock with Touch ID"), target: nil, action: nil)
+    private let touchIDChange = NSButton(checkboxWithTitle: L("Allow changing the password with Touch ID"), target: nil, action: nil)
     private let newPhrase    = NSButton(title: L("New Recovery Phrase…"), target: nil, action: nil)
-    private let phraseHint   = NSTextField(wrappingLabelWithString: L("Issues a new 24-word phrase and invalidates the old one. Use it if the printed sheet was lost or seen by someone; you will then be offered to change the password too."))
     private let uninstall    = NSButton(title: L("Delete Keepit and All Data…"), target: nil, action: nil)
-    private let uninstallHint = NSTextField(wrappingLabelWithString: L("⚠️ Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back."))
     private let historyHK    = HotKeyRecorderView(frame: .zero)
     private let templateHK   = HotKeyRecorderView(frame: .zero)
     private let ignoreScroll = NSTextView.scrollableTextView()
@@ -121,11 +118,41 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         return grid
     }
 
-    private func hint(_ label: NSTextField) -> NSTextField {
-        label.textColor = .secondaryLabelColor
+    /// `view` followed by a small (?) button that opens a popover with `text`.
+    private func withHelp(_ view: NSView, _ text: String) -> NSView {
+        let b = NSButton(title: "", target: self, action: #selector(helpTapped(_:)))
+        b.bezelStyle = .helpButton
+        b.controlSize = .small
+        b.toolTip = text
+        b.identifier = NSUserInterfaceItemIdentifier(text)
+        let row = NSStackView(views: [view, b])
+        row.orientation = .horizontal
+        row.alignment = .centerY
+        row.spacing = 6
+        return row
+    }
+
+    @objc private func helpTapped(_ sender: NSButton) {
+        guard let text = sender.identifier?.rawValue else { return }
+        let pop = NSPopover()
+        pop.behavior = .transient
+        let vc = NSViewController()
+        let label = NSTextField(wrappingLabelWithString: text)
+        label.preferredMaxLayoutWidth = 320
         label.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
-        label.preferredMaxLayoutWidth = 330
-        return label
+        label.translatesAutoresizingMaskIntoConstraints = false
+        let v = NSView()
+        v.addSubview(label)
+        NSLayoutConstraint.activate([
+            label.topAnchor.constraint(equalTo: v.topAnchor, constant: 10),
+            label.leadingAnchor.constraint(equalTo: v.leadingAnchor, constant: 12),
+            label.trailingAnchor.constraint(equalTo: v.trailingAnchor, constant: -12),
+            label.bottomAnchor.constraint(equalTo: v.bottomAnchor, constant: -10),
+            v.widthAnchor.constraint(lessThanOrEqualToConstant: 344),
+        ])
+        vc.view = v
+        pop.contentViewController = vc
+        pop.show(relativeTo: sender.bounds, of: sender, preferredEdge: .maxY)
     }
 
     /// Wrap a grid into a tab page with standard margins.
@@ -163,13 +190,14 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
 
         // --- History
         let ignoredPlaceholder = NSView()
+        let ignoredLabel = NSTextField(labelWithString: L("Ignored apps:"))
+        ignoredLabel.alignment = .right
         let historyGrid = makeGrid([
             pair(L("Text & file items:"), numField(historyMax), L("Image items:"), numField(imageMax)),
             labeled(L("Forget items older than:"), maxAge),
-            [NSView(), overlap],
-            [NSView(), concealed],
-            header(L("Ignored apps (bundle IDs, one per line; known password managers are always ignored)")),
-            [ignoredPlaceholder, NSView()],
+            [NSView(), withHelp(overlap, L("When the same content is copied again, the older copy is removed and the new one goes to the top."))],
+            [NSView(), withHelp(concealed, L("Password managers mark what they copy as concealed; such items are never recorded. Known password managers are ignored in any case."))],
+            [ignoredLabel, withHelp(ignoredPlaceholder, L("Bundle identifiers, one per line, e.g. com.example.app. Nothing copied in these apps is recorded. Known password managers are always ignored."))],
         ])
         let scroll = ignoreScroll
         scroll.focusRingType = .none
@@ -179,23 +207,30 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         ignoreApps.isRichText = false
         ignoreApps.font = NSFont.monospacedSystemFont(ofSize: 12, weight: .regular)
         scroll.translatesAutoresizingMaskIntoConstraints = false
-        scroll.heightAnchor.constraint(equalToConstant: 110).isActive = true
-        scroll.widthAnchor.constraint(equalToConstant: 470).isActive = true
-        let ignoredRowIndex = historyGrid.index(of: historyGrid.cell(for: ignoredPlaceholder)!.row!)
-        historyGrid.mergeCells(inHorizontalRange: NSRange(location: 0, length: 2), verticalRange: NSRange(location: ignoredRowIndex, length: 1))
-        historyGrid.cell(atColumnIndex: 0, rowIndex: ignoredRowIndex).contentView = scroll
+        scroll.heightAnchor.constraint(equalToConstant: 96).isActive = true
+        scroll.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        // The placeholder sits inside the help row; swap it for the scroll view.
+        if let row = ignoredPlaceholder.superview as? NSStackView {
+            row.alignment = .top
+            row.insertArrangedSubview(scroll, at: 0)
+            row.removeArrangedSubview(ignoredPlaceholder)
+            ignoredPlaceholder.removeFromSuperview()
+        }
+        historyGrid.cell(for: ignoredLabel)?.yPlacement = .top
 
         // --- Menu
+        let modifiers = NSTextField(labelWithString: L("Modifier keys while choosing an item"))
         let menuGrid = makeGrid([
-            [NSView(), searchMenu],
-            [NSView(), numberItems],
-            [NSView(), showPreview],
+            [NSView(), withHelp(searchMenu, L("A search field at the top of the history menu: typing filters the list in place, Return pastes the first match. Item shortcuts then become ⌘1–⌘0 instead of 1-9/0/A-Z."))],
+            [NSView(), withHelp(numberItems, L("Prefix items with 1-9, 0, A-Z; pressing the key pastes the item without the mouse."))],
+            [NSView(), withHelp(showPreview, L("Hovering a history item shows the full image or the first lines of text in a panel beside the menu. Tooltips are not shown while this is on."))],
             [NSView(), showTips],
             [NSView(), showSource],
             [NSView(), showThumbs],
             pair(L("Title length (chars):"), numField(titleLength), L("Thumbnail height (px):"), numField(thumbSize)),
-            [NSView(), hint(plainHint)],
+            [NSView(), withHelp(modifiers, L("Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it."))],
         ])
+        modifiers.textColor = .secondaryLabelColor
 
         // --- Security (+ backup)
         let exportBtn = NSButton(title: L("Export Backup…"), target: self, action: #selector(exportTapped))
@@ -204,15 +239,14 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         backupRow.orientation = .horizontal
         backupRow.spacing = 8
         let security = makeGrid([
-            [NSView(), protect],
+            [NSView(), withHelp(protect, L("History and templates are stored AES-256 encrypted; the key is derived from the password and asked for every time Keepit starts."))],
             [NSView(), changePw],
-            [NSView(), touchID],
-            [NSView(), touchIDChange],
-            [NSView(), lockScreen],
-            [NSView(), newPhrase],
-            [NSView(), hint(phraseHint)],
+            [NSView(), withHelp(touchID, L("Unlock with a fingerprint instead of typing the password. The password always remains as fallback."))],
+            [NSView(), withHelp(touchIDChange, L("Let Touch ID stand in for the current password when changing it. Off = always type the current password first."))],
+            [NSView(), withHelp(lockScreen, L("Wipes the key from memory and unloads history and templates when the screen locks or the Mac sleeps; unlock with Touch ID or the password afterwards."))],
+            [NSView(), withHelp(newPhrase, L("Issues a new 24-word phrase and invalidates the old one. Use it if the printed sheet was lost or seen by someone; you will then be offered to change the password too."))],
             header(L("Backup")),
-            [NSView(), backupRow],
+            [NSView(), withHelp(backupRow, L("One password-encrypted .keepit file with history, templates and preferences — for moving to another Mac or between the App Store and direct editions."))],
         ])
         changePw.target = self
         changePw.action = #selector(changePasswordTapped)
@@ -225,8 +259,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
             labeled(L("Poll interval (s):"), numField(pollInterval)),
             [NSView(), reveal],
             header(L("Danger zone")),
-            [NSView(), uninstall],
-            [NSView(), hint(uninstallHint)],
+            [NSView(), withHelp(uninstall, L("⚠️ Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back."))],
         ])
         uninstall.target = self
         uninstall.action = #selector(uninstallTapped)
@@ -267,7 +300,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         // One fixed size for all tabs: the tallest page decides.
         let tallest = [general, historyGrid, menuGrid, security, advanced].map { $0.fittingSize.height }.max() ?? 300
         let height = tallest + 32 + 40 /* tab bar */ + 12 + buttons.fittingSize.height + 12 + 16
-        window?.setContentSize(NSSize(width: 560, height: height))
+        window?.setContentSize(NSSize(width: 540, height: height))
     }
 
     // MARK: Load / collect
