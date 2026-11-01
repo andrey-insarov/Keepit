@@ -232,6 +232,9 @@ T = {
 'Replace': ('Заменить', 'Ersetzen', 'Remplacer', 'Reemplazar', '置き換え', '替换'),
 'Imported %@': ('Импорт %@', 'Import %@', 'Import %@', 'Importado %@', '読み込み %@', '导入 %@'),
 'Import finished — history: %d item(s), templates: %d item(s).': ('Импорт завершён — история: %d, шаблоны: %d.', 'Import abgeschlossen – Verlauf: %d Einträge, Vorlagen: %d Einträge.', 'Import terminé — historique : %d élément(s), modèles : %d élément(s).', 'Importación finalizada: historial %d elemento(s), plantillas %d elemento(s).', '読み込み完了 — 履歴 %d 件、テンプレート %d 件。', '导入完成 — 历史记录 %d 项，模板 %d 项。'),
+# About window
+'Version %@ (%@)': ('Версия %@ (%@)', 'Version %@ (%@)', 'Version %@ (%@)', 'Versión %@ (%@)', 'バージョン %@ (%@)', '版本 %@ (%@)'),
+'Help': ('Справка', 'Hilfe', 'Aide', 'Ayuda', 'ヘルプ', '帮助'),
 }
 
 PH = re.compile(r"%[@d]")

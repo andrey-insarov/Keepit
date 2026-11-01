@@ -218,3 +218,7 @@
 "Replace" = "Replace";
 "Imported %@" = "Imported %@";
 "Import finished — history: %d item(s), templates: %d item(s)." = "Import finished — history: %d item(s), templates: %d item(s).";
+
+/* About window */
+"Version %@ (%@)" = "Version %@ (%@)";
+"Help" = "Help";

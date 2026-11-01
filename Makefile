@@ -4,6 +4,9 @@ VERSION ?= $(shell cat VERSION)
 SPARKLE_PUBLIC_KEY ?= $(shell cat SPARKLE_PUBLIC_KEY 2>/dev/null)
 SPARKLE_FW = $(shell find .build -type d -name Sparkle.framework -path "*macos*" 2>/dev/null | head -1)
 BUILD_NO ?= $(shell git rev-list --count HEAD 2>/dev/null || echo 1)
+GIT_SHA  ?= $(shell git rev-parse --short HEAD 2>/dev/null || echo dev)
+BUILD_DATE ?= $(shell date -u +%Y-%m-%dT%H:%M:%SZ)
+PLIST_SUBST = -e 's/__VERSION__/$(VERSION)/' -e 's/__BUILD__/$(BUILD_NO)/' -e 's/__SHA__/$(GIT_SHA)/' -e 's/__DATE__/$(BUILD_DATE)/'
 # Universal (arm64 + x86_64) for distribution builds; single-arch for quick ad-hoc builds.
 # `swift build --arch a --arch b` writes to <build-path>/apple/Products/Release.
 UNIVERSAL ?= $(if $(filter -,$(SIGN_ID)),0,1)
@@ -114,7 +117,7 @@ appstore:
 	cp $(APPSTORE_BUILD)/$(APP) $(CONTENTS)/MacOS/$(APP)
 	@if [ "$(UNIVERSAL)" = "1" ]; then lipo -archs $(CONTENTS)/MacOS/$(APP) | grep -q x86_64 && lipo -archs $(CONTENTS)/MacOS/$(APP) | grep -q arm64 || (echo "expected a universal binary"; exit 1); fi
 	# No Sparkle keys in the store build.
-	sed -e 's/__VERSION__/$(VERSION)/' -e 's/__BUILD__/$(BUILD_NO)/' Resources/Info.plist \
+	sed $(PLIST_SUBST) Resources/Info.plist \
 	  | plutil -remove SUFeedURL -o - - | plutil -remove SUPublicEDKey -o - - | plutil -remove SUEnableAutomaticChecks -o - - \
 	  | plutil -remove SUScheduledCheckInterval -o - - | plutil -remove SUAutomaticallyUpdate -o - - > $(CONTENTS)/Info.plist
 	@! otool -L $(CONTENTS)/MacOS/$(APP) | grep -q Sparkle || (echo "App Store binary must not link Sparkle"; exit 1)
@@ -147,7 +150,7 @@ app: build
 	mkdir -p $(CONTENTS)/MacOS $(CONTENTS)/Resources
 	cp $(BUILD)/$(APP) $(CONTENTS)/MacOS/$(APP)
 	@if [ "$(UNIVERSAL)" = "1" ]; then lipo -archs $(CONTENTS)/MacOS/$(APP) | grep -q x86_64 && lipo -archs $(CONTENTS)/MacOS/$(APP) | grep -q arm64 || (echo "expected a universal binary"; exit 1); fi
-	sed -e 's/__VERSION__/$(VERSION)/' -e 's/__BUILD__/$(BUILD_NO)/' -e 's|__SPARKLE_PUBLIC_KEY__|$(SPARKLE_PUBLIC_KEY)|' Resources/Info.plist > $(CONTENTS)/Info.plist
+	sed $(PLIST_SUBST) -e 's|__SPARKLE_PUBLIC_KEY__|$(SPARKLE_PUBLIC_KEY)|' Resources/Info.plist > $(CONTENTS)/Info.plist
 	cp Resources/Icon/AppIcon.icns $(CONTENTS)/Resources/AppIcon.icns
 	cp -R $(BUILD)/Keepit_Keepit.bundle $(CONTENTS)/Resources/      # localized strings (SwiftPM resource bundle)
 	echo -n 'APPL????' > $(CONTENTS)/PkgInfo

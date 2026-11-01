@@ -216,3 +216,5 @@
 "Replace" = "替换";
 "Imported %@" = "导入 %@";
 "Import finished — history: %d item(s), templates: %d item(s)." = "导入完成 — 历史记录 %d 项，模板 %d 项。";
+"Version %@ (%@)" = "版本 %@ (%@)";
+"Help" = "帮助";

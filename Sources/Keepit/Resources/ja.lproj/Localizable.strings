@@ -216,3 +216,5 @@
 "Replace" = "置き換え";
 "Imported %@" = "読み込み %@";
 "Import finished — history: %d item(s), templates: %d item(s)." = "読み込み完了 — 履歴 %d 件、テンプレート %d 件。";
+"Version %@ (%@)" = "バージョン %@ (%@)";
+"Help" = "ヘルプ";

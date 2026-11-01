@@ -216,3 +216,5 @@
 "Replace" = "Заменить";
 "Imported %@" = "Импорт %@";
 "Import finished — history: %d item(s), templates: %d item(s)." = "Импорт завершён — история: %d, шаблоны: %d.";
+"Version %@ (%@)" = "Версия %@ (%@)";
+"Help" = "Справка";

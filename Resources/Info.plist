@@ -28,6 +28,10 @@
     <string>__BUILD__</string>
     <key>LSApplicationCategoryType</key>
     <string>public.app-category.productivity</string>
+    <key>KeepitGitSHA</key>
+    <string>__SHA__</string>
+    <key>KeepitBuildDate</key>
+    <string>__DATE__</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
     <key>UTExportedTypeDeclarations</key>

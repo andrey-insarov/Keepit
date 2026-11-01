@@ -216,3 +216,5 @@
 "Replace" = "استبدال";
 "Imported %@" = "مستورد %@";
 "Import finished — history: %d item(s), templates: %d item(s)." = "اكتمل الاستيراد — السجل: %d عنصر، القوالب: %d عنصر.";
+"Version %@ (%@)" = "الإصدار %@ (%@)";
+"Help" = "مساعدة";

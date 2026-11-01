@@ -216,3 +216,5 @@
 "Replace" = "Reemplazar";
 "Imported %@" = "Importado %@";
 "Import finished — history: %d item(s), templates: %d item(s)." = "Importación finalizada: historial %d elemento(s), plantillas %d elemento(s).";
+"Version %@ (%@)" = "Versión %@ (%@)";
+"Help" = "Ayuda";

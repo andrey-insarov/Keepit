@@ -574,11 +574,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             mi.target = self
             return mi
         }
-        let versionItem = NSMenuItem(title: AppInfo.versionLine, action: #selector(showAbout), keyEquivalent: "")
-        versionItem.target = self
         var out: [NSMenuItem] = [
-            versionItem,
-            .separator(),
             item(L("Viewer…"), #selector(openViewer)),
             item(L("Add Clipboard to Templates"), #selector(addClipboardToTemplates)),
             item(L("Preferences…"), #selector(openPreferences), ","),
@@ -594,6 +590,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if updater.isConfigured {
             out.append(item(L("Check for Updates…"), #selector(checkForUpdates)))
         }
+        out.append(item(L("About Keepit"), #selector(showAbout)))
         if !Paster.isTrusted() {
             out.append(item(L("Grant Accessibility Permission…"), #selector(grantAccessibility)))
         }
@@ -697,17 +694,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     @objc func showAbout() {
         menuSelectionMade = true
-        NSApp.activate(ignoringOtherApps: true)
-        if let iconURL = Bundle.main.url(forResource: "AppIcon", withExtension: "icns"),
-           let icon = NSImage(contentsOf: iconURL) {
-            NSApp.applicationIconImage = icon
-        }
-        NSApp.orderFrontStandardAboutPanel(options: [
-            .applicationName: AppInfo.fullName,
-            .applicationVersion: AppInfo.version,
-            .version: AppInfo.build,
-            .credits: AppInfo.credits,
-        ])
+        AboutWindow.shared.show()
     }
 
     @objc func checkForUpdates() {

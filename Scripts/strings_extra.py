@@ -221,4 +221,8 @@ T2 = {
 'Replace': ('Замінити', 'استبدال', 'Sostituisci'),
 'Imported %@': ('Імпорт %@', 'مستورد %@', 'Importato %@'),
 'Import finished — history: %d item(s), templates: %d item(s).': ('Імпорт завершено — історія: %d, шаблони: %d.', 'اكتمل الاستيراد — السجل: %d عنصر، القوالب: %d عنصر.', 'Importazione completata — cronologia: %d elemento/i, modelli: %d elemento/i.'),
+
+# About window
+'Version %@ (%@)': ('Версія %@ (%@)', 'الإصدار %@ (%@)', 'Versione %@ (%@)'),
+'Help': ('Довідка', 'مساعدة', 'Aiuto'),
 }
