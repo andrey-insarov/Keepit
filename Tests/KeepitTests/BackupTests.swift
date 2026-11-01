@@ -21,7 +21,7 @@ final class BackupTests: XCTestCase {
         XCTAssertFalse(String(decoding: data, as: UTF8.self).contains("Hello"), "payload must not be readable in clear")
         let back = try Backup.decode(data, password: pw)
         XCTAssertEqual(back.history.map(\.contentHash), samplePayload().history.map(\.contentHash))
-        XCTAssertEqual(back.templates.subtreeCount, 5)
+        XCTAssertEqual(back.templates.subtreeCount, 4)   // root + Work + Sig + Hi
         XCTAssertEqual(back.templates.children[0].children[0].clip?.plainText, "-- A")
         XCTAssertNotNil(back.settings)
         XCTAssertTrue(back.app.hasPrefix("Keepit"))
