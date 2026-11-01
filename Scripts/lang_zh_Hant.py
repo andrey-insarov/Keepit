@@ -263,4 +263,6 @@ T = {
 'Pause Recording for 10 Minutes': '暫停記錄 10 分鐘',
 'Resume Recording (paused until %@)': '恢復記錄（已暫停至 %@）',
 'Keepit — recording paused': 'Keepit — 記錄已暫停',
+'Advanced': '進階',
+'Backup': '備份',
 }

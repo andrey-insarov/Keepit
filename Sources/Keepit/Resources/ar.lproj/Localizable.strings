@@ -263,3 +263,5 @@
 "Pause Recording for 10 Minutes" = "إيقاف التسجيل مؤقتًا لمدة 10 دقائق";
 "Resume Recording (paused until %@)" = "استئناف التسجيل (متوقف حتى %@)";
 "Keepit — recording paused" = "Keepit — التسجيل متوقف مؤقتًا";
+"Advanced" = "متقدم";
+"Backup" = "النسخ الاحتياطي";

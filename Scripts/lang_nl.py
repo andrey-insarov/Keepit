@@ -263,4 +263,6 @@ T = {
 'Pause Recording for 10 Minutes': 'Opnemen 10 minuten pauzeren',
 'Resume Recording (paused until %@)': 'Opnemen hervatten (gepauzeerd tot %@)',
 'Keepit — recording paused': 'Keepit — opnemen gepauzeerd',
+'Advanced': 'Geavanceerd',
+'Backup': 'Reservekopie',
 }

@@ -263,4 +263,6 @@ T = {
 'Pause Recording for 10 Minutes': 'Apturēt ierakstīšanu uz 10 minūtēm',
 'Resume Recording (paused until %@)': 'Turpināt ierakstīšanu (apturēts līdz %@)',
 'Keepit — recording paused': 'Keepit — ierakstīšana apturēta',
+'Advanced': 'Papildu',
+'Backup': 'Dublējums',
 }

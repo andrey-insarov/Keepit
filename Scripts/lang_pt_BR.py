@@ -263,4 +263,6 @@ T = {
 'Pause Recording for 10 Minutes': 'Pausar a gravação por 10 minutos',
 'Resume Recording (paused until %@)': 'Retomar a gravação (pausada até %@)',
 'Keepit — recording paused': 'Keepit — gravação pausada',
+'Advanced': 'Avançado',
+'Backup': 'Backup',
 }

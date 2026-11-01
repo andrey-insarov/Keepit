@@ -263,3 +263,5 @@
 "Pause Recording for 10 Minutes" = "記録を 10 分間一時停止";
 "Resume Recording (paused until %@)" = "記録を再開（%@ まで一時停止中）";
 "Keepit — recording paused" = "Keepit — 記録を一時停止中";
+"Advanced" = "詳細";
+"Backup" = "バックアップ";

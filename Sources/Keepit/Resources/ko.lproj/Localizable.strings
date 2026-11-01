@@ -263,3 +263,5 @@
 "Pause Recording for 10 Minutes" = "10분간 기록 일시 정지";
 "Resume Recording (paused until %@)" = "기록 재개(%@까지 일시 정지)";
 "Keepit — recording paused" = "Keepit — 기록 일시 정지됨";
+"Advanced" = "고급";
+"Backup" = "백업";

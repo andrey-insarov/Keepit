@@ -282,3 +282,6 @@
 "Pause Recording for 10 Minutes" = "Pause Recording for 10 Minutes";
 "Resume Recording (paused until %@)" = "Resume Recording (paused until %@)";
 "Keepit — recording paused" = "Keepit — recording paused";
+
+"Advanced" = "Advanced";
+"Backup" = "Backup";

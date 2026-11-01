@@ -263,4 +263,6 @@ T = {
 'Pause Recording for 10 Minutes': 'השהה הקלטה ל‑10 דקות',
 'Resume Recording (paused until %@)': 'המשך הקלטה (מושהה עד %@)',
 'Keepit — recording paused': 'Keepit — ההקלטה מושהית',
+'Advanced': 'מתקדם',
+'Backup': 'גיבוי',
 }

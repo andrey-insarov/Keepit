@@ -263,4 +263,6 @@ T = {
 'Pause Recording for 10 Minutes': 'Peata salvestamine 10 minutiks',
 'Resume Recording (paused until %@)': 'Jätka salvestamist (peatatud kuni %@)',
 'Keepit — recording paused': 'Keepit — salvestamine peatatud',
+'Advanced': 'Täpsemalt',
+'Backup': 'Varukoopia',
 }

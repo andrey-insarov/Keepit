@@ -263,3 +263,5 @@
 "Pause Recording for 10 Minutes" = "Aufzeichnung 10 Minuten pausieren";
 "Resume Recording (paused until %@)" = "Aufzeichnung fortsetzen (pausiert bis %@)";
 "Keepit — recording paused" = "Keepit – Aufzeichnung pausiert";
+"Advanced" = "Erweitert";
+"Backup" = "Backup";

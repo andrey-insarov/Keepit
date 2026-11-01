@@ -263,4 +263,6 @@ T = {
 'Pause Recording for 10 Minutes': 'Kaydı 10 Dakika Duraklat',
 'Resume Recording (paused until %@)': 'Kaydı Sürdür (%@ saatine kadar duraklatıldı)',
 'Keepit — recording paused': 'Keepit — kayıt duraklatıldı',
+'Advanced': 'Gelişmiş',
+'Backup': 'Yedekleme',
 }

@@ -111,73 +111,66 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         return [NSView(), l]
     }
 
-    private func buildUI() {
-        guard let content = window?.contentView else { return }
-        let ignoredPlaceholder = NSView()
-
-        let grid = NSGridView(views: [
-            header(L("History")),
-            pair(L("Text & file items:"), numField(historyMax), L("Image items:"), numField(imageMax)),
-            labeled(L("Forget items older than:"), maxAge),
-            [NSView(), overlap],
-            [NSView(), saveHistory],
-            [NSView(), concealed],
-
-            header(L("Menu")),
-            pair(L("Title length (chars):"), numField(titleLength), L("Thumbnail height (px):"), numField(thumbSize)),
-            [NSView(), showThumbs],
-            [NSView(), showTips],
-            [NSView(), showPreview],
-            [NSView(), showSource],
-            [NSView(), numberItems],
-            [NSView(), searchMenu],
-            [NSView(), plainHint],
-            [NSView(), showAtCaret],
-
-            header(L("Hot keys & paste")),
-            pair(L("History menu:"), historyHK, L("Template menu:"), templateHK),
-            [NSView(), pasteAfter],
-            pair(L("Paste delay (s):"), numField(pasteDelay), L("Poll interval (s):"), numField(pollInterval)),
-
-            header(L("Ignored apps (bundle IDs, one per line; known password managers are always ignored)")),
-            [ignoredPlaceholder, NSView()],
-            header(L("General")),
-            [NSView(), loginItem],
-            header(L("Security")),
-            [NSView(), protect],
-            [NSView(), changePw],
-            [NSView(), lockScreen],
-            [NSView(), touchID],
-            [NSView(), touchIDChange],
-            [NSView(), newPhrase],
-            [NSView(), phraseHint],
-            header(L("Danger zone")),
-            [NSView(), uninstall],
-            [NSView(), uninstallHint],
-        ])
-        uninstall.target = self
-        uninstall.action = #selector(uninstallTapped)
-        uninstall.contentTintColor = .systemRed
-        uninstallHint.textColor = .secondaryLabelColor
-        uninstallHint.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
-        uninstallHint.preferredMaxLayoutWidth = 320
-        changePw.target = self
-        changePw.action = #selector(changePasswordTapped)
-        newPhrase.target = self
-        newPhrase.action = #selector(newPhraseTapped)
-        plainHint.textColor = .secondaryLabelColor
-        plainHint.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
-        plainHint.preferredMaxLayoutWidth = 320
-        phraseHint.textColor = .secondaryLabelColor
-        phraseHint.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
-        phraseHint.preferredMaxLayoutWidth = 320
+    private func makeGrid(_ rows: [[NSView]]) -> NSGridView {
+        let grid = NSGridView(views: rows)
         grid.rowSpacing = 6
         grid.columnSpacing = 10
         grid.column(at: 0).xPlacement = .trailing
-        grid.column(at: 0).width = 170
+        grid.column(at: 0).width = 160
         grid.translatesAutoresizingMaskIntoConstraints = false
+        return grid
+    }
 
-        // Ignored apps text view occupies its own row spanning both columns.
+    private func hint(_ label: NSTextField) -> NSTextField {
+        label.textColor = .secondaryLabelColor
+        label.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
+        label.preferredMaxLayoutWidth = 330
+        return label
+    }
+
+    /// Wrap a grid into a tab page with standard margins.
+    private func page(_ title: String, symbol: String, grid: NSGridView) -> NSTabViewItem {
+        let item = NSTabViewItem(identifier: title)
+        item.label = title
+        item.image = NSImage(systemSymbolName: symbol, accessibilityDescription: nil)
+        let v = NSView()
+        v.addSubview(grid)
+        NSLayoutConstraint.activate([
+            grid.topAnchor.constraint(equalTo: v.topAnchor, constant: 16),
+            grid.leadingAnchor.constraint(equalTo: v.leadingAnchor, constant: 16),
+            grid.trailingAnchor.constraint(lessThanOrEqualTo: v.trailingAnchor, constant: -16),
+            grid.bottomAnchor.constraint(lessThanOrEqualTo: v.bottomAnchor, constant: -16),
+        ])
+        item.view = v
+        return item
+    }
+
+    private let tabs = NSTabView()
+
+    private func buildUI() {
+        guard let content = window?.contentView else { return }
+
+        // --- General
+        let general = makeGrid([
+            [NSView(), loginItem],
+            [NSView(), saveHistory],
+            header(L("Hot keys & paste")),
+            pair(L("History menu:"), historyHK, L("Template menu:"), templateHK),
+            [NSView(), pasteAfter],
+            labeled(L("Paste delay (s):"), numField(pasteDelay)),
+            [NSView(), showAtCaret],
+        ])
+
+        // --- History
+        let ignoredPlaceholder = NSView()
+        let historyGrid = makeGrid([
+            pair(L("Text & file items:"), numField(historyMax), L("Image items:"), numField(imageMax)),
+            labeled(L("Forget items older than:"), maxAge),
+            [NSView(), overlap],
+            [NSView(), concealed],
+            header(L("Ignored apps (bundle IDs, one per line; known password managers are always ignored)")),
+            [ignoredPlaceholder, NSView()],
+        ])
         let scroll = ignoreScroll
         scroll.focusRingType = .none
         ignoreApps.focusRingType = .none
@@ -186,45 +179,83 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         ignoreApps.isRichText = false
         ignoreApps.font = NSFont.monospacedSystemFont(ofSize: 12, weight: .regular)
         scroll.translatesAutoresizingMaskIntoConstraints = false
-        scroll.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        // Replace the placeholder row with the scroll view spanning both columns.
-        let ignoredRowIndex = grid.index(of: grid.cell(for: ignoredPlaceholder)!.row!)
-        grid.mergeCells(inHorizontalRange: NSRange(location: 0, length: 2), verticalRange: NSRange(location: ignoredRowIndex, length: 1))
-        grid.cell(atColumnIndex: 0, rowIndex: ignoredRowIndex).contentView = scroll
+        scroll.heightAnchor.constraint(equalToConstant: 110).isActive = true
+        scroll.widthAnchor.constraint(equalToConstant: 470).isActive = true
+        let ignoredRowIndex = historyGrid.index(of: historyGrid.cell(for: ignoredPlaceholder)!.row!)
+        historyGrid.mergeCells(inHorizontalRange: NSRange(location: 0, length: 2), verticalRange: NSRange(location: ignoredRowIndex, length: 1))
+        historyGrid.cell(atColumnIndex: 0, rowIndex: ignoredRowIndex).contentView = scroll
+
+        // --- Menu
+        let menuGrid = makeGrid([
+            [NSView(), searchMenu],
+            [NSView(), numberItems],
+            [NSView(), showPreview],
+            [NSView(), showTips],
+            [NSView(), showSource],
+            [NSView(), showThumbs],
+            pair(L("Title length (chars):"), numField(titleLength), L("Thumbnail height (px):"), numField(thumbSize)),
+            [NSView(), hint(plainHint)],
+        ])
+
+        // --- Security (+ backup)
+        let exportBtn = NSButton(title: L("Export Backup…"), target: self, action: #selector(exportTapped))
+        let importBtn = NSButton(title: L("Import Backup…"), target: self, action: #selector(importTapped))
+        let backupRow = NSStackView(views: [exportBtn, importBtn])
+        backupRow.orientation = .horizontal
+        backupRow.spacing = 8
+        let security = makeGrid([
+            [NSView(), protect],
+            [NSView(), changePw],
+            [NSView(), touchID],
+            [NSView(), touchIDChange],
+            [NSView(), lockScreen],
+            [NSView(), newPhrase],
+            [NSView(), hint(phraseHint)],
+            header(L("Backup")),
+            [NSView(), backupRow],
+        ])
+        changePw.target = self
+        changePw.action = #selector(changePasswordTapped)
+        newPhrase.target = self
+        newPhrase.action = #selector(newPhraseTapped)
+
+        // --- Advanced
+        let reveal = NSButton(title: L("Open Data Folder"), target: self, action: #selector(revealData))
+        let advanced = makeGrid([
+            labeled(L("Poll interval (s):"), numField(pollInterval)),
+            [NSView(), reveal],
+            header(L("Danger zone")),
+            [NSView(), uninstall],
+            [NSView(), hint(uninstallHint)],
+        ])
+        uninstall.target = self
+        uninstall.action = #selector(uninstallTapped)
+        uninstall.contentTintColor = .systemRed
+
+        tabs.tabViewType = .topTabsBezelBorder
+        tabs.translatesAutoresizingMaskIntoConstraints = false
+        tabs.addTabViewItem(page(L("General"), symbol: "gearshape", grid: general))
+        tabs.addTabViewItem(page(L("History"), symbol: "clock", grid: historyGrid))
+        tabs.addTabViewItem(page(L("Menu"), symbol: "filemenu.and.selection", grid: menuGrid))
+        tabs.addTabViewItem(page(L("Security"), symbol: "lock", grid: security))
+        tabs.addTabViewItem(page(L("Advanced"), symbol: "wrench.and.screwdriver", grid: advanced))
 
         let save = NSButton(title: L("Save"), target: self, action: #selector(saveTapped))
         save.keyEquivalent = "\r"
         let cancel = NSButton(title: L("Cancel"), target: self, action: #selector(cancelTapped))
         cancel.keyEquivalent = "\u{1b}"
-        let reveal = NSButton(title: L("Open Data Folder"), target: self, action: #selector(revealData))
-        let buttons = NSStackView(views: [reveal, Spacer(), cancel, save])
+        let buttons = NSStackView(views: [Spacer(), cancel, save])
         buttons.orientation = .horizontal
         buttons.distribution = .fill
         buttons.translatesAutoresizingMaskIntoConstraints = false
 
-        // The grid lives in a scroll view so the window still fits small displays (the form is tall).
-        let gridScroll = NSScrollView()
-        gridScroll.drawsBackground = false
-        gridScroll.hasVerticalScroller = true
-        gridScroll.borderType = .noBorder
-        gridScroll.focusRingType = .none
-        gridScroll.translatesAutoresizingMaskIntoConstraints = false
-        let doc = FlippedView()
-        doc.translatesAutoresizingMaskIntoConstraints = false
-        doc.addSubview(grid)
-        gridScroll.documentView = doc
-        content.addSubview(gridScroll)
+        content.addSubview(tabs)
         content.addSubview(buttons)
         NSLayoutConstraint.activate([
-            gridScroll.topAnchor.constraint(equalTo: content.topAnchor),
-            gridScroll.leadingAnchor.constraint(equalTo: content.leadingAnchor),
-            gridScroll.trailingAnchor.constraint(equalTo: content.trailingAnchor),
-            doc.widthAnchor.constraint(equalTo: gridScroll.contentView.widthAnchor),
-            grid.topAnchor.constraint(equalTo: doc.topAnchor, constant: 16),
-            grid.leadingAnchor.constraint(equalTo: doc.leadingAnchor, constant: 16),
-            grid.trailingAnchor.constraint(equalTo: doc.trailingAnchor, constant: -16),
-            grid.bottomAnchor.constraint(equalTo: doc.bottomAnchor, constant: -8),
-            buttons.topAnchor.constraint(equalTo: gridScroll.bottomAnchor, constant: 8),
+            tabs.topAnchor.constraint(equalTo: content.topAnchor, constant: 12),
+            tabs.leadingAnchor.constraint(equalTo: content.leadingAnchor, constant: 16),
+            tabs.trailingAnchor.constraint(equalTo: content.trailingAnchor, constant: -16),
+            buttons.topAnchor.constraint(equalTo: tabs.bottomAnchor, constant: 12),
             buttons.leadingAnchor.constraint(equalTo: content.leadingAnchor, constant: 16),
             buttons.trailingAnchor.constraint(equalTo: content.trailingAnchor, constant: -16),
             buttons.bottomAnchor.constraint(equalTo: content.bottomAnchor, constant: -16),
@@ -233,10 +264,10 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         historyHK.onChange = { [weak self] hk in self?.draft.historyHotKey = hk }
         templateHK.onChange = { [weak self] hk in self?.draft.templateHotKey = hk }
 
-        // Size the window to its content, but never taller than the screen; the grid scrolls then.
-        let wanted = grid.fittingSize.height + 24 + buttons.fittingSize.height + 8 + 16
-        let maxHeight = (window?.screen ?? NSScreen.main).map { $0.visibleFrame.height - 60 } ?? wanted
-        window?.setContentSize(NSSize(width: 520, height: min(wanted, maxHeight)))
+        // One fixed size for all tabs: the tallest page decides.
+        let tallest = [general, historyGrid, menuGrid, security, advanced].map { $0.fittingSize.height }.max() ?? 300
+        let height = tallest + 32 + 40 /* tab bar */ + 12 + buttons.fittingSize.height + 12 + 16
+        window?.setContentSize(NSSize(width: 560, height: height))
     }
 
     // MARK: Load / collect
@@ -352,13 +383,10 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         window?.close()
     }
 
+    @objc private func exportTapped() { app.exportBackup() }
+    @objc private func importTapped() { app.importBackup() }
+
     @objc private func revealData() {
         NSWorkspace.shared.activateFileViewerSelecting([Storage.settingsURL])
     }
-}
-
-
-/// Top-left origin so the grid starts at the top of the scroll view.
-private final class FlippedView: NSView {
-    override var isFlipped: Bool { true }
 }

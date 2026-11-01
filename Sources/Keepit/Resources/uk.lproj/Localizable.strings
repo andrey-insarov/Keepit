@@ -263,3 +263,5 @@
 "Pause Recording for 10 Minutes" = "Призупинити запис на 10 хвилин";
 "Resume Recording (paused until %@)" = "Відновити запис (пауза до %@)";
 "Keepit — recording paused" = "Keepit — запис призупинено";
+"Advanced" = "Додатково";
+"Backup" = "Резервна копія";

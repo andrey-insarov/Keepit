@@ -263,4 +263,6 @@ T = {
 'Pause Recording for 10 Minutes': 'Pristabdyti įrašymą 10 minučių',
 'Resume Recording (paused until %@)': 'Tęsti įrašymą (pristabdyta iki %@)',
 'Keepit — recording paused': '„Keepit“ — įrašymas pristabdytas',
+'Advanced': 'Išplėstinės',
+'Backup': 'Atsarginė kopija',
 }

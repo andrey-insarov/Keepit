@@ -274,4 +274,6 @@ T2 = {
 'Pause Recording for 10 Minutes': ('Призупинити запис на 10 хвилин', 'إيقاف التسجيل مؤقتًا لمدة 10 دقائق', 'Sospendi la registrazione per 10 minuti'),
 'Resume Recording (paused until %@)': ('Відновити запис (пауза до %@)', 'استئناف التسجيل (متوقف حتى %@)', 'Riprendi la registrazione (in pausa fino alle %@)'),
 'Keepit — recording paused': ('Keepit — запис призупинено', 'Keepit — التسجيل متوقف مؤقتًا', 'Keepit — registrazione in pausa'),
+'Advanced': ('Додатково', 'متقدم', 'Avanzate'),
+'Backup': ('Резервна копія', 'النسخ الاحتياطي', 'Backup'),
 }

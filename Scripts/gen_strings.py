@@ -286,6 +286,8 @@ T = {
 'Pause Recording for 10 Minutes': ('Приостановить запись на 10 минут', 'Aufzeichnung 10 Minuten pausieren', 'Suspendre l’enregistrement 10 minutes', 'Pausar la grabación 10 minutos', '記録を 10 分間一時停止', '暂停记录 10 分钟'),
 'Resume Recording (paused until %@)': ('Возобновить запись (пауза до %@)', 'Aufzeichnung fortsetzen (pausiert bis %@)', 'Reprendre l’enregistrement (suspendu jusqu’à %@)', 'Reanudar la grabación (en pausa hasta las %@)', '記録を再開（%@ まで一時停止中）', '恢复记录（已暂停至 %@）'),
 'Keepit — recording paused': ('Keepit — запись приостановлена', 'Keepit – Aufzeichnung pausiert', 'Keepit — enregistrement suspendu', 'Keepit: grabación en pausa', 'Keepit — 記録を一時停止中', 'Keepit — 记录已暂停'),
+'Advanced': ('Дополнительно', 'Erweitert', 'Avancé', 'Avanzado', '詳細', '高级'),
+'Backup': ('Резервная копия', 'Backup', 'Sauvegarde', 'Copia de seguridad', 'バックアップ', '备份'),
 }
 
 PH = re.compile(r"%[@d]")

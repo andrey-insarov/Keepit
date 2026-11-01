@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.9.0 — unreleased
+
+- Preferences reorganised into five tabs — General, History, Menu, Security, Advanced — in a
+  fixed-size window; Export/Import Backup also live on the Security tab, *Open Data Folder* and
+  the Danger zone on Advanced.
+
 ## 2.8.0 — 2026-11-01
 
 - **Pause Recording for 10 Minutes** in the menu (the menu-bar icon turns into ⏸); *Resume Recording*

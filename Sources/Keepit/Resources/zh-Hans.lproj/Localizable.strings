@@ -263,3 +263,5 @@
 "Pause Recording for 10 Minutes" = "暂停记录 10 分钟";
 "Resume Recording (paused until %@)" = "恢复记录（已暂停至 %@）";
 "Keepit — recording paused" = "Keepit — 记录已暂停";
+"Advanced" = "高级";
+"Backup" = "备份";
