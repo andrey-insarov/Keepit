@@ -173,11 +173,14 @@ app: build $(ICNS)
 	mkdir -p $(CONTENTS)/Frameworks
 	cp -R "$(SPARKLE_FW)" $(CONTENTS)/Frameworks/
 	install_name_tool -add_rpath @executable_path/../Frameworks $(CONTENTS)/MacOS/$(APP) 2>/dev/null || true
-	# Sparkle's nested helpers must be signed first (hardened runtime), then the framework, then the app.
+	# Sparkle's nested helpers are signed first, each keeping its own entitlements (Sparkle docs:
+	# never --deep, and never push the app's Team-ID entitlements onto them — the updater would
+	# fail to launch with "An error occurred while running the updater").
 	@if [ "$(SIGN_ID)" != "-" ]; then \
 	  FW=$(CONTENTS)/Frameworks/Sparkle.framework/Versions/B; \
-	  codesign --force --options runtime --timestamp --sign "$(SIGN_ID)" $$FW/XPCServices/*.xpc 2>/dev/null || true; \
-	  codesign --force --options runtime --timestamp --sign "$(SIGN_ID)" $$FW/Autoupdate $$FW/Updater.app; \
+	  for x in $$FW/XPCServices/*.xpc; do if [ -e "$$x" ]; then codesign --force --options runtime --timestamp --preserve-metadata=entitlements --sign "$(SIGN_ID)" "$$x"; fi; done; \
+	  codesign --force --options runtime --timestamp --sign "$(SIGN_ID)" $$FW/Autoupdate; \
+	  codesign --force --options runtime --timestamp --sign "$(SIGN_ID)" $$FW/Updater.app; \
 	  codesign --force --options runtime --timestamp --sign "$(SIGN_ID)" $(CONTENTS)/Frameworks/Sparkle.framework; \
 	fi
 	@if [ -n "$(HAVE_PROFILE)" ]; then \
@@ -185,8 +188,9 @@ app: build $(ICNS)
 	  cp $(DEVID_PROFILE) $(CONTENTS)/embedded.provisionprofile; echo "Embedding Developer ID profile (Touch ID enabled)"; \
 	else echo "No Developer ID profile at $(DEVID_PROFILE): Touch ID unlock disabled in this build"; fi
 	xattr -cr $(BUNDLE)
-	codesign --force --deep $(SIGN_FLAGS) --sign "$(SIGN_ID)" $(BUNDLE)
-	codesign --verify --strict --verbose=2 $(BUNDLE)
+	codesign --force $(if $(filter -,$(SIGN_ID)),--deep,) $(SIGN_FLAGS) --sign "$(SIGN_ID)" $(BUNDLE)
+	codesign --verify --strict --deep --verbose=2 $(BUNDLE)
+	@if [ "$(SIGN_ID)" != "-" ]; then codesign -d --entitlements - $(CONTENTS)/Frameworks/Sparkle.framework/Versions/B/Autoupdate 2>&1 | grep -q application-identifier && (echo "Autoupdate must not carry the app's entitlements"; exit 1) || true; fi
 	@echo "Built $(BUNDLE)"
 
 run: app

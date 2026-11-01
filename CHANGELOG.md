@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.5.1 — 2026-11-01
+
+- Fixed Sparkle updates failing with “An error occurred while running the updater” (launchd 163):
+  the app signature no longer pushes the app's Team-ID entitlements onto Sparkle's `Autoupdate`,
+  `Updater.app` and XPC services (no `--deep`; helpers signed individually, keeping their own
+  entitlements). 2.4.0 → 2.5.0 in-app updates were affected; install 2.5.1 from the DMG once.
+
 ## 2.5.0 — 2026-11-01
 
 - **Backup export / import** (menu → *Export Backup…* / *Import Backup…*): history, templates and
