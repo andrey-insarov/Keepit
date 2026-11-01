@@ -252,3 +252,10 @@
 "CAPS LOCK" = "CAPS LOCK";
 "Show a preview panel next to the highlighted item (replaces tooltips)" = "Toon een voorvertoningspaneel naast het gemarkeerde item (vervangt knopinfo)";
 "Show the icon of the app each item was copied from" = "Toon het symbool van de app waaruit elk item is gekopieerd";
+"Forget items older than:" = "Vergeet items ouder dan:";
+"Never" = "Nooit";
+"1 hour" = "1 uur";
+"6 hours" = "6 uur";
+"1 day" = "1 dag";
+"1 week" = "1 week";
+"30 days" = "30 dagen";

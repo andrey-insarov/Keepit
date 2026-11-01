@@ -116,8 +116,26 @@ final class HistoryStore {
     var textItems: [ClipItem] { items.filter { $0.kind != .image } }
     var imageItems: [ClipItem] { items.filter { $0.kind == .image } }
 
+    /// Drop items older than `historyMaxAge` (no-op when 0). Returns how many were removed.
+    /// Called from `trim()` on every change and by the app's minute timer, so items also vanish
+    /// while nothing is being copied.
+    @discardableResult
+    func expire(now: Date = Date()) -> Int {
+        guard settings.historyMaxAge > 0 else { return 0 }
+        let cutoff = now.addingTimeInterval(-settings.historyMaxAge)
+        let before = items.count
+        items.removeAll { $0.date < cutoff }
+        let removed = before - items.count
+        if removed > 0 { changed() }
+        return removed
+    }
+
     /// Two independent rings: text/file items and image items, each dropping its oldest first.
     private func trim() {
+        if settings.historyMaxAge > 0 {
+            let cutoff = Date().addingTimeInterval(-settings.historyMaxAge)
+            items.removeAll { $0.date < cutoff }
+        }
         var textSeen = 0, imageSeen = 0
         items = items.filter { item in
             if item.kind == .image {

@@ -31,6 +31,12 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     private let searchMenu   = NSButton(checkboxWithTitle: L("Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)"), target: nil, action: nil)
     private let pasteAfter   = NSButton(checkboxWithTitle: L("Paste into the active app after choosing"), target: nil, action: nil)
     private let showAtCaret  = NSButton(checkboxWithTitle: L("Open menu at text cursor when possible"), target: nil, action: nil)
+    private let maxAge       = NSPopUpButton(frame: .zero, pullsDown: false)
+    /// Choices for "Forget items older than": seconds (0 = never).
+    private static let ages: [(TimeInterval, String)] = [
+        (0, L("Never")), (3600, L("1 hour")), (6 * 3600, L("6 hours")), (86400, L("1 day")),
+        (7 * 86400, L("1 week")), (30 * 86400, L("30 days")),
+    ]
     private let overlap      = NSButton(checkboxWithTitle: L("Remove duplicates (keep newest)"), target: nil, action: nil)
     private let saveHistory  = NSButton(checkboxWithTitle: L("Save history on quit, restore on start"), target: nil, action: nil)
     private let concealed    = NSButton(checkboxWithTitle: L("Ignore concealed clipboard data (password managers)"), target: nil, action: nil)
@@ -112,6 +118,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         let grid = NSGridView(views: [
             header(L("History")),
             pair(L("Text & file items:"), numField(historyMax), L("Image items:"), numField(imageMax)),
+            labeled(L("Forget items older than:"), maxAge),
             [NSView(), overlap],
             [NSView(), saveHistory],
             [NSView(), concealed],
@@ -250,6 +257,8 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         pasteAfter.state = s.pasteAfterSelect ? .on : .off
         showAtCaret.state = s.showAtCaret ? .on : .off
         overlap.state = s.overlapCheck ? .on : .off
+        if maxAge.numberOfItems == 0 { for (_, title) in Self.ages { maxAge.addItem(withTitle: title) } }
+        maxAge.selectItem(at: Self.ages.firstIndex { $0.0 == s.historyMaxAge } ?? 0)
         saveHistory.state = s.historySave ? .on : .off
         concealed.state = s.ignoreConcealed ? .on : .off
         loginItem.state = s.launchAtLogin ? .on : .off
@@ -286,6 +295,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         s.pasteAfterSelect = pasteAfter.state == .on
         s.showAtCaret = showAtCaret.state == .on
         s.overlapCheck = overlap.state == .on
+        s.historyMaxAge = Self.ages[max(0, maxAge.indexOfSelectedItem)].0
         s.historySave = saveHistory.state == .on
         s.ignoreConcealed = concealed.state == .on
         s.launchAtLogin = loginItem.state == .on

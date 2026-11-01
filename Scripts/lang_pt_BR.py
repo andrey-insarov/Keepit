@@ -252,4 +252,11 @@ T = {
 'CAPS LOCK': 'CAPS LOCK',
 'Show a preview panel next to the highlighted item (replaces tooltips)': 'Mostrar um painel de pré-visualização ao lado do item destacado (substitui as dicas)',
 'Show the icon of the app each item was copied from': 'Mostrar o ícone do app de onde cada item foi copiado',
+'Forget items older than:': 'Esquecer itens com mais de:',
+'Never': 'Nunca',
+'1 hour': '1 hora',
+'6 hours': '6 horas',
+'1 day': '1 dia',
+'1 week': '1 semana',
+'30 days': '30 dias',
 }

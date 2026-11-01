@@ -252,3 +252,10 @@
 "CAPS LOCK" = "大写锁定";
 "Show a preview panel next to the highlighted item (replaces tooltips)" = "在高亮项旁显示预览面板（取代工具提示）";
 "Show the icon of the app each item was copied from" = "显示每个项目来源应用的图标";
+"Forget items older than:" = "忘记早于以下时间的项目：";
+"Never" = "从不";
+"1 hour" = "1 小时";
+"6 hours" = "6 小时";
+"1 day" = "1 天";
+"1 week" = "1 周";
+"30 days" = "30 天";

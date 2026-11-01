@@ -2,6 +2,8 @@
 
 ## 2.8.0 — unreleased
 
+- **Auto-expiry**: Preferences → History → *Forget items older than* 1 h / 6 h / 1 day / 1 week /
+  30 days. Old items are dropped on every change and once a minute by a timer.
 - **Source app icons**: text and file items in the history menu carry the icon of the app they were
   copied from (Preferences → Menu).
 - **Preview panel**: hovering a history item shows the full image or the first lines of the text in a

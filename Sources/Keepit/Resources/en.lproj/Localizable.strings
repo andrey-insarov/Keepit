@@ -268,3 +268,11 @@
 "Show a preview panel next to the highlighted item (replaces tooltips)" = "Show a preview panel next to the highlighted item (replaces tooltips)";
 
 "Show the icon of the app each item was copied from" = "Show the icon of the app each item was copied from";
+
+"Forget items older than:" = "Forget items older than:";
+"Never" = "Never";
+"1 hour" = "1 hour";
+"6 hours" = "6 hours";
+"1 day" = "1 day";
+"1 week" = "1 week";
+"30 days" = "30 days";

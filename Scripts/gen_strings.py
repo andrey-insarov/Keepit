@@ -275,6 +275,13 @@ T = {
 'CAPS LOCK': ('CAPS LOCK', 'CAPS LOCK', 'VERR. MAJ', 'BLOQ MAYÚS', 'CAPS LOCK', '大写锁定'),
 'Show a preview panel next to the highlighted item (replaces tooltips)': ('Показывать панель предпросмотра рядом с выделенным элементом (вместо подсказок)', 'Vorschaufenster neben dem markierten Eintrag anzeigen (ersetzt Tooltips)', 'Afficher un panneau d’aperçu à côté de l’élément surligné (remplace les infobulles)', 'Mostrar un panel de vista previa junto al elemento resaltado (sustituye a los consejos)', 'ハイライトした項目の横にプレビューパネルを表示（ツールチップの代わり）', '在高亮项旁显示预览面板（取代工具提示）'),
 'Show the icon of the app each item was copied from': ('Показывать иконку приложения, из которого скопирован элемент', 'Symbol der App anzeigen, aus der ein Eintrag kopiert wurde', 'Afficher l’icône de l’app d’où chaque élément a été copié', 'Mostrar el icono de la app desde la que se copió cada elemento', '項目のコピー元アプリのアイコンを表示', '显示每个项目来源应用的图标'),
+'Forget items older than:': ('Забывать элементы старше:', 'Einträge vergessen, die älter sind als:', 'Oublier les éléments plus anciens que :', 'Olvidar elementos anteriores a:', '次より古い項目を削除:', '忘记早于以下时间的项目：'),
+'Never': ('Никогда', 'Nie', 'Jamais', 'Nunca', 'しない', '从不'),
+'1 hour': ('1 час', '1 Stunde', '1 heure', '1 hora', '1 時間', '1 小时'),
+'6 hours': ('6 часов', '6 Stunden', '6 heures', '6 horas', '6 時間', '6 小时'),
+'1 day': ('1 день', '1 Tag', '1 jour', '1 día', '1 日', '1 天'),
+'1 week': ('1 неделя', '1 Woche', '1 semaine', '1 semana', '1 週間', '1 周'),
+'30 days': ('30 дней', '30 Tage', '30 jours', '30 días', '30 日', '30 天'),
 }
 
 PH = re.compile(r"%[@d]")

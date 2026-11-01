@@ -25,3 +25,26 @@ final class HistoryRingsTests: XCTestCase {
         XCTAssertEqual(store.items.first?.kind, .image, "newest overall stays first")
     }
 }
+
+extension HistoryRingsTests {
+    func testExpireDropsOldItems() {
+        var s = Settings()
+        s.historySave = false
+        s.historyMaxAge = 3600
+        let h = HistoryStore(settings: s)
+        h.add(.text("fresh"))
+        func text(_ t: String, age: TimeInterval) -> ClipItem {
+            let base = ClipItem.text(t)
+            return ClipItem(id: base.id, date: Date().addingTimeInterval(-age), formats: base.formats, sourceApp: nil, contentHash: base.contentHash)
+        }
+        h.insert(text("old", age: 7200), at: 1)
+        XCTAssertEqual(h.items.count, 1, "trim() on insert already drops items past the age")
+        h.insert(text("stale", age: 10), at: 1)
+        XCTAssertEqual(h.items.count, 2)
+        XCTAssertEqual(h.expire(now: Date().addingTimeInterval(3601 + 10)), 2)
+        XCTAssertTrue(h.items.isEmpty)
+        s.historyMaxAge = 0
+        h.updateSettings(s)
+        XCTAssertEqual(h.expire(), 0)
+    }
+}

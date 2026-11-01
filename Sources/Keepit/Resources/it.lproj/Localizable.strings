@@ -252,3 +252,10 @@
 "CAPS LOCK" = "BLOC MAIUSC";
 "Show a preview panel next to the highlighted item (replaces tooltips)" = "Mostra un pannello di anteprima accanto all’elemento evidenziato (sostituisce i suggerimenti)";
 "Show the icon of the app each item was copied from" = "Mostra l’icona dell’app da cui è stato copiato ogni elemento";
+"Forget items older than:" = "Dimentica gli elementi più vecchi di:";
+"Never" = "Mai";
+"1 hour" = "1 ora";
+"6 hours" = "6 ore";
+"1 day" = "1 giorno";
+"1 week" = "1 settimana";
+"30 days" = "30 giorni";

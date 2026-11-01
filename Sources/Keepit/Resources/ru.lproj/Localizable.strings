@@ -252,3 +252,10 @@
 "CAPS LOCK" = "CAPS LOCK";
 "Show a preview panel next to the highlighted item (replaces tooltips)" = "Показывать панель предпросмотра рядом с выделенным элементом (вместо подсказок)";
 "Show the icon of the app each item was copied from" = "Показывать иконку приложения, из которого скопирован элемент";
+"Forget items older than:" = "Забывать элементы старше:";
+"Never" = "Никогда";
+"1 hour" = "1 час";
+"6 hours" = "6 часов";
+"1 day" = "1 день";
+"1 week" = "1 неделя";
+"30 days" = "30 дней";

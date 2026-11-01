@@ -37,6 +37,7 @@ struct Settings: Codable, Equatable {
     // [history]
     var historyMax = 1000          // text & file items kept (~10–30 MB; images have their own, smaller ring)
     var historyImageMax = 30       // image items kept (separate ring)
+    var historyMaxAge: TimeInterval = 0   // seconds; items older than this are forgotten (0 = never)
     var historySave = true         // history.save
     var overlapCheck = true        // history.overlap_check — dedupe identical entries
     var moveToTopOnPaste = true    // pasted item moves to the top
@@ -93,6 +94,7 @@ struct Settings: Codable, Equatable {
         let d = Settings()
         historyMax       = try c.decodeIfPresent(Int.self,    forKey: .historyMax)       ?? d.historyMax
         historyImageMax  = try c.decodeIfPresent(Int.self,    forKey: .historyImageMax)  ?? d.historyImageMax
+        historyMaxAge    = try c.decodeIfPresent(Double.self, forKey: .historyMaxAge)    ?? d.historyMaxAge
         historySave      = try c.decodeIfPresent(Bool.self,   forKey: .historySave)      ?? d.historySave
         overlapCheck     = try c.decodeIfPresent(Bool.self,   forKey: .overlapCheck)     ?? d.overlapCheck
         moveToTopOnPaste = try c.decodeIfPresent(Bool.self,   forKey: .moveToTopOnPaste) ?? d.moveToTopOnPaste
@@ -129,6 +131,7 @@ struct Settings: Codable, Equatable {
     mutating func clamp() {
         historyMax = Limits.clamp(historyMax, 1, Limits.historyMaxCeiling)
         historyImageMax = Limits.clamp(historyImageMax, 1, Limits.historyMaxCeiling)
+        historyMaxAge = historyMaxAge <= 0 ? 0 : Limits.clamp(historyMaxAge, 60, 366 * 86400)
         titleLength = Limits.clamp(titleLength, 10, 500)
         thumbnailSize = Limits.clamp(thumbnailSize, 16, 128)
         pollInterval = Limits.clamp(pollInterval, 0.1, 5)

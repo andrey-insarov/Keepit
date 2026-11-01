@@ -252,3 +252,10 @@
 "CAPS LOCK" = "CAPS LOCK";
 "Show a preview panel next to the highlighted item (replaces tooltips)" = "Vurgulanan öğenin yanında önizleme paneli göster (ipuçlarının yerine geçer)";
 "Show the icon of the app each item was copied from" = "Her öğenin kopyalandığı uygulamanın simgesini göster";
+"Forget items older than:" = "Şundan eski öğeleri unut:";
+"Never" = "Hiçbir zaman";
+"1 hour" = "1 saat";
+"6 hours" = "6 saat";
+"1 day" = "1 gün";
+"1 week" = "1 hafta";
+"30 days" = "30 gün";

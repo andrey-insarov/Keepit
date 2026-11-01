@@ -263,4 +263,11 @@ T2 = {
 'CAPS LOCK': ('CAPS LOCK', 'CAPS LOCK', 'BLOC MAIUSC'),
 'Show a preview panel next to the highlighted item (replaces tooltips)': ('Показувати панель попереднього перегляду поруч із виділеним елементом (замість підказок)', 'عرض لوحة معاينة بجوار العنصر المحدد (بدلًا من التلميحات)', 'Mostra un pannello di anteprima accanto all’elemento evidenziato (sostituisce i suggerimenti)'),
 'Show the icon of the app each item was copied from': ('Показувати іконку програми, з якої скопійовано елемент', 'عرض أيقونة التطبيق الذي نُسخ منه كل عنصر', 'Mostra l’icona dell’app da cui è stato copiato ogni elemento'),
+'Forget items older than:': ('Забувати елементи, старші за:', 'نسيان العناصر الأقدم من:', 'Dimentica gli elementi più vecchi di:'),
+'Never': ('Ніколи', 'أبدًا', 'Mai'),
+'1 hour': ('1 година', 'ساعة واحدة', '1 ora'),
+'6 hours': ('6 годин', '6 ساعات', '6 ore'),
+'1 day': ('1 день', 'يوم واحد', '1 giorno'),
+'1 week': ('1 тиждень', 'أسبوع واحد', '1 settimana'),
+'30 days': ('30 днів', '30 يومًا', '30 giorni'),
 }

@@ -252,3 +252,10 @@
 "CAPS LOCK" = "CAPS LOCK";
 "Show a preview panel next to the highlighted item (replaces tooltips)" = "Zobrazovat panel náhledu vedle zvýrazněné položky (nahrazuje tipy)";
 "Show the icon of the app each item was copied from" = "Zobrazovat ikonu aplikace, ze které byla položka zkopírována";
+"Forget items older than:" = "Zapomenout položky starší než:";
+"Never" = "Nikdy";
+"1 hour" = "1 hodina";
+"6 hours" = "6 hodin";
+"1 day" = "1 den";
+"1 week" = "1 týden";
+"30 days" = "30 dní";

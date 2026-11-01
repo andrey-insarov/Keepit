@@ -252,3 +252,10 @@
 "CAPS LOCK" = "CAPS LOCK";
 "Show a preview panel next to the highlighted item (replaces tooltips)" = "Rādīt priekšskatījuma paneli blakus iezīmētajam vienumam (aizstāj padomus)";
 "Show the icon of the app each item was copied from" = "Rādīt tās lietotnes ikonu, no kuras vienums nokopēts";
+"Forget items older than:" = "Aizmirst vienumus, kas vecāki par:";
+"Never" = "Nekad";
+"1 hour" = "1 stunda";
+"6 hours" = "6 stundas";
+"1 day" = "1 diena";
+"1 week" = "1 nedēļa";
+"30 days" = "30 dienas";

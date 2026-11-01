@@ -252,4 +252,11 @@ T = {
 'CAPS LOCK': 'CAPS LOCK',
 'Show a preview panel next to the highlighted item (replaces tooltips)': 'Rodyti peržiūros skydelį šalia pažymėto elemento (vietoj patarimų)',
 'Show the icon of the app each item was copied from': 'Rodyti programos, iš kurios nukopijuotas elementas, piktogramą',
+'Forget items older than:': 'Pamiršti senesnius nei:',
+'Never': 'Niekada',
+'1 hour': '1 valanda',
+'6 hours': '6 valandos',
+'1 day': '1 diena',
+'1 week': '1 savaitė',
+'30 days': '30 dienų',
 }

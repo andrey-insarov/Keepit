@@ -252,3 +252,10 @@
 "CAPS LOCK" = "CAPS LOCK";
 "Show a preview panel next to the highlighted item (replaces tooltips)" = "강조된 항목 옆에 미리보기 패널 표시(툴팁 대체)";
 "Show the icon of the app each item was copied from" = "각 항목을 복사한 앱의 아이콘 표시";
+"Forget items older than:" = "다음보다 오래된 항목 삭제:";
+"Never" = "안 함";
+"1 hour" = "1시간";
+"6 hours" = "6시간";
+"1 day" = "1일";
+"1 week" = "1주";
+"30 days" = "30일";

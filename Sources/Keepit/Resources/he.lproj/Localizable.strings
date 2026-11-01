@@ -252,3 +252,10 @@
 "CAPS LOCK" = "CAPS LOCK";
 "Show a preview panel next to the highlighted item (replaces tooltips)" = "הצג חלונית תצוגה מקדימה ליד הפריט המסומן (במקום תיאורי כלים)";
 "Show the icon of the app each item was copied from" = "הצג את סמל היישום שממנו הועתק כל פריט";
+"Forget items older than:" = "שכח פריטים ישנים מ:";
+"Never" = "אף פעם";
+"1 hour" = "שעה";
+"6 hours" = "6 שעות";
+"1 day" = "יום";
+"1 week" = "שבוע";
+"30 days" = "30 יום";

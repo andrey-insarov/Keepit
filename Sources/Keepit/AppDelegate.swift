@@ -50,6 +50,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             return
         }
         history = HistoryStore(settings: settings)
+        // Age-based expiry also runs on a timer, so items disappear without waiting for the next copy.
+        Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
+            guard let self, !self.isLocked else { return }
+            if self.history.expire() > 0 { self.viewer?.refresh() }
+        }
         templates = TemplateStore()
         monitor = ClipboardMonitor(settings: settings)
         if needsPasswordReset { completeRecovery() }

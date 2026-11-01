@@ -252,3 +252,10 @@
 "CAPS LOCK" = "大寫鎖定";
 "Show a preview panel next to the highlighted item (replaces tooltips)" = "在高亮顯示的項目旁顯示預覽面板（取代工具提示）";
 "Show the icon of the app each item was copied from" = "顯示每個項目來源 App 的圖示";
+"Forget items older than:" = "忘記早於以下時間的項目：";
+"Never" = "永不";
+"1 hour" = "1 小時";
+"6 hours" = "6 小時";
+"1 day" = "1 天";
+"1 week" = "1 週";
+"30 days" = "30 天";

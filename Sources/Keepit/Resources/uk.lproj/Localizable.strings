@@ -252,3 +252,10 @@
 "CAPS LOCK" = "CAPS LOCK";
 "Show a preview panel next to the highlighted item (replaces tooltips)" = "Показувати панель попереднього перегляду поруч із виділеним елементом (замість підказок)";
 "Show the icon of the app each item was copied from" = "Показувати іконку програми, з якої скопійовано елемент";
+"Forget items older than:" = "Забувати елементи, старші за:";
+"Never" = "Ніколи";
+"1 hour" = "1 година";
+"6 hours" = "6 годин";
+"1 day" = "1 день";
+"1 week" = "1 тиждень";
+"30 days" = "30 днів";

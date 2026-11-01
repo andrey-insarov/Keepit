@@ -252,3 +252,10 @@
 "CAPS LOCK" = "CAPS LOCK";
 "Show a preview panel next to the highlighted item (replaces tooltips)" = "عرض لوحة معاينة بجوار العنصر المحدد (بدلًا من التلميحات)";
 "Show the icon of the app each item was copied from" = "عرض أيقونة التطبيق الذي نُسخ منه كل عنصر";
+"Forget items older than:" = "نسيان العناصر الأقدم من:";
+"Never" = "أبدًا";
+"1 hour" = "ساعة واحدة";
+"6 hours" = "6 ساعات";
+"1 day" = "يوم واحد";
+"1 week" = "أسبوع واحد";
+"30 days" = "30 يومًا";

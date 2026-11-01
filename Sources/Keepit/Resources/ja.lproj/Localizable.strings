@@ -252,3 +252,10 @@
 "CAPS LOCK" = "CAPS LOCK";
 "Show a preview panel next to the highlighted item (replaces tooltips)" = "ハイライトした項目の横にプレビューパネルを表示（ツールチップの代わり）";
 "Show the icon of the app each item was copied from" = "項目のコピー元アプリのアイコンを表示";
+"Forget items older than:" = "次より古い項目を削除:";
+"Never" = "しない";
+"1 hour" = "1 時間";
+"6 hours" = "6 時間";
+"1 day" = "1 日";
+"1 week" = "1 週間";
+"30 days" = "30 日";

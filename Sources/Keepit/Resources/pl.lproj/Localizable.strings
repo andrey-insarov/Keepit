@@ -252,3 +252,10 @@
 "CAPS LOCK" = "CAPS LOCK";
 "Show a preview panel next to the highlighted item (replaces tooltips)" = "Pokazuj panel podglądu obok podświetlonego elementu (zastępuje podpowiedzi)";
 "Show the icon of the app each item was copied from" = "Pokazuj ikonę aplikacji, z której skopiowano element";
+"Forget items older than:" = "Zapominaj elementy starsze niż:";
+"Never" = "Nigdy";
+"1 hour" = "1 godzina";
+"6 hours" = "6 godzin";
+"1 day" = "1 dzień";
+"1 week" = "1 tydzień";
+"30 days" = "30 dni";

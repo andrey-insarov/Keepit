@@ -252,3 +252,10 @@
 "CAPS LOCK" = "CAPS LOCK";
 "Show a preview panel next to the highlighted item (replaces tooltips)" = "Näita esiletõstetud üksuse kõrval eelvaatepaneeli (asendab kohtspikrid)";
 "Show the icon of the app each item was copied from" = "Näita selle rakenduse ikooni, kust üksus kopeeriti";
+"Forget items older than:" = "Unusta üksused, mis on vanemad kui:";
+"Never" = "Mitte kunagi";
+"1 hour" = "1 tund";
+"6 hours" = "6 tundi";
+"1 day" = "1 päev";
+"1 week" = "1 nädal";
+"30 days" = "30 päeva";
