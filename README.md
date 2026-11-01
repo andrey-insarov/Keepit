@@ -277,9 +277,20 @@ Sources/Keepit/
 
 ## Roadmap
 
-1. Import of Windows CLCL `history.dat` / `regist.dat`.
-2. Format filter & priority pages (which formats to keep / show first).
-3. Tools/plugin equivalents (shell scripts or AppleScript on an item, from the menu).
+**3.0**
+
+1. **Automatic encrypted backup to your own cloud folder** — iCloud Drive, Google Drive, Dropbox or any
+   folder: the existing `.keepit` format (AES-256-GCM, your file password) written on a schedule with
+   rotation; restore offered on first launch on another Mac; optional merge on start. No Keepit
+   server, the provider only ever sees ciphertext.
+2. **Paste queue** — copy several things, then ⌘V pastes them one after another (⌘V interception
+   while a queue is active, or a dedicated key; Esc / timeout / a new copy ends the queue).
+
+**Later**
+
+- Import of Windows CLCL `history.dat` / `regist.dat`.
+- Format filter & priority pages (which formats to keep / show first).
+- Tools/plugin equivalents (shell scripts or AppleScript on an item, from the menu).
 
 ## License
 
