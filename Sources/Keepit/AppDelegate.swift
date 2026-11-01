@@ -647,7 +647,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func menu(_ menu: NSMenu, willHighlight item: NSMenuItem?) {
         guard settings.showPreview, !isLocked else { return }
         guard let mi = item, mi.tag == MenuBuilder.historyTag, let id = mi.representedObject as? UUID,
-              let clip = history.item(id: id) else {
+              let clip = history.item(id: id), !clip.fitsInTitle(maxLength: settings.titleLength) else {
             PreviewPanel.shared.hide()
             return
         }
