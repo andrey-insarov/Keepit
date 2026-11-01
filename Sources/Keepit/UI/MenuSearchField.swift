@@ -21,6 +21,8 @@ final class MenuSearchItem: NSMenuItem, NSSearchFieldDelegate {
         view = box
     }
 
+    required init(coder: NSCoder) { fatalError() }
+
     func focus() {
         DispatchQueue.main.async { [weak self] in
             guard let f = self?.field else { return }
