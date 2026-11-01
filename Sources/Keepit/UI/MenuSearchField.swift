@@ -7,11 +7,17 @@ final class MenuSearchItem: NSMenuItem, NSSearchFieldDelegate {
     /// submenus and AppKit stops firing their key equivalents, so the field picks the item directly.
     final class Field: NSSearchField {
         var onCommandDigit: ((String) -> Bool)?
+        private func handles(_ event: NSEvent) -> Bool {
+            let mods = event.modifierFlags.intersection([.command, .shift, .option, .control])
+            guard mods == [.command], let ch = event.charactersIgnoringModifiers, ch.count == 1, ch.first!.isNumber else { return false }
+            return onCommandDigit?(ch) == true
+        }
         override func performKeyEquivalent(with event: NSEvent) -> Bool {
-            let mods = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
-            if mods == [.command], let ch = event.charactersIgnoringModifiers, ch.count == 1, ch.first!.isNumber,
-               onCommandDigit?(ch) == true { return true }
-            return super.performKeyEquivalent(with: event)
+            handles(event) || super.performKeyEquivalent(with: event)
+        }
+        override func keyDown(with event: NSEvent) {
+            if handles(event) { return }
+            super.keyDown(with: event)
         }
     }
 
