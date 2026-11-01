@@ -89,10 +89,13 @@ dmg: app
 	SetFile -c icnC $(DMG_TMP)/.VolumeIcon.icns 2>/dev/null || true
 	hdiutil create -volname "$(DMG_VOL)" -srcfolder $(DMG_TMP) -ov -fs HFS+ -format UDRW $(DMG_TMP)/rw.dmg
 	# Mount read-write to set the volume icon flag and Finder window layout, then convert to compressed read-only.
-	MOUNT=$$(hdiutil attach -readwrite -noverify $(DMG_TMP)/rw.dmg | grep -o '/Volumes/.*' | head -1); \
-	SetFile -a C "$$MOUNT" 2>/dev/null || true; \
-	perl -e 'alarm 60; exec @ARGV' osascript Resources/dmg-layout.applescript "$$MOUNT" >/dev/null 2>&1 || true; \
-	sync; hdiutil detach "$$MOUNT" -quiet || hdiutil detach "$$MOUNT" -force
+	# Cosmetic only — if the image cannot be mounted (CI runners occasionally fail here), skip it.
+	MOUNT=$$(hdiutil attach -readwrite -noverify $(DMG_TMP)/rw.dmg 2>/dev/null | grep -o '/Volumes/.*' | head -1); \
+	if [ -n "$$MOUNT" ] && [ -d "$$MOUNT" ]; then \
+	  SetFile -a C "$$MOUNT" 2>/dev/null || true; \
+	  perl -e 'alarm 60; exec @ARGV' osascript Resources/dmg-layout.applescript "$$MOUNT" >/dev/null 2>&1 || true; \
+	  sync; hdiutil detach "$$MOUNT" -quiet || hdiutil detach "$$MOUNT" -force || true; \
+	else echo "warning: could not mount rw.dmg — skipping volume icon and window layout"; fi
 	hdiutil convert $(DMG_TMP)/rw.dmg -format UDZO -imagekey zlib-level=9 -o $(DMG)
 	codesign --force $(if $(filter -,$(SIGN_ID)),,--timestamp) --sign "$(SIGN_ID)" $(DMG) 2>/dev/null || true
 	rm -rf $(DMG_TMP)
