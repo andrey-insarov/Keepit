@@ -12,13 +12,19 @@ PLIST_SUBST = -e 's/__VERSION__/$(VERSION)/' -e 's/__BUILD__/$(BUILD_NO)/' -e 's
 UNIVERSAL ?= $(if $(filter -,$(SIGN_ID)),0,1)
 ifeq ($(UNIVERSAL),1)
 ARCH_FLAGS = --arch arm64 --arch x86_64
-BUILD    = .build/apple/Products/Release
-APPSTORE_BUILD = .build-appstore/apple/Products/Release
 else
 ARCH_FLAGS =
-BUILD    = .build/release
-APPSTORE_BUILD = .build-appstore/release
 endif
+# Ask SwiftPM where it puts the products — the layout differs between toolchains and arch sets.
+BUILD    = $(shell swift build -c release $(ARCH_FLAGS) --show-bin-path 2>/dev/null)
+APPSTORE_BUILD = $(shell KEEPIT_APPSTORE=1 swift build -c release $(ARCH_FLAGS) --build-path .build-appstore --show-bin-path 2>/dev/null)
+# Universal check: hard error on CI (release artifacts), a warning for local builds whose toolchain may lack a slice.
+define CHECK_UNIVERSAL
+	@if [ "$(UNIVERSAL)" = "1" ]; then \
+	  if lipo -archs $(CONTENTS)/MacOS/$(APP) | grep -q x86_64 && lipo -archs $(CONTENTS)/MacOS/$(APP) | grep -q arm64; then echo "Universal binary: $$(lipo -archs $(CONTENTS)/MacOS/$(APP))"; \
+	  else echo "WARNING: not a universal binary ($$(lipo -archs $(CONTENTS)/MacOS/$(APP)))"; [ -z "$$CI" ] || exit 1; fi; \
+	fi
+endef
 BUNDLE   = $(APP).app
 CONTENTS = $(BUNDLE)/Contents
 # Ad-hoc signature by default. See README "Accessibility permission resets after rebuild".
@@ -115,7 +121,7 @@ appstore:
 	rm -rf $(BUNDLE) $(PKG) .build/appstore.entitlements
 	mkdir -p $(CONTENTS)/MacOS $(CONTENTS)/Resources
 	cp $(APPSTORE_BUILD)/$(APP) $(CONTENTS)/MacOS/$(APP)
-	@if [ "$(UNIVERSAL)" = "1" ]; then lipo -archs $(CONTENTS)/MacOS/$(APP) | grep -q x86_64 && lipo -archs $(CONTENTS)/MacOS/$(APP) | grep -q arm64 || (echo "expected a universal binary"; exit 1); fi
+	$(CHECK_UNIVERSAL)
 	# No Sparkle keys in the store build.
 	sed $(PLIST_SUBST) Resources/Info.plist \
 	  | plutil -remove SUFeedURL -o - - | plutil -remove SUPublicEDKey -o - - | plutil -remove SUEnableAutomaticChecks -o - - \
@@ -149,7 +155,7 @@ app: build
 	rm -rf $(BUNDLE)
 	mkdir -p $(CONTENTS)/MacOS $(CONTENTS)/Resources
 	cp $(BUILD)/$(APP) $(CONTENTS)/MacOS/$(APP)
-	@if [ "$(UNIVERSAL)" = "1" ]; then lipo -archs $(CONTENTS)/MacOS/$(APP) | grep -q x86_64 && lipo -archs $(CONTENTS)/MacOS/$(APP) | grep -q arm64 || (echo "expected a universal binary"; exit 1); fi
+	$(CHECK_UNIVERSAL)
 	sed $(PLIST_SUBST) -e 's|__SPARKLE_PUBLIC_KEY__|$(SPARKLE_PUBLIC_KEY)|' Resources/Info.plist > $(CONTENTS)/Info.plist
 	cp Resources/Icon/AppIcon.icns $(CONTENTS)/Resources/AppIcon.icns
 	cp -R $(BUILD)/Keepit_Keepit.bundle $(CONTENTS)/Resources/      # localized strings (SwiftPM resource bundle)
