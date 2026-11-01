@@ -233,8 +233,6 @@
 "Also unlock with Touch ID (the password stays as fallback)" = "בטל נעילה גם באמצעות Touch ID (הסיסמה נשארת כגיבוי)";
 "Search history…" = "חיפוש בהיסטוריה…";
 "(no matches)" = "(אין התאמות)";
-"%@ — plain text" = "%@ — טקסט רגיל";
-"%@ — add to Templates" = "%@ — הוסף לתבניות";
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "אי אפשר להשתמש ב‑Touch ID כרגע (המכסה סגור, המקלדת בשינה או לא נרשמה טביעת אצבע). Keepit יפעיל אותו אוטומטית בפעם הבאה שתבטל את הנעילה בסיסמה.";
 "Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit" = "Keepit הותקן באמצעות Homebrew; כדי לנקות את הרישום הרץ: brew uninstall --cask --force keepit";
 "Layout: %@" = "פריסה: %@";
@@ -246,7 +244,6 @@
 "1 day" = "יום";
 "1 week" = "שבוע";
 "30 days" = "30 יום";
-"%@ — delete" = "%@ — מחק";
 "Pause Recording for 10 Minutes" = "השהה הקלטה ל‑10 דקות";
 "Resume Recording (paused until %@)" = "המשך הקלטה (מושהה עד %@)";
 "Keepit — recording paused" = "Keepit — ההקלטה מושהית";
@@ -316,7 +313,6 @@
 "Paste as" = "הדבק בתור";
 "Paste as plain text" = "הדבק כטקסט פשוט";
 "Show in Viewer" = "הצג במציג";
-"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "החזק ⇧ לתפריט המורחב: כל פריט בהיסטוריה מקבל תת־תפריט עם כל הפעולות — הדבקה כטקסט פשוט, אותיות גדולות, שורה אחת, העתקה בלבד, …. החזק ⌥ בעת בחירת פריט להוספה לתבניות, ⌃ למחיקה.";
 "%@ and %@ use the same hot key (%@)." = "‏«%@» ו‑«%@» משתמשים באותו קיצור (%@).";
 "Hot key conflict" = "התנגשות קיצורים";
 "Hot keys" = "קיצורים";
@@ -325,8 +321,9 @@
 "Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "מקשי שינוי שיחד עם 1–9 ו‑0 מדביקים ישירות את פריט 1–10 בהיסטוריה. לחץ על השדה והקש את מקשי השינוי עם ספרה כלשהי; ⌫ מכבה.";
 "Other" = "אחר";
 "Paste item by number:" = "הדבק פריט לפי מספר:";
-"Paste latest as plain text:" = "הדבק את האחרון כטקסט פשוט:";
 "Paste without the menu" = "הדבקה ללא התפריט";
-"Pastes the most recent item with formatting stripped." = "מדביק את הפריט האחרון ללא עיצוב.";
 "Pause / resume recording:" = "השהה / המשך הקלטה:";
 "Reset to Defaults" = "אפס לברירת מחדל";
+"Actions on the latest item:" = "פעולות על הפריט האחרון:";
+"Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu." = "מקשי שינוי שעם אות פועלים על הפריט האחרון (הלוח): V טקסט פשוט, U אותיות גדולות, L אותיות קטנות, T אות גדולה בכל מילה, S תחילת משפט, W הסרת רווחים, J שורה אחת, A לתבניות, ⌫ מחיקה. אותם מקשים מוצגים בתפריט המורחב של הפריט.";
+"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "החזק ⇧ לתפריט המורחב: כל פריט בהיסטוריה מקבל תת־תפריט עם כל הפעולות — טקסט פשוט, אותיות גדולות, שורה אחת, העתקה בלבד, לתבניות, מחיקה, …. עבור הפריט האחרון תת־התפריט מציג גם את הקיצורים הגלובליים שעושים את אותו הדבר ללא התפריט.";

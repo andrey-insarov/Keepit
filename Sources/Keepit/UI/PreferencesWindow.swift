@@ -51,7 +51,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     private let historyHK    = HotKeyRecorderView(frame: .zero)
     private let templateHK   = HotKeyRecorderView(frame: .zero)
     private let previousHK   = HotKeyRecorderView(frame: .zero)
-    private let plainHK      = HotKeyRecorderView(frame: .zero)
+    private let latestHK     = HotKeyRecorderView(frame: .zero)
     private let numbersHK    = HotKeyRecorderView(frame: .zero)
     private let lockHK       = HotKeyRecorderView(frame: .zero)
     private let pauseHK      = HotKeyRecorderView(frame: .zero)
@@ -216,8 +216,8 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
             labeled(L("Template menu:"), templateHK),
             header(L("Paste without the menu")),
             labeled(L("Paste previous item:"), withHelp(previousHK, L("Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off."))),
-            labeled(L("Paste latest as plain text:"), withHelp(plainHK, L("Pastes the most recent item with formatting stripped."))),
             labeled(L("Paste item by number:"), withHelp(numbersHK, L("Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off."))),
+            labeled(L("Actions on the latest item:"), withHelp(latestHK, L("Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu."))),
             header(L("Other")),
             labeled(L("Lock Keepit:"), lockHK),
             labeled(L("Pause / resume recording:"), pauseHK),
@@ -264,7 +264,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
             [NSView(), showSource],
             [NSView(), showThumbs],
             pair(L("Title length (chars):"), numField(titleLength), L("Thumbnail height (px):"), numField(thumbSize)),
-            [NSView(), withHelp(modifiers, L("Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it."))],
+            [NSView(), withHelp(modifiers, L("Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu."))],
         ])
         modifiers.textColor = .secondaryLabelColor
 
@@ -335,8 +335,10 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         templateHK.onChange = { [weak self] hk in if let hk { self?.draft.templateHotKey = hk } }
         previousHK.allowsClear = true
         previousHK.onChange = { [weak self] hk in self?.draft.previousHotKey = hk }
-        plainHK.allowsClear = true
-        plainHK.onChange = { [weak self] hk in self?.draft.plainHotKey = hk }
+        latestHK.allowsClear = true
+        latestHK.modifiersOnly = true
+        latestHK.modifiersSuffix = "V U L T S W J A ⌫"
+        latestHK.onChange = { [weak self] hk in self?.draft.latestActionModifiers = hk?.modifiers }
         numbersHK.allowsClear = true
         numbersHK.modifiersOnly = true
         numbersHK.onChange = { [weak self] hk in self?.draft.numberPasteModifiers = hk?.modifiers }
@@ -388,7 +390,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         historyHK.hotKey = s.historyHotKey
         templateHK.hotKey = s.templateHotKey
         previousHK.hotKey = s.previousHotKey
-        plainHK.hotKey = s.plainHotKey
+        latestHK.hotKey = s.latestActionModifiers.map { HotKey(keyCode: UInt32(kVK_ANSI_1), modifiers: $0) }
         numbersHK.hotKey = s.numberPasteModifiers.map { HotKey(keyCode: UInt32(kVK_ANSI_1), modifiers: $0) }
         lockHK.hotKey = s.lockHotKey
         pauseHK.hotKey = s.pauseHotKey
@@ -432,10 +434,10 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     @objc private func resetHotKeysTapped() {
         let d = Settings()
         draft.historyHotKey = d.historyHotKey; draft.templateHotKey = d.templateHotKey
-        draft.previousHotKey = d.previousHotKey; draft.plainHotKey = d.plainHotKey
+        draft.previousHotKey = d.previousHotKey; draft.latestActionModifiers = d.latestActionModifiers
         draft.numberPasteModifiers = d.numberPasteModifiers; draft.lockHotKey = d.lockHotKey; draft.pauseHotKey = d.pauseHotKey
         historyHK.hotKey = d.historyHotKey; templateHK.hotKey = d.templateHotKey; previousHK.hotKey = d.previousHotKey
-        plainHK.hotKey = d.plainHotKey
+        latestHK.hotKey = d.latestActionModifiers.map { HotKey(keyCode: UInt32(kVK_ANSI_1), modifiers: $0) }
         numbersHK.hotKey = d.numberPasteModifiers.map { HotKey(keyCode: UInt32(kVK_ANSI_1), modifiers: $0) }
         lockHK.hotKey = d.lockHotKey; pauseHK.hotKey = d.pauseHotKey
     }
@@ -444,7 +446,9 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     private func hotKeyConflict(_ s: Settings) -> String? {
         var all: [(String, HotKey)] = [(L("History menu:"), s.historyHotKey), (L("Template menu:"), s.templateHotKey)]
         if let h = s.previousHotKey { all.append((L("Paste previous item:"), h)) }
-        if let h = s.plainHotKey { all.append((L("Paste latest as plain text:"), h)) }
+        if let m = s.latestActionModifiers {
+            for la in HotKey.LatestAction.allCases { all.append((L("Actions on the latest item:"), HotKey(keyCode: la.keyCode, modifiers: m))) }
+        }
         if let h = s.lockHotKey { all.append((L("Lock Keepit:"), h)) }
         if let h = s.pauseHotKey { all.append((L("Pause / resume recording:"), h)) }
         if let m = s.numberPasteModifiers {

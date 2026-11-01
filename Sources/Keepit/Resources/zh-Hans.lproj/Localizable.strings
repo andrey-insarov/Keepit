@@ -233,8 +233,6 @@
 "Also unlock with Touch ID (the password stays as fallback)" = "同时使用 Touch ID 解锁（密码仍可作为备用）";
 "Search history…" = "搜索历史记录…";
 "(no matches)" = "(无匹配项)";
-"%@ — plain text" = "%@ — 纯文本";
-"%@ — add to Templates" = "%@ — 添加到模板";
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "Touch ID 目前不可用（合盖、键盘休眠或未录入指纹）。下次使用密码解锁时，Keepit 会自动启用它。";
 "Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit" = "Keepit 是通过 Homebrew 安装的；要清除其记录，请运行：brew uninstall --cask --force keepit";
 "Layout: %@" = "键盘布局：%@";
@@ -246,7 +244,6 @@
 "1 day" = "1 天";
 "1 week" = "1 周";
 "30 days" = "30 天";
-"%@ — delete" = "%@ — 删除";
 "Pause Recording for 10 Minutes" = "暂停记录 10 分钟";
 "Resume Recording (paused until %@)" = "恢复记录（已暂停至 %@）";
 "Keepit — recording paused" = "Keepit — 记录已暂停";
@@ -316,7 +313,6 @@
 "Paste as" = "粘贴为";
 "Paste as plain text" = "以纯文本粘贴";
 "Show in Viewer" = "在查看器中显示";
-"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "按住 ⇧ 显示扩展菜单：每个历史记录项都会有包含全部操作的子菜单 — 以纯文本粘贴、大写、单行、仅复制、…。选择项目时按住 ⌥ 添加到模板，⌃ 删除。";
 "%@ and %@ use the same hot key (%@)." = "“%@”和“%@”使用相同的热键（%@）。";
 "Hot key conflict" = "热键冲突";
 "Hot keys" = "热键";
@@ -325,8 +321,9 @@
 "Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "与 1–9 和 0 组合可直接粘贴历史记录第 1–10 项的修饰键。点击该字段并按下修饰键加任意数字；⌫ 关闭。";
 "Other" = "其他";
 "Paste item by number:" = "按编号粘贴项目：";
-"Paste latest as plain text:" = "以纯文本粘贴最新项：";
 "Paste without the menu" = "不经菜单粘贴";
-"Pastes the most recent item with formatting stripped." = "粘贴最新项并去除格式。";
 "Pause / resume recording:" = "暂停 / 恢复记录：";
 "Reset to Defaults" = "恢复默认";
+"Actions on the latest item:" = "对最新项的操作：";
+"Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu." = "与字母组合对最新项（剪贴板）执行操作的修饰键：V 纯文本、U 大写、L 小写、T 每词首字母大写、S 句首大写、W 去除首尾空白、J 单行、A 添加到模板、⌫ 删除。相同的按键显示在该项的扩展菜单中。";
+"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "按住 ⇧ 显示扩展菜单：每个历史记录项都会有包含全部操作的子菜单 — 纯文本、大写、单行、仅复制、添加到模板、删除、…。对于最新项，子菜单还会显示无需菜单即可执行相同操作的全局热键。";

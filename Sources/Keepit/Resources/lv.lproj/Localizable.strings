@@ -233,8 +233,6 @@
 "Also unlock with Touch ID (the password stays as fallback)" = "Atbloķēt arī ar Touch ID (parole paliek kā rezerves variants)";
 "Search history…" = "Meklēt vēsturē…";
 "(no matches)" = "(nav atbilstību)";
-"%@ — plain text" = "%@ — vienkāršs teksts";
-"%@ — add to Templates" = "%@ — uz veidnēm";
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "Touch ID pašlaik nav izmantojams (aizvērts vāks, tastatūra guļ vai nav reģistrēts pirksta nospiedums). Keepit to ieslēgs automātiski nākamajā atbloķēšanā ar paroli.";
 "Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit" = "Keepit tika instalēts ar Homebrew; lai notīrītu tā ierakstu, izpildiet: brew uninstall --cask --force keepit";
 "Layout: %@" = "Izkārtojums: %@";
@@ -246,7 +244,6 @@
 "1 day" = "1 diena";
 "1 week" = "1 nedēļa";
 "30 days" = "30 dienas";
-"%@ — delete" = "%@ — dzēst";
 "Pause Recording for 10 Minutes" = "Apturēt ierakstīšanu uz 10 minūtēm";
 "Resume Recording (paused until %@)" = "Turpināt ierakstīšanu (apturēts līdz %@)";
 "Keepit — recording paused" = "Keepit — ierakstīšana apturēta";
@@ -316,7 +313,6 @@
 "Paste as" = "Ielīmēt kā";
 "Paste as plain text" = "Ielīmēt kā vienkāršu tekstu";
 "Show in Viewer" = "Rādīt skatītājā";
-"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "Turiet ⇧ paplašinātajai izvēlnei: katrs vēstures vienums iegūst apakšizvēlni ar visām darbībām — ielīmēt kā vienkāršu tekstu, LIELIE BURTI, viena rinda, tikai kopēt, …. Izvēloties vienumu, turiet ⌥, lai pievienotu Veidnēm, ⌃ — dzēst.";
 "%@ and %@ use the same hot key (%@)." = "“%@” un “%@” izmanto vienu un to pašu taustiņu kombināciju (%@).";
 "Hot key conflict" = "Taustiņu kombināciju konflikts";
 "Hot keys" = "Taustiņu kombinācijas";
@@ -325,8 +321,9 @@
 "Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "Modifikatori, kas kopā ar 1–9 un 0 uzreiz ielīmē vēstures vienumu 1–10. Noklikšķiniet laukā un nospiediet modifikatorus ar jebkuru ciparu; ⌫ izslēdz.";
 "Other" = "Cits";
 "Paste item by number:" = "Ielīmēt vienumu pēc numura:";
-"Paste latest as plain text:" = "Ielīmēt jaunāko kā vienkāršu tekstu:";
 "Paste without the menu" = "Ielīmēšana bez izvēlnes";
-"Pastes the most recent item with formatting stripped." = "Ielīmē jaunāko vienumu bez formatējuma.";
 "Pause / resume recording:" = "Pauzēt / atsākt ierakstīšanu:";
 "Reset to Defaults" = "Atiestatīt uz noklusējumu";
+"Actions on the latest item:" = "Darbības ar jaunāko vienumu:";
+"Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu." = "Modifikatori, kas kopā ar burtu darbojas ar jaunāko vienumu (starpliktuvi): V vienkāršs teksts, U LIELIE BURTI, L mazie burti, T Katrs Vārds, S kā teikums, W noņemt atstarpes, J viena rinda, A uz Veidnēm, ⌫ dzēst. Tie paši taustiņi redzami vienuma paplašinātajā izvēlnē.";
+"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "Turiet ⇧ paplašinātajai izvēlnei: katrs vēstures vienums iegūst apakšizvēlni ar visām darbībām — vienkāršs teksts, LIELIE BURTI, viena rinda, tikai kopēt, uz Veidnēm, dzēst, …. Jaunākajam vienumam apakšizvēlne rāda arī globālās taustiņu kombinācijas, kas dara to pašu bez izvēlnes.";

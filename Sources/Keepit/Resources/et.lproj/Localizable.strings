@@ -233,8 +233,6 @@
 "Also unlock with Touch ID (the password stays as fallback)" = "Ava ka Touch ID-ga (parool jääb varuvariandiks)";
 "Search history…" = "Otsi ajaloost…";
 "(no matches)" = "(vasteid pole)";
-"%@ — plain text" = "%@ — lihttekst";
-"%@ — add to Templates" = "%@ — mallidesse";
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "Touch ID pole praegu kasutatav (kaas suletud, klaviatuur unerežiimis või sõrmejälge pole registreeritud). Keepit lülitab selle automaatselt sisse järgmisel parooliga avamisel.";
 "Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit" = "Keepit paigaldati Homebrew abil; kirje kustutamiseks käivita: brew uninstall --cask --force keepit";
 "Layout: %@" = "Paigutus: %@";
@@ -246,7 +244,6 @@
 "1 day" = "1 päev";
 "1 week" = "1 nädal";
 "30 days" = "30 päeva";
-"%@ — delete" = "%@ — kustuta";
 "Pause Recording for 10 Minutes" = "Peata salvestamine 10 minutiks";
 "Resume Recording (paused until %@)" = "Jätka salvestamist (peatatud kuni %@)";
 "Keepit — recording paused" = "Keepit — salvestamine peatatud";
@@ -316,7 +313,6 @@
 "Paste as" = "Kleebi kui";
 "Paste as plain text" = "Kleebi vormindamata tekstina";
 "Show in Viewer" = "Näita vaaturis";
-"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "Hoia ⇧ laiendatud menüü jaoks: iga ajaloo üksus saab alammenüü kõigi toimingutega — kleebi vormindamata tekstina, SUURTÄHED, üks rida, ainult kopeeri, …. Üksust valides hoia ⌥, et lisada Mallidesse, ⌃ kustutab.";
 "%@ and %@ use the same hot key (%@)." = "„%@” ja „%@” kasutavad sama kiirklahvi (%@).";
 "Hot key conflict" = "Kiirklahvide konflikt";
 "Hot keys" = "Kiirklahvid";
@@ -325,8 +321,9 @@
 "Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "Muuteklahvid, mis koos 1–9 ja 0-ga kleebivad otse ajaloo üksuse 1–10. Klõpsa väljal ja vajuta muuteklahve koos mis tahes numbriga; ⌫ lülitab välja.";
 "Other" = "Muu";
 "Paste item by number:" = "Kleebi üksus numbri järgi:";
-"Paste latest as plain text:" = "Kleebi uusim vormindamata tekstina:";
 "Paste without the menu" = "Kleepimine ilma menüüta";
-"Pastes the most recent item with formatting stripped." = "Kleebib uusima üksuse ilma vorminguta.";
 "Pause / resume recording:" = "Peata / jätka salvestamist:";
 "Reset to Defaults" = "Taasta vaikeväärtused";
+"Actions on the latest item:" = "Toimingud uusima üksusega:";
+"Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu." = "Muuteklahvid, mis koos tähega toimivad uusima üksusega (lõikelauaga): V vormindamata tekst, U SUURTÄHED, L väiketähed, T Iga Sõna, S nagu lause, W eemalda tühikud, J üks rida, A Mallidesse, ⌫ kustuta. Samad klahvid on näha üksuse laiendatud menüüs.";
+"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "Hoia ⇧ laiendatud menüü jaoks: iga ajaloo üksus saab alammenüü kõigi toimingutega — vormindamata tekst, SUURTÄHED, üks rida, ainult kopeeri, Mallidesse, kustuta, …. Uusima üksuse alammenüü näitab ka globaalseid kiirklahve, mis teevad sama ilma menüüta.";

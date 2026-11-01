@@ -233,8 +233,6 @@
 "Also unlock with Touch ID (the password stays as fallback)" = "Также разблокировать по Touch ID (пароль остаётся запасным вариантом)";
 "Search history…" = "Поиск в истории…";
 "(no matches)" = "(ничего не найдено)";
-"%@ — plain text" = "%@ — простой текст";
-"%@ — add to Templates" = "%@ — в шаблоны";
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "Touch ID сейчас недоступен (закрыта крышка, клавиатура спит или нет зарегистрированного отпечатка). Keepit включит его автоматически при следующей разблокировке паролем.";
 "Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit" = "Keepit был установлен через Homebrew; чтобы очистить его запись, выполните: brew uninstall --cask --force keepit";
 "Layout: %@" = "Раскладка: %@";
@@ -246,7 +244,6 @@
 "1 day" = "1 день";
 "1 week" = "1 неделя";
 "30 days" = "30 дней";
-"%@ — delete" = "%@ — удалить";
 "Pause Recording for 10 Minutes" = "Приостановить запись на 10 минут";
 "Resume Recording (paused until %@)" = "Возобновить запись (пауза до %@)";
 "Keepit — recording paused" = "Keepit — запись приостановлена";
@@ -316,7 +313,6 @@
 "Paste as" = "Вставить как";
 "Paste as plain text" = "Вставить как простой текст";
 "Show in Viewer" = "Показать в Просмотре";
-"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "Удерживайте ⇧ для расширенного меню: у каждого элемента истории появляется подменю со всеми действиями — вставить как простой текст, в ВЕРХНЕМ РЕГИСТРЕ, в одну строку, только скопировать, …. Удерживайте ⌥ при выборе элемента, чтобы добавить его в Шаблоны, ⌃ — удалить.";
 "%@ and %@ use the same hot key (%@)." = "«%@» и «%@» используют одно сочетание (%@).";
 "Hot key conflict" = "Конфликт сочетаний";
 "Hot keys" = "Сочетания";
@@ -325,8 +321,9 @@
 "Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "Модификаторы, которые вместе с 1–9 и 0 сразу вставляют элемент истории 1–10. Кликните поле и нажмите модификаторы с любой цифрой; ⌫ выключает.";
 "Other" = "Другое";
 "Paste item by number:" = "Вставить элемент по номеру:";
-"Paste latest as plain text:" = "Вставить последний как простой текст:";
 "Paste without the menu" = "Вставка без меню";
-"Pastes the most recent item with formatting stripped." = "Вставляет самый свежий элемент без форматирования.";
 "Pause / resume recording:" = "Пауза / возобновить запись:";
 "Reset to Defaults" = "Сбросить по умолчанию";
+"Actions on the latest item:" = "Действия с последним элементом:";
+"Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu." = "Модификаторы, которые с буквой действуют на последний элемент (буфер): V — простой текст, U — ВЕРХНИЙ РЕГИСТР, L — нижний, T — Каждое Слово, S — как в предложении, W — обрезать пробелы, J — в одну строку, A — в Шаблоны, ⌫ — удалить. Те же клавиши показаны в расширенном меню элемента.";
+"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "Удерживайте ⇧ для расширенного меню: у каждого элемента истории появляется подменю со всеми действиями — простой текст, ВЕРХНИЙ РЕГИСТР, в одну строку, только скопировать, в Шаблоны, удалить, …. Для последнего элемента подменю показывает и глобальные сочетания, делающие то же самое без меню.";

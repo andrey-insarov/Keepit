@@ -233,8 +233,6 @@
 "Also unlock with Touch ID (the password stays as fallback)" = "Desbloquear também com Touch ID (a senha continua como alternativa)";
 "Search history…" = "Buscar no histórico…";
 "(no matches)" = "(nenhum resultado)";
-"%@ — plain text" = "%@ — texto simples";
-"%@ — add to Templates" = "%@ — adicionar aos modelos";
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "O Touch ID não pode ser usado agora (tampa fechada, teclado em repouso ou nenhuma impressão digital cadastrada). O Keepit o ativará automaticamente no próximo desbloqueio com senha.";
 "Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit" = "O Keepit foi instalado pelo Homebrew; para limpar o registro, execute: brew uninstall --cask --force keepit";
 "Layout: %@" = "Leiaute: %@";
@@ -246,7 +244,6 @@
 "1 day" = "1 dia";
 "1 week" = "1 semana";
 "30 days" = "30 dias";
-"%@ — delete" = "%@ — apagar";
 "Pause Recording for 10 Minutes" = "Pausar a gravação por 10 minutos";
 "Resume Recording (paused until %@)" = "Retomar a gravação (pausada até %@)";
 "Keepit — recording paused" = "Keepit — gravação pausada";
@@ -316,7 +313,6 @@
 "Paste as" = "Colar como";
 "Paste as plain text" = "Colar como texto simples";
 "Show in Viewer" = "Mostrar no Visualizador";
-"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "Segure ⇧ para o menu estendido: cada item do histórico recebe um submenu com todas as ações — colar como texto simples, MAIÚSCULAS, uma linha, só copiar, …. Segure ⌥ ao escolher um item para adicioná-lo aos Modelos, ⌃ para excluí-lo.";
 "%@ and %@ use the same hot key (%@)." = "“%@” e “%@” usam a mesma tecla de atalho (%@).";
 "Hot key conflict" = "Conflito de teclas de atalho";
 "Hot keys" = "Atalhos";
@@ -325,8 +321,9 @@
 "Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "Modificadores que, junto com 1–9 e 0, colam diretamente o item 1–10 do histórico. Clique no campo e pressione os modificadores com qualquer dígito; ⌫ desativa.";
 "Other" = "Outros";
 "Paste item by number:" = "Colar item por número:";
-"Paste latest as plain text:" = "Colar o mais recente como texto simples:";
 "Paste without the menu" = "Colar sem o menu";
-"Pastes the most recent item with formatting stripped." = "Cola o item mais recente sem formatação.";
 "Pause / resume recording:" = "Pausar / retomar a gravação:";
 "Reset to Defaults" = "Restaurar padrões";
+"Actions on the latest item:" = "Ações no item mais recente:";
+"Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu." = "Modificadores que, com uma letra, atuam no item mais recente (a área de transferência): V texto simples, U MAIÚSCULAS, L minúsculas, T Iniciais Maiúsculas, S frase, W espaços, J uma linha, A aos Modelos, ⌫ excluir. As mesmas teclas aparecem no menu estendido do item.";
+"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "Segure ⇧ para o menu estendido: cada item do histórico recebe um submenu com todas as ações — texto simples, MAIÚSCULAS, uma linha, só copiar, aos Modelos, excluir, …. Para o item mais recente, o submenu também mostra os atalhos globais que fazem o mesmo sem o menu.";

@@ -233,8 +233,6 @@
 "Also unlock with Touch ID (the password stays as fallback)" = "Touch ID ile de kilidi aç (parola yedek olarak kalır)";
 "Search history…" = "Geçmişte ara…";
 "(no matches)" = "(eşleşme yok)";
-"%@ — plain text" = "%@ — düz metin";
-"%@ — add to Templates" = "%@ — şablonlara ekle";
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "Touch ID şu anda kullanılamıyor (kapak kapalı, klavye uykuda veya parmak izi kayıtlı değil). Keepit, parolayla bir sonraki kilit açışınızda bunu otomatik olarak etkinleştirecek.";
 "Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit" = "Keepit Homebrew ile yüklendi; kaydını temizlemek için şunu çalıştırın: brew uninstall --cask --force keepit";
 "Layout: %@" = "Düzen: %@";
@@ -246,7 +244,6 @@
 "1 day" = "1 gün";
 "1 week" = "1 hafta";
 "30 days" = "30 gün";
-"%@ — delete" = "%@ — sil";
 "Pause Recording for 10 Minutes" = "Kaydı 10 Dakika Duraklat";
 "Resume Recording (paused until %@)" = "Kaydı Sürdür (%@ saatine kadar duraklatıldı)";
 "Keepit — recording paused" = "Keepit — kayıt duraklatıldı";
@@ -316,7 +313,6 @@
 "Paste as" = "Şu şekilde yapıştır";
 "Paste as plain text" = "Düz metin olarak yapıştır";
 "Show in Viewer" = "Görüntüleyicide göster";
-"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "Genişletilmiş menü için ⇧ basılı tutun: her geçmiş öğesi tüm eylemleri içeren bir alt menü alır — düz metin olarak yapıştır, BÜYÜK HARF, tek satır, yalnızca kopyala, …. Bir öğeyi seçerken ⌥ ile Şablonlara ekleyin, ⌃ ile silin.";
 "%@ and %@ use the same hot key (%@)." = "“%@” ve “%@” aynı kısayolu kullanıyor (%@).";
 "Hot key conflict" = "Kısayol çakışması";
 "Hot keys" = "Kısayollar";
@@ -325,8 +321,9 @@
 "Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "1–9 ve 0 ile birlikte geçmiş öğesi 1–10'u doğrudan yapıştıran değiştiriciler. Alana tıklayıp değiştiricilere herhangi bir rakamla basın; ⌫ kapatır.";
 "Other" = "Diğer";
 "Paste item by number:" = "Öğeyi numarayla yapıştır:";
-"Paste latest as plain text:" = "En sonunu düz metin olarak yapıştır:";
 "Paste without the menu" = "Menü olmadan yapıştırma";
-"Pastes the most recent item with formatting stripped." = "En son öğeyi biçimlendirmesiz yapıştırır.";
 "Pause / resume recording:" = "Kaydı duraklat / sürdür:";
 "Reset to Defaults" = "Varsayılanlara sıfırla";
+"Actions on the latest item:" = "En son öğe için eylemler:";
+"Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu." = "Bir harfle birlikte en son öğeye (panoya) etki eden değiştiriciler: V düz metin, U BÜYÜK HARF, L küçük harf, T Her Kelime Büyük, S cümle düzeni, W boşlukları kırp, J tek satır, A Şablonlara ekle, ⌫ sil. Aynı tuşlar öğenin genişletilmiş menüsünde gösterilir.";
+"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "Genişletilmiş menü için ⇧ basılı tutun: her geçmiş öğesi tüm eylemleri içeren bir alt menü alır — düz metin, BÜYÜK HARF, tek satır, yalnızca kopyala, Şablonlara ekle, sil, …. En son öğe için alt menü, aynı işi menüsüz yapan genel kısayolları da gösterir.";

@@ -1,4 +1,5 @@
 import AppKit
+import Carbon.HIToolbox
 
 /// Builds the popup menus: history list with accelerators + thumbnails, template tree.
 final class MenuBuilder {
@@ -58,86 +59,78 @@ final class MenuBuilder {
     }
 
     /// Context menu of a history row (right click): all actions for that one item, with single-letter shortcuts.
-    func contextMenu(for item: ClipItem, target: AnyObject, actions a: ContextActions) -> NSMenu {
+    /// - Parameter latestMods: when the item is the latest one and the "actions on the latest item" hot keys are
+    ///   on, their modifiers — the entries then show (and respond to) <mods>+letter, which also work globally.
+    ///   Otherwise the entries have no shortcuts at all: a key is either always available or not shown.
+    func contextMenu(for item: ClipItem, target: AnyObject, actions a: ContextActions, latestMods: UInt32?) -> NSMenu {
         let m = NSMenu()
         m.autoenablesItems = false
-        func add(_ title: String, _ sel: Selector, key: String, symbol: String? = nil, object: Any? = item.id) {
-            // Two copies: the plain key, and a ⇧ alternate with the same title so the shortcut also works
-            // while ⇧ (which opened the extended menu) is still held.
-            for mask in [NSEvent.ModifierFlags(), [.shift]] {
-                let mi = NSMenuItem(title: title, action: sel, keyEquivalent: key)
-                mi.keyEquivalentModifierMask = mask
-                mi.isAlternate = mask == [.shift]
+        let mask = latestMods.map { Self.flags($0) }
+        func add(_ title: String, _ sel: Selector, key: HotKey.LatestAction?, symbol: String? = nil, object: Any? = item.id, enabled: Bool = true) {
+            let keyChar = (mask != nil && key != nil) ? key!.keyChar : ""
+            // With a key: a second, ⇧ alternate copy so the shortcut also works while ⇧ (extended menu) is held.
+            for extra in [NSEvent.ModifierFlags(), [.shift]] {
+                let mi = NSMenuItem(title: title, action: sel, keyEquivalent: keyChar)
+                mi.keyEquivalentModifierMask = (mask ?? []).union(extra)
+                mi.isAlternate = extra == [.shift]
+                mi.isEnabled = enabled
                 mi.target = target
                 mi.representedObject = object
                 if let symbol { mi.image = NSImage(systemSymbolName: symbol, accessibilityDescription: nil) }
                 m.addItem(mi)
-                if key.isEmpty { break }
+                if keyChar.isEmpty { break }
             }
         }
-        add(L("Paste"), a.paste, key: "\r", symbol: "doc.on.clipboard")
-        if item.kind == .text, item.plainText != nil {
-            if item.hasRichText { add(L("Paste as plain text"), a.pastePlain, key: "p", symbol: "doc.plaintext") }
-            add(L("Copy only"), a.copyOnly, key: "c", symbol: "doc.on.doc")
-            m.addItem(.separator())
-            let group = NSMenuItem(title: L("Paste as"), action: nil, keyEquivalent: "")
-            group.isEnabled = false
-            m.addItem(group)
-            let keys: [TextTransform: String] = [.upper: "u", .lower: "l", .title: "t", .sentence: "s", .trim: "w", .singleLine: "j"]
-            for t in TextTransform.allCases where t != .stripFormatting {
-                add("   " + t.title, a.transform, key: keys[t] ?? "", object: TransformChoice(id: item.id, transform: t))
-            }
-        } else {
-            add(L("Copy only"), a.copyOnly, key: "c", symbol: "doc.on.doc")
+        let isText = item.kind == .text && item.plainText != nil
+        add(L("Paste"), a.paste, key: nil, symbol: "doc.on.clipboard")
+        add(L("Paste as plain text"), a.pastePlain, key: .plain, symbol: "doc.plaintext", enabled: isText)
+        add(L("Copy only"), a.copyOnly, key: nil, symbol: "doc.on.doc")
+        m.addItem(.separator())
+        let group = NSMenuItem(title: L("Paste as"), action: nil, keyEquivalent: "")
+        group.isEnabled = false
+        m.addItem(group)
+        for la in HotKey.LatestAction.allCases {
+            guard let t = la.transform else { continue }
+            add("   " + t.title, a.transform, key: la, object: TransformChoice(id: item.id, transform: t), enabled: isText)
         }
         m.addItem(.separator())
-        add(L("Add to Templates"), a.pin, key: "a", symbol: "text.badge.star")
-        add(L("Show in Viewer"), a.reveal, key: "v", symbol: "eye")
-        add(L("Delete"), a.delete, key: "\u{8}", symbol: "trash")
+        add(L("Add to Templates"), a.pin, key: .addToTemplates, symbol: "text.badge.star")
+        add(L("Show in Viewer"), a.reveal, key: nil, symbol: "eye")
+        add(L("Delete"), a.delete, key: .delete, symbol: "trash")
         return m
     }
 
-    func historyItems(_ items: [ClipItem], target: AnyObject, action: Selector, plainAction: Selector? = nil,
-                      pinAction: Selector? = nil, deleteAction: Selector? = nil, commandAccelerators: Bool = false) -> [NSMenuItem] {
+    /// Carbon modifier bits → AppKit flags.
+    static func flags(_ mods: UInt32) -> NSEvent.ModifierFlags {
+        var f: NSEvent.ModifierFlags = []
+        if mods & UInt32(cmdKey) != 0 { f.insert(.command) }
+        if mods & UInt32(shiftKey) != 0 { f.insert(.shift) }
+        if mods & UInt32(optionKey) != 0 { f.insert(.option) }
+        if mods & UInt32(controlKey) != 0 { f.insert(.control) }
+        return f
+    }
+
+    /// - Parameter numberMods: modifiers of the global "paste item by number" hot keys; the rows then carry
+    ///   <mods>+digit as their key equivalent (works in the menu and in the background alike). nil = the
+    ///   feature is off: rows get menu-only accelerators (1–9/0/A–Z, or ⌘1…⌘0 with the search field).
+    func historyItems(_ items: [ClipItem], target: AnyObject, action: Selector, numberMods: UInt32?,
+                      commandAccelerators: Bool = false) -> [NSMenuItem] {
         var out: [NSMenuItem] = []
         let shown = items.prefix(settings.menuMaxItems)
-        let accels = commandAccelerators ? Array(Self.accelerators.prefix(10)) : Self.accelerators
-        let baseMask: NSEvent.ModifierFlags = commandAccelerators ? [.command] : []
+        let global = numberMods != nil
+        let accels = (commandAccelerators || global) ? Array(Self.accelerators.prefix(10)) : Self.accelerators
+        let mask: NSEvent.ModifierFlags = global ? Self.flags(numberMods!) : (commandAccelerators ? [.command] : [])
         for (i, item) in shown.enumerated() {
             let title = item.title(maxLength: settings.titleLength)
             let mi = NSMenuItem(title: title, action: action, keyEquivalent: "")
             mi.target = target
             mi.representedObject = item.id
             mi.tag = Self.historyTag
-
-            var prefix = ""
             if settings.numberItems, i < accels.count {
                 let ch = accels[i]
                 mi.keyEquivalent = String(ch).lowercased()
-                mi.keyEquivalentModifierMask = baseMask
-                // Visible prefix "1  text" (the key equivalent column shows it too).
-                prefix = "\(ch)  "
-                mi.title = prefix + title
-            }
-            func alternate(_ suffix: String, _ sel: Selector, _ mod: NSEvent.ModifierFlags, symbol: String?) -> NSMenuItem {
-                let alt = NSMenuItem(title: prefix + suffix, action: sel, keyEquivalent: mi.keyEquivalent)
-                alt.target = target
-                alt.representedObject = item.id
-                alt.tag = Self.historyTag
-                alt.isAlternate = true
-                alt.keyEquivalentModifierMask = baseMask.union(mod)
-                if let symbol { alt.image = NSImage(systemSymbolName: symbol, accessibilityDescription: nil) }
-                return alt
-            }
-            var alternates: [NSMenuItem] = []
-            if let plain = plainAction, item.plainText != nil, item.kind == .text {
-                alternates.append(alternate(LF("%@ — plain text", title), plain, .shift, symbol: nil))
-            }
-            if let pin = pinAction {
-                alternates.append(alternate(LF("%@ — add to Templates", title), pin, .option, symbol: "text.badge.star"))
-            }
-            if let del = deleteAction {
-                alternates.append(alternate(LF("%@ — delete", title), del, .control, symbol: "trash"))
+                mi.keyEquivalentModifierMask = mask
+                mi.title = "\(ch)  " + title     // visible prefix "1  text"
             }
             if settings.showThumbnails, item.kind == .image {
                 mi.image = thumbnail(for: item)
@@ -150,7 +143,6 @@ final class MenuBuilder {
                 mi.toolTip = tip    // the preview panel replaces tooltips when it is on
             }
             out.append(mi)
-            out.append(contentsOf: alternates)   // alternates must directly follow their item
         }
         if items.count > shown.count {
             let more = NSMenuItem(title: LF("… %d more in the Viewer", items.count - shown.count), action: nil, keyEquivalent: "")

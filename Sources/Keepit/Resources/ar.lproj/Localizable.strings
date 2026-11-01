@@ -233,8 +233,6 @@
 "Also unlock with Touch ID (the password stays as fallback)" = "إلغاء القفل أيضًا عبر Touch ID (تبقى كلمة المرور كبديل)";
 "Search history…" = "البحث في السجل…";
 "(no matches)" = "(لا نتائج)";
-"%@ — plain text" = "%@ — نص عادي";
-"%@ — add to Templates" = "%@ — إضافة إلى القوالب";
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "لا يمكن استخدام Touch ID الآن (الغطاء مغلق أو لوحة المفاتيح في وضع السكون أو لا توجد بصمة مسجلة). سيفعّله Keepit تلقائيًا عند فتح القفل بكلمة المرور في المرة القادمة.";
 "Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit" = "تم تثبيت Keepit عبر Homebrew؛ لمسح سجله نفّذ: brew uninstall --cask --force keepit";
 "Layout: %@" = "التخطيط: %@";
@@ -246,7 +244,6 @@
 "1 day" = "يوم واحد";
 "1 week" = "أسبوع واحد";
 "30 days" = "30 يومًا";
-"%@ — delete" = "%@ — حذف";
 "Pause Recording for 10 Minutes" = "إيقاف التسجيل مؤقتًا لمدة 10 دقائق";
 "Resume Recording (paused until %@)" = "استئناف التسجيل (متوقف حتى %@)";
 "Keepit — recording paused" = "Keepit — التسجيل متوقف مؤقتًا";
@@ -316,7 +313,6 @@
 "Paste as" = "لصق كـ";
 "Paste as plain text" = "لصق كنص عادي";
 "Show in Viewer" = "إظهار في العارض";
-"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "اضغط ⇧ باستمرار للقائمة الموسّعة: يحصل كل عنصر في السجل على قائمة فرعية بكل الإجراءات — لصق كنص عادي، أحرف كبيرة، سطر واحد، نسخ فقط، …. اضغط ⌥ مع اختيار عنصر لإضافته إلى القوالب، و⌃ لحذفه.";
 "%@ and %@ use the same hot key (%@)." = "يستخدم «%@» و«%@» الاختصار نفسه (%@).";
 "Hot key conflict" = "تعارض في الاختصارات";
 "Hot keys" = "الاختصارات";
@@ -325,8 +321,9 @@
 "Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "مفاتيح التعديل التي تلصق مباشرة العنصر 1–10 من السجل مع 1–9 و0. انقر الحقل واضغط مفاتيح التعديل مع أي رقم؛ ⌫ يوقفه.";
 "Other" = "أخرى";
 "Paste item by number:" = "لصق عنصر بالرقم:";
-"Paste latest as plain text:" = "لصق الأحدث كنص عادي:";
 "Paste without the menu" = "اللصق دون القائمة";
-"Pastes the most recent item with formatting stripped." = "يلصق أحدث عنصر بدون تنسيق.";
 "Pause / resume recording:" = "إيقاف / استئناف التسجيل:";
 "Reset to Defaults" = "إعادة التعيين إلى الافتراضي";
+"Actions on the latest item:" = "إجراءات على أحدث عنصر:";
+"Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu." = "مفاتيح التعديل التي تعمل مع حرف على أحدث عنصر (الحافظة): V نص عادي، U أحرف كبيرة، L أحرف صغيرة، T حرف كبير لكل كلمة، S بداية الجملة، W إزالة المسافات، J سطر واحد، A إضافة إلى القوالب، ⌫ حذف. تظهر المفاتيح نفسها في القائمة الموسّعة للعنصر.";
+"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "اضغط ⇧ باستمرار للقائمة الموسّعة: يحصل كل عنصر في السجل على قائمة فرعية بكل الإجراءات — نص عادي، أحرف كبيرة، سطر واحد، نسخ فقط، إلى القوالب، حذف، …. لأحدث عنصر تُظهر القائمة الفرعية أيضًا الاختصارات العامة التي تفعل الشيء نفسه دون القائمة.";

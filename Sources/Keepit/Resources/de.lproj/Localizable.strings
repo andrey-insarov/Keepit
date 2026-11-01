@@ -233,8 +233,6 @@
 "Also unlock with Touch ID (the password stays as fallback)" = "Auch mit Touch ID entsperren (Passwort bleibt als Ersatz)";
 "Search history…" = "Verlauf durchsuchen …";
 "(no matches)" = "(keine Treffer)";
-"%@ — plain text" = "%@ – reiner Text";
-"%@ — add to Templates" = "%@ – zu Vorlagen";
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "Touch ID ist gerade nicht nutzbar (Deckel geschlossen, Tastatur im Ruhezustand oder kein Fingerabdruck registriert). Keepit aktiviert es automatisch beim nächsten Entsperren mit dem Passwort.";
 "Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit" = "Keepit wurde mit Homebrew installiert; zum Löschen des Eintrags ausführen: brew uninstall --cask --force keepit";
 "Layout: %@" = "Belegung: %@";
@@ -246,7 +244,6 @@
 "1 day" = "1 Tag";
 "1 week" = "1 Woche";
 "30 days" = "30 Tage";
-"%@ — delete" = "%@ – löschen";
 "Pause Recording for 10 Minutes" = "Aufzeichnung 10 Minuten pausieren";
 "Resume Recording (paused until %@)" = "Aufzeichnung fortsetzen (pausiert bis %@)";
 "Keepit — recording paused" = "Keepit – Aufzeichnung pausiert";
@@ -316,7 +313,6 @@
 "Paste as" = "Einfügen als";
 "Paste as plain text" = "Als reinen Text einfügen";
 "Show in Viewer" = "Im Viewer anzeigen";
-"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "⇧ halten für das erweiterte Menü: jeder Verlaufseintrag erhält ein Untermenü mit allen Aktionen – als reinen Text einfügen, GROSSBUCHSTABEN, eine Zeile, nur kopieren, …. Beim Auswählen ⌥ halten, um den Eintrag zu Vorlagen hinzuzufügen, ⌃ zum Löschen.";
 "%@ and %@ use the same hot key (%@)." = "„%@“ und „%@“ verwenden dasselbe Tastenkürzel (%@).";
 "Hot key conflict" = "Tastenkürzel-Konflikt";
 "Hot keys" = "Tastenkürzel";
@@ -325,8 +321,9 @@
 "Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "Modifiertasten, die zusammen mit 1–9 und 0 den Verlaufseintrag 1–10 direkt einfügen. Ins Feld klicken und die Modifier mit einer beliebigen Ziffer drücken; ⌫ schaltet ab.";
 "Other" = "Sonstiges";
 "Paste item by number:" = "Eintrag nach Nummer einfügen:";
-"Paste latest as plain text:" = "Neuesten als reinen Text einfügen:";
 "Paste without the menu" = "Einfügen ohne Menü";
-"Pastes the most recent item with formatting stripped." = "Fügt den neuesten Eintrag ohne Formatierung ein.";
 "Pause / resume recording:" = "Aufzeichnung pausieren / fortsetzen:";
 "Reset to Defaults" = "Auf Standard zurücksetzen";
+"Actions on the latest item:" = "Aktionen für den neuesten Eintrag:";
+"Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu." = "Modifiertasten, die mit einem Buchstaben auf den neuesten Eintrag (die Zwischenablage) wirken: V reiner Text, U GROSSBUCHSTABEN, L kleinbuchstaben, T Jedes Wort Groß, S Satzanfang groß, W Leerraum entfernen, J eine Zeile, A zu Vorlagen, ⌫ löschen. Dieselben Tasten stehen im erweiterten Menü des Eintrags.";
+"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "⇧ halten für das erweiterte Menü: jeder Verlaufseintrag erhält ein Untermenü mit allen Aktionen – reiner Text, GROSSBUCHSTABEN, eine Zeile, nur kopieren, zu Vorlagen, löschen, …. Beim neuesten Eintrag zeigt das Untermenü auch die globalen Tastenkürzel, die dasselbe ohne Menü tun.";

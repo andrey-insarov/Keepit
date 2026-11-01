@@ -11,6 +11,8 @@ final class HotKeyRecorderView: NSControl {
     var allowsClear = false
     /// Record only the modifiers (for "<mods> + 1–0"): the key pressed with them is ignored.
     var modifiersOnly = false
+    /// What follows the modifiers in the modifiers-only display, e.g. "1–0" or "V/U/L…".
+    var modifiersSuffix = "1–0"
     private var recording = false {
         didSet { needsDisplay = true }
     }
@@ -92,7 +94,7 @@ final class HotKeyRecorderView: NSControl {
         NSColor.separatorColor.setStroke()
         path.stroke()
 
-        let set: String? = hotKey.map { modifiersOnly ? HotKey.modifierString($0.modifiers) + " 1–0" : $0.displayString }
+        let set: String? = hotKey.map { modifiersOnly ? HotKey.modifierString($0.modifiers) + " " + modifiersSuffix : $0.displayString }
         let text = recording ? L("Press keys… (⎋ cancels)") : (set ?? (allowsClear ? L("Off — click to set") : L("Click to set")))
         let attrs: [NSAttributedString.Key: Any] = [
             .font: NSFont.systemFont(ofSize: NSFont.systemFontSize),

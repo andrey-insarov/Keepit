@@ -436,7 +436,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         menuBuilder.settings = new
         menuBuilder.invalidateThumbnails()
         if old.historyHotKey != new.historyHotKey || old.templateHotKey != new.templateHotKey || old.previousHotKey != new.previousHotKey
-            || old.plainHotKey != new.plainHotKey || old.numberPasteModifiers != new.numberPasteModifiers
+            || old.latestActionModifiers != new.latestActionModifiers || old.numberPasteModifiers != new.numberPasteModifiers
             || old.lockHotKey != new.lockHotKey || old.pauseHotKey != new.pauseHotKey {
             registerHotKeys()
         }
@@ -469,9 +469,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
            !hotKeys.register(prev, handler: { [weak self] in self?.pastePreviousItem() }) {
             failed.append(prev.displayString)
         }
-        if let plain = settings.plainHotKey,
-           !hotKeys.register(plain, handler: { [weak self] in self?.pasteItem(at: 0, plainText: true) }) {
-            failed.append(plain.displayString)
+        if let mods = settings.latestActionModifiers {
+            for la in HotKey.LatestAction.allCases {
+                let hk = HotKey(keyCode: la.keyCode, modifiers: mods)
+                if !hotKeys.register(hk, handler: { [weak self] in self?.performOnLatest(la) }) { failed.append(hk.displayString) }
+            }
         }
         if let mods = settings.numberPasteModifiers {
             for (i, code) in HotKey.digitKeyCodes.enumerated() {
@@ -708,8 +710,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
 
         let items = menuBuilder.historyItems(history.items, target: self, action: #selector(historyChosen(_:)),
-                                             pinAction: #selector(historyPinned(_:)),
-                                             deleteAction: #selector(historyDeleted(_:)), commandAccelerators: searching)
+                                             numberMods: settings.numberPasteModifiers, commandAccelerators: searching)
         if items.isEmpty {
             let e = NSMenuItem(title: L("(History is empty)"), action: nil, keyEquivalent: "")
             e.isEnabled = false
@@ -743,8 +744,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         for mi in menu.items where mi.tag == MenuBuilder.historyTag { menu.removeItem(mi) }
         let matches = MenuBuilder.filter(history.items, query: query)
         var fresh = menuBuilder.historyItems(matches, target: self, action: #selector(historyChosen(_:)),
-                                             pinAction: #selector(historyPinned(_:)),
-                                             deleteAction: #selector(historyDeleted(_:)), commandAccelerators: true)
+                                             numberMods: settings.numberPasteModifiers, commandAccelerators: true)
         if fresh.isEmpty {
             let none = NSMenuItem(title: L("(no matches)"), action: nil, keyEquivalent: "")
             none.isEnabled = false
@@ -798,6 +798,30 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         pasteItem(at: history.items.count > 1 ? 1 : 0, plainText: false)
     }
 
+    /// Global "actions on the latest item" hot keys (<mods>+V/U/L/…): act on history item #1 = the clipboard.
+    func performOnLatest(_ action: HotKey.LatestAction) {
+        guard !isLocked, let item = history.items.first else { NSSound.beep(); return }
+        let target = NSWorkspace.shared.frontmostApplication
+        let isText = item.kind == .text && item.plainText != nil
+        switch action {
+        case .plain:
+            guard isText else { NSSound.beep(); return }
+            Paster.paste(item, into: target, monitor: monitor, settings: settings, sendKey: settings.pasteAfterSelect, plainText: true)
+        case .addToTemplates:
+            let node = TemplateNode(name: "", clip: item)
+            guard templates.canInsert(node, under: templates.root) else { NSSound.beep(); return }
+            templates.root.insert(node)
+            templates.changed()
+            viewer?.refresh()
+        case .delete:
+            history.remove(id: item.id)
+            viewer?.refresh()
+        default:
+            guard isText, let t = action.transform, let out = item.transformed(t) else { NSSound.beep(); return }
+            Paster.paste(out, into: target, monitor: monitor, settings: settings, sendKey: settings.pasteAfterSelect)
+        }
+    }
+
     /// Global hot keys: paste history item at `index` into the front app without the menu.
     func pasteItem(at index: Int, plainText: Bool) {
         guard !isLocked, index >= 0, index < history.items.count else { NSSound.beep(); return }
@@ -844,10 +868,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func actionMenu(for id: UUID) -> NSMenu? {
         guard let item = history.item(id: id) else { return nil }
         PreviewPanel.shared.hide()
+        let isLatest = history.items.first?.id == id
         let m = menuBuilder.contextMenu(for: item, target: self, actions: .init(
             paste: #selector(historyChosen(_:)), pastePlain: #selector(historyChosenPlain(_:)),
             copyOnly: #selector(historyCopied(_:)), transform: #selector(historyTransformed(_:)),
-            pin: #selector(historyPinned(_:)), reveal: #selector(historyRevealed(_:)), delete: #selector(historyDeleted(_:))))
+            pin: #selector(historyPinned(_:)), reveal: #selector(historyRevealed(_:)), delete: #selector(historyDeleted(_:))),
+            latestMods: isLatest ? settings.latestActionModifiers : nil)
         m.delegate = self
         m.title = Self.actionMenuTitle
         return m

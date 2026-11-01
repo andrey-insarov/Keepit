@@ -243,9 +243,7 @@
 "Search history…" = "Search history…";
 "(no matches)" = "(no matches)";
 
-"%@ — plain text" = "%@ — plain text";
 
-"%@ — add to Templates" = "%@ — add to Templates";
 
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password.";
 
@@ -264,7 +262,6 @@
 "1 week" = "1 week";
 "30 days" = "30 days";
 
-"%@ — delete" = "%@ — delete";
 
 "Pause Recording for 10 Minutes" = "Pause Recording for 10 Minutes";
 "Resume Recording (paused until %@)" = "Resume Recording (paused until %@)";
@@ -345,7 +342,6 @@
 
 
 
-"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it.";
 
 "%@ and %@ use the same hot key (%@)." = "%@ and %@ use the same hot key (%@).";
 "Hot key conflict" = "Hot key conflict";
@@ -355,8 +351,10 @@
 "Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off.";
 "Other" = "Other";
 "Paste item by number:" = "Paste item by number:";
-"Paste latest as plain text:" = "Paste latest as plain text:";
 "Paste without the menu" = "Paste without the menu";
-"Pastes the most recent item with formatting stripped." = "Pastes the most recent item with formatting stripped.";
 "Pause / resume recording:" = "Pause / resume recording:";
 "Reset to Defaults" = "Reset to Defaults";
+
+"Actions on the latest item:" = "Actions on the latest item:";
+"Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu." = "Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu.";
+"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu.";

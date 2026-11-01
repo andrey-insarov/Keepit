@@ -233,8 +233,6 @@
 "Also unlock with Touch ID (the password stays as fallback)" = "Також розблоковувати через Touch ID (пароль лишається запасним варіантом)";
 "Search history…" = "Пошук в історії…";
 "(no matches)" = "(нічого не знайдено)";
-"%@ — plain text" = "%@ — простий текст";
-"%@ — add to Templates" = "%@ — до шаблонів";
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "Touch ID зараз недоступний (закрита кришка, клавіатура спить або немає зареєстрованого відбитка). Keepit увімкне його автоматично під час наступного розблокування паролем.";
 "Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit" = "Keepit було встановлено через Homebrew; щоб очистити його запис, виконайте: brew uninstall --cask --force keepit";
 "Layout: %@" = "Розкладка: %@";
@@ -246,7 +244,6 @@
 "1 day" = "1 день";
 "1 week" = "1 тиждень";
 "30 days" = "30 днів";
-"%@ — delete" = "%@ — видалити";
 "Pause Recording for 10 Minutes" = "Призупинити запис на 10 хвилин";
 "Resume Recording (paused until %@)" = "Відновити запис (пауза до %@)";
 "Keepit — recording paused" = "Keepit — запис призупинено";
@@ -316,7 +313,6 @@
 "Paste as" = "Вставити як";
 "Paste as plain text" = "Вставити як простий текст";
 "Show in Viewer" = "Показати в Перегляді";
-"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "Утримуйте ⇧ для розширеного меню: у кожного елемента історії з’являється підменю з усіма діями — вставити як простий текст, ВЕЛИКИМИ, в один рядок, лише скопіювати, …. Утримуйте ⌥ під час вибору елемента, щоб додати його до Шаблонів, ⌃ — видалити.";
 "%@ and %@ use the same hot key (%@)." = "«%@» і «%@» використовують одне сполучення (%@).";
 "Hot key conflict" = "Конфлікт сполучень";
 "Hot keys" = "Сполучення";
@@ -325,8 +321,9 @@
 "Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "Модифікатори, які разом із 1–9 та 0 одразу вставляють елемент історії 1–10. Клацніть поле й натисніть модифікатори з будь-якою цифрою; ⌫ вимикає.";
 "Other" = "Інше";
 "Paste item by number:" = "Вставити елемент за номером:";
-"Paste latest as plain text:" = "Вставити останній як простий текст:";
 "Paste without the menu" = "Вставлення без меню";
-"Pastes the most recent item with formatting stripped." = "Вставляє найновіший елемент без форматування.";
 "Pause / resume recording:" = "Пауза / відновити запис:";
 "Reset to Defaults" = "Скинути до типових";
+"Actions on the latest item:" = "Дії з останнім елементом:";
+"Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu." = "Модифікатори, які з літерою діють на останній елемент (буфер): V — простий текст, U — ВЕЛИКІ, L — малі, T — Кожне Слово, S — як у реченні, W — прибрати пробіли, J — в один рядок, A — до Шаблонів, ⌫ — видалити. Ті самі клавіші показані в розширеному меню елемента.";
+"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "Утримуйте ⇧ для розширеного меню: у кожного елемента історії з’являється підменю з усіма діями — простий текст, ВЕЛИКІ, в один рядок, лише скопіювати, до Шаблонів, видалити, …. Для останнього елемента підменю показує й глобальні сполучення, що роблять те саме без меню.";

@@ -233,8 +233,6 @@
 "Also unlock with Touch ID (the password stays as fallback)" = "Touch ID でもロック解除（パスワードは代替手段として残ります）";
 "Search history…" = "履歴を検索…";
 "(no matches)" = "(一致なし)";
-"%@ — plain text" = "%@ — プレーンテキスト";
-"%@ — add to Templates" = "%@ — テンプレートに追加";
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "現在 Touch ID を使用できません（ふたが閉じている、キーボードがスリープ中、または指紋が未登録）。次回パスワードでロック解除したときに Keepit が自動的に有効にします。";
 "Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit" = "Keepit は Homebrew でインストールされています。記録を消すには次を実行してください: brew uninstall --cask --force keepit";
 "Layout: %@" = "入力ソース: %@";
@@ -246,7 +244,6 @@
 "1 day" = "1 日";
 "1 week" = "1 週間";
 "30 days" = "30 日";
-"%@ — delete" = "%@ — 削除";
 "Pause Recording for 10 Minutes" = "記録を 10 分間一時停止";
 "Resume Recording (paused until %@)" = "記録を再開（%@ まで一時停止中）";
 "Keepit — recording paused" = "Keepit — 記録を一時停止中";
@@ -316,7 +313,6 @@
 "Paste as" = "変換してペースト";
 "Paste as plain text" = "書式なしテキストとしてペースト";
 "Show in Viewer" = "ビューアで表示";
-"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, …. Hold ⌥ while choosing an item to add it to Templates, ⌃ to delete it." = "⇧ を押し続けると拡張メニューになり、履歴の各項目にすべての操作のサブメニュー（書式なしでペースト、大文字、1 行、コピーのみ、…）が付きます。項目を選ぶときに ⌥ でテンプレートに追加、⌃ で削除します。";
 "%@ and %@ use the same hot key (%@)." = "「%@」と「%@」に同じホットキー（%@）が設定されています。";
 "Hot key conflict" = "ホットキーの競合";
 "Hot keys" = "ホットキー";
@@ -325,8 +321,9 @@
 "Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "1〜9 と 0 と組み合わせて履歴の 1〜10 番目を直接ペーストする修飾キー。フィールドをクリックし、修飾キーと任意の数字を押します。⌫ でオフ。";
 "Other" = "その他";
 "Paste item by number:" = "番号で項目をペースト:";
-"Paste latest as plain text:" = "最新の項目を書式なしでペースト:";
 "Paste without the menu" = "メニューを開かずにペースト";
-"Pastes the most recent item with formatting stripped." = "最新の項目を書式を取り除いてペーストします。";
 "Pause / resume recording:" = "記録を一時停止 / 再開:";
 "Reset to Defaults" = "デフォルトに戻す";
+"Actions on the latest item:" = "最新の項目への操作:";
+"Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu." = "文字と組み合わせて最新の項目（クリップボード）に作用する修飾キー: V 書式なし、U 大文字、L 小文字、T 各単語の先頭を大文字、S 文頭のみ大文字、W 前後の空白を削除、J 1 行、A テンプレートに追加、⌫ 削除。同じキーが項目の拡張メニューに表示されます。";
+"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "⇧ を押し続けると拡張メニューになり、履歴の各項目にすべての操作のサブメニュー（書式なし、大文字、1 行、コピーのみ、テンプレートに追加、削除、…）が付きます。最新の項目では、メニューなしで同じ操作を行うグローバルホットキーも表示されます。";
