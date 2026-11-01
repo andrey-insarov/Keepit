@@ -238,3 +238,4 @@
 "Your data will not be encrypted" = "您的数据将不会被加密";
 "Without a password Keepit stores history and templates unencrypted in your user Library. You can turn protection on at any time in Preferences → Security." = "没有密码时，Keepit 会将历史记录和模板以未加密形式存储在您的用户资源库中。您可以随时在偏好设置 → 安全中开启保护。";
 "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "没有该权限，Keepit 仍能记录历史并将项目复制到剪贴板，但无法向当前应用发送 ⌘V，也无法在文本光标处显示菜单。\n\n系统设置 → 隐私与安全性 → 辅助功能 → 启用 Keepit。";
+"Keepit removes its Accessibility permission." = "Keepit 正在移除其辅助功能权限。";

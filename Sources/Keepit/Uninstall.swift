@@ -41,12 +41,11 @@ extension AppDelegate {
         leftovers.append(library.appendingPathComponent("Preferences/\(bundleID).plist"))
         for url in leftovers { try? fm.removeItem(at: url) }
 
-        // Accessibility grant (not possible from the sandboxed App Store build; harmless if it fails).
-        let tcc = Process()
-        tcc.executableURL = URL(fileURLWithPath: "/usr/bin/tccutil")
-        tcc.arguments = ["reset", "Accessibility", bundleID]
-        try? tcc.run()
-        tcc.waitUntilExit()
+        // Accessibility grant. TCC entries follow the bundle (even into the Trash, under a renamed
+        // copy), so reset it *before* recycling. `tccutil reset` for Accessibility needs admin rights:
+        // try plainly first, then through the standard administrator prompt. Not possible from the
+        // sandboxed App Store build; a failure is not fatal.
+        resetAccessibilityGrant(bundleID: bundleID)
 
         NSWorkspace.shared.recycle([Bundle.main.bundleURL]) { _, error in
             DispatchQueue.main.async {
@@ -64,6 +63,25 @@ extension AppDelegate {
                 NSApp.terminate(nil)
             }
         }
+    }
+}
+
+extension AppDelegate {
+    fileprivate func resetAccessibilityGrant(bundleID: String) {
+        func run(_ exe: String, _ args: [String]) -> Int32 {
+            let p = Process()
+            p.executableURL = URL(fileURLWithPath: exe)
+            p.arguments = args
+            p.standardOutput = FileHandle.nullDevice
+            p.standardError = FileHandle.nullDevice
+            do { try p.run() } catch { return -1 }
+            p.waitUntilExit()
+            return p.terminationStatus
+        }
+        if run("/usr/bin/tccutil", ["reset", "Accessibility", bundleID]) == 0 { return }
+        let prompt = L("Keepit removes its Accessibility permission.").replacingOccurrences(of: "\"", with: "\\\"")
+        let script = "do shell script \"/usr/bin/tccutil reset Accessibility \(bundleID)\" with administrator privileges with prompt \"\(prompt)\""
+        _ = run("/usr/bin/osascript", ["-e", script])
     }
 }
 

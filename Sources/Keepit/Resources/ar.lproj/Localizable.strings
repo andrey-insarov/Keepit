@@ -238,3 +238,4 @@
 "Your data will not be encrypted" = "لن يتم تشفير بياناتك";
 "Without a password Keepit stores history and templates unencrypted in your user Library. You can turn protection on at any time in Preferences → Security." = "بدون كلمة مرور يخزّن Keepit السجل والقوالب دون تشفير في مكتبة المستخدم. يمكنك تفعيل الحماية في أي وقت من التفضيلات ← الأمن.";
 "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "بدونه يستمر Keepit في تسجيل السجل ونسخ العناصر إلى الحافظة، لكنه لا يستطيع إرسال ⌘V إلى التطبيق النشط أو وضع القائمة عند مؤشر النص.\n\nإعدادات النظام ← الخصوصية والأمن ← تسهيلات الاستخدام ← تفعيل Keepit.";
+"Keepit removes its Accessibility permission." = "يزيل Keepit إذن تسهيلات الاستخدام الخاص به.";

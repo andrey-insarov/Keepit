@@ -246,3 +246,4 @@
 "Your data will not be encrypted" = "Your data will not be encrypted";
 "Without a password Keepit stores history and templates unencrypted in your user Library. You can turn protection on at any time in Preferences → Security." = "Without a password Keepit stores history and templates unencrypted in your user Library. You can turn protection on at any time in Preferences → Security.";
 "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit.";
+"Keepit removes its Accessibility permission." = "Keepit removes its Accessibility permission.";
