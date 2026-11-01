@@ -621,7 +621,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func menu(_ menu: NSMenu, willHighlight item: NSMenuItem?) {
         guard settings.showPreview, !isLocked else { return }
         guard let mi = item, mi.tag == MenuBuilder.historyTag, let id = mi.representedObject as? UUID,
-              let clip = history.item(id: id) else {
+              let clip = history.item(id: id), !clip.fitsInTitle(maxLength: settings.titleLength) else {
             PreviewPanel.shared.hide()
             return
         }
@@ -810,31 +810,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     // MARK: - Long-press context menu
 
-    /// Close the history menu and open the per-item action menu under the mouse (the disabled header sits
-    /// under the pointer, so releasing the button right away chooses nothing).
+    /// Attach the per-item action menu as a submenu of the pressed item, so it opens beside the history
+    /// menu like any submenu (the history menu stays open). A one-pixel synthetic mouse move makes AppKit
+    /// notice the new submenu right away; without Accessibility the submenu opens on the next mouse move.
     private func showContextMenu(for mi: NSMenuItem, in menu: NSMenu) {
-        guard let id = mi.representedObject as? UUID, let item = history.item(id: id) else { return }
-        menuSelectionMade = true          // keep the paste target; the context menu continues the interaction
-        let wasPopup = popupActive
-        menu.cancelTracking()
+        guard mi.submenu == nil, let id = mi.representedObject as? UUID, let item = history.item(id: id) else { return }
         PreviewPanel.shared.hide()
         let ctx = menuBuilder.contextMenu(for: item, target: self, actions: .init(
             paste: #selector(historyChosen(_:)), pastePlain: #selector(historyChosenPlain(_:)),
             copyOnly: #selector(historyCopied(_:)), transform: #selector(historyTransformed(_:)),
             pin: #selector(historyPinned(_:)), reveal: #selector(historyRevealed(_:)), delete: #selector(historyDeleted(_:))))
-        ctx.delegate = self
-        let anchor = NSEvent.mouseLocation
-        // Wait for the button to be released; popping up while it is held would let the release dismiss the menu.
-        func openWhenReleased(_ tries: Int) {
-            if NSEvent.pressedMouseButtons & 1 != 0, tries > 0 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.03) { openWhenReleased(tries - 1) }
-                return
-            }
-            self.menuSelectionMade = false
-            self.popupActive = wasPopup
-            ctx.popUp(positioning: ctx.items.first, at: anchor, in: nil)
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { openWhenReleased(200) }
+        mi.submenu = ctx
+        LongPress.nudgePointer()
     }
 
     /// Context menu: put the item on the clipboard without pasting.

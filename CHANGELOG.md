@@ -4,8 +4,9 @@
 
 - **`keepit://` URL scheme** for Shortcuts, Raycast, Alfred and scripts: `keepit://paste/2`, `keepit://copy/3`, `keepit://template/Name`, `keepit://add?text=…`, `keepit://add-template?text=…&name=…`, `keepit://history`, `keepit://pause` … (Help → Placeholders & Automation…)
 - **Placeholders in templates** — `{date}`, `{date+7d:EEEE}`, `{time}`, `{clipboard}`, `{clipboard:2|upper}`, `{input:Name}`, `{choice:A|B}`, `{cursor}`, `{user}`, `{uuid}`, `{random:1-100}` and more (Help → Template Placeholders…); `{input}`/`{choice}` ask for values before pasting, `{cursor}` places the caret
-- **Long-press action menu**: press and hold a history item for half a second to get all actions for it — Paste, Paste as plain text, Copy only, *Paste as* UPPERCASE / lowercase / Title Case / Sentence case / trimmed / single line, Add to Templates, Show in Viewer, Delete — with single-letter shortcuts
+- **Long-press action menu**: press and hold a history item for half a second and a submenu with all actions for it opens beside the list — Paste, Paste as plain text, Copy only, *Paste as* UPPERCASE / lowercase / Title Case / Sentence case / trimmed / single line, Add to Templates, Show in Viewer, Delete — with single-letter shortcuts
 - New hot key **⌥⇧V — Paste previous item**: pastes history item #2 without opening the menu (press again to swap back); changeable or switchable off on the General tab
+- Preview panel no longer pops up for short single-line text (the menu line already shows it all)
 - Short checkbox labels with (?) help buttons that open explanations in a popover; ignored-apps field aligned with the other rows
 - Preferences reorganised into five tabs — General, History, Menu, Security, Advanced — in a
   fixed-size window; Export/Import Backup also live on the Security tab, *Open Data Folder* and

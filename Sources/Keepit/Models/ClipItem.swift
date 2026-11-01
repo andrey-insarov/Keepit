@@ -133,6 +133,14 @@ struct ClipItem: Codable, Identifiable, Equatable {
     }
 
     /// Menu title: first meaningful line, whitespace collapsed, truncated.
+    /// True when the menu line already shows everything: single-line text that fits in `maxLength`.
+    /// The preview panel is skipped for such items (it would only repeat the line).
+    func fitsInTitle(maxLength: Int) -> Bool {
+        guard kind == .text, let t = plainText else { return false }
+        let trimmed = t.trimmingCharacters(in: .whitespacesAndNewlines)
+        return !trimmed.contains(where: { $0.isNewline }) && trimmed.count <= maxLength
+    }
+
     func title(maxLength: Int) -> String {
         let raw: String
         switch kind {

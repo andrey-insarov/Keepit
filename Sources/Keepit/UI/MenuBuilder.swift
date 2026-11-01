@@ -57,13 +57,10 @@ final class MenuBuilder {
         var delete: Selector
     }
 
-    /// Menu shown after a long press on a history item: all actions for that one item, with single-letter shortcuts.
+    /// Submenu attached to a history item after a long press: all actions for that one item, with single-letter shortcuts.
     func contextMenu(for item: ClipItem, target: AnyObject, actions a: ContextActions) -> NSMenu {
         let m = NSMenu()
         m.autoenablesItems = false
-        let header = NSMenuItem(title: item.title(maxLength: 40), action: nil, keyEquivalent: "")
-        header.isEnabled = false
-        m.addItem(header)
         func add(_ title: String, _ sel: Selector, key: String, symbol: String? = nil, object: Any? = item.id) {
             let mi = NSMenuItem(title: title, action: sel, keyEquivalent: key)
             mi.keyEquivalentModifierMask = []
