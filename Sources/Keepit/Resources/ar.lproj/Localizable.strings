@@ -91,14 +91,12 @@
 "Longer is better — try a phrase of several words" = "الأطول أفضل — جرّب عبارة من عدة كلمات";
 "Menu" = "القائمة";
 "Mix letters, digits and symbols" = "امزج بين الحروف والأرقام والرموز";
-"Name" = "الاسم";
 "Name:" = "الاسم:";
 "New Folder" = "مجلد جديد";
 "New Item" = "عنصر جديد";
 "New Item from File…" = "عنصر جديد من ملف…";
 "New Recovery Phrase…" = "عبارة استرداد جديدة…";
 "New password" = "كلمة المرور الجديدة";
-"New …" = "جديد…";
 "No, Keep Password" = "لا، الاحتفاظ بكلمة المرور";
 "OK" = "موافق";
 "Open Data Folder" = "فتح مجلد البيانات";
@@ -131,7 +129,6 @@
 "Select All" = "تحديد الكل";
 "Select an item in the tree." = "حدد عنصرًا في الشجرة.";
 "Send to Clipboard" = "إرسال إلى الحافظة";
-"Set Hot Key" = "تعيين مفتاح اختصار";
 "Set Hot Key…" = "تعيين مفتاح اختصار…";
 "Set Keepit password" = "تعيين كلمة مرور Keepit";
 "Set a new password" = "تعيين كلمة مرور جديدة";
@@ -329,3 +326,4 @@
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "اضغط ⇧ باستمرار للقائمة الموسّعة: يحصل كل عنصر في السجل على قائمة فرعية بكل الإجراءات — نص عادي، أحرف كبيرة، سطر واحد، نسخ فقط، إلى القوالب، حذف، …. لأحدث عنصر تُظهر القائمة الفرعية أيضًا الاختصارات العامة التي تفعل الشيء نفسه دون القائمة.";
 "Search" = "بحث";
 "Find…" = "بحث…";
+"Template “%@”" = "القالب «%@»";

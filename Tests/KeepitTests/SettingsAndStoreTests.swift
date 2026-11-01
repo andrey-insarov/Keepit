@@ -1,5 +1,6 @@
 import XCTest
 @testable import Keepit
+import Carbon.HIToolbox
 
 final class SettingsAndStoreTests: XCTestCase {
     var tmp: TempStorage!
@@ -127,4 +128,32 @@ final class SnippetTests: XCTestCase {
 
 private extension Array {
     subscript(safe i: Int) -> Element? { indices.contains(i) ? self[i] : nil }
+}
+
+final class HotKeySettingsTests: XCTestCase {
+    func testNewHotKeyFieldsRoundTripAndDefaults() throws {
+        var s = Settings()
+        XCTAssertEqual(s.numberPasteModifiers, HotKey.controlOption)
+        XCTAssertEqual(s.latestActionModifiers, HotKey.controlOption)
+        XCTAssertNil(s.lockHotKey)
+        s.numberPasteModifiers = nil                      // explicitly off must survive a round trip
+        s.lockHotKey = HotKey(keyCode: UInt32(kVK_ANSI_L), modifiers: UInt32(cmdKey | controlKey))
+        let data = try JSONEncoder().encode(s)
+        let back = try JSONDecoder().decode(Settings.self, from: data)
+        XCTAssertNil(back.numberPasteModifiers)
+        XCTAssertEqual(back.lockHotKey, s.lockHotKey)
+        XCTAssertEqual(back.latestActionModifiers, HotKey.controlOption)
+    }
+
+    func testOldSettingsWithoutNewKeysGetDefaults() throws {
+        let back = try JSONDecoder().decode(Settings.self, from: Data("{}".utf8))
+        XCTAssertEqual(back.numberPasteModifiers, HotKey.controlOption)
+        XCTAssertEqual(back.previousHotKey, HotKey.optionShiftV)
+    }
+
+    func testLatestActionKeyCodesAreDistinct() {
+        let codes = HotKey.LatestAction.allCases.map(\.keyCode)
+        XCTAssertEqual(Set(codes).count, codes.count)
+        XCTAssertTrue(Set(HotKey.digitKeyCodes).isDisjoint(with: codes))
+    }
 }

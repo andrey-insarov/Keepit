@@ -110,14 +110,12 @@ T = {
 "Longer is better — try a phrase of several words": ("Чем длиннее, тем лучше — попробуйте фразу из нескольких слов", "Länger ist besser – versuchen Sie eine Phrase aus mehreren Wörtern", "Plus c’est long, mieux c’est — essayez une phrase de plusieurs mots", "Cuanto más larga, mejor: prueba una frase de varias palabras", "長いほど安全です — 複数の単語からなるフレーズを試してください", "越长越好 — 试试由多个单词组成的短语"),
 "Menu": ("Меню", "Menü", "Menu", "Menú", "メニュー", "菜单"),
 "Mix letters, digits and symbols": ("Смешивайте буквы, цифры и символы", "Buchstaben, Ziffern und Symbole mischen", "Mélangez lettres, chiffres et symboles", "Mezcla letras, dígitos y símbolos", "文字・数字・記号を組み合わせてください", "混合使用字母、数字和符号"),
-"Name": ("Имя", "Name", "Nom", "Nombre", "名前", "名称"),
 "Name:": ("Имя:", "Name:", "Nom :", "Nombre:", "名前:", "名称："),
 "New Folder": ("Новая папка", "Neuer Ordner", "Nouveau dossier", "Nueva carpeta", "新規フォルダ", "新建文件夹"),
 "New Item": ("Новый элемент", "Neuer Eintrag", "Nouvel élément", "Nuevo elemento", "新規項目", "新建项"),
 "New Item from File…": ("Новый элемент из файла…", "Neuer Eintrag aus Datei …", "Nouvel élément depuis un fichier…", "Nuevo elemento desde archivo…", "ファイルから新規項目…", "从文件新建项…"),
 "New Recovery Phrase…": ("Новая фраза восстановления…", "Neue Wiederherstellungsphrase …", "Nouvelle phrase de récupération…", "Nueva frase de recuperación…", "新しいリカバリーフレーズ…", "新恢复助记词…"),
 "New password": ("Новый пароль", "Neues Passwort", "Nouveau mot de passe", "Nueva contraseña", "新しいパスワード", "新密码"),
-"New …": ("Создать …", "Neu …", "Nouveau…", "Nuevo…", "新規…", "新建…"),
 "No, Keep Password": ("Нет, оставить пароль", "Nein, Passwort behalten", "Non, garder le mot de passe", "No, mantener la contraseña", "いいえ、パスワードを維持", "否，保留密码"),
 "OK": ("ОК", "OK", "OK", "Aceptar", "OK", "好"),
 "Open Data Folder": ("Открыть папку данных", "Datenordner öffnen", "Ouvrir le dossier de données", "Abrir carpeta de datos", "データフォルダを開く", "打开数据文件夹"),
@@ -150,7 +148,6 @@ T = {
 "Select All": ("Выбрать всё", "Alles auswählen", "Tout sélectionner", "Seleccionar todo", "すべてを選択", "全选"),
 "Select an item in the tree.": ("Выберите элемент в дереве.", "Wählen Sie einen Eintrag im Baum.", "Sélectionnez un élément dans l’arborescence.", "Selecciona un elemento en el árbol.", "ツリーで項目を選択してください。", "请在树中选择一项。"),
 "Send to Clipboard": ("Отправить в буфер обмена", "In die Zwischenablage legen", "Envoyer au presse-papiers", "Enviar al portapapeles", "クリップボードへ送る", "发送到剪贴板"),
-"Set Hot Key": ("Задать горячую клавишу", "Tastenkürzel festlegen", "Définir le raccourci", "Definir atajo", "ホットキーを設定", "设置快捷键"),
 "Set Hot Key…": ("Задать горячую клавишу…", "Tastenkürzel festlegen …", "Définir le raccourci…", "Definir atajo…", "ホットキーを設定…", "设置快捷键…"),
 "Set Keepit password": ("Задать пароль Keepit", "Keepit-Passwort festlegen", "Définir le mot de passe Keepit", "Definir la contraseña de Keepit", "Keepit のパスワードを設定", "设置 Keepit 密码"),
 "Set a new password": ("Задайте новый пароль", "Neues Passwort festlegen", "Définir un nouveau mot de passe", "Define una nueva contraseña", "新しいパスワードを設定", "设置新密码"),
@@ -352,6 +349,7 @@ T = {
 'Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu.': ('Удерживайте ⇧ для расширенного меню: у каждого элемента истории появляется подменю со всеми действиями — простой текст, ВЕРХНИЙ РЕГИСТР, в одну строку, только скопировать, в Шаблоны, удалить, …. Для последнего элемента подменю показывает и глобальные сочетания, делающие то же самое без меню.', '⇧ halten für das erweiterte Menü: jeder Verlaufseintrag erhält ein Untermenü mit allen Aktionen – reiner Text, GROSSBUCHSTABEN, eine Zeile, nur kopieren, zu Vorlagen, löschen, …. Beim neuesten Eintrag zeigt das Untermenü auch die globalen Tastenkürzel, die dasselbe ohne Menü tun.', 'Maintenez ⇧ pour le menu étendu : chaque élément de l’historique reçoit un sous-menu avec toutes les actions — texte brut, MAJUSCULES, une ligne, copier seulement, vers Modèles, supprimer, …. Pour le dernier élément, le sous-menu affiche aussi les raccourcis globaux qui font la même chose sans le menu.', 'Mantén ⇧ para el menú ampliado: cada elemento del historial recibe un submenú con todas las acciones: texto sin formato, MAYÚSCULAS, una línea, solo copiar, a Plantillas, eliminar, …. Para el último elemento, el submenú muestra además los atajos globales que hacen lo mismo sin el menú.', '⇧ を押し続けると拡張メニューになり、履歴の各項目にすべての操作のサブメニュー（書式なし、大文字、1 行、コピーのみ、テンプレートに追加、削除、…）が付きます。最新の項目では、メニューなしで同じ操作を行うグローバルホットキーも表示されます。', '按住 ⇧ 显示扩展菜单：每个历史记录项都会有包含全部操作的子菜单 — 纯文本、大写、单行、仅复制、添加到模板、删除、…。对于最新项，子菜单还会显示无需菜单即可执行相同操作的全局热键。'),
 'Search': ('Поиск', 'Suchen', 'Rechercher', 'Buscar', '検索', '搜索'),
 'Find…': ('Найти…', 'Suchen …', 'Rechercher…', 'Buscar…', '検索…', '查找…'),
+'Template “%@”': ('Шаблон «%@»', 'Vorlage „%@“', 'Modèle « %@ »', 'Plantilla «%@»', 'テンプレート「%@」', '模板“%@”'),
 }
 
 PH = re.compile(r"%[@d]")

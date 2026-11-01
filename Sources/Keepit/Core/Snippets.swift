@@ -74,7 +74,7 @@ enum Snippets {
     }
 
     private static func prompt(from token: String) -> Prompt? {
-        let (head, filters) = splitFilters(token)
+        let (head, _) = splitFilters(token)
         if head.hasPrefix("input:") {
             let spec = String(head.dropFirst(6))
             let (name, def) = splitDefault(spec)
@@ -86,7 +86,6 @@ enum Snippets {
             let choices = (list ?? name).split(separator: "|").map { String($0) }
             return Prompt(name: list == nil ? L("Choice") : name, defaultValue: choices.first ?? "", choices: choices)
         }
-        _ = filters
         return nil
     }
 

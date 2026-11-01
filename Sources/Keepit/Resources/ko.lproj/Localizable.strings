@@ -91,14 +91,12 @@
 "Longer is better — try a phrase of several words" = "길수록 좋습니다 — 여러 단어로 된 문구를 사용해 보세요";
 "Menu" = "메뉴";
 "Mix letters, digits and symbols" = "문자, 숫자, 기호를 섞으세요";
-"Name" = "이름";
 "Name:" = "이름:";
 "New Folder" = "새 폴더";
 "New Item" = "새 항목";
 "New Item from File…" = "파일에서 새 항목…";
 "New Recovery Phrase…" = "새 복구 문구…";
 "New password" = "새 암호";
-"New …" = "새로 만들기…";
 "No, Keep Password" = "아니요, 암호 유지";
 "OK" = "확인";
 "Open Data Folder" = "데이터 폴더 열기";
@@ -131,7 +129,6 @@
 "Select All" = "전체 선택";
 "Select an item in the tree." = "트리에서 항목을 선택하세요.";
 "Send to Clipboard" = "클립보드로 보내기";
-"Set Hot Key" = "단축키 설정";
 "Set Hot Key…" = "단축키 설정…";
 "Set Keepit password" = "Keepit 암호 설정";
 "Set a new password" = "새 암호 설정";
@@ -329,3 +326,4 @@
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "⇧를 누르고 있으면 확장 메뉴가 되어 모든 기록 항목에 전체 동작 하위 메뉴(서식 없음, 대문자, 한 줄, 복사만, 템플릿에 추가, 삭제, …)가 생깁니다. 최신 항목의 하위 메뉴에는 메뉴 없이 같은 동작을 하는 전역 단축키도 표시됩니다.";
 "Search" = "검색";
 "Find…" = "찾기…";
+"Template “%@”" = "템플릿 “%@”";

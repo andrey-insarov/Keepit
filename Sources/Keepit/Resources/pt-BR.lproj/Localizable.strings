@@ -91,14 +91,12 @@
 "Longer is better — try a phrase of several words" = "Quanto mais longa, melhor — tente uma frase de várias palavras";
 "Menu" = "Menu";
 "Mix letters, digits and symbols" = "Misture letras, números e símbolos";
-"Name" = "Nome";
 "Name:" = "Nome:";
 "New Folder" = "Nova pasta";
 "New Item" = "Novo item";
 "New Item from File…" = "Novo item a partir de arquivo…";
 "New Recovery Phrase…" = "Nova frase de recuperação…";
 "New password" = "Nova senha";
-"New …" = "Novo…";
 "No, Keep Password" = "Não, manter a senha";
 "OK" = "OK";
 "Open Data Folder" = "Abrir pasta de dados";
@@ -131,7 +129,6 @@
 "Select All" = "Selecionar tudo";
 "Select an item in the tree." = "Selecione um item na árvore.";
 "Send to Clipboard" = "Enviar para a área de transferência";
-"Set Hot Key" = "Definir tecla de atalho";
 "Set Hot Key…" = "Definir tecla de atalho…";
 "Set Keepit password" = "Definir a senha do Keepit";
 "Set a new password" = "Defina uma nova senha";
@@ -329,3 +326,4 @@
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "Segure ⇧ para o menu estendido: cada item do histórico recebe um submenu com todas as ações — texto simples, MAIÚSCULAS, uma linha, só copiar, aos Modelos, excluir, …. Para o item mais recente, o submenu também mostra os atalhos globais que fazem o mesmo sem o menu.";
 "Search" = "Buscar";
 "Find…" = "Buscar…";
+"Template “%@”" = "Modelo “%@”";

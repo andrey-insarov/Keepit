@@ -91,14 +91,12 @@
 "Longer is better — try a phrase of several words" = "ארוך יותר עדיף — נסה ביטוי של כמה מילים";
 "Menu" = "תפריט";
 "Mix letters, digits and symbols" = "שלב אותיות, ספרות וסמלים";
-"Name" = "שם";
 "Name:" = "שם:";
 "New Folder" = "תיקייה חדשה";
 "New Item" = "פריט חדש";
 "New Item from File…" = "פריט חדש מקובץ…";
 "New Recovery Phrase…" = "משפט שחזור חדש…";
 "New password" = "סיסמה חדשה";
-"New …" = "חדש…";
 "No, Keep Password" = "לא, השאר את הסיסמה";
 "OK" = "אישור";
 "Open Data Folder" = "פתח את תיקיית הנתונים";
@@ -131,7 +129,6 @@
 "Select All" = "בחר הכול";
 "Select an item in the tree." = "בחר פריט בעץ.";
 "Send to Clipboard" = "שלח ללוח";
-"Set Hot Key" = "הגדר מקש קיצור";
 "Set Hot Key…" = "הגדר מקש קיצור…";
 "Set Keepit password" = "הגדר סיסמת Keepit";
 "Set a new password" = "הגדר סיסמה חדשה";
@@ -329,3 +326,4 @@
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "החזק ⇧ לתפריט המורחב: כל פריט בהיסטוריה מקבל תת־תפריט עם כל הפעולות — טקסט פשוט, אותיות גדולות, שורה אחת, העתקה בלבד, לתבניות, מחיקה, …. עבור הפריט האחרון תת־התפריט מציג גם את הקיצורים הגלובליים שעושים את אותו הדבר ללא התפריט.";
 "Search" = "חיפוש";
 "Find…" = "חפש…";
+"Template “%@”" = "תבנית «%@»";

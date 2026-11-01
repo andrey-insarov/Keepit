@@ -52,20 +52,23 @@ Or the DMG:
 | Tray icon, left click = menu, right = viewer | Menu-bar icon 📎, left click = history menu, right click = Viewer |
 | `Alt+C` history+template popup, pastes       | `⌥C` (configurable), pops at the text cursor, pastes with `⌘V` |
 | `Alt+T` template popup                       | `⌥T` (configurable)                                        |
-| Numbered menu items `&1 … &9 &0 &A …`        | Same: press `1-9`, `0`, `A-Z` while the menu is open       |
-| Bitmap thumbnails and tooltips in the menu   | Same (PNG thumbnails, text tooltips)                       |
+| Numbered menu items `&1 … &9 &0 &A …`        | Items are numbered; `⌃⌥1 … ⌃⌥0` paste item 1–10 — inside the menu and from any app (configurable; menu-only `1-9/0/A-Z` when the global keys are off) |
+| —                                            | Search field at the top of the history menu: typing filters in place, Return pastes the first match |
+| —                                            | Extended menu: hold `⇧` and every item gets a submenu — paste as plain text, UPPERCASE / lowercase / Title Case / Sentence case / trimmed / single line, copy only, add to Templates, show in Viewer, delete |
+| —                                            | Global hot keys on the latest item (the clipboard): `⌃⌥V` plain text, `⌃⌥U/L/T/S/W/J` transformations, `⌃⌥A` add to Templates, `⌃⌥⌫` delete; `⌥⇧V` pastes the previous item (swap). All of them on the *Hot keys* tab of Preferences |
+| Bitmap thumbnails and tooltips in the menu   | Same (PNG thumbnails, text tooltips) plus a preview panel next to the highlighted item and the source app's icon |
 | Formats: TEXT, UNICODE, RTF, HTML, BITMAP, HDROP | plain text, RTF, HTML, PNG (TIFF converted), file URLs |
 | History max (30), overlap check, save/restore| Separate rings: 1000 text/file items + 30 images by default, JSON in `~/Library/Application Support/Keepit/` |
 | Window filter (ignore apps)                  | Built-in list of password managers (always ignored) + user ignore list + `org.nspasteboard.ConcealedType` |
 | Per-window paste key (`sendkey`)             | Per-bundle-id paste key in `settings.json` (`pasteKeys`)   |
 | Templates (hierarchical "Regist")            | Same: folders, any format (text/image/files), `-` separators, `&x` shortcuts, per-item hot key, `{date}`/`{clipboard}`/`{input:…}`/`{cursor}` placeholders |
 | Automation                                   | `keepit://` URL scheme: `paste/N`, `copy/N`, `template/Name`, `add?text=`, `add-template?text=&name=`, `history`, `pause` — use from Shortcuts (“Open URL”), Raycast, Alfred or `open` |
-| Viewer: tree Clipboard / History / Template  | Same tree; each item expands into its formats              |
+| Viewer: tree Clipboard / History / Template  | Same tree, with a search field (`⌘F`) that filters history and templates and highlights matches |
 | Viewer: edit text, bitmap view, file list, binary view | Text/RTF/HTML editing (applied when focus leaves), image view, file list (double-click opens), hex dump toggle |
 | Viewer context menu                          | Send to Clipboard, Paste, Add to Template, New Item/Folder, New Item from File, Rename, Clear Name, Set Hot Key, Save Format to File, Up/Down, Delete |
 | Viewer drag & drop                           | History → Template (copy), Template → History (copy), reorder within each |
 | Status bar                                   | Date, source app, format, size, hot key                    |
-| Options dialog (CLCLSet)                     | Preferences window with hot-key recorder                   |
+| Options dialog (CLCLSet)                     | Preferences with tabs General / Hot keys / History / Menu / Security / Advanced, hot-key recorders, (?) help popovers |
 | —                                            | Export / Import Backup: one password-encrypted `.keepit` file (history, templates, preferences); Merge or Replace on import |
 | —                                            | 21 interface languages: en, ru, uk, de, fr, es, it, pt-BR, nl, pl, cs, tr, lt, lv, et, ja, ko, zh-Hans, zh-Hant, ar, he |
 
@@ -277,7 +280,6 @@ Sources/Keepit/
 1. Import of Windows CLCL `history.dat` / `regist.dat`.
 2. Format filter & priority pages (which formats to keep / show first).
 3. Tools/plugin equivalents (shell scripts or AppleScript on an item, from the menu).
-4. Localisation (CLCL ships ja/en/de/uk/zh readmes).
 
 ## License
 

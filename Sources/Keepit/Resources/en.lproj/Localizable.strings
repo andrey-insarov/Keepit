@@ -91,14 +91,12 @@
 "Longer is better — try a phrase of several words" = "Longer is better — try a phrase of several words";
 "Menu" = "Menu";
 "Mix letters, digits and symbols" = "Mix letters, digits and symbols";
-"Name" = "Name";
 "Name:" = "Name:";
 "New Folder" = "New Folder";
 "New Item" = "New Item";
 "New Item from File…" = "New Item from File…";
 "New Recovery Phrase…" = "New Recovery Phrase…";
 "New password" = "New password";
-"New …" = "New …";
 "No, Keep Password" = "No, Keep Password";
 "OK" = "OK";
 "Open Data Folder" = "Open Data Folder";
@@ -131,7 +129,6 @@
 "Select All" = "Select All";
 "Select an item in the tree." = "Select an item in the tree.";
 "Send to Clipboard" = "Send to Clipboard";
-"Set Hot Key" = "Set Hot Key";
 "Set Hot Key…" = "Set Hot Key…";
 "Set Keepit password" = "Set Keepit password";
 "Set a new password" = "Set a new password";
@@ -361,3 +358,5 @@
 
 "Search" = "Search";
 "Find…" = "Find…";
+
+"Template “%@”" = "Template “%@”";

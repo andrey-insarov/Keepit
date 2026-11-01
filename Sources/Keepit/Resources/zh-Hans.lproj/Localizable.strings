@@ -91,14 +91,12 @@
 "Longer is better — try a phrase of several words" = "越长越好 — 试试由多个单词组成的短语";
 "Menu" = "菜单";
 "Mix letters, digits and symbols" = "混合使用字母、数字和符号";
-"Name" = "名称";
 "Name:" = "名称：";
 "New Folder" = "新建文件夹";
 "New Item" = "新建项";
 "New Item from File…" = "从文件新建项…";
 "New Recovery Phrase…" = "新恢复助记词…";
 "New password" = "新密码";
-"New …" = "新建…";
 "No, Keep Password" = "否，保留密码";
 "OK" = "好";
 "Open Data Folder" = "打开数据文件夹";
@@ -131,7 +129,6 @@
 "Select All" = "全选";
 "Select an item in the tree." = "请在树中选择一项。";
 "Send to Clipboard" = "发送到剪贴板";
-"Set Hot Key" = "设置快捷键";
 "Set Hot Key…" = "设置快捷键…";
 "Set Keepit password" = "设置 Keepit 密码";
 "Set a new password" = "设置新密码";
@@ -329,3 +326,4 @@
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "按住 ⇧ 显示扩展菜单：每个历史记录项都会有包含全部操作的子菜单 — 纯文本、大写、单行、仅复制、添加到模板、删除、…。对于最新项，子菜单还会显示无需菜单即可执行相同操作的全局热键。";
 "Search" = "搜索";
 "Find…" = "查找…";
+"Template “%@”" = "模板“%@”";

@@ -91,14 +91,12 @@
 "Longer is better — try a phrase of several words" = "Langer is beter — probeer een zin van meerdere woorden";
 "Menu" = "Menu";
 "Mix letters, digits and symbols" = "Combineer letters, cijfers en symbolen";
-"Name" = "Naam";
 "Name:" = "Naam:";
 "New Folder" = "Nieuwe map";
 "New Item" = "Nieuw item";
 "New Item from File…" = "Nieuw item uit bestand…";
 "New Recovery Phrase…" = "Nieuwe herstelzin…";
 "New password" = "Nieuw wachtwoord";
-"New …" = "Nieuw…";
 "No, Keep Password" = "Nee, wachtwoord behouden";
 "OK" = "OK";
 "Open Data Folder" = "Open gegevensmap";
@@ -131,7 +129,6 @@
 "Select All" = "Selecteer alles";
 "Select an item in the tree." = "Selecteer een item in de boomstructuur.";
 "Send to Clipboard" = "Stuur naar klembord";
-"Set Hot Key" = "Stel sneltoets in";
 "Set Hot Key…" = "Stel sneltoets in…";
 "Set Keepit password" = "Keepit-wachtwoord instellen";
 "Set a new password" = "Stel een nieuw wachtwoord in";
@@ -329,3 +326,4 @@
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "Houd ⇧ ingedrukt voor het uitgebreide menu: elk geschiedenisitem krijgt een submenu met alle acties — platte tekst, HOOFDLETTERS, één regel, alleen kopiëren, naar Sjablonen, verwijderen, …. Voor het nieuwste item toont het submenu ook de globale sneltoetsen die hetzelfde doen zonder het menu.";
 "Search" = "Zoeken";
 "Find…" = "Zoek…";
+"Template “%@”" = "Sjabloon “%@”";

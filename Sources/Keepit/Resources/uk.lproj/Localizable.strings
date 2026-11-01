@@ -91,14 +91,12 @@
 "Longer is better — try a phrase of several words" = "Що довше, то краще — спробуйте фразу з кількох слів";
 "Menu" = "Меню";
 "Mix letters, digits and symbols" = "Поєднуйте літери, цифри та символи";
-"Name" = "Назва";
 "Name:" = "Назва:";
 "New Folder" = "Нова тека";
 "New Item" = "Новий елемент";
 "New Item from File…" = "Новий елемент із файлу…";
 "New Recovery Phrase…" = "Нова фраза відновлення…";
 "New password" = "Новий пароль";
-"New …" = "Створити …";
 "No, Keep Password" = "Ні, залишити пароль";
 "OK" = "OK";
 "Open Data Folder" = "Відкрити теку даних";
@@ -131,7 +129,6 @@
 "Select All" = "Вибрати все";
 "Select an item in the tree." = "Виберіть елемент у дереві.";
 "Send to Clipboard" = "Надіслати в буфер обміну";
-"Set Hot Key" = "Задати гарячу клавішу";
 "Set Hot Key…" = "Задати гарячу клавішу…";
 "Set Keepit password" = "Задати пароль Keepit";
 "Set a new password" = "Задайте новий пароль";
@@ -329,3 +326,4 @@
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "Утримуйте ⇧ для розширеного меню: у кожного елемента історії з’являється підменю з усіма діями — простий текст, ВЕЛИКІ, в один рядок, лише скопіювати, до Шаблонів, видалити, …. Для останнього елемента підменю показує й глобальні сполучення, що роблять те саме без меню.";
 "Search" = "Пошук";
 "Find…" = "Знайти…";
+"Template “%@”" = "Шаблон «%@»";

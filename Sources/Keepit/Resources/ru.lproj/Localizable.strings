@@ -91,14 +91,12 @@
 "Longer is better — try a phrase of several words" = "Чем длиннее, тем лучше — попробуйте фразу из нескольких слов";
 "Menu" = "Меню";
 "Mix letters, digits and symbols" = "Смешивайте буквы, цифры и символы";
-"Name" = "Имя";
 "Name:" = "Имя:";
 "New Folder" = "Новая папка";
 "New Item" = "Новый элемент";
 "New Item from File…" = "Новый элемент из файла…";
 "New Recovery Phrase…" = "Новая фраза восстановления…";
 "New password" = "Новый пароль";
-"New …" = "Создать …";
 "No, Keep Password" = "Нет, оставить пароль";
 "OK" = "ОК";
 "Open Data Folder" = "Открыть папку данных";
@@ -131,7 +129,6 @@
 "Select All" = "Выбрать всё";
 "Select an item in the tree." = "Выберите элемент в дереве.";
 "Send to Clipboard" = "Отправить в буфер обмена";
-"Set Hot Key" = "Задать горячую клавишу";
 "Set Hot Key…" = "Задать горячую клавишу…";
 "Set Keepit password" = "Задать пароль Keepit";
 "Set a new password" = "Задайте новый пароль";
@@ -329,3 +326,4 @@
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "Удерживайте ⇧ для расширенного меню: у каждого элемента истории появляется подменю со всеми действиями — простой текст, ВЕРХНИЙ РЕГИСТР, в одну строку, только скопировать, в Шаблоны, удалить, …. Для последнего элемента подменю показывает и глобальные сочетания, делающие то же самое без меню.";
 "Search" = "Поиск";
 "Find…" = "Найти…";
+"Template “%@”" = "Шаблон «%@»";

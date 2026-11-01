@@ -91,14 +91,12 @@
 "Longer is better — try a phrase of several words" = "Kuo ilgesnis, tuo geriau — pabandykite kelių žodžių frazę";
 "Menu" = "Meniu";
 "Mix letters, digits and symbols" = "Derinkite raides, skaitmenis ir simbolius";
-"Name" = "Pavadinimas";
 "Name:" = "Pavadinimas:";
 "New Folder" = "Naujas aplankas";
 "New Item" = "Naujas elementas";
 "New Item from File…" = "Naujas elementas iš failo…";
 "New Recovery Phrase…" = "Nauja atkūrimo frazė…";
 "New password" = "Naujas slaptažodis";
-"New …" = "Naujas…";
 "No, Keep Password" = "Ne, palikti slaptažodį";
 "OK" = "Gerai";
 "Open Data Folder" = "Atverti duomenų aplanką";
@@ -131,7 +129,6 @@
 "Select All" = "Pasirinkti viską";
 "Select an item in the tree." = "Pasirinkite elementą medyje.";
 "Send to Clipboard" = "Siųsti į iškarpinę";
-"Set Hot Key" = "Nustatyti spartųjį klavišą";
 "Set Hot Key…" = "Nustatyti spartųjį klavišą…";
 "Set Keepit password" = "Nustatyti „Keepit“ slaptažodį";
 "Set a new password" = "Nustatykite naują slaptažodį";
@@ -329,3 +326,4 @@
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "Laikykite ⇧ išplėstiniam meniu: kiekvienas istorijos elementas gauna submeniu su visais veiksmais — paprastas tekstas, DIDŽIOSIOS, viena eilutė, tik kopijuoti, į Šablonus, ištrinti, …. Naujausiam elementui submeniu rodo ir globalius sparčiuosius klavišus, kurie daro tą patį be meniu.";
 "Search" = "Ieškoti";
 "Find…" = "Ieškoti…";
+"Template “%@”" = "Šablonas „%@“";

@@ -91,14 +91,12 @@
 "Longer is better — try a phrase of several words" = "長いほど安全です — 複数の単語からなるフレーズを試してください";
 "Menu" = "メニュー";
 "Mix letters, digits and symbols" = "文字・数字・記号を組み合わせてください";
-"Name" = "名前";
 "Name:" = "名前:";
 "New Folder" = "新規フォルダ";
 "New Item" = "新規項目";
 "New Item from File…" = "ファイルから新規項目…";
 "New Recovery Phrase…" = "新しいリカバリーフレーズ…";
 "New password" = "新しいパスワード";
-"New …" = "新規…";
 "No, Keep Password" = "いいえ、パスワードを維持";
 "OK" = "OK";
 "Open Data Folder" = "データフォルダを開く";
@@ -131,7 +129,6 @@
 "Select All" = "すべてを選択";
 "Select an item in the tree." = "ツリーで項目を選択してください。";
 "Send to Clipboard" = "クリップボードへ送る";
-"Set Hot Key" = "ホットキーを設定";
 "Set Hot Key…" = "ホットキーを設定…";
 "Set Keepit password" = "Keepit のパスワードを設定";
 "Set a new password" = "新しいパスワードを設定";
@@ -329,3 +326,4 @@
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "⇧ を押し続けると拡張メニューになり、履歴の各項目にすべての操作のサブメニュー（書式なし、大文字、1 行、コピーのみ、テンプレートに追加、削除、…）が付きます。最新の項目では、メニューなしで同じ操作を行うグローバルホットキーも表示されます。";
 "Search" = "検索";
 "Find…" = "検索…";
+"Template “%@”" = "テンプレート「%@」";

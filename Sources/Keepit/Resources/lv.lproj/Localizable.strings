@@ -91,14 +91,12 @@
 "Longer is better — try a phrase of several words" = "Jo garāka, jo labāk — izmēģiniet vairāku vārdu frāzi";
 "Menu" = "Izvēlne";
 "Mix letters, digits and symbols" = "Apvienojiet burtus, ciparus un simbolus";
-"Name" = "Nosaukums";
 "Name:" = "Nosaukums:";
 "New Folder" = "Jauna mape";
 "New Item" = "Jauns vienums";
 "New Item from File…" = "Jauns vienums no faila…";
 "New Recovery Phrase…" = "Jauna atkopšanas frāze…";
 "New password" = "Jauna parole";
-"New …" = "Jauns…";
 "No, Keep Password" = "Nē, paturēt paroli";
 "OK" = "Labi";
 "Open Data Folder" = "Atvērt datu mapi";
@@ -131,7 +129,6 @@
 "Select All" = "Atlasīt visu";
 "Select an item in the tree." = "Atlasiet vienumu kokā.";
 "Send to Clipboard" = "Sūtīt uz starpliktuvi";
-"Set Hot Key" = "Iestatīt īsinājumtaustiņu";
 "Set Hot Key…" = "Iestatīt īsinājumtaustiņu…";
 "Set Keepit password" = "Iestatīt Keepit paroli";
 "Set a new password" = "Iestatiet jaunu paroli";
@@ -329,3 +326,4 @@
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "Turiet ⇧ paplašinātajai izvēlnei: katrs vēstures vienums iegūst apakšizvēlni ar visām darbībām — vienkāršs teksts, LIELIE BURTI, viena rinda, tikai kopēt, uz Veidnēm, dzēst, …. Jaunākajam vienumam apakšizvēlne rāda arī globālās taustiņu kombinācijas, kas dara to pašu bez izvēlnes.";
 "Search" = "Meklēt";
 "Find…" = "Meklēt…";
+"Template “%@”" = "Veidne “%@”";

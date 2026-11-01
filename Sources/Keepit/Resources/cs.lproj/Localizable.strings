@@ -91,14 +91,12 @@
 "Longer is better — try a phrase of several words" = "Delší je lepší — zkuste frázi z několika slov";
 "Menu" = "Nabídka";
 "Mix letters, digits and symbols" = "Kombinujte písmena, číslice a symboly";
-"Name" = "Název";
 "Name:" = "Název:";
 "New Folder" = "Nová složka";
 "New Item" = "Nová položka";
 "New Item from File…" = "Nová položka ze souboru…";
 "New Recovery Phrase…" = "Nová fráze pro obnovení…";
 "New password" = "Nové heslo";
-"New …" = "Nová…";
 "No, Keep Password" = "Ne, ponechat heslo";
 "OK" = "OK";
 "Open Data Folder" = "Otevřít složku s daty";
@@ -131,7 +129,6 @@
 "Select All" = "Vybrat vše";
 "Select an item in the tree." = "Vyberte položku ve stromu.";
 "Send to Clipboard" = "Odeslat do schránky";
-"Set Hot Key" = "Nastavit klávesovou zkratku";
 "Set Hot Key…" = "Nastavit klávesovou zkratku…";
 "Set Keepit password" = "Nastavit heslo Keepit";
 "Set a new password" = "Nastavte nové heslo";
@@ -329,3 +326,4 @@
 "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "Podržením ⇧ zapnete rozšířenou nabídku: každá položka historie dostane podnabídku se všemi akcemi — prostý text, VELKÁ PÍSMENA, jeden řádek, jen zkopírovat, do Šablon, smazat, …. U nejnovější položky podnabídka ukazuje i globální zkratky, které dělají totéž bez nabídky.";
 "Search" = "Hledat";
 "Find…" = "Najít…";
+"Template “%@”" = "Šablona „%@“";

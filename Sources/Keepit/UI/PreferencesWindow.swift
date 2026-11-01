@@ -454,6 +454,9 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         if let m = s.numberPasteModifiers {
             for c in HotKey.digitKeyCodes { all.append((L("Paste item by number:"), HotKey(keyCode: c, modifiers: m))) }
         }
+        for t in app.templates.allItems() where t.hotKey != nil {
+            all.append((LF("Template “%@”", t.displayName), t.hotKey!))
+        }
         for i in all.indices {
             for j in all.indices where j > i && all[i].1 == all[j].1 {
                 return LF("%@ and %@ use the same hot key (%@).", all[i].0, all[j].0, all[i].1.displayString)
