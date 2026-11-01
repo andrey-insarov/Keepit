@@ -360,6 +360,11 @@ T = {
 'Computer name': ('Имя компьютера', 'Computername', 'Nom de l’ordinateur', 'Nombre del equipo', 'コンピュータ名', '电脑名'),
 'New UUID': ('Новый UUID', 'Neue UUID', 'Nouvel UUID', 'UUID nuevo', '新しい UUID', '新的 UUID'),
 'Random number': ('Случайное число', 'Zufallszahl', 'Nombre aléatoire', 'Número aleatorio', '乱数', '随机数'),
+'Viewer:': ('Просмотр:', 'Viewer:', 'Visionneuse :', 'Visor:', 'ビューア:', '查看器：'),
+'Preferences:': ('Настройки:', 'Einstellungen:', 'Préférences :', 'Preferencias:', '環境設定:', '偏好设置：'),
+'Clear History:': ('Очистить историю:', 'Verlauf löschen:', 'Effacer l’historique :', 'Borrar historial:', '履歴を消去:', '清除历史记录：'),
+'Quit Keepit:': ('Завершить Keepit:', 'Keepit beenden:', 'Quitter Keepit :', 'Salir de Keepit:', 'Keepit を終了:', '退出 Keepit：'),
+'Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off.': ('Заданные здесь сочетания работают из любого приложения и показываются рядом с командами в меню. ⌫ в поле выключает сочетание.', 'Hier festgelegte Kürzel wirken aus jeder App und stehen im Menü neben ihren Befehlen. ⌫ im Feld schaltet das Kürzel ab.', 'Les raccourcis définis ici fonctionnent depuis n’importe quelle app et apparaissent à côté de leurs commandes dans le menu. ⌫ dans un champ désactive le raccourci.', 'Los atajos definidos aquí funcionan desde cualquier app y se muestran junto a sus comandos en el menú. ⌫ en un campo desactiva el atajo.', 'ここで設定したキーはどのアプリからでも使え、メニューのコマンドの横に表示されます。フィールドで ⌫ を押すとオフになります。', '此处设置的按键可在任何应用中使用，并显示在菜单中对应命令旁。在字段中按 ⌫ 可关闭。'),
 }
 
 PH = re.compile(r"%[@d]")

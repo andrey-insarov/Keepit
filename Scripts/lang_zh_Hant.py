@@ -337,4 +337,9 @@ T = {
 'Computer name': '電腦名稱',
 'New UUID': '新的 UUID',
 'Random number': '隨機數',
+'Viewer:': '檢視器：',
+'Preferences:': '偏好設定：',
+'Clear History:': '清除歷史記錄：',
+'Quit Keepit:': '結束 Keepit：',
+'Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off.': '此處設定的按鍵可在任何 App 中使用，並顯示在選單中對應指令旁。在欄位中按 ⌫ 可關閉。',
 }

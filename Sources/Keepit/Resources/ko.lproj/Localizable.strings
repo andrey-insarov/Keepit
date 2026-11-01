@@ -337,3 +337,8 @@
 "Computer name" = "컴퓨터 이름";
 "New UUID" = "새 UUID";
 "Random number" = "난수";
+"Viewer:" = "뷰어:";
+"Preferences:" = "환경설정:";
+"Clear History:" = "기록 지우기:";
+"Quit Keepit:" = "Keepit 종료:";
+"Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off." = "여기서 설정한 키는 모든 앱에서 작동하며 메뉴의 명령 옆에 표시됩니다. 필드에서 ⌫를 누르면 꺼집니다.";

@@ -1,3 +1,4 @@
+import AppKit
 import Foundation
 import Carbon.HIToolbox
 
@@ -40,6 +41,18 @@ struct HotKey: Codable, Equatable {
     /// Key codes of 1…9, 0 — the digits used for direct paste.
     static let digitKeyCodes: [UInt32] = [kVK_ANSI_1, kVK_ANSI_2, kVK_ANSI_3, kVK_ANSI_4, kVK_ANSI_5,
                                           kVK_ANSI_6, kVK_ANSI_7, kVK_ANSI_8, kVK_ANSI_9, kVK_ANSI_0].map { UInt32($0) }
+
+    /// The same combination as an NSMenuItem key equivalent, so the menu can show global hot keys
+    /// next to their commands. nil for keys AppKit cannot display (F13+, exotic codes).
+    var menuKeyEquivalent: (key: String, mask: NSEvent.ModifierFlags)? {
+        guard let key = KeyCodes.menuCharacter(for: UInt16(keyCode)) else { return nil }
+        var mask: NSEvent.ModifierFlags = []
+        if modifiers & UInt32(cmdKey) != 0 { mask.insert(.command) }
+        if modifiers & UInt32(shiftKey) != 0 { mask.insert(.shift) }
+        if modifiers & UInt32(optionKey) != 0 { mask.insert(.option) }
+        if modifiers & UInt32(controlKey) != 0 { mask.insert(.control) }
+        return (key, mask)
+    }
 
     static func modifierString(_ modifiers: UInt32) -> String {
         var s = ""
@@ -108,6 +121,10 @@ struct Settings: Codable, Equatable {
     var latestActionModifiers: UInt32? = HotKey.controlOption  // <mods>+V/U/L/T/S/W/J/A/⌫ act on item #1; nil = off
     var lockHotKey: HotKey? = nil                        // global "Lock Keepit"
     var pauseHotKey: HotKey? = nil                       // global "Pause recording for 10 minutes"
+    var viewerHotKey: HotKey? = nil                      // global "Viewer…"
+    var preferencesHotKey: HotKey? = nil                 // global "Preferences…"
+    var clearHistoryHotKey: HotKey? = nil                // global "Clear History"
+    var quitHotKey: HotKey? = nil                        // global "Quit Keepit"
     var pasteAfterSelect = true    // action.paste
 
     // [sendkey]
@@ -157,6 +174,10 @@ struct Settings: Codable, Equatable {
         case latestActionModifiers
         case lockHotKey
         case pauseHotKey
+        case viewerHotKey
+        case preferencesHotKey
+        case clearHistoryHotKey
+        case quitHotKey
         case pasteAfterSelect
         case pasteDelay
         case pasteKeys
@@ -202,6 +223,10 @@ struct Settings: Codable, Equatable {
         latestActionModifiers = c.contains(.latestActionModifiers) ? try c.decodeIfPresent(UInt32.self, forKey: .latestActionModifiers) : d.latestActionModifiers
         lockHotKey       = try c.decodeIfPresent(HotKey.self, forKey: .lockHotKey)
         pauseHotKey      = try c.decodeIfPresent(HotKey.self, forKey: .pauseHotKey)
+        viewerHotKey     = try c.decodeIfPresent(HotKey.self, forKey: .viewerHotKey)
+        preferencesHotKey = try c.decodeIfPresent(HotKey.self, forKey: .preferencesHotKey)
+        clearHistoryHotKey = try c.decodeIfPresent(HotKey.self, forKey: .clearHistoryHotKey)
+        quitHotKey       = try c.decodeIfPresent(HotKey.self, forKey: .quitHotKey)
         pasteAfterSelect = try c.decodeIfPresent(Bool.self,   forKey: .pasteAfterSelect) ?? d.pasteAfterSelect
         pasteDelay       = try c.decodeIfPresent(Double.self, forKey: .pasteDelay)       ?? d.pasteDelay
         pasteKeys        = try c.decodeIfPresent([String: PasteKey].self, forKey: .pasteKeys) ?? d.pasteKeys
@@ -246,6 +271,10 @@ struct Settings: Codable, Equatable {
         try c.encode(latestActionModifiers, forKey: .latestActionModifiers)
         try c.encode(lockHotKey, forKey: .lockHotKey)
         try c.encode(pauseHotKey, forKey: .pauseHotKey)
+        try c.encode(viewerHotKey, forKey: .viewerHotKey)
+        try c.encode(preferencesHotKey, forKey: .preferencesHotKey)
+        try c.encode(clearHistoryHotKey, forKey: .clearHistoryHotKey)
+        try c.encode(quitHotKey, forKey: .quitHotKey)
         try c.encode(pasteAfterSelect, forKey: .pasteAfterSelect)
         try c.encode(pasteDelay, forKey: .pasteDelay)
         try c.encode(pasteKeys, forKey: .pasteKeys)
@@ -312,5 +341,26 @@ enum KeyCodes {
 
     static func name(for keyCode: UInt16) -> String {
         names[keyCode] ?? "key\(keyCode)"
+    }
+
+    /// Character for NSMenuItem.keyEquivalent, or nil if AppKit has no representation.
+    static func menuCharacter(for keyCode: UInt16) -> String? {
+        let special: [UInt16: String] = [
+            UInt16(kVK_Space): " ", UInt16(kVK_Return): "\r", UInt16(kVK_Tab): "\t", UInt16(kVK_Escape): "\u{1B}",
+            UInt16(kVK_Delete): "\u{8}", UInt16(kVK_ForwardDelete): String(UnicodeScalar(NSDeleteFunctionKey)!),
+            UInt16(kVK_LeftArrow): String(UnicodeScalar(NSLeftArrowFunctionKey)!), UInt16(kVK_RightArrow): String(UnicodeScalar(NSRightArrowFunctionKey)!),
+            UInt16(kVK_UpArrow): String(UnicodeScalar(NSUpArrowFunctionKey)!), UInt16(kVK_DownArrow): String(UnicodeScalar(NSDownArrowFunctionKey)!),
+            UInt16(kVK_Home): String(UnicodeScalar(NSHomeFunctionKey)!), UInt16(kVK_End): String(UnicodeScalar(NSEndFunctionKey)!),
+            UInt16(kVK_PageUp): String(UnicodeScalar(NSPageUpFunctionKey)!), UInt16(kVK_PageDown): String(UnicodeScalar(NSPageDownFunctionKey)!),
+            UInt16(kVK_F1): String(UnicodeScalar(NSF1FunctionKey)!), UInt16(kVK_F2): String(UnicodeScalar(NSF2FunctionKey)!),
+            UInt16(kVK_F3): String(UnicodeScalar(NSF3FunctionKey)!), UInt16(kVK_F4): String(UnicodeScalar(NSF4FunctionKey)!),
+            UInt16(kVK_F5): String(UnicodeScalar(NSF5FunctionKey)!), UInt16(kVK_F6): String(UnicodeScalar(NSF6FunctionKey)!),
+            UInt16(kVK_F7): String(UnicodeScalar(NSF7FunctionKey)!), UInt16(kVK_F8): String(UnicodeScalar(NSF8FunctionKey)!),
+            UInt16(kVK_F9): String(UnicodeScalar(NSF9FunctionKey)!), UInt16(kVK_F10): String(UnicodeScalar(NSF10FunctionKey)!),
+            UInt16(kVK_F11): String(UnicodeScalar(NSF11FunctionKey)!), UInt16(kVK_F12): String(UnicodeScalar(NSF12FunctionKey)!),
+        ]
+        if let s = special[keyCode] { return s }
+        if let n = names[keyCode], n.count == 1 { return n.lowercased() }
+        return nil
     }
 }

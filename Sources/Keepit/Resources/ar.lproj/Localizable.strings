@@ -337,3 +337,8 @@
 "Computer name" = "اسم الكمبيوتر";
 "New UUID" = "UUID جديد";
 "Random number" = "رقم عشوائي";
+"Viewer:" = "العارض:";
+"Preferences:" = "التفضيلات:";
+"Clear History:" = "مسح السجل:";
+"Quit Keepit:" = "إنهاء Keepit:";
+"Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off." = "تعمل المفاتيح المعيّنة هنا من أي تطبيق وتظهر بجانب أوامرها في القائمة. ⌫ في الحقل يوقف المفتاح.";

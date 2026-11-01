@@ -337,3 +337,8 @@
 "Computer name" = "שם המחשב";
 "New UUID" = "UUID חדש";
 "Random number" = "מספר אקראי";
+"Viewer:" = "מציג:";
+"Preferences:" = "העדפות:";
+"Clear History:" = "נקה היסטוריה:";
+"Quit Keepit:" = "צא מ‑Keepit:";
+"Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off." = "מקשים שהוגדרו כאן פועלים מכל יישום ומוצגים ליד הפקודות בתפריט. ⌫ בשדה מכבה את המקש.";

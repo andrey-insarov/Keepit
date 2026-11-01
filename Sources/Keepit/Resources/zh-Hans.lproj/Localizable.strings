@@ -337,3 +337,8 @@
 "Computer name" = "电脑名";
 "New UUID" = "新的 UUID";
 "Random number" = "随机数";
+"Viewer:" = "查看器：";
+"Preferences:" = "偏好设置：";
+"Clear History:" = "清除历史记录：";
+"Quit Keepit:" = "退出 Keepit：";
+"Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off." = "此处设置的按键可在任何应用中使用，并显示在菜单中对应命令旁。在字段中按 ⌫ 可关闭。";

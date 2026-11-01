@@ -337,4 +337,9 @@ T = {
 'Computer name': 'Computernaam',
 'New UUID': 'Nieuwe UUID',
 'Random number': 'Willekeurig getal',
+'Viewer:': 'Weergave:',
+'Preferences:': 'Voorkeuren:',
+'Clear History:': 'Geschiedenis wissen:',
+'Quit Keepit:': 'Keepit stoppen:',
+'Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off.': 'Hier ingestelde toetsen werken vanuit elke app en staan in het menu naast hun opdrachten. ⌫ in een veld zet de toets uit.',
 }

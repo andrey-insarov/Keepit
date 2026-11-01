@@ -337,3 +337,8 @@
 "Computer name" = "Ім’я комп’ютера";
 "New UUID" = "Новий UUID";
 "Random number" = "Випадкове число";
+"Viewer:" = "Перегляд:";
+"Preferences:" = "Налаштування:";
+"Clear History:" = "Очистити історію:";
+"Quit Keepit:" = "Завершити Keepit:";
+"Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off." = "Задані тут сполучення працюють із будь-якої програми й показуються поруч із командами в меню. ⌫ у полі вимикає сполучення.";

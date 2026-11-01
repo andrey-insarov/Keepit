@@ -28,6 +28,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var pasteTarget: NSRunningApplication?
     private var menuSelectionMade = false
     private var popupActive = false
+    /// Menus of ours currently tracking (history, template, action submenus); global hot keys pause meanwhile.
+    private var openMenus = 0
 
     /// True while the vault key is wiped and data is unloaded (password set, not yet entered).
     private(set) var isLocked = false
@@ -80,6 +82,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             self?.lastExternalApp = app
         }
 
+        hotKeys.isSuppressed = { [weak self] in (self?.openMenus ?? 0) > 0 }
         registerHotKeys()
         Storage.save(settings, to: Storage.settingsURL, encrypt: false)
         observeScreenLock()
@@ -437,7 +440,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         menuBuilder.invalidateThumbnails()
         if old.historyHotKey != new.historyHotKey || old.templateHotKey != new.templateHotKey || old.previousHotKey != new.previousHotKey
             || old.latestActionModifiers != new.latestActionModifiers || old.numberPasteModifiers != new.numberPasteModifiers
-            || old.lockHotKey != new.lockHotKey || old.pauseHotKey != new.pauseHotKey {
+            || old.lockHotKey != new.lockHotKey || old.pauseHotKey != new.pauseHotKey
+            || old.viewerHotKey != new.viewerHotKey || old.preferencesHotKey != new.preferencesHotKey
+            || old.clearHistoryHotKey != new.clearHistoryHotKey || old.quitHotKey != new.quitHotKey {
             registerHotKeys()
         }
         if old.launchAtLogin != new.launchAtLogin {
@@ -484,6 +489,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             }
         }
         if let hk = settings.lockHotKey, !hotKeys.register(hk, handler: { [weak self] in self?.lock() }) {
+            failed.append(hk.displayString)
+        }
+        if let hk = settings.viewerHotKey, !hotKeys.register(hk, handler: { [weak self] in self?.openViewer() }) {
+            failed.append(hk.displayString)
+        }
+        if let hk = settings.preferencesHotKey, !hotKeys.register(hk, handler: { [weak self] in self?.openPreferences() }) {
+            failed.append(hk.displayString)
+        }
+        if let hk = settings.clearHistoryHotKey, !hotKeys.register(hk, handler: { [weak self] in self?.clearHistory() }) {
+            failed.append(hk.displayString)
+        }
+        if let hk = settings.quitHotKey, !hotKeys.register(hk, handler: { [weak self] in self?.quit() }) {
             failed.append(hk.displayString)
         }
         if let hk = settings.pauseHotKey, !hotKeys.register(hk, handler: { [weak self] in
@@ -650,6 +667,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     func menuWillOpen(_ menu: NSMenu) {
+        openMenus += 1
         if let s = historySearchItem, menu.items.first === s { s.focus() }
         if menu.items.contains(where: { $0.tag == MenuBuilder.historyTag }) {
             ExtendedMenuWatch.shared.watch(menu) { [weak self] mi in
@@ -661,6 +679,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     func menuDidClose(_ menu: NSMenu) {
+        openMenus = max(0, openMenus - 1)
         if menu.title == Self.actionMenuTitle { ExtendedMenuWatch.shared.submenuClosed(); return }
         ExtendedMenuWatch.shared.stop(menu)
         PreviewPanel.shared.hide()
@@ -750,26 +769,31 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     private func appMenuItems() -> [NSMenuItem] {
-        func item(_ title: String, _ sel: Selector, _ key: String = "") -> NSMenuItem {
-            let mi = NSMenuItem(title: title, action: sel, keyEquivalent: key)
+        /// A command with its global hot key shown (and usable) in the menu — the same key works everywhere.
+        func item(_ title: String, _ sel: Selector, hotKey: HotKey? = nil) -> NSMenuItem {
+            let mi = NSMenuItem(title: title, action: sel, keyEquivalent: "")
             mi.target = self
+            if let eq = hotKey?.menuKeyEquivalent {
+                mi.keyEquivalent = eq.key
+                mi.keyEquivalentModifierMask = eq.mask
+            }
             return mi
         }
         var out: [NSMenuItem] = [
-            item(L("Viewer…"), #selector(openViewer)),
-            item(L("Add Clipboard to Templates"), #selector(addClipboardToTemplates)),
-            item(L("Preferences…"), #selector(openPreferences), ","),
+            item(L("Viewer…"), #selector(openViewer), hotKey: settings.viewerHotKey),
+            item(L("Add Clipboard to Templates"), #selector(addClipboardToTemplates), hotKey: settings.latestActionModifiers.map { HotKey(keyCode: HotKey.LatestAction.addToTemplates.keyCode, modifiers: $0) }),
+            item(L("Preferences…"), #selector(openPreferences), hotKey: settings.preferencesHotKey),
             .separator(),
-            item(L("Clear History"), #selector(clearHistory)),
+            item(L("Clear History"), #selector(clearHistory), hotKey: settings.clearHistoryHotKey),
         ]
         if let until = pausedUntil, until > Date() {
             let f = DateFormatter(); f.timeStyle = .short
-            out.append(item(LF("Resume Recording (paused until %@)", f.string(from: until)), #selector(resumeRecording)))
+            out.append(item(LF("Resume Recording (paused until %@)", f.string(from: until)), #selector(resumeRecording), hotKey: settings.pauseHotKey))
         } else {
-            out.append(item(L("Pause Recording for 10 Minutes"), #selector(pauseRecording)))
+            out.append(item(L("Pause Recording for 10 Minutes"), #selector(pauseRecording), hotKey: settings.pauseHotKey))
         }
         if Vault.isEnabled {
-            out.append(item(L("Lock Keepit"), #selector(lock), "l"))
+            out.append(item(L("Lock Keepit"), #selector(lock), hotKey: settings.lockHotKey))
         }
         out.append(.separator())
         if updater.isConfigured {
@@ -780,7 +804,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             out.append(item(L("Grant Accessibility Permission…"), #selector(grantAccessibility)))
         }
         out.append(.separator())
-        out.append(item(L("Quit Keepit"), #selector(quit), "q"))
+        let quitItem = item(L("Quit Keepit"), #selector(quit), hotKey: settings.quitHotKey)
+        if settings.quitHotKey == nil { quitItem.keyEquivalent = "q" }   // ⌘Q inside the menu, as everywhere on the Mac
+        out.append(quitItem)
         return out
     }
 

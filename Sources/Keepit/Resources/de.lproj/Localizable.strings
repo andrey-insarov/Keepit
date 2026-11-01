@@ -337,3 +337,8 @@
 "Computer name" = "Computername";
 "New UUID" = "Neue UUID";
 "Random number" = "Zufallszahl";
+"Viewer:" = "Viewer:";
+"Preferences:" = "Einstellungen:";
+"Clear History:" = "Verlauf löschen:";
+"Quit Keepit:" = "Keepit beenden:";
+"Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off." = "Hier festgelegte Kürzel wirken aus jeder App und stehen im Menü neben ihren Befehlen. ⌫ im Feld schaltet das Kürzel ab.";

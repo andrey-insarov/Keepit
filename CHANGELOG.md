@@ -6,6 +6,8 @@
 - Fix: a template with `{input:…}` / `{choice:…}` was expanded but not pasted — the target app now gets time to come back after the dialog
 - Fix: the Help menu added in 2.9.0 was unreachable (a menu-bar app has no menu bar); the in-app placeholder reference window is gone, the guide replaces it
 - The placeholder dialog shows the template name without the `&` shortcut marker; *Show in Viewer* clears the Viewer search first
+- Hot keys for *Viewer*, *Preferences*, *Clear History* and *Quit Keepit* (Hot keys tab, off by default); every global key is shown next to its command in the menu. While a menu is open, global keys pause so an action never fires twice
+- Fix: after previewing a large image the preview panel stayed huge for every item; images are capped at the panel size
 - User guide and security page: keep.it.com/guide.html, keep.it.com/security.html (docs/GUIDE.md, docs/SECURITY.md)
 
 ## 2.9.0 — 2026-11-01

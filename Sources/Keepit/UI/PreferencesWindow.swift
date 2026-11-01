@@ -55,6 +55,10 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     private let numbersHK    = HotKeyRecorderView(frame: .zero)
     private let lockHK       = HotKeyRecorderView(frame: .zero)
     private let pauseHK      = HotKeyRecorderView(frame: .zero)
+    private let viewerHK     = HotKeyRecorderView(frame: .zero)
+    private let prefsHK      = HotKeyRecorderView(frame: .zero)
+    private let clearHK      = HotKeyRecorderView(frame: .zero)
+    private let quitHK       = HotKeyRecorderView(frame: .zero)
     private let ignoreScroll = NSTextView.scrollableTextView()
     private var ignoreApps: NSTextView { ignoreScroll.documentView as! NSTextView }
 
@@ -219,9 +223,10 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
             labeled(L("Paste item by number:"), withHelp(numbersHK, L("Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off."))),
             labeled(L("Actions on the latest item:"), withHelp(latestHK, L("Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu."))),
             header(L("Other")),
-            labeled(L("Lock Keepit:"), lockHK),
-            labeled(L("Pause / resume recording:"), pauseHK),
-            [NSView(), resetHK],
+            pair(L("Viewer:"), viewerHK, L("Preferences:"), prefsHK),
+            pair(L("Clear History:"), clearHK, L("Pause / resume recording:"), pauseHK),
+            pair(L("Lock Keepit:"), lockHK, L("Quit Keepit:"), quitHK),
+            [NSView(), withHelp(resetHK, L("Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off."))],
         ])
 
         // --- History
@@ -346,6 +351,13 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         lockHK.onChange = { [weak self] hk in self?.draft.lockHotKey = hk }
         pauseHK.allowsClear = true
         pauseHK.onChange = { [weak self] hk in self?.draft.pauseHotKey = hk }
+        for (r, set) in [(viewerHK, { (s: inout Settings, h: HotKey?) in s.viewerHotKey = h }),
+                         (prefsHK, { (s: inout Settings, h: HotKey?) in s.preferencesHotKey = h }),
+                         (clearHK, { (s: inout Settings, h: HotKey?) in s.clearHistoryHotKey = h }),
+                         (quitHK, { (s: inout Settings, h: HotKey?) in s.quitHotKey = h })] {
+            r.allowsClear = true
+            r.onChange = { [weak self] hk in guard let self else { return }; set(&self.draft, hk) }
+        }
 
         // One fixed size for all tabs: the tallest page decides.
         let tallest = [general, historyGrid, menuGrid, security, advanced].map { $0.fittingSize.height }.max() ?? 300
@@ -394,6 +406,8 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         numbersHK.hotKey = s.numberPasteModifiers.map { HotKey(keyCode: UInt32(kVK_ANSI_1), modifiers: $0) }
         lockHK.hotKey = s.lockHotKey
         pauseHK.hotKey = s.pauseHotKey
+        viewerHK.hotKey = s.viewerHotKey; prefsHK.hotKey = s.preferencesHotKey
+        clearHK.hotKey = s.clearHistoryHotKey; quitHK.hotKey = s.quitHotKey
         ignoreApps.string = s.ignoreApps.joined(separator: "\n")
     }
 
@@ -436,6 +450,9 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         draft.historyHotKey = d.historyHotKey; draft.templateHotKey = d.templateHotKey
         draft.previousHotKey = d.previousHotKey; draft.latestActionModifiers = d.latestActionModifiers
         draft.numberPasteModifiers = d.numberPasteModifiers; draft.lockHotKey = d.lockHotKey; draft.pauseHotKey = d.pauseHotKey
+        draft.viewerHotKey = d.viewerHotKey; draft.preferencesHotKey = d.preferencesHotKey
+        draft.clearHistoryHotKey = d.clearHistoryHotKey; draft.quitHotKey = d.quitHotKey
+        viewerHK.hotKey = nil; prefsHK.hotKey = nil; clearHK.hotKey = nil; quitHK.hotKey = nil
         historyHK.hotKey = d.historyHotKey; templateHK.hotKey = d.templateHotKey; previousHK.hotKey = d.previousHotKey
         latestHK.hotKey = d.latestActionModifiers.map { HotKey(keyCode: UInt32(kVK_ANSI_1), modifiers: $0) }
         numbersHK.hotKey = d.numberPasteModifiers.map { HotKey(keyCode: UInt32(kVK_ANSI_1), modifiers: $0) }
@@ -451,6 +468,10 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         }
         if let h = s.lockHotKey { all.append((L("Lock Keepit:"), h)) }
         if let h = s.pauseHotKey { all.append((L("Pause / resume recording:"), h)) }
+        if let h = s.viewerHotKey { all.append((L("Viewer:"), h)) }
+        if let h = s.preferencesHotKey { all.append((L("Preferences:"), h)) }
+        if let h = s.clearHistoryHotKey { all.append((L("Clear History:"), h)) }
+        if let h = s.quitHotKey { all.append((L("Quit Keepit:"), h)) }
         if let m = s.numberPasteModifiers {
             for c in HotKey.digitKeyCodes { all.append((L("Paste item by number:"), HotKey(keyCode: c, modifiers: m))) }
         }

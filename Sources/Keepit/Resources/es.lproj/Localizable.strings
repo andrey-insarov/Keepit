@@ -337,3 +337,8 @@
 "Computer name" = "Nombre del equipo";
 "New UUID" = "UUID nuevo";
 "Random number" = "Número aleatorio";
+"Viewer:" = "Visor:";
+"Preferences:" = "Preferencias:";
+"Clear History:" = "Borrar historial:";
+"Quit Keepit:" = "Salir de Keepit:";
+"Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off." = "Los atajos definidos aquí funcionan desde cualquier app y se muestran junto a sus comandos en el menú. ⌫ en un campo desactiva el atajo.";

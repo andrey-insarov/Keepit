@@ -337,4 +337,9 @@ T = {
 'Computer name': 'Název počítače',
 'New UUID': 'Nové UUID',
 'Random number': 'Náhodné číslo',
+'Viewer:': 'Prohlížeč:',
+'Preferences:': 'Předvolby:',
+'Clear History:': 'Vymazat historii:',
+'Quit Keepit:': 'Ukončit Keepit:',
+'Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off.': 'Zde nastavené klávesy fungují z jakékoli aplikace a zobrazují se v nabídce vedle svých příkazů. ⌫ v poli klávesu vypne.',
 }

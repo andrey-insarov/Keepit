@@ -253,7 +253,7 @@ On the **Hot keys** tab click a field and press a combination; ⌫ switches a ke
 Defaults* brings back ⌥C, ⌥T, ⌥⇧V and ⌃⌥. *Paste item by number* and *Actions on the latest item*
 take only modifiers — the digit or letter is added by Keepit. Two of your own keys on the same
 combination are refused on Save; if macOS or another app already owns one, Keepit says so when it
-starts. *Lock Keepit* and *Pause / resume recording* have no key until you set one.
+starts. *Viewer*, *Preferences*, *Clear History*, *Pause / resume recording*, *Lock Keepit* and *Quit Keepit* have no key until you set one; whatever you set is shown next to the command in the menu.
 
 ---
 

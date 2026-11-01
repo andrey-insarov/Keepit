@@ -337,3 +337,8 @@
 "Computer name" = "Arvuti nimi";
 "New UUID" = "Uus UUID";
 "Random number" = "Juhuslik arv";
+"Viewer:" = "Vaatur:";
+"Preferences:" = "Eelistused:";
+"Clear History:" = "Tühjenda ajalugu:";
+"Quit Keepit:" = "Lõpeta Keepit:";
+"Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off." = "Siin seatud klahvid töötavad igast rakendusest ja neid näidatakse menüüs käskude kõrval. ⌫ väljal lülitab klahvi välja.";

@@ -337,3 +337,8 @@
 "Computer name" = "Nome del computer";
 "New UUID" = "Nuovo UUID";
 "Random number" = "Numero casuale";
+"Viewer:" = "Visualizzatore:";
+"Preferences:" = "Preferenze:";
+"Clear History:" = "Cancella cronologia:";
+"Quit Keepit:" = "Esci da Keepit:";
+"Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off." = "Le scorciatoie impostate qui funzionano da qualsiasi app e compaiono accanto ai comandi nel menu. ⌫ in un campo disattiva la scorciatoia.";

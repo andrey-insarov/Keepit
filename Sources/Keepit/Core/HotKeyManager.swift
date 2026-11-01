@@ -4,6 +4,8 @@ import Foundation
 /// System-wide hot keys via Carbon RegisterEventHotKey — the macOS counterpart of RegisterHotKey().
 /// Carbon hot keys don't need the Accessibility permission (unlike CGEvent taps).
 final class HotKeyManager {
+    /// Return true to swallow hot keys for the moment (a menu of ours is tracking).
+    var isSuppressed: () -> Bool = { false }
     private var handlers: [UInt32: () -> Void] = [:]
     private var refs: [UInt32: EventHotKeyRef] = [:]
     private var eventHandler: EventHandlerRef?
@@ -28,6 +30,9 @@ final class HotKeyManager {
                 return OSStatus(eventNotHandledErr)
             }
             if let h = manager.handlers[hkID.id] {
+                // While one of our menus is open the same combination is also a menu key equivalent,
+                // which AppKit fires itself — don't run the action twice.
+                if manager.isSuppressed() { return noErr }
                 DispatchQueue.main.async { h() }
                 return noErr
             }

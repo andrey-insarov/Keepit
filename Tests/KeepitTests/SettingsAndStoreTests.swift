@@ -157,3 +157,14 @@ final class HotKeySettingsTests: XCTestCase {
         XCTAssertTrue(Set(HotKey.digitKeyCodes).isDisjoint(with: codes))
     }
 }
+
+final class MenuKeyEquivalentTests: XCTestCase {
+    func testHotKeyMapsToMenuKeyEquivalent() {
+        let hk = HotKey(keyCode: UInt32(kVK_ANSI_V), modifiers: UInt32(controlKey | optionKey))
+        let eq = hk.menuKeyEquivalent
+        XCTAssertEqual(eq?.key, "v")
+        XCTAssertEqual(eq?.mask, [.control, .option])
+        XCTAssertEqual(HotKey(keyCode: UInt32(kVK_F5), modifiers: 0).menuKeyEquivalent?.key, String(UnicodeScalar(NSF5FunctionKey)!))
+        XCTAssertNil(HotKey(keyCode: 0xFFFF, modifiers: 0).menuKeyEquivalent)
+    }
+}

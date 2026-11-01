@@ -371,3 +371,9 @@
 "Computer name" = "Computer name";
 "New UUID" = "New UUID";
 "Random number" = "Random number";
+
+"Viewer:" = "Viewer:";
+"Preferences:" = "Preferences:";
+"Clear History:" = "Clear History:";
+"Quit Keepit:" = "Quit Keepit:";
+"Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off." = "Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off.";

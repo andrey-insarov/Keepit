@@ -337,3 +337,8 @@
 "Computer name" = "Kompiuterio vardas";
 "New UUID" = "Naujas UUID";
 "Random number" = "Atsitiktinis skaičius";
+"Viewer:" = "Peržiūra:";
+"Preferences:" = "Nuostatos:";
+"Clear History:" = "Išvalyti istoriją:";
+"Quit Keepit:" = "Baigti „Keepit“:";
+"Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off." = "Čia nustatyti klavišai veikia iš bet kurios programos ir rodomi meniu šalia komandų. ⌫ lauke išjungia klavišą.";

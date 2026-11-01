@@ -337,3 +337,8 @@
 "Computer name" = "コンピュータ名";
 "New UUID" = "新しい UUID";
 "Random number" = "乱数";
+"Viewer:" = "ビューア:";
+"Preferences:" = "環境設定:";
+"Clear History:" = "履歴を消去:";
+"Quit Keepit:" = "Keepit を終了:";
+"Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off." = "ここで設定したキーはどのアプリからでも使え、メニューのコマンドの横に表示されます。フィールドで ⌫ を押すとオフになります。";

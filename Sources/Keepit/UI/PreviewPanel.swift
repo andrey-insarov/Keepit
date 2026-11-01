@@ -38,6 +38,12 @@ final class PreviewPanel {
 
         imageView.imageScaling = .scaleProportionallyDown
         imageView.imageAlignment = .alignCenter
+        // A hidden view still takes part in Auto Layout: without this a large image's intrinsic size
+        // would keep the panel huge for every item shown afterwards.
+        imageView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+        imageView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        imageView.setContentHuggingPriority(.defaultLow, for: .vertical)
 
         textView.isEditable = false
         textView.isSelectable = false
@@ -94,13 +100,15 @@ final class PreviewPanel {
         switch item.kind {
         case .image:
             guard let img = item.image else { hide(); return }
+            let s = img.size
+            let scale = min(1, (maxSize.width - 20) / max(s.width, 1), (maxSize.height - 50) / max(s.height, 1))
+            img.size = NSSize(width: s.width * scale, height: s.height * scale)   // a fresh NSImage per call; the data is untouched
             imageView.image = img
             imageView.isHidden = false
             textScroll.isHidden = true
-            let s = img.size
-            let scale = min(1, (maxSize.width - 20) / max(s.width, 1), (maxSize.height - 50) / max(s.height, 1))
-            size = NSSize(width: max(220, s.width * scale + 20), height: max(120, s.height * scale + 50))
+            size = NSSize(width: max(220, img.size.width + 20), height: max(120, img.size.height + 50))
         case .text, .files:
+            imageView.image = nil
             let text: String
             if item.kind == .files { text = item.filePaths.joined(separator: "\n") }
             else { text = item.plainText ?? "" }

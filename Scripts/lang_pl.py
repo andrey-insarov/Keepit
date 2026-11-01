@@ -337,4 +337,9 @@ T = {
 'Computer name': 'Nazwa komputera',
 'New UUID': 'Nowy UUID',
 'Random number': 'Losowa liczba',
+'Viewer:': 'Przeglądarka:',
+'Preferences:': 'Preferencje:',
+'Clear History:': 'Wyczyść historię:',
+'Quit Keepit:': 'Zakończ Keepit:',
+'Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off.': 'Ustawione tu skróty działają z każdej aplikacji i są pokazane obok poleceń w menu. ⌫ w polu wyłącza skrót.',
 }

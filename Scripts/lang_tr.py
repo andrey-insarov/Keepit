@@ -337,4 +337,9 @@ T = {
 'Computer name': 'Bilgisayar adı',
 'New UUID': 'Yeni UUID',
 'Random number': 'Rastgele sayı',
+'Viewer:': 'Görüntüleyici:',
+'Preferences:': 'Tercihler:',
+'Clear History:': 'Geçmişi temizle:',
+'Quit Keepit:': "Keepit'ten çık:",
+'Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off.': 'Burada ayarlanan tuşlar her uygulamadan çalışır ve menüde komutlarının yanında gösterilir. Alanda ⌫ tuşu kapatır.',
 }

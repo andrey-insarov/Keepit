@@ -337,4 +337,9 @@ T = {
 'Computer name': 'Nome do computador',
 'New UUID': 'Novo UUID',
 'Random number': 'Número aleatório',
+'Viewer:': 'Visualizador:',
+'Preferences:': 'Preferências:',
+'Clear History:': 'Limpar histórico:',
+'Quit Keepit:': 'Encerrar o Keepit:',
+'Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off.': 'As teclas definidas aqui funcionam em qualquer app e aparecem ao lado dos comandos no menu. ⌫ em um campo desativa a tecla.',
 }

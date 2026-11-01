@@ -337,4 +337,9 @@ T = {
 'Computer name': 'Datora nosaukums',
 'New UUID': 'Jauns UUID',
 'Random number': 'Nejaušs skaitlis',
+'Viewer:': 'Skatītājs:',
+'Preferences:': 'Iestatījumi:',
+'Clear History:': 'Notīrīt vēsturi:',
+'Quit Keepit:': 'Aizvērt Keepit:',
+'Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off.': 'Šeit iestatītie taustiņi darbojas no jebkuras lietotnes un tiek rādīti izvēlnē blakus komandām. ⌫ laukā izslēdz taustiņu.',
 }

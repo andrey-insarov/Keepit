@@ -337,3 +337,8 @@
 "Computer name" = "Nom de l’ordinateur";
 "New UUID" = "Nouvel UUID";
 "Random number" = "Nombre aléatoire";
+"Viewer:" = "Visionneuse :";
+"Preferences:" = "Préférences :";
+"Clear History:" = "Effacer l’historique :";
+"Quit Keepit:" = "Quitter Keepit :";
+"Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off." = "Les raccourcis définis ici fonctionnent depuis n’importe quelle app et apparaissent à côté de leurs commandes dans le menu. ⌫ dans un champ désactive le raccourci.";

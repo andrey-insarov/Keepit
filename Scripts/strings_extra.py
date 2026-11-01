@@ -348,4 +348,9 @@ T2 = {
 'Computer name': ('Ім’я комп’ютера', 'اسم الكمبيوتر', 'Nome del computer'),
 'New UUID': ('Новий UUID', 'UUID جديد', 'Nuovo UUID'),
 'Random number': ('Випадкове число', 'رقم عشوائي', 'Numero casuale'),
+'Viewer:': ('Перегляд:', 'العارض:', 'Visualizzatore:'),
+'Preferences:': ('Налаштування:', 'التفضيلات:', 'Preferenze:'),
+'Clear History:': ('Очистити історію:', 'مسح السجل:', 'Cancella cronologia:'),
+'Quit Keepit:': ('Завершити Keepit:', 'إنهاء Keepit:', 'Esci da Keepit:'),
+'Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off.': ('Задані тут сполучення працюють із будь-якої програми й показуються поруч із командами в меню. ⌫ у полі вимикає сполучення.', 'تعمل المفاتيح المعيّنة هنا من أي تطبيق وتظهر بجانب أوامرها في القائمة. ⌫ في الحقل يوقف المفتاح.', 'Le scorciatoie impostate qui funzionano da qualsiasi app e compaiono accanto ai comandi nel menu. ⌫ in un campo disattiva la scorciatoia.'),
 }
