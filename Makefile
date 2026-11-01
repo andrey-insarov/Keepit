@@ -101,12 +101,20 @@ dmg: app
 	done; test -f $(DMG_TMP)/rw.dmg
 	# Mount read-write to set the volume icon flag and Finder window layout, then convert to compressed read-only.
 	# Cosmetic only — if the image cannot be mounted (CI runners occasionally fail here), skip it.
-	MOUNT=$$(hdiutil attach -readwrite -noverify $(DMG_TMP)/rw.dmg 2>/dev/null | grep -o '/Volumes/.*' | head -1); \
+	ATTACH=$$(hdiutil attach -readwrite -noverify -nobrowse $(DMG_TMP)/rw.dmg 2>/dev/null); \
+	DEV=$$(echo "$$ATTACH" | grep -o '^/dev/disk[0-9]*' | head -1); \
+	MOUNT=$$(echo "$$ATTACH" | grep -o '/Volumes/.*' | head -1); \
 	if [ -n "$$MOUNT" ] && [ -d "$$MOUNT" ]; then \
 	  SetFile -a C "$$MOUNT" 2>/dev/null || true; \
 	  perl -e 'alarm 60; exec @ARGV' osascript Resources/dmg-layout.applescript "$$MOUNT" >/dev/null 2>&1 || true; \
-	  sync; hdiutil detach "$$MOUNT" -quiet || hdiutil detach "$$MOUNT" -force || true; \
-	else echo "warning: could not mount rw.dmg — skipping volume icon and window layout"; fi
+	  sync; \
+	else echo "warning: could not mount rw.dmg — skipping volume icon and window layout"; fi; \
+	for i in 1 2 3 4 5; do \
+	  [ -n "$$DEV" ] || break; \
+	  hdiutil detach "$$DEV" -quiet 2>/dev/null || hdiutil detach "$$DEV" -force 2>/dev/null; \
+	  hdiutil info | grep -q "$$DEV" || break; \
+	  echo "rw.dmg still attached ($$DEV), retrying detach…"; sleep 3; \
+	done
 	for i in 1 2 3 4 5; do \
 	  hdiutil convert $(DMG_TMP)/rw.dmg -format UDZO -imagekey zlib-level=9 -o $(DMG) && break; \
 	  echo "hdiutil convert failed (attempt $$i), retrying…"; rm -f $(DMG); sleep 5; \
