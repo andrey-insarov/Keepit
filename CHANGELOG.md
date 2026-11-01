@@ -2,6 +2,8 @@
 
 ## 2.7.2 — unreleased
 
+- Password prompts show the current keyboard layout (EN, RU, …) and a red Caps Lock warning, live.
+- The password-strength hint no longer gets cut off.
 - *Delete Keepit and All Data* notices a Homebrew install and tells you how to clear brew's record
   (`brew uninstall --cask --force keepit`), so a later `brew install` does not fail.
 

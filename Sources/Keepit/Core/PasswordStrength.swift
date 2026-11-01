@@ -95,6 +95,9 @@ final class PasswordStrengthView: NSView {
         fill.layer?.cornerRadius = 2
         label.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
         label.textColor = .secondaryLabelColor
+        label.maximumNumberOfLines = 2
+        label.lineBreakMode = .byWordWrapping
+        label.preferredMaxLayoutWidth = 300
         for v in [bar, fill, label] { v.translatesAutoresizingMaskIntoConstraints = false }
         addSubview(bar); bar.addSubview(fill); addSubview(label)
         fillWidth = fill.widthAnchor.constraint(equalToConstant: 0)

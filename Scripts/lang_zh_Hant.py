@@ -248,4 +248,6 @@ T = {
 'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead.': '選擇歷史記錄項目時按住 ⇧ 以純文字貼上（移除格式）；按住 ⌥ 則改為加入範本。',
 'Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password.': '目前無法使用 Touch ID（合上上蓋、鍵盤睡眠或尚未登錄指紋）。下次以密碼解鎖時，Keepit 會自動啟用。',
 'Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit': 'Keepit 是透過 Homebrew 安裝的；要清除其記錄，請執行：brew uninstall --cask --force keepit',
+'Layout: %@': '鍵盤配置：%@',
+'CAPS LOCK': '大寫鎖定',
 }

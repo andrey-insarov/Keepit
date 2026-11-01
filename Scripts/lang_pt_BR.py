@@ -248,4 +248,6 @@ T = {
 'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead.': 'Segure ⇧ ao escolher um item do histórico para colá-lo como texto simples (sem formatação); segure ⌥ para adicioná-lo aos modelos em vez disso.',
 'Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password.': 'O Touch ID não pode ser usado agora (tampa fechada, teclado em repouso ou nenhuma impressão digital cadastrada). O Keepit o ativará automaticamente no próximo desbloqueio com senha.',
 'Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit': 'O Keepit foi instalado pelo Homebrew; para limpar o registro, execute: brew uninstall --cask --force keepit',
+'Layout: %@': 'Leiaute: %@',
+'CAPS LOCK': 'CAPS LOCK',
 }

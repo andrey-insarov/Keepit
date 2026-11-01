@@ -261,3 +261,6 @@
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password.";
 
 "Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit" = "Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit";
+
+"Layout: %@" = "Layout: %@";
+"CAPS LOCK" = "CAPS LOCK";

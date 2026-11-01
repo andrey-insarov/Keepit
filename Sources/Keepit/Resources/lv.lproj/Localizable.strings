@@ -248,3 +248,5 @@
 "Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead." = "Turiet ⇧, izvēloties vēstures vienumu, lai to ielīmētu kā vienkāršu tekstu (bez formatējuma); turiet ⌥, lai tā vietā to pievienotu veidnēm.";
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "Touch ID pašlaik nav izmantojams (aizvērts vāks, tastatūra guļ vai nav reģistrēts pirksta nospiedums). Keepit to ieslēgs automātiski nākamajā atbloķēšanā ar paroli.";
 "Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit" = "Keepit tika instalēts ar Homebrew; lai notīrītu tā ierakstu, izpildiet: brew uninstall --cask --force keepit";
+"Layout: %@" = "Izkārtojums: %@";
+"CAPS LOCK" = "CAPS LOCK";

@@ -247,13 +247,17 @@ enum Vault {
             a.icon = NSImage(systemSymbolName: "lock.fill", accessibilityDescription: nil)
 
             let width: CGFloat = 300
-            // Layout (top → bottom): new password, strength meter, repeat password.
-            let meterHeight: CGFloat = confirm ? 26 : 0
-            let boxHeight: CGFloat = confirm ? 24 + 6 + meterHeight + 6 + 24 : 24
-            let f1 = SecurePasswordField(frame: NSRect(x: 0, y: boxHeight - 24, width: width, height: 24))
+            // Layout (top → bottom): layout/Caps Lock indicator, password, strength meter, repeat password.
+            let indicatorHeight: CGFloat = 18
+            let meterHeight: CGFloat = confirm ? 40 : 0
+            let boxHeight: CGFloat = indicatorHeight + 24 + (confirm ? 6 + meterHeight + 6 + 24 : 0)
+            let f1 = SecurePasswordField(frame: NSRect(x: 0, y: boxHeight - indicatorHeight - 24, width: width, height: 24))
             let f2 = SecurePasswordField(frame: NSRect(x: 0, y: 0, width: width, height: 24))
             f2.placeholder = L("Repeat password")
             let box = NSView(frame: NSRect(x: 0, y: 0, width: width, height: boxHeight))
+            let indicator = InputSourceIndicator(width: width)
+            indicator.frame.origin = NSPoint(x: 0, y: boxHeight - indicatorHeight + 1)
+            box.addSubview(indicator)
             box.addSubview(f1)
             if confirm {
                 let meter = PasswordStrengthView(frame: NSRect(x: 0, y: 24 + 6, width: width, height: meterHeight))
