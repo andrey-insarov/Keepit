@@ -256,7 +256,6 @@
 "%@ — plain text" = "%@ — plain text";
 
 "%@ — add to Templates" = "%@ — add to Templates";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead." = "Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead.";
 
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password.";
 
@@ -276,3 +275,6 @@
 "1 day" = "1 day";
 "1 week" = "1 week";
 "30 days" = "30 days";
+
+"%@ — delete" = "%@ — delete";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it." = "Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it.";

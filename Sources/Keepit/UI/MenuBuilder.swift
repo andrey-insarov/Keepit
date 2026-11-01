@@ -42,8 +42,9 @@ final class MenuBuilder {
     /// - Parameter plainAction: when given, every text item gets a ⇧ alternate ("… — plain text") that
     ///   calls it instead; hold ⇧ while clicking or add ⇧ to the shortcut.
     /// - Parameter pinAction: when given, every item gets an ⌥ alternate ("… — add to Templates").
+    /// - Parameter deleteAction: when given, every item gets a ⌃ alternate ("… — delete").
     func historyItems(_ items: [ClipItem], target: AnyObject, action: Selector, plainAction: Selector? = nil,
-                      pinAction: Selector? = nil, commandAccelerators: Bool = false) -> [NSMenuItem] {
+                      pinAction: Selector? = nil, deleteAction: Selector? = nil, commandAccelerators: Bool = false) -> [NSMenuItem] {
         var out: [NSMenuItem] = []
         let shown = items.prefix(settings.menuMaxItems)
         let accels = commandAccelerators ? Array(Self.accelerators.prefix(10)) : Self.accelerators
@@ -82,6 +83,16 @@ final class MenuBuilder {
                 alt.isAlternate = true
                 alt.keyEquivalentModifierMask = baseMask.union(.option)
                 alt.image = NSImage(systemSymbolName: "text.badge.star", accessibilityDescription: nil)
+                alternates.append(alt)
+            }
+            if let del = deleteAction {
+                let alt = NSMenuItem(title: prefix + LF("%@ — delete", title), action: del, keyEquivalent: mi.keyEquivalent)
+                alt.target = target
+                alt.representedObject = item.id
+                alt.tag = Self.historyTag
+                alt.isAlternate = true
+                alt.keyEquivalentModifierMask = baseMask.union(.control)
+                alt.image = NSImage(systemSymbolName: "trash", accessibilityDescription: nil)
                 alternates.append(alt)
             }
             if settings.showThumbnails, item.kind == .image {

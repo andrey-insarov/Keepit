@@ -245,7 +245,6 @@ T = {
 'Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)': 'שדה חיפוש בתפריט ההיסטוריה (הקלדה מסננת; הקיצורים הופכים ל‑⌘1–⌘0)',
 '%@ — plain text': '%@ — טקסט רגיל',
 '%@ — add to Templates': '%@ — הוסף לתבניות',
-'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead.': 'החזק ⇧ בעת בחירת פריט מההיסטוריה כדי להדביק אותו כטקסט רגיל (ללא עיצוב); החזק ⌥ כדי להוסיף אותו לתבניות במקום זאת.',
 'Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password.': 'אי אפשר להשתמש ב‑Touch ID כרגע (המכסה סגור, המקלדת בשינה או לא נרשמה טביעת אצבע). Keepit יפעיל אותו אוטומטית בפעם הבאה שתבטל את הנעילה בסיסמה.',
 'Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit': 'Keepit הותקן באמצעות Homebrew; כדי לנקות את הרישום הרץ: brew uninstall --cask --force keepit',
 'Layout: %@': 'פריסה: %@',
@@ -259,4 +258,6 @@ T = {
 '1 day': 'יום',
 '1 week': 'שבוע',
 '30 days': '30 יום',
+'%@ — delete': '%@ — מחק',
+'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it.': 'בעת בחירת פריט מההיסטוריה החזק ⇧ כדי להדביק כטקסט רגיל (ללא עיצוב), ⌥ כדי להוסיף לתבניות, ⌃ כדי למחוק.',
 }

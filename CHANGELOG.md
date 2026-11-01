@@ -2,6 +2,8 @@
 
 ## 2.8.0 — unreleased
 
+- **Delete from the menu**: hold ⌃ while choosing a history item to remove it (⌃1, or ⌃⌘1 with
+  the search field).
 - **Auto-expiry**: Preferences → History → *Forget items older than* 1 h / 6 h / 1 day / 1 week /
   30 days. Old items are dropped on every change and once a minute by a timer.
 - **Source app icons**: text and file items in the history menu carry the icon of the app they were

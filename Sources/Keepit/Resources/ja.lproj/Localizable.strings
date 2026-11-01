@@ -245,7 +245,6 @@
 "Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "履歴メニューに検索フィールド（入力で絞り込み。ショートカットは ⌘1〜⌘0 に）";
 "%@ — plain text" = "%@ — プレーンテキスト";
 "%@ — add to Templates" = "%@ — テンプレートに追加";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead." = "履歴の項目を選ぶときに ⇧ を押したままにすると書式なしで貼り付け、⌥ を押したままにすると代わりにテンプレートに追加します。";
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "現在 Touch ID を使用できません（ふたが閉じている、キーボードがスリープ中、または指紋が未登録）。次回パスワードでロック解除したときに Keepit が自動的に有効にします。";
 "Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit" = "Keepit は Homebrew でインストールされています。記録を消すには次を実行してください: brew uninstall --cask --force keepit";
 "Layout: %@" = "入力ソース: %@";
@@ -259,3 +258,5 @@
 "1 day" = "1 日";
 "1 week" = "1 週間";
 "30 days" = "30 日";
+"%@ — delete" = "%@ — 削除";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it." = "履歴の項目を選ぶときに ⇧ で書式なし貼り付け、⌥ でテンプレートに追加、⌃ で削除します。";

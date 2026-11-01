@@ -245,7 +245,6 @@
 "Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "Paieškos laukas istorijos meniu (rašant filtruojama; spartieji klavišai tampa ⌘1–⌘0)";
 "%@ — plain text" = "%@ — paprastas tekstas";
 "%@ — add to Templates" = "%@ — į šablonus";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead." = "Renkantis istorijos elementą laikykite ⇧, kad jis būtų įklijuotas kaip paprastas tekstas (be formatavimo); laikykite ⌥, kad vietoj to jis būtų pridėtas prie šablonų.";
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "„Touch ID“ šiuo metu negalimas (uždarytas dangtis, klaviatūra miega arba neužregistruotas piršto atspaudas). „Keepit“ įjungs jį automatiškai kitą kartą atrakinus slaptažodžiu.";
 "Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit" = "„Keepit“ įdiegta per „Homebrew“; įrašui išvalyti įvykdykite: brew uninstall --cask --force keepit";
 "Layout: %@" = "Išdėstymas: %@";
@@ -259,3 +258,5 @@
 "1 day" = "1 diena";
 "1 week" = "1 savaitė";
 "30 days" = "30 dienų";
+"%@ — delete" = "%@ — ištrinti";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it." = "Renkantis istorijos elementą laikykite ⇧, kad įklijuotumėte kaip paprastą tekstą (be formatavimo), ⌥ — kad pridėtumėte prie šablonų, ⌃ — kad ištrintumėte.";

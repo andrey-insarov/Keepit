@@ -245,7 +245,6 @@
 "Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "Suchfeld im Verlaufsmenü (Tippen filtert; Kürzel werden zu ⌘1–⌘0)";
 "%@ — plain text" = "%@ – reiner Text";
 "%@ — add to Templates" = "%@ – zu Vorlagen";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead." = "Halten Sie ⇧ beim Auswählen eines Verlaufseintrags, um ihn als reinen Text einzufügen (ohne Formatierung); mit ⌥ wird er stattdessen zu den Vorlagen hinzugefügt.";
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "Touch ID ist gerade nicht nutzbar (Deckel geschlossen, Tastatur im Ruhezustand oder kein Fingerabdruck registriert). Keepit aktiviert es automatisch beim nächsten Entsperren mit dem Passwort.";
 "Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit" = "Keepit wurde mit Homebrew installiert; zum Löschen des Eintrags ausführen: brew uninstall --cask --force keepit";
 "Layout: %@" = "Belegung: %@";
@@ -259,3 +258,5 @@
 "1 day" = "1 Tag";
 "1 week" = "1 Woche";
 "30 days" = "30 Tage";
+"%@ — delete" = "%@ – löschen";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it." = "Halten Sie beim Auswählen eines Verlaufseintrags ⇧, um ihn als reinen Text einzufügen (ohne Formatierung), ⌥, um ihn zu den Vorlagen hinzuzufügen, ⌃, um ihn zu löschen.";

@@ -245,7 +245,6 @@
 "Search field in the history menu (type to filter; shortcuts become ⌘1–⌘0)" = "Vyhledávací pole v nabídce historie (psaní filtruje; zkratky se změní na ⌘1–⌘0)";
 "%@ — plain text" = "%@ — prostý text";
 "%@ — add to Templates" = "%@ — do šablon";
-"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead." = "Podržte ⇧ při výběru položky historie, aby se vložila jako prostý text (bez formátování); podržte ⌥, aby se místo toho přidala do šablon.";
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "Touch ID teď nelze použít (zavřené víko, klávesnice spí nebo není zaregistrován otisk). Keepit ho zapne automaticky při příštím odemknutí heslem.";
 "Keepit was installed with Homebrew; to clear its record run: brew uninstall --cask --force keepit" = "Keepit byl nainstalován přes Homebrew; pro smazání záznamu spusťte: brew uninstall --cask --force keepit";
 "Layout: %@" = "Rozložení: %@";
@@ -259,3 +258,5 @@
 "1 day" = "1 den";
 "1 week" = "1 týden";
 "30 days" = "30 dní";
+"%@ — delete" = "%@ — smazat";
+"Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped), ⌥ to add it to Templates, ⌃ to delete it." = "Při výběru položky historie podržte ⇧ pro vložení jako prostý text (bez formátování), ⌥ pro přidání do šablon, ⌃ pro smazání.";
