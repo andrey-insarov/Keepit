@@ -18,6 +18,8 @@ let package = Package(
             name: "Keepit",
             dependencies: appStore ? [] : [.product(name: "Sparkle", package: "Sparkle")],
             path: "Sources/Keepit",
+            // Resources/ holds the icon and one <lang>.lproj/Localizable.strings per interface language
+            // (21 of them; the list itself lives in Resources/Info.plist, CFBundleLocalizations).
             resources: [.process("Resources")],
             swiftSettings: appStore ? [.define("APPSTORE")] : [],
             linkerSettings: [
