@@ -69,7 +69,26 @@ final class HistoryItemView: NSView {
             x += imageSize.width + gap
         }
         var keyW: CGFloat = 0
-        let keyLabel = enclosingMenuItem?.submenu == nil ? self.keyLabel : ""
+        let hasSubmenu = enclosingMenuItem?.submenu != nil
+        if hasSubmenu {
+            // Submenu chevron at the right edge, like AppKit draws for native items.
+            let cfg = NSImage.SymbolConfiguration(pointSize: 9, weight: .bold)
+            if let chev = NSImage(systemSymbolName: "chevron.right", accessibilityDescription: nil)?.withSymbolConfiguration(cfg) {
+                let tinted = chev.copy() as! NSImage
+                tinted.isTemplate = true
+                let sz = tinted.size
+                let r = NSRect(x: bounds.maxX - hPad + 2 - sz.width, y: midY - sz.height / 2, width: sz.width, height: sz.height)
+                NSGraphicsContext.saveGraphicsState()
+                textColor.set()
+                let tintedImage = NSImage(size: sz, flipped: false) { rect in
+                    tinted.draw(in: rect); rect.fill(using: .sourceAtop); return true
+                }
+                tintedImage.draw(in: r, from: .zero, operation: .sourceOver, fraction: 1, respectFlipped: true, hints: nil)
+                NSGraphicsContext.restoreGraphicsState()
+                keyW = sz.width
+            }
+        }
+        let keyLabel = hasSubmenu ? "" : self.keyLabel
         if !keyLabel.isEmpty {
             let a: [NSAttributedString.Key: Any] = [.font: Self.keyFont, .foregroundColor: dimColor]
             let sz = (keyLabel as NSString).size(withAttributes: a)
