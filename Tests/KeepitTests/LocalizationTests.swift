@@ -2,7 +2,7 @@ import XCTest
 @testable import Keepit
 
 final class LocalizationTests: XCTestCase {
-    static let languages = ["en", "ru", "de", "fr", "es", "ja", "zh-Hans"]
+    static let languages = ["en", "ru", "de", "fr", "es", "ja", "zh-Hans", "uk", "ar", "it"]
 
     private func table(_ lang: String) throws -> [String: String] {
         let url = try XCTUnwrap(Bundle.module.url(forResource: "Localizable", withExtension: "strings", subdirectory: nil, localization: lang),

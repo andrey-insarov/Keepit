@@ -2,7 +2,7 @@
 
 ## 2.5.0 — unreleased
 
-- **Localization**: Russian, German, French, Spanish, Japanese and Simplified Chinese. Keepit
+- **Localization**: Russian, Ukrainian, German, French, Spanish, Italian, Japanese, Simplified Chinese and Arabic. Keepit
   follows the macOS system language; English remains the base. `Scripts/gen_strings.py` holds the
   translation table and regenerates the `.lproj` files.
 
