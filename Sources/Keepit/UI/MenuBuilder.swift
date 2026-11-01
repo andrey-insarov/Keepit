@@ -62,12 +62,18 @@ final class MenuBuilder {
         let m = NSMenu()
         m.autoenablesItems = false
         func add(_ title: String, _ sel: Selector, key: String, symbol: String? = nil, object: Any? = item.id) {
-            let mi = NSMenuItem(title: title, action: sel, keyEquivalent: key)
-            mi.keyEquivalentModifierMask = []
-            mi.target = target
-            mi.representedObject = object
-            if let symbol { mi.image = NSImage(systemSymbolName: symbol, accessibilityDescription: nil) }
-            m.addItem(mi)
+            // Two copies: the plain key, and a ⇧ alternate with the same title so the shortcut also works
+            // while ⇧ (which opened the extended menu) is still held.
+            for mask in [NSEvent.ModifierFlags(), [.shift]] {
+                let mi = NSMenuItem(title: title, action: sel, keyEquivalent: key)
+                mi.keyEquivalentModifierMask = mask
+                mi.isAlternate = mask == [.shift]
+                mi.target = target
+                mi.representedObject = object
+                if let symbol { mi.image = NSImage(systemSymbolName: symbol, accessibilityDescription: nil) }
+                m.addItem(mi)
+                if key.isEmpty { break }
+            }
         }
         add(L("Paste"), a.paste, key: "\r", symbol: "doc.on.clipboard")
         if item.kind == .text, item.plainText != nil {

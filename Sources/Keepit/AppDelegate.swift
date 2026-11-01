@@ -581,6 +581,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             menuTopLeft = NSPoint(x: f.minX, y: f.minY)
         }
         statusItem.menu = menu
+        // Key equivalents (⌘1, ⇧U in the extended menu, …) only reach the menu while we are the active app.
+        NSApp.activate(ignoringOtherApps: true)
         statusItem.button?.performClick(nil)
     }
 
