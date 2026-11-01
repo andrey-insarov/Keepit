@@ -277,4 +277,7 @@ T = {
 'Lock when the screen locks or the Mac sleeps': '화면이 잠기거나 Mac이 잠자기에 들어가면 잠그기',
 'Wipes the key from memory and unloads history and templates when the screen locks or the Mac sleeps; unlock with Touch ID or the password afterwards.': '화면이 잠기거나 Mac이 잠자기에 들어가면 메모리에서 키를 지우고 기록과 템플릿을 해제합니다. 이후 Touch ID나 암호로 잠금을 해제합니다.',
 'One password-encrypted .keepit file with history, templates and preferences — for moving to another Mac or between the App Store and direct editions.': '기록, 템플릿, 환경설정이 담긴 암호로 암호화된 .keepit 파일 하나 — 다른 Mac으로 옮기거나 App Store 버전과 직접 배포 버전 간에 이동할 때 사용합니다.',
+'Paste previous item:': '이전 항목 붙여넣기:',
+'Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off.': '메뉴 없이 기록의 두 번째 항목을 바로 붙여넣습니다. 최근 두 항목을 번갈아 쓸 때 편리합니다. 끄려면 필드를 클릭하고 ⌫를 누르세요.',
+'Off — click to set': '꺼짐 — 클릭하여 설정',
 }

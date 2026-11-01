@@ -277,3 +277,6 @@
 "Lock when the screen locks or the Mac sleeps" = "螢幕鎖定或 Mac 睡眠時鎖定";
 "Wipes the key from memory and unloads history and templates when the screen locks or the Mac sleeps; unlock with Touch ID or the password afterwards." = "螢幕鎖定或 Mac 睡眠時從記憶體清除金鑰並卸載歷史記錄和範本；之後以 Touch ID 或密碼解鎖。";
 "One password-encrypted .keepit file with history, templates and preferences — for moving to another Mac or between the App Store and direct editions." = "一個以密碼加密的 .keepit 檔案，包含歷史記錄、範本和偏好設定 — 用於移轉到另一台 Mac 或在 App Store 版與直接下載版之間移轉。";
+"Paste previous item:" = "貼上上一個項目：";
+"Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "不開啟選單，直接貼上歷史記錄中的第二個項目 — 方便在最近兩筆之間切換。按一下欄位並按 ⌫ 可關閉。";
+"Off — click to set" = "關閉 — 按一下以設定";

@@ -434,7 +434,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         monitor.updateSettings(new)
         menuBuilder.settings = new
         menuBuilder.invalidateThumbnails()
-        if old.historyHotKey != new.historyHotKey || old.templateHotKey != new.templateHotKey {
+        if old.historyHotKey != new.historyHotKey || old.templateHotKey != new.templateHotKey || old.previousHotKey != new.previousHotKey {
             registerHotKeys()
         }
         if old.launchAtLogin != new.launchAtLogin {
@@ -461,6 +461,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         if !hotKeys.register(settings.templateHotKey, handler: { [weak self] in self?.showTemplatePopup() }) {
             failed.append(settings.templateHotKey.displayString)
+        }
+        if let prev = settings.previousHotKey,
+           !hotKeys.register(prev, handler: { [weak self] in self?.pastePreviousItem() }) {
+            failed.append(prev.displayString)
         }
         // Per-template hot keys: paste the item directly, no menu ("Set Hot Key" on a template item).
         for t in templates.allItems().filter({ $0.hotKey != nil }).prefix(Limits.templateHotKeysMax) {
@@ -750,6 +754,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     // MARK: - Actions
+
+    /// ⌥⇧V by default: paste history item #2 without opening the menu. The pasted content is recorded
+    /// again and goes to the top, so pressing the key repeatedly swaps between the two latest clips.
+    func pastePreviousItem() {
+        guard !history.items.isEmpty else { NSSound.beep(); return }
+        let item = history.items.count > 1 ? history.items[1] : history.items[0]
+        let target = NSWorkspace.shared.frontmostApplication
+        Paster.paste(item, into: target, monitor: monitor, settings: settings, sendKey: settings.pasteAfterSelect)
+    }
 
     @objc private func historyChosen(_ sender: NSMenuItem) {
         chooseHistoryItem(sender, plainText: false)

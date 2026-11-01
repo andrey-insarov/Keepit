@@ -277,4 +277,7 @@ T = {
 'Lock when the screen locks or the Mac sleeps': 'Vergrendelen als het scherm vergrendelt of de Mac in de sluimerstand gaat',
 'Wipes the key from memory and unloads history and templates when the screen locks or the Mac sleeps; unlock with Touch ID or the password afterwards.': 'Wist de sleutel uit het geheugen en laadt geschiedenis en sjablonen uit als het scherm vergrendelt of de Mac in de sluimerstand gaat; daarna ontgrendelen met Touch ID of het wachtwoord.',
 'One password-encrypted .keepit file with history, templates and preferences — for moving to another Mac or between the App Store and direct editions.': 'Eén met wachtwoord versleuteld .keepit-bestand met geschiedenis, sjablonen en voorkeuren — om naar een andere Mac of tussen de App Store- en directe editie te verhuizen.',
+'Paste previous item:': 'Vorig item plakken:',
+'Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off.': 'Plakt meteen het tweede item uit de geschiedenis, zonder menu — handig om tussen de twee laatste clips te wisselen. Klik op het veld en druk op ⌫ om het uit te zetten.',
+'Off — click to set': 'Uit — klik om in te stellen',
 }

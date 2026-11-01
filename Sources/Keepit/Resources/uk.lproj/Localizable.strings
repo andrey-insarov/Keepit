@@ -277,3 +277,6 @@
 "Lock when the screen locks or the Mac sleeps" = "Блокувати під час блокування екрана або сну Mac";
 "Wipes the key from memory and unloads history and templates when the screen locks or the Mac sleeps; unlock with Touch ID or the password afterwards." = "Стирає ключ із пам’яті та вивантажує історію й шаблони під час блокування екрана або сну Mac; далі розблокування через Touch ID або пароль.";
 "One password-encrypted .keepit file with history, templates and preferences — for moving to another Mac or between the App Store and direct editions." = "Один зашифрований паролем файл .keepit з історією, шаблонами та налаштуваннями — для перенесення на інший Mac або між виданнями з App Store і з сайту.";
+"Paste previous item:" = "Вставити попередній:";
+"Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "Одразу вставляє другий елемент історії, без меню — зручно перемикатися між двома останніми копіями. Щоб вимкнути, клацніть поле й натисніть ⌫.";
+"Off — click to set" = "Вимк. — клацніть, щоб задати";

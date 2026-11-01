@@ -2,6 +2,7 @@
 
 ## 2.9.0 — unreleased
 
+- New hot key **⌥⇧V — Paste previous item**: pastes history item #2 without opening the menu (press again to swap back); changeable or switchable off on the General tab
 - Short checkbox labels with (?) help buttons that open explanations in a popover; ignored-apps field aligned with the other rows
 - Preferences reorganised into five tabs — General, History, Menu, Security, Advanced — in a
   fixed-size window; Export/Import Backup also live on the Security tab, *Open Data Folder* and

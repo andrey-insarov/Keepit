@@ -6,7 +6,9 @@ final class HotKeyRecorderView: NSControl {
     var hotKey: HotKey? {
         didSet { needsDisplay = true }
     }
-    var onChange: ((HotKey) -> Void)?
+    var onChange: ((HotKey?) -> Void)?
+    /// Allow ⌫ while recording to remove the hot key (shown as “—”).
+    var allowsClear = false
     private var recording = false {
         didSet { needsDisplay = true }
     }
@@ -55,6 +57,14 @@ final class HotKeyRecorderView: NSControl {
             window?.makeFirstResponder(nil)
             return true
         }
+        if allowsClear, event.keyCode == UInt16(kVK_Delete) || event.keyCode == UInt16(kVK_ForwardDelete),
+           event.modifierFlags.intersection(.deviceIndependentFlagsMask).isEmpty {
+            hotKey = nil
+            recording = false
+            window?.makeFirstResponder(nil)
+            onChange?(nil)
+            return true
+        }
         var mods: UInt32 = 0
         let f = event.modifierFlags
         if f.contains(.command) { mods |= UInt32(cmdKey) }
@@ -80,7 +90,7 @@ final class HotKeyRecorderView: NSControl {
         NSColor.separatorColor.setStroke()
         path.stroke()
 
-        let text = recording ? L("Press keys… (⎋ cancels)") : (hotKey?.displayString ?? L("Click to set"))
+        let text = recording ? L("Press keys… (⎋ cancels)") : (hotKey?.displayString ?? (allowsClear ? L("Off — click to set") : L("Click to set")))
         let attrs: [NSAttributedString.Key: Any] = [
             .font: NSFont.systemFont(ofSize: NSFont.systemFontSize),
             .foregroundColor: recording ? NSColor.secondaryLabelColor : NSColor.labelColor,

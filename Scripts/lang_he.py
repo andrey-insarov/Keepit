@@ -277,4 +277,7 @@ T = {
 'Lock when the screen locks or the Mac sleeps': 'נעל כשהמסך ננעל או כשה‑Mac נכנס לשינה',
 'Wipes the key from memory and unloads history and templates when the screen locks or the Mac sleeps; unlock with Touch ID or the password afterwards.': 'מוחק את המפתח מהזיכרון ופורק את ההיסטוריה והתבניות כשהמסך ננעל או כשה‑Mac נכנס לשינה; לאחר מכן בטל נעילה באמצעות Touch ID או הסיסמה.',
 'One password-encrypted .keepit file with history, templates and preferences — for moving to another Mac or between the App Store and direct editions.': 'קובץ .keepit אחד מוצפן בסיסמה עם היסטוריה, תבניות והעדפות — למעבר ל‑Mac אחר או בין גרסת App Store לגרסה הישירה.',
+'Paste previous item:': 'הדבק פריט קודם:',
+'Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off.': 'מדביק מיד את הפריט השני בהיסטוריה, ללא התפריט — נוח להחלפה בין שני הפריטים האחרונים. לחץ על השדה והקש ⌫ כדי לכבות.',
+'Off — click to set': 'כבוי — לחץ כדי להגדיר',
 }

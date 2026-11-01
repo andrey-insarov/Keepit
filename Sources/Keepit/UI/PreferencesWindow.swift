@@ -49,6 +49,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     private let uninstall    = NSButton(title: L("Delete Keepit and All Data…"), target: nil, action: nil)
     private let historyHK    = HotKeyRecorderView(frame: .zero)
     private let templateHK   = HotKeyRecorderView(frame: .zero)
+    private let previousHK   = HotKeyRecorderView(frame: .zero)
     private let ignoreScroll = NSTextView.scrollableTextView()
     private var ignoreApps: NSTextView { ignoreScroll.documentView as! NSTextView }
 
@@ -198,6 +199,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
             [NSView(), saveHistory],
             header(L("Hot keys & paste")),
             pair(L("History menu:"), historyHK, L("Template menu:"), templateHK),
+            labeled(L("Paste previous item:"), withHelp(previousHK, L("Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off."))),
             [NSView(), pasteAfter],
             labeled(L("Paste delay (s):"), numField(pasteDelay)),
             [NSView(), showAtCaret],
@@ -309,8 +311,10 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
             buttons.bottomAnchor.constraint(equalTo: content.bottomAnchor, constant: -16),
         ])
 
-        historyHK.onChange = { [weak self] hk in self?.draft.historyHotKey = hk }
-        templateHK.onChange = { [weak self] hk in self?.draft.templateHotKey = hk }
+        historyHK.onChange = { [weak self] hk in if let hk { self?.draft.historyHotKey = hk } }
+        templateHK.onChange = { [weak self] hk in if let hk { self?.draft.templateHotKey = hk } }
+        previousHK.allowsClear = true
+        previousHK.onChange = { [weak self] hk in self?.draft.previousHotKey = hk }
 
         // One fixed size for all tabs: the tallest page decides.
         let tallest = [general, historyGrid, menuGrid, security, advanced].map { $0.fittingSize.height }.max() ?? 300
@@ -354,6 +358,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         if !BiometricUnlock.hasSensor { touchID.title = L("Unlock with Touch ID (no Touch ID on this Mac)") }
         historyHK.hotKey = s.historyHotKey
         templateHK.hotKey = s.templateHotKey
+        previousHK.hotKey = s.previousHotKey
         ignoreApps.string = s.ignoreApps.joined(separator: "\n")
     }
 

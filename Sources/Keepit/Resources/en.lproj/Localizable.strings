@@ -298,3 +298,7 @@
 "Lock when the screen locks or the Mac sleeps" = "Lock when the screen locks or the Mac sleeps";
 "Wipes the key from memory and unloads history and templates when the screen locks or the Mac sleeps; unlock with Touch ID or the password afterwards." = "Wipes the key from memory and unloads history and templates when the screen locks or the Mac sleeps; unlock with Touch ID or the password afterwards.";
 "One password-encrypted .keepit file with history, templates and preferences — for moving to another Mac or between the App Store and direct editions." = "One password-encrypted .keepit file with history, templates and preferences — for moving to another Mac or between the App Store and direct editions.";
+
+"Paste previous item:" = "Paste previous item:";
+"Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off.";
+"Off — click to set" = "Off — click to set";

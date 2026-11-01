@@ -277,4 +277,7 @@ T = {
 'Lock when the screen locks or the Mac sleeps': 'Lukusta, kui ekraan lukustub või Mac läheb unne',
 'Wipes the key from memory and unloads history and templates when the screen locks or the Mac sleeps; unlock with Touch ID or the password afterwards.': 'Kustutab võtme mälust ja laadib ajaloo ja mallid maha, kui ekraan lukustub või Mac läheb unne; seejärel ava Touch ID või parooliga.',
 'One password-encrypted .keepit file with history, templates and preferences — for moving to another Mac or between the App Store and direct editions.': "Üks parooliga krüpteeritud .keepit-fail ajaloo, mallide ja eelistustega — teise Maci kolimiseks või App Store'i ja otseväljaande vahel liikumiseks.",
+'Paste previous item:': 'Kleebi eelmine üksus:',
+'Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off.': 'Kleebib kohe ajaloo teise üksuse ilma menüüta — mugav kahe viimase lõike vahel vahetamiseks. Väljalülitamiseks klõpsa väljal ja vajuta ⌫.',
+'Off — click to set': 'Väljas — klõpsa seadmiseks',
 }

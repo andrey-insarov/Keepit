@@ -277,3 +277,6 @@
 "Lock when the screen locks or the Mac sleeps" = "Bloquear cuando se bloquee la pantalla o el Mac entre en reposo";
 "Wipes the key from memory and unloads history and templates when the screen locks or the Mac sleeps; unlock with Touch ID or the password afterwards." = "Borra la clave de la memoria y descarga el historial y las plantillas al bloquearse la pantalla o entrar el Mac en reposo; después se desbloquea con Touch ID o la contraseña.";
 "One password-encrypted .keepit file with history, templates and preferences — for moving to another Mac or between the App Store and direct editions." = "Un único archivo .keepit cifrado con contraseña con historial, plantillas y preferencias: para pasar a otro Mac o entre las ediciones de App Store y directa.";
+"Paste previous item:" = "Pegar elemento anterior:";
+"Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "Pega directamente el segundo elemento del historial, sin menú: útil para alternar entre los dos últimos clips. Haz clic en el campo y pulsa ⌫ para desactivarlo.";
+"Off — click to set" = "Desactivado — haz clic para definir";

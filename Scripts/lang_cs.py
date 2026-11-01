@@ -277,4 +277,7 @@ T = {
 'Lock when the screen locks or the Mac sleeps': 'Uzamknout při zamknutí obrazovky nebo uspání Macu',
 'Wipes the key from memory and unloads history and templates when the screen locks or the Mac sleeps; unlock with Touch ID or the password afterwards.': 'Při zamknutí obrazovky nebo uspání Macu smaže klíč z paměti a uvolní historii a šablony; poté odemkněte pomocí Touch ID nebo hesla.',
 'One password-encrypted .keepit file with history, templates and preferences — for moving to another Mac or between the App Store and direct editions.': 'Jeden heslem šifrovaný soubor .keepit s historií, šablonami a předvolbami — pro přesun na jiný Mac nebo mezi edicí z App Storu a přímou.',
+'Paste previous item:': 'Vložit předchozí položku:',
+'Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off.': 'Okamžitě vloží druhou položku historie bez nabídky — hodí se k přepínání mezi dvěma posledními klipy. Pro vypnutí klikněte do pole a stiskněte ⌫.',
+'Off — click to set': 'Vypnuto — kliknutím nastavíte',
 }

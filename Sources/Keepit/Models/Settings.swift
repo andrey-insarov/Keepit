@@ -8,6 +8,7 @@ struct HotKey: Codable, Equatable {
 
     static let optionC = HotKey(keyCode: UInt32(kVK_ANSI_C), modifiers: UInt32(optionKey))
     static let optionT = HotKey(keyCode: UInt32(kVK_ANSI_T), modifiers: UInt32(optionKey))
+    static let optionShiftV = HotKey(keyCode: UInt32(kVK_ANSI_V), modifiers: UInt32(optionKey | shiftKey))
 
     var displayString: String {
         var s = ""
@@ -62,6 +63,7 @@ struct Settings: Codable, Equatable {
     // [action]
     var historyHotKey = HotKey.optionC
     var templateHotKey = HotKey.optionT
+    var previousHotKey: HotKey? = HotKey.optionShiftV   // paste history item #2 directly, no menu
     var pasteAfterSelect = true    // action.paste
 
     // [sendkey]
@@ -111,6 +113,7 @@ struct Settings: Codable, Equatable {
         showAtCaret      = try c.decodeIfPresent(Bool.self,   forKey: .showAtCaret)      ?? d.showAtCaret
         historyHotKey    = try c.decodeIfPresent(HotKey.self, forKey: .historyHotKey)    ?? d.historyHotKey
         templateHotKey   = try c.decodeIfPresent(HotKey.self, forKey: .templateHotKey)   ?? d.templateHotKey
+        previousHotKey   = c.contains(.previousHotKey) ? try c.decodeIfPresent(HotKey.self, forKey: .previousHotKey) : d.previousHotKey
         pasteAfterSelect = try c.decodeIfPresent(Bool.self,   forKey: .pasteAfterSelect) ?? d.pasteAfterSelect
         pasteDelay       = try c.decodeIfPresent(Double.self, forKey: .pasteDelay)       ?? d.pasteDelay
         pasteKeys        = try c.decodeIfPresent([String: PasteKey].self, forKey: .pasteKeys) ?? d.pasteKeys

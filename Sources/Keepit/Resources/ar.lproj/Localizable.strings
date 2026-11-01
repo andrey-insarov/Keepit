@@ -277,3 +277,6 @@
 "Lock when the screen locks or the Mac sleeps" = "القفل عند قفل الشاشة أو دخول Mac في وضع السكون";
 "Wipes the key from memory and unloads history and templates when the screen locks or the Mac sleeps; unlock with Touch ID or the password afterwards." = "يمسح المفتاح من الذاكرة ويفرغ السجل والقوالب عند قفل الشاشة أو دخول Mac في وضع السكون؛ ثم افتح القفل بـ Touch ID أو كلمة المرور.";
 "One password-encrypted .keepit file with history, templates and preferences — for moving to another Mac or between the App Store and direct editions." = "ملف .keepit واحد مشفّر بكلمة مرور يحوي السجل والقوالب والتفضيلات — للانتقال إلى Mac آخر أو بين إصدار App Store والإصدار المباشر.";
+"Paste previous item:" = "لصق العنصر السابق:";
+"Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off." = "يلصق العنصر الثاني من السجل فورًا دون القائمة — مفيد للتبديل بين آخر نسختين. انقر الحقل واضغط ⌫ لإيقافه.";
+"Off — click to set" = "إيقاف — انقر للتعيين";
