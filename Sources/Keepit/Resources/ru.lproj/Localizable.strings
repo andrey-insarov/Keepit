@@ -218,3 +218,16 @@
 "Import finished — history: %d item(s), templates: %d item(s)." = "Импорт завершён — история: %d, шаблоны: %d.";
 "Version %@ (%@)" = "Версия %@ (%@)";
 "Help" = "Справка";
+"Danger zone" = "Опасная зона";
+"Delete Keepit and All Data…" = "Удалить Keepit и все данные…";
+"⚠️ Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back." = "⚠️ Удаляет приложение вместе с историей, шаблонами, настройками, ключом Touch ID и разрешениями. Потребует пароль или Touch ID и напечатанное подтверждение. Если данные могут понадобиться — сначала экспортируйте резервную копию.";
+"delete Keepit and all its data" = "удалить Keepit и все его данные";
+"Delete Keepit and all its data?" = "Удалить Keepit и все его данные?";
+"This removes the app, your clipboard history, templates, settings, the Touch ID key and Keepit's permissions. There is no undo. If you have not exported a backup, the data cannot be recovered." = "Будут удалены приложение, история буфера обмена, шаблоны, настройки, ключ Touch ID и разрешения Keepit. Отменить нельзя. Если резервная копия не экспортирована, восстановить данные невозможно.";
+"Type %@ (in capitals) to confirm:" = "Введите %@ (заглавными) для подтверждения:";
+"I understand that Keepit's data will be deleted forever and, without a backup, cannot be recovered." = "Я понимаю, что данные Keepit будут удалены навсегда и без резервной копии их невозможно восстановить.";
+"Delete Everything" = "Удалить всё";
+"Keepit and all its data have been deleted." = "Keepit и все его данные удалены.";
+"The app has been moved to the Trash. If an Accessibility entry for Keepit remains in System Settings, you can remove it there." = "Приложение перемещено в Корзину. Если в Системных настройках осталась запись Keepit в Универсальном доступе, её можно удалить там.";
+"All Keepit data has been deleted." = "Все данные Keepit удалены.";
+"Finish by dragging Keepit from the Applications folder to the Trash." = "Завершите удаление, перетащив Keepit из папки «Программы» в Корзину.";

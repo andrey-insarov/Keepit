@@ -218,3 +218,16 @@
 "Import finished — history: %d item(s), templates: %d item(s)." = "読み込み完了 — 履歴 %d 件、テンプレート %d 件。";
 "Version %@ (%@)" = "バージョン %@ (%@)";
 "Help" = "ヘルプ";
+"Danger zone" = "危険ゾーン";
+"Delete Keepit and All Data…" = "Keepit とすべてのデータを削除…";
+"⚠️ Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back." = "⚠️ 履歴、テンプレート、設定、Touch ID キー、権限ごとアプリを削除します。パスワードまたは Touch ID と、入力による確認が必要です。データが必要になる可能性があれば、先にバックアップを書き出してください。";
+"delete Keepit and all its data" = "Keepit とそのすべてのデータを削除する";
+"Delete Keepit and all its data?" = "Keepit とすべてのデータを削除しますか？";
+"This removes the app, your clipboard history, templates, settings, the Touch ID key and Keepit's permissions. There is no undo. If you have not exported a backup, the data cannot be recovered." = "アプリ、クリップボード履歴、テンプレート、設定、Touch ID キー、Keepit の権限を削除します。取り消しはできません。バックアップを書き出していない場合、データは復元できません。";
+"Type %@ (in capitals) to confirm:" = "確認のため %@（大文字）と入力してください:";
+"I understand that Keepit's data will be deleted forever and, without a backup, cannot be recovered." = "Keepit のデータは永久に削除され、バックアップがなければ復元できないことを理解しました。";
+"Delete Everything" = "すべて削除";
+"Keepit and all its data have been deleted." = "Keepit とすべてのデータを削除しました。";
+"The app has been moved to the Trash. If an Accessibility entry for Keepit remains in System Settings, you can remove it there." = "アプリはゴミ箱に移動しました。システム設定のアクセシビリティに Keepit の項目が残っている場合は、そこで削除できます。";
+"All Keepit data has been deleted." = "Keepit のすべてのデータを削除しました。";
+"Finish by dragging Keepit from the Applications folder to the Trash." = "最後に、アプリケーションフォルダから Keepit をゴミ箱にドラッグしてください。";

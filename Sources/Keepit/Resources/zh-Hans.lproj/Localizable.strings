@@ -218,3 +218,16 @@
 "Import finished — history: %d item(s), templates: %d item(s)." = "导入完成 — 历史记录 %d 项，模板 %d 项。";
 "Version %@ (%@)" = "版本 %@ (%@)";
 "Help" = "帮助";
+"Danger zone" = "危险区域";
+"Delete Keepit and All Data…" = "删除 Keepit 及全部数据…";
+"⚠️ Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back." = "⚠️ 删除应用及其历史记录、模板、设置、Touch ID 密钥和权限。需要输入密码或使用 Touch ID，并键入确认。若日后可能需要数据，请先导出备份。";
+"delete Keepit and all its data" = "删除 Keepit 及其全部数据";
+"Delete Keepit and all its data?" = "删除 Keepit 及其全部数据？";
+"This removes the app, your clipboard history, templates, settings, the Touch ID key and Keepit's permissions. There is no undo. If you have not exported a backup, the data cannot be recovered." = "将删除应用、剪贴板历史记录、模板、设置、Touch ID 密钥和 Keepit 的权限。无法撤销。如果没有导出备份，数据将无法恢复。";
+"Type %@ (in capitals) to confirm:" = "请输入 %@（大写）以确认：";
+"I understand that Keepit's data will be deleted forever and, without a backup, cannot be recovered." = "我明白 Keepit 的数据将被永久删除，且没有备份将无法恢复。";
+"Delete Everything" = "全部删除";
+"Keepit and all its data have been deleted." = "Keepit 及其全部数据已删除。";
+"The app has been moved to the Trash. If an Accessibility entry for Keepit remains in System Settings, you can remove it there." = "应用已移到废纸篓。如果系统设置的辅助功能中仍有 Keepit 条目，可在那里删除。";
+"All Keepit data has been deleted." = "Keepit 的全部数据已删除。";
+"Finish by dragging Keepit from the Applications folder to the Trash." = "最后请将 Keepit 从“应用程序”文件夹拖到废纸篓。";

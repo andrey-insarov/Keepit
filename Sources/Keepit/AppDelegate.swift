@@ -14,6 +14,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private lazy var updater = Updater()
     private var preferencesWindow: PreferencesWindowController?
     private var viewer: ViewerWindowController?
+    /// Set by the uninstaller: nothing may be written to disk any more (see Uninstall.swift).
+    var uninstalling = false
 
     /// Most recently active app other than us — the Viewer pastes into it (the original remembered the previous window).
     private(set) var lastExternalApp: NSRunningApplication?
@@ -83,10 +85,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     func applicationWillTerminate(_ notification: Notification) {
         monitor?.stop()
-        history?.flush()
-        templates?.flush()
-        Storage.save(settings, to: Storage.settingsURL, encrypt: false)
+        if !uninstalling {
+            history?.flush()
+            templates?.flush()
+            Storage.save(settings, to: Storage.settingsURL, encrypt: false)
+        }
         Storage.clearKey()          // wipe key bytes before the process goes away
+    }
+
+    /// Close all windows (used by lock and uninstall).
+    func closeAllWindows() {
+        viewer?.close()
+        preferencesWindow?.close()
     }
 
     // MARK: - Lock / unlock (key zeroization)
@@ -243,7 +253,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     /// Confirm identity for sensitive changes: Touch ID (if allowed) or the current password.
-    private func authenticateForChange(reasonKey: String) -> Bool {
+    func authenticateForChange(reasonKey: String) -> Bool {
         if settings.biometricUnlock, settings.biometricPasswordChange, BiometricUnlock.isAvailable, BiometricUnlock.isConfigured,
            let k = BiometricUnlock.retrieve(reasonKey: reasonKey) {
             let ok = Vault.verify(k)

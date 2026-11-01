@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.6.0 — unreleased
+
+- Preferences → **Danger zone → Delete Keepit and All Data…**: a complete uninstall from inside the
+  app. Requires the password or Touch ID (when protection is on), then typing `DELETE` and ticking
+  the acknowledgement. Removes the data folder, the Touch ID keychain item, the defaults domain
+  (Sparkle state), caches, the login item and the Accessibility grant, and moves the app to the Trash.
+- Preferences window scrolls when taller than the display.
+
 ## 2.5.2 — 2026-11-01
 
 - Menu: separator before *Check for Updates…* / *About Keepit*.

@@ -222,3 +222,18 @@
 /* About window */
 "Version %@ (%@)" = "Version %@ (%@)";
 "Help" = "Help";
+
+/* Uninstall */
+"Danger zone" = "Danger zone";
+"Delete Keepit and All Data…" = "Delete Keepit and All Data…";
+"⚠️ Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back." = "⚠️ Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back.";
+"delete Keepit and all its data" = "delete Keepit and all its data";
+"Delete Keepit and all its data?" = "Delete Keepit and all its data?";
+"This removes the app, your clipboard history, templates, settings, the Touch ID key and Keepit's permissions. There is no undo. If you have not exported a backup, the data cannot be recovered." = "This removes the app, your clipboard history, templates, settings, the Touch ID key and Keepit's permissions. There is no undo. If you have not exported a backup, the data cannot be recovered.";
+"Type %@ (in capitals) to confirm:" = "Type %@ (in capitals) to confirm:";
+"I understand that Keepit's data will be deleted forever and, without a backup, cannot be recovered." = "I understand that Keepit's data will be deleted forever and, without a backup, cannot be recovered.";
+"Delete Everything" = "Delete Everything";
+"Keepit and all its data have been deleted." = "Keepit and all its data have been deleted.";
+"The app has been moved to the Trash. If an Accessibility entry for Keepit remains in System Settings, you can remove it there." = "The app has been moved to the Trash. If an Accessibility entry for Keepit remains in System Settings, you can remove it there.";
+"All Keepit data has been deleted." = "All Keepit data has been deleted.";
+"Finish by dragging Keepit from the Applications folder to the Trash." = "Finish by dragging Keepit from the Applications folder to the Trash.";

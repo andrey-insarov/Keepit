@@ -218,3 +218,16 @@
 "Import finished — history: %d item(s), templates: %d item(s)." = "اكتمل الاستيراد — السجل: %d عنصر، القوالب: %d عنصر.";
 "Version %@ (%@)" = "الإصدار %@ (%@)";
 "Help" = "مساعدة";
+"Danger zone" = "منطقة الخطر";
+"Delete Keepit and All Data…" = "حذف Keepit وجميع البيانات…";
+"⚠️ Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back." = "⚠️ يزيل التطبيق مع سجله وقوالبه وإعداداته ومفتاح Touch ID وأذوناته. يطلب كلمة المرور أو Touch ID وتأكيدًا مكتوبًا. صدّر نسخة احتياطية أولًا إن كنت قد تحتاج البيانات.";
+"delete Keepit and all its data" = "حذف Keepit وجميع بياناته";
+"Delete Keepit and all its data?" = "هل تريد حذف Keepit وجميع بياناته؟";
+"This removes the app, your clipboard history, templates, settings, the Touch ID key and Keepit's permissions. There is no undo. If you have not exported a backup, the data cannot be recovered." = "سيؤدي هذا إلى إزالة التطبيق وسجل الحافظة والقوالب والإعدادات ومفتاح Touch ID وأذونات Keepit. لا يمكن التراجع. إن لم تصدّر نسخة احتياطية، فلا يمكن استرداد البيانات.";
+"Type %@ (in capitals) to confirm:" = "اكتب %@ (بأحرف كبيرة) للتأكيد:";
+"I understand that Keepit's data will be deleted forever and, without a backup, cannot be recovered." = "أفهم أن بيانات Keepit ستُحذف إلى الأبد، ولا يمكن استردادها دون نسخة احتياطية.";
+"Delete Everything" = "حذف كل شيء";
+"Keepit and all its data have been deleted." = "تم حذف Keepit وجميع بياناته.";
+"The app has been moved to the Trash. If an Accessibility entry for Keepit remains in System Settings, you can remove it there." = "نُقل التطبيق إلى سلة المهملات. إن بقي إدخال لـ Keepit في تسهيلات الاستخدام ضمن إعدادات النظام، يمكنك إزالته من هناك.";
+"All Keepit data has been deleted." = "تم حذف جميع بيانات Keepit.";
+"Finish by dragging Keepit from the Applications folder to the Trash." = "أكمل بسحب Keepit من مجلد التطبيقات إلى سلة المهملات.";

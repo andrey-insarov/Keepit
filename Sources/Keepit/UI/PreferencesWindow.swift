@@ -38,6 +38,8 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     private let touchIDChange = NSButton(checkboxWithTitle: L("Allow changing the password with Touch ID (off = always require the current password)"), target: nil, action: nil)
     private let newPhrase    = NSButton(title: L("New Recovery Phrase…"), target: nil, action: nil)
     private let phraseHint   = NSTextField(wrappingLabelWithString: L("Issues a new 24-word phrase and invalidates the old one. Use it if the printed sheet was lost or seen by someone; you will then be offered to change the password too."))
+    private let uninstall    = NSButton(title: L("Delete Keepit and All Data…"), target: nil, action: nil)
+    private let uninstallHint = NSTextField(wrappingLabelWithString: L("⚠️ Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back."))
     private let historyHK    = HotKeyRecorderView(frame: .zero)
     private let templateHK   = HotKeyRecorderView(frame: .zero)
     private let ignoreScroll = NSTextView.scrollableTextView()
@@ -125,7 +127,16 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
             [NSView(), touchIDChange],
             [NSView(), newPhrase],
             [NSView(), phraseHint],
+            header(L("Danger zone")),
+            [NSView(), uninstall],
+            [NSView(), uninstallHint],
         ])
+        uninstall.target = self
+        uninstall.action = #selector(uninstallTapped)
+        uninstall.contentTintColor = .systemRed
+        uninstallHint.textColor = .secondaryLabelColor
+        uninstallHint.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
+        uninstallHint.preferredMaxLayoutWidth = 320
         changePw.target = self
         changePw.action = #selector(changePasswordTapped)
         newPhrase.target = self
@@ -164,13 +175,29 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         buttons.distribution = .fill
         buttons.translatesAutoresizingMaskIntoConstraints = false
 
-        content.addSubview(grid)
+        // The grid lives in a scroll view so the window still fits small displays (the form is tall).
+        let gridScroll = NSScrollView()
+        gridScroll.drawsBackground = false
+        gridScroll.hasVerticalScroller = true
+        gridScroll.borderType = .noBorder
+        gridScroll.focusRingType = .none
+        gridScroll.translatesAutoresizingMaskIntoConstraints = false
+        let doc = FlippedView()
+        doc.translatesAutoresizingMaskIntoConstraints = false
+        doc.addSubview(grid)
+        gridScroll.documentView = doc
+        content.addSubview(gridScroll)
         content.addSubview(buttons)
         NSLayoutConstraint.activate([
-            grid.topAnchor.constraint(equalTo: content.topAnchor, constant: 16),
-            grid.leadingAnchor.constraint(equalTo: content.leadingAnchor, constant: 16),
-            grid.trailingAnchor.constraint(equalTo: content.trailingAnchor, constant: -16),
-            buttons.topAnchor.constraint(greaterThanOrEqualTo: grid.bottomAnchor, constant: 16),
+            gridScroll.topAnchor.constraint(equalTo: content.topAnchor),
+            gridScroll.leadingAnchor.constraint(equalTo: content.leadingAnchor),
+            gridScroll.trailingAnchor.constraint(equalTo: content.trailingAnchor),
+            doc.widthAnchor.constraint(equalTo: gridScroll.contentView.widthAnchor),
+            grid.topAnchor.constraint(equalTo: doc.topAnchor, constant: 16),
+            grid.leadingAnchor.constraint(equalTo: doc.leadingAnchor, constant: 16),
+            grid.trailingAnchor.constraint(equalTo: doc.trailingAnchor, constant: -16),
+            grid.bottomAnchor.constraint(equalTo: doc.bottomAnchor, constant: -8),
+            buttons.topAnchor.constraint(equalTo: gridScroll.bottomAnchor, constant: 8),
             buttons.leadingAnchor.constraint(equalTo: content.leadingAnchor, constant: 16),
             buttons.trailingAnchor.constraint(equalTo: content.trailingAnchor, constant: -16),
             buttons.bottomAnchor.constraint(equalTo: content.bottomAnchor, constant: -16),
@@ -179,9 +206,10 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         historyHK.onChange = { [weak self] hk in self?.draft.historyHotKey = hk }
         templateHK.onChange = { [weak self] hk in self?.draft.templateHotKey = hk }
 
-        // Size the window to its content.
-        let height = grid.fittingSize.height + buttons.fittingSize.height + 16 * 3
-        window?.setContentSize(NSSize(width: 520, height: height))
+        // Size the window to its content, but never taller than the screen; the grid scrolls then.
+        let wanted = grid.fittingSize.height + 24 + buttons.fittingSize.height + 8 + 16
+        let maxHeight = (window?.screen ?? NSScreen.main).map { $0.visibleFrame.height - 60 } ?? wanted
+        window?.setContentSize(NSSize(width: 520, height: min(wanted, maxHeight)))
     }
 
     // MARK: Load / collect
@@ -270,6 +298,10 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         app.regenerateRecoveryPhrase()
     }
 
+    @objc private func uninstallTapped() {
+        app.uninstallRequested()
+    }
+
     @objc private func cancelTapped() {
         window?.close()
     }
@@ -277,4 +309,10 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     @objc private func revealData() {
         NSWorkspace.shared.activateFileViewerSelecting([Storage.settingsURL])
     }
+}
+
+
+/// Top-left origin so the grid starts at the top of the scroll view.
+private final class FlippedView: NSView {
+    override var isFlipped: Bool { true }
 }

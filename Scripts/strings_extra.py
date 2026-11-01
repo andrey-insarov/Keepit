@@ -225,4 +225,19 @@ T2 = {
 # About window
 'Version %@ (%@)': ('Версія %@ (%@)', 'الإصدار %@ (%@)', 'Versione %@ (%@)'),
 'Help': ('Довідка', 'مساعدة', 'Aiuto'),
+
+# Uninstall
+'Danger zone': ('Небезпечна зона', 'منطقة الخطر', 'Zona pericolosa'),
+'Delete Keepit and All Data…': ('Видалити Keepit і всі дані…', 'حذف Keepit وجميع البيانات…', 'Elimina Keepit e tutti i dati…'),
+'⚠️ Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back.': ('⚠️ Видаляє застосунок разом з історією, шаблонами, налаштуваннями, ключем Touch ID і дозволами. Потребує пароль або Touch ID і надруковане підтвердження. Якщо дані можуть знадобитися — спершу експортуйте резервну копію.', '⚠️ يزيل التطبيق مع سجله وقوالبه وإعداداته ومفتاح Touch ID وأذوناته. يطلب كلمة المرور أو Touch ID وتأكيدًا مكتوبًا. صدّر نسخة احتياطية أولًا إن كنت قد تحتاج البيانات.', '⚠️ Rimuove l’app insieme a cronologia, modelli, impostazioni, chiave Touch ID e permessi. Richiede password o Touch ID e una conferma digitata. Esporta prima un backup se potresti rivolere i dati.'),
+'delete Keepit and all its data': ('видалити Keepit і всі його дані', 'حذف Keepit وجميع بياناته', 'eliminare Keepit e tutti i suoi dati'),
+'Delete Keepit and all its data?': ('Видалити Keepit і всі його дані?', 'هل تريد حذف Keepit وجميع بياناته؟', 'Eliminare Keepit e tutti i suoi dati?'),
+"This removes the app, your clipboard history, templates, settings, the Touch ID key and Keepit's permissions. There is no undo. If you have not exported a backup, the data cannot be recovered.": ('Буде видалено застосунок, історію буфера обміну, шаблони, налаштування, ключ Touch ID і дозволи Keepit. Скасувати неможливо. Якщо резервну копію не експортовано, відновити дані неможливо.', 'سيؤدي هذا إلى إزالة التطبيق وسجل الحافظة والقوالب والإعدادات ومفتاح Touch ID وأذونات Keepit. لا يمكن التراجع. إن لم تصدّر نسخة احتياطية، فلا يمكن استرداد البيانات.', 'Rimuove l’app, la cronologia degli appunti, i modelli, le impostazioni, la chiave Touch ID e i permessi di Keepit. Non si può annullare. Se non hai esportato un backup, i dati non possono essere recuperati.'),
+'Type %@ (in capitals) to confirm:': ('Введіть %@ (великими літерами) для підтвердження:', 'اكتب %@ (بأحرف كبيرة) للتأكيد:', 'Digita %@ (in maiuscolo) per confermare:'),
+"I understand that Keepit's data will be deleted forever and, without a backup, cannot be recovered.": ('Я розумію, що дані Keepit буде видалено назавжди і без резервної копії їх неможливо відновити.', 'أفهم أن بيانات Keepit ستُحذف إلى الأبد، ولا يمكن استردادها دون نسخة احتياطية.', 'Capisco che i dati di Keepit saranno eliminati per sempre e, senza un backup, non potranno essere recuperati.'),
+'Delete Everything': ('Видалити все', 'حذف كل شيء', 'Elimina tutto'),
+'Keepit and all its data have been deleted.': ('Keepit і всі його дані видалено.', 'تم حذف Keepit وجميع بياناته.', 'Keepit e tutti i suoi dati sono stati eliminati.'),
+'The app has been moved to the Trash. If an Accessibility entry for Keepit remains in System Settings, you can remove it there.': ('Застосунок переміщено до Смітника. Якщо в Системних параметрах лишився запис Keepit у Доступності, його можна видалити там.', 'نُقل التطبيق إلى سلة المهملات. إن بقي إدخال لـ Keepit في تسهيلات الاستخدام ضمن إعدادات النظام، يمكنك إزالته من هناك.', 'L’app è stata spostata nel Cestino. Se in Impostazioni di Sistema resta una voce Accessibilità per Keepit, puoi rimuoverla lì.'),
+'All Keepit data has been deleted.': ('Усі дані Keepit видалено.', 'تم حذف جميع بيانات Keepit.', 'Tutti i dati di Keepit sono stati eliminati.'),
+'Finish by dragging Keepit from the Applications folder to the Trash.': ('Завершіть, перетягнувши Keepit з теки «Програми» до Смітника.', 'أكمل بسحب Keepit من مجلد التطبيقات إلى سلة المهملات.', 'Completa trascinando Keepit dalla cartella Applicazioni nel Cestino.'),
 }

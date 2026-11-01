@@ -218,3 +218,16 @@
 "Import finished — history: %d item(s), templates: %d item(s)." = "Importación finalizada: historial %d elemento(s), plantillas %d elemento(s).";
 "Version %@ (%@)" = "Versión %@ (%@)";
 "Help" = "Ayuda";
+"Danger zone" = "Zona de peligro";
+"Delete Keepit and All Data…" = "Eliminar Keepit y todos los datos…";
+"⚠️ Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back." = "⚠️ Elimina la app junto con su historial, plantillas, ajustes, clave de Touch ID y permisos. Pide tu contraseña o Touch ID y una confirmación escrita. Exporta antes una copia de seguridad si pudieras necesitar los datos.";
+"delete Keepit and all its data" = "eliminar Keepit y todos sus datos";
+"Delete Keepit and all its data?" = "¿Eliminar Keepit y todos sus datos?";
+"This removes the app, your clipboard history, templates, settings, the Touch ID key and Keepit's permissions. There is no undo. If you have not exported a backup, the data cannot be recovered." = "Elimina la app, tu historial del portapapeles, las plantillas, los ajustes, la clave de Touch ID y los permisos de Keepit. No se puede deshacer. Si no has exportado una copia de seguridad, los datos no se pueden recuperar.";
+"Type %@ (in capitals) to confirm:" = "Escribe %@ (en mayúsculas) para confirmar:";
+"I understand that Keepit's data will be deleted forever and, without a backup, cannot be recovered." = "Entiendo que los datos de Keepit se eliminarán para siempre y que, sin copia de seguridad, no se podrán recuperar.";
+"Delete Everything" = "Eliminar todo";
+"Keepit and all its data have been deleted." = "Keepit y todos sus datos se han eliminado.";
+"The app has been moved to the Trash. If an Accessibility entry for Keepit remains in System Settings, you can remove it there." = "La app se ha movido a la Papelera. Si queda una entrada de Accesibilidad para Keepit en Ajustes del Sistema, puedes eliminarla allí.";
+"All Keepit data has been deleted." = "Se han eliminado todos los datos de Keepit.";
+"Finish by dragging Keepit from the Applications folder to the Trash." = "Para terminar, arrastra Keepit de la carpeta Aplicaciones a la Papelera.";
