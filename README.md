@@ -54,7 +54,7 @@ him; Keepit reuses the behaviour and settings model under the MIT License (see `
 | Status bar                                   | Date, source app, format, size, hot key                    |
 | Options dialog (CLCLSet)                     | Preferences window with hot-key recorder                   |
 | —                                            | Export / Import Backup: one password-encrypted `.keepit` file (history, templates, preferences); Merge or Replace on import |
-| —                                            | 10 interface languages (en, ru, uk, de, fr, es, it, ja, zh-Hans, ar) |
+| —                                            | 21 interface languages: en, ru, uk, de, fr, es, it, pt-BR, nl, pl, cs, tr, lt, lv, et, ja, ko, zh-Hans, zh-Hant, ar, he |
 
 Still not ported: plugins/tools, format filter/priority option pages, importing Windows
 `history.dat` / `regist.dat`, the `%0d`-style menu numbering format.

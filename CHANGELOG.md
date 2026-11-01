@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.7.0 — unreleased
+
+- 11 more interface languages: Brazilian Portuguese, Korean, Traditional Chinese, Turkish, Polish,
+  Dutch, Hebrew, Czech, Lithuanian, Latvian and Estonian (21 in total).
+
 ## 2.6.0 — 2026-11-01
 
 - Preferences → **Danger zone → Delete Keepit and All Data…**: a complete uninstall from inside the

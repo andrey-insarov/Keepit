@@ -7,6 +7,7 @@
     <key>CFBundleLocalizations</key>
     <array>
         <string>en</string><string>ru</string><string>de</string><string>fr</string><string>es</string><string>ja</string><string>zh-Hans</string><string>uk</string><string>ar</string><string>it</string>
+        <string>pt-BR</string><string>ko</string><string>zh-Hant</string><string>tr</string><string>pl</string><string>nl</string><string>he</string><string>cs</string><string>lt</string><string>lv</string><string>et</string>
     </array>
     <key>CFBundleExecutable</key>
     <string>Keepit</string>
