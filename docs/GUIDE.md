@@ -5,7 +5,7 @@ what you copy, and pastes any of it back with a hot key. This guide walks throug
 the first launch to automation. Keyboard shortcuts are given with the default settings; every one of
 them can be changed in *Preferences → Hot keys*.
 
-<!-- screenshot: menu bar icon with the history menu open -->
+![The history menu](site/img/guide/menu.png)
 
 ## Contents
 
@@ -41,6 +41,13 @@ brew install --cask andrey-insarov/keepit/keepit
 [latest release](https://github.com/andrey-insarov/Keepit/releases/latest), open it and drag Keepit
 into *Applications*. The app is signed and notarized by Apple and updates itself.
 
+![The DMG: drag Keepit to Applications](site/img/guide/dmg.png)
+
+The first time you open it macOS confirms that the app came from the Internet and was checked by
+Apple — click *Open*.
+
+![macOS Gatekeeper confirmation](site/img/guide/gatekeeper.png)
+
 Keepit needs macOS 13 Ventura or newer and runs natively on Apple silicon and Intel Macs.
 
 ## 2. First launch
@@ -48,7 +55,9 @@ Keepit needs macOS 13 Ventura or newer and runs natively on Apple silicon and In
 Keepit is a menu-bar app: there is no Dock icon and no window until you ask for one. After the first
 launch you will see the 📎 icon in the menu bar and two dialogs.
 
-<!-- screenshot: Accessibility prompt -->
+![Keepit asks for the Accessibility permission](site/img/guide/accessibility-prompt.png)
+
+![Keepit enabled under Privacy & Security → Accessibility](site/img/guide/accessibility-settings.png)
 
 **Accessibility permission.** To paste for you, Keepit sends ⌘V to the app you were working in. macOS
 only allows that for apps listed under *System Settings → Privacy & Security → Accessibility*. Turn
@@ -66,7 +75,7 @@ Keepit launches at login by default (you can turn that off on the *General* tab)
 Press **⌥C** in any app, or click the 📎 icon. The menu opens at your text cursor when Keepit can
 find it, otherwise at the mouse pointer.
 
-<!-- screenshot: history menu with numbered items, source icons and ⌃⌥ keys -->
+![History menu: numbered items, source app icons, ⌃⌥ keys](site/img/guide/menu.png)
 
 Each line is one thing you copied, newest first; the newest one is **bold** — it is what is on the
 clipboard right now. The icon on the left is the app you copied it from. A title that ends with `…`
@@ -83,7 +92,7 @@ has more lines than the menu shows.
 by title and by the full text, so you can find a line in the middle of a long clip. Return pastes the
 first match, Esc clears the field (press it again to close the menu).
 
-<!-- screenshot: searching the menu, preview panel beside it -->
+![Typing filters the menu; the preview panel shows the highlighted item](site/img/guide/search-preview.png)
 
 **Preview.** Hover over an item (or move to it with the keyboard) and a panel appears beside the
 menu with the full image, or the first lines of a long text, plus the source app, date and size.
@@ -196,7 +205,9 @@ and leaves the cursor on the empty line.
 (what is on the clipboard now, read-only), **History** (split into *Text & files* and *Images*) and
 **Template**.
 
-<!-- screenshot: the Viewer with a template selected -->
+![The Viewer with a template selected](site/img/guide/viewer.png)
+
+![Searching in the Viewer highlights matches](site/img/guide/viewer-search.png)
 
 * Select an item to see it on the right: text is editable in place (changes apply when you leave the
   editor), images are shown, file lists open the file on double-click. *Binary* toggles a hex dump of
@@ -213,7 +224,7 @@ and leaves the cursor on the empty line.
 `⌘,` from the menu, or *Preferences…*. Every option with a **?** next to it has a popover explaining
 it — click the button.
 
-<!-- screenshot: Preferences, Hot keys tab -->
+![Preferences → Hot keys](site/img/guide/prefs-hotkeys.png)
 
 **General** — launch at login; save the history on quit and restore it on start; paste after
 choosing (off = only put on the clipboard); the delay before ⌘V is sent (raise it for apps that
@@ -236,6 +247,8 @@ thumbnails, title length and thumbnail height.
 
 **Security** — see the next section — and *Export / Import Backup*.
 
+![Preferences → Security](site/img/guide/prefs-security.png)
+
 **Advanced** — clipboard poll interval, *Open Data Folder*, and the Danger zone: *Delete Keepit and
 All Data…* removes the app with everything it stored (see [Uninstalling](#14-uninstalling)).
 
@@ -246,7 +259,13 @@ The key is derived from your password (PBKDF2, 200 000 rounds) and lives only in
 when Keepit locks — on demand (*Lock Keepit*, `⌘L` in the menu), when the screen locks or the Mac
 sleeps (optional), and on quit.
 
-<!-- screenshot: unlock dialog with the keyboard-layout indicator -->
+![The password offer on first launch](site/img/guide/password-offer.png)
+
+![Setting the password: layout indicator and strength meter](site/img/guide/set-password.png)
+
+![The 24-word recovery phrase (words hidden here)](site/img/guide/recovery-phrase.png)
+
+![Unlocking with Touch ID; the password stays as fallback](site/img/guide/touch-id.png)
 
 **Touch ID.** With *Unlock with Touch ID* on, the key is additionally stored in the Secure Enclave
 behind your fingerprint: Keepit asks for a touch instead of the password. The password always keeps

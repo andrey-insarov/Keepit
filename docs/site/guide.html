@@ -18,8 +18,7 @@ nav.top a{margin-right:16px}.toc{background:rgba(127,127,127,.08);border-radius:
 what you copy, and pastes any of it back with a hot key. This guide walks through everything from
 the first launch to automation. Keyboard shortcuts are given with the default settings; every one of
 them can be changed in <em>Preferences → Hot keys</em>.</p>
-<p class="slot">Screenshot: menu bar icon with the history menu open</p>
-
+<p><img alt="The history menu" src="img/guide/menu.png" /></p>
 <h2 id="contents">Contents</h2>
 <ol>
 <li><a href="#1-install">Install</a></li>
@@ -48,12 +47,16 @@ brew install --cask andrey-insarov/keepit/keepit
 <p><strong>DMG</strong>: download <code>Keepit-&lt;version&gt;.dmg</code> from the
 <a href="https://github.com/andrey-insarov/Keepit/releases/latest">latest release</a>, open it and drag Keepit
 into <em>Applications</em>. The app is signed and notarized by Apple and updates itself.</p>
+<p><img alt="The DMG: drag Keepit to Applications" src="img/guide/dmg.png" /></p>
+<p>The first time you open it macOS confirms that the app came from the Internet and was checked by
+Apple — click <em>Open</em>.</p>
+<p><img alt="macOS Gatekeeper confirmation" src="img/guide/gatekeeper.png" /></p>
 <p>Keepit needs macOS 13 Ventura or newer and runs natively on Apple silicon and Intel Macs.</p>
 <h2 id="2-first-launch">2. First launch</h2>
 <p>Keepit is a menu-bar app: there is no Dock icon and no window until you ask for one. After the first
 launch you will see the 📎 icon in the menu bar and two dialogs.</p>
-<p class="slot">Screenshot: Accessibility prompt</p>
-
+<p><img alt="Keepit asks for the Accessibility permission" src="img/guide/accessibility-prompt.png" /></p>
+<p><img alt="Keepit enabled under Privacy &amp; Security → Accessibility" src="img/guide/accessibility-settings.png" /></p>
 <p><strong>Accessibility permission.</strong> To paste for you, Keepit sends ⌘V to the app you were working in. macOS
 only allows that for apps listed under <em>System Settings → Privacy &amp; Security → Accessibility</em>. Turn
 Keepit on there. Without it everything still works, but after choosing an item you press ⌘V yourself.</p>
@@ -65,8 +68,7 @@ Keepit is fully usable without a password.</p>
 <h2 id="3-the-history-menu">3. The history menu</h2>
 <p>Press <strong>⌥C</strong> in any app, or click the 📎 icon. The menu opens at your text cursor when Keepit can
 find it, otherwise at the mouse pointer.</p>
-<p class="slot">Screenshot: history menu with numbered items, source icons and ⌃⌥ keys</p>
-
+<p><img alt="History menu: numbered items, source app icons, ⌃⌥ keys" src="img/guide/menu.png" /></p>
 <p>Each line is one thing you copied, newest first; the newest one is <strong>bold</strong> — it is what is on the
 clipboard right now. The icon on the left is the app you copied it from. A title that ends with <code>…</code>
 has more lines than the menu shows.</p>
@@ -80,8 +82,7 @@ has more lines than the menu shows.</p>
 <p><strong>Searching.</strong> Just start typing: the field at the top of the menu filters the list as you type —
 by title and by the full text, so you can find a line in the middle of a long clip. Return pastes the
 first match, Esc clears the field (press it again to close the menu).</p>
-<p class="slot">Screenshot: searching the menu, preview panel beside it</p>
-
+<p><img alt="Typing filters the menu; the preview panel shows the highlighted item" src="img/guide/search-preview.png" /></p>
 <p><strong>Preview.</strong> Hover over an item (or move to it with the keyboard) and a panel appears beside the
 menu with the full image, or the first lines of a long text, plus the source app, date and size.
 Short one-line texts have no preview — the menu line already shows them whole.</p>
@@ -246,8 +247,8 @@ and leaves the cursor on the empty line.</p>
 <p><em>Viewer…</em> in the menu (or right-click the 📎 icon) opens a window with three trees: <strong>Clipboard</strong>
 (what is on the clipboard now, read-only), <strong>History</strong> (split into <em>Text &amp; files</em> and <em>Images</em>) and
 <strong>Template</strong>.</p>
-<p class="slot">Screenshot: the Viewer with a template selected</p>
-
+<p><img alt="The Viewer with a template selected" src="img/guide/viewer.png" /></p>
+<p><img alt="Searching in the Viewer highlights matches" src="img/guide/viewer-search.png" /></p>
 <ul>
 <li>Select an item to see it on the right: text is editable in place (changes apply when you leave the
   editor), images are shown, file lists open the file on double-click. <em>Binary</em> toggles a hex dump of
@@ -262,8 +263,7 @@ and leaves the cursor on the empty line.</p>
 <h2 id="9-preferences">9. Preferences</h2>
 <p><code>⌘,</code> from the menu, or <em>Preferences…</em>. Every option with a <strong>?</strong> next to it has a popover explaining
 it — click the button.</p>
-<p class="slot">Screenshot: Preferences, Hot keys tab</p>
-
+<p><img alt="Preferences → Hot keys" src="img/guide/prefs-hotkeys.png" /></p>
 <p><strong>General</strong> — launch at login; save the history on quit and restore it on start; paste after
 choosing (off = only put on the clipboard); the delay before ⌘V is sent (raise it for apps that
 need a moment to come to the front); open the menu at the text cursor.</p>
@@ -280,6 +280,7 @@ and the list of ignored apps by bundle identifier. Known password managers are a
 <p><strong>Menu</strong> — the search field, numbering, the preview panel, tooltips, source-app icons, image
 thumbnails, title length and thumbnail height.</p>
 <p><strong>Security</strong> — see the next section — and <em>Export / Import Backup</em>.</p>
+<p><img alt="Preferences → Security" src="img/guide/prefs-security.png" /></p>
 <p><strong>Advanced</strong> — clipboard poll interval, <em>Open Data Folder</em>, and the Danger zone: <em>Delete Keepit and
 All Data…</em> removes the app with everything it stored (see <a href="#14-uninstalling">Uninstalling</a>).</p>
 <h2 id="10-password-touch-id-and-the-recovery-phrase">10. Password, Touch ID and the recovery phrase</h2>
@@ -287,8 +288,10 @@ All Data…</em> removes the app with everything it stored (see <a href="#14-uni
 The key is derived from your password (PBKDF2, 200 000 rounds) and lives only in memory; it is wiped
 when Keepit locks — on demand (<em>Lock Keepit</em>, <code>⌘L</code> in the menu), when the screen locks or the Mac
 sleeps (optional), and on quit.</p>
-<p class="slot">Screenshot: unlock dialog with the keyboard-layout indicator</p>
-
+<p><img alt="The password offer on first launch" src="img/guide/password-offer.png" /></p>
+<p><img alt="Setting the password: layout indicator and strength meter" src="img/guide/set-password.png" /></p>
+<p><img alt="The 24-word recovery phrase (words hidden here)" src="img/guide/recovery-phrase.png" /></p>
+<p><img alt="Unlocking with Touch ID; the password stays as fallback" src="img/guide/touch-id.png" /></p>
 <p><strong>Touch ID.</strong> With <em>Unlock with Touch ID</em> on, the key is additionally stored in the Secure Enclave
 behind your fingerprint: Keepit asks for a touch instead of the password. The password always keeps
 working as a fallback (the <em>Use Password</em> button). On a Mac with the lid closed and an external Magic

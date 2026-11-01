@@ -5,6 +5,7 @@ root = pathlib.Path(__file__).resolve().parent.parent
 md = (root / "docs/GUIDE.md").read_text(encoding="utf-8")
 body = markdown.markdown(md, extensions=["tables", "fenced_code", "toc"])
 # Screenshot slots: "<!-- screenshot: ... -->" → a dashed placeholder until an image replaces it.
+body = body.replace('src="site/img/', 'src="img/')
 body = re.sub(r"<!-- screenshot: (.*?) -->", r'<p class="slot">Screenshot: \1</p>', body)
 html = f"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>User guide — Keepit</title><link rel="icon" href="img/icon.png">
