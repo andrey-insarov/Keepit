@@ -43,7 +43,7 @@ him; Keepit reuses the behaviour and settings model under the MIT License (see `
 | Numbered menu items `&1 … &9 &0 &A …`        | Same: press `1-9`, `0`, `A-Z` while the menu is open       |
 | Bitmap thumbnails and tooltips in the menu   | Same (PNG thumbnails, text tooltips)                       |
 | Formats: TEXT, UNICODE, RTF, HTML, BITMAP, HDROP | plain text, RTF, HTML, PNG (TIFF converted), file URLs |
-| History max (30), overlap check, save/restore| Same, JSON in `~/Library/Application Support/Keepit/`        |
+| History max (30), overlap check, save/restore| Separate rings: 1000 text/file items + 30 images by default, JSON in `~/Library/Application Support/Keepit/` |
 | Window filter (ignore apps)                  | Built-in list of password managers (always ignored) + user ignore list + `org.nspasteboard.ConcealedType` |
 | Per-window paste key (`sendkey`)             | Per-bundle-id paste key in `settings.json` (`pasteKeys`)   |
 | Templates (hierarchical "Regist")            | Same: folders, any format (text/image/files), `-` separators, `&x` shortcuts, per-item hot key |

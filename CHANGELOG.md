@@ -2,6 +2,8 @@
 
 ## 2.7.0 — unreleased
 
+- Default text/file history raised from 100 to 1000 items for new installs (≈10–30 MB; the
+  image ring stays at 30). Existing settings are not changed.
 - 11 more interface languages: Brazilian Portuguese, Korean, Traditional Chinese, Turkish, Polish,
   Dutch, Hebrew, Czech, Lithuanian, Latvian and Estonian (21 in total). Terminology cross-checked
   against community-localized macOS apps (Maccy, Rectangle) and Apple's own wording; *Clear History*

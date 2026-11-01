@@ -35,7 +35,7 @@ struct PasteKey: Codable, Equatable {
 /// Persisted user options.
 struct Settings: Codable, Equatable {
     // [history]
-    var historyMax = 100           // text & file items kept
+    var historyMax = 1000          // text & file items kept (~10–30 MB; images have their own, smaller ring)
     var historyImageMax = 30       // image items kept (separate ring)
     var historySave = true         // history.save
     var overlapCheck = true        // history.overlap_check — dedupe identical entries
