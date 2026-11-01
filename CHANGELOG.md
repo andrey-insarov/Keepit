@@ -2,9 +2,10 @@
 
 ## 2.7.1 — unreleased
 
-- Touch ID is offered whenever the Mac has a sensor (also when no fingerprint is enrolled yet or
-  biometry is temporarily locked), on first run and when turning protection on in Preferences —
-  the Touch ID checkboxes there become active as soon as *Require password* is ticked.
+- Touch ID is always offered on first run and as soon as *Require password* is ticked in Preferences.
+  A closed MacBook lid or a sleeping Magic Keyboard makes macOS report Touch ID as unavailable for a
+  moment; Keepit now keeps the setting and stores the key at the next password unlock instead of
+  silently dropping the option.
 - Homebrew cask: current `depends_on macos:` syntax (no more deprecation warning).
 
 ## 2.7.0 — 2026-11-01

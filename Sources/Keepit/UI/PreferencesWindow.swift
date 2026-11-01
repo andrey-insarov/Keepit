@@ -251,13 +251,13 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         changePw.isEnabled = Vault.isEnabled
         lockScreen.state = s.lockWithScreen ? .on : .off
         touchID.state = s.biometricUnlock ? .on : .off
-        touchID.isEnabled = Vault.isEnabled && BiometricUnlock.hasSensor
+        touchID.isEnabled = Vault.isEnabled
         protect.target = self
         protect.action = #selector(protectToggled)
         touchIDChange.state = s.biometricPasswordChange ? .on : .off
         touchIDChange.isEnabled = touchID.isEnabled
         newPhrase.isEnabled = Vault.isEnabled
-        if !BiometricUnlock.isAvailable { touchID.title = L("Unlock with Touch ID (no Touch ID on this Mac)") }
+        if !BiometricUnlock.hasSensor { touchID.title = L("Unlock with Touch ID (no Touch ID on this Mac)") }
         historyHK.hotKey = s.historyHotKey
         templateHK.hotKey = s.templateHotKey
         ignoreApps.string = s.ignoreApps.joined(separator: "\n")
@@ -313,7 +313,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     /// Turning protection on in this window should let the user pick Touch ID in the same go.
     @objc private func protectToggled() {
         let turningOn = protect.state == .on && !Vault.isEnabled
-        touchID.isEnabled = (Vault.isEnabled || protect.state == .on) && BiometricUnlock.hasSensor
+        touchID.isEnabled = Vault.isEnabled || protect.state == .on
         touchIDChange.isEnabled = touchID.isEnabled
         if turningOn && touchID.isEnabled { touchID.state = .on; touchIDChange.state = .on }
     }

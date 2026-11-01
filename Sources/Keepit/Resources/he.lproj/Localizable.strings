@@ -246,3 +246,4 @@
 "%@ — plain text" = "%@ — טקסט רגיל";
 "%@ — add to Templates" = "%@ — הוסף לתבניות";
 "Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead." = "החזק ⇧ בעת בחירת פריט מההיסטוריה כדי להדביק אותו כטקסט רגיל (ללא עיצוב); החזק ⌥ כדי להוסיף אותו לתבניות במקום זאת.";
+"Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "אי אפשר להשתמש ב‑Touch ID כרגע (המכסה סגור, המקלדת בשינה או לא נרשמה טביעת אצבע). Keepit יפעיל אותו אוטומטית בפעם הבאה שתבטל את הנעילה בסיסמה.";

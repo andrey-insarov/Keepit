@@ -246,3 +246,4 @@
 "%@ — plain text" = "%@ — 纯文本";
 "%@ — add to Templates" = "%@ — 添加到模板";
 "Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead." = "选择历史记录项时按住 ⇧ 以纯文本粘贴（去除格式）；按住 ⌥ 则改为添加到模板。";
+"Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "Touch ID 目前不可用（合盖、键盘休眠或未录入指纹）。下次使用密码解锁时，Keepit 会自动启用它。";

@@ -246,3 +246,4 @@
 "%@ — plain text" = "%@ — простий текст";
 "%@ — add to Templates" = "%@ — до шаблонів";
 "Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead." = "Утримуйте ⇧ під час вибору елемента історії, щоб вставити його як простий текст (без форматування); утримуйте ⌥, щоб натомість додати його до шаблонів.";
+"Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "Touch ID зараз недоступний (закрита кришка, клавіатура спить або немає зареєстрованого відбитка). Keepit увімкне його автоматично під час наступного розблокування паролем.";

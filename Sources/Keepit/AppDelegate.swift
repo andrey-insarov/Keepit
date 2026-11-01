@@ -103,18 +103,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         a.messageText = L("Protect your clipboard history with a password?")
         a.informativeText = L("Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts. You will also get a 24-word recovery phrase in case you forget the password.")
         let touchID = NSButton(checkboxWithTitle: L("Also unlock with Touch ID (the password stays as fallback)"), target: nil, action: nil)
-        if BiometricUnlock.hasSensor {
-            touchID.state = .on
-            touchID.sizeToFit()
-            a.accessoryView = touchID
-        }
+        // Always offered: Touch ID on a closed MacBook or a sleeping Magic Keyboard reports "not available"
+        // for a moment, and the key is simply stored later, at the next password unlock.
+        touchID.state = BiometricUnlock.hasSensor ? .on : .off
+        touchID.sizeToFit()
+        a.accessoryView = touchID
         a.addButton(withTitle: L("Set Password…"))
         a.addButton(withTitle: L("Not Now"))
         NSApp.activate(ignoringOtherApps: true)
         if a.runModal() == .alertFirstButtonReturn {
             // Decide Touch ID before enabling: enableProtection() stores the key for it right away.
             var s = settings
-            s.biometricUnlock = BiometricUnlock.hasSensor && touchID.state == .on
+            s.biometricUnlock = touchID.state == .on
             s.biometricPasswordChange = s.biometricUnlock
             apply(settings: s)
             if enableProtection() {
@@ -242,6 +242,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 pw.zero()
                 if let key = key {
                     Storage.key = key
+                    if settings.biometricUnlock && !BiometricUnlock.isConfigured { syncBiometricKey(quiet: true) }
                     return true
                 }
                 // Slow down guessing: 1 s, 2 s, 4 s after each miss, then a 30 s lockout.
@@ -364,10 +365,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     /// Store / refresh / remove the Touch ID copy of the key according to settings.
-    func syncBiometricKey() {
+    /// Store (or remove) the vault key for Touch ID according to the setting. If biometry is not usable
+    /// at this moment (lid closed, keyboard asleep, nothing enrolled yet) the setting is kept and the key
+    /// is stored at the next password unlock; `quiet` suppresses the dialog for those retries.
+    func syncBiometricKey(quiet: Bool = false) {
         guard Vault.isEnabled, let key = Storage.key else { BiometricUnlock.remove(); return }
         if settings.biometricUnlock {
-            do { try BiometricUnlock.store(key) } catch {
+            do { try BiometricUnlock.store(key) } catch BiometricUnlock.Failure.notAvailable {
+                NSLog("Keepit: Touch ID not usable right now; will store the key at the next password unlock")
+                if !quiet {
+                    Vault.error(L("Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password."))
+                }
+            } catch {
                 Vault.error(LF("Touch ID could not be set up: %@", error.localizedDescription))
                 settings.biometricUnlock = false
                 Storage.save(settings, to: Storage.settingsURL, encrypt: false)

@@ -246,4 +246,5 @@ T = {
 '%@ — plain text': '%@ — vienkāršs teksts',
 '%@ — add to Templates': '%@ — uz veidnēm',
 'Hold ⇧ while choosing a history item to paste it as plain text (formatting stripped); hold ⌥ to add it to Templates instead.': 'Turiet ⇧, izvēloties vēstures vienumu, lai to ielīmētu kā vienkāršu tekstu (bez formatējuma); turiet ⌥, lai tā vietā to pievienotu veidnēm.',
+'Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password.': 'Touch ID pašlaik nav izmantojams (aizvērts vāks, tastatūra guļ vai nav reģistrēts pirksta nospiedums). Keepit to ieslēgs automātiski nākamajā atbloķēšanā ar paroli.',
 }
