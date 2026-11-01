@@ -812,7 +812,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         viewer?.refresh()
     }
 
-    // MARK: - Long-press context menu
+    // MARK: - Right-click action menu
 
     /// Action menu for a history entry (right click on its row).
     func actionMenu(for id: UUID) -> NSMenu? {
@@ -827,8 +827,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         return m
     }
     private static let actionMenuTitle = "keepit.actions"
-
-    }
 
     /// Context menu: put the item on the clipboard without pasting.
     @objc private func historyCopied(_ sender: NSMenuItem) {
