@@ -28,6 +28,15 @@ him; Keepit reuses the behaviour and settings model under the MIT License (see `
 
 ## Install
 
+Homebrew:
+
+```bash
+brew tap andrey-insarov/keepit https://github.com/andrey-insarov/Keepit
+brew install --cask andrey-insarov/keepit/keepit
+```
+
+Or the DMG:
+
 * **Download**: grab `Keepit-<version>.dmg` from the [latest release](https://github.com/andrey-insarov/Keepit/releases/latest),
   open it and drag Keepit to Applications. Signed and notarized; updates itself.
 * **Mac App Store**: coming soon.

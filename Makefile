@@ -56,7 +56,7 @@ ICNS = $(if $(shell command -v iconutil 2>/dev/null),.build/AppIcon.icns,Resourc
 # Notarization: NOTARY_PROFILE (xcrun notarytool store-credentials) or the APPSTORE_* env vars used by CI.
 NOTARY_PROFILE ?=
 
-.PHONY: build app run install clean dist dmg icon notarize appstore appcast
+.PHONY: build app run install clean dist dmg icon notarize appstore appcast cask
 
 # Sign the DMG with the Sparkle EdDSA key and write appcast.xml next to it.
 #   make appcast SPARKLE_PRIVATE_KEY_FILE=path   (or the key in the keychain from generate_keys)
@@ -74,6 +74,13 @@ appcast:
 	$(SPARKLE_BIN)/sign_update $(if $(SPARKLE_PRIVATE_KEY_FILE),--ed-key-file $(SPARKLE_PRIVATE_KEY_FILE),) -p $(DMG) > $(DMG).sig
 	shasum -a 256 $(DMG) $(APP)-$(VERSION).zip > SHA256SUMS
 	@echo "Wrote appcast.xml, $(DMG).sig and SHA256SUMS"
+
+# Rewrite version/sha256 in the Homebrew cask from the built DMG (CI runs this after each release).
+cask:
+	@test -f $(DMG) || (echo "no $(DMG)"; exit 1)
+	SHA=$$(shasum -a 256 $(DMG) | cut -d' ' -f1); \
+	sed -i '' -e 's/^  version ".*"/  version "$(VERSION)"/' -e "s/^  sha256 \".*\"/  sha256 \"$$SHA\"/" Casks/keepit.rb
+	@grep -E '^  (version|sha256)' Casks/keepit.rb
 
 DMG      = $(APP)-$(VERSION).dmg
 DMG_VOL  = Keepit

@@ -113,3 +113,15 @@ jobs:
             SHA256SUMS
             appcast.xml
           generate_release_notes: true
+
+      - name: Update Homebrew cask (version + sha256) on main
+        if: startsWith(github.ref, 'refs/tags/v') && env.HAS_SIGNING == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git checkout -B main origin/main
+          make cask VERSION=$(cat VERSION)
+          git add Casks/keepit.rb
+          git diff --cached --quiet || git commit -m "cask: Keepit $(cat VERSION)"
+          git push origin main

@@ -2,6 +2,8 @@
 
 ## 2.7.0 — unreleased
 
+- **Homebrew**: `brew tap andrey-insarov/keepit https://github.com/andrey-insarov/Keepit && brew install
+  --cask andrey-insarov/keepit/keepit`. The cask lives in `Casks/` and CI bumps it on every release.
 - **Paste as plain text**: hold ⇧ while choosing a history item (or add ⇧ to its shortcut) to paste
   without RTF/HTML formatting.
 - **Search in the history menu**: a search field at the top of the menu; typing filters the list in
