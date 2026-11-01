@@ -99,7 +99,6 @@ final class ViewerWindowController: NSWindowController,
     private let filesFormat = FilesFormatView(frame: .zero)
     private let hexFormat = HexFormatView(frame: .zero)
     private let infoFormat = InfoView(frame: .zero)
-    private var binaryButton: NSButton!
 
     private var nodes: [String: VNode] = [:]
     private let clipboardRoot: VNode
@@ -108,6 +107,7 @@ final class ViewerWindowController: NSWindowController,
     private var currentClipboard: ClipItem?
     private let searchField = NSSearchField()
     private let helpButton = NSButton(title: "", target: nil, action: nil)
+    private let insertButton = NSPopUpButton(frame: .zero, pullsDown: true)
     private var query = ""   // lower-cased, trimmed; empty = no filter
     private var editingNode: VNode?
     private var showBinary = false
@@ -161,8 +161,6 @@ final class ViewerWindowController: NSWindowController,
             b.imagePosition = .imageLeading
             return b
         }
-        binaryButton = btn(L("Binary"), #selector(toggleBinary), symbol: "number")
-        binaryButton.setButtonType(.pushOnPushOff)
         let bar = NSStackView(views: [
             searchField,
             btn(L("Send to Clipboard"), #selector(sendToClipboard), symbol: "doc.on.clipboard"),
@@ -172,15 +170,17 @@ final class ViewerWindowController: NSWindowController,
             btn(L("New Item"), #selector(newItem), symbol: "plus"),
             btn(L("New Folder"), #selector(newFolder), symbol: "folder.badge.plus"),
             btn(L("Delete"), #selector(deleteSelected), symbol: "trash"),
-            btn(L("Up"), #selector(moveUpAction), symbol: "arrow.up"),
-            btn(L("Down"), #selector(moveDownAction), symbol: "arrow.down"),
             Spacer(),
-            binaryButton,
+            insertButton,
             helpButton,
         ])
+        insertButton.bezelStyle = .rounded
+        insertButton.pullsDown = true
+        insertButton.menu = PlaceholderMenu.make(target: self, action: #selector(insertPlaceholder(_:)), title: L("Insert"))
+        insertButton.toolTip = L("Insert a placeholder at the cursor (text templates)")
         helpButton.bezelStyle = .helpButton
         helpButton.title = ""
-        helpButton.toolTip = L("Placeholders & Automation")
+        helpButton.toolTip = L("User guide (keep.it.com)")
         helpButton.target = self
         helpButton.action = #selector(showHelp)
         searchField.placeholderString = L("Search")
@@ -353,9 +353,20 @@ final class ViewerWindowController: NSWindowController,
         if !query.isEmpty { outline.expandItem(nil, expandChildren: true) }
     }
 
-    /// The (?) toolbar button: the app has no menu bar (accessory app), so the reference lives here.
+    /// Insert ▾: put the chosen `{…}` token into the editor at the cursor (templates only — the text pane of a
+    /// history item is editable too, but placeholders only expand when a template is pasted).
+    @objc private func insertPlaceholder(_ sender: NSMenuItem) {
+        guard let token = sender.representedObject as? String else { return }
+        guard let n = selectedNode, n.isInTemplate, let t = n.itemNode?.templateNode, !t.isFolder,
+              textFormat.textView.isEditable else { NSSound.beep(); return }
+        let tv = textFormat.textView
+        window?.makeFirstResponder(tv)
+        tv.insertText(token, replacementRange: tv.selectedRange())
+    }
+
+    /// The (?) toolbar button opens the online user guide (the app has no menu bar to put Help into).
     @objc private func showHelp() {
-        PlaceholderReferenceWindow.show()
+        NSWorkspace.shared.open(AppInfo.guideURL)
     }
 
     /// Edit → Find (⌘F) while the Viewer is key.
@@ -534,7 +545,7 @@ final class ViewerWindowController: NSWindowController,
     }
 
     @objc private func toggleBinary() {
-        showBinary = binaryButton.state == .on
+        showBinary.toggle()
         showSelection()
     }
 
@@ -854,6 +865,10 @@ final class ViewerWindowController: NSWindowController,
         }
         if hasItem {
             add(L("Save Format to File…"), #selector(saveToFile))
+            let hex = NSMenuItem(title: L("Show as Hex Dump"), action: #selector(toggleBinary), keyEquivalent: "")
+            hex.target = self
+            hex.state = showBinary ? .on : .off
+            menu.addItem(hex)
         }
         if let n = n, !n.isRoot {
             menu.addItem(.separator())

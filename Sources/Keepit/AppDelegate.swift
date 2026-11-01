@@ -552,13 +552,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         windowItem.submenu = window
         main.addItem(windowItem)
 
-        let helpItem = NSMenuItem()
-        let help = NSMenu(title: L("Help"))
-        help.addItem(withTitle: L("Placeholders & Automation…"), action: #selector(showPlaceholderReference), keyEquivalent: "")
-        helpItem.submenu = help
-        main.addItem(helpItem)
-        NSApp.helpMenu = help
-
         NSApp.mainMenu = main
     }
 
@@ -944,9 +937,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         nudgeAccessibilityIfNeeded()
     }
 
-    @objc func showPlaceholderReference() {
-        PlaceholderReferenceWindow.show()
-    }
 
     /// Paste a template; text templates with `{placeholders}` are expanded first (asking for `{input:…}` values).
     func pasteTemplate(_ clip: ClipItem, named name: String, into target: NSRunningApplication?) {
@@ -960,17 +950,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             return items[n - 1].plainText
         }
         let prompts = Snippets.prompts(in: text)
+        var extra: TimeInterval = 0
         if !prompts.isEmpty {
             guard let answers = SnippetPromptDialog.ask(prompts, templateName: name) else { return }
             ctx.answers = answers
+            extra = 0.35      // the modal dialog took the focus; the target app needs a moment to get it back
         }
         let exp = Snippets.expand(text, context: ctx)
         let out = ClipItem.text(exp.text)
         let sendKey = settings.pasteAfterSelect
-        Paster.paste(out, into: target, monitor: monitor, settings: settings, sendKey: sendKey)
+        Paster.paste(out, into: target, monitor: monitor, settings: settings, sendKey: sendKey, extraDelay: extra)
         if sendKey, Paster.isTrusted(), let back = exp.charsAfterCursor, back > 0 {
             // Move the caret to the {cursor} mark once the paste has landed.
-            DispatchQueue.main.asyncAfter(deadline: .now() + settings.pasteDelay + 0.25) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + settings.pasteDelay + extra + 0.25) {
                 Paster.sendKeyStroke(PasteKey(keyCode: UInt16(kVK_LeftArrow), command: false), times: back)
             }
         }

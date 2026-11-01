@@ -170,9 +170,9 @@ that pastes it from anywhere.</p>
 editor, or <em>Rename</em> / <em>Clear Name</em> in the context menu.</p>
 <h2 id="7-placeholders-templates-as-a-text-expander">7. Placeholders — templates as a text expander</h2>
 <p>Text templates can contain <code>{…}</code> placeholders that are filled in when the template is pasted. Put
-them anywhere in the text; everything without braces is pasted unchanged. The <strong>?</strong> button at the
-right end of the Viewer's toolbar opens a reference of all of them.</p>
-<p class="slot">Screenshot: the Placeholders & Automation window (? button in the Viewer)</p>
+them anywhere in the text; everything without braces is pasted unchanged. In the Viewer, <em>Insert ▾</em>
+in the toolbar lists them all and puts the chosen one at the cursor.</p>
+<p class="slot">Screenshot: the Insert ▾ menu in the Viewer</p>
 
 <table>
 <thead>
@@ -241,8 +241,7 @@ thanks for your message of {date-1d}. I'll get back to you by {date+3d:EEEE}.
 </code></pre>
 <p>Pasting it opens a small dialog asking for <em>Name</em>, inserts the dates, puts your full name at the end
 and leaves the cursor on the empty line.</p>
-<p class="slot">Screenshot: the input dialog of a template with {input:}</p>
-
+<p><img alt="Pasting a template with {input:Name} asks for the value first" src="img/guide/input-dialog.png" /></p>
 <h2 id="8-the-viewer">8. The Viewer</h2>
 <p><em>Viewer…</em> in the menu (or right-click the 📎 icon) opens a window with three trees: <strong>Clipboard</strong>
 (what is on the clipboard now, read-only), <strong>History</strong> (split into <em>Text &amp; files</em> and <em>Images</em>) and
@@ -251,14 +250,15 @@ and leaves the cursor on the empty line.</p>
 <p><img alt="Searching in the Viewer highlights matches" src="img/guide/viewer-search.png" /></p>
 <ul>
 <li>Select an item to see it on the right: text is editable in place (changes apply when you leave the
-  editor), images are shown, file lists open the file on double-click. <em>Binary</em> toggles a hex dump of
-  the raw data.</li>
+  editor), images are shown, file lists open the file on double-click. <em>Show as Hex Dump</em> in the
+  context menu shows the raw bytes.</li>
 <li>The status bar shows the date, source app, format and size.</li>
 <li><strong>Search</strong> (<code>⌘F</code>): the field in the toolbar filters history and templates by name and content and
   highlights the match in yellow.</li>
 <li><em>Send to Clipboard</em> puts the item on the clipboard; <em>Paste</em> also pastes it into the app you were in.</li>
 <li>Drag history items into the Template tree to keep them; drag templates into History to copy them
-  back; reorder with drag or <em>Up</em>/<em>Down</em>. ⌫ deletes the selected item.</li>
+  back; reorder with drag or <em>Up</em>/<em>Down</em> in the context menu. ⌫ deletes the selected item.</li>
+<li>The <strong>?</strong> button opens this guide.</li>
 </ul>
 <h2 id="9-preferences">9. Preferences</h2>
 <p><code>⌘,</code> from the menu, or <em>Preferences…</em>. Every option with a <strong>?</strong> next to it has a popover explaining
@@ -310,8 +310,7 @@ preferences, encrypted with a password you choose for the file. <em>Import Backu
 reads it back — <em>Merge</em> adds to what is there, <em>Replace</em> starts from the backup. The same file moves
 data between the direct download and the App Store edition.</p>
 <h2 id="12-automation-the-keepit-url-scheme">12. Automation: the keepit:// URL scheme</h2>
-<p>Shortcuts, Raycast, Alfred, Keyboard Maestro or a shell <code>open</code> can drive Keepit through URLs
-(the <strong>?</strong> button in the Viewer lists them in the app):</p>
+<p>Shortcuts, Raycast, Alfred, Keyboard Maestro or a shell <code>open</code> can drive Keepit through URLs:</p>
 <table>
 <thead>
 <tr>

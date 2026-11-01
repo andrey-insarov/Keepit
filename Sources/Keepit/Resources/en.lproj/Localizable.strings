@@ -22,7 +22,6 @@
 "About Keepit" = "About Keepit";
 "Add Clipboard to Templates" = "Add Clipboard to Templates";
 "Add to Template" = "Add to Template";
-"Binary" = "Binary";
 "Cancel" = "Cancel";
 "Change Password Now" = "Change Password Now";
 "Change Password…" = "Change Password…";
@@ -303,33 +302,10 @@
 "Single line" = "Single line";
 "Plain text (no formatting)" = "Plain text (no formatting)";
 
-"A new UUID; a random number in the range" = "A new UUID; a random number in the range";
-"Asks for a value before pasting; the same name is asked once" = "Asks for a value before pasting; the same name is asked once";
-"Asks to pick one of the options" = "Asks to pick one of the options";
 "Choice" = "Choice";
-"Current clipboard (history item #1) or item N" = "Current clipboard (history item #1) or item N";
-"Custom format (Unicode date patterns: yyyy MM dd EEEE HH mm …)" = "Custom format (Unicode date patterns: yyyy MM dd EEEE HH mm …)";
-"Day name, month name, year, ISO 8601 timestamp, Unix time" = "Day name, month name, year, ISO 8601 timestamp, Unix time";
-"Example:" = "Example:";
 "Fill in the template" = "Fill in the template";
-"Filters: upper, lower, title, trim, oneline, url — can be chained" = "Filters: upper, lower, title, trim, oneline, url — can be chained";
-"Full name, account name, computer name" = "Full name, account name, computer name";
-"Literal braces" = "Literal braces";
-"Put these tokens into the text of a template; they are replaced when the template is pasted. Plain text without braces is pasted unchanged." = "Put these tokens into the text of a template; they are replaced when the template is pasted. Plain text without braces is pasted unchanged.";
-"Shifted date: +/- number and d (days), w (weeks), m (months), y (years), h (hours)" = "Shifted date: +/- number and d (days), w (weeks), m (months), y (years), h (hours)";
-"Today's date / current time, in the system format" = "Today's date / current time, in the system format";
 "Values for the placeholders in this template:" = "Values for the placeholders in this template:";
-"Where the text cursor ends up after pasting" = "Where the text cursor ends up after pasting";
 
-"Placeholders & Automation" = "Placeholders & Automation";
-"Placeholders & Automation…" = "Placeholders & Automation…";
-"Automation — keepit:// URLs (Shortcuts “Open URL”, Raycast, Alfred, the open command)" = "Automation — keepit:// URLs (Shortcuts “Open URL”, Raycast, Alfred, the open command)";
-"Paste history item N into the front app" = "Paste history item N into the front app";
-"Put item N on the clipboard without pasting" = "Put item N on the clipboard without pasting";
-"Paste (or copy) a template by name or folder path" = "Paste (or copy) a template by name or folder path";
-"Add text to the history or as a new template" = "Add text to the history or as a new template";
-"Open the menus and windows" = "Open the menus and windows";
-"Pause recording for 10 minutes / resume" = "Pause recording for 10 minutes / resume";
 
 "Add to Templates" = "Add to Templates";
 "Copy only" = "Copy only";
@@ -360,3 +336,38 @@
 "Find…" = "Find…";
 
 "Template “%@”" = "Template “%@”";
+
+"Insert" = "Insert";
+"Insert a placeholder at the cursor (text templates)" = "Insert a placeholder at the cursor (text templates)";
+"User guide (keep.it.com)" = "User guide (keep.it.com)";
+"Show as Hex Dump" = "Show as Hex Dump";
+"Date & time" = "Date & time";
+"Today's date" = "Today's date";
+"Current time" = "Current time";
+"Date and time" = "Date and time";
+"Custom format" = "Custom format";
+"Shifted date (d/w/m/y/h)" = "Shifted date (d/w/m/y/h)";
+"Day name" = "Day name";
+"Month name" = "Month name";
+"Year" = "Year";
+"ISO 8601 timestamp" = "ISO 8601 timestamp";
+"Unix time" = "Unix time";
+"Clipboard" = "Clipboard";
+"Current clipboard" = "Current clipboard";
+"History item N" = "History item N";
+"Clipboard, UPPERCASE" = "Clipboard, UPPERCASE";
+"Clipboard, lowercase" = "Clipboard, lowercase";
+"Clipboard, Title Case" = "Clipboard, Title Case";
+"Clipboard, trimmed" = "Clipboard, trimmed";
+"Clipboard, single line" = "Clipboard, single line";
+"Clipboard, URL-encoded" = "Clipboard, URL-encoded";
+"Ask when pasting" = "Ask when pasting";
+"Text field" = "Text field";
+"Text field with a default" = "Text field with a default";
+"Pick one of the options" = "Pick one of the options";
+"Caret position after pasting" = "Caret position after pasting";
+"Full name" = "Full name";
+"Account name" = "Account name";
+"Computer name" = "Computer name";
+"New UUID" = "New UUID";
+"Random number" = "Random number";

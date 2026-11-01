@@ -36,7 +36,8 @@ enum Paster {
                       monitor: ClipboardMonitor,
                       settings: Settings,
                       sendKey: Bool,
-                      plainText: Bool = false) {
+                      plainText: Bool = false,
+                      extraDelay: TimeInterval = 0) {
         let payload = plainText ? (item.plainTextOnly() ?? item) : item
         monitor.performIgnoringChange {
             payload.write(to: NSPasteboard.general)
@@ -55,7 +56,7 @@ enum Paster {
         }
 
         let key = settings.pasteKey(for: target?.bundleIdentifier)
-        DispatchQueue.main.asyncAfter(deadline: .now() + settings.pasteDelay) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + settings.pasteDelay + extraDelay) {
             waitForModifiersReleased {
                 sendKeyStroke(key)
             }

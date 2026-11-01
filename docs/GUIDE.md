@@ -168,10 +168,10 @@ editor, or *Rename* / *Clear Name* in the context menu.
 ## 7. Placeholders — templates as a text expander
 
 Text templates can contain `{…}` placeholders that are filled in when the template is pasted. Put
-them anywhere in the text; everything without braces is pasted unchanged. The **?** button at the
-right end of the Viewer's toolbar opens a reference of all of them.
+them anywhere in the text; everything without braces is pasted unchanged. In the Viewer, *Insert ▾*
+in the toolbar lists them all and puts the chosen one at the cursor.
 
-<!-- screenshot: the Placeholders & Automation window (? button in the Viewer) -->
+<!-- screenshot: the Insert ▾ menu in the Viewer -->
 
 | Placeholder | Result |
 |-------------|--------|
@@ -201,7 +201,7 @@ thanks for your message of {date-1d}. I'll get back to you by {date+3d:EEEE}.
 Pasting it opens a small dialog asking for *Name*, inserts the dates, puts your full name at the end
 and leaves the cursor on the empty line.
 
-<!-- screenshot: the input dialog of a template with {input:} -->
+![Pasting a template with {input:Name} asks for the value first](site/img/guide/input-dialog.png)
 
 ## 8. The Viewer
 
@@ -214,14 +214,15 @@ and leaves the cursor on the empty line.
 ![Searching in the Viewer highlights matches](site/img/guide/viewer-search.png)
 
 * Select an item to see it on the right: text is editable in place (changes apply when you leave the
-  editor), images are shown, file lists open the file on double-click. *Binary* toggles a hex dump of
-  the raw data.
+  editor), images are shown, file lists open the file on double-click. *Show as Hex Dump* in the
+  context menu shows the raw bytes.
 * The status bar shows the date, source app, format and size.
 * **Search** (`⌘F`): the field in the toolbar filters history and templates by name and content and
   highlights the match in yellow.
 * *Send to Clipboard* puts the item on the clipboard; *Paste* also pastes it into the app you were in.
 * Drag history items into the Template tree to keep them; drag templates into History to copy them
-  back; reorder with drag or *Up*/*Down*. ⌫ deletes the selected item.
+  back; reorder with drag or *Up*/*Down* in the context menu. ⌫ deletes the selected item.
+* The **?** button opens this guide.
 
 ## 9. Preferences
 
@@ -295,8 +296,7 @@ data between the direct download and the App Store edition.
 
 ## 12. Automation: the keepit:// URL scheme
 
-Shortcuts, Raycast, Alfred, Keyboard Maestro or a shell `open` can drive Keepit through URLs
-(the **?** button in the Viewer lists them in the app):
+Shortcuts, Raycast, Alfred, Keyboard Maestro or a shell `open` can drive Keepit through URLs:
 
 | URL | Effect |
 |-----|--------|
