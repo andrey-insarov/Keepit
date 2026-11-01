@@ -825,6 +825,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         mi.action = nil
         mi.submenu = ctx
         LongPress.nudgePointer()
+        // The release of the long press makes AppKit close the submenu again; reopen it with another nudge.
+        LongPress.shared.onRelease = {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.08) { LongPress.nudgePointer() }
+        }
     }
 
     /// Context menu: put the item on the clipboard without pasting.
