@@ -9,7 +9,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private(set) var templates: TemplateStore!
     private(set) var monitor: ClipboardMonitor!
     let hotKeys = HotKeyManager()
-    private lazy var menuBuilder = MenuBuilder(settings: settings)
+    private lazy var menuBuilder: MenuBuilder = {
+        let b = MenuBuilder(settings: settings)
+        b.longPressMenu = { [weak self] id in self?.actionMenu(for: id) }
+        return b
+    }()
 
     private var statusItem: NSStatusItem!
     private lazy var updater = Updater()
@@ -619,6 +623,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     // NSMenuDelegate
     func menu(_ menu: NSMenu, willHighlight item: NSMenuItem?) {
+        // Custom row views draw their own highlight: repaint the old and the new one.
+        menu.highlightedItem?.view?.needsDisplay = true
+        item?.view?.needsDisplay = true
         guard settings.showPreview, !isLocked else { return }
         guard let mi = item, mi.tag == MenuBuilder.historyTag, let id = mi.representedObject as? UUID,
               let clip = history.item(id: id), !clip.fitsInTitle(maxLength: settings.titleLength) else {
@@ -632,13 +639,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     func menuWillOpen(_ menu: NSMenu) {
         if let s = historySearchItem, menu.items.first === s { s.focus() }
-        if menu.items.contains(where: { $0.tag == MenuBuilder.historyTag }) { LongPress.shared.watch(menu) { [weak self] item in
-            self?.showContextMenu(for: item, in: menu)
-        } }
     }
 
     func menuDidClose(_ menu: NSMenu) {
-        LongPress.shared.stop(menu)
         PreviewPanel.shared.hide()
         if statusItem.menu === menu { statusItem.menu = nil }
         let wasPopup = popupActive
@@ -810,25 +813,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     // MARK: - Long-press context menu
 
-    /// Long press on a history item. AppKit treats the release after a long hold as a click on the item,
-    /// which would paste it or (with a submenu attached) close everything. So: while the button is still
-    /// down the item is disabled (a release over a disabled item does nothing and the menu stays open);
-    /// as soon as it is released the item is re-enabled with the action submenu attached (▸ appears), which
-    /// opens on the next pointer movement or with the → key.
-    private func showContextMenu(for mi: NSMenuItem, in menu: NSMenu) {
-        guard mi.submenu == nil, let id = mi.representedObject as? UUID, let item = history.item(id: id) else { return }
+    /// Action menu for a history entry (long press on its row).
+    func actionMenu(for id: UUID) -> NSMenu? {
+        guard let item = history.item(id: id) else { return nil }
         PreviewPanel.shared.hide()
-        let ctx = menuBuilder.contextMenu(for: item, target: self, actions: .init(
+        return menuBuilder.contextMenu(for: item, target: self, actions: .init(
             paste: #selector(historyChosen(_:)), pastePlain: #selector(historyChosenPlain(_:)),
             copyOnly: #selector(historyCopied(_:)), transform: #selector(historyTransformed(_:)),
             pin: #selector(historyPinned(_:)), reveal: #selector(historyRevealed(_:)), delete: #selector(historyDeleted(_:))))
-        mi.action = nil
-        mi.isEnabled = false
-        LongPress.shared.onRelease = { [weak mi] in
-            guard let mi else { return }
-            mi.isEnabled = true
-            mi.submenu = ctx
-        }
     }
 
     /// Context menu: put the item on the clipboard without pasting.

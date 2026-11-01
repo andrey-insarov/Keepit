@@ -91,70 +91,75 @@ final class MenuBuilder {
         return m
     }
 
+    /// Builds the long-press action menu for a history entry (set by the app delegate).
+    var longPressMenu: ((UUID) -> NSMenu?)?
+
     func historyItems(_ items: [ClipItem], target: AnyObject, action: Selector, plainAction: Selector? = nil,
                       pinAction: Selector? = nil, deleteAction: Selector? = nil, commandAccelerators: Bool = false) -> [NSMenuItem] {
         var out: [NSMenuItem] = []
+        var views: [HistoryItemView] = []
         let shown = items.prefix(settings.menuMaxItems)
         let accels = commandAccelerators ? Array(Self.accelerators.prefix(10)) : Self.accelerators
         let baseMask: NSEvent.ModifierFlags = commandAccelerators ? [.command] : []
-        for (i, item) in shown.enumerated() {
-            let title = item.title(maxLength: settings.titleLength)
-            let mi = NSMenuItem(title: title, action: action, keyEquivalent: "")
+        let cmd = commandAccelerators ? "⌘" : ""
+
+        /// One menu item + its custom row view.
+        func make(_ item: ClipItem, title: String, action: Selector?, key: String, mask: NSEvent.ModifierFlags,
+                  prefix: String, keyLabel: String, image: NSImage?, imageSize: NSSize, alternate: Bool) -> NSMenuItem {
+            let mi = NSMenuItem(title: (prefix.isEmpty ? "" : prefix + "  ") + title, action: action, keyEquivalent: key)
+            mi.keyEquivalentModifierMask = mask
             mi.target = target
             mi.representedObject = item.id
             mi.tag = Self.historyTag
+            mi.isAlternate = alternate
+            let v = HistoryItemView()
+            v.prefix = prefix
+            v.title = title
+            v.keyLabel = keyLabel
+            v.image = image
+            v.imageSize = imageSize
+            v.onLongPress = { [weak self] _ in self?.longPressMenu?(item.id) }
+            if settings.showTooltips, !settings.showPreview, let tip = item.tooltip { v.toolTip = tip }
+            mi.view = v
+            views.append(v)
+            return mi
+        }
 
-            var prefix = ""
+        for (i, item) in shown.enumerated() {
+            let title = item.title(maxLength: settings.titleLength)
+            var key = "", prefix = "", keyLabel = ""
             if settings.numberItems, i < accels.count {
                 let ch = accels[i]
-                mi.keyEquivalent = String(ch).lowercased()
-                mi.keyEquivalentModifierMask = baseMask
-                // Visible prefix "1  text" (the key equivalent column shows it too).
-                prefix = "\(ch)  "
-                mi.title = prefix + title
+                key = String(ch).lowercased()
+                prefix = String(ch)
+                keyLabel = cmd + String(ch)
             }
-            var alternates: [NSMenuItem] = []
+            var image: NSImage?
+            var imageSize = NSSize(width: 16, height: 16)
+            if settings.showThumbnails, item.kind == .image, let t = thumbnail(for: item) {
+                image = t
+                imageSize = t.size
+            } else if settings.showSourceIcons, let icon = appIcon(for: item.sourceApp) {
+                image = icon
+            } else if item.kind == .files {
+                image = NSImage(systemSymbolName: "doc.on.doc", accessibilityDescription: nil)
+            }
+            out.append(make(item, title: title, action: action, key: key, mask: baseMask, prefix: prefix,
+                            keyLabel: keyLabel, image: image, imageSize: imageSize, alternate: false))
             if let plain = plainAction, item.plainText != nil, item.kind == .text {
-                let alt = NSMenuItem(title: prefix + LF("%@ — plain text", title), action: plain, keyEquivalent: mi.keyEquivalent)
-                alt.target = target
-                alt.representedObject = item.id
-                alt.tag = Self.historyTag
-                alt.isAlternate = true
-                alt.keyEquivalentModifierMask = baseMask.union(.shift)
-                alternates.append(alt)
+                out.append(make(item, title: LF("%@ — plain text", title), action: plain, key: key, mask: baseMask.union(.shift),
+                                prefix: prefix, keyLabel: key.isEmpty ? "" : "⇧" + keyLabel, image: image, imageSize: imageSize, alternate: true))
             }
             if let pin = pinAction {
-                let alt = NSMenuItem(title: prefix + LF("%@ — add to Templates", title), action: pin, keyEquivalent: mi.keyEquivalent)
-                alt.target = target
-                alt.representedObject = item.id
-                alt.tag = Self.historyTag
-                alt.isAlternate = true
-                alt.keyEquivalentModifierMask = baseMask.union(.option)
-                alt.image = NSImage(systemSymbolName: "text.badge.star", accessibilityDescription: nil)
-                alternates.append(alt)
+                out.append(make(item, title: LF("%@ — add to Templates", title), action: pin, key: key, mask: baseMask.union(.option),
+                                prefix: prefix, keyLabel: key.isEmpty ? "" : "⌥" + keyLabel,
+                                image: NSImage(systemSymbolName: "text.badge.star", accessibilityDescription: nil), imageSize: NSSize(width: 16, height: 16), alternate: true))
             }
             if let del = deleteAction {
-                let alt = NSMenuItem(title: prefix + LF("%@ — delete", title), action: del, keyEquivalent: mi.keyEquivalent)
-                alt.target = target
-                alt.representedObject = item.id
-                alt.tag = Self.historyTag
-                alt.isAlternate = true
-                alt.keyEquivalentModifierMask = baseMask.union(.control)
-                alt.image = NSImage(systemSymbolName: "trash", accessibilityDescription: nil)
-                alternates.append(alt)
+                out.append(make(item, title: LF("%@ — delete", title), action: del, key: key, mask: baseMask.union(.control),
+                                prefix: prefix, keyLabel: key.isEmpty ? "" : "⌃" + keyLabel,
+                                image: NSImage(systemSymbolName: "trash", accessibilityDescription: nil), imageSize: NSSize(width: 16, height: 16), alternate: true))
             }
-            if settings.showThumbnails, item.kind == .image {
-                mi.image = thumbnail(for: item)
-            } else if settings.showSourceIcons, let icon = appIcon(for: item.sourceApp) {
-                mi.image = icon
-            } else if item.kind == .files {
-                mi.image = NSImage(systemSymbolName: "doc.on.doc", accessibilityDescription: nil)
-            }
-            if settings.showTooltips, !settings.showPreview, let tip = item.tooltip {
-                mi.toolTip = tip    // the preview panel replaces tooltips when it is on
-            }
-            out.append(mi)
-            out.append(contentsOf: alternates)   // alternates must directly follow their item
         }
         if items.count > shown.count {
             let more = NSMenuItem(title: LF("… %d more in the Viewer", items.count - shown.count), action: nil, keyEquivalent: "")
@@ -162,6 +167,9 @@ final class MenuBuilder {
             more.tag = Self.historyTag
             out.append(more)
         }
+        // All rows share the widest width (the menu is as wide as its widest item).
+        let width = min(max(views.map { $0.preferredWidth() }.max() ?? 200, 200), 640)
+        views.forEach { $0.sizeToFit(width: width) }
         return out
     }
 
