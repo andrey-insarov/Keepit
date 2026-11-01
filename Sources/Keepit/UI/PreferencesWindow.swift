@@ -319,7 +319,10 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         save.keyEquivalent = "\r"
         let cancel = NSButton(title: L("Cancel"), target: self, action: #selector(cancelTapped))
         cancel.keyEquivalent = "\u{1b}"
-        let buttons = NSStackView(views: [Spacer(), cancel, save])
+        let guide = NSButton(title: "", target: self, action: #selector(openGuide))
+        guide.bezelStyle = .helpButton
+        guide.toolTip = L("User guide (keep.it.com)")
+        let buttons = NSStackView(views: [guide, Spacer(), cancel, save])
         buttons.orientation = .horizontal
         buttons.distribution = .fill
         buttons.translatesAutoresizingMaskIntoConstraints = false
@@ -526,6 +529,8 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     @objc private func uninstallTapped() {
         app.uninstallRequested()
     }
+
+    @objc private func openGuide() { NSWorkspace.shared.open(AppInfo.guideURL) }
 
     @objc private func cancelTapped() {
         window?.close()
