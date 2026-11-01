@@ -823,12 +823,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             copyOnly: #selector(historyCopied(_:)), transform: #selector(historyTransformed(_:)),
             pin: #selector(historyPinned(_:)), reveal: #selector(historyRevealed(_:)), delete: #selector(historyDeleted(_:))))
         ctx.delegate = self
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
-            guard let self else { return }
+        let anchor = NSEvent.mouseLocation
+        // Wait for the button to be released; popping up while it is held would let the release dismiss the menu.
+        func openWhenReleased(_ tries: Int) {
+            if NSEvent.pressedMouseButtons & 1 != 0, tries > 0 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.03) { openWhenReleased(tries - 1) }
+                return
+            }
             self.menuSelectionMade = false
             self.popupActive = wasPopup
-            ctx.popUp(positioning: ctx.items.first, at: NSEvent.mouseLocation, in: nil)
+            ctx.popUp(positioning: ctx.items.first, at: anchor, in: nil)
         }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { openWhenReleased(200) }
     }
 
     /// Context menu: put the item on the clipboard without pasting.
