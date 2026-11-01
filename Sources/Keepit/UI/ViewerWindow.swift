@@ -169,7 +169,6 @@ final class ViewerWindowController: NSWindowController,
             btn(L("New Item"), #selector(newItem), symbol: "plus"),
             btn(L("New Folder"), #selector(newFolder), symbol: "folder.badge.plus"),
             btn(L("Delete"), #selector(deleteSelected), symbol: "trash"),
-            Spacer(),
             insertButton,
             helpButton,
         ])
