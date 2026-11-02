@@ -109,6 +109,14 @@ JS = """
 KEY_RE = re.compile(r"^[⌃⌥⌘⇧]{1,3}(?:[A-Z0-9⌫]|[1-9]|0)$|^[⌃⌥⌘⇧]$|^⌥[A-Z]$")
 
 
+def file_hash(p) -> str:
+    import hashlib
+    try:
+        return hashlib.sha1(p.read_bytes()).hexdigest()[:8]
+    except OSError:
+        return "0"
+
+
 def figure(src: str, alt: str) -> str:
     path = src.replace("site/", "", 1)                # docs/*.md links are relative to docs/
     try:
@@ -116,9 +124,10 @@ def figure(src: str, alt: str) -> str:
     except OSError:
         w, h = 1200, 800
     css_w, css_h = w // 2, h // 2
+    url = path + "?v=" + file_hash(site / path)      # content hash: a changed picture gets a new URL
     return (f'<figure class="shot" style="max-width:{css_w}px">'
-            f'<a href="{path}" class="zoom" title="Open full size">'
-            f'<img src="{path}" alt="{alt}" width="{css_w}" height="{css_h}" loading="lazy"></a>'
+            f'<a href="{url}" class="zoom" title="Open full size">'
+            f'<img src="{url}" alt="{alt}" width="{css_w}" height="{css_h}" loading="lazy"></a>'
             f'<figcaption>{alt}</figcaption></figure>')
 
 
