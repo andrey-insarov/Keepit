@@ -176,7 +176,7 @@ def modified(src_name: str) -> str:
         return DATE
 
 
-TURNSTILE_SITE_KEY = "1x00000000000000000000AA"   # public site key; the test key passes always — replace with the real one
+TURNSTILE_SITE_KEY = "0x4AAAAAAFxKO-1Iq_maRhEF"   # public Turnstile site key for keep.it.com
 
 
 def render(src_name: str, out_name: str, title: str, description: str, with_toc: bool, kind: str, crumb: str) -> None:
