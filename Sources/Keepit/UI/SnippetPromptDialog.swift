@@ -42,7 +42,7 @@ enum SnippetPromptDialog {
         var answers: [String: String] = [:]
         for (p, c) in zip(prompts, controls) {
             if let pop = c as? NSPopUpButton { answers[p.name] = pop.titleOfSelectedItem ?? p.defaultValue }
-            else { answers[p.name] = c.stringValue }
+            else { answers[p.name] = String(c.stringValue.prefix(Limits.promptInputMaxChars)) }
         }
         return answers
     }

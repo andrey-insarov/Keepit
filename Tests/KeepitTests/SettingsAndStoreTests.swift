@@ -1,4 +1,5 @@
 import XCTest
+import AppKit
 @testable import Keepit
 import Carbon.HIToolbox
 
@@ -250,6 +251,28 @@ final class PasteQueueTests: XCTestCase {
         q.start(); q.record(ClipItem.text("a"))
         wait(for: [done], timeout: 2)
         XCTAssertFalse(q.isActive); XCTAssertEqual(q.remaining, 0)
+    }
+}
+
+final class InputLimitTests: XCTestCase {
+    private func png(width: Int, height: Int) -> Data {
+        let rep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: width, pixelsHigh: height, bitsPerSample: 8, samplesPerPixel: 4,
+                                   hasAlpha: true, isPlanar: false, colorSpaceName: .deviceRGB, bytesPerRow: 0, bitsPerPixel: 0)!
+        return rep.representation(using: .png, properties: [:])!
+    }
+
+    func testImagePixelCapReadsTheHeaderOnly() {
+        let small = png(width: 40, height: 30)
+        XCTAssertTrue(ClipItem.pixelCountOK(small))
+        XCTAssertFalse(ClipItem.pixelCountOK(small, maxPixels: 1_000), "1 200 px > 1 000")
+        XCTAssertFalse(ClipItem.pixelCountOK(Data([0x00, 0x01, 0x02]), maxPixels: 1_000_000), "garbage fails closed")
+    }
+
+    func testPasteQueueStopsGrowingAtTheCap() {
+        let q = PasteQueue(); q.timeout = 0
+        q.start()
+        for i in 0..<(Limits.queueMaxItems + 20) { q.record(ClipItem.text("\(i)")) }
+        XCTAssertEqual(q.remaining, Limits.queueMaxItems)
     }
 }
 

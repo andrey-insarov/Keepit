@@ -12,6 +12,9 @@ enum Limits {
     static let menuMaxItemsCeiling = 200
     static let historyMaxCeiling = 10_000
     static let dataFileMaxBytes = 512 * 1024 * 1024
+    static let imageMaxPixels = 40_000_000           // 40 MP: a 10 MB PNG can still be a 20 000×20 000 bomb
+    static let queueMaxItems = 500                    // paste queue entries per session
+    static let promptInputMaxChars = 10_000           // one {input:} answer
     static let ignoreAppsMaxLines = 500
     static let bundleIdMaxChars = 255
     static let unlockBackoffSeconds: [Double] = [1, 2, 4]   // after the 1st, 2nd, 3rd wrong password

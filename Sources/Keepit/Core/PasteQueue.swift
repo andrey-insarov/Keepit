@@ -1,4 +1,4 @@
-import Foundation
+import AppKit
 
 /// Serial copy-and-paste ("paste queue").
 ///
@@ -44,6 +44,7 @@ final class PasteQueue {
     /// A new clipboard capture while the queue is on.
     func record(_ item: ClipItem) {
         guard isActive else { return }
+        guard items.count < Limits.queueMaxItems else { NSSound.beep(); return }   // a runaway copier cannot grow it forever
         items.append(item)
         armTimer()
         onChange?()

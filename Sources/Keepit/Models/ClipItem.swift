@@ -227,7 +227,7 @@ struct ClipItem: Codable, Identifiable, Equatable {
                 if let html = pb.data(forType: .html), html.count <= settings.maxTextBytes * 4 { formats[Format.html] = html }
             }
 
-            if let png = Self.pngData(from: pb), png.count <= settings.maxImageBytes {
+            if let png = Self.pngData(from: pb, maxBytes: settings.maxImageBytes), png.count <= settings.maxImageBytes {
                 formats[Format.png] = png
             }
         }
@@ -244,14 +244,30 @@ struct ClipItem: Codable, Identifiable, Equatable {
         return ClipItem(id: UUID(), date: Date(), formats: formats, sourceApp: sourceApp, contentHash: hash)
     }
 
-    private static func pngData(from pb: NSPasteboard) -> Data? {
-        if let png = pb.data(forType: .png) { return png }
-        if let tiff = pb.data(forType: .tiff),
-           let rep = NSBitmapImageRep(data: tiff),
-           let png = rep.representation(using: .png, properties: [:]) {
+    /// PNG from the pasteboard. Everything is checked *before* decoding: byte size against the cap
+    /// (TIFF is allowed a few times more, it is uncompressed) and the pixel count from the image
+    /// header alone, so a decompression bomb is refused without ever being inflated.
+    private static func pngData(from pb: NSPasteboard, maxBytes: Int) -> Data? {
+        if let png = pb.data(forType: .png) {
+            guard png.count <= maxBytes, pixelCountOK(png) else { return nil }
+            return png
+        }
+        if let tiff = pb.data(forType: .tiff) {
+            guard tiff.count <= maxBytes * 6, pixelCountOK(tiff),
+                  let rep = NSBitmapImageRep(data: tiff),
+                  let png = rep.representation(using: .png, properties: [:]) else { return nil }
             return png
         }
         return nil
+    }
+
+    /// Width × height from the header, without decoding the pixels. Unreadable headers fail closed.
+    static func pixelCountOK(_ data: Data, maxPixels: Int = Limits.imageMaxPixels) -> Bool {
+        guard let src = CGImageSourceCreateWithData(data as CFData, nil),
+              let props = CGImageSourceCopyPropertiesAtIndex(src, 0, [kCGImageSourceShouldCache: false] as CFDictionary) as? [CFString: Any],
+              let w = props[kCGImagePropertyPixelWidth] as? Int, let h = props[kCGImagePropertyPixelHeight] as? Int,
+              w > 0, h > 0 else { return false }
+        return w.multipliedReportingOverflow(by: h).overflow == false && w * h <= maxPixels
     }
 
     /// Put this item back onto the pasteboard with all its formats.

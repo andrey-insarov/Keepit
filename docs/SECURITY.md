@@ -153,6 +153,22 @@ keychain entry, the login item and the Accessibility grant, after asking for the
 ID and a typed confirmation. Deleting the app by hand leaves the data folder in place — remove
 `~/Library/Application Support/Keepit/` yourself if you want it gone.
 
+## Input limits
+
+Whatever lands on the clipboard is checked before it is stored, so a hostile or runaway copy cannot
+exhaust memory or disk:
+
+| What | Limit | Where |
+|------|-------|-------|
+| Text | 2 MB of UTF-8 (rich text / HTML up to 4× that); larger copies are not recorded | Settings → History |
+| Images | 10 MB and 40 megapixels; the pixel count is read from the image header, the image is never decoded first | Settings → History |
+| File lists | 1 000 paths | Settings → History |
+| History | 1 000 text / 30 image items, 256 MB in total; the oldest go first | Settings → History |
+| Templates | 5 000 items, 16 levels deep, names of 200 characters | fixed |
+| Paste queue | 500 items per session | fixed |
+| Backup files | 512 MB | fixed |
+| Password | 256 characters; a prompt answer (`{input:}`) 10 000 | fixed |
+
 ## Limitations worth knowing
 
 - The clipboard itself is readable by any app on your Mac; Keepit cannot change that. It can only

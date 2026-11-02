@@ -12,6 +12,7 @@
 - Reset runs the same welcome as a fresh install: the password offer, then the Accessibility prompt if needed
 - Viewer: toolbar buttons that make no sense for the selection are disabled — *Add to Template* on a template, *New Folder* outside Template, *Delete* on a group heading, *Send to Clipboard* on the clipboard itself, *Insert* unless a text template is being edited; *Delete* on the clipboard empties it
 - Shortcut fields no longer start recording just because the pane gave them keyboard focus — click them, or press Space
+- Hardening: images are checked by byte size *and* pixel count from the header before anything is decoded (40 MP cap), the paste queue stops at 500 items, a `{input:}` answer at 10 000 characters; the full table is on the security page
 - A fresh install (and Reset) starts with an *Examples* template folder that shows placeholders at work — a greeting with `{input:Name}` and `{cursor}`, today's date, a clipboard quote, a signature — in the system language
 
 ## 2.10.1 — 2026-11-02

@@ -50,7 +50,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
   <a class="brand" href="index.html"><img src="img/icon.png" alt="">Keepit</a>
   <nav><a href="index.html#features">Features</a><a href="guide.html">Guide</a><a href="security.html">Security</a><a href="support.html">Support</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a></nav>
 </div></header>
-<main class="wrap"><aside aria-label="Contents"><p class="ttl">On this page</p><ol><li><a href="#in-one-paragraph">In one paragraph</a></li><li><a href="#what-is-stored-and-where">What is stored, and where</a></li><li><a href="#what-is-never-recorded">What is never recorded</a></li><li><a href="#encryption">Encryption</a></li><li><a href="#touch-id">Touch ID</a></li><li><a href="#recovery-phrase">Recovery phrase</a></li><li><a href="#backups">Backups</a></li><li><a href="#permissions-keepit-asks-for">Permissions Keepit asks for</a></li><li><a href="#network">Network</a></li><li><a href="#code-signing-and-verifying-a-download">Code signing and verifying a download</a></li><li><a href="#uninstalling-and-data-removal">Uninstalling and data removal</a></li><li><a href="#limitations-worth-knowing">Limitations worth knowing</a></li><li><a href="#reporting-a-vulnerability">Reporting a vulnerability</a></li></ol></aside><article><h1 id="keepit-security">Keepit security</h1>
+<main class="wrap"><aside aria-label="Contents"><p class="ttl">On this page</p><ol><li><a href="#in-one-paragraph">In one paragraph</a></li><li><a href="#what-is-stored-and-where">What is stored, and where</a></li><li><a href="#what-is-never-recorded">What is never recorded</a></li><li><a href="#encryption">Encryption</a></li><li><a href="#touch-id">Touch ID</a></li><li><a href="#recovery-phrase">Recovery phrase</a></li><li><a href="#backups">Backups</a></li><li><a href="#permissions-keepit-asks-for">Permissions Keepit asks for</a></li><li><a href="#network">Network</a></li><li><a href="#code-signing-and-verifying-a-download">Code signing and verifying a download</a></li><li><a href="#uninstalling-and-data-removal">Uninstalling and data removal</a></li><li><a href="#input-limits">Input limits</a></li><li><a href="#limitations-worth-knowing">Limitations worth knowing</a></li><li><a href="#reporting-a-vulnerability">Reporting a vulnerability</a></li></ol></aside><article><h1 id="keepit-security">Keepit security</h1>
 <p>A clipboard manager sees everything you copy, so it has to be clear about what it keeps, where, and
 who can get at it. This page is the complete picture for Keepit. The code is open
 (<a href="https://github.com/andrey-insarov/Keepit">github.com/andrey-insarov/Keepit</a>), so every claim here
@@ -219,6 +219,60 @@ third-party action in the workflow is pinned to a commit hash rather than a mova
 keychain entry, the login item and the Accessibility grant, after asking for the password or Touch
 ID and a typed confirmation. Deleting the app by hand leaves the data folder in place — remove
 <code>~/Library/Application Support/Keepit/</code> yourself if you want it gone.</p>
+<h2 id="input-limits">Input limits</h2>
+<p>Whatever lands on the clipboard is checked before it is stored, so a hostile or runaway copy cannot
+exhaust memory or disk:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>What</th>
+<th>Limit</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Text</td>
+<td>2 MB of UTF-8 (rich text / HTML up to 4× that); larger copies are not recorded</td>
+<td>Settings → History</td>
+</tr>
+<tr>
+<td>Images</td>
+<td>10 MB and 40 megapixels; the pixel count is read from the image header, the image is never decoded first</td>
+<td>Settings → History</td>
+</tr>
+<tr>
+<td>File lists</td>
+<td>1 000 paths</td>
+<td>Settings → History</td>
+</tr>
+<tr>
+<td>History</td>
+<td>1 000 text / 30 image items, 256 MB in total; the oldest go first</td>
+<td>Settings → History</td>
+</tr>
+<tr>
+<td>Templates</td>
+<td>5 000 items, 16 levels deep, names of 200 characters</td>
+<td>fixed</td>
+</tr>
+<tr>
+<td>Paste queue</td>
+<td>500 items per session</td>
+<td>fixed</td>
+</tr>
+<tr>
+<td>Backup files</td>
+<td>512 MB</td>
+<td>fixed</td>
+</tr>
+<tr>
+<td>Password</td>
+<td>256 characters; a prompt answer (<code>{input:}</code>) 10 000</td>
+<td>fixed</td>
+</tr>
+</tbody>
+</table></div>
 <h2 id="limitations-worth-knowing">Limitations worth knowing</h2>
 <ul>
 <li>The clipboard itself is readable by any app on your Mac; Keepit cannot change that. It can only
