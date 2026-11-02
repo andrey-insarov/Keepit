@@ -43,13 +43,13 @@ Found a bug, a wrong translation, or have a question? Write below — a reply us
     btn.disabled=true;btn.textContent='Sending…';
     fetch(f.action,{method:'POST',body:new FormData(f)}).then(function(r){return r.json().catch(function(){return{error:'Something went wrong.'};}).then(function(j){return[r.ok,j];});})
       .then(function(x){if(x[0]){f.reset();ok.hidden=false;btn.hidden=true;count.textContent='at least 70 characters';}else{show(x[1].error||'Something went wrong.');if(window.turnstile)turnstile.reset();}})
-      .catch(function(){show('No connection. Please try again or e-mail admin@keep.it.com.');})
+      .catch(function(){show('No connection. Please try again or e-mail admin@it.com.');})
       .finally(function(){btn.disabled=false;btn.textContent='Send';});
   });
 })();
 </script>
 
-E-mail: [admin@keep.it.com](mailto:admin@keep.it.com) · Step-by-step: [the user guide](guide.html) · How your data is protected: [security](security.html).
+E-mail: [admin@it.com](mailto:admin@it.com) · Step-by-step: [the user guide](guide.html) · How your data is protected: [security](security.html).
 
 ## Quick answers
 

@@ -101,13 +101,13 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
     btn.disabled=true;btn.textContent='Sending…';
     fetch(f.action,{method:'POST',body:new FormData(f)}).then(function(r){return r.json().catch(function(){return{error:'Something went wrong.'};}).then(function(j){return[r.ok,j];});})
       .then(function(x){if(x[0]){f.reset();ok.hidden=false;btn.hidden=true;count.textContent='at least 70 characters';}else{show(x[1].error||'Something went wrong.');if(window.turnstile)turnstile.reset();}})
-      .catch(function(){show('No connection. Please try again or e-mail admin@keep.it.com.');})
+      .catch(function(){show('No connection. Please try again or e-mail admin@it.com.');})
       .finally(function(){btn.disabled=false;btn.textContent='Send';});
   });
 })();
 </script>
 
-<p>E-mail: <a href="mailto:admin@keep.it.com">admin@keep.it.com</a> · Step-by-step: <a href="guide.html">the user guide</a> · How your data is protected: <a href="security.html">security</a>.</p>
+<p>E-mail: <a href="mailto:admin@it.com">admin@it.com</a> · Step-by-step: <a href="guide.html">the user guide</a> · How your data is protected: <a href="security.html">security</a>.</p>
 <h2 id="quick-answers">Quick answers</h2>
 <p><strong>Nothing is pasted after I pick an item.</strong> Grant the Accessibility permission: System Settings → Privacy &amp; Security → Accessibility → enable Keepit (if it is already listed, toggle it off and on). Until then, press ⌘V yourself — the item is on the clipboard.</p>
 <p><strong>I forgot the password.</strong> Use <em>Recovery Access…</em> on the unlock dialog, or Touch ID on the same Mac. Without either, the data cannot be recovered.</p>
