@@ -99,7 +99,7 @@ server-side reset and Keepit's authors cannot help.
 
 ## Backups
 
-*Settings → Security → Backup → Export…* produces one `.keepit` file: a magic header, a format version, a random 16-byte
+*Settings → General → Backup → Export…* produces one `.keepit` file: a magic header, a format version, a random 16-byte
 salt, and the LZFSE-compressed JSON of history, templates and preferences sealed with AES-256-GCM
 under a PBKDF2 key from a password you choose for the file. The file is safe to keep on a cloud
 drive; its password is independent of the app password. *Import…* verifies the

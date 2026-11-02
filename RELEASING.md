@@ -59,7 +59,7 @@ start it, "error 163").
    a `SIGN_ID` now embeds it and enables Touch ID.
 4. For CI: `gh secret set MACOS_DEVID_PROFILE --env release < <(base64 -i Resources/KeepitDevID.provisionprofile)`.
 
-Without the profile everything else works; Preferences explains that Touch ID needs the signed build.
+Without the profile everything else works; Settings explains that Touch ID needs the signed build.
 
 ### Local signed build
 

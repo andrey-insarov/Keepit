@@ -42,7 +42,7 @@ Or the DMG:
 
 * **Download**: grab `Keepit-<version>.dmg` from the [latest release](https://github.com/andrey-insarov/Keepit/releases/latest),
   open it and drag Keepit to Applications. Signed and notarized; updates itself.
-* **Mac App Store**: coming soon.
+* **Mac App Store**: in review (2.11.1); the link will appear here once it is live.
 * **Build it yourself**: see below.
 
 ## Features (what is ported)
@@ -63,7 +63,7 @@ Or the DMG:
 | Window filter (ignore apps)                  | Built-in list of password managers (always ignored) + user ignore list + `org.nspasteboard.ConcealedType` |
 | Per-window paste key (`sendkey`)             | Per-bundle-id paste key in `settings.json` (`pasteKeys`)   |
 | Templates (hierarchical "Regist")            | Same: folders, any format (text/image/files), `-` separators, `&x` shortcuts, per-item hot key, `{date}`/`{clipboard}`/`{input:…}`/`{cursor}` placeholders |
-| Automation                                   | `keepit://` URL scheme: `paste/N`, `copy/N`, `template/Name`, `add?text=`, `add-template?text=&name=`, `history`, `pause` — use from Shortcuts (“Open URL”), Raycast, Alfred or `open` |
+| Automation                                   | `keepit://` URL scheme: `paste/N`, `copy/N`, `template/Name`, `add?text=`, `add-template?text=&name=`, `history`, `templates`, `viewer`, `settings`, `pause`, `resume` — use from Shortcuts (“Open URL”), Raycast, Alfred or `open` |
 | Viewer: tree Clipboard / History / Template  | Same tree, with a search field (`⌘F`) that filters history and templates and highlights matches |
 | Viewer: edit text, bitmap view, file list, binary view | Text/RTF/HTML editing (applied when focus leaves), image view, file list (double-click opens), hex dump toggle |
 | Viewer context menu                          | Send to Clipboard, Paste, Add to Template, New Item/Folder, New Item from File, Rename, Clear Name, Set Hot Key, Save Format to File, Up/Down, Delete |
@@ -98,7 +98,7 @@ Or in Xcode: `open Package.swift` and run the `Keepit` scheme (the `LSUIElement`
    Accessibility). It is required to send `⌘V` to the active app and to place the menu at the
    text cursor. Without it Keepit still records history and copies the chosen item to the clipboard.
 2. Press `⌥M` in any text field — the history menu appears; pick an item, it is pasted.
-3. Press `⌥T` for templates. Right-click the menu-bar icon (or `⌘L` in any Keepit window) to open the Viewer.
+3. Press `⌥T` for templates, `⌥E` for the Viewer (or right-click the menu-bar icon), `⌥S` for Settings.
 
 ## Viewer
 
@@ -156,7 +156,7 @@ Turning protection on shows a 24-word recovery phrase (standard BIP-39 English l
 checksum). A key derived from the phrase (HKDF) wraps the data key inside `vault.json`; the phrase
 itself is never stored. Print it (the dialog offers the system print panel, which can also save a
 PDF) and keep it offline — anyone holding it can read the history. If you forget the password,
-the unlock prompt's *Use Recovery Phrase…* unlocks the data and immediately asks for a new
+the unlock prompt's *Recovery Access…* unlocks the data and immediately asks for a new
 password. The phrase keeps working after password changes; *Recovery phrase → Create New…* in Settings
 replaces it (the old sheet becomes useless). Lose both password and phrase and the data is
 unrecoverable — by design.
@@ -175,7 +175,7 @@ unrecoverable — by design.
   the key is derived. Limitation: input methods / dead-key composition are not supported — type
   the password with a plain keyboard layout. (What remains outside our control is the one-character
   `NSEvent.characters` string macOS creates per key press.)
-* **Lock Keepit** (menu-bar icon → *Lock Keepit*, `⌘L`): wipes the key, unloads history and templates
+* **Lock Keepit** (menu-bar icon → *Lock Keepit*, `⌥L`): wipes the key, unloads history and templates
   from memory, stops watching the clipboard and unregisters hot keys. The icon turns into a lock;
   click it → *Unlock Keepit…* to enter the password and resume. Pending edits are saved (encrypted)
   before the key is wiped.
@@ -284,8 +284,7 @@ Sources/Keepit/
    folder: the existing `.keepit` format (AES-256-GCM, your file password) written on a schedule with
    rotation; restore offered on first launch on another Mac; optional merge on start. No Keepit
    server, the provider only ever sees ciphertext.
-2. **Paste queue** — copy several things, then ⌘V pastes them one after another (⌘V interception
-   while a queue is active, or a dedicated key; Esc / timeout / a new copy ends the queue).
+2. ~~Paste queue~~ — shipped in 2.10.
 3. **Import from other managers** — only open, documented formats; closed CloudKit-backed stores
    (Paste, Pastebot, PastePal) are left alone. History: Maccy (SQLite), Alfred (`clipboard.alfdb`),
    Flycut (plist), CLCL (`history.dat`). Snippets → templates, with placeholder conversion: Alfred

@@ -332,7 +332,7 @@ the old password when you change it.
 ### Recovery phrase
 
 When you set a password Keepit shows a 24-word phrase once. Print it or keep it in a password
-manager. If you forget the password, *Use Recovery Phrase…* on the unlock dialog opens the data and
+manager. If you forget the password, *Recovery Access…* on the unlock dialog opens the data and
 lets you set a new one. *Recovery phrase → Create New…* issues a fresh phrase and invalidates the old.
 
 Without the password, Touch ID on the same Mac, or the phrase, the data cannot be recovered: there
