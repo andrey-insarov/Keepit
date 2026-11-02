@@ -198,3 +198,23 @@ after each push to `main` or a tag (Codeberg itself no longer offers pull mirror
 The mirror push force-updates every branch and tag on Codeberg to match GitHub but never deletes
 anything there — do not push to the mirror by hand.
 
+
+## Site and support form (Cloudflare Pages)
+
+keep.it.com is a Cloudflare Pages project built from `docs/site` (every page but the landing is
+rendered by `python3 Scripts/build_guide.py`); `functions/api/feedback.js` is the Pages Function
+behind the support form. Variables and secrets: `TURNSTILE_SECRET`, `RESEND_API_KEY`,
+`FEEDBACK_TO`, `FEEDBACK_FROM`.
+
+The function itself checks `Content-Length`, the parsed size of every part, the number and size
+of attachments and their magic bytes, and the Turnstile token. Two things live in the Cloudflare
+dashboard, not in the repo, and need to be set once per zone:
+
+- **Rate limiting** on `POST /api/feedback` (Security → WAF → Rate limiting rules): a handful of
+  requests per minute per IP is plenty for a support form.
+- **HSTS** can also be enforced at the zone level (SSL/TLS → Edge Certificates); `_headers`
+  sends it as well so the Pages origin behaves the same on preview URLs.
+
+Response headers for the static site are in `docs/site/_headers`. The Content-Security-Policy
+there is deliberately `Report-Only` until the landing page's inline scripts and styles have
+moved to files or hashes; switch it to enforcing only after a release with no reports.

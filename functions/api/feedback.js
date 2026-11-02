@@ -15,9 +15,22 @@ export const LIMITS = {
   messageMax: 5000,
   files: 5,
   fileBytes: 1024 * 1024,
-  bodyBytes: 6 * 1024 * 1024,      // 5 screenshots + text + multipart overhead; checked before the body is read
+  bodyBytes: 6 * 1024 * 1024,      // 5 screenshots + text + multipart overhead; checked against Content-Length
+                                   // before the body is read AND against the parsed parts afterwards
   types: ["image/png", "image/jpeg", "image/gif", "image/webp", "image/heic"],
 };
+
+/** What the file actually is, from its first bytes — the client's MIME type is just a claim. */
+export function sniffImage(buf) {
+  const b = new Uint8Array(buf);
+  const ascii = (from, len) => String.fromCharCode(...b.subarray(from, from + len));
+  if (b.length >= 8 && b[0] === 0x89 && ascii(1, 3) === "PNG") return "image/png";
+  if (b.length >= 3 && b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff) return "image/jpeg";
+  if (b.length >= 6 && (ascii(0, 6) === "GIF87a" || ascii(0, 6) === "GIF89a")) return "image/gif";
+  if (b.length >= 12 && ascii(0, 4) === "RIFF" && ascii(8, 4) === "WEBP") return "image/webp";
+  if (b.length >= 12 && ascii(4, 4) === "ftyp" && ["heic", "heix", "hevc", "hevx", "mif1", "msf1"].includes(ascii(8, 4))) return "image/heic";
+  return null;
+}
 
 export const TYPES = { app: "App issue", translation: "Translation issue", other: "Other" };
 
@@ -44,6 +57,10 @@ export function validate(form) {
     if (f.size > LIMITS.fileBytes) return { ok: false, error: `“${f.name}” is larger than 1 MB.` };
     if (!LIMITS.types.includes(f.type)) return { ok: false, error: `“${f.name}” is not an image (PNG, JPEG, GIF, WebP or HEIC).` };
   }
+  // Actual size of what was parsed, whatever Content-Length said (or did not say).
+  let total = files.reduce((n, f) => n + f.size, 0);
+  for (const [k, v] of form.entries()) if (typeof v === "string") total += k.length + v.length;
+  if (total > LIMITS.bodyBytes) return { ok: false, error: "The attachments are too large (5 screenshots of 1 MB at most)." };
   return { ok: true, data: { name, email, type, message, files } };
 }
 
@@ -68,7 +85,10 @@ function b64(buf) {
 const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
 export async function onRequestPost({ request, env }) {
-  const declared = Number(request.headers.get("content-length") || 0);
+  // Browsers always send Content-Length for a multipart form; a request without one (or with a
+  // nonsense value) is not the support form, and parsing it would mean reading an unbounded body.
+  const declared = Number(request.headers.get("content-length"));
+  if (!Number.isFinite(declared) || declared <= 0) return json(411, { error: "Could not read the form." });
   if (declared > LIMITS.bodyBytes) return json(413, { error: "The attachments are too large (5 screenshots of 1 MB at most)." });
   const ctype = request.headers.get("content-type") || "";
   if (!ctype.startsWith("multipart/form-data")) return json(400, { error: "Could not read the form." });
@@ -90,7 +110,9 @@ export async function onRequestPost({ request, env }) {
 
   const attachments = [];
   for (const f of files) {
-    attachments.push({ filename: f.name.replace(/[^\w.\-]+/g, "_").slice(0, 80) || "screenshot", content: b64(await f.arrayBuffer()) });
+    const buf = await f.arrayBuffer();
+    if (sniffImage(buf) === null) return json(400, { error: `“${f.name}” is not an image (PNG, JPEG, GIF, WebP or HEIC).` });
+    attachments.push({ filename: f.name.replace(/[^\w.\-]+/g, "_").slice(0, 80) || "screenshot", content: b64(buf) });
   }
 
   const subject = `[Keepit] ${TYPES[type]} — ${name}`;
