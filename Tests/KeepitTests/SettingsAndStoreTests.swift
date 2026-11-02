@@ -63,9 +63,9 @@ final class SettingsAndStoreTests: XCTestCase {
         let n = TemplateNode(name: "sig", text: "sig")
         t.root.insert(n); t.changed(); t.flush()
         // Lock: purge memory, forget the key; then what applicationWillTerminate does.
-        h.purge(); t.purge(); Storage.clearKey()
+        h.purge(); t.purge(); Storage.clearKey()          // clearKey zeroizes the key in place
         h.flush(); t.flush(); h.saveNow(); t.saveNow()
-        Storage.key = key
+        Storage.key = try XCTUnwrap(Vault.unlock(password: .of("pw")))
         XCTAssertEqual(HistoryStore(settings: Settings()).items.first?.plainText, "keep me")
         XCTAssertEqual(TemplateStore().root.find(id: n.id)?.clip?.plainText, "sig")
         XCTAssertTrue(Vault.isEncrypted(try Data(contentsOf: Storage.historyURL)), "never rewritten as plaintext")
