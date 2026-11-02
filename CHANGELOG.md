@@ -5,12 +5,13 @@
 - **Settings, the Mac way.** *Preferences* is now *Settings* (as in macOS 13+), with a toolbar of panes — General, Shortcuts, Paste Queue, History, Menu, Security, Advanced — and the window sized to each pane. Every change applies immediately; there is no Save or Cancel, ⌘W or Esc closes
 - Number fields have a stepper and a unit word (seconds, characters, pixels, items) and refuse values out of range; a shortcut that collides with another command is refused on the spot with the reason shown under the fields
 - Ignored apps are a list with icons: **+** picks an app from Applications (the bundle identifier is read from it), **−** removes, double-click edits an identifier by hand
-- Labels follow Apple's wording: *Shortcuts* instead of *Hot keys*, *Pause recording*, *Remove Keepit* instead of *Danger zone*; the window title is the pane name
+- Labels follow Apple's wording: *Shortcuts* instead of *Hot keys*, *Pause recording*, buttons carry the action and group titles the meaning (Password → *Change…*, Backup → *Export…* / *Import…*, Recovery phrase → *Create New…*); the window title is the pane name
 - Menu: *Settings…* (⌘,) replaces *Preferences…*
 - Paste queue keys are now `⌥N` (start / stop) and `⌥⇧N` (paste all remaining); `⌥V` stays. Settings still on the 2.10 defaults are moved automatically
 - Advanced → *Reset…* puts Keepit back to a fresh install (history, templates, settings, password, Touch ID key) without touching the app or its permissions; *Uninstall…* does that and removes the app
 - Reset runs the same welcome as a fresh install: the password offer, then the Accessibility prompt if needed
-- Viewer: toolbar buttons that make no sense for the selection are disabled — *Add to Template* on a template, *New Folder* outside Template, *Delete* on a group heading, *Insert* unless a text template is being edited
+- Viewer: toolbar buttons that make no sense for the selection are disabled — *Add to Template* on a template, *New Folder* outside Template, *Delete* on a group heading, *Send to Clipboard* on the clipboard itself, *Insert* unless a text template is being edited; *Delete* on the clipboard empties it
+- Shortcut fields no longer start recording just because the pane gave them keyboard focus — click them, or press Space
 - A fresh install (and Reset) starts with an *Examples* template folder that shows placeholders at work — a greeting with `{input:Name}` and `{cursor}`, today's date, a clipboard quote, a signature — in the system language
 
 ## 2.10.1 — 2026-11-02

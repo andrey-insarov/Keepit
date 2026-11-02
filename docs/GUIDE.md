@@ -266,7 +266,7 @@ that explains it.
 | **Paste Queue** | The three queue keys, the idle time after which the queue switches off, and what to put between items for *Paste all remaining* — [The paste queue](#the-paste-queue) |
 | **History** | How many text/file items and images to keep (1000 / 30) · forget items older than … · *Remove duplicates* (copying the same thing again moves it to the top) · *Ignore concealed clipboard data* · the ignored-apps list (bundle identifiers; password managers are always ignored) |
 | **Menu** | Search field · numbering · preview panel · tooltips · source-app icons · image thumbnails · title length · thumbnail height |
-| **Security** | Password, Touch ID, locking, recovery phrase, Export / Import Backup — [Part 6](#part-6--security) |
+| **Security** | Password, Touch ID, locking, recovery phrase, Backup (Export / Import) — [Part 6](#part-6--security) |
 | **Advanced** | Clipboard poll interval · Data: *Open Folder* · Reset and uninstall: *Reset…* (back to a fresh install, example templates return) · *Uninstall…* (reset, then remove the app, Launch at login, keychain entry and permissions) |
 
 ![Settings → Shortcuts](site/img/guide/prefs-hotkeys.png)
@@ -276,7 +276,7 @@ combination already used by another command is refused and the reason is shown u
 Defaults* brings back the ⌥-letter set (⌥M history, ⌥T templates, ⌥E Viewer, ⌥S Settings, ⌥C Clear History, ⌥P pause, ⌥L lock, ⌥Q quit), ⌥⇧V and ⌃⌥. *Paste item by number* and *Actions on the latest item*
 take only modifiers — the digit or letter is added by Keepit. Two of your own keys on the same
 combination are refused on Save; if macOS or another app already owns one, Keepit says so when it
-starts. *Viewer* ⌥E, *Settings* ⌥S, *Clear History* ⌥C, *Pause / resume recording* ⌥P, *Lock Keepit* ⌥L and *Quit Keepit* ⌥Q work from any app and are shown next to their commands in the menu. On a US layout ⌥+letter normally types a special character (⌥S = ß, ⌥C = ç …); if you need one of those, move the key.
+starts. *Viewer* ⌥E, *Settings* ⌥S, *Clear History* ⌥C, *Pause recording* ⌥P, *Lock Keepit* ⌥L and *Quit Keepit* ⌥Q work from any app and are shown next to their commands in the menu. On a US layout ⌥+letter normally types a special character (⌥S = ß, ⌥C = ç …); if you need one of those, move the key.
 
 ---
 
@@ -319,8 +319,8 @@ is no server and nothing to reset.
 
 ### Backup
 
-*Export Backup…* in the menu (or *Backup → Export…* in Settings → Security) writes one `.keepit` file with the history, templates and preferences, encrypted
-with a password you choose for the file. *Import Backup…* reads it back on any Mac — *Merge* adds to
+*Settings → Security → Backup → Export…* writes one `.keepit` file with the history, templates and preferences, encrypted
+with a password you choose for the file. *Import…* reads it back on any Mac — *Merge* adds to
 what is there, *Replace* starts from the backup. The same file moves data between the direct
 download and the App Store edition.
 

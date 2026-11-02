@@ -1,7 +1,7 @@
 import AppKit
 import ServiceManagement
 
-/// Preferences → "Delete Keepit and All Data…": authenticate, make the user type DELETE and tick the
+/// Settings → Advanced → Uninstall…: authenticate, make the user type DELETE and tick the
 /// acknowledgement, then wipe everything Keepit ever wrote and move the app to the Trash.
 extension AppDelegate {
     func uninstallRequested() {

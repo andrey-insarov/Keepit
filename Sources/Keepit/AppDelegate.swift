@@ -395,7 +395,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         return true
     }
 
-    /// Preferences → "New Recovery Phrase…": invalidates the old sheet.
+    /// Settings → Security → Recovery phrase → Create New…: invalidates the old sheet.
     func regenerateRecoveryPhrase() {
         guard Vault.isEnabled, let key = Storage.key else { return }
         guard authenticateForChange(reasonKey: "generate a new recovery phrase") else { return }

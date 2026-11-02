@@ -159,10 +159,10 @@ entropy (HKDF) wraps the data key, and the entropy is in turn wrapped by the dat
 password, Touch ID on the same Mac, or the phrase, the data is unrecoverable by design — there is no
 server-side reset and Keepit's authors cannot help.</p>
 <h2 id="backups">Backups</h2>
-<p><em>Backup → Export…</em> (Settings → Security, also <em>Export Backup…</em> in the menu) produces one <code>.keepit</code> file: a magic header, a format version, a random 16-byte
+<p><em>Settings → Security → Backup → Export…</em> produces one <code>.keepit</code> file: a magic header, a format version, a random 16-byte
 salt, and the LZFSE-compressed JSON of history, templates and preferences sealed with AES-256-GCM
 under a PBKDF2 key from a password you choose for the file. The file is safe to keep on a cloud
-drive; its password is independent of the app password. <em>Import Backup…</em> verifies the
+drive; its password is independent of the app password. <em>Import…</em> verifies the
 authentication tag before using anything.</p>
 <h2 id="permissions-keepit-asks-for">Permissions Keepit asks for</h2>
 <div class="tbl"><table>

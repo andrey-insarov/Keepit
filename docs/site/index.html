@@ -200,7 +200,7 @@
 {"@type":"Question","name":"Does anything leave my Mac?","acceptedAnswer":{"@type":"Answer","text":"No. The only network request is the daily update check against GitHub Releases; the App Store edition does not make even that one. There is no account, no telemetry, no crash reporting."}},
 {"@type":"Question","name":"What if I forget the password?","acceptedAnswer":{"@type":"Answer","text":"Use the 24-word recovery phrase shown when you turned protection on, or Touch ID on the same Mac. With neither, the data cannot be recovered — there is no master key, by design."}},
 {"@type":"Question","name":"Is Keepit really free? What's the catch?","acceptedAnswer":{"@type":"Answer","text":"Free and MIT-licensed, source on GitHub. Keepit was built by the founder of the it.com domain zone to show what can live at a .it.com address. No ads, no in-app purchases, no pro tier."}},
-{"@type":"Question","name":"How do I move my data to another Mac?","acceptedAnswer":{"@type":"Answer","text":"Export Backup writes one encrypted .keepit file with history, templates and preferences; Import Backup on the other Mac merges or replaces."}},
+{"@type":"Question","name":"How do I move my data to another Mac?","acceptedAnswer":{"@type":"Answer","text":"Settings → Security → Backup → Export writes one encrypted .keepit file with history, templates and preferences; Import on the other Mac merges or replaces."}},
 {"@type":"Question","name":"Which Macs are supported?","acceptedAnswer":{"@type":"Answer","text":"macOS 13 Ventura or later, Apple silicon and Intel. Touch ID unlock needs a Mac with Touch ID."}}
 ]}
 ]}
@@ -352,7 +352,7 @@ open "keepit://pause"</div>
         <div class="r"><dt><kbd class="k">⌃⌥⌫</kbd></dt><dd>Delete the latest item</dd></div>
         <div class="r"><dt><kbd class="k">⌥E</kbd></dt><dd>Open the Viewer</dd></div>
         <div class="r"><dt><kbd class="k">⌥S</kbd></dt><dd>Settings</dd></div>
-        <div class="r"><dt><kbd class="k">⌥P</kbd></dt><dd>Pause / resume recording</dd></div>
+        <div class="r"><dt><kbd class="k">⌥P</kbd></dt><dd>Pause recording</dd></div>
         <div class="r"><dt><kbd class="k">⌥L</kbd></dt><dd>Lock now</dd></div>
         <div class="r"><dt><kbd class="k">⌥C</kbd> <kbd class="k">⌥Q</kbd></dt><dd>Clear history, quit</dd></div>
       </dl>
@@ -367,7 +367,7 @@ open "keepit://pause"</div>
     <details><summary>What if I forget the password?</summary><p>Use the 24-word recovery phrase Keepit showed you when you turned protection on, or Touch ID on the same Mac. With neither, the data cannot be recovered — there is no master key, by design.</p></details>
     <details><summary>Is it really free? What's the catch?</summary><p>Free, MIT-licensed, source on <a href="https://github.com/andrey-insarov/Keepit">GitHub</a>. Keepit was built by the founder of the <a href="https://it.com">it.com</a> domain zone to show what can live at a .it.com address — the app is the advertisement. No ads, no in-app purchases, no pro tier, and therefore nothing to gain from your data.</p></details>
     <details><summary>Where does the design come from?</summary><p>Keepit is a native macOS take on <a href="https://github.com/nakkag/CLCL">CLCL</a>, the classic Windows clipboard tool by Ohno Tomoaki, written from scratch in Swift. It is not affiliated with the original author.</p></details>
-    <details><summary>How do I move my data to another Mac, or between editions?</summary><p>Menu → <em>Export Backup…</em> writes one <code>.keepit</code> file with history, templates and, if you like, preferences, encrypted with a password you choose. On the other Mac, <em>Import Backup…</em> and pick <em>Merge</em> or <em>Replace</em>. The file is AES-256-GCM encrypted, so a USB stick or iCloud Drive is fine.</p></details>
+    <details><summary>How do I move my data to another Mac, or between editions?</summary><p><em>Settings → Security → Backup → Export…</em> writes one <code>.keepit</code> file with history, templates and, if you like, preferences, encrypted with a password you choose. On the other Mac, <em>Import…</em> and pick <em>Merge</em> or <em>Replace</em>. The file is AES-256-GCM encrypted, so a USB stick or iCloud Drive is fine.</p></details>
     <details><summary>Which Macs are supported?</summary><p>macOS 13 Ventura or later, Apple silicon and Intel. Touch ID unlock needs a Mac with Touch ID.</p></details>
   </div></section>
 
