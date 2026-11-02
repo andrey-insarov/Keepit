@@ -406,4 +406,5 @@ T = {
 'How often Keepit looks at the clipboard. macOS sends no notification when it changes, so every clipboard manager polls; 0.3 s is unnoticeable and cheap.': 'Keepit’in panoya ne sıklıkla baktığı. macOS değişiklikte bildirim göndermez, bu yüzden her pano yöneticisi yoklar; 0,3 sn fark edilmez ve ucuzdur.',
 'Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back.': 'Uygulamayı geçmişi, şablonları, ayarları, Touch ID anahtarı ve izinleriyle birlikte kaldırır. Parolanızı veya Touch ID’yi ve yazılı onay ister. Verileri geri isteyebilirseniz önce bir yedek dışa aktarın.',
 'Time between bringing the app you were in back to the front and sending ⌘V. Raise it for apps that are slow to come forward.': 'Bulunduğunuz uygulamayı öne getirme ile ⌘V gönderme arasındaki süre. Öne gelmesi yavaş uygulamalar için artırın.',
+'Startup': 'Başlangıç',
 }

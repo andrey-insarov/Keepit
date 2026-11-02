@@ -406,3 +406,4 @@
 "How often Keepit looks at the clipboard. macOS sends no notification when it changes, so every clipboard manager polls; 0.3 s is unnoticeable and cheap." = "Keepit 检查剪贴板的频率。macOS 不会通知剪贴板变化，因此所有剪贴板管理器都要轮询；0.3 秒既无感又省资源。";
 "Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back." = "移除应用及其历史记录、模板、设置、Touch ID 密钥和权限。会要求输入密码或 Touch ID 并键入确认。如果以后可能需要数据，请先导出备份。";
 "Time between bringing the app you were in back to the front and sending ⌘V. Raise it for apps that are slow to come forward." = "将原来的应用带回前台与发送 ⌘V 之间的间隔。对于切换到前台较慢的应用请调大。";
+"Startup" = "启动";

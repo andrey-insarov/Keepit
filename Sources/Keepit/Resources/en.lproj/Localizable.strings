@@ -444,3 +444,5 @@
 "How often Keepit looks at the clipboard. macOS sends no notification when it changes, so every clipboard manager polls; 0.3 s is unnoticeable and cheap." = "How often Keepit looks at the clipboard. macOS sends no notification when it changes, so every clipboard manager polls; 0.3 s is unnoticeable and cheap.";
 "Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back." = "Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back.";
 "Time between bringing the app you were in back to the front and sending ⌘V. Raise it for apps that are slow to come forward." = "Time between bringing the app you were in back to the front and sending ⌘V. Raise it for apps that are slow to come forward.";
+
+"Startup" = "Startup";

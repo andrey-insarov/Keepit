@@ -406,3 +406,4 @@
 "How often Keepit looks at the clipboard. macOS sends no notification when it changes, so every clipboard manager polls; 0.3 s is unnoticeable and cheap." = "كم مرة يفحص Keepit الحافظة. لا يرسل macOS إشعارًا عند تغيّرها، لذا يستطلعها كل مدير حافظة؛ 0.3 ث غير ملحوظ ومنخفض التكلفة.";
 "Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back." = "يزيل التطبيق مع سجله وقوالبه وإعداداته ومفتاح Touch ID والأذونات. يطلب كلمة المرور أو Touch ID وتأكيدًا مكتوبًا. صدّر نسخة احتياطية أولًا إذا كنت قد تحتاج البيانات لاحقًا.";
 "Time between bringing the app you were in back to the front and sending ⌘V. Raise it for apps that are slow to come forward." = "الفاصل بين إعادة التطبيق الذي كنت فيه إلى المقدمة وإرسال ⌘V. زِده للتطبيقات البطيئة في الظهور.";
+"Startup" = "بدء التشغيل";

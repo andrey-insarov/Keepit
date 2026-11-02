@@ -406,4 +406,5 @@ T = {
 'How often Keepit looks at the clipboard. macOS sends no notification when it changes, so every clipboard manager polls; 0.3 s is unnoticeable and cheap.': 'Kui tihti Keepit lõikelauda vaatab. macOS ei saada muutusest teadet, seega kõik lõikelauahaldurid pärivad; 0,3 s on märkamatu ja odav.',
 'Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back.': 'Eemaldab rakenduse koos ajaloo, mallide, seadete, Touch ID võtme ja õigustega. Küsib parooli või Touch ID-d ja sisestatud kinnitust. Kui andmeid võib veel vaja minna, ekspordi enne varukoopia.',
 'Time between bringing the app you were in back to the front and sending ⌘V. Raise it for apps that are slow to come forward.': 'Aeg rakenduse, kus olid, esiplaanile toomise ja ⌘V saatmise vahel. Suurenda rakenduste puhul, mis tulevad esiplaanile aeglaselt.',
+'Startup': 'Käivitus',
 }

@@ -406,4 +406,5 @@ T = {
 'How often Keepit looks at the clipboard. macOS sends no notification when it changes, so every clipboard manager polls; 0.3 s is unnoticeable and cheap.': 'Com que frequência o Keepit verifica a área de transferência. O macOS não notifica mudanças, então todo gerenciador consulta; 0,3 s é imperceptível e barato.',
 'Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back.': 'Remove o app junto com histórico, modelos, ajustes, chave do Touch ID e permissões. Pede sua senha ou Touch ID e uma confirmação digitada. Exporte um backup antes se puder querer os dados de volta.',
 'Time between bringing the app you were in back to the front and sending ⌘V. Raise it for apps that are slow to come forward.': 'Tempo entre trazer o app em que você estava de volta à frente e enviar ⌘V. Aumente para apps lentos em vir à frente.',
+'Startup': 'Inicialização',
 }

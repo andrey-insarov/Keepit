@@ -406,4 +406,5 @@ T = {
 'How often Keepit looks at the clipboard. macOS sends no notification when it changes, so every clipboard manager polls; 0.3 s is unnoticeable and cheap.': 'Jak často Keepit kontroluje schránku. macOS změnu neoznamuje, takže každý správce schránky dotazuje; 0,3 s je nepostřehnutelné a levné.',
 'Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back.': 'Odstraní aplikaci včetně historie, šablon, nastavení, klíče Touch ID a oprávnění. Vyžádá si heslo nebo Touch ID a napsané potvrzení. Pokud byste data mohli chtít zpět, nejprve exportujte zálohu.',
 'Time between bringing the app you were in back to the front and sending ⌘V. Raise it for apps that are slow to come forward.': 'Doba mezi přenesením aplikace, v níž jste byli, do popředí a odesláním ⌘V. Zvyšte ji u aplikací, které se dostávají do popředí pomalu.',
+'Startup': 'Spuštění',
 }

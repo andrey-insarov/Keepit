@@ -406,4 +406,5 @@ T = {
 'How often Keepit looks at the clipboard. macOS sends no notification when it changes, so every clipboard manager polls; 0.3 s is unnoticeable and cheap.': 'Keepit이 클립보드를 확인하는 주기입니다. macOS는 변경 알림을 보내지 않으므로 모든 클립보드 관리자가 폴링합니다. 0.3초는 눈에 띄지 않고 부담도 적습니다.',
 'Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back.': '앱을 기록, 템플릿, 설정, Touch ID 키, 권한과 함께 제거합니다. 암호 또는 Touch ID와 입력 확인을 요구합니다. 데이터가 다시 필요할 수 있다면 먼저 백업을 내보내세요.',
 'Time between bringing the app you were in back to the front and sending ⌘V. Raise it for apps that are slow to come forward.': '원래 앱을 앞으로 가져온 뒤 ⌘V를 보내기까지의 시간입니다. 앞으로 나오는 데 느린 앱이라면 늘리세요.',
+'Startup': '시작',
 }

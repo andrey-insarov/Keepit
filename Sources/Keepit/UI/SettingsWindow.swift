@@ -139,19 +139,25 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
 
     private func row(_ text: String, _ view: NSView) -> [NSView] { [label(text), view] }
 
+    /// Group title: bold, in the label column, on the same axis as the labels — so a pane without
+    /// labelled fields still has something on the left and every pane reads "what / controls".
     private func header(_ text: String) -> [NSView] {
         let l = NSTextField(labelWithString: text)
         l.font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
-        return [NSView(), l]
+        l.alignment = .right
+        return [l, NSView()]
     }
 
-    private func note(_ text: String, width: CGFloat = 400) -> [NSView] {
+    private static let spanTag = 7001
+    /// Explanatory text that spans both columns, from the leading edge.
+    private func note(_ text: String, width: CGFloat = 480) -> [NSView] {
         let l = NSTextField(wrappingLabelWithString: text)
         l.textColor = .secondaryLabelColor
         l.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
         l.preferredMaxLayoutWidth = width
         l.widthAnchor.constraint(lessThanOrEqualToConstant: width).isActive = true
-        return [NSView(), l]
+        l.tag = Self.spanTag
+        return [l, NSView()]
     }
 
     private func status(_ field: NSTextField) -> [NSView] {
@@ -195,7 +201,16 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         let g = NSGridView(views: rows)
         g.rowSpacing = 8
         g.columnSpacing = 10
+        g.xPlacement = .leading
         g.column(at: 0).xPlacement = .trailing
+        g.column(at: 1).xPlacement = .leading
+        // Hug the content: an empty label column must not be handed half of the window.
+        g.setContentHuggingPriority(.required, for: .horizontal)
+        g.setContentCompressionResistancePriority(.required, for: .horizontal)
+        for (i, r) in rows.enumerated() where (r.first as? NSTextField)?.tag == Self.spanTag {
+            g.mergeCells(inHorizontalRange: NSRange(location: 0, length: 2), verticalRange: NSRange(location: i, length: 1))
+            g.cell(atColumnIndex: 0, rowIndex: i).xPlacement = .leading
+        }
         g.translatesAutoresizingMaskIntoConstraints = false
         return g
     }
@@ -263,6 +278,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
 
     private func buildPanes() {
         let general = grid([
+            header(L("Startup")),
             [NSView(), check(loginItem)],
             [NSView(), check(saveHistory)],
             header(L("Paste")),
@@ -326,6 +342,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         (tableBlock.superview as? NSStackView)?.alignment = .top
 
         let menu = grid([
+            header(L("History menu")),
             [NSView(), help(check(searchMenu), L("A search field at the top of the history menu: typing filters the list in place, Return pastes the first match. Item shortcuts then become ⌘1–⌘0 instead of 1-9/0/A-Z."))],
             [NSView(), help(check(numberItems), L("Prefix items with 1-9, 0, A-Z; pressing the key pastes the item without the mouse."))],
             [NSView(), help(check(showPreview), L("Hovering a history item shows the full image or the first lines of text in a panel beside the menu. Tooltips are not shown while this is on."))],
@@ -345,6 +362,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         changePw.target = self; changePw.action = #selector(changePasswordTapped)
         newPhrase.target = self; newPhrase.action = #selector(newPhraseTapped)
         let security = grid([
+            header(L("Password")),
             [NSView(), help(protect, L("History and templates are stored AES-256 encrypted; the key is derived from the password and asked for every time Keepit starts."))],
             [NSView(), changePw],
             [NSView(), help(check(touchID), L("Unlock with a fingerprint instead of typing the password. The password always remains as fallback."))],
@@ -360,6 +378,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         uninstall.target = self; uninstall.action = #selector(uninstallTapped)
         uninstall.contentTintColor = .systemRed
         let advanced = grid([
+            header(L("Clipboard")),
             row(L("Poll interval:"), help(number(pollInterval, unit: L("seconds"), min: 0.1, max: 5, step: 0.1, decimals: 2),
                                            L("How often Keepit looks at the clipboard. macOS sends no notification when it changes, so every clipboard manager polls; 0.3 s is unnoticeable and cheap."))),
             [NSView(), reveal],
