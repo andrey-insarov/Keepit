@@ -57,7 +57,7 @@ a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
 header{position:sticky;top:0;z-index:20;backdrop-filter:saturate(180%) blur(18px);background:color-mix(in srgb,var(--paper) 78%,transparent);border-bottom:1px solid var(--line)}
 header .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:650;color:var(--ink);font-size:18px}.brand img{width:34px;height:34px;border-radius:8px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:650;color:var(--ink);font-size:20px}.brand img{width:44px;height:44px;border-radius:10px}
 nav{display:flex;gap:24px}nav a{color:var(--ink-2);font-size:15px}nav a:hover{color:var(--ink);text-decoration:none}
 @media(max-width:700px){nav a:not(.gh){display:none}}
 main.wrap{display:grid;grid-template-columns:230px minmax(0,1fr);gap:56px;padding-top:48px;padding-bottom:96px}
