@@ -159,7 +159,30 @@ final class HotKeySettingsTests: XCTestCase {
         let s = try JSONDecoder().decode(Settings.self, from: json)
         XCTAssertEqual(s.historyHotKey, HotKey.optionC)
         XCTAssertNil(s.clearHistoryHotKey, "⌥C already taken by the history menu")
-        XCTAssertEqual(s.viewerHotKey, HotKey.option(kVK_ANSI_V), "unaffected defaults still apply")
+        XCTAssertEqual(s.viewerHotKey, HotKey.option(kVK_ANSI_E), "unaffected defaults still apply")
+        XCTAssertEqual(s.queuePasteHotKey, HotKey.option(kVK_ANSI_V))
+    }
+
+    func testViewerMovesFromOptionVToOptionEWhenTheQueueArrives() throws {
+        // A 2.9.x file wrote every key explicitly; the Viewer sat on ⌥V, which 2.10 gives to the paste queue.
+        let json = Data(#"{"viewerHotKey":{"keyCode":9,"modifiers":2048}}"#.utf8)   // 9 = kVK_ANSI_V
+        let s = try JSONDecoder().decode(Settings.self, from: json)
+        XCTAssertEqual(s.viewerHotKey, HotKey.option(kVK_ANSI_E))
+        XCTAssertEqual(s.queuePasteHotKey, HotKey.option(kVK_ANSI_V))
+        XCTAssertEqual(s.queueHotKey, HotKey.option(kVK_ANSI_R))
+        // But a file that already knows about the queue keeps whatever it says.
+        let json2 = Data(#"{"viewerHotKey":{"keyCode":9,"modifiers":2048},"queuePasteHotKey":null}"#.utf8)
+        let s2 = try JSONDecoder().decode(Settings.self, from: json2)
+        XCTAssertEqual(s2.viewerHotKey, HotKey.option(kVK_ANSI_V))
+        XCTAssertNil(s2.queuePasteHotKey)
+    }
+
+    func testQueueSettingsRoundTrip() throws {
+        var s = Settings()
+        s.queueTimeout = 45; s.queueSeparator = "\t"; s.queuePasteAllHotKey = nil
+        let back = try JSONDecoder().decode(Settings.self, from: JSONEncoder().encode(s))
+        XCTAssertEqual(back.queueTimeout, 45); XCTAssertEqual(back.queueSeparator, "\t"); XCTAssertNil(back.queuePasteAllHotKey)
+        XCTAssertEqual(back.queueHotKey, HotKey.option(kVK_ANSI_R))
     }
 
     func testLatestActionKeyCodesAreDistinct() {
@@ -179,3 +202,44 @@ final class MenuKeyEquivalentTests: XCTestCase {
         XCTAssertNil(HotKey(keyCode: 0xFFFF, modifiers: 0).menuKeyEquivalent)
     }
 }
+
+final class PasteQueueTests: XCTestCase {
+    func testFifoOrderAndAutoStop() {
+        let q = PasteQueue(); q.timeout = 0
+        var stops = 0; q.onAutoStop = { stops += 1 }
+        q.record(ClipItem.text("ignored: queue is off"))
+        XCTAssertFalse(q.isActive); XCTAssertEqual(q.remaining, 0)
+        q.start()
+        q.record(ClipItem.text("a")); q.record(ClipItem.text("b")); q.record(ClipItem.text("c"))
+        XCTAssertEqual(q.remaining, 3)
+        XCTAssertEqual(q.take()?.plainText, "a")
+        XCTAssertEqual(q.take()?.plainText, "b")
+        XCTAssertTrue(q.isActive); XCTAssertEqual(q.remaining, 1)
+        XCTAssertEqual(q.take()?.plainText, "c")
+        XCTAssertFalse(q.isActive, "ends by itself after the last item"); XCTAssertEqual(stops, 1)
+        XCTAssertNil(q.take())
+    }
+
+    func testMarksAndTakeAll() {
+        let q = PasteQueue(); q.timeout = 0
+        q.start()
+        let a = ClipItem.text("a"), b = ClipItem.text("b"), c = ClipItem.text("c")
+        q.record(a); q.record(b); q.record(c)
+        _ = q.take()
+        XCTAssertTrue(q.wasPasted(a.id)); XCTAssertTrue(q.isNext(b.id)); XCTAssertTrue(q.isQueued(c.id)); XCTAssertFalse(q.isQueued(a.id))
+        XCTAssertEqual(q.takeAll(separator: "\n"), "b\nc")
+        XCTAssertFalse(q.isActive)
+        q.start(); XCTAssertNil(q.takeAll(separator: ","), "nothing queued → nil, queue stays on"); XCTAssertTrue(q.isActive)
+        q.stop(); XCTAssertFalse(q.isActive)
+    }
+
+    func testTimeoutStopsTheQueue() {
+        let q = PasteQueue(); q.timeout = 0.2
+        let done = expectation(description: "auto stop")
+        q.onAutoStop = { done.fulfill() }
+        q.start(); q.record(ClipItem.text("a"))
+        wait(for: [done], timeout: 2)
+        XCTAssertFalse(q.isActive); XCTAssertEqual(q.remaining, 0)
+    }
+}
+

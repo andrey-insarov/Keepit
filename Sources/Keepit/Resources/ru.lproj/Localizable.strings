@@ -342,3 +342,17 @@
 "Clear History:" = "Очистить историю:";
 "Quit Keepit:" = "Завершить Keepit:";
 "Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off." = "Заданные здесь сочетания работают из любого приложения и показываются рядом с командами в меню. ⌫ в поле выключает сочетание.";
+"Paste queue" = "Очередь вставки";
+"Start / stop the queue:" = "Включить / выключить очередь:";
+"Paste next item:" = "Вставить следующий:";
+"Paste all remaining:" = "Вставить всё оставшееся:";
+"Idle time (s):" = "Простой (с):";
+"Join items with:" = "Разделять элементы:";
+"New line" = "Новая строка";
+"Tab" = "Табуляция";
+"Space" = "Пробел";
+"Nothing" = "Ничего";
+"Serial copy-and-paste. Start the queue, copy several things in a row (the menu bar icon counts them), then paste them back one by one in the same order with the key below. The queue ends when the last item has been pasted or after the idle time; ⌘V keeps working as usual." = "Серийное копирование и вставка. Включите очередь, скопируйте несколько фрагментов подряд (значок в строке меню их считает), затем вставляйте их по одному в том же порядке клавишей ниже. Очередь заканчивается после вставки последнего элемента или по истечении времени простоя; ⌘V работает как обычно.";
+"Start Paste Queue" = "Включить очередь вставки";
+"Stop Paste Queue (%d to paste)" = "Выключить очередь (осталось %d)";
+"Keepit — paste queue on: %d to paste (%@ next, %@ stop)" = "Keepit — очередь вставки: осталось %d (%@ следующий, %@ стоп)";

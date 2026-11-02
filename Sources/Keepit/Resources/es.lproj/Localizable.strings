@@ -342,3 +342,17 @@
 "Clear History:" = "Borrar historial:";
 "Quit Keepit:" = "Salir de Keepit:";
 "Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off." = "Los atajos definidos aquí funcionan desde cualquier app y se muestran junto a sus comandos en el menú. ⌫ en un campo desactiva el atajo.";
+"Paste queue" = "Cola de pegado";
+"Start / stop the queue:" = "Iniciar / detener la cola:";
+"Paste next item:" = "Pegar el siguiente:";
+"Paste all remaining:" = "Pegar todo lo restante:";
+"Idle time (s):" = "Tiempo de inactividad (s):";
+"Join items with:" = "Unir elementos con:";
+"New line" = "Salto de línea";
+"Tab" = "Tabulación";
+"Space" = "Espacio";
+"Nothing" = "Nada";
+"Serial copy-and-paste. Start the queue, copy several things in a row (the menu bar icon counts them), then paste them back one by one in the same order with the key below. The queue ends when the last item has been pasted or after the idle time; ⌘V keeps working as usual." = "Copiar y pegar en serie. Inicie la cola, copie varias cosas seguidas (el icono de la barra de menús las cuenta) y luego péguelas una por una en el mismo orden con la tecla de abajo. La cola termina al pegar el último elemento o tras el tiempo de inactividad; ⌘V sigue funcionando como siempre.";
+"Start Paste Queue" = "Iniciar la cola de pegado";
+"Stop Paste Queue (%d to paste)" = "Detener la cola (%d por pegar)";
+"Keepit — paste queue on: %d to paste (%@ next, %@ stop)" = "Keepit — cola de pegado: %d por pegar (%@ siguiente, %@ parar)";

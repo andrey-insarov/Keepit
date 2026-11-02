@@ -342,3 +342,17 @@
 "Clear History:" = "Очистити історію:";
 "Quit Keepit:" = "Завершити Keepit:";
 "Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off." = "Задані тут сполучення працюють із будь-якої програми й показуються поруч із командами в меню. ⌫ у полі вимикає сполучення.";
+"Paste queue" = "Черга вставлення";
+"Start / stop the queue:" = "Увімкнути / вимкнути чергу:";
+"Paste next item:" = "Вставити наступний:";
+"Paste all remaining:" = "Вставити все, що залишилось:";
+"Idle time (s):" = "Час простою (с):";
+"Join items with:" = "Розділяти елементи:";
+"New line" = "Новий рядок";
+"Tab" = "Табуляція";
+"Space" = "Пробіл";
+"Nothing" = "Нічого";
+"Serial copy-and-paste. Start the queue, copy several things in a row (the menu bar icon counts them), then paste them back one by one in the same order with the key below. The queue ends when the last item has been pasted or after the idle time; ⌘V keeps working as usual." = "Серійне копіювання та вставлення. Увімкніть чергу, скопіюйте кілька фрагментів поспіль (значок у рядку меню їх рахує), потім вставляйте їх по одному в тому ж порядку клавішею нижче. Черга завершується після вставлення останнього елемента або після часу простою; ⌘V працює як завжди.";
+"Start Paste Queue" = "Увімкнути чергу вставлення";
+"Stop Paste Queue (%d to paste)" = "Вимкнути чергу (залишилось %d)";
+"Keepit — paste queue on: %d to paste (%@ next, %@ stop)" = "Keepit — черга вставлення: залишилось %d (%@ наступний, %@ стоп)";

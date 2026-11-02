@@ -342,3 +342,17 @@
 "Clear History:" = "Verlauf löschen:";
 "Quit Keepit:" = "Keepit beenden:";
 "Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off." = "Hier festgelegte Kürzel wirken aus jeder App und stehen im Menü neben ihren Befehlen. ⌫ im Feld schaltet das Kürzel ab.";
+"Paste queue" = "Einfügewarteschlange";
+"Start / stop the queue:" = "Warteschlange starten / stoppen:";
+"Paste next item:" = "Nächstes Element einfügen:";
+"Paste all remaining:" = "Alle verbleibenden einfügen:";
+"Idle time (s):" = "Leerlaufzeit (s):";
+"Join items with:" = "Elemente verbinden mit:";
+"New line" = "Zeilenumbruch";
+"Tab" = "Tabulator";
+"Space" = "Leerzeichen";
+"Nothing" = "Nichts";
+"Serial copy-and-paste. Start the queue, copy several things in a row (the menu bar icon counts them), then paste them back one by one in the same order with the key below. The queue ends when the last item has been pasted or after the idle time; ⌘V keeps working as usual." = "Serielles Kopieren und Einfügen. Warteschlange starten, mehrere Dinge nacheinander kopieren (das Menüleistensymbol zählt mit), dann mit der Taste unten eins nach dem anderen in derselben Reihenfolge einfügen. Die Warteschlange endet nach dem letzten Element oder nach der Leerlaufzeit; ⌘V funktioniert weiterhin wie gewohnt.";
+"Start Paste Queue" = "Einfügewarteschlange starten";
+"Stop Paste Queue (%d to paste)" = "Warteschlange stoppen (%d übrig)";
+"Keepit — paste queue on: %d to paste (%@ next, %@ stop)" = "Keepit – Warteschlange: %d übrig (%@ nächstes, %@ stopp)";

@@ -342,3 +342,17 @@
 "Clear History:" = "Cancella cronologia:";
 "Quit Keepit:" = "Esci da Keepit:";
 "Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off." = "Le scorciatoie impostate qui funzionano da qualsiasi app e compaiono accanto ai comandi nel menu. ⌫ in un campo disattiva la scorciatoia.";
+"Paste queue" = "Coda di incolla";
+"Start / stop the queue:" = "Avvia / ferma la coda:";
+"Paste next item:" = "Incolla il successivo:";
+"Paste all remaining:" = "Incolla tutto il resto:";
+"Idle time (s):" = "Tempo di inattività (s):";
+"Join items with:" = "Unisci gli elementi con:";
+"New line" = "A capo";
+"Tab" = "Tabulazione";
+"Space" = "Spazio";
+"Nothing" = "Niente";
+"Serial copy-and-paste. Start the queue, copy several things in a row (the menu bar icon counts them), then paste them back one by one in the same order with the key below. The queue ends when the last item has been pasted or after the idle time; ⌘V keeps working as usual." = "Copia e incolla in serie. Avvia la coda, copia più elementi di seguito (l’icona nella barra dei menu li conta), poi incollali uno alla volta nello stesso ordine con il tasto qui sotto. La coda termina dopo l’ultimo elemento o dopo il tempo di inattività; ⌘V continua a funzionare come sempre.";
+"Start Paste Queue" = "Avvia la coda di incolla";
+"Stop Paste Queue (%d to paste)" = "Ferma la coda (%d da incollare)";
+"Keepit — paste queue on: %d to paste (%@ next, %@ stop)" = "Keepit — coda di incolla: %d da incollare (%@ successivo, %@ stop)";

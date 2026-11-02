@@ -9,7 +9,7 @@ each can be changed in *Preferences → Hot keys*.
 **Contents**
 
 - [Part 1 — Getting started](#part-1--getting-started): [Install](#install) · [First launch](#first-launch)
-- [Part 2 — Everyday use](#part-2--everyday-use): [The history menu](#the-history-menu) · [Search and preview](#search-and-preview) · [Paste without the menu](#paste-without-the-menu) · [The extended menu](#the-extended-menu)
+- [Part 2 — Everyday use](#part-2--everyday-use): [The history menu](#the-history-menu) · [Search and preview](#search-and-preview) · [Paste without the menu](#paste-without-the-menu) · [The paste queue](#the-paste-queue) · [The extended menu](#the-extended-menu)
 - [Part 3 — Templates](#part-3--templates): [Creating and organising](#creating-and-organising) · [Placeholders](#placeholders) · [Templates that ask questions](#templates-that-ask-questions)
 - [Part 4 — The Viewer](#part-4--the-viewer)
 - [Part 5 — Preferences](#part-5--preferences)
@@ -84,7 +84,7 @@ menu shows. Images show a thumbnail, file lists show the file names.
 To paste an item: click it, or move to it with ↑ ↓ and press Return, or press its number with
 **⌃⌥** — `⌃⌥3` pastes item 3. The same key works from anywhere, without opening the menu.
 
-Below the history: the *Template* submenu, the Viewer (⌥V), Preferences (⌥S), *Clear History* (⌥C),
+Below the history: the *Template* submenu, the Viewer (⌥E), Preferences (⌥S), *Clear History* (⌥C),
 *Pause Recording for 10 Minutes* (⌥P — for typing something you do not want recorded), *Lock Keepit*
 (⌥L) when a password is set, and the updater. **⌥T** opens the template menu on its own; every one
 of these keys also works without the menu.
@@ -118,6 +118,24 @@ Global hot keys act on the history as it is right now — item 1 is the clipboar
 
 Transformations apply to text; for an image or a file list the key beeps. All of these can be
 changed or switched off in *Preferences → Hot keys*.
+
+### The paste queue
+
+Sometimes you want to copy five things from one place and paste them, in order, somewhere else —
+cells into a form, lines from a page into a document. The paste queue does that without the menu:
+
+1. Press **⌥R** (or *Start Paste Queue* in the menu). The menu bar icon shows a red dot and a
+   counter: `📎 ● 0`.
+2. Copy as usual with ⌘C, as many times as you like. The counter goes up with every copy: 1, 2, 3…
+   Everything is recorded in the history too.
+3. Switch to where the text goes and press **⌥V** for each item. The first thing you copied is
+   pasted first, the counter goes down. ⌘V still pastes the clipboard as usual, so you can mix both.
+4. The queue switches itself off after the last item is pasted, or after two minutes without a copy
+   or a paste (the time is adjustable). ⌥R again stops it early.
+
+**⌥⇧R** pastes everything still in the queue in one go, items joined with a line break, a tab, a
+space or nothing — pick on the *Hot keys* tab. While the queue is on, the history menu marks its
+items: `▶` next to paste, `○` still queued, `✓` already pasted.
 
 ### The extended menu
 
@@ -251,10 +269,10 @@ it.
 ![Preferences → Hot keys](site/img/guide/prefs-hotkeys.png)
 
 On the **Hot keys** tab click a field and press a combination; ⌫ switches a key off; *Reset to
-Defaults* brings back the ⌥-letter set (⌥M history, ⌥T templates, ⌥V Viewer, ⌥S Preferences, ⌥C Clear History, ⌥P pause, ⌥L lock, ⌥Q quit), ⌥⇧V and ⌃⌥. *Paste item by number* and *Actions on the latest item*
+Defaults* brings back the ⌥-letter set (⌥M history, ⌥T templates, ⌥E Viewer, ⌥S Preferences, ⌥C Clear History, ⌥P pause, ⌥L lock, ⌥Q quit), ⌥⇧V and ⌃⌥. *Paste item by number* and *Actions on the latest item*
 take only modifiers — the digit or letter is added by Keepit. Two of your own keys on the same
 combination are refused on Save; if macOS or another app already owns one, Keepit says so when it
-starts. *Viewer* ⌥V, *Preferences* ⌥S, *Clear History* ⌥C, *Pause / resume recording* ⌥P, *Lock Keepit* ⌥L and *Quit Keepit* ⌥Q work from any app and are shown next to their commands in the menu. On a US layout ⌥+letter normally types a special character (⌥S = ß, ⌥C = ç …); if you need one of those, move the key.
+starts. *Viewer* ⌥E, *Preferences* ⌥S, *Clear History* ⌥C, *Pause / resume recording* ⌥P, *Lock Keepit* ⌥L and *Quit Keepit* ⌥Q work from any app and are shown next to their commands in the menu. On a US layout ⌥+letter normally types a special character (⌥S = ß, ⌥C = ç …); if you need one of those, move the key.
 
 ---
 
@@ -378,7 +396,8 @@ Still stuck? [GitHub Issues](https://github.com/andrey-insarov/Keepit/issues) ·
 | `⌃⌥W` `⌃⌥J` | Trimmed / single line |
 | `⌃⌥A` | Add the clipboard to Templates |
 | `⌃⌥⌫` | Delete the newest item |
-| `⌥V` `⌥S` `⌥C` `⌥P` `⌥L` `⌥Q` | Viewer · Preferences · Clear History · Pause / resume · Lock · Quit |
+| `⌥R` · `⌥V` · `⌥⇧R` | Paste queue: start / stop · paste next · paste all remaining |
+| `⌥E` `⌥S` `⌥C` `⌥P` `⌥L` `⌥Q` | Viewer · Preferences · Clear History · Pause / resume · Lock · Quit |
 | `⌘F` in the Viewer | Search |
 | `⌘,` | Preferences |
 

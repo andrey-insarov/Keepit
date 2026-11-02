@@ -342,3 +342,17 @@
 "Clear History:" = "Geschiedenis wissen:";
 "Quit Keepit:" = "Keepit stoppen:";
 "Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off." = "Hier ingestelde toetsen werken vanuit elke app en staan in het menu naast hun opdrachten. ⌫ in een veld zet de toets uit.";
+"Paste queue" = "Plakwachtrij";
+"Start / stop the queue:" = "Wachtrij starten / stoppen:";
+"Paste next item:" = "Volgend item plakken:";
+"Paste all remaining:" = "Alle resterende plakken:";
+"Idle time (s):" = "Inactiviteitstijd (s):";
+"Join items with:" = "Items scheiden met:";
+"New line" = "Nieuwe regel";
+"Tab" = "Tab";
+"Space" = "Spatie";
+"Nothing" = "Niets";
+"Serial copy-and-paste. Start the queue, copy several things in a row (the menu bar icon counts them), then paste them back one by one in the same order with the key below. The queue ends when the last item has been pasted or after the idle time; ⌘V keeps working as usual." = "Serieel kopiëren en plakken. Start de wachtrij, kopieer meerdere dingen achter elkaar (het menubalkicoon telt ze), en plak ze daarna één voor één in dezelfde volgorde met de toets hieronder. De wachtrij eindigt na het laatste item of na de inactiviteitstijd; ⌘V blijft gewoon werken.";
+"Start Paste Queue" = "Plakwachtrij starten";
+"Stop Paste Queue (%d to paste)" = "Wachtrij stoppen (%d te plakken)";
+"Keepit — paste queue on: %d to paste (%@ next, %@ stop)" = "Keepit — plakwachtrij: %d te plakken (%@ volgende, %@ stop)";

@@ -59,6 +59,12 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     private let prefsHK      = HotKeyRecorderView(frame: .zero)
     private let clearHK      = HotKeyRecorderView(frame: .zero)
     private let quitHK       = HotKeyRecorderView(frame: .zero)
+    private let queueHK      = HotKeyRecorderView(frame: .zero)
+    private let queuePasteHK = HotKeyRecorderView(frame: .zero)
+    private let queueAllHK   = HotKeyRecorderView(frame: .zero)
+    private let queueTimeout = NSTextField()
+    private let queueSep     = NSPopUpButton(frame: .zero, pullsDown: false)
+    private static let separators: [(String, String)] = [("\n", L("New line")), ("\t", L("Tab")), (" ", L("Space")), ("", L("Nothing"))]
     private let ignoreScroll = NSTextView.scrollableTextView()
     private var ignoreApps: NSTextView { ignoreScroll.documentView as! NSTextView }
 
@@ -222,6 +228,10 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
             labeled(L("Paste previous item:"), withHelp(previousHK, L("Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off."))),
             labeled(L("Paste item by number:"), withHelp(numbersHK, L("Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off."))),
             labeled(L("Actions on the latest item:"), withHelp(latestHK, L("Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu."))),
+            header(L("Paste queue")),
+            labeled(L("Start / stop the queue:"), withHelp(queueHK, L("Serial copy-and-paste. Start the queue, copy several things in a row (the menu bar icon counts them), then paste them back one by one in the same order with the key below. The queue ends when the last item has been pasted or after the idle time; ⌘V keeps working as usual."))),
+            pair(L("Paste next item:"), queuePasteHK, L("Paste all remaining:"), queueAllHK),
+            pair(L("Idle time (s):"), numField(queueTimeout), L("Join items with:"), queueSep),
             header(L("Other")),
             pair(L("Viewer:"), viewerHK, L("Preferences:"), prefsHK),
             pair(L("Clear History:"), clearHK, L("Pause / resume recording:"), pauseHK),
@@ -354,7 +364,10 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         lockHK.onChange = { [weak self] hk in self?.draft.lockHotKey = hk }
         pauseHK.allowsClear = true
         pauseHK.onChange = { [weak self] hk in self?.draft.pauseHotKey = hk }
-        for (r, set) in [(viewerHK, { (s: inout Settings, h: HotKey?) in s.viewerHotKey = h }),
+        for (r, set) in [(queueHK, { (s: inout Settings, h: HotKey?) in s.queueHotKey = h }),
+                         (queuePasteHK, { (s: inout Settings, h: HotKey?) in s.queuePasteHotKey = h }),
+                         (queueAllHK, { (s: inout Settings, h: HotKey?) in s.queuePasteAllHotKey = h }),
+                         (viewerHK, { (s: inout Settings, h: HotKey?) in s.viewerHotKey = h }),
                          (prefsHK, { (s: inout Settings, h: HotKey?) in s.preferencesHotKey = h }),
                          (clearHK, { (s: inout Settings, h: HotKey?) in s.clearHistoryHotKey = h }),
                          (quitHK, { (s: inout Settings, h: HotKey?) in s.quitHotKey = h })] {
@@ -411,6 +424,11 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         pauseHK.hotKey = s.pauseHotKey
         viewerHK.hotKey = s.viewerHotKey; prefsHK.hotKey = s.preferencesHotKey
         clearHK.hotKey = s.clearHistoryHotKey; quitHK.hotKey = s.quitHotKey
+        queueHK.hotKey = s.queueHotKey; queuePasteHK.hotKey = s.queuePasteHotKey; queueAllHK.hotKey = s.queuePasteAllHotKey
+        queueTimeout.stringValue = s.queueTimeout == 0 ? "0" : String(Int(s.queueTimeout))
+        queueSep.removeAllItems()
+        for (_, name) in Self.separators { queueSep.addItem(withTitle: name) }
+        queueSep.selectItem(at: Self.separators.firstIndex { $0.0 == s.queueSeparator } ?? 0)
         ignoreApps.string = s.ignoreApps.joined(separator: "\n")
     }
 
@@ -422,6 +440,8 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         s.thumbnailSize = max(16, min(128, thumbSize.integerValue))
         s.pollInterval = max(0.1, Double(pollInterval.stringValue.replacingOccurrences(of: ",", with: ".")) ?? s.pollInterval)
         s.pasteDelay = max(0, Double(pasteDelay.stringValue.replacingOccurrences(of: ",", with: ".")) ?? s.pasteDelay)
+        s.queueTimeout = max(0, Double(queueTimeout.stringValue) ?? s.queueTimeout)
+        s.queueSeparator = Self.separators[max(0, queueSep.indexOfSelectedItem)].0
         s.showThumbnails = showThumbs.state == .on
         s.showTooltips = showTips.state == .on
         s.showPreview = showPreview.state == .on
@@ -455,7 +475,9 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         draft.numberPasteModifiers = d.numberPasteModifiers; draft.lockHotKey = d.lockHotKey; draft.pauseHotKey = d.pauseHotKey
         draft.viewerHotKey = d.viewerHotKey; draft.preferencesHotKey = d.preferencesHotKey
         draft.clearHistoryHotKey = d.clearHistoryHotKey; draft.quitHotKey = d.quitHotKey
-        viewerHK.hotKey = nil; prefsHK.hotKey = nil; clearHK.hotKey = nil; quitHK.hotKey = nil
+        draft.queueHotKey = d.queueHotKey; draft.queuePasteHotKey = d.queuePasteHotKey; draft.queuePasteAllHotKey = d.queuePasteAllHotKey
+        viewerHK.hotKey = d.viewerHotKey; prefsHK.hotKey = d.preferencesHotKey; clearHK.hotKey = d.clearHistoryHotKey; quitHK.hotKey = d.quitHotKey
+        queueHK.hotKey = d.queueHotKey; queuePasteHK.hotKey = d.queuePasteHotKey; queueAllHK.hotKey = d.queuePasteAllHotKey
         historyHK.hotKey = d.historyHotKey; templateHK.hotKey = d.templateHotKey; previousHK.hotKey = d.previousHotKey
         latestHK.hotKey = d.latestActionModifiers.map { HotKey(keyCode: UInt32(kVK_ANSI_1), modifiers: $0) }
         numbersHK.hotKey = d.numberPasteModifiers.map { HotKey(keyCode: UInt32(kVK_ANSI_1), modifiers: $0) }
@@ -472,6 +494,9 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         if let h = s.lockHotKey { all.append((L("Lock Keepit:"), h)) }
         if let h = s.pauseHotKey { all.append((L("Pause / resume recording:"), h)) }
         if let h = s.viewerHotKey { all.append((L("Viewer:"), h)) }
+        if let h = s.queueHotKey { all.append((L("Start / stop the queue:"), h)) }
+        if let h = s.queuePasteHotKey { all.append((L("Paste next item:"), h)) }
+        if let h = s.queuePasteAllHotKey { all.append((L("Paste all remaining:"), h)) }
         if let h = s.preferencesHotKey { all.append((L("Preferences:"), h)) }
         if let h = s.clearHistoryHotKey { all.append((L("Clear History:"), h)) }
         if let h = s.quitHotKey { all.append((L("Quit Keepit:"), h)) }

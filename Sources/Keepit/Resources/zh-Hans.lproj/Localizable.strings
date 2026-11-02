@@ -342,3 +342,17 @@
 "Clear History:" = "清除历史记录：";
 "Quit Keepit:" = "退出 Keepit：";
 "Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off." = "此处设置的按键可在任何应用中使用，并显示在菜单中对应命令旁。在字段中按 ⌫ 可关闭。";
+"Paste queue" = "粘贴队列";
+"Start / stop the queue:" = "开始 / 停止队列：";
+"Paste next item:" = "粘贴下一项：";
+"Paste all remaining:" = "粘贴所有剩余项：";
+"Idle time (s):" = "空闲时间（秒）：";
+"Join items with:" = "项目之间用：";
+"New line" = "换行";
+"Tab" = "制表符";
+"Space" = "空格";
+"Nothing" = "无";
+"Serial copy-and-paste. Start the queue, copy several things in a row (the menu bar icon counts them), then paste them back one by one in the same order with the key below. The queue ends when the last item has been pasted or after the idle time; ⌘V keeps working as usual." = "连续复制粘贴。开始队列，连续复制多项内容（菜单栏图标会计数），然后用下面的快捷键按相同顺序逐个粘贴。粘贴完最后一项或超过空闲时间后队列结束；⌘V 照常使用。";
+"Start Paste Queue" = "开始粘贴队列";
+"Stop Paste Queue (%d to paste)" = "停止队列（剩余 %d 项）";
+"Keepit — paste queue on: %d to paste (%@ next, %@ stop)" = "Keepit — 粘贴队列：剩余 %d 项（%@ 下一项，%@ 停止）";

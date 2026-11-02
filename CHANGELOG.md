@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.10.0 — 2026-11-02
+
+- **Paste queue** — serial copy-and-paste. `⌥R` starts it; every ⌘C adds to a counter next to the menu bar icon (`● 3`); `⌥V` pastes the items back one by one in the order they were copied; `⌥⇧R` pastes everything left, joined with a line break, tab, space or nothing. The queue ends by itself after the last item or after two minutes without activity (adjustable), ⌘V works as always, and while it is on the history menu marks its items (▶ next, ○ queued, ✓ pasted)
+- The Viewer's default hot key is now `⌥E`; `⌥V` belongs to the paste queue. Existing settings that had the Viewer on ⌥V are moved to ⌥E automatically
+- Preferences → Hot keys: a *Paste queue* block (three keys, idle time, separator); *Reset to Defaults* now also refills the Viewer / Preferences / Clear History / Quit fields instead of blanking them
+
 ## 2.9.3 — 2026-11-02
 
 - Fix: 2.9.2 was built without the Developer ID provisioning profile, so Touch ID unlock stopped working and Keepit asked for the password. This build restores it; the release job now refuses to run without the profile

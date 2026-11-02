@@ -342,3 +342,17 @@
 "Clear History:" = "履歴を消去:";
 "Quit Keepit:" = "Keepit を終了:";
 "Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off." = "ここで設定したキーはどのアプリからでも使え、メニューのコマンドの横に表示されます。フィールドで ⌫ を押すとオフになります。";
+"Paste queue" = "貼り付けキュー";
+"Start / stop the queue:" = "キューの開始 / 停止:";
+"Paste next item:" = "次の項目を貼り付け:";
+"Paste all remaining:" = "残りをすべて貼り付け:";
+"Idle time (s):" = "待機時間 (秒):";
+"Join items with:" = "項目の区切り:";
+"New line" = "改行";
+"Tab" = "タブ";
+"Space" = "スペース";
+"Nothing" = "なし";
+"Serial copy-and-paste. Start the queue, copy several things in a row (the menu bar icon counts them), then paste them back one by one in the same order with the key below. The queue ends when the last item has been pasted or after the idle time; ⌘V keeps working as usual." = "連続コピー＆ペースト。キューを開始して複数の項目を続けてコピーし（メニューバーのアイコンが数えます）、下のキーで同じ順序で 1 つずつ貼り付けます。最後の項目を貼り付けるか待機時間が過ぎるとキューは終了します。⌘V は通常どおり使えます。";
+"Start Paste Queue" = "貼り付けキューを開始";
+"Stop Paste Queue (%d to paste)" = "キューを停止（残り %d）";
+"Keepit — paste queue on: %d to paste (%@ next, %@ stop)" = "Keepit — 貼り付けキュー: 残り %d（%@ 次へ、%@ 停止）";

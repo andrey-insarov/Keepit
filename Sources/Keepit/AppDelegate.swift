@@ -26,6 +26,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     /// App that was frontmost when a popup menu opened — paste goes back there.
     private var pasteTarget: NSRunningApplication?
+    /// Serial copy-and-paste; see PasteQueue.
+    let queue = PasteQueue()
     private var menuSelectionMade = false
     private var popupActive = false
     /// Menus of ours currently tracking (history, template, action submenus); global hot keys pause meanwhile.
@@ -69,9 +71,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         monitor.onCapture = { [weak self] item in
             self?.history.add(item)
+            self?.queue.record(item)
             self?.viewer?.refresh()
         }
         monitor.start()
+        queue.timeout = settings.queueTimeout
+        queue.onChange = { [weak self] in self?.updateStatusIcon() }
+        queue.onAutoStop = { [weak self] in self?.queueBlink(times: 1) }
 
         lastExternalApp = NSWorkspace.shared.frontmostApplication
         NSWorkspace.shared.notificationCenter.addObserver(
@@ -183,6 +189,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc func lock() {
         guard Vault.isEnabled, !isLocked else { return }
         isLocked = true
+        queue.stop()
         viewer?.close()
         preferencesWindow?.close()
         monitor.stop()
@@ -217,7 +224,61 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         b.image?.isTemplate = true
         b.toolTip = isLocked ? L("Keepit — locked, click to unlock")
                   : paused ? L("Keepit — recording paused")
+                  : queue.isActive ? LF("Keepit — paste queue on: %d to paste (%@ next, %@ stop)", queue.remaining,
+                                        settings.queuePasteHotKey?.displayString ?? "–", settings.queueHotKey?.displayString ?? "–")
                   : LF("Keepit — %@ history, %@ templates", settings.historyHotKey.displayString, settings.templateHotKey.displayString)
+        // Paste queue: a red dot and the number of items still to paste next to the icon.
+        if queue.isActive, !isLocked {
+            b.imagePosition = .imageLeading
+            let font = NSFont.monospacedDigitSystemFont(ofSize: NSFont.systemFontSize(for: .small), weight: .semibold)
+            let t = NSMutableAttributedString(string: "●", attributes: [.foregroundColor: queueDotDimmed ? NSColor.tertiaryLabelColor : NSColor.systemRed, .font: font, .baselineOffset: 1])
+            t.append(NSAttributedString(string: " \(queue.remaining)", attributes: [.foregroundColor: NSColor.labelColor, .font: font]))
+            b.attributedTitle = t
+            statusItem.length = NSStatusItem.variableLength
+        } else {
+            b.attributedTitle = NSAttributedString(string: "")
+            b.title = ""
+            b.imagePosition = .imageOnly
+            statusItem.length = NSStatusItem.squareLength
+        }
+    }
+
+    // MARK: - Paste queue
+
+    private var queueDotDimmed = false
+
+    /// Blink the red dot a few times (on start, and once when the queue ends by itself).
+    private func queueBlink(times: Int) {
+        var left = times * 2
+        Timer.scheduledTimer(withTimeInterval: 0.22, repeats: true) { [weak self] t in
+            guard let self else { t.invalidate(); return }
+            left -= 1
+            self.queueDotDimmed = left % 2 == 1
+            self.updateStatusIcon()
+            if left <= 0 { t.invalidate(); self.queueDotDimmed = false; self.updateStatusIcon() }
+        }
+    }
+
+    @objc func toggleQueue() {
+        guard !isLocked else { NSSound.beep(); return }
+        queue.toggle()
+        if queue.isActive { queueBlink(times: 3) }
+    }
+
+    /// ⌥V by default: paste the next queued item into the front app.
+    func pasteFromQueue() {
+        guard !isLocked, queue.isActive else { NSSound.beep(); return }
+        guard let item = queue.take() else { NSSound.beep(); queue.stop(); return }
+        let target = NSWorkspace.shared.frontmostApplication
+        Paster.paste(item, into: target, monitor: monitor, settings: settings, sendKey: settings.pasteAfterSelect)
+    }
+
+    /// ⌥⇧R by default: paste everything still queued as one text, items joined with the chosen separator.
+    func pasteAllFromQueue() {
+        guard !isLocked, queue.isActive else { NSSound.beep(); return }
+        guard let text = queue.takeAll(separator: settings.queueSeparator) else { NSSound.beep(); return }
+        let target = NSWorkspace.shared.frontmostApplication
+        Paster.paste(ClipItem.text(text), into: target, monitor: monitor, settings: settings, sendKey: settings.pasteAfterSelect)
     }
 
     // MARK: - Password / encryption
@@ -442,9 +503,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             || old.latestActionModifiers != new.latestActionModifiers || old.numberPasteModifiers != new.numberPasteModifiers
             || old.lockHotKey != new.lockHotKey || old.pauseHotKey != new.pauseHotKey
             || old.viewerHotKey != new.viewerHotKey || old.preferencesHotKey != new.preferencesHotKey
-            || old.clearHistoryHotKey != new.clearHistoryHotKey || old.quitHotKey != new.quitHotKey {
+            || old.clearHistoryHotKey != new.clearHistoryHotKey || old.quitHotKey != new.quitHotKey
+            || old.queueHotKey != new.queueHotKey || old.queuePasteHotKey != new.queuePasteHotKey
+            || old.queuePasteAllHotKey != new.queuePasteAllHotKey {
             registerHotKeys()
         }
+        queue.timeout = new.queueTimeout
         if old.launchAtLogin != new.launchAtLogin {
             setLaunchAtLogin(new.launchAtLogin)
         }
@@ -498,6 +562,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             failed.append(hk.displayString)
         }
         if let hk = settings.clearHistoryHotKey, !hotKeys.register(hk, handler: { [weak self] in self?.clearHistory() }) {
+            failed.append(hk.displayString)
+        }
+        if let hk = settings.queueHotKey, !hotKeys.register(hk, handler: { [weak self] in self?.toggleQueue() }) {
+            failed.append(hk.displayString)
+        }
+        if let hk = settings.queuePasteHotKey, !hotKeys.register(hk, handler: { [weak self] in self?.pasteFromQueue() }) {
+            failed.append(hk.displayString)
+        }
+        if let hk = settings.queuePasteAllHotKey, !hotKeys.register(hk, handler: { [weak self] in self?.pasteAllFromQueue() }) {
             failed.append(hk.displayString)
         }
         if let hk = settings.quitHotKey, !hotKeys.register(hk, handler: { [weak self] in self?.quit() }) {
@@ -725,6 +798,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         let items = menuBuilder.historyItems(history.items, target: self, action: #selector(historyChosen(_:)),
                                              numberMods: settings.numberPasteModifiers, commandAccelerators: searching)
+        markQueue(items)
         if items.isEmpty {
             let e = NSMenuItem(title: L("(History is empty)"), action: nil, keyEquivalent: "")
             e.isEnabled = false
@@ -751,6 +825,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     private var historySearchItem: MenuSearchItem?
+
+    /// While the paste queue is on, show where it stands: ▶ next to paste, ○ still queued, ✓ already pasted.
+    private func markQueue(_ items: [NSMenuItem]) {
+        guard queue.isActive else { return }
+        for mi in items {
+            guard let id = mi.representedObject as? UUID else { continue }
+            let mark = queue.isNext(id) ? "▶ " : queue.isQueued(id) ? "○ " : queue.wasPasted(id) ? "✓ " : nil
+            guard let mark else { continue }
+            if let at = mi.attributedTitle {
+                let m = NSMutableAttributedString(attributedString: at)
+                m.insert(NSAttributedString(string: mark, attributes: at.attributes(at: 0, effectiveRange: nil)), at: 0)
+                mi.attributedTitle = m
+            } else {
+                mi.title = mark + mi.title
+            }
+        }
+    }
 
     /// Swap the history entries of an open menu for the ones matching `query` (the rest of the menu stays).
     private func refilterHistoryMenu(_ menu: NSMenu, query: String) {
@@ -791,6 +882,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             out.append(item(LF("Resume Recording (paused until %@)", f.string(from: until)), #selector(resumeRecording), hotKey: settings.pauseHotKey))
         } else {
             out.append(item(L("Pause Recording for 10 Minutes"), #selector(pauseRecording), hotKey: settings.pauseHotKey))
+        }
+        if queue.isActive {
+            out.append(item(LF("Stop Paste Queue (%d to paste)", queue.remaining), #selector(toggleQueue), hotKey: settings.queueHotKey))
+        } else {
+            out.append(item(L("Start Paste Queue"), #selector(toggleQueue), hotKey: settings.queueHotKey))
         }
         if Vault.isEnabled {
             out.append(item(L("Lock Keepit"), #selector(lock), hotKey: settings.lockHotKey))

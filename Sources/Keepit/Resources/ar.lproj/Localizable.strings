@@ -342,3 +342,17 @@
 "Clear History:" = "مسح السجل:";
 "Quit Keepit:" = "إنهاء Keepit:";
 "Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off." = "تعمل المفاتيح المعيّنة هنا من أي تطبيق وتظهر بجانب أوامرها في القائمة. ⌫ في الحقل يوقف المفتاح.";
+"Paste queue" = "قائمة انتظار اللصق";
+"Start / stop the queue:" = "بدء / إيقاف القائمة:";
+"Paste next item:" = "لصق العنصر التالي:";
+"Paste all remaining:" = "لصق كل ما تبقى:";
+"Idle time (s):" = "مهلة الخمول (ث):";
+"Join items with:" = "الفاصل بين العناصر:";
+"New line" = "سطر جديد";
+"Tab" = "جدولة";
+"Space" = "مسافة";
+"Nothing" = "لا شيء";
+"Serial copy-and-paste. Start the queue, copy several things in a row (the menu bar icon counts them), then paste them back one by one in the same order with the key below. The queue ends when the last item has been pasted or after the idle time; ⌘V keeps working as usual." = "نسخ ولصق متسلسل. ابدأ القائمة، انسخ عدة عناصر على التوالي (تعدّها أيقونة شريط القوائم)، ثم الصقها واحدًا تلو الآخر بالترتيب نفسه بالمفتاح أدناه. تنتهي القائمة بعد لصق آخر عنصر أو بعد مهلة الخمول؛ يظل ⌘V يعمل كالمعتاد.";
+"Start Paste Queue" = "بدء قائمة انتظار اللصق";
+"Stop Paste Queue (%d to paste)" = "إيقاف القائمة (المتبقي %d)";
+"Keepit — paste queue on: %d to paste (%@ next, %@ stop)" = "Keepit — قائمة اللصق: المتبقي %d (%@ التالي، %@ إيقاف)";

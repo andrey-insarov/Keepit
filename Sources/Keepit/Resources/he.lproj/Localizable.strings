@@ -342,3 +342,17 @@
 "Clear History:" = "נקה היסטוריה:";
 "Quit Keepit:" = "צא מ‑Keepit:";
 "Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off." = "מקשים שהוגדרו כאן פועלים מכל יישום ומוצגים ליד הפקודות בתפריט. ⌫ בשדה מכבה את המקש.";
+"Paste queue" = "תור הדבקה";
+"Start / stop the queue:" = "הפעלת / עצירת התור:";
+"Paste next item:" = "הדבקת הפריט הבא:";
+"Paste all remaining:" = "הדבקת כל השאר:";
+"Idle time (s):" = "זמן חוסר פעילות (שנ׳):";
+"Join items with:" = "הפרדה בין פריטים:";
+"New line" = "שורה חדשה";
+"Tab" = "טאב";
+"Space" = "רווח";
+"Nothing" = "כלום";
+"Serial copy-and-paste. Start the queue, copy several things in a row (the menu bar icon counts them), then paste them back one by one in the same order with the key below. The queue ends when the last item has been pasted or after the idle time; ⌘V keeps working as usual." = "העתקה והדבקה בסדרה. הפעילו את התור, העתיקו כמה פריטים ברצף (סמל שורת התפריטים סופר אותם), ואז הדביקו אותם אחד-אחד באותו סדר עם המקש שלמטה. התור מסתיים אחרי הפריט האחרון או אחרי זמן חוסר הפעילות; ⌘V ממשיך לעבוד כרגיל.";
+"Start Paste Queue" = "הפעלת תור הדבקה";
+"Stop Paste Queue (%d to paste)" = "עצירת התור (נותרו %d)";
+"Keepit — paste queue on: %d to paste (%@ next, %@ stop)" = "Keepit — תור הדבקה: נותרו %d (%@ הבא, %@ עצירה)";

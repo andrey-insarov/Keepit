@@ -342,3 +342,17 @@
 "Clear History:" = "Effacer l’historique :";
 "Quit Keepit:" = "Quitter Keepit :";
 "Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off." = "Les raccourcis définis ici fonctionnent depuis n’importe quelle app et apparaissent à côté de leurs commandes dans le menu. ⌫ dans un champ désactive le raccourci.";
+"Paste queue" = "File de collage";
+"Start / stop the queue:" = "Démarrer / arrêter la file :";
+"Paste next item:" = "Coller l’élément suivant :";
+"Paste all remaining:" = "Coller tout le reste :";
+"Idle time (s):" = "Délai d’inactivité (s) :";
+"Join items with:" = "Séparer les éléments par :";
+"New line" = "Saut de ligne";
+"Tab" = "Tabulation";
+"Space" = "Espace";
+"Nothing" = "Rien";
+"Serial copy-and-paste. Start the queue, copy several things in a row (the menu bar icon counts them), then paste them back one by one in the same order with the key below. The queue ends when the last item has been pasted or after the idle time; ⌘V keeps working as usual." = "Copier-coller en série. Démarrez la file, copiez plusieurs éléments à la suite (l’icône de la barre des menus les compte), puis collez-les un par un dans le même ordre avec la touche ci-dessous. La file se termine après le dernier élément ou après le délai d’inactivité ; ⌘V continue de fonctionner normalement.";
+"Start Paste Queue" = "Démarrer la file de collage";
+"Stop Paste Queue (%d to paste)" = "Arrêter la file (%d restants)";
+"Keepit — paste queue on: %d to paste (%@ next, %@ stop)" = "Keepit — file de collage : %d restants (%@ suivant, %@ stop)";

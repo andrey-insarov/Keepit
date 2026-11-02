@@ -12,6 +12,7 @@ struct HotKey: Codable, Equatable {
     static let optionT = option(kVK_ANSI_T)
     static let optionM = option(kVK_ANSI_M)
     static let optionShiftV = HotKey(keyCode: UInt32(kVK_ANSI_V), modifiers: UInt32(optionKey | shiftKey))
+    static func optionShift(_ key: Int) -> HotKey { HotKey(keyCode: UInt32(key), modifiers: UInt32(optionKey | shiftKey)) }
     /// Letters of the "actions on the latest item" hot keys (<mods> + letter), shared by the menu and the registry.
     enum LatestAction: CaseIterable {
         case plain, upper, lower, title, sentence, trim, singleLine, addToTemplates, delete
@@ -123,11 +124,18 @@ struct Settings: Codable, Equatable {
     var latestActionModifiers: UInt32? = HotKey.controlOption  // <mods>+V/U/L/T/S/W/J/A/⌫ act on item #1; nil = off
     var lockHotKey: HotKey? = HotKey.option(kVK_ANSI_L)         // global "Lock Keepit"
     var pauseHotKey: HotKey? = HotKey.option(kVK_ANSI_P)        // global "Pause recording for 10 minutes"
-    var viewerHotKey: HotKey? = HotKey.option(kVK_ANSI_V)       // global "Viewer…"
+    var viewerHotKey: HotKey? = HotKey.option(kVK_ANSI_E)       // global "Viewer…" (was ⌥V before 2.10; ⌥V now pastes from the queue)
     var preferencesHotKey: HotKey? = HotKey.option(kVK_ANSI_S)  // global "Preferences…"
     var clearHistoryHotKey: HotKey? = HotKey.option(kVK_ANSI_C) // global "Clear History"
     var quitHotKey: HotKey? = HotKey.option(kVK_ANSI_Q)         // global "Quit Keepit"
     var pasteAfterSelect = true    // action.paste
+
+    // [queue] — serial copy-and-paste
+    var queueHotKey: HotKey? = HotKey.option(kVK_ANSI_R)         // start / stop the paste queue ("Record")
+    var queuePasteHotKey: HotKey? = HotKey.option(kVK_ANSI_V)    // paste the next queued item
+    var queuePasteAllHotKey: HotKey? = HotKey.optionShift(kVK_ANSI_R) // paste everything left, joined
+    var queueTimeout: Double = 120 // seconds without a copy or a paste before the queue switches off (0 = never)
+    var queueSeparator = "\n"      // between items for "paste all"
 
     // [sendkey]
     var pasteDelay: Double = 0.08  // seconds between activating target app and sending the key
@@ -181,6 +189,11 @@ struct Settings: Codable, Equatable {
         case clearHistoryHotKey
         case quitHotKey
         case pasteAfterSelect
+        case queueHotKey
+        case queuePasteHotKey
+        case queuePasteAllHotKey
+        case queueTimeout
+        case queueSeparator
         case pasteDelay
         case pasteKeys
         case ignoreApps
@@ -230,8 +243,20 @@ struct Settings: Codable, Equatable {
         preferencesHotKey = c.contains(.preferencesHotKey) ? try c.decodeIfPresent(HotKey.self, forKey: .preferencesHotKey) : d.preferencesHotKey
         clearHistoryHotKey = c.contains(.clearHistoryHotKey) ? try c.decodeIfPresent(HotKey.self, forKey: .clearHistoryHotKey) : d.clearHistoryHotKey
         quitHotKey       = c.contains(.quitHotKey) ? try c.decodeIfPresent(HotKey.self, forKey: .quitHotKey) : d.quitHotKey
+        queueHotKey      = c.contains(.queueHotKey) ? try c.decodeIfPresent(HotKey.self, forKey: .queueHotKey) : d.queueHotKey
+        queuePasteHotKey = c.contains(.queuePasteHotKey) ? try c.decodeIfPresent(HotKey.self, forKey: .queuePasteHotKey) : d.queuePasteHotKey
+        queuePasteAllHotKey = c.contains(.queuePasteAllHotKey) ? try c.decodeIfPresent(HotKey.self, forKey: .queuePasteAllHotKey) : d.queuePasteAllHotKey
+        queueTimeout     = try c.decodeIfPresent(Double.self, forKey: .queueTimeout)     ?? d.queueTimeout
+        queueSeparator   = try c.decodeIfPresent(String.self, forKey: .queueSeparator)   ?? d.queueSeparator
+        // 2.10: ⌥V moved from the Viewer to the paste queue. A settings file from before the queue
+        // existed keeps its Viewer on ⌥V only if the user had chosen it; the old default moves to ⌥E.
+        if !c.contains(.queuePasteHotKey), viewerHotKey == HotKey.option(kVK_ANSI_V) {
+            viewerHotKey = HotKey.option(kVK_ANSI_E)
+            if isTaken(viewerHotKey) { viewerHotKey = nil }
+        }
         // New defaults must not shadow keys an older settings file already uses (history was ⌥C before 2.9.1).
-        for key in [CodingKeys.viewerHotKey, .preferencesHotKey, .clearHistoryHotKey, .pauseHotKey, .lockHotKey, .quitHotKey]
+        for key in [CodingKeys.viewerHotKey, .preferencesHotKey, .clearHistoryHotKey, .pauseHotKey, .lockHotKey, .quitHotKey,
+                    .queueHotKey, .queuePasteHotKey, .queuePasteAllHotKey]
         where !c.contains(key) {
             switch key {
             case .viewerHotKey:       if isTaken(viewerHotKey) { viewerHotKey = nil }
@@ -240,6 +265,9 @@ struct Settings: Codable, Equatable {
             case .pauseHotKey:        if isTaken(pauseHotKey) { pauseHotKey = nil }
             case .lockHotKey:         if isTaken(lockHotKey) { lockHotKey = nil }
             case .quitHotKey:         if isTaken(quitHotKey) { quitHotKey = nil }
+            case .queueHotKey:        if isTaken(queueHotKey) { queueHotKey = nil }
+            case .queuePasteHotKey:   if isTaken(queuePasteHotKey) { queuePasteHotKey = nil }
+            case .queuePasteAllHotKey: if isTaken(queuePasteAllHotKey) { queuePasteAllHotKey = nil }
             default: break
             }
         }
@@ -292,6 +320,11 @@ struct Settings: Codable, Equatable {
         try c.encode(clearHistoryHotKey, forKey: .clearHistoryHotKey)
         try c.encode(quitHotKey, forKey: .quitHotKey)
         try c.encode(pasteAfterSelect, forKey: .pasteAfterSelect)
+        try c.encode(queueHotKey, forKey: .queueHotKey)
+        try c.encode(queuePasteHotKey, forKey: .queuePasteHotKey)
+        try c.encode(queuePasteAllHotKey, forKey: .queuePasteAllHotKey)
+        try c.encode(queueTimeout, forKey: .queueTimeout)
+        try c.encode(queueSeparator, forKey: .queueSeparator)
         try c.encode(pasteDelay, forKey: .pasteDelay)
         try c.encode(pasteKeys, forKey: .pasteKeys)
         try c.encode(ignoreApps, forKey: .ignoreApps)
@@ -310,7 +343,8 @@ struct Settings: Codable, Equatable {
     private func isTaken(_ hk: HotKey?) -> Bool {
         guard let hk else { return false }
         let all: [HotKey?] = [historyHotKey, templateHotKey, previousHotKey, viewerHotKey, preferencesHotKey,
-                              clearHistoryHotKey, pauseHotKey, lockHotKey, quitHotKey]
+                              clearHistoryHotKey, pauseHotKey, lockHotKey, quitHotKey,
+                              queueHotKey, queuePasteHotKey, queuePasteAllHotKey]
         return all.compactMap { $0 }.filter { $0 == hk }.count > 1
     }
 
@@ -323,6 +357,7 @@ struct Settings: Codable, Equatable {
         thumbnailSize = Limits.clamp(thumbnailSize, 16, 128)
         pollInterval = Limits.clamp(pollInterval, 0.1, 5)
         pasteDelay = Limits.clamp(pasteDelay, 0, 5)
+        queueTimeout = queueTimeout <= 0 ? 0 : Limits.clamp(queueTimeout, 10, 3600)
         maxImageBytes = Limits.clamp(maxImageBytes, 64 * 1024, 100 * 1024 * 1024)
         maxTextBytes = Limits.clamp(maxTextBytes, 1024, 50 * 1024 * 1024)
         maxFileListEntries = Limits.clamp(maxFileListEntries, 1, 10_000)

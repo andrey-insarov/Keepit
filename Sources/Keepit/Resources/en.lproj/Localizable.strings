@@ -377,3 +377,18 @@
 "Clear History:" = "Clear History:";
 "Quit Keepit:" = "Quit Keepit:";
 "Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off." = "Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off.";
+
+"Paste queue" = "Paste queue";
+"Start / stop the queue:" = "Start / stop the queue:";
+"Paste next item:" = "Paste next item:";
+"Paste all remaining:" = "Paste all remaining:";
+"Idle time (s):" = "Idle time (s):";
+"Join items with:" = "Join items with:";
+"New line" = "New line";
+"Tab" = "Tab";
+"Space" = "Space";
+"Nothing" = "Nothing";
+"Serial copy-and-paste. Start the queue, copy several things in a row (the menu bar icon counts them), then paste them back one by one in the same order with the key below. The queue ends when the last item has been pasted or after the idle time; ⌘V keeps working as usual." = "Serial copy-and-paste. Start the queue, copy several things in a row (the menu bar icon counts them), then paste them back one by one in the same order with the key below. The queue ends when the last item has been pasted or after the idle time; ⌘V keeps working as usual.";
+"Start Paste Queue" = "Start Paste Queue";
+"Stop Paste Queue (%d to paste)" = "Stop Paste Queue (%d to paste)";
+"Keepit — paste queue on: %d to paste (%@ next, %@ stop)" = "Keepit — paste queue on: %d to paste (%@ next, %@ stop)";
