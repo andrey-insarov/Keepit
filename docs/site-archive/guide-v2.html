@@ -1,0 +1,567 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>User guide — Keepit</title><link rel="icon" href="img/icon.png"><link rel="apple-touch-icon" href="img/icon.png">
+<meta name="description" content="How to use Keepit, the clipboard manager for macOS: history menu, hot keys, templates and placeholders, the Viewer, security, automation.">
+<meta property="og:title" content="User guide — Keepit"><meta property="og:description" content="How to use Keepit, the clipboard manager for macOS: history menu, hot keys, templates and placeholders, the Viewer, security, automation."><meta property="og:image" content="https://keep.it.com/img/menu.png"><meta property="og:url" content="https://keep.it.com/guide.html">
+<style>
+:root{--paper:#fbfbfd;--ink:#0f1222;--ink-2:#4b4f63;--ink-3:#8a8ea3;--blue:#2f4fd1;--blue-deep:#1f3aa6;--blue-tint:#eef2ff;--line:#e3e5ef;--key:#fff;--key-edge:#cfd2de;--win:#fff;--sel:#2f5cf0}
+@media(prefers-color-scheme:dark){:root{--paper:#0c0d14;--ink:#f2f3f8;--ink-2:#b7bacb;--ink-3:#7c8097;--blue:#7d9bff;--blue-deep:#a9bdff;--blue-tint:#151b35;--line:#23263a;--key:#1b1e2e;--key-edge:#3a3e56;--win:#1a1c28;--sel:#3d6bff}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;font:17px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+:focus-visible{outline:3px solid var(--sel);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:20;backdrop-filter:saturate(180%) blur(18px);background:color-mix(in srgb,var(--paper) 78%,transparent);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:650;color:var(--ink);font-size:17px}.brand img{width:26px;height:26px;border-radius:6px}
+nav{display:flex;gap:24px}nav a{color:var(--ink-2);font-size:15px}nav a:hover{color:var(--ink);text-decoration:none}
+@media(max-width:700px){nav a:not(.gh){display:none}}
+main.wrap{display:grid;grid-template-columns:230px minmax(0,1fr);gap:56px;padding-top:48px;padding-bottom:96px}
+main.wrap.narrow{grid-template-columns:minmax(0,1fr);max-width:820px}
+aside{position:sticky;top:76px;align-self:start;max-height:calc(100vh - 96px);overflow:auto;font-size:14px;line-height:1.45;padding-right:8px}
+aside .ttl{font-weight:650;color:var(--ink);margin:0 0 10px;font-size:13px}
+aside ol{list-style:none;margin:0;padding:0}aside li{margin:0}
+aside a{display:block;color:var(--ink-2);padding:4px 0 4px 12px;border-left:2px solid var(--line)}
+aside a:hover{color:var(--ink);text-decoration:none}aside a.on{color:var(--blue);border-left-color:var(--blue)}
+aside ol ol a{padding-left:24px;font-size:13px;color:var(--ink-3)}
+@media(max-width:900px){main.wrap{grid-template-columns:minmax(0,1fr);gap:0}aside{position:static;max-height:none;margin-bottom:32px;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--win)}aside ol ol{display:none}}
+article{max-width:72ch;min-width:0}
+article h1{font-size:clamp(34px,5vw,52px);line-height:1.05;letter-spacing:-.03em;font-weight:750;margin:0 0 .5em}
+article h1+p{font-size:19px;color:var(--ink-2)}
+article h2{font-size:30px;line-height:1.15;letter-spacing:-.02em;font-weight:700;margin:2.2em 0 .6em;padding-top:1em;border-top:1px solid var(--line)}
+article h3{font-size:20px;font-weight:650;margin:1.8em 0 .5em}
+article p,article li{color:var(--ink);}article li{margin:.25em 0}
+article hr{border:0;border-top:1px solid var(--line);margin:2.5em 0}
+code{font:.9em ui-monospace,"SF Mono",Menlo,monospace;background:color-mix(in srgb,var(--ink) 7%,transparent);padding:2px 6px;border-radius:6px;white-space:nowrap}
+pre{background:var(--blue-tint);padding:14px 18px;border-radius:12px;overflow:auto;font-size:14px;line-height:1.6;max-width:100%}pre code{background:none;padding:0;white-space:pre-wrap;word-break:break-word}
+kbd.k{display:inline-block;min-width:1.7em;padding:0 .4em;text-align:center;font:600 .82em/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text",Helvetica,Arial,sans-serif;color:var(--ink);background:var(--key);border:1px solid var(--key-edge);border-bottom-width:2px;border-radius:6px;white-space:nowrap;vertical-align:baseline}
+.tbl{overflow-x:auto;margin:1.2em 0}table{border-collapse:collapse;width:100%;font-size:15.5px}th,td{text-align:left;padding:9px 12px 9px 0;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--ink-3);font-weight:600;font-size:14px}
+td:first-child{white-space:nowrap}@media(max-width:600px){td:first-child{white-space:normal}}
+figure.shot{margin:1.6em 0;width:100%}figure.shot a{display:block}figure.shot img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line);box-shadow:0 12px 32px -8px rgba(15,18,34,.25);cursor:zoom-in}
+figure.shot figcaption{font-size:14px;color:var(--ink-3);margin-top:8px}
+.slot{border:2px dashed var(--line);border-radius:12px;padding:28px;text-align:center;color:var(--ink-3);font-size:15px}
+.contents{display:none}
+footer{border-top:1px solid var(--line);padding:36px 0 64px;color:var(--ink-3);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}footer a{color:var(--ink-2)}
+#lb{position:fixed;inset:0;background:rgba(5,7,20,.86);display:none;align-items:center;justify-content:center;padding:24px;z-index:30;cursor:zoom-out}
+#lb.on{display:flex}#lb img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+</style></head>
+<body><header><div class="wrap">
+  <a class="brand" href="index.html"><img src="img/icon.png" alt="">Keepit</a>
+  <nav><a href="index.html#features">Features</a><a href="guide.html">Guide</a><a href="security.html">Security</a><a href="support.html">Support</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a></nav>
+</div></header>
+<main class="wrap"><aside aria-label="Contents"><p class="ttl">On this page</p><ol><li><a href="#part-1-getting-started">Part 1 — Getting started</a><ol><li><a href="#install">Install</a></li><li><a href="#first-launch">First launch</a></li></ol></li><li><a href="#part-2-everyday-use">Part 2 — Everyday use</a><ol><li><a href="#the-history-menu">The history menu</a></li><li><a href="#search-and-preview">Search and preview</a></li><li><a href="#paste-without-the-menu">Paste without the menu</a></li><li><a href="#the-extended-menu">The extended menu</a></li></ol></li><li><a href="#part-3-templates">Part 3 — Templates</a><ol><li><a href="#creating-and-organising">Creating and organising</a></li><li><a href="#placeholders">Placeholders</a></li><li><a href="#templates-that-ask-questions">Templates that ask questions</a></li></ol></li><li><a href="#part-4-the-viewer">Part 4 — The Viewer</a></li><li><a href="#part-5-preferences">Part 5 — Preferences</a></li><li><a href="#part-6-security">Part 6 — Security</a><ol><li><a href="#password-and-encryption">Password and encryption</a></li><li><a href="#touch-id">Touch ID</a></li><li><a href="#recovery-phrase">Recovery phrase</a></li><li><a href="#backup">Backup</a></li></ol></li><li><a href="#part-7-advanced">Part 7 — Advanced</a><ol><li><a href="#automation-the-keepit-url-scheme">Automation: the keepit:// URL scheme</a></li><li><a href="#updates">Updates</a></li><li><a href="#uninstalling">Uninstalling</a></li></ol></li><li><a href="#reference">Reference</a><ol><li><a href="#troubleshooting">Troubleshooting</a></li><li><a href="#keyboard-cheat-sheet">Keyboard cheat sheet</a></li><li><a href="#placeholder-cheat-sheet">Placeholder cheat sheet</a></li></ol></li></ol></aside><article><h1 id="keepit-user-guide">Keepit user guide</h1>
+<p>Keepit is a clipboard history and template manager for macOS. It lives in the menu bar, remembers
+everything you copy, and pastes any of it back with a hot key. All shortcuts below are the defaults;
+each can be changed in <em>Preferences → Hot keys</em>.</p>
+<figure class="shot" style="max-width:570px"><a href="img/guide/menu.png" class="zoom" title="Open full size"><img src="img/guide/menu.png" alt="The history menu" width="570" height="415" loading="lazy"></a><figcaption>The history menu</figcaption></figure>
+
+<h2 id="part-1-getting-started">Part 1 — Getting started</h2>
+<h3 id="install">Install</h3>
+<p><strong>Homebrew</strong> — recommended, because <code>brew upgrade</code> keeps it current:</p>
+<pre><code class="language-bash">brew tap andrey-insarov/keepit https://github.com/andrey-insarov/Keepit
+brew install --cask andrey-insarov/keepit/keepit
+</code></pre>
+<p><strong>DMG</strong> — download <code>Keepit-&lt;version&gt;.dmg</code> from the
+<a href="https://github.com/andrey-insarov/Keepit/releases/latest">latest release</a>, open it and drag Keepit
+into <em>Applications</em>.</p>
+<figure class="shot" style="max-width:586px"><a href="img/guide/dmg.png" class="zoom" title="Open full size"><img src="img/guide/dmg.png" alt="The DMG: drag Keepit to Applications" width="586" height="344" loading="lazy"></a><figcaption>The DMG: drag Keepit to Applications</figcaption></figure>
+<p>The first time you open the app, macOS confirms that it came from the Internet and was checked by
+Apple. Click <em>Open</em>.</p>
+<figure class="shot" style="max-width:286px"><a href="img/guide/gatekeeper.png" class="zoom" title="Open full size"><img src="img/guide/gatekeeper.png" alt="macOS Gatekeeper confirmation" width="286" height="274" loading="lazy"></a><figcaption>macOS Gatekeeper confirmation</figcaption></figure>
+<p>Keepit is signed and notarized, updates itself, and runs natively on Apple silicon and Intel Macs
+with macOS 13 Ventura or newer.</p>
+<h3 id="first-launch">First launch</h3>
+<p>Keepit is a menu-bar app: no Dock icon, no window until you open one. After the first launch the 📎
+icon appears in the menu bar, and Keepit asks two things.</p>
+<p><strong>1. The Accessibility permission.</strong> To paste for you, Keepit sends ⌘V to the app you were working
+in; macOS allows that only for apps listed under <em>System Settings → Privacy &amp; Security →
+Accessibility</em>. Click <em>Open System Settings</em> and switch Keepit on. Without it Keepit still records
+and copies, but you press ⌘V yourself.</p>
+<figure class="shot" style="max-width:316px"><a href="img/guide/accessibility-prompt.png" class="zoom" title="Open full size"><img src="img/guide/accessibility-prompt.png" alt="Keepit asks for the Accessibility permission" width="316" height="410" loading="lazy"></a><figcaption>Keepit asks for the Accessibility permission</figcaption></figure>
+<figure class="shot" style="max-width:492px"><a href="img/guide/accessibility-settings.png" class="zoom" title="Open full size"><img src="img/guide/accessibility-settings.png" alt="Keepit enabled under Privacy &amp; Security → Accessibility" width="492" height="373" loading="lazy"></a><figcaption>Keepit enabled under Privacy &amp; Security → Accessibility</figcaption></figure>
+<p><strong>2. A password (optional).</strong> Keepit can store the history and templates encrypted and unlock with
+Touch ID. You can decide now or later in <em>Preferences → Security</em>; <a href="#part-6--security">Part 6</a>
+explains how it works. <em>Not Now</em> keeps everything unencrypted on disk.</p>
+<figure class="shot" style="max-width:450px"><a href="img/guide/password-offer.png" class="zoom" title="Open full size"><img src="img/guide/password-offer.png" alt="The password offer on first launch" width="450" height="341" loading="lazy"></a><figcaption>The password offer on first launch</figcaption></figure>
+<p>Keepit starts at login by default — <em>Preferences → General</em> switches that off.</p>
+<hr />
+<h2 id="part-2-everyday-use">Part 2 — Everyday use</h2>
+<h3 id="the-history-menu">The history menu</h3>
+<p>Press <strong>⌥M</strong> in any app, or click the 📎 icon. The menu opens at your text cursor when Keepit can
+find it, otherwise at the mouse pointer.</p>
+<p>Each line is one clip, newest first. The newest one is <strong>bold</strong> — it is what is on the clipboard
+right now. The icon shows the app you copied from; a title ending in <code>…</code> has more lines than the
+menu shows. Images show a thumbnail, file lists show the file names.</p>
+<figure class="shot" style="max-width:1198px"><a href="img/guide/menu-image.png" class="zoom" title="Open full size"><img src="img/guide/menu-image.png" alt="An image in the history: thumbnail in the menu, full picture in the preview" width="1198" height="680" loading="lazy"></a><figcaption>An image in the history: thumbnail in the menu, full picture in the preview</figcaption></figure>
+<p>To paste an item: click it, or move to it with ↑ ↓ and press Return, or press its number with
+<strong>⌃⌥</strong> — <kbd class="k">⌃⌥3</kbd> pastes item 3. The same key works from anywhere, without opening the menu.</p>
+<p>Below the history: the <em>Template</em> submenu, the Viewer (⌥V), Preferences (⌥S), <em>Clear History</em> (⌥C),
+<em>Pause Recording for 10 Minutes</em> (⌥P — for typing something you do not want recorded), <em>Lock Keepit</em>
+(⌥L) when a password is set, and the updater. <strong>⌥T</strong> opens the template menu on its own; every one
+of these keys also works without the menu.</p>
+<h3 id="search-and-preview">Search and preview</h3>
+<p><strong>Search.</strong> Start typing while the menu is open: the field at the top filters the list by title and
+by full text, so a line in the middle of a long clip is found too. Return pastes the first match;
+Esc clears the field, and a second Esc closes the menu.</p>
+<p><strong>Preview.</strong> Hover over an item (or move to it with the keyboard) and a panel beside the menu shows
+the full image, or the first lines of a long text, with the source app, date and size. Short
+one-line texts have no preview — the menu line already shows them whole.</p>
+<figure class="shot" style="max-width:788px"><a href="img/guide/search-preview.png" class="zoom" title="Open full size"><img src="img/guide/search-preview.png" alt="Typing filters the menu; the preview panel shows the highlighted item" width="788" height="380" loading="lazy"></a><figcaption>Typing filters the menu; the preview panel shows the highlighted item</figcaption></figure>
+<h3 id="paste-without-the-menu">Paste without the menu</h3>
+<p>Global hot keys act on the history as it is right now — item 1 is the clipboard — from any app:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Keys</th>
+<th>What happens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><kbd class="k">⌃⌥1</kbd> … <kbd class="k">⌃⌥9</kbd>, <kbd class="k">⌃⌥0</kbd></td>
+<td>Paste history item 1–10</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥⇧V</kbd></td>
+<td>Paste the <em>previous</em> item (item 2); press again to swap back</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥V</kbd></td>
+<td>Paste the clipboard as plain text, formatting stripped</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
+<td>Paste the clipboard as UPPERCASE / lowercase / Title Case / Sentence case</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥W</kbd></td>
+<td>Paste the clipboard trimmed of leading and trailing whitespace</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥J</kbd></td>
+<td>Paste the clipboard joined into one line</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥A</kbd></td>
+<td>Add the clipboard to Templates</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥⌫</kbd></td>
+<td>Delete the newest item from the history</td>
+</tr>
+</tbody>
+</table></div>
+<p>Transformations apply to text; for an image or a file list the key beeps. All of these can be
+changed or switched off in <em>Preferences → Hot keys</em>.</p>
+<h3 id="the-extended-menu">The extended menu</h3>
+<p>Hold <strong>⇧</strong> while the history menu is open and every item gets a <code>▸</code> submenu with all actions for
+that item: Paste, Paste as plain text, Copy only (clipboard, no paste), the <em>Paste as</em>
+transformations, Add to Templates, Show in Viewer, Delete. Point at an item or press → to open it;
+you can release ⇧ once it is open.</p>
+<figure class="shot" style="max-width:854px"><a href="img/guide/extended-menu.png" class="zoom" title="Open full size"><img src="img/guide/extended-menu.png" alt="Hold ⇧: every item gets a submenu; for the newest item it shows the global hot keys" width="854" height="594" loading="lazy"></a><figcaption>Hold ⇧: every item gets a submenu; for the newest item it shows the global hot keys</figcaption></figure>
+<p>For the newest item the submenu lists the global hot keys from the table above — the same actions
+with the same keys, so you can learn them here. Other items show the actions without keys: a
+shortcut either works everywhere or is not shown.</p>
+<figure class="shot" style="max-width:774px"><a href="img/guide/extended-menu-item2.png" class="zoom" title="Open full size"><img src="img/guide/extended-menu-item2.png" alt="For other items: the same actions, no shortcuts" width="774" height="597" loading="lazy"></a><figcaption>For other items: the same actions, no shortcuts</figcaption></figure>
+<hr />
+<h2 id="part-3-templates">Part 3 — Templates</h2>
+<p>Templates are clips you keep for good: signatures, addresses, canned replies, code snippets, a logo
+you paste often. They live in a tree with folders and appear in the <em>Template</em> submenu of the history
+menu and under <strong>⌥T</strong>.</p>
+<figure class="shot" style="max-width:329px"><a href="img/guide/template-menu-letters.png" class="zoom" title="Open full size"><img src="img/guide/template-menu-letters.png" alt="The template menu: folders open as submenus, &amp;-letters become shortcuts" width="329" height="180" loading="lazy"></a><figcaption>The template menu: folders open as submenus, &amp;-letters become shortcuts</figcaption></figure>
+<h3 id="creating-and-organising">Creating and organising</h3>
+<p><strong>Add a template</strong></p>
+<ul>
+<li>From the history menu: <kbd class="k">⌃⌥A</kbd> for the newest item, <em>Add Clipboard to Templates</em> at the bottom, or
+  ⇧ → the item's submenu → <em>Add to Templates</em> for any item.</li>
+<li>In the Viewer: select a history item and click <em>Add to Template</em>, or drag it onto the Template
+  tree. <em>New Item</em> makes an empty text template; <em>New Item from File</em> (context menu) makes one from
+  a text or image file.</li>
+</ul>
+<p><strong>Organise</strong></p>
+<ul>
+<li><em>New Folder</em> creates a folder; drag items between folders, or use <em>Up</em> / <em>Down</em> in the context
+  menu.</li>
+<li>A template named <code>-</code> becomes a separator line in the menu.</li>
+<li><code>&amp;</code> before a letter in the name — <code>&amp;Signature</code> — makes that letter the item's shortcut in the
+  template menu: press <code>S</code> while the menu is open.</li>
+<li><em>Set Hot Key</em> in the context menu gives a template its own global hot key.</li>
+<li>A template without a name shows its first line; <em>Rename</em> and <em>Clear Name</em> are in the context menu,
+  or edit the <em>Name</em> field above the text.</li>
+</ul>
+<h3 id="placeholders">Placeholders</h3>
+<p>Text templates can contain <code>{…}</code> placeholders that are filled in at paste time. Everything else is
+pasted unchanged. In the Viewer, <strong>Insert ▾</strong> lists every placeholder and puts the chosen one at the
+cursor, so there is nothing to memorise.</p>
+<figure class="shot" style="max-width:650px"><a href="img/guide/insert-menu.png" class="zoom" title="Open full size"><img src="img/guide/insert-menu.png" alt="Insert ▾ in the Viewer lists every placeholder" width="650" height="770" loading="lazy"></a><figcaption>Insert ▾ in the Viewer lists every placeholder</figcaption></figure>
+<p>The most useful ones:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Placeholder</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{date}</code> <code>{time}</code> <code>{datetime}</code></td>
+<td>Today's date / current time, system format</td>
+</tr>
+<tr>
+<td><code>{date:yyyy-MM-dd}</code></td>
+<td>Any format (<code>yyyy MM dd EEEE HH mm …</code>)</td>
+</tr>
+<tr>
+<td><code>{date+7d}</code> <code>{date-1m:MMMM}</code></td>
+<td>Shifted date: <code>d</code> days, <code>w</code> weeks, <code>m</code> months, <code>y</code> years, <code>h</code> hours</td>
+</tr>
+<tr>
+<td><code>{clipboard}</code> <code>{clipboard:2}</code></td>
+<td>The clipboard, or history item N</td>
+</tr>
+<tr>
+<td><code>{clipboard\|upper}</code> <code>{clipboard\|trim\|oneline}</code></td>
+<td>Filters <code>upper</code> <code>lower</code> <code>title</code> <code>trim</code> <code>oneline</code> <code>url</code>, chainable</td>
+</tr>
+<tr>
+<td><code>{cursor}</code></td>
+<td>Where the text cursor ends up after pasting</td>
+</tr>
+<tr>
+<td><code>{user}</code> <code>{username}</code> <code>{host}</code></td>
+<td>Full name, account name, computer name</td>
+</tr>
+<tr>
+<td><code>{uuid}</code> <code>{random:1-100}</code></td>
+<td>A new UUID; a random number</td>
+</tr>
+<tr>
+<td><code>{{</code> <code>}}</code></td>
+<td>Literal braces</td>
+</tr>
+</tbody>
+</table></div>
+<p>The full list is in the <a href="#placeholder-cheat-sheet">placeholder cheat sheet</a>.</p>
+<h3 id="templates-that-ask-questions">Templates that ask questions</h3>
+<p><code>{input:Name}</code> and <code>{choice:Label=A|B|C}</code> turn a template into a small form: when you paste it,
+Keepit asks for the values first, then pastes the finished text. The same name is asked only once,
+however often it appears; <code>{input:Name=Default}</code> pre-fills the field.</p>
+<figure class="shot" style="max-width:454px"><a href="img/guide/input-dialog.png" class="zoom" title="Open full size"><img src="img/guide/input-dialog.png" alt="Pasting a template with {input:Name} asks for the value first" width="454" height="280" loading="lazy"></a><figcaption>Pasting a template with {input:Name} asks for the value first</figcaption></figure>
+<p>A reply template, for example:</p>
+<pre><code>Hi {input:Name},
+
+thanks for your message of {date-1d}. I'll get back to you by {date+3d:EEEE}.
+{cursor}
+{user}
+</code></pre>
+<p>Pasting it asks for <em>Name</em>, fills in the dates, signs with your full name and leaves the cursor on
+the empty line.</p>
+<hr />
+<h2 id="part-4-the-viewer">Part 4 — The Viewer</h2>
+<p><em>Viewer…</em> in the menu, or a right-click on the 📎 icon, opens a window with three trees: <strong>Clipboard</strong>
+(the clipboard right now, read-only), <strong>History</strong> (<em>Text &amp; files</em> and <em>Images</em>) and <strong>Template</strong>.</p>
+<figure class="shot" style="max-width:1004px"><a href="img/guide/viewer.png" class="zoom" title="Open full size"><img src="img/guide/viewer.png" alt="The Viewer with a template selected" width="1004" height="637" loading="lazy"></a><figcaption>The Viewer with a template selected</figcaption></figure>
+<ul>
+<li>Select an item to see it on the right. Text is editable in place — changes apply when you leave
+  the editor; images are shown; file lists open the file on double-click. <em>Show as Hex Dump</em> in the
+  context menu shows the raw bytes.</li>
+<li>The toolbar: <em>Send to Clipboard</em>, <em>Paste</em> (into the app you came from), <em>Add to Template</em>, <em>New
+  Item</em>, <em>New Folder</em>, <em>Delete</em>, <em>Insert ▾</em> (placeholders), and <strong>?</strong> — this guide.</li>
+<li><strong>Search</strong> (<kbd class="k">⌘F</kbd>): the field at the left filters history and templates by name and content and
+  highlights the match.</li>
+<li>Drag history items into the Template tree to keep them, templates into History to copy them back;
+  reorder by dragging or with <em>Up</em> / <em>Down</em>. ⌫ deletes the selected item.</li>
+<li>The status bar shows the date, source app, format and size.</li>
+</ul>
+<figure class="shot" style="max-width:1004px"><a href="img/guide/viewer-search.png" class="zoom" title="Open full size"><img src="img/guide/viewer-search.png" alt="Searching in the Viewer highlights matches" width="1004" height="637" loading="lazy"></a><figcaption>Searching in the Viewer highlights matches</figcaption></figure>
+<hr />
+<h2 id="part-5-preferences">Part 5 — Preferences</h2>
+<p><code>⌘,</code> in the menu, or <em>Preferences…</em>. Every option with a <strong>?</strong> next to it has a popover that explains
+it.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Tab</th>
+<th>What is there</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>General</strong></td>
+<td>Launch at login · save history on quit, restore on start · paste after choosing (off = only copy) · paste delay — raise it for apps that are slow to come to the front · open the menu at the text cursor</td>
+</tr>
+<tr>
+<td><strong>Hot keys</strong></td>
+<td>Every global shortcut in one place — see below</td>
+</tr>
+<tr>
+<td><strong>History</strong></td>
+<td>How many text/file items and images to keep (1000 / 30) · forget items older than … · <em>Remove duplicates</em> (copying the same thing again moves it to the top) · <em>Ignore concealed clipboard data</em> · the ignored-apps list (bundle identifiers; password managers are always ignored)</td>
+</tr>
+<tr>
+<td><strong>Menu</strong></td>
+<td>Search field · numbering · preview panel · tooltips · source-app icons · image thumbnails · title length · thumbnail height</td>
+</tr>
+<tr>
+<td><strong>Security</strong></td>
+<td>Password, Touch ID, locking, recovery phrase, Export / Import Backup — <a href="#part-6--security">Part 6</a></td>
+</tr>
+<tr>
+<td><strong>Advanced</strong></td>
+<td>Clipboard poll interval · <em>Open Data Folder</em> · Danger zone: <em>Delete Keepit and All Data…</em></td>
+</tr>
+</tbody>
+</table></div>
+<figure class="shot" style="max-width:689px"><a href="img/guide/prefs-hotkeys.png" class="zoom" title="Open full size"><img src="img/guide/prefs-hotkeys.png" alt="Preferences → Hot keys" width="689" height="468" loading="lazy"></a><figcaption>Preferences → Hot keys</figcaption></figure>
+<p>On the <strong>Hot keys</strong> tab click a field and press a combination; ⌫ switches a key off; <em>Reset to
+Defaults</em> brings back the ⌥-letter set (⌥M history, ⌥T templates, ⌥V Viewer, ⌥S Preferences, ⌥C Clear History, ⌥P pause, ⌥L lock, ⌥Q quit), ⌥⇧V and ⌃⌥. <em>Paste item by number</em> and <em>Actions on the latest item</em>
+take only modifiers — the digit or letter is added by Keepit. Two of your own keys on the same
+combination are refused on Save; if macOS or another app already owns one, Keepit says so when it
+starts. <em>Viewer</em> ⌥V, <em>Preferences</em> ⌥S, <em>Clear History</em> ⌥C, <em>Pause / resume recording</em> ⌥P, <em>Lock Keepit</em> ⌥L and <em>Quit Keepit</em> ⌥Q work from any app and are shown next to their commands in the menu. On a US layout ⌥+letter normally types a special character (⌥S = ß, ⌥C = ç …); if you need one of those, move the key.</p>
+<hr />
+<h2 id="part-6-security">Part 6 — Security</h2>
+<h3 id="password-and-encryption">Password and encryption</h3>
+<p><em>Preferences → Security → Require password at launch</em> encrypts the history and templates with
+AES-256-GCM. The key is derived from your password (PBKDF2, 200 000 rounds) and lives only in
+memory; it is wiped when Keepit locks — <em>Lock Keepit</em> (<kbd class="k">⌥L</kbd>), on quit, and optionally
+when the screen locks or the Mac sleeps.</p>
+<figure class="shot" style="max-width:372px"><a href="img/guide/set-password.png" class="zoom" title="Open full size"><img src="img/guide/set-password.png" alt="Setting the password: layout indicator and strength meter" width="372" height="380" loading="lazy"></a><figcaption>Setting the password: layout indicator and strength meter</figcaption></figure>
+<p>The password dialogs show the current keyboard layout and warn about Caps Lock, so a rejected
+password is rarely a mystery.</p>
+<figure class="shot" style="max-width:700px"><a href="img/guide/prefs-security.png" class="zoom" title="Open full size"><img src="img/guide/prefs-security.png" alt="Preferences → Security" width="700" height="527" loading="lazy"></a><figcaption>Preferences → Security</figcaption></figure>
+<h3 id="touch-id">Touch ID</h3>
+<p>With <em>Unlock with Touch ID</em> the key is also stored in the Secure Enclave behind your fingerprint:
+Keepit asks for a touch instead of the password. The password keeps working as a fallback — <em>Use
+Password</em> on the prompt. With the lid closed and an external Magic Keyboard with Touch ID, Keepit
+asks on the keyboard. <em>Allow changing the password with Touch ID</em> lets a fingerprint stand in for
+the old password when you change it.</p>
+<figure class="shot" style="max-width:293px"><a href="img/guide/touch-id.png" class="zoom" title="Open full size"><img src="img/guide/touch-id.png" alt="Unlocking with Touch ID; the password stays as fallback" width="293" height="268" loading="lazy"></a><figcaption>Unlocking with Touch ID; the password stays as fallback</figcaption></figure>
+<h3 id="recovery-phrase">Recovery phrase</h3>
+<p>When you set a password Keepit shows a 24-word phrase once. Print it or keep it in a password
+manager. If you forget the password, <em>Use Recovery Phrase…</em> on the unlock dialog opens the data and
+lets you set a new one. <em>New Recovery Phrase…</em> issues a fresh phrase and invalidates the old.</p>
+<p>Without the password, Touch ID on the same Mac, or the phrase, the data cannot be recovered: there
+is no server and nothing to reset.</p>
+<figure class="shot" style="max-width:537px"><a href="img/guide/recovery-phrase.png" class="zoom" title="Open full size"><img src="img/guide/recovery-phrase.png" alt="The 24-word recovery phrase (words hidden here)" width="537" height="538" loading="lazy"></a><figcaption>The 24-word recovery phrase (words hidden here)</figcaption></figure>
+<h3 id="backup">Backup</h3>
+<p><em>Export Backup…</em> writes one <code>.keepit</code> file with the history, templates and preferences, encrypted
+with a password you choose for the file. <em>Import Backup…</em> reads it back on any Mac — <em>Merge</em> adds to
+what is there, <em>Replace</em> starts from the backup. The same file moves data between the direct
+download and the App Store edition.</p>
+<hr />
+<h2 id="part-7-advanced">Part 7 — Advanced</h2>
+<h3 id="automation-the-keepit-url-scheme">Automation: the keepit:// URL scheme</h3>
+<p>Shortcuts (<em>Open URL</em>), Raycast, Alfred, Keyboard Maestro or <code>open</code> in a shell can drive Keepit:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>URL</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>keepit://paste/2</code>, <code>keepit://paste/latest</code>, <code>keepit://paste/previous</code></td>
+<td>Paste history item N into the front app</td>
+</tr>
+<tr>
+<td><code>keepit://copy/3</code></td>
+<td>Put item N on the clipboard without pasting</td>
+</tr>
+<tr>
+<td><code>keepit://template/Signature</code>, <code>keepit://template/Work/Reply?copy=1</code></td>
+<td>Paste (or copy) a template by name or folder path</td>
+</tr>
+<tr>
+<td><code>keepit://add?text=…</code></td>
+<td>Add text to the history and the clipboard</td>
+</tr>
+<tr>
+<td><code>keepit://add-template?text=…&amp;name=…</code></td>
+<td>Create a template</td>
+</tr>
+<tr>
+<td><code>keepit://history</code> <code>keepit://templates</code> <code>keepit://viewer</code> <code>keepit://preferences</code></td>
+<td>Open the menus and windows</td>
+</tr>
+<tr>
+<td><code>keepit://pause</code> <code>keepit://resume</code></td>
+<td>Pause recording for 10 minutes / resume</td>
+</tr>
+</tbody>
+</table></div>
+<p>Percent-encode the text (<code>%20</code> for a space). URLs are ignored while Keepit is locked.</p>
+<h3 id="updates">Updates</h3>
+<p>Keepit checks GitHub Releases once a day and offers updates in a dialog; <em>Check for Updates…</em> does it
+now. Updates are signed (EdDSA) and notarized. With Homebrew, <code>brew upgrade --cask keepit</code> does the
+same. Checksums for every download are in <code>SHA256SUMS</code> on the release page.</p>
+<h3 id="uninstalling">Uninstalling</h3>
+<p><em>Preferences → Advanced → Delete Keepit and All Data…</em> removes the app, the data folder, the keychain
+entries (including the Touch ID key), the login item and the Accessibility entry. It asks for your
+password or Touch ID, a typed <code>DELETE</code> and a confirmation — export a backup first if you might want
+the data back. With Homebrew, run <code>brew uninstall --cask --force keepit</code> afterwards so Homebrew
+forgets the cask.</p>
+<hr />
+<h2 id="reference">Reference</h2>
+<h3 id="troubleshooting">Troubleshooting</h3>
+<p><strong>Nothing is pasted after choosing an item.</strong> Accessibility is missing: <em>System Settings → Privacy &amp;
+Security → Accessibility → Keepit</em>. If Keepit is listed but still does not paste, switch it off and
+on again — macOS forgets the grant when the app is reinstalled.</p>
+<p><strong>A hot key does nothing.</strong> Another app or macOS owns it; Keepit reports that at launch. Pick a
+different combination on the <em>Hot keys</em> tab. ⌃⌥ with digits and letters is free on a stock Mac.</p>
+<p><strong>The menu opens in the wrong place.</strong> The app you are in does not expose its text cursor, so the
+menu falls back to the mouse pointer. <em>Open menu at text cursor</em> on the General tab turns the
+lookup off if you prefer the pointer always.</p>
+<p><strong>Something I copied is missing.</strong> Copies from password managers and anything marked concealed are
+never recorded; apps on the ignore list are skipped. See <em>Preferences → History</em>.</p>
+<p><strong>Touch ID is not offered.</strong> No Touch ID sensor is reachable at the moment (lid closed, no Touch ID
+keyboard). Keepit keeps the setting and asks for the fingerprint as soon as a sensor is available.</p>
+<p><strong>Homebrew refuses to install over an existing app.</strong> Quit Keepit and move
+<code>/Applications/Keepit.app</code> to the Trash first, or add <code>--force</code>.</p>
+<p>Still stuck? <a href="https://github.com/andrey-insarov/Keepit/issues">GitHub Issues</a> · dp@intistele.com</p>
+<h3 id="keyboard-cheat-sheet">Keyboard cheat sheet</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Keys</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><kbd class="k">⌥M</kbd></td>
+<td>History menu — type to search</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥T</kbd></td>
+<td>Template menu</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥1</kbd> … <kbd class="k">⌃⌥0</kbd></td>
+<td>Paste item 1–10 (in the menu and anywhere)</td>
+</tr>
+<tr>
+<td><kbd class="k">⇧</kbd> in the menu</td>
+<td>Extended menu: all actions per item</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥⇧V</kbd></td>
+<td>Paste the previous item / swap</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥V</kbd></td>
+<td>Paste the clipboard as plain text</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
+<td>UPPERCASE / lowercase / Title Case / Sentence case</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥W</kbd> <kbd class="k">⌃⌥J</kbd></td>
+<td>Trimmed / single line</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥A</kbd></td>
+<td>Add the clipboard to Templates</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥⌫</kbd></td>
+<td>Delete the newest item</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥V</kbd> <kbd class="k">⌥S</kbd> <kbd class="k">⌥C</kbd> <kbd class="k">⌥P</kbd> <kbd class="k">⌥L</kbd> <kbd class="k">⌥Q</kbd></td>
+<td>Viewer · Preferences · Clear History · Pause / resume · Lock · Quit</td>
+</tr>
+<tr>
+<td><kbd class="k">⌘F</kbd> in the Viewer</td>
+<td>Search</td>
+</tr>
+<tr>
+<td><code>⌘,</code></td>
+<td>Preferences</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="placeholder-cheat-sheet">Placeholder cheat sheet</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Placeholder</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{date}</code> <code>{time}</code> <code>{datetime}</code></td>
+<td>Date / time / both, system format</td>
+</tr>
+<tr>
+<td><code>{date:yyyy-MM-dd}</code> <code>{time:HH:mm}</code></td>
+<td>Custom format (Unicode date patterns)</td>
+</tr>
+<tr>
+<td><code>{date+7d}</code> <code>{date-1m:MMMM}</code></td>
+<td>Shifted date: <code>d</code> <code>w</code> <code>m</code> <code>y</code> <code>h</code></td>
+</tr>
+<tr>
+<td><code>{weekday}</code> <code>{month}</code> <code>{year}</code></td>
+<td>Day name, month name, year</td>
+</tr>
+<tr>
+<td><code>{iso}</code> <code>{unix}</code></td>
+<td>ISO 8601 timestamp, Unix time</td>
+</tr>
+<tr>
+<td><code>{clipboard}</code> <code>{clipboard:2}</code></td>
+<td>The clipboard (item 1) or item N</td>
+</tr>
+<tr>
+<td><code>{clipboard\|upper}</code> <code>\|lower</code> <code>\|title</code> <code>\|trim</code> <code>\|oneline</code> <code>\|url</code></td>
+<td>Filters, chainable</td>
+</tr>
+<tr>
+<td><code>{input:Name}</code> <code>{input:Name=Default}</code></td>
+<td>Ask for a value before pasting</td>
+</tr>
+<tr>
+<td><code>{choice:Label=A\|B\|C}</code></td>
+<td>Ask to pick an option</td>
+</tr>
+<tr>
+<td><code>{cursor}</code></td>
+<td>Caret position after pasting</td>
+</tr>
+<tr>
+<td><code>{user}</code> <code>{username}</code> <code>{host}</code></td>
+<td>Full name, account name, computer name</td>
+</tr>
+<tr>
+<td><code>{uuid}</code> <code>{random:1-100}</code></td>
+<td>New UUID, random number in a range</td>
+</tr>
+<tr>
+<td><code>{{</code> <code>}}</code></td>
+<td>Literal braces</td>
+</tr>
+</tbody>
+</table></div></article></main>
+<footer><div class="wrap">
+  <span>© 2026 UK Intis Telecom LTD · Keepit is MIT-licensed</span>
+  <span><a href="privacy.html">Privacy policy</a> · <a href="security.html">Security</a> · <a href="support.html">Support</a> · <a href="https://github.com/andrey-insarov/Keepit/blob/main/CHANGELOG.md">Changelog</a> · <a href="https://it.com">it.com</a></span>
+</div></footer>
+<div id="lb" role="dialog" aria-label="Full-size screenshot"><img alt=""></div>
+<script>
+(function(){
+  var lb=document.getElementById('lb'),im=lb.querySelector('img');
+  document.querySelectorAll('a.zoom').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();im.src=a.getAttribute('href');im.alt=a.querySelector('img').alt;lb.classList.add('on');});});
+  function close(){lb.classList.remove('on');im.src='';}
+  lb.addEventListener('click',close);document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+  var links=[].slice.call(document.querySelectorAll('aside a')),heads=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  if(links.length&&'IntersectionObserver' in window){
+    var cur=null;function mark(id){links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+id);});}
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){cur=e.target.id;mark(cur);}});},{rootMargin:'-70px 0px -70% 0px'});
+    heads.forEach(function(h){if(h)io.observe(h);});
+  }
+})();
+</script>
+</body></html>
