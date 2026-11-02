@@ -356,4 +356,8 @@ T = {
 'Start Paste Queue': 'Iniciar fila de colagem',
 'Stop Paste Queue (%d to paste)': 'Parar fila (%d por colar)',
 'Keepit — paste queue on: %d to paste (%@ next, %@ stop)': 'Keepit — fila de colagem: %d por colar (%@ próximo, %@ parar)',
+'Behaviour': 'Comportamento',
+"Keys set here and on the Paste queue tab work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off. Reset to Defaults restores every key, including the paste queue's.": 'As teclas definidas aqui e na aba “Fila de colagem” funcionam em qualquer app e aparecem ao lado dos comandos no menu. ⌫ em um campo desativa a tecla. “Restaurar padrões” restaura todas as teclas, inclusive as da fila.',
+'Pastes everything still in the queue as one text, items joined with the separator below, and ends the queue.': 'Cola tudo o que resta na fila como um único texto, com os itens unidos pelo separador abaixo, e encerra a fila.',
+'Seconds without a copy or a paste after which the queue switches itself off. 0 keeps it on until you stop it.': 'Segundos sem copiar nem colar após os quais a fila se desliga sozinha. 0 a mantém ligada até você pará-la.',
 }

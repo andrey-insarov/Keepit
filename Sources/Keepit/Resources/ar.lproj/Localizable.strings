@@ -356,3 +356,7 @@
 "Start Paste Queue" = "بدء قائمة انتظار اللصق";
 "Stop Paste Queue (%d to paste)" = "إيقاف القائمة (المتبقي %d)";
 "Keepit — paste queue on: %d to paste (%@ next, %@ stop)" = "Keepit — قائمة اللصق: المتبقي %d (%@ التالي، %@ إيقاف)";
+"Behaviour" = "السلوك";
+"Keys set here and on the Paste queue tab work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off. Reset to Defaults restores every key, including the paste queue's." = "المفاتيح المحددة هنا وفي تبويب «قائمة انتظار اللصق» تعمل من أي تطبيق وتظهر بجانب أوامرها في القائمة. ⌫ في الحقل يعطّل المفتاح. «استعادة الافتراضي» يعيد كل المفاتيح بما فيها مفاتيح القائمة.";
+"Pastes everything still in the queue as one text, items joined with the separator below, and ends the queue." = "يلصق كل ما تبقى في القائمة كنص واحد، مع ربط العناصر بالفاصل أدناه، ثم ينهي القائمة.";
+"Seconds without a copy or a paste after which the queue switches itself off. 0 keeps it on until you stop it." = "عدد الثواني بدون نسخ أو لصق التي تتوقف بعدها القائمة تلقائيًا. 0 يبقيها تعمل حتى توقفها.";

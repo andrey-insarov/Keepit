@@ -392,3 +392,8 @@
 "Start Paste Queue" = "Start Paste Queue";
 "Stop Paste Queue (%d to paste)" = "Stop Paste Queue (%d to paste)";
 "Keepit — paste queue on: %d to paste (%@ next, %@ stop)" = "Keepit — paste queue on: %d to paste (%@ next, %@ stop)";
+
+"Behaviour" = "Behaviour";
+"Keys set here and on the Paste queue tab work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off. Reset to Defaults restores every key, including the paste queue's." = "Keys set here and on the Paste queue tab work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off. Reset to Defaults restores every key, including the paste queue's.";
+"Pastes everything still in the queue as one text, items joined with the separator below, and ends the queue." = "Pastes everything still in the queue as one text, items joined with the separator below, and ends the queue.";
+"Seconds without a copy or a paste after which the queue switches itself off. 0 keeps it on until you stop it." = "Seconds without a copy or a paste after which the queue switches itself off. 0 keeps it on until you stop it.";

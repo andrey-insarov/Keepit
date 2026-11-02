@@ -129,7 +129,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         grid.rowSpacing = 6
         grid.columnSpacing = 10
         grid.column(at: 0).xPlacement = .trailing
-        grid.column(at: 0).width = 160
+        grid.column(at: 0).width = 185
         grid.translatesAutoresizingMaskIntoConstraints = false
         return grid
     }
@@ -228,15 +228,30 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
             labeled(L("Paste previous item:"), withHelp(previousHK, L("Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off."))),
             labeled(L("Paste item by number:"), withHelp(numbersHK, L("Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off."))),
             labeled(L("Actions on the latest item:"), withHelp(latestHK, L("Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu."))),
-            header(L("Paste queue")),
-            labeled(L("Start / stop the queue:"), withHelp(queueHK, L("Serial copy-and-paste. Start the queue, copy several things in a row (the menu bar icon counts them), then paste them back one by one in the same order with the key below. The queue ends when the last item has been pasted or after the idle time; ⌘V keeps working as usual."))),
-            pair(L("Paste next item:"), queuePasteHK, L("Paste all remaining:"), queueAllHK),
-            pair(L("Idle time (s):"), numField(queueTimeout), L("Join items with:"), queueSep),
             header(L("Other")),
-            pair(L("Viewer:"), viewerHK, L("Preferences:"), prefsHK),
-            pair(L("Clear History:"), clearHK, L("Pause / resume recording:"), pauseHK),
-            pair(L("Lock Keepit:"), lockHK, L("Quit Keepit:"), quitHK),
-            [NSView(), withHelp(resetHK, L("Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off."))],
+            labeled(L("Viewer:"), viewerHK),
+            labeled(L("Preferences:"), prefsHK),
+            labeled(L("Clear History:"), clearHK),
+            labeled(L("Pause / resume recording:"), pauseHK),
+            labeled(L("Lock Keepit:"), lockHK),
+            labeled(L("Quit Keepit:"), quitHK),
+            [NSView(), withHelp(resetHK, L("Keys set here and on the Paste queue tab work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off. Reset to Defaults restores every key, including the paste queue's."))],
+        ])
+
+        // --- Paste queue
+        let queueIntro = NSTextField(wrappingLabelWithString: L("Serial copy-and-paste. Start the queue, copy several things in a row (the menu bar icon counts them), then paste them back one by one in the same order with the key below. The queue ends when the last item has been pasted or after the idle time; ⌘V keeps working as usual."))
+        queueIntro.textColor = .secondaryLabelColor
+        queueIntro.preferredMaxLayoutWidth = 420
+        queueIntro.widthAnchor.constraint(lessThanOrEqualToConstant: 420).isActive = true
+        let queueGrid = makeGrid([
+            [NSView(), queueIntro],
+            header(L("Hot keys")),
+            labeled(L("Start / stop the queue:"), queueHK),
+            labeled(L("Paste next item:"), queuePasteHK),
+            labeled(L("Paste all remaining:"), withHelp(queueAllHK, L("Pastes everything still in the queue as one text, items joined with the separator below, and ends the queue."))),
+            header(L("Behaviour")),
+            labeled(L("Idle time (s):"), withHelp(numField(queueTimeout), L("Seconds without a copy or a paste after which the queue switches itself off. 0 keeps it on until you stop it."))),
+            labeled(L("Join items with:"), queueSep),
         ])
 
         // --- History
@@ -320,6 +335,7 @@ final class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         tabs.translatesAutoresizingMaskIntoConstraints = false
         tabs.addTabViewItem(page(L("General"), symbol: "gearshape", grid: general))
         tabs.addTabViewItem(page(L("Hot keys"), symbol: "keyboard", grid: hotKeys))
+        tabs.addTabViewItem(page(L("Paste queue"), symbol: "list.number", grid: queueGrid))
         tabs.addTabViewItem(page(L("History"), symbol: "clock", grid: historyGrid))
         tabs.addTabViewItem(page(L("Menu"), symbol: "filemenu.and.selection", grid: menuGrid))
         tabs.addTabViewItem(page(L("Security"), symbol: "lock", grid: security))

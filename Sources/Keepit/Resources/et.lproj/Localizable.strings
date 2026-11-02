@@ -356,3 +356,7 @@
 "Start Paste Queue" = "Alusta kleepimisjärjekorda";
 "Stop Paste Queue (%d to paste)" = "Lõpeta järjekord (%d jäänud)";
 "Keepit — paste queue on: %d to paste (%@ next, %@ stop)" = "Keepit — kleepimisjärjekord: %d jäänud (%@ järgmine, %@ lõpeta)";
+"Behaviour" = "Käitumine";
+"Keys set here and on the Paste queue tab work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off. Reset to Defaults restores every key, including the paste queue's." = "Siin ja vahekaardil „Kleepimisjärjekord“ määratud klahvid töötavad igas rakenduses ja kuvatakse menüüs käskude kõrval. ⌫ väljal lülitab klahvi välja. „Taasta vaikeväärtused“ taastab kõik klahvid, ka järjekorra omad.";
+"Pastes everything still in the queue as one text, items joined with the separator below, and ends the queue." = "Kleebib kõik järjekorda jäänu ühe tekstina (üksused ühendatud allpool oleva eraldajaga) ja lõpetab järjekorra.";
+"Seconds without a copy or a paste after which the queue switches itself off. 0 keeps it on until you stop it." = "Sekundid ilma kopeerimise või kleepimiseta, mille järel järjekord end ise välja lülitab. 0 hoiab seda sees, kuni selle ise lõpetad.";

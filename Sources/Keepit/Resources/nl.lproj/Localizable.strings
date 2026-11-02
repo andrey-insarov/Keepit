@@ -356,3 +356,7 @@
 "Start Paste Queue" = "Plakwachtrij starten";
 "Stop Paste Queue (%d to paste)" = "Wachtrij stoppen (%d te plakken)";
 "Keepit — paste queue on: %d to paste (%@ next, %@ stop)" = "Keepit — plakwachtrij: %d te plakken (%@ volgende, %@ stop)";
+"Behaviour" = "Gedrag";
+"Keys set here and on the Paste queue tab work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off. Reset to Defaults restores every key, including the paste queue's." = "Toetsen die hier en op het tabblad ‘Plakwachtrij’ zijn ingesteld werken vanuit elke app en staan in het menu naast hun opdrachten. ⌫ in een veld schakelt de toets uit. ‘Standaardwaarden’ herstelt alle toetsen, ook die van de wachtrij.";
+"Pastes everything still in the queue as one text, items joined with the separator below, and ends the queue." = "Plakt alles wat nog in de wachtrij staat als één tekst, items gescheiden door het scheidingsteken hieronder, en beëindigt de wachtrij.";
+"Seconds without a copy or a paste after which the queue switches itself off. 0 keeps it on until you stop it." = "Seconden zonder kopiëren of plakken waarna de wachtrij zichzelf uitschakelt. 0 houdt hem aan tot u hem stopt.";

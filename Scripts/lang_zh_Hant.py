@@ -356,4 +356,8 @@ T = {
 'Start Paste Queue': '開始貼上佇列',
 'Stop Paste Queue (%d to paste)': '停止佇列（剩餘 %d 項）',
 'Keepit — paste queue on: %d to paste (%@ next, %@ stop)': 'Keepit — 貼上佇列：剩餘 %d 項（%@ 下一項，%@ 停止）',
+'Behaviour': '行為',
+"Keys set here and on the Paste queue tab work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off. Reset to Defaults restores every key, including the paste queue's.": '此處和「貼上佇列」分頁中設定的快速鍵在任何 App 中都有效，並顯示在選單指令旁。在欄位中按 ⌫ 可關閉該快速鍵。「回復預設值」會回復所有快速鍵，包括貼上佇列的。',
+'Pastes everything still in the queue as one text, items joined with the separator below, and ends the queue.': '將佇列中剩餘的全部內容以一段文字貼上（項目之間用下方分隔符連接），並結束佇列。',
+'Seconds without a copy or a paste after which the queue switches itself off. 0 keeps it on until you stop it.': '沒有複製或貼上操作多少秒後佇列自動關閉。0 表示一直開啟直到手動停止。',
 }

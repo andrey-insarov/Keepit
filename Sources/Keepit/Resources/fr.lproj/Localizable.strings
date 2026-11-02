@@ -356,3 +356,7 @@
 "Start Paste Queue" = "Démarrer la file de collage";
 "Stop Paste Queue (%d to paste)" = "Arrêter la file (%d restants)";
 "Keepit — paste queue on: %d to paste (%@ next, %@ stop)" = "Keepit — file de collage : %d restants (%@ suivant, %@ stop)";
+"Behaviour" = "Comportement";
+"Keys set here and on the Paste queue tab work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off. Reset to Defaults restores every key, including the paste queue's." = "Les touches définies ici et dans l’onglet « File de collage » fonctionnent depuis n’importe quelle app et s’affichent à côté de leurs commandes dans le menu. ⌫ dans un champ désactive la touche. « Rétablir » restaure toutes les touches, y compris celles de la file.";
+"Pastes everything still in the queue as one text, items joined with the separator below, and ends the queue." = "Colle tout ce qui reste dans la file en un seul texte, éléments séparés par le séparateur ci-dessous, et termine la file.";
+"Seconds without a copy or a paste after which the queue switches itself off. 0 keeps it on until you stop it." = "Secondes sans copie ni collage après lesquelles la file s’arrête d’elle-même. 0 la garde active jusqu’à ce que vous l’arrêtiez.";

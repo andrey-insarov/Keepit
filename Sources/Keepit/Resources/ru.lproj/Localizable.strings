@@ -356,3 +356,7 @@
 "Start Paste Queue" = "Включить очередь вставки";
 "Stop Paste Queue (%d to paste)" = "Выключить очередь (осталось %d)";
 "Keepit — paste queue on: %d to paste (%@ next, %@ stop)" = "Keepit — очередь вставки: осталось %d (%@ следующий, %@ стоп)";
+"Behaviour" = "Поведение";
+"Keys set here and on the Paste queue tab work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off. Reset to Defaults restores every key, including the paste queue's." = "Клавиши, заданные здесь и на вкладке «Очередь вставки», работают из любого приложения и показываются рядом с командами в меню. ⌫ в поле выключает клавишу. «Сбросить» возвращает все клавиши, включая клавиши очереди.";
+"Pastes everything still in the queue as one text, items joined with the separator below, and ends the queue." = "Вставляет всё, что осталось в очереди, одним текстом — элементы через разделитель ниже — и завершает очередь.";
+"Seconds without a copy or a paste after which the queue switches itself off. 0 keeps it on until you stop it." = "Секунды без копирования и вставки, после которых очередь выключается сама. 0 — работает, пока вы её не выключите.";

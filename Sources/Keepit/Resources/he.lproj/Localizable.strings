@@ -356,3 +356,7 @@
 "Start Paste Queue" = "הפעלת תור הדבקה";
 "Stop Paste Queue (%d to paste)" = "עצירת התור (נותרו %d)";
 "Keepit — paste queue on: %d to paste (%@ next, %@ stop)" = "Keepit — תור הדבקה: נותרו %d (%@ הבא, %@ עצירה)";
+"Behaviour" = "התנהגות";
+"Keys set here and on the Paste queue tab work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off. Reset to Defaults restores every key, including the paste queue's." = "מקשים שהוגדרו כאן ובלשונית ‚תור הדבקה‘ עובדים מכל יישום ומוצגים ליד הפקודות בתפריט. ⌫ בשדה מכבה את המקש. ‚איפוס לברירת מחדל‘ משחזר את כל המקשים, כולל אלה של התור.";
+"Pastes everything still in the queue as one text, items joined with the separator below, and ends the queue." = "מדביק את כל מה שנותר בתור כטקסט אחד, פריטים מופרדים במפריד שלמטה, ומסיים את התור.";
+"Seconds without a copy or a paste after which the queue switches itself off. 0 keeps it on until you stop it." = "שניות ללא העתקה או הדבקה שאחריהן התור נכבה מעצמו. 0 משאיר אותו פעיל עד שתעצרו אותו.";

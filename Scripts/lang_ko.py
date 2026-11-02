@@ -356,4 +356,8 @@ T = {
 'Start Paste Queue': '붙여넣기 대기열 시작',
 'Stop Paste Queue (%d to paste)': '대기열 중지(%d개 남음)',
 'Keepit — paste queue on: %d to paste (%@ next, %@ stop)': 'Keepit — 붙여넣기 대기열: %d개 남음(%@ 다음, %@ 중지)',
+'Behaviour': '동작',
+"Keys set here and on the Paste queue tab work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off. Reset to Defaults restores every key, including the paste queue's.": '여기와 ‘붙여넣기 대기열’ 탭에서 설정한 키는 어느 앱에서나 작동하며 메뉴의 명령 옆에 표시됩니다. 필드에서 ⌫를 누르면 키가 꺼집니다. ‘기본값으로 재설정’은 대기열 키를 포함한 모든 키를 되돌립니다.',
+'Pastes everything still in the queue as one text, items joined with the separator below, and ends the queue.': '대기열에 남은 항목 전체를 아래 구분자로 이어 하나의 텍스트로 붙여넣고 대기열을 끝냅니다.',
+'Seconds without a copy or a paste after which the queue switches itself off. 0 keeps it on until you stop it.': '복사나 붙여넣기가 없는 상태가 이 초 수만큼 지속되면 대기열이 자동으로 꺼집니다. 0이면 직접 중지할 때까지 유지됩니다.',
 }

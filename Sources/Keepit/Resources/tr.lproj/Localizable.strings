@@ -356,3 +356,7 @@
 "Start Paste Queue" = "Yapıştırma kuyruğunu başlat";
 "Stop Paste Queue (%d to paste)" = "Kuyruğu durdur (%d kaldı)";
 "Keepit — paste queue on: %d to paste (%@ next, %@ stop)" = "Keepit — yapıştırma kuyruğu: %d kaldı (%@ sonraki, %@ durdur)";
+"Behaviour" = "Davranış";
+"Keys set here and on the Paste queue tab work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off. Reset to Defaults restores every key, including the paste queue's." = "Burada ve “Yapıştırma kuyruğu” sekmesinde ayarlanan tuşlar her uygulamada çalışır ve menüde komutlarının yanında gösterilir. Bir alanda ⌫ tuşu kapatır. “Varsayılanlara sıfırla” kuyruğunkiler dahil tüm tuşları geri yükler.";
+"Pastes everything still in the queue as one text, items joined with the separator below, and ends the queue." = "Kuyrukta kalan her şeyi, öğeleri aşağıdaki ayırıcıyla birleştirerek tek metin olarak yapıştırır ve kuyruğu bitirir.";
+"Seconds without a copy or a paste after which the queue switches itself off. 0 keeps it on until you stop it." = "Kopyalama veya yapıştırma olmadan geçen bu süre sonunda kuyruk kendini kapatır. 0, siz durdurana kadar açık tutar.";

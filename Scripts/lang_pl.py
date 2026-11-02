@@ -356,4 +356,8 @@ T = {
 'Start Paste Queue': 'Włącz kolejkę wklejania',
 'Stop Paste Queue (%d to paste)': 'Wyłącz kolejkę (zostało %d)',
 'Keepit — paste queue on: %d to paste (%@ next, %@ stop)': 'Keepit — kolejka wklejania: zostało %d (%@ następny, %@ stop)',
+'Behaviour': 'Zachowanie',
+"Keys set here and on the Paste queue tab work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off. Reset to Defaults restores every key, including the paste queue's.": 'Klawisze ustawione tutaj i na karcie „Kolejka wklejania” działają w każdej aplikacji i są pokazywane obok poleceń w menu. ⌫ w polu wyłącza klawisz. „Przywróć domyślne” przywraca wszystkie klawisze, także te kolejki.',
+'Pastes everything still in the queue as one text, items joined with the separator below, and ends the queue.': 'Wkleja wszystko, co zostało w kolejce, jako jeden tekst (elementy połączone poniższym separatorem) i kończy kolejkę.',
+'Seconds without a copy or a paste after which the queue switches itself off. 0 keeps it on until you stop it.': 'Sekundy bez kopiowania i wklejania, po których kolejka sama się wyłącza. 0 utrzymuje ją włączoną, dopóki jej nie wyłączysz.',
 }

@@ -356,3 +356,7 @@
 "Start Paste Queue" = "貼り付けキューを開始";
 "Stop Paste Queue (%d to paste)" = "キューを停止（残り %d）";
 "Keepit — paste queue on: %d to paste (%@ next, %@ stop)" = "Keepit — 貼り付けキュー: 残り %d（%@ 次へ、%@ 停止）";
+"Behaviour" = "動作";
+"Keys set here and on the Paste queue tab work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off. Reset to Defaults restores every key, including the paste queue's." = "ここと「貼り付けキュー」タブで設定したキーはどのアプリからでも使え、メニューの各コマンドの横に表示されます。フィールドで ⌫ を押すとキーをオフにします。「デフォルトに戻す」はキューのキーを含めすべてのキーを戻します。";
+"Pastes everything still in the queue as one text, items joined with the separator below, and ends the queue." = "キューに残っているすべてを、下の区切りでつないだ 1 つのテキストとして貼り付け、キューを終了します。";
+"Seconds without a copy or a paste after which the queue switches itself off. 0 keeps it on until you stop it." = "コピーも貼り付けもない状態がこの秒数続くとキューは自動で終了します。0 にすると停止するまで続きます。";

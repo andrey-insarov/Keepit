@@ -356,3 +356,7 @@
 "Start Paste Queue" = "开始粘贴队列";
 "Stop Paste Queue (%d to paste)" = "停止队列（剩余 %d 项）";
 "Keepit — paste queue on: %d to paste (%@ next, %@ stop)" = "Keepit — 粘贴队列：剩余 %d 项（%@ 下一项，%@ 停止）";
+"Behaviour" = "行为";
+"Keys set here and on the Paste queue tab work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off. Reset to Defaults restores every key, including the paste queue's." = "此处和“粘贴队列”标签页中设置的快捷键在任何应用中都有效，并显示在菜单命令旁边。在字段中按 ⌫ 可关闭该快捷键。“恢复默认”会恢复所有快捷键，包括粘贴队列的。";
+"Pastes everything still in the queue as one text, items joined with the separator below, and ends the queue." = "将队列中剩余的全部内容作为一段文本粘贴（项目之间用下方分隔符连接），并结束队列。";
+"Seconds without a copy or a paste after which the queue switches itself off. 0 keeps it on until you stop it." = "没有复制或粘贴操作多少秒后队列自动关闭。0 表示一直开启直到手动停止。";

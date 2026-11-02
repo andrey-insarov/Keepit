@@ -356,4 +356,8 @@ T = {
 'Start Paste Queue': 'Spustit frontu vkládání',
 'Stop Paste Queue (%d to paste)': 'Zastavit frontu (zbývá %d)',
 'Keepit — paste queue on: %d to paste (%@ next, %@ stop)': 'Keepit — fronta vkládání: zbývá %d (%@ další, %@ stop)',
+'Behaviour': 'Chování',
+"Keys set here and on the Paste queue tab work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off. Reset to Defaults restores every key, including the paste queue's.": 'Klávesy nastavené zde a na kartě „Fronta vkládání“ fungují z libovolné aplikace a zobrazují se v nabídce vedle příkazů. ⌫ v poli klávesu vypne. „Obnovit výchozí“ vrátí všechny klávesy včetně kláves fronty.',
+'Pastes everything still in the queue as one text, items joined with the separator below, and ends the queue.': 'Vloží vše, co ve frontě zbývá, jako jeden text (položky spojené oddělovačem níže) a frontu ukončí.',
+'Seconds without a copy or a paste after which the queue switches itself off. 0 keeps it on until you stop it.': 'Sekundy bez kopírování či vkládání, po kterých se fronta sama vypne. 0 ji ponechá zapnutou, dokud ji nezastavíte.',
 }

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.10.1 — 2026-11-02
+
+- Preferences: the paste queue has its own tab (keys, idle time, separator); on *Hot keys* the *Other* section is one straight column, so every field lines up
+
 ## 2.10.0 — 2026-11-02
 
 - **Paste queue** — serial copy-and-paste. `⌥R` starts it; every ⌘C adds to a counter next to the menu bar icon (`● 3`); `⌥V` pastes the items back one by one in the order they were copied; `⌥⇧R` pastes everything left, joined with a line break, tab, space or nothing. The queue ends by itself after the last item or after two minutes without activity (adjustable), ⌘V works as always, and while it is on the history menu marks its items (▶ next, ○ queued, ✓ pasted)

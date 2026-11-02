@@ -356,3 +356,7 @@
 "Start Paste Queue" = "Iniciar la cola de pegado";
 "Stop Paste Queue (%d to paste)" = "Detener la cola (%d por pegar)";
 "Keepit — paste queue on: %d to paste (%@ next, %@ stop)" = "Keepit — cola de pegado: %d por pegar (%@ siguiente, %@ parar)";
+"Behaviour" = "Comportamiento";
+"Keys set here and on the Paste queue tab work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off. Reset to Defaults restores every key, including the paste queue's." = "Las teclas definidas aquí y en la pestaña «Cola de pegado» funcionan desde cualquier app y se muestran junto a sus comandos en el menú. ⌫ en un campo desactiva la tecla. «Restablecer» restaura todas las teclas, incluidas las de la cola.";
+"Pastes everything still in the queue as one text, items joined with the separator below, and ends the queue." = "Pega todo lo que queda en la cola como un solo texto, con los elementos unidos por el separador de abajo, y termina la cola.";
+"Seconds without a copy or a paste after which the queue switches itself off. 0 keeps it on until you stop it." = "Segundos sin copiar ni pegar tras los cuales la cola se apaga sola. 0 la mantiene activa hasta que la detenga.";

@@ -134,7 +134,7 @@ cells into a form, lines from a page into a document. The paste queue does that 
    or a paste (the time is adjustable). ⌥R again stops it early.
 
 **⌥⇧R** pastes everything still in the queue in one go, items joined with a line break, a tab, a
-space or nothing — pick on the *Hot keys* tab. While the queue is on, the history menu marks its
+space or nothing — pick on the *Paste queue* tab of Preferences, where the idle time lives too. While the queue is on, the history menu marks its
 items: `▶` next to paste, `○` still queued, `✓` already pasted.
 
 ### The extended menu
@@ -261,6 +261,7 @@ it.
 |-----|---------------|
 | **General** | Launch at login · save history on quit, restore on start · paste after choosing (off = only copy) · paste delay — raise it for apps that are slow to come to the front · open the menu at the text cursor |
 | **Hot keys** | Every global shortcut in one place — see below |
+| **Paste queue** | The three queue keys, the idle time after which the queue switches off, and what to put between items for *Paste all remaining* — [The paste queue](#the-paste-queue) |
 | **History** | How many text/file items and images to keep (1000 / 30) · forget items older than … · *Remove duplicates* (copying the same thing again moves it to the top) · *Ignore concealed clipboard data* · the ignored-apps list (bundle identifiers; password managers are always ignored) |
 | **Menu** | Search field · numbering · preview panel · tooltips · source-app icons · image thumbnails · title length · thumbnail height |
 | **Security** | Password, Touch ID, locking, recovery phrase, Export / Import Backup — [Part 6](#part-6--security) |

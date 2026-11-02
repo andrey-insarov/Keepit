@@ -356,3 +356,7 @@
 "Start Paste Queue" = "Pradėti įklijavimo eilę";
 "Stop Paste Queue (%d to paste)" = "Sustabdyti eilę (liko %d)";
 "Keepit — paste queue on: %d to paste (%@ next, %@ stop)" = "Keepit — įklijavimo eilė: liko %d (%@ kitas, %@ stop)";
+"Behaviour" = "Elgsena";
+"Keys set here and on the Paste queue tab work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off. Reset to Defaults restores every key, including the paste queue's." = "Čia ir skirtuke „Įklijavimo eilė“ nustatyti klavišai veikia iš bet kurios programos ir rodomi meniu šalia komandų. ⌫ laukelyje išjungia klavišą. „Atkurti numatytuosius“ grąžina visus klavišus, įskaitant eilės.";
+"Pastes everything still in the queue as one text, items joined with the separator below, and ends the queue." = "Įklijuoja viską, kas liko eilėje, kaip vieną tekstą (elementai sujungti žemiau nurodytu skirtuku) ir užbaigia eilę.";
+"Seconds without a copy or a paste after which the queue switches itself off. 0 keeps it on until you stop it." = "Sekundės be kopijavimo ar įklijavimo, po kurių eilė išsijungia pati. 0 – veikia, kol ją sustabdysite.";
