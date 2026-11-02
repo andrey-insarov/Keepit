@@ -22,9 +22,10 @@
 stores everything AES-256 encrypted, unlocks with Touch ID, and comes with a 24-word recovery phrase.
 Copies from password managers are never recorded. No account, no cloud, no analytics.
 
-Keepit is a fork and port of [CLCL](https://github.com/nakkag/CLCL) by Ohno Tomoaki (nakka), the
-Windows original; it is not affiliated with or endorsed by him. The CLCL name and icons belong to
-him; Keepit reuses the behaviour and settings model under the MIT License (see `LICENSE`).
+Keepit started as a macOS take on the workflow of [CLCL](https://github.com/nakkag/CLCL), Ohno
+Tomoaki's Windows clipboard tool, and has since been rewritten and extended into an app of its own,
+with ideas drawn from many clipboard and snippet managers. It contains no CLCL code and is not
+affiliated with its author — see [docs/ORIGINS.md](docs/ORIGINS.md).
 
 ## Install
 
@@ -45,36 +46,19 @@ Or the DMG:
 * **Mac App Store**: in review (2.11.1); the link will appear here once it is live.
 * **Build it yourself**: see below.
 
-## Features (what is ported)
+## Features
 
-| CLCL (Windows)                               | Keepit (macOS)                                            |
-|----------------------------------------------|------------------------------------------------------------|
-| Tray icon, left click = menu, right = viewer | Menu-bar icon 📎, left click = history menu, right click = Viewer |
-| `Alt+C` history+template popup, pastes       | `⌥M` (configurable), pops at the text cursor, pastes with `⌘V` |
-| `Alt+T` template popup                       | `⌥T` (configurable)                                        |
-| Numbered menu items `&1 … &9 &0 &A …`        | Items are numbered; `⌃⌥1 … ⌃⌥0` paste item 1–10 — inside the menu and from any app (configurable; menu-only `1-9/0/A-Z` when the global keys are off) |
-| —                                            | Search field at the top of the history menu: typing filters in place, Return pastes the first match |
-| —                                            | Extended menu: hold `⇧` and every item gets a submenu — paste as plain text, UPPERCASE / lowercase / Title Case / Sentence case / trimmed / single line, copy only, add to Templates, show in Viewer, delete |
-| —                                            | **Paste queue**: `⌥N` starts it, every ⌘C adds to a counter in the menu bar, `⌥V` pastes the items back one by one in the same order, `⌥⇧N` pastes all that is left; ends by itself after the last item or an idle timeout |
-| —                                            | Global hot keys on the latest item (the clipboard): `⌃⌥V` plain text, `⌃⌥U/L/T/S/W/J` transformations, `⌃⌥A` add to Templates, `⌃⌥⌫` delete; `⌥⇧V` pastes the previous item (swap); `⌥E` Viewer, `⌥S` Settings, `⌥C` Clear History, `⌥P` pause, `⌥L` lock, `⌥Q` quit. All of them on the *Shortcuts* pane of Preferences |
-| Bitmap thumbnails and tooltips in the menu   | Same (PNG thumbnails, text tooltips) plus a preview panel next to the highlighted item and the source app's icon |
-| Formats: TEXT, UNICODE, RTF, HTML, BITMAP, HDROP | plain text, RTF, HTML, PNG (TIFF converted), file URLs |
-| History max (30), overlap check, save/restore| Separate rings: 1000 text/file items + 30 images by default, JSON in `~/Library/Application Support/Keepit/` |
-| Window filter (ignore apps)                  | Built-in list of password managers (always ignored) + user ignore list + `org.nspasteboard.ConcealedType` |
-| Per-window paste key (`sendkey`)             | Per-bundle-id paste key in `settings.json` (`pasteKeys`)   |
-| Templates (hierarchical "Regist")            | Same: folders, any format (text/image/files), `-` separators, `&x` shortcuts, per-item hot key, `{date}`/`{clipboard}`/`{input:…}`/`{cursor}` placeholders |
-| Automation                                   | `keepit://` URL scheme: `paste/N`, `copy/N`, `template/Name`, `add?text=`, `add-template?text=&name=`, `history`, `templates`, `viewer`, `settings`, `pause`, `resume` — use from Shortcuts (“Open URL”), Raycast, Alfred or `open` |
-| Viewer: tree Clipboard / History / Template  | Same tree, with a search field (`⌘F`) that filters history and templates and highlights matches |
-| Viewer: edit text, bitmap view, file list, binary view | Text/RTF/HTML editing (applied when focus leaves), image view, file list (double-click opens), hex dump toggle |
-| Viewer context menu                          | Send to Clipboard, Paste, Add to Template, New Item/Folder, New Item from File, Rename, Clear Name, Set Hot Key, Save Format to File, Up/Down, Delete |
-| Viewer drag & drop                           | History → Template (copy), Template → History (copy), reorder within each |
-| Status bar                                   | Date, source app, format, size, hot key                    |
-| Options dialog (CLCLSet)                     | Settings window with panes General / Shortcuts / Paste Queue / History / Menu / Security / Advanced, hot-key recorders, (?) help popovers |
-| —                                            | Export / Import Backup: one password-encrypted `.keepit` file (history, templates, preferences); Merge or Replace on import |
-| —                                            | 21 interface languages: en, ru, uk, de, fr, es, it, pt-BR, nl, pl, cs, tr, lt, lv, et, ja, ko, zh-Hans, zh-Hant, ar, he |
-
-Still not ported: plugins/tools, format filter/priority option pages, importing Windows
-`history.dat` / `regist.dat`, the `%0d`-style menu numbering format.
+* **History menu** — `⌥M` opens next to the text cursor; type to search, pick with the mouse or press 1–9 / A–Z; `⌃⌥1…0` paste items 1–10 without the menu. Hover for a preview panel; hold `⇧` for an extended menu (plain text, UPPERCASE / lowercase / Title Case / Sentence case, trimmed, single line, copy only, add to Templates, delete).
+* **Everything is kept** — plain text, RTF, HTML, images with thumbnails, file lists. Duplicates are merged; separate limits for text/file items and images; forget items older than N.
+* **Paste queue** — `⌥N` starts it, every ⌘C adds to a counter in the menu bar, `⌥V` pastes the items back one by one in the same order, `⌥⇧N` pastes all remaining joined with a separator.
+* **Templates** — folders, `-` separators, `&x` menu shortcuts, per-template hot keys, any format. Placeholders fill in at paste time: `{date…}`, `{time}`, `{clipboard}` with transforms, `{input:…}`, `{choice:a|b}`, `{cursor}`. An *Examples* folder on first launch.
+* **Viewer** — tree of Clipboard / History / Template, search with highlighted matches, in-place editing, hex dump, drag history into templates, save any format to a file.
+* **Private by design** — password-protected AES-256-GCM storage, Touch ID unlock, 24-word recovery phrase, lock on screen lock / sleep; password managers and concealed clipboard data are never recorded; per-app ignore list; no account, no network.
+* **Backup** — one password-encrypted `.keepit` file with history, templates and settings; Merge or Replace on import.
+* **Settings the Mac way** — General / Shortcuts / Paste Queue / History / Menu / Security / Advanced; every change applies at once; hot-key recorders with conflict checks; per-app paste key (⌘⇧V, ⌃V…).
+* **Automation** — `keepit://` URL scheme: `paste/N`, `copy/N`, `template/Name`, `add?text=`, `add-template?text=&name=`, `history`, `templates`, `viewer`, `settings`, `pause`, `resume` — from Shortcuts (“Open URL”), Raycast, Alfred or `open`.
+* **21 interface languages** — en, ru, uk, de, fr, es, it, pt-BR, nl, pl, cs, tr, lt, lv, et, ja, ko, zh-Hans, zh-Hant, ar, he.
+* Menu-bar only, launch at login, universal binary (Apple silicon + Intel), signed and notarized, self-updating (Sparkle) in the direct edition.
 
 ## Build
 
@@ -105,7 +89,7 @@ Or in Xcode: `open Package.swift` and run the `Keepit` scheme (the `LSUIElement`
 * Left: tree. **Clipboard** is the live pasteboard (read-only). **History** and **Template** items
   expand into their formats (TEXT, RTF, HTML, PNG, FILE LIST).
 * Right: the selected format. Text, RTF and HTML are editable; the edit is applied when the editor
-  loses focus (as in CLCL). Editing TEXT drops stale RTF/HTML from that item. **Binary** toggles a hex dump.
+  loses focus. Editing TEXT drops stale RTF/HTML from that item. **Binary** toggles a hex dump.
 * `↩` sends the selected item (or single format) to the clipboard; `⌫` deletes it. Right-click for
   the full menu. Drag history items onto the Template tree to register them.
 * Template names: `-` makes a separator in the popup menu, `&G` makes `G` the shortcut, `&&` is a
@@ -239,31 +223,23 @@ Example `pasteKeys` override in `settings.json` (an app that pastes with ⇧⌘V
 }
 ```
 
-## Architecture (where the Windows code went)
+## Architecture
 
 ```
 Sources/Keepit/
-  main.swift                   WinMain → NSApplication
-  AppDelegate.swift            main.c: tray icon, hot-key dispatch, popup menus, actions
-  Models/
-    ClipItem.swift             Data.c / Format.c / fmt_*.c: one history entry with its formats
-    TemplateNode.swift         Regist.c tree node
-    Settings.swift             Ini.c option struct (JSON instead of ini)
-  Core/
-    ClipboardMonitor.swift     ClipBoard.c: WM_CLIPBOARDUPDATE → NSPasteboard.changeCount polling
-    HistoryStore.swift         History.c
-    TemplateStore.swift        Regist.c persistence
-    HotKeyManager.swift        RegisterHotKey → Carbon RegisterEventHotKey
-    Paster.swift               SendKey.c (keybd_event) → CGEvent; caret lookup via Accessibility API
-    Storage.swift              File.c / Profile.c: JSON files in Application Support
-    Vault.swift                password prompt, PBKDF2 → AES-GCM for the data files
-  UI/
-    MenuBuilder.swift          Menu.c: owner-drawn menu → NSMenu with images, key equivalents, tooltips
-    HotKeyRecorderView.swift   SetHotkey.c
-    SettingsWindow.swift    CLCLSet (subset)
-    ViewerWindow.swift         Viewer.c / TreeView.c / ListView.c: tree + actions + drag & drop
-    FormatViews.swift          fmt_text_view.c / fmt_bitmap_view.c / fmt_file_view.c / BinView.c
+  main.swift                   NSApplication bootstrap
+  AppDelegate.swift            menu-bar icon, hot-key dispatch, popup menus, actions, lock/unlock
+  Models/                      ClipItem (one entry with its formats), TemplateNode, Settings, AppInfo
+  Core/                        ClipboardMonitor (changeCount polling), HistoryStore, TemplateStore,
+                               PasteQueue, HotKeyManager (Carbon), Paster (CGEvent + caret lookup),
+                               Storage, Vault (PBKDF2 → AES-GCM), BiometricUnlock, Backup, Snippets, Limits
+  UI/                          MenuBuilder, PreviewPanel, SettingsWindow, HotKeyRecorderView,
+                               ViewerWindow, FormatViews, SnippetPromptDialog, SecurePasswordField
+  URLCommands.swift            keepit:// scheme
+  Uninstall.swift              Reset… / Uninstall…
 ```
+
+The historical map from CLCL's C sources to these files is in [docs/ORIGINS.md](docs/ORIGINS.md).
 
 ## Platform notes
 
@@ -274,7 +250,7 @@ Sources/Keepit/
 * **Focus**: an `NSMenu` needs our process to be active to receive keyboard input, so we activate
   on hot key, remember the previous app, and re-activate it before sending `⌘V` (or on cancel).
 * **Modifier bleed**: if `⌥` is still held when `⌘V` is synthesized the target gets `⌥⌘V`;
-  `Paster` waits (up to ~1.2 s) for all modifiers to be released first, like CLCL's `paste_wait`.
+  `Paster` waits (up to ~1.2 s) for all modifiers to be released first.
 
 ## Roadmap
 
@@ -306,5 +282,5 @@ Sources/Keepit/
 
 ## License
 
-MIT, same as upstream CLCL. `LICENSE` carries the original copyright notice of Ohno Tomoaki
-as the license requires, plus `Copyright (c) 2026 UK Intis Telecom LTD (Andrey Insarov)` for the Keepit fork.
+MIT. Keepit contains no CLCL code; `LICENSE` keeps the CLCL copyright line as a credit to the
+idea Keepit started from, alongside `Copyright (c) 2026 UK Intis Telecom LTD (Andrey Insarov)`.
