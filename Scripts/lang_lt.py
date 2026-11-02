@@ -417,4 +417,6 @@ T = {
 'Export…': 'Eksportuoti…',
 'Import…': 'Importuoti…',
 'letter': 'raidė',
+'Uninstall…': 'Pašalinti…',
+'Uninstall and remove all Keepit data': 'Pašalinti Keepit ir visus duomenis',
 }

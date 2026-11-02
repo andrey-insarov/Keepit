@@ -417,3 +417,5 @@
 "Export…" = "تصدير…";
 "Import…" = "استيراد…";
 "letter" = "حرف";
+"Uninstall…" = "إلغاء التثبيت…";
+"Uninstall and remove all Keepit data" = "إلغاء تثبيت Keepit وحذف كل بياناته";

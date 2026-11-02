@@ -417,4 +417,6 @@ T = {
 'Export…': 'Dışa aktar…',
 'Import…': 'İçe aktar…',
 'letter': 'harf',
+'Uninstall…': 'Kaldır…',
+'Uninstall and remove all Keepit data': 'Keepit’i ve tüm verilerini kaldır',
 }

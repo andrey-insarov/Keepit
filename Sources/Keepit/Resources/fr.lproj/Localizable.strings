@@ -417,3 +417,5 @@
 "Export…" = "Exporter…";
 "Import…" = "Importer…";
 "letter" = "lettre";
+"Uninstall…" = "Désinstaller…";
+"Uninstall and remove all Keepit data" = "Désinstaller et effacer toutes les données";

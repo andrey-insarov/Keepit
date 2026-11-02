@@ -79,7 +79,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
     private let newPhrase    = NSButton(title: L("Create New…"), target: nil, action: nil)
 
     private let pollInterval = NSTextField()
-    private let uninstall    = NSButton(title: L("Delete…"), target: nil, action: nil)
+    private let uninstall    = NSButton(title: L("Uninstall…"), target: nil, action: nil)
 
     // MARK: Panes
 
@@ -93,9 +93,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
     private let container = NSView()
     private var shownPane: NSView?
     /// One label column and one window width for all panes, measured from the real (localized) labels.
-    private var labelWidth: CGFloat = 0
     private var windowWidth: CGFloat = 0
-    private var paneX: CGFloat = 20
     /// One width for every field, pop-up and button, so nothing is ever stretched or truncated:
     /// the widest button title in the current language decides, never less than 150 pt.
     private var controlWidth: CGFloat = 150
@@ -321,13 +319,13 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         ])
 
         let tableScroll = buildIgnoredTable()
-        let addApp = NSButton(image: NSImage(systemSymbolName: "plus", accessibilityDescription: L("Add application"))!, target: self, action: #selector(addIgnoredApp))
-        let removeApp = NSButton(image: NSImage(systemSymbolName: "minus", accessibilityDescription: L("Remove"))!, target: self, action: #selector(removeIgnoredApp))
-        for b in [addApp, removeApp] { b.bezelStyle = .smallSquare; b.widthAnchor.constraint(equalToConstant: 28).isActive = true }
-        let tableButtons = NSStackView(views: [addApp, removeApp])
-        tableButtons.orientation = .horizontal; tableButtons.spacing = 0
+        let tableButtons = NSSegmentedControl(images: [NSImage(systemSymbolName: "plus", accessibilityDescription: L("Add application"))!,
+                                                       NSImage(systemSymbolName: "minus", accessibilityDescription: L("Remove"))!],
+                                              trackingMode: .momentary, target: self, action: #selector(ignoredSegmentTapped(_:)))
+        tableButtons.segmentStyle = .smallSquare
+        for i in 0..<2 { tableButtons.setWidth(28, forSegment: i) }
         let tableBlock = NSStackView(views: [tableScroll, tableButtons])
-        tableBlock.orientation = .vertical; tableBlock.alignment = .leading; tableBlock.spacing = 0
+        tableBlock.orientation = .vertical; tableBlock.alignment = .leading; tableBlock.spacing = 4
         let ignoredLabel = label(L("Ignored apps:"))
         let history = grid([
             row(L("Text and file items:"), number(historyMax, unit: L("items"), min: 1, max: Double(Limits.historyMaxCeiling), step: 100)),
@@ -381,7 +379,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
                                            L("How often Keepit looks at the clipboard. macOS sends no notification when it changes, so every clipboard manager polls; 0.3 s is unnoticeable and cheap."))),
             header(L("Data")),
             [NSView(), button(reveal)],
-            header(L("Remove Keepit")),
+            header(L("Uninstall and remove all Keepit data")),
             [NSView(), help(button(uninstall), L("Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back."))],
         ])
 
@@ -396,19 +394,13 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         ]
         // Measure once, in the current language:
         //  • every button, field and pop-up gets the same width — the widest button title decides;
-        //  • the widest label fixes the colon axis for the whole window;
-        //  • the widest pane fixes the window width, and every pane starts at the same x, so the
-        //    axis never moves when switching panes and the widest pane sits exactly centred.
+        //  • the widest pane fixes the window width; every pane is centred in it.
         let widestTitle = sizedControls.compactMap { ($0 as? NSButton)?.fittingSize.width }.max() ?? 0
         controlWidth = max(150, ceil(widestTitle) + 16)
         for c in sizedControls { c.widthAnchor.constraint(equalToConstant: controlWidth).isActive = true }
         for p in panes { (p.view as? NSGridView)?.layoutSubtreeIfNeeded() }
-        labelWidth = panes.compactMap { ($0.view as? NSGridView)?.column(at: 0).width }.max() ?? 0
-        for p in panes { (p.view as? NSGridView)?.column(at: 0).width = labelWidth }
-        for p in panes { (p.view as? NSGridView)?.layoutSubtreeIfNeeded() }
         let widest = ceil(panes.map { $0.view.fittingSize.width }.max() ?? 480)
         windowWidth = max(560, widest + 2 * 28)
-        paneX = (windowWidth - widest) / 2
 
         container.translatesAutoresizingMaskIntoConstraints = false
         let guide = NSButton(title: "", target: self, action: #selector(openGuide))
@@ -447,9 +439,13 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         let scroll = NSScrollView()
         scroll.documentView = ignoredTable
         scroll.hasVerticalScroller = true
-        scroll.borderType = .bezelBorder
+        scroll.borderType = .noBorder
+        scroll.wantsLayer = true
+        scroll.layer?.cornerRadius = 6
+        scroll.layer?.borderWidth = 1
+        scroll.layer?.borderColor = NSColor.separatorColor.cgColor
         scroll.translatesAutoresizingMaskIntoConstraints = false
-        scroll.widthAnchor.constraint(equalToConstant: 360).isActive = true
+        scroll.widthAnchor.constraint(equalToConstant: 300).isActive = true
         scroll.heightAnchor.constraint(equalToConstant: 120).isActive = true
         return scroll
     }
@@ -491,7 +487,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         container.addSubview(v)
         NSLayoutConstraint.activate([
             v.topAnchor.constraint(equalTo: container.topAnchor, constant: 20),
-            v.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: paneX),
+            v.centerXAnchor.constraint(equalTo: container.centerXAnchor),
         ])
         shownPane = v
         window.toolbar?.selectedItemIdentifier = pane.id
@@ -763,6 +759,10 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             cell.textField?.attributedStringValue = NSAttributedString(string: id, attributes: [.font: NSFont.systemFont(ofSize: NSFont.systemFontSize)])
         }
         return cell
+    }
+
+    @objc private func ignoredSegmentTapped(_ sender: NSSegmentedControl) {
+        sender.selectedSegment == 0 ? addIgnoredApp() : removeIgnoredApp()
     }
 
     @objc private func addIgnoredApp() {

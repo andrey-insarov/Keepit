@@ -417,3 +417,5 @@
 "Export…" = "書き出す…";
 "Import…" = "読み込む…";
 "letter" = "文字";
+"Uninstall…" = "アンインストール…";
+"Uninstall and remove all Keepit data" = "Keepit とすべてのデータを削除";

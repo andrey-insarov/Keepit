@@ -459,3 +459,6 @@
 "Export…" = "Export…";
 "Import…" = "Import…";
 "letter" = "letter";
+
+"Uninstall…" = "Uninstall…";
+"Uninstall and remove all Keepit data" = "Uninstall and remove all Keepit data";

@@ -417,4 +417,6 @@ T = {
 'Export…': '내보내기…',
 'Import…': '가져오기…',
 'letter': '문자',
+'Uninstall…': '설치 제거…',
+'Uninstall and remove all Keepit data': 'Keepit과 모든 데이터 제거',
 }

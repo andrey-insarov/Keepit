@@ -440,6 +440,8 @@ T = {
 'Export…': ('Экспортировать…', 'Exportieren …', 'Exporter…', 'Exportar…', '書き出す…', '导出…'),
 'Import…': ('Импортировать…', 'Importieren …', 'Importer…', 'Importar…', '読み込む…', '导入…'),
 'letter': ('буква', 'Buchstabe', 'lettre', 'letra', '文字', '字母'),
+'Uninstall…': ('Удалить программу…', 'Deinstallieren …', 'Désinstaller…', 'Desinstalar…', 'アンインストール…', '卸载…'),
+'Uninstall and remove all Keepit data': ('Удалить Keepit и все его данные', 'Keepit samt allen Daten entfernen', 'Désinstaller et effacer toutes les données', 'Desinstalar y borrar todos los datos', 'Keepit とすべてのデータを削除', '卸载并删除 Keepit 全部数据'),
 }
 
 PH = re.compile(r"%[@d]")

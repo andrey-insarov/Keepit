@@ -428,4 +428,6 @@ T2 = {
 'Export…': ('Експортувати…', 'تصدير…', 'Esporta…'),
 'Import…': ('Імпортувати…', 'استيراد…', 'Importa…'),
 'letter': ('літера', 'حرف', 'lettera'),
+'Uninstall…': ('Видалити програму…', 'إلغاء التثبيت…', 'Disinstalla…'),
+'Uninstall and remove all Keepit data': ('Видалити Keepit і всі його дані', 'إلغاء تثبيت Keepit وحذف كل بياناته', 'Disinstalla ed elimina tutti i dati'),
 }

@@ -417,4 +417,6 @@ T = {
 'Export…': '匯出…',
 'Import…': '匯入…',
 'letter': '字母',
+'Uninstall…': '解除安裝…',
+'Uninstall and remove all Keepit data': '解除安裝並刪除 Keepit 全部資料',
 }

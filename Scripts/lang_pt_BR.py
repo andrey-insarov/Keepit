@@ -417,4 +417,6 @@ T = {
 'Export…': 'Exportar…',
 'Import…': 'Importar…',
 'letter': 'letra',
+'Uninstall…': 'Desinstalar…',
+'Uninstall and remove all Keepit data': 'Desinstalar e apagar todos os dados',
 }

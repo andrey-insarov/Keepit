@@ -417,4 +417,6 @@ T = {
 'Export…': 'Ekspordi…',
 'Import…': 'Impordi…',
 'letter': 'täht',
+'Uninstall…': 'Desinstalli…',
+'Uninstall and remove all Keepit data': 'Desinstalli ja kustuta kõik Keepiti andmed',
 }
