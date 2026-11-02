@@ -27,7 +27,7 @@ A clipboard manager keeps more than the last item, so clearing the system clipbo
 - **`⌥C`** or *Clear History* in the menu removes every history item. Templates are kept.
 - Delete one item: hold `⇧` in the history menu and choose *Delete* from the item's submenu, or `⌃⌥⌫` for the newest item.
 - **`⌥P`** pauses recording for ten minutes — for typing something you would rather not have in the history at all.
-- Copies from password managers (1Password, Bitwarden, KeePassXC, Apple Passwords and others) and anything the copying app marks as concealed are never recorded in the first place.
+- Anything the copying app marks as concealed is not recorded in the first place, and copies made from password managers (1Password, Bitwarden, KeePassXC, Apple Passwords and others) are excluded by app — best effort, as the [security page](security.html#what-is-not-recorded) explains.
 
 If the history is encrypted (*Settings → Security*), locking Keepit with `⌥L` wipes the key from memory, and the files on disk stay unreadable until you unlock. Deleting Keepit and all its data is one command in *Settings → Advanced*.
 

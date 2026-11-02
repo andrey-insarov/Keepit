@@ -400,8 +400,10 @@ different combination on the *Shortcuts* pane. ⌃⌥ with digits and letters is
 menu falls back to the mouse pointer. *Open menu at text cursor* on the General tab turns the
 lookup off if you prefer the pointer always.
 
-**Something I copied is missing.** Copies from password managers and anything marked concealed are
-never recorded; apps on the ignore list are skipped. See *Settings → History*.
+**Something I copied is missing.** Anything marked concealed by the copying app is not recorded,
+and neither is a copy made while a password manager (built-in list) or an app on your ignore list
+was in front — including the app you switched away from a moment ago. See *Settings → History*
+and the [security page](security.html#what-is-not-recorded).
 
 **Touch ID is not offered.** No Touch ID sensor is reachable at the moment (lid closed, no Touch ID
 keyboard). Keepit keeps the setting and asks for the fingerprint as soon as a sensor is available.

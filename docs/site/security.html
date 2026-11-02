@@ -59,7 +59,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
   <a class="brand" href="index.html"><img src="img/icon.png" alt="">Keepit</a>
   <nav><a href="index.html#features">Features</a><a href="guide.html">Guide</a><a href="security.html">Security</a><a href="support.html">Support</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a></nav>
 </div></header>
-<main class="wrap"><aside aria-label="Contents"><p class="ttl">On this page</p><ol><li><a href="#in-one-paragraph">In one paragraph</a></li><li><a href="#what-is-stored-and-where">What is stored, and where</a></li><li><a href="#what-is-never-recorded">What is never recorded</a></li><li><a href="#encryption">Encryption</a></li><li><a href="#touch-id">Touch ID</a></li><li><a href="#recovery-phrase">Recovery phrase</a></li><li><a href="#backups">Backups</a></li><li><a href="#permissions-keepit-asks-for">Permissions Keepit asks for</a></li><li><a href="#network">Network</a></li><li><a href="#code-signing-and-verifying-a-download">Code signing and verifying a download</a></li><li><a href="#uninstalling-and-data-removal">Uninstalling and data removal</a></li><li><a href="#input-limits">Input limits</a></li><li><a href="#limitations-worth-knowing">Limitations worth knowing</a></li><li><a href="#reporting-a-vulnerability">Reporting a vulnerability</a></li></ol></aside><article><h1 id="keepit-security">Keepit security</h1>
+<main class="wrap"><aside aria-label="Contents"><p class="ttl">On this page</p><ol><li><a href="#in-one-paragraph">In one paragraph</a></li><li><a href="#what-is-stored-and-where">What is stored, and where</a></li><li><a href="#what-is-not-recorded">What is not recorded</a></li><li><a href="#encryption">Encryption</a></li><li><a href="#touch-id">Touch ID</a></li><li><a href="#recovery-phrase">Recovery phrase</a></li><li><a href="#backups">Backups</a></li><li><a href="#permissions-keepit-asks-for">Permissions Keepit asks for</a></li><li><a href="#network">Network</a></li><li><a href="#code-signing-and-verifying-a-download">Code signing and verifying a download</a></li><li><a href="#uninstalling-and-data-removal">Uninstalling and data removal</a></li><li><a href="#input-limits">Input limits</a></li><li><a href="#limitations-worth-knowing">Limitations worth knowing</a></li><li><a href="#reporting-a-vulnerability">Reporting a vulnerability</a></li></ol></aside><article><h1 id="keepit-security">Keepit security</h1>
 <p>A clipboard manager sees everything you copy, so it has to be clear about what it keeps, where, and
 who can get at it. This page is the complete picture for Keepit. The code is open
 (<a href="https://github.com/andrey-insarov/Keepit">github.com/andrey-insarov/Keepit</a>), so every claim here
@@ -67,8 +67,9 @@ can be checked against it.</p>
 <h2 id="in-one-paragraph">In one paragraph</h2>
 <p>Keepit stores your clipboard history and templates in one folder on your Mac and nowhere else. There
 is no account, no cloud, no analytics, and the app makes exactly one kind of network request: the
-daily update check against GitHub. Copies from password managers are never recorded. If you set a
-password, everything on disk is AES-256-GCM encrypted with a key derived from that password; the key
+daily update check against GitHub. Clipboard data that the copying app marks as concealed is not
+recorded, and copies from known password managers are excluded by app — a best-effort heuristic,
+explained below. If you set a password, everything on disk is AES-256-GCM encrypted with a key derived from that password; the key
 exists only in memory, is wiped when Keepit locks, and can optionally be released by Touch ID from
 the Secure Enclave. A 24-word recovery phrase is the only way back in if you forget the password —
 Keepit itself cannot reset it.</p>
@@ -111,30 +112,45 @@ text on disk, protected only by your macOS account and FileVault. <em>Settings �
 Data Folder</em> shows the folder.</p>
 <p>Keepit also writes to the macOS keychain — only the Touch ID entry described below — and registers
 itself as a login item if you let it start at login.</p>
-<h2 id="what-is-never-recorded">What is never recorded</h2>
-<ul>
-<li>Anything copied from a known password manager: 1Password, Bitwarden, KeePassXC, MacPass,
-  Strongbox, KeeWeb, LastPass, Dashlane, Enpass, Keeper, NordPass, RoboForm, Apple Passwords and
-  Keychain Access. These bundle identifiers are built in and always active; you can add your own
-  apps on <em>Settings → History</em>.</li>
-<li>Anything the copying app marks as concealed or transient (<code>org.nspasteboard.ConcealedType</code>,
-  <code>org.nspasteboard.TransientType</code>). Password managers and many terminals set these.</li>
-<li>Anything copied while recording is paused (<em>Pause Recording for 10 Minutes</em> in the menu).</li>
-<li>Formats other than plain text, RTF, HTML, PNG and file lists.</li>
-</ul>
-<p>Note that Keepit cannot tell a password typed into a form from any other text if the app that put it
-on the clipboard did not mark it. Use the pause, or the ignore list, for such apps.</p>
+<h2 id="what-is-not-recorded">What is not recorded</h2>
+<p>Three layers, in decreasing order of certainty. It matters which one you are relying on.</p>
+<ol>
+<li><strong>Marked by the source — reliable.</strong> Anything the copying app marks as concealed or transient
+   (<code>org.nspasteboard.ConcealedType</code>, <code>org.nspasteboard.TransientType</code>, 1Password's own type) is
+   skipped on the strength of the mark alone; Keepit does not need to know which app wrote it.
+   1Password, Bitwarden, Apple Passwords, Keychain Access and many terminals set these marks. (The
+   check can be turned off on <em>Settings → History</em>; leave it on.)</li>
+<li><strong>Known by app — best effort.</strong> Copies from a password manager that sets no mark are excluded by
+   its bundle identifier: KeePassXC, MacPass, Strongbox, KeeWeb, LastPass, Dashlane, Enpass, Keeper,
+   NordPass, RoboForm (and, as a second line, the apps in layer 1) are built in and always active;
+   add your own apps on <em>Settings → History</em>. The limit here is macOS: the pasteboard does not record
+   which app wrote it, so Keepit works from which apps were in front since it last looked (every
+   300 ms by default). If any of them is on the list, the change is skipped — including when you copy
+   and switch to another app before Keepit notices. This errs towards skipping. It cannot cover a
+   copy made by a background process or a script, and it cannot tell a password from any other text
+   in an app that is not on the list.</li>
+<li><strong>By your choice.</strong> Anything copied while recording is paused (<em>Pause Recording for 10 Minutes</em>,
+   <kbd class="k">⌥P</kbd>), apps on your ignore list, and formats other than plain text, RTF, HTML, PNG and file lists.</li>
+</ol>
+<p>Keepit does not inspect text for things that look like passwords or one-time codes. If an app that
+is not on the list puts a secret on the clipboard without marking it, it is recorded like anything
+else: use the pause or the ignore list for such apps, and delete the item from the history.</p>
 <h2 id="encryption">Encryption</h2>
 <p>Turn on <em>Require password at launch</em> and the history and templates files are encrypted:</p>
 <ul>
 <li><strong>Key derivation</strong>: PBKDF2-HMAC-SHA256 with 200 000 rounds and a random 16-byte salt, producing a
-  256-bit key. The salt is stored in <code>vault.json</code>; nothing else derived from the password is written
-  except a small GCM-sealed verifier that lets Keepit tell a wrong password from corrupt data.</li>
+  256-bit key. The salt, the KDF name and the round count are stored in <code>vault.json</code> (so the
+  parameters can change in a later version without breaking existing vaults); nothing else derived
+  from the password is written except a small GCM-sealed verifier that lets Keepit tell a wrong
+  password from corrupt data.</li>
 <li><strong>Cipher</strong>: AES-256-GCM (CryptoKit), a fresh random nonce per file write, authenticated — a
   modified file fails to open rather than decrypting to garbage.</li>
-<li><strong>Key in memory</strong>: the 32 key bytes live in a page-locked (<code>mlock</code>) buffer that is never swapped
-  out and is overwritten with <code>memset_s</code> when Keepit locks or quits. A CryptoKit key object is built
-  only for the duration of one call and discarded.</li>
+<li><strong>Key in memory</strong>: the 32 key bytes live in a dedicated buffer that is overwritten with <code>memset_s</code>
+  when Keepit locks or quits; Keepit asks the kernel to keep that page out of swap (<code>mlock</code>) and
+  logs if the request is refused. A CryptoKit key object is built only for the duration of one call
+  and discarded. This covers Keepit's own key buffer. The decrypted history while Keepit is unlocked,
+  and the copies Swift and CryptoKit make internally, are ordinary process memory — see
+  <em>Limitations</em> below.</li>
 <li><strong>Locking</strong>: <em>Lock Keepit</em> (<kbd class="k">⌥L</kbd>), quitting, and — on by default — the screen locking
   or the Mac sleeping wipe the key and unload the decrypted history and templates. After that nothing
   readable is in memory until you unlock again.</li>
@@ -291,6 +307,8 @@ exhaust memory or disk:</p>
 <li>Encryption protects the files at rest. Someone with your macOS password and Keepit unlocked sees
   what you see.</li>
 <li>Items you paste leave Keepit's control the moment they land in another app.</li>
+<li>Which app wrote the clipboard is a guess (see <em>What is not recorded</em>). The reliable signal is the
+  concealed mark, and only the copying app can set it.</li>
 </ul>
 <h2 id="reporting-a-vulnerability">Reporting a vulnerability</h2>
 <p>Please use GitHub's private vulnerability reporting (<em>Security → Report a vulnerability</em> on the

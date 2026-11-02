@@ -39,7 +39,7 @@ A VIEWER FOR EVERYTHING
 
 PRIVATE BY DESIGN
 • Everything stays on your Mac. No account, no cloud, no analytics, no network.
-• Copies from password managers are never recorded; concealed clipboard data is ignored; any app can be excluded.
+• Concealed clipboard data is not recorded; copies from known password managers are excluded; any app can be excluded.
 • Optional password: history and templates are stored AES-256 encrypted; the key is wiped from memory when Keepit locks — manually, when the screen locks, or when the Mac sleeps.
 • Touch ID unlock, and a 24-word recovery phrase in case you forget the password.
 • Export / Import: one password-encrypted backup file moves everything to another Mac.

@@ -32,7 +32,7 @@ Optional Touch ID unlock keeps a copy of that key in the macOS keychain, protect
 
 ## 5. Password managers and concealed content
 
-Keepit never records clipboard content marked as concealed or transient by the copying application, and ignores copies made from known password managers (1Password, Bitwarden, KeePassXC, Keychain Access, Apple Passwords and others). You can add any application to the ignore list in Settings → History.
+Keepit does not record clipboard content marked as concealed or transient by the copying application. It also skips copies made while a known password manager (1Password, Bitwarden, KeePassXC, Keychain Access, Apple Passwords and others) or an application on your ignore list was in front; because macOS does not tell applications which program wrote the clipboard, this second rule is best effort — the [security page](security.html#what-is-not-recorded) explains its limits. You can add any application to the ignore list in Settings → History.
 
 ## 6. Network connections and third parties
 
