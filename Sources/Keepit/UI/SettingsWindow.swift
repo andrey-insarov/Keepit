@@ -244,19 +244,22 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         helpPopover = pop
         pop.behavior = .transient
         let vc = NSViewController()
-        let l = NSTextField(wrappingLabelWithString: text)
-        l.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
-        l.preferredMaxLayoutWidth = 320
-        l.translatesAutoresizingMaskIntoConstraints = false
+        let label = NSTextField(wrappingLabelWithString: text)
+        label.preferredMaxLayoutWidth = 320
+        label.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
+        label.translatesAutoresizingMaskIntoConstraints = false
         let v = NSView()
-        v.addSubview(l)
+        v.translatesAutoresizingMaskIntoConstraints = false
+        v.addSubview(label)
         NSLayoutConstraint.activate([
-            l.topAnchor.constraint(equalTo: v.topAnchor, constant: 10),
-            l.leadingAnchor.constraint(equalTo: v.leadingAnchor, constant: 12),
-            l.trailingAnchor.constraint(equalTo: v.trailingAnchor, constant: -12),
-            l.bottomAnchor.constraint(equalTo: v.bottomAnchor, constant: -10),
+            label.topAnchor.constraint(equalTo: v.topAnchor, constant: 10),
+            label.leadingAnchor.constraint(equalTo: v.leadingAnchor, constant: 12),
+            label.trailingAnchor.constraint(equalTo: v.trailingAnchor, constant: -12),
+            label.bottomAnchor.constraint(equalTo: v.bottomAnchor, constant: -10),
+            v.widthAnchor.constraint(equalToConstant: 344),
         ])
-        let h = l.sizeThatFits(NSSize(width: 320, height: 1000)).height
+        v.layoutSubtreeIfNeeded()
+        let h = label.sizeThatFits(NSSize(width: 320, height: 1000)).height
         vc.view = v
         pop.contentSize = NSSize(width: 344, height: h + 20)
         pop.contentViewController = vc
