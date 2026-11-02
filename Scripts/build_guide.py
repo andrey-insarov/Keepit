@@ -12,18 +12,29 @@ combination (`⌃⌥1`, `⌥M`, `⌘V`) is rendered as a keycap.
 import re, pathlib, html, markdown
 from PIL import Image
 
+import datetime, subprocess
 root = pathlib.Path(__file__).resolve().parent.parent
 site = root / "docs/site"
+DATE = datetime.date.today().isoformat()
 
+SITE = "https://keep.it.com/"
+
+# (source, output, <title>, meta description, sidebar TOC?, schema.org type, breadcrumb label)
 PAGES = [
-    ("GUIDE.md", "guide.html", "User guide — Keepit",
-     "How to use Keepit, the clipboard manager for macOS: history menu, hot keys, templates and placeholders, the Viewer, security, automation.", True),
-    ("SECURITY.md", "security.html", "Security — Keepit",
-     "What Keepit stores, where, how it is encrypted, which permissions it needs and why, and how to verify a download.", True),
-    ("SUPPORT.md", "support.html", "Support — Keepit",
-     "How to get help with Keepit, the clipboard manager for macOS, and quick answers to the usual questions.", False),
-    ("PRIVACY.md", "privacy.html", "Privacy policy — Keepit",
-     "Keepit's privacy policy: the app collects, transmits and shares nothing; everything stays on your Mac.", False),
+    ("GUIDE.md", "guide.html", "Keepit User Guide – Clipboard Manager for Mac",
+     "How to use Keepit, the free clipboard manager for Mac: clipboard history menu, hot keys, templates and placeholders, the Viewer, encryption and Touch ID, automation.", True, "TechArticle", "User guide"),
+    ("SECURITY.md", "security.html", "Keepit Security – Encrypted Clipboard Manager for Mac",
+     "What Keepit stores and where, how the clipboard history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download.", True, "TechArticle", "Security"),
+    ("SUPPORT.md", "support.html", "Keepit Support",
+     "How to get help with Keepit, the clipboard manager for Mac, and quick answers to the usual questions.", False, "WebPage", "Support"),
+    ("PRIVACY.md", "privacy.html", "Keepit Privacy Policy",
+     "Keepit's privacy policy: the app collects, transmits and shares nothing; everything stays on your Mac.", False, "WebPage", "Privacy policy"),
+    ("CLIPBOARD-HISTORY-MAC.md", "clipboard-history-mac.html", "How to See Clipboard History on a Mac (2026)",
+     "macOS keeps only the last thing you copied. Here is what Finder's Show Clipboard can do, and how to get a searchable clipboard history on your Mac with a free, open-source app.", False, "HowTo", "Clipboard history on a Mac"),
+    ("PASTE-AS-PLAIN-TEXT-MAC.md", "paste-as-plain-text-mac.html", "How to Paste as Plain Text on a Mac",
+     "The macOS shortcut for pasting without formatting (Paste and Match Style, ⌥⇧⌘V), how to remap it per app, and a one-key plain-text paste that works in every app.", False, "HowTo", "Paste as plain text on a Mac"),
+    ("CLEAR-CLIPBOARD-MAC.md", "clear-clipboard-mac.html", "How to Clear the Clipboard on a Mac",
+     "Ways to empty the macOS clipboard — copy an empty selection, pbcopy from Terminal — and how to clear or pause a clipboard history.", False, "HowTo", "Clear the clipboard on a Mac"),
 ]
 
 HEADER = """<header><div class="wrap">
@@ -126,7 +137,31 @@ def toc_html(tokens, depth=0) -> str:
     return f"<ol>{items}</ol>" if items else ""
 
 
-def render(src_name: str, out_name: str, title: str, description: str, with_toc: bool) -> None:
+def json_ld(out_name: str, title: str, description: str, kind: str, crumb: str, headline: str) -> str:
+    url = SITE + out_name
+    crumbs = {"@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Keepit", "item": SITE},
+        {"@type": "ListItem", "position": 2, "name": crumb, "item": url}]}
+    page = {"@type": kind, "@id": url, "url": url, "name": headline, "headline": headline, "description": description,
+            "inLanguage": "en", "isPartOf": {"@id": SITE + "#site"}, "about": {"@id": SITE + "#app"},
+            "author": {"@id": SITE + "#org"}, "publisher": {"@id": SITE + "#org"},
+            "image": SITE + "img/social-preview.png", "dateModified": DATE}
+    import json
+    return '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@graph": [page, crumbs]}, ensure_ascii=False) + '</script>'
+
+
+def modified(src_name: str) -> str:
+    """Last commit date of the source file (today for files not committed yet)."""
+    try:
+        out = subprocess.run(["git", "log", "-1", "--format=%cs", "--", f"docs/{src_name}"], cwd=root, capture_output=True, text=True).stdout.strip()
+        return out or DATE
+    except OSError:
+        return DATE
+
+
+def render(src_name: str, out_name: str, title: str, description: str, with_toc: bool, kind: str, crumb: str) -> None:
+    global DATE
+    DATE = modified(src_name)
     md_text = (root / "docs" / src_name).read_text(encoding="utf-8")
     md = markdown.Markdown(extensions=["tables", "fenced_code", "toc"])
     body = md.convert(md_text)
@@ -135,6 +170,7 @@ def render(src_name: str, out_name: str, title: str, description: str, with_toc:
     body = re.sub(r"<p><strong>Contents</strong></p>\s*<ul>.*?</ul>\s*<hr\s*/?>", "", body, count=1, flags=re.S)
     body = keycaps(body)
     body = body.replace('<table>', '<div class="tbl"><table>').replace('</table>', '</table></div>')
+    headline = tokens0 = (md.toc_tokens[0]["name"] if md.toc_tokens and md.toc_tokens[0]["level"] == 1 else title)
     tokens = [t for t in md.toc_tokens if t["level"] == 1]
     sections = tokens[0]["children"] if tokens else md.toc_tokens
     toc = toc_html(sections) if with_toc else ""
@@ -144,8 +180,13 @@ def render(src_name: str, out_name: str, title: str, description: str, with_toc:
             f'<meta name="viewport" content="width=device-width, initial-scale=1">\n'
             f'<title>{title}</title><link rel="icon" href="img/icon.png"><link rel="apple-touch-icon" href="img/icon.png">\n'
             f'<meta name="description" content="{description}">\n'
+            f'<link rel="canonical" href="{SITE}{out_name}">'
+            f'<meta property="og:type" content="article"><meta property="og:site_name" content="Keepit">'
             f'<meta property="og:title" content="{title}"><meta property="og:description" content="{description}">'
-            f'<meta property="og:image" content="https://keep.it.com/img/menu.png"><meta property="og:url" content="https://keep.it.com/{out_name}">\n'
+            f'<meta property="og:image" content="{SITE}img/social-preview.png"><meta property="og:url" content="{SITE}{out_name}">'
+            f'<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{title}"><meta name="twitter:description" content="{description}"><meta name="twitter:image" content="{SITE}img/social-preview.png">'
+            f'<meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">\n'
+            f'{json_ld(out_name, title, description, kind, crumb, headline)}\n'
             f'<style>{CSS}</style></head>\n<body>{HEADER}\n<main class="{main_cls}">{aside}<article>{body}</article></main>\n{FOOTER}\n'
             f'<div id="lb" role="dialog" aria-label="Full-size screenshot"><img alt=""></div>\n'
             f'<script>{JS}</script>\n</body></html>')
@@ -153,5 +194,14 @@ def render(src_name: str, out_name: str, title: str, description: str, with_toc:
     print(out_name, len(page), "bytes;", body.count('class="shot"'), "figures;", body.count('<kbd'), "keycaps")
 
 
+def write_sitemap() -> None:
+    urls = [("", "1.0", "weekly", modified("../docs/site/index.html"))] + [(p[1], "0.8" if p[5] != "WebPage" else "0.3", "monthly", modified(p[0])) for p in PAGES]
+    body = "".join(f"<url><loc>{SITE}{u}</loc><lastmod>{d}</lastmod><changefreq>{f}</changefreq><priority>{pr}</priority></url>" for u, pr, f, d in urls)
+    (site / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{body}</urlset>\n', encoding="utf-8")
+    (site / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE}sitemap.xml\n", encoding="utf-8")
+
+
 for p in PAGES:
     render(*p)
+write_sitemap()
+print("sitemap.xml, robots.txt")

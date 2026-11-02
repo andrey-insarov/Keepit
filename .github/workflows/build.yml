@@ -150,8 +150,9 @@ jobs:
           git fetch origin main
           git checkout -B main origin/main
           make cask VERSION=$(cat VERSION)
-          git add Casks/keepit.rb
-          git diff --cached --quiet || git commit -m "cask: Keepit $(cat VERSION)"
+          sed -i '' "s/\"softwareVersion\":\"[^\"]*\"/\"softwareVersion\":\"$(cat VERSION)\"/" docs/site/index.html
+          git add Casks/keepit.rb docs/site/index.html
+          git diff --cached --quiet || git commit -m "cask + site version: Keepit $(cat VERSION)"
           git push origin main
 
   # Off-site backup: push every branch and tag to the Codeberg mirror after each push to main or a tag.

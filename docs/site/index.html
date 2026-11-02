@@ -3,12 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Keepit – Clipboard Manager for macOS</title>
-<meta name="description" content="Keepit keeps a history of everything you copy on your Mac and pastes any of it with one hot key. Templates with placeholders, Touch ID lock, AES-256 encryption. Free and open source, by the it.com team.">
-<meta property="og:title" content="Keepit – Clipboard Manager for macOS">
-<meta property="og:description" content="Everything you copy, one hot key away. Free, open source, private by design.">
-<meta property="og:image" content="https://keep.it.com/img/menu.png">
-<meta property="og:url" content="https://keep.it.com">
+<title>Keepit – Free Clipboard Manager for Mac (Open Source, Encrypted)</title>
+<meta name="description" content="Keepit is a free, open-source clipboard manager for Mac. Clipboard history at one hot key, templates with placeholders, AES-256 encryption and Touch ID. No account, no cloud. macOS 13+.">
+<link rel="canonical" href="https://keep.it.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Keepit">
+<meta property="og:title" content="Keepit – Free Clipboard Manager for Mac">
+<meta property="og:description" content="Clipboard history one hot key away. Templates, Touch ID, AES-256 encryption. Free and open source, nothing leaves your Mac.">
+<meta property="og:image" content="https://keep.it.com/img/social-preview.png">
+<meta property="og:image:width" content="1280"><meta property="og:image:height" content="640">
+<meta property="og:url" content="https://keep.it.com/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Keepit – Free Clipboard Manager for Mac">
+<meta name="twitter:description" content="Clipboard history one hot key away. Templates, Touch ID, AES-256 encryption. Free and open source, nothing leaves your Mac.">
+<meta name="twitter:image" content="https://keep.it.com/img/social-preview.png">
+<meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="img/icon.png">
 <link rel="apple-touch-icon" href="img/icon.png">
 <style>
@@ -180,6 +190,21 @@
   footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; }
   footer a { color: var(--ink-2); }
 </style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"SoftwareApplication","@id":"https://keep.it.com/#app","name":"Keepit – Clipboard Manager","alternateName":"Keepit","applicationCategory":"UtilitiesApplication","applicationSubCategory":"Clipboard manager","operatingSystem":"macOS 13 or later","url":"https://keep.it.com/","downloadUrl":"https://github.com/andrey-insarov/Keepit/releases/latest","installUrl":"https://keep.it.com/#install","softwareVersion":"2.9.3","license":"https://opensource.org/license/mit","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"image":"https://keep.it.com/img/social-preview.png","screenshot":["https://keep.it.com/img/guide/menu.png","https://keep.it.com/img/viewer.png"],"featureList":["Clipboard history with search and preview","Paste by hot key or number from any app","Templates with placeholders (date, clipboard, input, choice, cursor)","AES-256-GCM encryption and Touch ID unlock","No account, no cloud, no analytics","keepit:// URL scheme for Shortcuts, Raycast and Alfred"],"author":{"@id":"https://keep.it.com/#org"},"publisher":{"@id":"https://keep.it.com/#org"},"description":"Free, open-source clipboard manager for Mac: clipboard history at one hot key, templates with placeholders, AES-256 encryption and Touch ID."},
+{"@type":"Organization","@id":"https://keep.it.com/#org","name":"UK Intis Telecom LTD","url":"https://it.com","logo":"https://keep.it.com/img/icon.png","sameAs":["https://github.com/andrey-insarov/Keepit"]},
+{"@type":"WebSite","@id":"https://keep.it.com/#site","url":"https://keep.it.com/","name":"Keepit","publisher":{"@id":"https://keep.it.com/#org"}},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Why does Keepit ask for the Accessibility permission?","acceptedAnswer":{"@type":"Answer","text":"To send ⌘V to the app you were working in after you pick an item, and to find the text cursor so the menu opens next to it. Keepit does not read or monitor other apps. Without the permission it still records history and copies the chosen item to the clipboard."}},
+{"@type":"Question","name":"Does anything leave my Mac?","acceptedAnswer":{"@type":"Answer","text":"No. The only network request is the daily update check against GitHub Releases; the App Store edition does not make even that one. There is no account, no telemetry, no crash reporting."}},
+{"@type":"Question","name":"What if I forget the password?","acceptedAnswer":{"@type":"Answer","text":"Use the 24-word recovery phrase shown when you turned protection on, or Touch ID on the same Mac. With neither, the data cannot be recovered — there is no master key, by design."}},
+{"@type":"Question","name":"Is Keepit really free? What's the catch?","acceptedAnswer":{"@type":"Answer","text":"Free and MIT-licensed, source on GitHub. Keepit was built by the founder of the it.com domain zone to show what can live at a .it.com address. No ads, no in-app purchases, no pro tier."}},
+{"@type":"Question","name":"How do I move my data to another Mac?","acceptedAnswer":{"@type":"Answer","text":"Export Backup writes one encrypted .keepit file with history, templates and preferences; Import Backup on the other Mac merges or replaces."}},
+{"@type":"Question","name":"Which Macs are supported?","acceptedAnswer":{"@type":"Answer","text":"macOS 13 Ventura or later, Apple silicon and Intel. Touch ID unlock needs a Mac with Touch ID."}}
+]}
+]}
+</script>
 </head>
 <body>
 
@@ -191,7 +216,7 @@
 <main>
   <div class="hero wrap">
     <h1>Everything you copy, one&nbsp;<kbd class="k">⌥M</kbd> away.</h1>
-    <p class="lead">Keepit remembers what you copy on your Mac and pastes any of it back where you are typing. Templates for the text you type every day. Encrypted on disk, unlocked with Touch&nbsp;ID, never leaves your Mac.</p>
+    <p class="lead">Keepit is a free, open-source clipboard manager for Mac. It keeps a history of everything you copy and pastes any of it back where you are typing. Templates for the text you type every day. Encrypted on disk, unlocked with Touch&nbsp;ID, never leaves your Mac.</p>
     <div class="ctas">
       <a class="btn btn-primary" id="download" href="https://github.com/andrey-insarov/Keepit/releases/latest">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
@@ -223,7 +248,7 @@
   </div>
 
   <section id="features"><div class="wrap">
-    <h2>Three keys you'll learn in a minute</h2>
+    <h2>Clipboard history, three keys you'll learn in a minute</h2>
     <p class="kicker">Keepit lives in the menu bar and stays out of the way. Every key below works in any app, and every one of them can be changed.</p>
     <div class="keys3">
       <div class="key3"><div class="big"><kbd class="k">⌥M</kbd></div><h3>The history menu</h3><p>Opens next to your text cursor. Type to search, hit a number or click — the item is pasted where you were typing. Hold <kbd class="k">⇧</kbd> and every item grows a submenu: plain text, UPPERCASE, add to templates, delete.</p></div>
@@ -233,7 +258,7 @@
 
     <div class="bento">
       <div class="cell c4">
-        <h3>Templates that fill themselves in</h3>
+        <h3>Templates that fill themselves in — a snippet manager built in</h3>
         <p>A template is plain text with placeholders. When you paste it, Keepit asks for the inputs, expands the rest and puts the cursor where <code>{cursor}</code> was.</p>
         <div class="tpl">Hi <b>{input:Name}</b>,
 
@@ -349,6 +374,7 @@ open "keepit://pause"</div>
 
 <footer><div class="wrap">
   <span>© 2026 UK Intis Telecom LTD · Keepit is MIT-licensed</span>
+  <span>How-tos: <a href="clipboard-history-mac.html">Clipboard history on a Mac</a> · <a href="paste-as-plain-text-mac.html">Paste as plain text</a> · <a href="clear-clipboard-mac.html">Clear the clipboard</a></span>
   <span><a href="/privacy">Privacy policy</a> · <a href="security.html">Security</a> · <a href="https://github.com/andrey-insarov/Keepit/issues">Support</a> · <a href="https://github.com/andrey-insarov/Keepit/blob/main/CHANGELOG.md">Changelog</a> · <a href="https://it.com">it.com</a></span>
 </div></footer>
 
