@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.11.1 — 2026-11-02
+
+- Hardening: images are checked by byte size *and* pixel count from the header before anything is decoded (40 MP cap), the paste queue stops at 500 items, a `{input:}` answer at 10 000 characters; the full table is on the security page
+- Cleanup: dead code and 39 localization strings left over from the old Preferences window removed from all 21 languages
+- Guide: every screenshot retaken for the 2.11 Settings window, the paste queue and the Examples templates
+
 ## 2.11.0 — 2026-11-02
 
 - **Settings, the Mac way.** *Preferences* is now *Settings* (as in macOS 13+), with a toolbar of panes — General, Shortcuts, Paste Queue, History, Menu, Security, Advanced — and the window sized to each pane. Every change applies immediately; there is no Save or Cancel, ⌘W or Esc closes
@@ -12,7 +18,6 @@
 - Reset runs the same welcome as a fresh install: the password offer, then the Accessibility prompt if needed
 - Viewer: toolbar buttons that make no sense for the selection are disabled — *Add to Template* on a template, *New Folder* outside Template, *Delete* on a group heading, *Send to Clipboard* on the clipboard itself, *Insert* unless a text template is being edited; *Delete* on the clipboard empties it
 - Shortcut fields no longer start recording just because the pane gave them keyboard focus — click them, or press Space
-- Hardening: images are checked by byte size *and* pixel count from the header before anything is decoded (40 MP cap), the paste queue stops at 500 items, a `{input:}` answer at 10 000 characters; the full table is on the security page
 - A fresh install (and Reset) starts with an *Examples* template folder that shows placeholders at work — a greeting with `{input:Name}` and `{cursor}`, today's date, a clipboard quote, a signature — in the system language
 
 ## 2.10.1 — 2026-11-02
