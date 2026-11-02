@@ -13,7 +13,7 @@ final class PreviewPanel {
     private var showTimer: Timer?
     private let maxSize = NSSize(width: 440, height: 380)
     private static let cornerRadius: CGFloat = 10
-    private static let gap: CGFloat = 8
+    private static let gap: CGFloat = 48
 
     private static func roundedMask(radius: CGFloat) -> NSImage {
         let side = radius * 2 + 1
