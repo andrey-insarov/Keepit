@@ -5,6 +5,8 @@ final class TemplateStore {
     private(set) var root = TemplateNode(name: "Template")
     var onChange: (() -> Void)?
     private lazy var saver = DebouncedSaver(delay: 1.0) { [weak self] in self?.saveNow() }
+    /// See HistoryStore.isPurged.
+    private(set) var isPurged = false
 
     init() {
         reload()
@@ -12,6 +14,7 @@ final class TemplateStore {
 
     /// (Re)load from disk — used at start and after unlocking.
     func reload() {
+        isPurged = false
         if let loaded = Storage.load(TemplateNode.self, from: Storage.templatesURL) {
             root = loaded
             root.relink()
@@ -45,6 +48,7 @@ final class TemplateStore {
     /// Drop everything from memory without touching the disk (lock).
     func purge() {
         saver.flush()
+        isPurged = true
         root = TemplateNode(name: "Template")
         onChange?()
     }
@@ -79,6 +83,7 @@ final class TemplateStore {
     }
 
     func saveNow() {
+        if isPurged { return }
         Storage.save(root, to: Storage.templatesURL)
     }
 

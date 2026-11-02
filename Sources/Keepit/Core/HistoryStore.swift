@@ -7,6 +7,9 @@ final class HistoryStore {
     var onChange: (() -> Void)?
 
     private lazy var saver = DebouncedSaver(delay: 1.5) { [weak self] in self?.saveNow() }
+    /// True between `purge()` (lock) and the next `reload()`: memory is empty on purpose and must
+    /// never be written over the file on disk — quitting or updating while locked used to do that.
+    private(set) var isPurged = false
 
     init(settings: Settings) {
         self.settings = settings
@@ -15,6 +18,7 @@ final class HistoryStore {
 
     /// (Re)load from disk — used at start and after unlocking.
     func reload() {
+        isPurged = false
         items = []
         if settings.historySave, let loaded = Storage.load([ClipItem].self, from: Storage.historyURL) {
             items = loaded
@@ -26,6 +30,7 @@ final class HistoryStore {
     /// Drop everything from memory without touching the disk (lock).
     func purge() {
         saver.flush()
+        isPurged = true
         items = []
         onChange?()
     }
@@ -158,6 +163,7 @@ final class HistoryStore {
     }
 
     func saveNow() {
+        if isPurged { return }
         if settings.historySave {
             Storage.save(items, to: Storage.historyURL)
         } else {

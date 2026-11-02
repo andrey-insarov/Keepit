@@ -53,6 +53,24 @@ final class SettingsAndStoreTests: XCTestCase {
         XCTAssertNil(HistoryStore(settings: Settings()).items.first, "no key → encrypted file is not readable")
     }
 
+    func testQuitWhileLockedKeepsHistoryAndTemplatesOnDisk() throws {
+        let key = try Vault.enable(password: .of("pw"))
+        Storage.key = key
+        let h = HistoryStore(settings: Settings())
+        h.add(.text("keep me"))
+        h.flush()
+        let t = TemplateStore()
+        let n = TemplateNode(name: "sig", text: "sig")
+        t.root.insert(n); t.changed(); t.flush()
+        // Lock: purge memory, forget the key; then what applicationWillTerminate does.
+        h.purge(); t.purge(); Storage.clearKey()
+        h.flush(); t.flush(); h.saveNow(); t.saveNow()
+        Storage.key = key
+        XCTAssertEqual(HistoryStore(settings: Settings()).items.first?.plainText, "keep me")
+        XCTAssertEqual(TemplateStore().root.find(id: n.id)?.clip?.plainText, "sig")
+        XCTAssertTrue(Vault.isEncrypted(try Data(contentsOf: Storage.historyURL)), "never rewritten as plaintext")
+    }
+
     func testTemplateStorePurgeAndReload() {
         let store = TemplateStore()
         let n = TemplateNode(name: "n", text: "t")

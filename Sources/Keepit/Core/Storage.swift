@@ -68,6 +68,12 @@ enum Storage {
     }
 
     static func save<T: Encodable>(_ value: T, to url: URL, encrypt: Bool = true) {
+        // With a password set and no key in memory (locked), writing would replace an encrypted
+        // file with plaintext — refuse rather than leak or clobber.
+        if encrypt, key == nil, Vault.isEnabled {
+            NSLog("Keepit: not saving \(url.lastPathComponent) while locked")
+            return
+        }
         do {
             var data = try encoder.encode(value)
             if encrypt, let k = key { data = try Vault.encrypt(data, key: k) }
