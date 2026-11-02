@@ -24,6 +24,7 @@ Found a bug, a wrong translation, or have a question? Write below. Bugs can also
   <div class="cf-turnstile" data-sitekey="__TURNSTILE_SITE_KEY__" data-theme="light"></div>
   <p class="fb-err" id="fb-err" hidden></p>
   <button type="submit" class="btn">Send</button>
+  <p class="hint fb-legal">What you send is e-mailed to us and used only to answer you — see the <a href="privacy.html">privacy policy</a>.</p>
   <div class="fb-ok" id="fb-ok" hidden><b>Thank you — your message has been sent.</b><br>A copy went to your e-mail address.</div>
 </form>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
