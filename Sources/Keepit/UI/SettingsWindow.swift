@@ -289,6 +289,10 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
     // MARK: Panes
 
     private func buildPanes() {
+        let exportBtn = NSButton(title: L("Export…"), target: self, action: #selector(exportTapped))
+        let importBtn = NSButton(title: L("Import…"), target: self, action: #selector(importTapped))
+        let backupRow = NSStackView(views: [button(exportBtn), button(importBtn)])
+        backupRow.orientation = .horizontal; backupRow.spacing = 8
         let general = grid([
             header(L("Startup")),
             [NSView(), check(loginItem)],
@@ -298,6 +302,8 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             row(L("Paste delay:"), help(number(pasteDelay, unit: L("seconds"), min: 0, max: 5, step: 0.02, decimals: 2),
                                          L("Time between bringing the app you were in back to the front and sending ⌘V. Raise it for apps that are slow to come forward."))),
             [NSView(), check(showAtCaret)],
+            header(L("Backup")),
+            [NSView(), help(backupRow, L("One password-encrypted .keepit file with history, templates and preferences — for moving to another Mac or between the App Store and direct editions."))],
         ])
 
         let resetHK = NSButton(title: L("Reset to Defaults"), target: self, action: #selector(resetShortcuts))
@@ -364,10 +370,6 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             row(L("Thumbnail height:"), number(thumbSize, unit: L("pixels"), min: 16, max: 128, step: 8)),
         ])
 
-        let exportBtn = NSButton(title: L("Export…"), target: self, action: #selector(exportTapped))
-        let importBtn = NSButton(title: L("Import…"), target: self, action: #selector(importTapped))
-        let backupRow = NSStackView(views: [button(exportBtn), button(importBtn)])
-        backupRow.orientation = .horizontal; backupRow.spacing = 8
         protect.target = self; protect.action = #selector(protectToggled)
         changePw.target = self; changePw.action = #selector(changePasswordTapped)
         newPhrase.target = self; newPhrase.action = #selector(newPhraseTapped)
@@ -378,8 +380,6 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             [NSView(), help(check(touchID), L("Unlock with a fingerprint instead of typing the password. The password always remains as fallback."))],
             [NSView(), help(check(touchIDChange), L("Let Touch ID stand in for the current password when changing it. Off = always type the current password first."))],
             [NSView(), help(check(lockScreen), L("Wipes the key from memory and unloads history and templates when the screen locks or the Mac sleeps; unlock with Touch ID or the password afterwards."))],
-            header(L("Backup")),
-            [NSView(), help(backupRow, L("One password-encrypted .keepit file with history, templates and preferences — for moving to another Mac or between the App Store and direct editions."))],
             header(L("Recovery phrase")),
             [NSView(), help(button(newPhrase), L("Issues a new 24-word phrase and invalidates the old one. Use it if the printed sheet was lost or seen by someone; you will then be offered to change the password too."))],
         ])

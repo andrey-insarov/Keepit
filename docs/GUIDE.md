@@ -278,12 +278,12 @@ that explains it.
 
 | Pane | What is there |
 |-----|---------------|
-| **General** | Launch at login · save history on quit, restore on start · paste after choosing (off = only copy) · paste delay — raise it for apps that are slow to come to the front · open the menu at the text cursor |
+| **General** | Launch at login · save history on quit, restore on start · paste after choosing (off = only copy) · paste delay — raise it for apps that are slow to come to the front · open the menu at the text cursor · Backup: *Export…* / *Import…* — [Backup](#backup) |
 | **Shortcuts** | Every global shortcut in one place — see below |
 | **Paste Queue** | The three queue keys, the idle time after which the queue switches off, and what to put between items for *Paste all remaining* — [The paste queue](#the-paste-queue) |
 | **History** | How many text/file items and images to keep (1000 / 30) · forget items older than … · *Remove duplicates* (copying the same thing again moves it to the top) · *Ignore concealed clipboard data* · the ignored-apps list (bundle identifiers; password managers are always ignored) |
 | **Menu** | Search field · numbering · preview panel · tooltips · source-app icons · image thumbnails · title length · thumbnail height |
-| **Security** | Password, Touch ID, locking, recovery phrase, Backup (Export / Import) — [Part 6](#part-6--security) |
+| **Security** | Password, Touch ID, locking, recovery phrase — [Part 6](#part-6--security) |
 | **Advanced** | Clipboard poll interval · Data: *Open Folder* · Reset and uninstall: *Reset…* (back to a fresh install, example templates return) · *Uninstall…* (reset, then remove the app, Launch at login, keychain entry and permissions) |
 
 ![Settings → History: limits and the ignored-apps list](site/img/guide/prefs-history.png)
@@ -337,7 +337,7 @@ is no server and nothing to reset.
 
 ### Backup
 
-*Settings → Security → Backup → Export…* writes one `.keepit` file with the history, templates and preferences, encrypted
+*Settings → General → Backup → Export…* writes one `.keepit` file with the history, templates and preferences, encrypted
 with a password you choose for the file. *Import…* reads it back on any Mac — *Merge* adds to
 what is there, *Replace* starts from the backup. The same file moves data between the direct
 download and the App Store edition.

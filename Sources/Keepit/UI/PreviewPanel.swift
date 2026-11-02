@@ -40,7 +40,17 @@ final class PreviewPanel {
                   (w[kCGWindowLayer as String] as? Int) == Int(CGWindowLevelForKey(.popUpMenuWindow)),
                   let b = w[kCGWindowBounds as String] as? [String: CGFloat],
                   let x = b["X"], let y = b["Y"], let wd = b["Width"], let ht = b["Height"], wd > 60, ht > 60 else { continue }
-            let frame = NSRect(x: x, y: primary.frame.maxY - y - ht, width: wd, height: ht)   // CG (top-left) → AppKit
+            var frame = NSRect(x: x, y: primary.frame.maxY - y - ht, width: wd, height: ht)   // CG (top-left) → AppKit
+            // The menu window is wider than the menu itself (a transparent margin for the shadow).
+            // The estimate knows the true width: when it lies inside the window, use its x-range;
+            // otherwise (the menu was shifted) assume the margin is symmetric.
+            if frame.width > estimate.width {
+                if estimate.minX >= frame.minX - 1, estimate.maxX <= frame.maxX + 1 {
+                    frame.origin.x = estimate.minX; frame.size.width = estimate.width
+                } else {
+                    frame = frame.insetBy(dx: (frame.width - estimate.width) / 2, dy: 0)
+                }
+            }
             let overlap = frame.intersection(estimate)
             let area = overlap.isNull ? 0 : overlap.width * overlap.height
             if area > 0, best == nil || area > best!.1 { best = (frame, area) }
