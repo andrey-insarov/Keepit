@@ -99,7 +99,6 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
     /// the widest button title in the current language decides, never less than 150 pt.
     private var controlWidth: CGFloat = 150
     private var sizedControls: [NSView] = []
-    private var widthConstraints: [NSLayoutConstraint] = []
     private static let lastPaneKey = "SettingsWindow.pane"
 
     init(app: AppDelegate) {

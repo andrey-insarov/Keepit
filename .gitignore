@@ -17,3 +17,4 @@ SHA256SUMS
 *.p8
 *.provisionprofile
 sparkle_private_key*
+__pycache__/

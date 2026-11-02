@@ -24,7 +24,6 @@
 "Add to Template" = "Add to Template";
 "Cancel" = "Cancel";
 "Change Password Now" = "Change Password Now";
-"Change Password…" = "Change Password…";
 "Check for Updates…" = "Check for Updates…";
 "Clear" = "Clear";
 "Clear History" = "Clear History";
@@ -40,7 +39,6 @@
 "Could not change the password: %@" = "Could not change the password: %@";
 "Could not create the recovery phrase: %@" = "Could not create the recovery phrase: %@";
 "Could not enable protection: %@" = "Could not enable protection: %@";
-"Could not register: %@. Another app or macOS is using it. Change it in Preferences." = "Could not register: %@. Another app or macOS is using it. Change it in Preferences.";
 "Create a template item from a file" = "Create a template item from a file";
 "Current contents of the clipboard (read-only)." = "Current contents of the clipboard (read-only).";
 "Cut" = "Cut";
@@ -75,7 +73,6 @@
 "Images (%d)" = "Images (%d)";
 "Images — %d of %d." = "Images — %d of %d.";
 "Issues a new 24-word phrase and invalidates the old one. Use it if the printed sheet was lost or seen by someone; you will then be offered to change the password too." = "Issues a new 24-word phrase and invalidates the old one. Use it if the printed sheet was lost or seen by someone; you will then be offered to change the password too.";
-"Keepit %@ — Preferences" = "Keepit %@ — Preferences";
 "Keepit is locked" = "Keepit is locked";
 "Keepit needs the Accessibility permission to paste" = "Keepit needs the Accessibility permission to paste";
 "Keepit never stores the phrase itself." = "Keepit never stores the phrase itself.";
@@ -94,22 +91,17 @@
 "New Folder" = "New Folder";
 "New Item" = "New Item";
 "New Item from File…" = "New Item from File…";
-"New Recovery Phrase…" = "New Recovery Phrase…";
 "New password" = "New password";
 "No, Keep Password" = "No, Keep Password";
 "OK" = "OK";
-"Open Data Folder" = "Open Data Folder";
 "Open System Settings" = "Open System Settings";
 "Open menu at text cursor when possible" = "Open menu at text cursor when possible";
 "Password" = "Password";
 "Password cannot be empty." = "Password cannot be empty.";
 "Passwords do not match." = "Passwords do not match.";
 "Paste" = "Paste";
-"Paste delay (s):" = "Paste delay (s):";
 "Paste into the active app after choosing" = "Paste into the active app after choosing";
 "Path" = "Path";
-"Poll interval (s):" = "Poll interval (s):";
-"Preferences…" = "Preferences…";
 "Press keys… (⎋ cancels)" = "Press keys… (⎋ cancels)";
 "Press ⌘V to paste now. To paste automatically, allow Keepit in System Settings → Privacy & Security → Accessibility. If Keepit is already listed, turn it off and on again (macOS forgets the grant when the app is rebuilt with a different signature)." = "Press ⌘V to paste now. To paste automatically, allow Keepit in System Settings → Privacy & Security → Accessibility. If Keepit is already listed, turn it off and on again (macOS forgets the grant when the app is rebuilt with a different signature).";
 "Pressing it sends the item to the clipboard and pastes it without showing the menu." = "Pressing it sends the item to the clipboard and pastes it without showing the menu.";
@@ -121,7 +113,6 @@
 "Rename…" = "Rename…";
 "Repeat password" = "Repeat password";
 "Repeated or sequential characters weaken it" = "Repeated or sequential characters weaken it";
-"Save" = "Save";
 "Save Format to File…" = "Save Format to File…";
 "Save history on quit, restore on start" = "Save history on quit, restore on start";
 "Security" = "Security";
@@ -140,7 +131,6 @@
 "Template" = "Template";
 "Template menu:" = "Template menu:";
 "Template — %d item(s). Drag history items here to register them." = "Template — %d item(s). Drag history items here to register them.";
-"Text & file items:" = "Text & file items:";
 "Text & files (%d)" = "Text & files (%d)";
 "Text & files — %d of %d." = "Text & files — %d of %d.";
 "That's %d word(s); the phrase has %d." = "That's %d word(s); the phrase has %d.";
@@ -148,8 +138,6 @@
 "They can unlock your history and templates if you forget the password (on any Mac). " = "They can unlock your history and templates if you forget the password (on any Mac). ";
 "This build is not signed with a Team ID, so it cannot use the protected keychain. Touch ID works in the signed release build." = "This build is not signed with a Team ID, so it cannot use the protected keychain. Touch ID works in the signed release build.";
 "This phrase does not match the stored recovery data." = "This phrase does not match the stored recovery data.";
-"Thumbnail height (px):" = "Thumbnail height (px):";
-"Title length (chars):" = "Title length (chars):";
 "Too many wrong attempts. Keepit stays locked." = "Too many wrong attempts. Keepit stays locked.";
 "Too many wrong attempts. Keepit will quit." = "Too many wrong attempts. Keepit will quit.";
 "Too many wrong attempts. Try again in %d s." = "Too many wrong attempts. Try again in %d s.";
@@ -161,7 +149,6 @@
 "Unlock Keepit…" = "Unlock Keepit…";
 "Unlock with Touch ID (no Touch ID on this Mac)" = "Unlock with Touch ID (no Touch ID on this Mac)";
 "Up" = "Up";
-"Use Password" = "Use Password";
 "Use Recovery Phrase…" = "Use Recovery Phrase…";
 "Use at least 8 characters" = "Use at least 8 characters";
 "Use “-” for a menu separator, “&x” to make x the menu shortcut, “&&” for a literal &." = "Use “-” for a menu separator, “&x” to make x the menu shortcut, “&&” for a literal &.";
@@ -184,8 +171,6 @@
 "… %d more in the Viewer" = "… %d more in the Viewer";
 
 /* Backup export / import */
-"Export Backup…" = "Export Backup…";
-"Import Backup…" = "Import Backup…";
 "Export Backup" = "Export Backup";
 "Import Backup" = "Import Backup";
 "Backup password" = "Backup password";
@@ -211,9 +196,6 @@
 "Help" = "Help";
 
 /* Uninstall */
-"Danger zone" = "Danger zone";
-"Delete Keepit and All Data…" = "Delete Keepit and All Data…";
-"⚠️ Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back." = "⚠️ Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back.";
 "delete Keepit and all its data" = "delete Keepit and all its data";
 "Delete Keepit and all its data?" = "Delete Keepit and all its data?";
 "This removes the app, your clipboard history, templates, settings, the Touch ID key and Keepit's permissions. There is no undo. If you have not exported a backup, the data cannot be recovered." = "This removes the app, your clipboard history, templates, settings, the Touch ID key and Keepit's permissions. There is no undo. If you have not exported a backup, the data cannot be recovered.";
@@ -231,7 +213,6 @@
 "Set Password…" = "Set Password…";
 "Not Now" = "Not Now";
 "Your data will not be encrypted" = "Your data will not be encrypted";
-"Without a password Keepit stores history and templates unencrypted in your user Library. You can turn protection on at any time in Preferences → Security." = "Without a password Keepit stores history and templates unencrypted in your user Library. You can turn protection on at any time in Preferences → Security.";
 "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit.";
 "Keepit removes its Accessibility permission." = "Keepit removes its Accessibility permission.";
 "Also unlock with Touch ID (the password stays as fallback)" = "Also unlock with Touch ID (the password stays as fallback)";
@@ -271,15 +252,11 @@
 "Ignore concealed clipboard data" = "Ignore concealed clipboard data";
 "Password managers mark what they copy as concealed; such items are never recorded. Known password managers are ignored in any case." = "Password managers mark what they copy as concealed; such items are never recorded. Known password managers are ignored in any case.";
 "Ignored apps:" = "Ignored apps:";
-"Bundle identifiers, one per line, e.g. com.example.app. Nothing copied in these apps is recorded. Known password managers are always ignored." = "Bundle identifiers, one per line, e.g. com.example.app. Nothing copied in these apps is recorded. Known password managers are always ignored.";
 "Search field in the history menu" = "Search field in the history menu";
 "A search field at the top of the history menu: typing filters the list in place, Return pastes the first match. Item shortcuts then become ⌘1–⌘0 instead of 1-9/0/A-Z." = "A search field at the top of the history menu: typing filters the list in place, Return pastes the first match. Item shortcuts then become ⌘1–⌘0 instead of 1-9/0/A-Z.";
-"Number items" = "Number items";
-"Prefix items with 1-9, 0, A-Z; pressing the key pastes the item without the mouse." = "Prefix items with 1-9, 0, A-Z; pressing the key pastes the item without the mouse.";
 "Show preview panel" = "Show preview panel";
 "Hovering a history item shows the full image or the first lines of text in a panel beside the menu. Tooltips are not shown while this is on." = "Hovering a history item shows the full image or the first lines of text in a panel beside the menu. Tooltips are not shown while this is on.";
 "Show source app icons" = "Show source app icons";
-"Modifier keys while choosing an item" = "Modifier keys while choosing an item";
 "Require password at launch" = "Require password at launch";
 "History and templates are stored AES-256 encrypted; the key is derived from the password and asked for every time Keepit starts." = "History and templates are stored AES-256 encrypted; the key is derived from the password and asked for every time Keepit starts.";
 "Unlock with Touch ID" = "Unlock with Touch ID";
@@ -316,21 +293,16 @@
 
 
 
-"%@ and %@ use the same hot key (%@)." = "%@ and %@ use the same hot key (%@).";
-"Hot key conflict" = "Hot key conflict";
-"Hot keys" = "Hot keys";
 "Lock Keepit:" = "Lock Keepit:";
 "Menus" = "Menus";
 "Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off." = "Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off.";
 "Other" = "Other";
 "Paste item by number:" = "Paste item by number:";
 "Paste without the menu" = "Paste without the menu";
-"Pause / resume recording:" = "Pause / resume recording:";
 "Reset to Defaults" = "Reset to Defaults";
 
 "Actions on the latest item:" = "Actions on the latest item:";
 "Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu." = "Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu.";
-"Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu." = "Hold ⇧ for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete, …. For the latest item the submenu also shows the global hot keys that do the same without the menu.";
 
 "Search" = "Search";
 "Find…" = "Find…";
@@ -373,16 +345,12 @@
 "Random number" = "Random number";
 
 "Viewer:" = "Viewer:";
-"Preferences:" = "Preferences:";
 "Clear History:" = "Clear History:";
 "Quit Keepit:" = "Quit Keepit:";
-"Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off." = "Keys set here work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off.";
 
-"Paste queue" = "Paste queue";
 "Start / stop the queue:" = "Start / stop the queue:";
 "Paste next item:" = "Paste next item:";
 "Paste all remaining:" = "Paste all remaining:";
-"Idle time (s):" = "Idle time (s):";
 "Join items with:" = "Join items with:";
 "New line" = "New line";
 "Tab" = "Tab";
@@ -394,7 +362,6 @@
 "Keepit — paste queue on: %d to paste (%@ next, %@ stop)" = "Keepit — paste queue on: %d to paste (%@ next, %@ stop)";
 
 "Behaviour" = "Behaviour";
-"Keys set here and on the Paste queue tab work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off. Reset to Defaults restores every key, including the paste queue's." = "Keys set here and on the Paste queue tab work from any app and are shown next to their commands in the menu. ⌫ in a field switches the key off. Reset to Defaults restores every key, including the paste queue's.";
 "Pastes everything still in the queue as one text, items joined with the separator below, and ends the queue." = "Pastes everything still in the queue as one text, items joined with the separator below, and ends the queue.";
 "Seconds without a copy or a paste after which the queue switches itself off. 0 keeps it on until you stop it." = "Seconds without a copy or a paste after which the queue switches itself off. 0 keeps it on until you stop it.";
 
@@ -425,7 +392,6 @@
 "Pause recording:" = "Pause recording:";
 "Recovery phrase" = "Recovery phrase";
 "Remove" = "Remove";
-"Remove Keepit" = "Remove Keepit";
 "Add application" = "Add application";
 "Bundle identifier" = "Bundle identifier";
 "Choose an app whose copies Keepit should ignore" = "Choose an app whose copies Keepit should ignore";
@@ -440,9 +406,7 @@
 "Could not register: %@. Another app or macOS is using it. Change it in Settings → Shortcuts." = "Could not register: %@. Another app or macOS is using it. Change it in Settings → Shortcuts.";
 "Without a password Keepit stores history and templates unencrypted in your user Library. You can turn protection on at any time in Settings → Security." = "Without a password Keepit stores history and templates unencrypted in your user Library. You can turn protection on at any time in Settings → Security.";
 "Shortcuts set here and on the Paste Queue pane work from any app and are shown next to their commands in the menu. ⌫ in a field switches the shortcut off. Reset to Defaults restores every shortcut, including the paste queue's." = "Shortcuts set here and on the Paste Queue pane work from any app and are shown next to their commands in the menu. ⌫ in a field switches the shortcut off. Reset to Defaults restores every shortcut, including the paste queue's.";
-"Hold ⇧ while the menu is open for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete. For the latest item the submenu also shows the global shortcuts that do the same without the menu." = "Hold ⇧ while the menu is open for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete. For the latest item the submenu also shows the global shortcuts that do the same without the menu.";
 "How often Keepit looks at the clipboard. macOS sends no notification when it changes, so every clipboard manager polls; 0.3 s is unnoticeable and cheap." = "How often Keepit looks at the clipboard. macOS sends no notification when it changes, so every clipboard manager polls; 0.3 s is unnoticeable and cheap.";
-"Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back." = "Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back.";
 "Time between bringing the app you were in back to the front and sending ⌘V. Raise it for apps that are slow to come forward." = "Time between bringing the app you were in back to the front and sending ⌘V. Raise it for apps that are slow to come forward.";
 
 "Startup" = "Startup";
@@ -451,17 +415,14 @@
 
 "Data" = "Data";
 "Open Folder" = "Open Folder";
-"Delete Keepit…" = "Delete Keepit…";
 
 "Change…" = "Change…";
 "Create New…" = "Create New…";
-"Delete…" = "Delete…";
 "Export…" = "Export…";
 "Import…" = "Import…";
 "letter" = "letter";
 
 "Uninstall…" = "Uninstall…";
-"Uninstall and remove all Keepit data" = "Uninstall and remove all Keepit data";
 
 "Examples" = "Examples";
 "Greeting" = "Greeting";

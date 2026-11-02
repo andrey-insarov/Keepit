@@ -84,7 +84,6 @@ final class SecurePasswordField: NSView {
     }
     required init?(coder: NSCoder) { fatalError() }
 
-    var characterCount: Int { charLengths.count }
 
     func clear() {
         buffer.removeLast(buffer.count)
