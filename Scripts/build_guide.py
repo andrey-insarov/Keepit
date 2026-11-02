@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
-"""Render docs/GUIDE.md → docs/site/guide.html and docs/SECURITY.md → docs/site/security.html.
+"""Render the Markdown pages in docs/ into docs/site/*.html with the keep.it.com shell.
+
+  docs/GUIDE.md    → guide.html      docs/SECURITY.md → security.html
+  docs/SUPPORT.md  → support.html    docs/PRIVACY.md  → privacy.html
 
 Every screenshot is a 2× Retina capture; it is shown at half its pixel width so all of them share one
-physical scale, and a click opens the full-size file in a lightbox.
+physical scale, and a click opens the full-size file in a lightbox. Pages with more than a few
+headings get a sticky table of contents in a side column. Inline code that is only a key
+combination (`⌃⌥1`, `⌥M`, `⌘V`) is rendered as a keycap.
 """
-import re, pathlib, markdown
+import re, pathlib, html, markdown
 from PIL import Image
 
 root = pathlib.Path(__file__).resolve().parent.parent
@@ -12,31 +17,66 @@ site = root / "docs/site"
 
 PAGES = [
     ("GUIDE.md", "guide.html", "User guide — Keepit",
-     "How to use Keepit, the clipboard manager for macOS: history menu, hot keys, templates and placeholders, the Viewer, security, automation."),
+     "How to use Keepit, the clipboard manager for macOS: history menu, hot keys, templates and placeholders, the Viewer, security, automation.", True),
     ("SECURITY.md", "security.html", "Security — Keepit",
-     "What Keepit stores, where, how it is encrypted, which permissions it needs and why, and how to verify a download."),
+     "What Keepit stores, where, how it is encrypted, which permissions it needs and why, and how to verify a download.", True),
+    ("SUPPORT.md", "support.html", "Support — Keepit",
+     "How to get help with Keepit, the clipboard manager for macOS, and quick answers to the usual questions.", False),
+    ("PRIVACY.md", "privacy.html", "Privacy policy — Keepit",
+     "Keepit's privacy policy: the app collects, transmits and shares nothing; everything stays on your Mac.", False),
 ]
 
-NAV = ('<nav class="top"><a href="index.html">← keep.it.com</a><a href="guide.html">Guide</a>'
-       '<a href="security.html">Security</a><a href="support.html">Support</a>'
-       '<a href="https://github.com/andrey-insarov/Keepit">GitHub</a></nav>')
+HEADER = """<header><div class="wrap">
+  <a class="brand" href="index.html"><img src="img/icon.png" alt="">Keepit</a>
+  <nav><a href="index.html#features">Features</a><a href="guide.html">Guide</a><a href="security.html">Security</a><a href="support.html">Support</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a></nav>
+</div></header>"""
+
+FOOTER = """<footer><div class="wrap">
+  <span>© 2026 UK Intis Telecom LTD · Keepit is MIT-licensed</span>
+  <span><a href="privacy.html">Privacy policy</a> · <a href="security.html">Security</a> · <a href="support.html">Support</a> · <a href="https://github.com/andrey-insarov/Keepit/blob/main/CHANGELOG.md">Changelog</a> · <a href="https://it.com">it.com</a></span>
+</div></footer>"""
 
 CSS = """
-:root{color-scheme:light dark;--accent:#2F4FD1;--muted:#6b7280;--line:rgba(127,127,127,.25)}
-body{font:17px/1.6 -apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;max-width:880px;margin:0 auto;padding:40px 24px 96px}
-h1{font-size:40px;letter-spacing:-.5px;margin:.2em 0 .4em}
-h2{font-size:30px;margin-top:2.4em;padding-top:.6em;border-top:1px solid var(--line)}
-h3{font-size:21px;margin-top:1.8em}
-a{color:var(--accent)}
-code{font:.92em ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(127,127,127,.14);padding:1px 5px;border-radius:5px;white-space:nowrap}
-pre{background:rgba(127,127,127,.12);padding:14px 18px;border-radius:12px;overflow:auto}pre code{background:none;padding:0;white-space:pre}
-table{border-collapse:collapse;width:100%;margin:1em 0;font-size:15.5px}th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--muted);font-weight:600}
-hr{border:0;border-top:1px solid var(--line);margin:2.5em 0}
-.shot{margin:1.4em auto;width:100%}.shot a{display:block}.shot img{display:block;width:100%;height:auto;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.16);cursor:zoom-in}
-.shot figcaption{font-size:14px;color:var(--muted);margin-top:8px;text-align:center}
-.slot{border:2px dashed var(--line);border-radius:12px;padding:28px;text-align:center;color:var(--muted);font-size:15px}
-nav.top a{margin-right:16px}
-#lb{position:fixed;inset:0;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;padding:24px;z-index:10;cursor:zoom-out}
+:root{--paper:#fbfbfd;--ink:#0f1222;--ink-2:#4b4f63;--ink-3:#8a8ea3;--blue:#2f4fd1;--blue-deep:#1f3aa6;--blue-tint:#eef2ff;--line:#e3e5ef;--key:#fff;--key-edge:#cfd2de;--win:#fff;--sel:#2f5cf0}
+@media(prefers-color-scheme:dark){:root{--paper:#0c0d14;--ink:#f2f3f8;--ink-2:#b7bacb;--ink-3:#7c8097;--blue:#7d9bff;--blue-deep:#a9bdff;--blue-tint:#151b35;--line:#23263a;--key:#1b1e2e;--key-edge:#3a3e56;--win:#1a1c28;--sel:#3d6bff}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;font:17px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+:focus-visible{outline:3px solid var(--sel);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:20;backdrop-filter:saturate(180%) blur(18px);background:color-mix(in srgb,var(--paper) 78%,transparent);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:650;color:var(--ink);font-size:17px}.brand img{width:26px;height:26px;border-radius:6px}
+nav{display:flex;gap:24px}nav a{color:var(--ink-2);font-size:15px}nav a:hover{color:var(--ink);text-decoration:none}
+@media(max-width:700px){nav a:not(.gh){display:none}}
+main.wrap{display:grid;grid-template-columns:230px minmax(0,1fr);gap:56px;padding-top:48px;padding-bottom:96px}
+main.wrap.narrow{grid-template-columns:minmax(0,1fr);max-width:820px}
+aside{position:sticky;top:76px;align-self:start;max-height:calc(100vh - 96px);overflow:auto;font-size:14px;line-height:1.45;padding-right:8px}
+aside .ttl{font-weight:650;color:var(--ink);margin:0 0 10px;font-size:13px}
+aside ol{list-style:none;margin:0;padding:0}aside li{margin:0}
+aside a{display:block;color:var(--ink-2);padding:4px 0 4px 12px;border-left:2px solid var(--line)}
+aside a:hover{color:var(--ink);text-decoration:none}aside a.on{color:var(--blue);border-left-color:var(--blue)}
+aside ol ol a{padding-left:24px;font-size:13px;color:var(--ink-3)}
+@media(max-width:900px){main.wrap{grid-template-columns:minmax(0,1fr);gap:0}aside{position:static;max-height:none;margin-bottom:32px;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--win)}aside ol ol{display:none}}
+article{max-width:72ch;min-width:0}
+article h1{font-size:clamp(34px,5vw,52px);line-height:1.05;letter-spacing:-.03em;font-weight:750;margin:0 0 .5em}
+article h1+p{font-size:19px;color:var(--ink-2)}
+article h2{font-size:30px;line-height:1.15;letter-spacing:-.02em;font-weight:700;margin:2.2em 0 .6em;padding-top:1em;border-top:1px solid var(--line)}
+article h3{font-size:20px;font-weight:650;margin:1.8em 0 .5em}
+article p,article li{color:var(--ink);}article li{margin:.25em 0}
+article hr{border:0;border-top:1px solid var(--line);margin:2.5em 0}
+code{font:.9em ui-monospace,"SF Mono",Menlo,monospace;background:color-mix(in srgb,var(--ink) 7%,transparent);padding:2px 6px;border-radius:6px;white-space:nowrap}
+pre{background:var(--blue-tint);padding:14px 18px;border-radius:12px;overflow:auto;font-size:14px;line-height:1.6;max-width:100%}pre code{background:none;padding:0;white-space:pre-wrap;word-break:break-word}
+kbd.k{display:inline-block;min-width:1.7em;padding:0 .4em;text-align:center;font:600 .82em/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text",Helvetica,Arial,sans-serif;color:var(--ink);background:var(--key);border:1px solid var(--key-edge);border-bottom-width:2px;border-radius:6px;white-space:nowrap;vertical-align:baseline}
+.tbl{overflow-x:auto;margin:1.2em 0}table{border-collapse:collapse;width:100%;font-size:15.5px}th,td{text-align:left;padding:9px 12px 9px 0;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--ink-3);font-weight:600;font-size:14px}
+td:first-child{white-space:nowrap}@media(max-width:600px){td:first-child{white-space:normal}}
+figure.shot{margin:1.6em 0;width:100%}figure.shot a{display:block}figure.shot img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line);box-shadow:0 12px 32px -8px rgba(15,18,34,.25);cursor:zoom-in}
+figure.shot figcaption{font-size:14px;color:var(--ink-3);margin-top:8px}
+.slot{border:2px dashed var(--line);border-radius:12px;padding:28px;text-align:center;color:var(--ink-3);font-size:15px}
+.contents{display:none}
+footer{border-top:1px solid var(--line);padding:36px 0 64px;color:var(--ink-3);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}footer a{color:var(--ink-2)}
+#lb{position:fixed;inset:0;background:rgba(5,7,20,.86);display:none;align-items:center;justify-content:center;padding:24px;z-index:30;cursor:zoom-out}
 #lb.on{display:flex}#lb img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
 """
 
@@ -46,8 +86,16 @@ JS = """
   document.querySelectorAll('a.zoom').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();im.src=a.getAttribute('href');im.alt=a.querySelector('img').alt;lb.classList.add('on');});});
   function close(){lb.classList.remove('on');im.src='';}
   lb.addEventListener('click',close);document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+  var links=[].slice.call(document.querySelectorAll('aside a')),heads=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  if(links.length&&'IntersectionObserver' in window){
+    var cur=null;function mark(id){links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+id);});}
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){cur=e.target.id;mark(cur);}});},{rootMargin:'-70px 0px -70% 0px'});
+    heads.forEach(function(h){if(h)io.observe(h);});
+  }
 })();
 """
+
+KEY_RE = re.compile(r"^[⌃⌥⌘⇧]{1,3}(?:[A-Z0-9⌫]|[1-9]|0)$|^[⌃⌥⌘⇧]$|^⌥[A-Z]$")
 
 
 def figure(src: str, alt: str) -> str:
@@ -63,22 +111,47 @@ def figure(src: str, alt: str) -> str:
             f'<figcaption>{alt}</figcaption></figure>')
 
 
-def render(src_name: str, out_name: str, title: str, description: str) -> None:
-    md = (root / "docs" / src_name).read_text(encoding="utf-8")
-    body = markdown.markdown(md, extensions=["tables", "fenced_code", "toc"])
-    body = re.sub(r'<p><img alt="([^"]*)" src="([^"]+)"\s*/?></p>',
-                  lambda m: figure(m.group(2), m.group(1)), body)
+def keycaps(body: str) -> str:
+    def rep(m):
+        txt = html.unescape(m.group(1))
+        return f'<kbd class="k">{m.group(1)}</kbd>' if KEY_RE.match(txt) else m.group(0)
+    return re.sub(r"<code>([^<]{1,6})</code>", rep, body)
+
+
+def toc_html(tokens, depth=0) -> str:
+    if not tokens or depth > 1:
+        return ""
+    items = "".join(f'<li><a href="#{t["id"]}">{t["name"]}</a>{toc_html(t["children"], depth + 1)}</li>'
+                    for t in tokens if t["level"] in (2, 3))
+    return f"<ol>{items}</ol>" if items else ""
+
+
+def render(src_name: str, out_name: str, title: str, description: str, with_toc: bool) -> None:
+    md_text = (root / "docs" / src_name).read_text(encoding="utf-8")
+    md = markdown.Markdown(extensions=["tables", "fenced_code", "toc"])
+    body = md.convert(md_text)
+    body = re.sub(r'<p><img alt="([^"]*)" src="([^"]+)"\s*/?></p>', lambda m: figure(m.group(2), m.group(1)), body)
     body = re.sub(r"<!-- screenshot: (.*?) -->", r'<p class="slot">Screenshot: \1</p>', body)
-    html = (f'<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">'
+    body = re.sub(r"<p><strong>Contents</strong></p>\s*<ul>.*?</ul>\s*<hr\s*/?>", "", body, count=1, flags=re.S)
+    body = keycaps(body)
+    body = body.replace('<table>', '<div class="tbl"><table>').replace('</table>', '</table></div>')
+    tokens = [t for t in md.toc_tokens if t["level"] == 1]
+    sections = tokens[0]["children"] if tokens else md.toc_tokens
+    toc = toc_html(sections) if with_toc else ""
+    aside = f'<aside aria-label="Contents"><p class="ttl">On this page</p>{toc}</aside>' if toc else ""
+    main_cls = "wrap" if toc else "wrap narrow"
+    page = (f'<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">'
             f'<meta name="viewport" content="width=device-width, initial-scale=1">\n'
-            f'<title>{title}</title><link rel="icon" href="img/icon.png">\n'
+            f'<title>{title}</title><link rel="icon" href="img/icon.png"><link rel="apple-touch-icon" href="img/icon.png">\n'
             f'<meta name="description" content="{description}">\n'
-            f'<style>{CSS}</style></head>\n<body>{NAV}\n{body}\n'
+            f'<meta property="og:title" content="{title}"><meta property="og:description" content="{description}">'
+            f'<meta property="og:image" content="https://keep.it.com/img/menu.png"><meta property="og:url" content="https://keep.it.com/{out_name}">\n'
+            f'<style>{CSS}</style></head>\n<body>{HEADER}\n<main class="{main_cls}">{aside}<article>{body}</article></main>\n{FOOTER}\n'
             f'<div id="lb" role="dialog" aria-label="Full-size screenshot"><img alt=""></div>\n'
             f'<script>{JS}</script>\n</body></html>')
-    (site / out_name).write_text(html, encoding="utf-8")
-    print(out_name, len(html), "bytes;", body.count('class="shot"'), "figures")
+    (site / out_name).write_text(page, encoding="utf-8")
+    print(out_name, len(page), "bytes;", body.count('class="shot"'), "figures;", body.count('<kbd'), "keycaps")
 
 
-for page in PAGES:
-    render(*page)
+for p in PAGES:
+    render(*p)
