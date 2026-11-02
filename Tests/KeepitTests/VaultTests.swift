@@ -38,12 +38,50 @@ final class VaultTests: XCTestCase {
         XCTAssertFalse(Vault.isEnabled)
     }
 
-    func testSameKeyFromSamePasswordAndSalt() {
+    func testSameKeyFromSamePasswordAndSalt() throws {
         let salt = Data(repeating: 7, count: 16)
-        let k1 = Vault.deriveKey(password: .of("pw"), salt: salt)
-        let k2 = Vault.deriveKey(password: .of("pw"), salt: salt)
-        let box = try! Vault.encrypt(Data("x".utf8), key: k1)
+        let k1 = try Vault.deriveKey(password: .of("pw"), salt: salt)
+        let k2 = try Vault.deriveKey(password: .of("pw"), salt: salt)
+        let box = try Vault.encrypt(Data("x".utf8), key: k1)
         XCTAssertEqual(try? Vault.decrypt(box, key: k2), Data("x".utf8))
+        let k3 = try Vault.deriveKey(password: .of("pw"), salt: salt, rounds: 1_000)
+        XCTAssertThrowsError(try Vault.decrypt(box, key: k3), "different round count → different key")
+    }
+
+    func testNewVaultRecordsKDFParameters() throws {
+        _ = try Vault.enable(password: .of("pw"))
+        let json = try JSONSerialization.jsonObject(with: Data(contentsOf: Vault.metaURL)) as? [String: Any]
+        XCTAssertEqual(json?["formatVersion"] as? Int, Vault.formatVersion)
+        XCTAssertEqual(json?["kdf"] as? String, Vault.kdfPBKDF2SHA256)
+        XCTAssertEqual(json?["rounds"] as? UInt32, Vault.defaultRounds)
+    }
+
+    func testFormat1VaultWithoutKDFFieldsStillUnlocks() throws {
+        // vault.json written by Keepit ≤ 2.11.1 has only salt / check (/ recovery).
+        let key = try Vault.enable(password: .of("old"))
+        key.zero()
+        var json = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(contentsOf: Vault.metaURL)) as? [String: Any])
+        json["formatVersion"] = nil; json["kdf"] = nil; json["rounds"] = nil
+        try JSONSerialization.data(withJSONObject: json).write(to: Vault.metaURL)
+        XCTAssertNotNil(Vault.unlock(password: .of("old")))
+        XCTAssertNil(Vault.unlock(password: .of("wrong")))
+        XCTAssertEqual(Vault.kdfDescription, "\(Vault.kdfPBKDF2SHA256), \(Vault.defaultRounds) rounds (format 1)")
+    }
+
+    func testVaultHonoursRecordedRoundsAndRefusesUnknownKDF() throws {
+        let key = try Vault.enable(password: .of("pw"), rounds: 1_000)
+        key.zero()
+        XCTAssertNotNil(Vault.unlock(password: .of("pw")), "rounds come from vault.json, not from the binary")
+        var json = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(contentsOf: Vault.metaURL)) as? [String: Any])
+        json["kdf"] = "argon2id"
+        try JSONSerialization.data(withJSONObject: json).write(to: Vault.metaURL)
+        XCTAssertNil(Vault.unlock(password: .of("pw")), "a KDF this build does not know is refused, not guessed")
+    }
+
+    func testRandomBytesAreFreshAndRightSized() throws {
+        let a = try Vault.randomBytes(16), b = try Vault.randomBytes(16)
+        XCTAssertEqual(a.count, 16)
+        XCTAssertNotEqual(a, b)
     }
 
     func testStorageKeyAssignmentZeroesPreviousKey() throws {
