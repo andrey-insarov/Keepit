@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.9.2 — 2026-11-02
+
+- Preferences: a **?** button in the bottom-left corner opens the online user guide
+- Screenshots on keep.it.com and in the guide show the 2.9.1 menu (⌥ keys, ⌃⌥ numbers) and the Viewer search
+- Releases are now built in a protected GitHub environment: signing keys are available only to `v*` tags after manual approval, the build-and-test job runs without secrets, third-party actions are pinned to commit hashes (see [security.html](https://keep.it.com/security.html))
+
 ## 2.9.1 — 2026-11-01
 
 - Viewer: **Insert ▾** in the toolbar lists every template placeholder with a description and puts the chosen one at the cursor; **?** opens the online user guide. Up/Down and the hex dump moved to the context menu; the toolbar has no gaps
