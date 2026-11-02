@@ -79,6 +79,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
     private let newPhrase    = NSButton(title: L("Create New…"), target: nil, action: nil)
 
     private let pollInterval = NSTextField()
+    private let resetAll     = NSButton(title: L("Reset…"), target: nil, action: nil)
     private let uninstall    = NSButton(title: L("Uninstall…"), target: nil, action: nil)
 
     // MARK: Panes
@@ -372,15 +373,17 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
 
         let reveal = NSButton(title: L("Open Folder"), target: self, action: #selector(revealData))
         uninstall.target = self; uninstall.action = #selector(uninstallTapped)
-        uninstall.contentTintColor = .systemRed
+        resetAll.target = self; resetAll.action = #selector(resetTapped)
+        let dangerRow = NSStackView(views: [button(resetAll), button(uninstall)])
+        dangerRow.orientation = .horizontal; dangerRow.spacing = 8
         let advanced = grid([
             header(L("Clipboard")),
             row(L("Poll interval:"), help(number(pollInterval, unit: L("seconds"), min: 0.1, max: 5, step: 0.1, decimals: 2),
                                            L("How often Keepit looks at the clipboard. macOS sends no notification when it changes, so every clipboard manager polls; 0.3 s is unnoticeable and cheap."))),
             header(L("Data")),
             [NSView(), button(reveal)],
-            header(L("Uninstall and remove all Keepit data")),
-            [NSView(), help(button(uninstall), L("Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back."))],
+            header(L("Reset and uninstall")),
+            [NSView(), help(dangerRow, L("Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back."))],
         ])
 
         panes = [
@@ -439,6 +442,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         let scroll = NSScrollView()
         scroll.documentView = ignoredTable
         scroll.hasVerticalScroller = true
+        scroll.autohidesScrollers = true
         scroll.borderType = .noBorder
         scroll.wantsLayer = true
         scroll.layer?.cornerRadius = 6
@@ -725,6 +729,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
     @objc private func exportTapped() { app.exportBackup() }
     @objc private func importTapped() { app.importBackup() }
     @objc private func uninstallTapped() { app.uninstallRequested() }
+    @objc private func resetTapped() { app.resetRequested() }
     @objc private func revealData() { NSWorkspace.shared.activateFileViewerSelecting([Storage.settingsURL]) }
 
     // MARK: Ignored apps
@@ -751,12 +756,12 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         if let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: id) {
             cell.imageView?.image = NSWorkspace.shared.icon(forFile: url.path)
             let name = FileManager.default.displayName(atPath: url.path).replacingOccurrences(of: ".app", with: "")
-            let t = NSMutableAttributedString(string: name + "  ", attributes: [.font: NSFont.systemFont(ofSize: NSFont.systemFontSize)])
-            t.append(NSAttributedString(string: id, attributes: [.font: NSFont.systemFont(ofSize: NSFont.smallSystemFontSize), .foregroundColor: NSColor.secondaryLabelColor]))
-            cell.textField?.attributedStringValue = t
+            cell.textField?.attributedStringValue = NSAttributedString(string: name, attributes: [.font: NSFont.systemFont(ofSize: NSFont.systemFontSize)])
+            cell.toolTip = id
         } else {
             cell.imageView?.image = NSImage(systemSymbolName: "app.dashed", accessibilityDescription: nil)
             cell.textField?.attributedStringValue = NSAttributedString(string: id, attributes: [.font: NSFont.systemFont(ofSize: NSFont.systemFontSize)])
+            cell.toolTip = nil
         }
         return cell
     }

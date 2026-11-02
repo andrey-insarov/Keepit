@@ -419,3 +419,17 @@
 "letter" = "文字";
 "Uninstall…" = "アンインストール…";
 "Uninstall and remove all Keepit data" = "Keepit とすべてのデータを削除";
+"Examples" = "例";
+"Greeting" = "あいさつ";
+"Quote the clipboard" = "クリップボードを引用";
+"Signature" = "署名";
+"Hi {input:Name},\n\n{cursor}\n\nBest regards" = "{input:お名前} 様\n\n{cursor}\n\nよろしくお願いいたします";
+"> {clipboard}\n\n" = "> {clipboard}\n\n";
+"--\nBest regards,\n{input:Your name}" = "--\n{input:お名前}";
+"Reset" = "リセット";
+"Reset…" = "リセット…";
+"Reset and uninstall" = "リセットとアンインストール";
+"reset Keepit" = "Keepit をリセット";
+"Reset Keepit to a fresh install?" = "Keepit を初期状態にリセットしますか？";
+"Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back." = "履歴、テンプレート、設定、パスワード、Touch ID キーが削除され、サンプルテンプレートが戻ります。アプリ、アクセス権、ログイン時に起動はそのままです。元に戻せません。データが必要になるかもしれない場合は先にバックアップを書き出してください。";
+"Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back." = "「リセット」は Keepit を初期状態に戻します。履歴、テンプレート、設定、パスワード、Touch ID キーが削除され、サンプルテンプレートが戻ります。アプリとアクセス権はそのままです。「アンインストール」は同じことを行った後、アプリ、ログイン時に起動、キーチェーン項目、アクセシビリティ権限を削除します。どちらもパスワードまたは Touch ID を求め、アンインストールは入力による確認も求めます。データが必要になるかもしれない場合は先にバックアップを書き出してください。";

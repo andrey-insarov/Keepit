@@ -419,3 +419,17 @@
 "letter" = "字母";
 "Uninstall…" = "卸载…";
 "Uninstall and remove all Keepit data" = "卸载并删除 Keepit 全部数据";
+"Examples" = "示例";
+"Greeting" = "问候";
+"Quote the clipboard" = "引用剪贴板";
+"Signature" = "签名";
+"Hi {input:Name},\n\n{cursor}\n\nBest regards" = "{input:姓名}，您好：\n\n{cursor}\n\n此致";
+"> {clipboard}\n\n" = "> {clipboard}\n\n";
+"--\nBest regards,\n{input:Your name}" = "--\n此致\n{input:您的姓名}";
+"Reset" = "重置";
+"Reset…" = "重置…";
+"Reset and uninstall" = "重置与卸载";
+"reset Keepit" = "重置 Keepit";
+"Reset Keepit to a fresh install?" = "要将 Keepit 重置为全新安装状态吗？";
+"Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back." = "将删除剪贴板历史、模板、设置、密码和 Touch ID 密钥；示例模板会恢复。应用、其权限和登录时启动保持不变。无法撤销——如果以后可能需要数据，请先导出备份。";
+"Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back." = "“重置”将 Keepit 恢复为全新安装状态：删除历史、模板、设置、密码和 Touch ID 密钥，恢复示例模板；应用及其权限保留。“卸载”在此基础上再移除应用、登录时启动、钥匙串条目和辅助功能权限。两者都需要密码或 Touch ID；卸载还需要键入确认。如果以后可能需要数据，请先导出备份。";

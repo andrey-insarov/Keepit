@@ -419,3 +419,17 @@
 "letter" = "Buchstabe";
 "Uninstall…" = "Deinstallieren …";
 "Uninstall and remove all Keepit data" = "Keepit samt allen Daten entfernen";
+"Examples" = "Beispiele";
+"Greeting" = "Begrüßung";
+"Quote the clipboard" = "Zwischenablage zitieren";
+"Signature" = "Signatur";
+"Hi {input:Name},\n\n{cursor}\n\nBest regards" = "Hallo {input:Name},\n\n{cursor}\n\nViele Grüße";
+"> {clipboard}\n\n" = "> {clipboard}\n\n";
+"--\nBest regards,\n{input:Your name}" = "--\nViele Grüße\n{input:Ihr Name}";
+"Reset" = "Zurücksetzen";
+"Reset…" = "Zurücksetzen …";
+"Reset and uninstall" = "Zurücksetzen und deinstallieren";
+"reset Keepit" = "Keepit zurückzusetzen";
+"Reset Keepit to a fresh install?" = "Keepit auf eine frische Installation zurücksetzen?";
+"Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back." = "Verlauf, Vorlagen, Einstellungen, Passwort und Touch-ID-Schlüssel werden gelöscht; die Beispielvorlagen kommen zurück. Programm, Berechtigungen und „Beim Anmelden starten“ bleiben. Kein Rückgängig – exportieren Sie zuerst ein Backup, falls Sie die Daten noch brauchen.";
+"Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back." = "„Zurücksetzen“ bringt Keepit in den Zustand einer frischen Installation: Verlauf, Vorlagen, Einstellungen, Passwort und Touch-ID-Schlüssel werden gelöscht, die Beispielvorlagen kommen zurück; Programm und Berechtigungen bleiben. „Deinstallieren“ tut dasselbe und entfernt danach das Programm, „Beim Anmelden starten“, den Schlüsselbund-Eintrag und die Bedienungshilfen-Berechtigung. Beide fragen nach Passwort oder Touch ID, Deinstallieren zusätzlich nach einer getippten Bestätigung. Exportieren Sie zuerst ein Backup, falls Sie die Daten noch brauchen.";

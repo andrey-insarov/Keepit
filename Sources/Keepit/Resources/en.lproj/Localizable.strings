@@ -462,3 +462,18 @@
 
 "Uninstall…" = "Uninstall…";
 "Uninstall and remove all Keepit data" = "Uninstall and remove all Keepit data";
+
+"Examples" = "Examples";
+"Greeting" = "Greeting";
+"Quote the clipboard" = "Quote the clipboard";
+"Signature" = "Signature";
+"Hi {input:Name},\n\n{cursor}\n\nBest regards" = "Hi {input:Name},\n\n{cursor}\n\nBest regards";
+"> {clipboard}\n\n" = "> {clipboard}\n\n";
+"--\nBest regards,\n{input:Your name}" = "--\nBest regards,\n{input:Your name}";
+"Reset" = "Reset";
+"Reset…" = "Reset…";
+"Reset and uninstall" = "Reset and uninstall";
+"reset Keepit" = "reset Keepit";
+"Reset Keepit to a fresh install?" = "Reset Keepit to a fresh install?";
+"Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back." = "Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back.";
+"Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back." = "Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back.";

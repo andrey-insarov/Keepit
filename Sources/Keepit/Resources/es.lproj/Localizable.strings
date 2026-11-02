@@ -419,3 +419,17 @@
 "letter" = "letra";
 "Uninstall…" = "Desinstalar…";
 "Uninstall and remove all Keepit data" = "Desinstalar y borrar todos los datos";
+"Examples" = "Ejemplos";
+"Greeting" = "Saludo";
+"Quote the clipboard" = "Citar el portapapeles";
+"Signature" = "Firma";
+"Hi {input:Name},\n\n{cursor}\n\nBest regards" = "Hola, {input:Nombre}:\n\n{cursor}\n\nUn saludo";
+"> {clipboard}\n\n" = "> {clipboard}\n\n";
+"--\nBest regards,\n{input:Your name}" = "--\nUn saludo,\n{input:Su nombre}";
+"Reset" = "Restablecer";
+"Reset…" = "Restablecer…";
+"Reset and uninstall" = "Restablecer y desinstalar";
+"reset Keepit" = "restablecer Keepit";
+"Reset Keepit to a fresh install?" = "¿Restablecer Keepit como recién instalado?";
+"Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back." = "Se eliminan el historial, las plantillas, los ajustes, la contraseña y la clave de Touch ID; vuelven las plantillas de ejemplo. La app, sus permisos y el inicio al iniciar sesión se mantienen. No se puede deshacer: exporte antes una copia de seguridad si podría querer recuperar los datos.";
+"Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back." = "«Restablecer» deja Keepit como recién instalado: se eliminan historial, plantillas, ajustes, contraseña y clave de Touch ID y vuelven las plantillas de ejemplo; la app y sus permisos se mantienen. «Desinstalar» hace lo mismo y además elimina la app, el inicio al iniciar sesión, la entrada del llavero y el permiso de Accesibilidad. Ambas piden la contraseña o Touch ID; Desinstalar además una confirmación escrita. Exporte antes una copia de seguridad si podría querer recuperar los datos.";

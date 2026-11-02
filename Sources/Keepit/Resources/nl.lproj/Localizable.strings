@@ -419,3 +419,17 @@
 "letter" = "letter";
 "Uninstall…" = "Verwijder…";
 "Uninstall and remove all Keepit data" = "Keepit en alle gegevens verwijderen";
+"Examples" = "Voorbeelden";
+"Greeting" = "Begroeting";
+"Quote the clipboard" = "Klembord citeren";
+"Signature" = "Handtekening";
+"Hi {input:Name},\n\n{cursor}\n\nBest regards" = "Hallo {input:Naam},\n\n{cursor}\n\nMet vriendelijke groet";
+"> {clipboard}\n\n" = "> {clipboard}\n\n";
+"--\nBest regards,\n{input:Your name}" = "--\nMet vriendelijke groet,\n{input:Uw naam}";
+"Reset" = "Herstel";
+"Reset…" = "Herstel…";
+"Reset and uninstall" = "Herstellen en verwijderen";
+"reset Keepit" = "Keepit te herstellen";
+"Reset Keepit to a fresh install?" = "Keepit herstellen naar een verse installatie?";
+"Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back." = "Geschiedenis, sjablonen, instellingen, wachtwoord en Touch ID-sleutel worden verwijderd; de voorbeeldsjablonen komen terug. De app, zijn machtigingen en Open bij inloggen blijven. Dit kan niet ongedaan worden gemaakt — exporteer eerst een back-up als u de gegevens misschien nog wilt.";
+"Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back." = "‘Herstel’ zet Keepit terug naar een verse installatie: geschiedenis, sjablonen, instellingen, wachtwoord en Touch ID-sleutel worden verwijderd en de voorbeeldsjablonen komen terug; de app en zijn machtigingen blijven. ‘Verwijder’ doet hetzelfde en verwijdert daarna de app, Open bij inloggen, het sleutelhangeritem en de Toegankelijkheid-machtiging. Beide vragen uw wachtwoord of Touch ID; Verwijder ook een getypte bevestiging. Exporteer eerst een back-up als u de gegevens misschien nog wilt.";

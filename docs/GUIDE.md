@@ -267,7 +267,7 @@ that explains it.
 | **History** | How many text/file items and images to keep (1000 / 30) · forget items older than … · *Remove duplicates* (copying the same thing again moves it to the top) · *Ignore concealed clipboard data* · the ignored-apps list (bundle identifiers; password managers are always ignored) |
 | **Menu** | Search field · numbering · preview panel · tooltips · source-app icons · image thumbnails · title length · thumbnail height |
 | **Security** | Password, Touch ID, locking, recovery phrase, Export / Import Backup — [Part 6](#part-6--security) |
-| **Advanced** | Clipboard poll interval · Data: *Open Folder* · *Uninstall…* (app, data, keychain key, permissions) |
+| **Advanced** | Clipboard poll interval · Data: *Open Folder* · Reset and uninstall: *Reset…* (back to a fresh install, example templates return) · *Uninstall…* (reset, then remove the app, Launch at login, keychain entry and permissions) |
 
 ![Settings → Shortcuts](site/img/guide/prefs-hotkeys.png)
 
@@ -352,7 +352,7 @@ same. Checksums for every download are in `SHA256SUMS` on the release page.
 
 ### Uninstalling
 
-*Settings → Advanced → Uninstall…* removes the app, the data folder, the keychain
+*Settings → Advanced → Reset and uninstall → Uninstall…* removes the app, the data folder, the keychain
 entries (including the Touch ID key), the login item and the Accessibility entry. It asks for your
 password or Touch ID, a typed `DELETE` and a confirmation — export a backup first if you might want
 the data back. With Homebrew, run `brew uninstall --cask --force keepit` afterwards so Homebrew

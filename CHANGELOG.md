@@ -7,6 +7,8 @@
 - Ignored apps are a list with icons: **+** picks an app from Applications (the bundle identifier is read from it), **−** removes, double-click edits an identifier by hand
 - Labels follow Apple's wording: *Shortcuts* instead of *Hot keys*, *Pause recording*, *Remove Keepit* instead of *Danger zone*; the window title is the pane name
 - Menu: *Settings…* (⌘,) replaces *Preferences…*
+- Advanced → *Reset…* puts Keepit back to a fresh install (history, templates, settings, password, Touch ID key) without touching the app or its permissions; *Uninstall…* does that and removes the app
+- A fresh install (and Reset) starts with an *Examples* template folder that shows placeholders at work — a greeting with `{input:Name}` and `{cursor}`, today's date, a clipboard quote, a signature — in the system language
 
 ## 2.10.1 — 2026-11-02
 

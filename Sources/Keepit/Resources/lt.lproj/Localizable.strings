@@ -419,3 +419,17 @@
 "letter" = "raidė";
 "Uninstall…" = "Pašalinti…";
 "Uninstall and remove all Keepit data" = "Pašalinti Keepit ir visus duomenis";
+"Examples" = "Pavyzdžiai";
+"Greeting" = "Pasisveikinimas";
+"Quote the clipboard" = "Cituoti iškarpinę";
+"Signature" = "Parašas";
+"Hi {input:Name},\n\n{cursor}\n\nBest regards" = "Sveiki, {input:Vardas},\n\n{cursor}\n\nPagarbiai";
+"> {clipboard}\n\n" = "> {clipboard}\n\n";
+"--\nBest regards,\n{input:Your name}" = "--\nPagarbiai,\n{input:Jūsų vardas}";
+"Reset" = "Atstatyti";
+"Reset…" = "Atstatyti…";
+"Reset and uninstall" = "Atstatymas ir pašalinimas";
+"reset Keepit" = "atstatyti Keepit";
+"Reset Keepit to a fresh install?" = "Atstatyti Keepit į ką tik įdiegtos programos būseną?";
+"Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back." = "Istorija, šablonai, nustatymai, slaptažodis ir Touch ID raktas ištrinami; pavyzdiniai šablonai grąžinami. Programa, jos leidimai ir paleidimas prisijungus lieka. Atšaukti negalima — jei duomenų gali prireikti, pirma eksportuokite atsarginę kopiją.";
+"Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back." = "„Atstatyti“ grąžina Keepit į ką tik įdiegtos programos būseną: istorija, šablonai, nustatymai, slaptažodis ir Touch ID raktas ištrinami, pavyzdiniai šablonai grąžinami; programa ir jos leidimai lieka. „Pašalinti“ daro tą patį ir tada pašalina programą, paleidimą prisijungus, raktinės įrašą ir pritaikymo neįgaliesiems leidimą. Abu prašo slaptažodžio arba Touch ID; pašalinimas – dar ir įvesto patvirtinimo. Jei duomenų gali prireikti, pirma eksportuokite atsarginę kopiją.";

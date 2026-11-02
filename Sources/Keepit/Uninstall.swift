@@ -12,6 +12,39 @@ extension AppDelegate {
         performUninstall()
     }
 
+    /// Settings → Advanced → Reset…: back to the state of a fresh install — history, templates, settings,
+    /// password, Touch ID key — without touching the app itself or its permissions.
+    func resetRequested() {
+        if Vault.isEnabled {
+            guard authenticateForChange(reasonKey: "reset Keepit") else { return }
+        }
+        let a = NSAlert()
+        a.alertStyle = .critical
+        a.messageText = L("Reset Keepit to a fresh install?")
+        a.informativeText = L("Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back.")
+        a.addButton(withTitle: L("Reset"))
+        a.addButton(withTitle: L("Cancel"))
+        a.buttons.first?.hasDestructiveAction = true
+        guard a.runModal() == .alertFirstButtonReturn else { return }
+        performReset()
+    }
+
+    private func performReset() {
+        queue.stop()
+        closeAllWindows()
+        history.purge()
+        templates.purge()
+        Storage.clearKey()
+        BiometricUnlock.remove()
+        Vault.disable()
+        for url in [Storage.historyURL, Storage.templatesURL, Storage.settingsURL] { try? FileManager.default.removeItem(at: url) }
+        apply(settings: Settings())
+        history.reload()
+        templates.resetToDefaults()
+        viewer?.refresh()
+        registerHotKeys()
+    }
+
     private func performUninstall() {
         uninstalling = true
         closeAllWindows()

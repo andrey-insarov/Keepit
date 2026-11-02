@@ -16,15 +16,29 @@ final class TemplateStore {
             root = loaded
             root.relink()
         } else {
-            root = TemplateNode(name: "Template", children: [
-                TemplateNode(name: "Examples", children: [
-                    TemplateNode(name: "&Greeting", text: "Hello,\n\n"),
-                    TemplateNode(name: "-", text: ""),
-                    TemplateNode(name: "&Signature", text: "--\nBest regards"),
-                ]),
-            ])
+            root = Self.defaultTree()
             saveNow()
         }
+        onChange?()
+    }
+
+    /// The tree a fresh install gets: one "Examples" folder that shows what placeholders can do.
+    static func defaultTree() -> TemplateNode {
+        TemplateNode(name: "Template", children: [
+            TemplateNode(name: L("Examples"), children: [
+                TemplateNode(name: "&" + L("Greeting"), text: L("Hi {input:Name},\n\n{cursor}\n\nBest regards")),
+                TemplateNode(name: "&" + L("Today's date"), text: "{date:EEEE, d MMMM yyyy}"),
+                TemplateNode(name: "&" + L("Quote the clipboard"), text: L("> {clipboard}\n\n")),
+                TemplateNode(name: "-", text: ""),
+                TemplateNode(name: "&" + L("Signature"), text: L("--\nBest regards,\n{input:Your name}")),
+            ]),
+        ])
+    }
+
+    /// Back to the fresh-install tree (Reset).
+    func resetToDefaults() {
+        root = Self.defaultTree()
+        saveNow()
         onChange?()
     }
 

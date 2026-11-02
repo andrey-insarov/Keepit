@@ -419,3 +419,17 @@
 "letter" = "буква";
 "Uninstall…" = "Удалить программу…";
 "Uninstall and remove all Keepit data" = "Удалить Keepit и все его данные";
+"Examples" = "Примеры";
+"Greeting" = "Приветствие";
+"Quote the clipboard" = "Цитировать буфер обмена";
+"Signature" = "Подпись";
+"Hi {input:Name},\n\n{cursor}\n\nBest regards" = "Здравствуйте, {input:Имя}!\n\n{cursor}\n\nС уважением";
+"> {clipboard}\n\n" = "> {clipboard}\n\n";
+"--\nBest regards,\n{input:Your name}" = "--\nС уважением,\n{input:Ваше имя}";
+"Reset" = "Сбросить";
+"Reset…" = "Сбросить…";
+"Reset and uninstall" = "Сброс и удаление";
+"reset Keepit" = "сбросить Keepit";
+"Reset Keepit to a fresh install?" = "Сбросить Keepit к состоянию новой установки?";
+"Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back." = "История буфера, шаблоны, настройки, пароль и ключ Touch ID удаляются; шаблоны-примеры возвращаются. Приложение, его разрешения и запуск при входе остаются. Отменить нельзя — если данные могут понадобиться, сначала экспортируйте резервную копию.";
+"Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back." = "«Сбросить» возвращает Keepit к состоянию новой установки: история, шаблоны, настройки, пароль и ключ Touch ID удаляются, шаблоны-примеры возвращаются; приложение и его разрешения остаются. «Удалить программу» делает то же и затем убирает приложение, запуск при входе, запись в Keychain и разрешение Accessibility. Обе запрашивают пароль или Touch ID; удаление — ещё и набранное подтверждение. Если данные могут понадобиться, сначала экспортируйте резервную копию.";
