@@ -29,7 +29,7 @@ From the menu:
 - **Hover** over an item to see a preview of long text or an image.
 - Press `⌃⌥1` … `⌃⌥0` without opening the menu to paste items 1–10 straight away, or `⌥⇧V` to paste the item before the current one.
 
-The history keeps the last 1 000 text and file items and the last 30 images by default; both limits are yours to change in *Preferences → History*. Duplicates are merged, and copies from password managers are never recorded.
+The history keeps the last 1 000 text and file items and the last 30 images by default; both limits are yours to change in *Settings → History*. Duplicates are merged, and copies from password managers are never recorded.
 
 ## Clipboard history and privacy
 

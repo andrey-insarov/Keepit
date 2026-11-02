@@ -2,7 +2,7 @@
 
 Keepit is a clipboard history and template manager for macOS. It lives in the menu bar, remembers
 everything you copy, and pastes any of it back with a hot key. All shortcuts below are the defaults;
-each can be changed in *Preferences → Hot keys*.
+each can be changed in *Settings → Shortcuts*.
 
 ![The history menu](site/img/guide/menu.png)
 
@@ -12,7 +12,7 @@ each can be changed in *Preferences → Hot keys*.
 - [Part 2 — Everyday use](#part-2--everyday-use): [The history menu](#the-history-menu) · [Search and preview](#search-and-preview) · [Paste without the menu](#paste-without-the-menu) · [The paste queue](#the-paste-queue) · [The extended menu](#the-extended-menu)
 - [Part 3 — Templates](#part-3--templates): [Creating and organising](#creating-and-organising) · [Placeholders](#placeholders) · [Templates that ask questions](#templates-that-ask-questions)
 - [Part 4 — The Viewer](#part-4--the-viewer)
-- [Part 5 — Preferences](#part-5--preferences)
+- [Part 5 — Settings](#part-5--settings)
 - [Part 6 — Security](#part-6--security): [Password and encryption](#password-and-encryption) · [Touch ID](#touch-id) · [Recovery phrase](#recovery-phrase) · [Backup](#backup)
 - [Part 7 — Advanced](#part-7--advanced): [Automation](#automation-the-keepit-url-scheme) · [Updates](#updates) · [Uninstalling](#uninstalling)
 - [Reference](#reference): [Troubleshooting](#troubleshooting) · [Keyboard cheat sheet](#keyboard-cheat-sheet) · [Placeholder cheat sheet](#placeholder-cheat-sheet)
@@ -59,12 +59,12 @@ and copies, but you press ⌘V yourself.
 ![Keepit enabled under Privacy & Security → Accessibility](site/img/guide/accessibility-settings.png)
 
 **2. A password (optional).** Keepit can store the history and templates encrypted and unlock with
-Touch ID. You can decide now or later in *Preferences → Security*; [Part 6](#part-6--security)
+Touch ID. You can decide now or later in *Settings → Security*; [Part 6](#part-6--security)
 explains how it works. *Not Now* keeps everything unencrypted on disk.
 
 ![The password offer on first launch](site/img/guide/password-offer.png)
 
-Keepit starts at login by default — *Preferences → General* switches that off.
+Keepit starts at login by default — *Settings → General* switches that off.
 
 ---
 
@@ -84,7 +84,7 @@ menu shows. Images show a thumbnail, file lists show the file names.
 To paste an item: click it, or move to it with ↑ ↓ and press Return, or press its number with
 **⌃⌥** — `⌃⌥3` pastes item 3. The same key works from anywhere, without opening the menu.
 
-Below the history: the *Template* submenu, the Viewer (⌥E), Preferences (⌥S), *Clear History* (⌥C),
+Below the history: the *Template* submenu, the Viewer (⌥E), Settings (⌥S), *Clear History* (⌥C),
 *Pause Recording for 10 Minutes* (⌥P — for typing something you do not want recorded), *Lock Keepit*
 (⌥L) when a password is set, and the updater. **⌥T** opens the template menu on its own; every one
 of these keys also works without the menu.
@@ -117,7 +117,7 @@ Global hot keys act on the history as it is right now — item 1 is the clipboar
 | `⌃⌥⌫` | Delete the newest item from the history |
 
 Transformations apply to text; for an image or a file list the key beeps. All of these can be
-changed or switched off in *Preferences → Hot keys*.
+changed or switched off in *Settings → Shortcuts*.
 
 ### The paste queue
 
@@ -134,7 +134,7 @@ cells into a form, lines from a page into a document. The paste queue does that 
    or a paste (the time is adjustable). ⌥R again stops it early.
 
 **⌥⇧R** pastes everything still in the queue in one go, items joined with a line break, a tab, a
-space or nothing — pick on the *Paste queue* tab of Preferences, where the idle time lives too. While the queue is on, the history menu marks its
+space or nothing — pick on the *Paste Queue* pane of Settings, where the idle time lives too. While the queue is on, the history menu marks its
 items: `▶` next to paste, `○` still queued, `✓` already pasted.
 
 ### The extended menu
@@ -252,28 +252,31 @@ the empty line.
 
 ---
 
-## Part 5 — Preferences
+## Part 5 — Settings
 
-`⌘,` in the menu, or *Preferences…*. Every option with a **?** next to it has a popover that explains
-it.
+`⌘,` in the menu, *Settings…*, or ⌥S from any app. The window works the way settings windows do on
+the Mac: pick a pane in the toolbar, and every change applies the moment you make it — there is no
+Save button; close the window with ⌘W or Esc. Every option with a **?** next to it has a popover
+that explains it.
 
-| Tab | What is there |
+| Pane | What is there |
 |-----|---------------|
 | **General** | Launch at login · save history on quit, restore on start · paste after choosing (off = only copy) · paste delay — raise it for apps that are slow to come to the front · open the menu at the text cursor |
-| **Hot keys** | Every global shortcut in one place — see below |
-| **Paste queue** | The three queue keys, the idle time after which the queue switches off, and what to put between items for *Paste all remaining* — [The paste queue](#the-paste-queue) |
+| **Shortcuts** | Every global shortcut in one place — see below |
+| **Paste Queue** | The three queue keys, the idle time after which the queue switches off, and what to put between items for *Paste all remaining* — [The paste queue](#the-paste-queue) |
 | **History** | How many text/file items and images to keep (1000 / 30) · forget items older than … · *Remove duplicates* (copying the same thing again moves it to the top) · *Ignore concealed clipboard data* · the ignored-apps list (bundle identifiers; password managers are always ignored) |
 | **Menu** | Search field · numbering · preview panel · tooltips · source-app icons · image thumbnails · title length · thumbnail height |
 | **Security** | Password, Touch ID, locking, recovery phrase, Export / Import Backup — [Part 6](#part-6--security) |
 | **Advanced** | Clipboard poll interval · *Open Data Folder* · Danger zone: *Delete Keepit and All Data…* |
 
-![Preferences → Hot keys](site/img/guide/prefs-hotkeys.png)
+![Settings → Shortcuts](site/img/guide/prefs-hotkeys.png)
 
-On the **Hot keys** tab click a field and press a combination; ⌫ switches a key off; *Reset to
-Defaults* brings back the ⌥-letter set (⌥M history, ⌥T templates, ⌥E Viewer, ⌥S Preferences, ⌥C Clear History, ⌥P pause, ⌥L lock, ⌥Q quit), ⌥⇧V and ⌃⌥. *Paste item by number* and *Actions on the latest item*
+On the **Shortcuts** pane click a field and press a combination; ⌫ switches a key off; a
+combination already used by another command is refused and the reason is shown under the fields; *Reset to
+Defaults* brings back the ⌥-letter set (⌥M history, ⌥T templates, ⌥E Viewer, ⌥S Settings, ⌥C Clear History, ⌥P pause, ⌥L lock, ⌥Q quit), ⌥⇧V and ⌃⌥. *Paste item by number* and *Actions on the latest item*
 take only modifiers — the digit or letter is added by Keepit. Two of your own keys on the same
 combination are refused on Save; if macOS or another app already owns one, Keepit says so when it
-starts. *Viewer* ⌥E, *Preferences* ⌥S, *Clear History* ⌥C, *Pause / resume recording* ⌥P, *Lock Keepit* ⌥L and *Quit Keepit* ⌥Q work from any app and are shown next to their commands in the menu. On a US layout ⌥+letter normally types a special character (⌥S = ß, ⌥C = ç …); if you need one of those, move the key.
+starts. *Viewer* ⌥E, *Settings* ⌥S, *Clear History* ⌥C, *Pause / resume recording* ⌥P, *Lock Keepit* ⌥L and *Quit Keepit* ⌥Q work from any app and are shown next to their commands in the menu. On a US layout ⌥+letter normally types a special character (⌥S = ß, ⌥C = ç …); if you need one of those, move the key.
 
 ---
 
@@ -281,7 +284,7 @@ starts. *Viewer* ⌥E, *Preferences* ⌥S, *Clear History* ⌥C, *Pause / resume
 
 ### Password and encryption
 
-*Preferences → Security → Require password at launch* encrypts the history and templates with
+*Settings → Security → Require password at launch* encrypts the history and templates with
 AES-256-GCM. The key is derived from your password (PBKDF2, 200 000 rounds) and lives only in
 memory; it is wiped when Keepit locks — *Lock Keepit* (`⌥L`), on quit, and optionally
 when the screen locks or the Mac sleeps.
@@ -291,7 +294,7 @@ when the screen locks or the Mac sleeps.
 The password dialogs show the current keyboard layout and warn about Caps Lock, so a rejected
 password is rarely a mystery.
 
-![Preferences → Security](site/img/guide/prefs-security.png)
+![Settings → Security](site/img/guide/prefs-security.png)
 
 ### Touch ID
 
@@ -349,7 +352,7 @@ same. Checksums for every download are in `SHA256SUMS` on the release page.
 
 ### Uninstalling
 
-*Preferences → Advanced → Delete Keepit and All Data…* removes the app, the data folder, the keychain
+*Settings → Advanced → Delete Keepit and All Data…* removes the app, the data folder, the keychain
 entries (including the Touch ID key), the login item and the Accessibility entry. It asks for your
 password or Touch ID, a typed `DELETE` and a confirmation — export a backup first if you might want
 the data back. With Homebrew, run `brew uninstall --cask --force keepit` afterwards so Homebrew
@@ -366,14 +369,14 @@ Security → Accessibility → Keepit*. If Keepit is listed but still does not p
 on again — macOS forgets the grant when the app is reinstalled.
 
 **A hot key does nothing.** Another app or macOS owns it; Keepit reports that at launch. Pick a
-different combination on the *Hot keys* tab. ⌃⌥ with digits and letters is free on a stock Mac.
+different combination on the *Shortcuts* pane. ⌃⌥ with digits and letters is free on a stock Mac.
 
 **The menu opens in the wrong place.** The app you are in does not expose its text cursor, so the
 menu falls back to the mouse pointer. *Open menu at text cursor* on the General tab turns the
 lookup off if you prefer the pointer always.
 
 **Something I copied is missing.** Copies from password managers and anything marked concealed are
-never recorded; apps on the ignore list are skipped. See *Preferences → History*.
+never recorded; apps on the ignore list are skipped. See *Settings → History*.
 
 **Touch ID is not offered.** No Touch ID sensor is reachable at the moment (lid closed, no Touch ID
 keyboard). Keepit keeps the setting and asks for the fingerprint as soon as a sensor is available.
@@ -398,9 +401,9 @@ Still stuck? [GitHub Issues](https://github.com/andrey-insarov/Keepit/issues) ·
 | `⌃⌥A` | Add the clipboard to Templates |
 | `⌃⌥⌫` | Delete the newest item |
 | `⌥R` · `⌥V` · `⌥⇧R` | Paste queue: start / stop · paste next · paste all remaining |
-| `⌥E` `⌥S` `⌥C` `⌥P` `⌥L` `⌥Q` | Viewer · Preferences · Clear History · Pause / resume · Lock · Quit |
+| `⌥E` `⌥S` `⌥C` `⌥P` `⌥L` `⌥Q` | Viewer · Settings · Clear History · Pause recording · Lock · Quit |
 | `⌘F` in the Viewer | Search |
-| `⌘,` | Preferences |
+| `⌘,` | Settings |
 
 ### Placeholder cheat sheet
 

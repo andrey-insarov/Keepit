@@ -13,7 +13,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     private var statusItem: NSStatusItem!
     private lazy var updater = Updater()
-    private var preferencesWindow: PreferencesWindowController?
+    private var preferencesWindow: SettingsWindowController?
     private(set) var viewer: ViewerWindowController?
     /// Set by the uninstaller: nothing may be written to disk any more (see Uninstall.swift).
     var uninstalling = false
@@ -143,7 +143,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let b = NSAlert()
         b.alertStyle = .warning
         b.messageText = L("Your data will not be encrypted")
-        b.informativeText = L("Without a password Keepit stores history and templates unencrypted in your user Library. You can turn protection on at any time in Preferences → Security.")
+        b.informativeText = L("Without a password Keepit stores history and templates unencrypted in your user Library. You can turn protection on at any time in Settings → Security.")
         b.addButton(withTitle: L("OK"))
         b.runModal()
     }
@@ -598,7 +598,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             // Report hot keys that could not be registered
             let a = NSAlert()
             a.messageText = L("Hot key unavailable")
-            a.informativeText = LF("Could not register: %@. Another app or macOS is using it. Change it in Preferences.", failed.joined(separator: ", "))
+            a.informativeText = LF("Could not register: %@. Another app or macOS is using it. Change it in Settings → Shortcuts.", failed.joined(separator: ", "))
             a.runModal()
         }
     }
@@ -616,7 +616,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             appMenu.addItem(withTitle: L("Check for Updates…"), action: #selector(checkForUpdates), keyEquivalent: "")
         }
         appMenu.addItem(withTitle: L("Viewer…"), action: #selector(openViewer), keyEquivalent: "l")
-        appMenu.addItem(withTitle: L("Preferences…"), action: #selector(openPreferences), keyEquivalent: ",")
+        appMenu.addItem(withTitle: L("Settings…"), action: #selector(openPreferences), keyEquivalent: ",")
         appMenu.addItem(.separator())
         appMenu.addItem(withTitle: L("Quit Keepit"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         appItem.submenu = appMenu
@@ -873,7 +873,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         var out: [NSMenuItem] = [
             item(L("Viewer…"), #selector(openViewer), hotKey: settings.viewerHotKey),
             item(L("Add Clipboard to Templates"), #selector(addClipboardToTemplates), hotKey: settings.latestActionModifiers.map { HotKey(keyCode: HotKey.LatestAction.addToTemplates.keyCode, modifiers: $0) }),
-            item(L("Preferences…"), #selector(openPreferences), hotKey: settings.preferencesHotKey),
+            item(L("Settings…"), #selector(openPreferences), hotKey: settings.preferencesHotKey),
             .separator(),
             item(L("Clear History"), #selector(clearHistory), hotKey: settings.clearHistoryHotKey),
         ]
@@ -1135,7 +1135,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc func openPreferences() {
         menuSelectionMade = true
         if preferencesWindow == nil {
-            preferencesWindow = PreferencesWindowController(app: self)
+            preferencesWindow = SettingsWindowController(app: self)
         }
         preferencesWindow?.show()
     }

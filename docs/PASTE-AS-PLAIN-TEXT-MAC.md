@@ -26,7 +26,7 @@ You can remap the shortcut per app in *System Settings → Keyboard → Keyboard
 
 ![The extended history menu with paste transformations](site/img/guide/extended-menu.png)
 
-Every key can be changed in *Preferences → Hot keys*, and if you want plain text to be the default, set a per-app paste key in *Preferences → Menu* for the apps that need it.
+Every key can be changed in *Settings → Shortcuts*, and if you want plain text to be the default, set a per-app paste key in *Settings → Menu* for the apps that need it.
 
 Keepit is open source and keeps everything on your Mac; the [security page](security.html) explains what is stored and how.
 

@@ -24,11 +24,11 @@ under `~/Library/Containers/com.it.keep/`):
 |------|----------|----------------------------|
 | `history.json` | The clipboard history: text, RTF, HTML, PNG images, file lists, with date and source app | Yes |
 | `templates.json` | The template tree, including per-template hot keys | Yes |
-| `settings.json` | Preferences: hot keys, limits, ignore list — no clipboard data | No |
+| `settings.json` | Settings: hot keys, limits, ignore list — no clipboard data | No |
 | `vault.json` | Encryption metadata: PBKDF2 salt, a sealed verifier, the wrapped recovery material | — |
 
 The history is written when it changes and read on launch. Without a password the JSON is plain
-text on disk, protected only by your macOS account and FileVault. *Preferences → Advanced → Open
+text on disk, protected only by your macOS account and FileVault. *Settings → Advanced → Open
 Data Folder* shows the folder.
 
 Keepit also writes to the macOS keychain — only the Touch ID entry described below — and registers
@@ -39,7 +39,7 @@ itself as a login item if you let it start at login.
 - Anything copied from a known password manager: 1Password, Bitwarden, KeePassXC, MacPass,
   Strongbox, KeeWeb, LastPass, Dashlane, Enpass, Keeper, NordPass, RoboForm, Apple Passwords and
   Keychain Access. These bundle identifiers are built in and always active; you can add your own
-  apps on *Preferences → History*.
+  apps on *Settings → History*.
 - Anything the copying app marks as concealed or transient (`org.nspasteboard.ConcealedType`,
   `org.nspasteboard.TransientType`). Password managers and many terminals set these.
 - Anything copied while recording is paused (*Pause Recording for 10 Minutes* in the menu).
@@ -137,7 +137,7 @@ Intis Telecom LTD, notarized by Apple and stapled. The release page carries, for
 
 ```bash
 shasum -a 256 -c SHA256SUMS --ignore-missing
-spctl -a -vv -t install Keepit-2.10.1.dmg      # "accepted, source=Notarized Developer ID"
+spctl -a -vv -t install Keepit-2.11.0.dmg      # "accepted, source=Notarized Developer ID"
 ```
 
 Homebrew installs the same DMG from the same release.
@@ -148,7 +148,7 @@ third-party action in the workflow is pinned to a commit hash rather than a mova
 
 ## Uninstalling and data removal
 
-*Preferences → Advanced → Delete Keepit and All Data…* removes the app bundle, the data folder, the
+*Settings → Advanced → Delete Keepit and All Data…* removes the app bundle, the data folder, the
 keychain entry, the login item and the Accessibility grant, after asking for the password or Touch
 ID and a typed confirmation. Deleting the app by hand leaves the data folder in place — remove
 `~/Library/Application Support/Keepit/` yourself if you want it gone.

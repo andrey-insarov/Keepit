@@ -56,7 +56,7 @@ Or the DMG:
 | —                                            | Search field at the top of the history menu: typing filters in place, Return pastes the first match |
 | —                                            | Extended menu: hold `⇧` and every item gets a submenu — paste as plain text, UPPERCASE / lowercase / Title Case / Sentence case / trimmed / single line, copy only, add to Templates, show in Viewer, delete |
 | —                                            | **Paste queue**: `⌥R` starts it, every ⌘C adds to a counter in the menu bar, `⌥V` pastes the items back one by one in the same order, `⌥⇧R` pastes all that is left; ends by itself after the last item or an idle timeout |
-| —                                            | Global hot keys on the latest item (the clipboard): `⌃⌥V` plain text, `⌃⌥U/L/T/S/W/J` transformations, `⌃⌥A` add to Templates, `⌃⌥⌫` delete; `⌥⇧V` pastes the previous item (swap); `⌥E` Viewer, `⌥S` Preferences, `⌥C` Clear History, `⌥P` pause, `⌥L` lock, `⌥Q` quit. All of them on the *Hot keys* tab of Preferences |
+| —                                            | Global hot keys on the latest item (the clipboard): `⌃⌥V` plain text, `⌃⌥U/L/T/S/W/J` transformations, `⌃⌥A` add to Templates, `⌃⌥⌫` delete; `⌥⇧V` pastes the previous item (swap); `⌥E` Viewer, `⌥S` Settings, `⌥C` Clear History, `⌥P` pause, `⌥L` lock, `⌥Q` quit. All of them on the *Shortcuts* pane of Preferences |
 | Bitmap thumbnails and tooltips in the menu   | Same (PNG thumbnails, text tooltips) plus a preview panel next to the highlighted item and the source app's icon |
 | Formats: TEXT, UNICODE, RTF, HTML, BITMAP, HDROP | plain text, RTF, HTML, PNG (TIFF converted), file URLs |
 | History max (30), overlap check, save/restore| Separate rings: 1000 text/file items + 30 images by default, JSON in `~/Library/Application Support/Keepit/` |
@@ -69,7 +69,7 @@ Or the DMG:
 | Viewer context menu                          | Send to Clipboard, Paste, Add to Template, New Item/Folder, New Item from File, Rename, Clear Name, Set Hot Key, Save Format to File, Up/Down, Delete |
 | Viewer drag & drop                           | History → Template (copy), Template → History (copy), reorder within each |
 | Status bar                                   | Date, source app, format, size, hot key                    |
-| Options dialog (CLCLSet)                     | Preferences with tabs General / Hot keys / History / Menu / Security / Advanced, hot-key recorders, (?) help popovers |
+| Options dialog (CLCLSet)                     | Settings window with panes General / Shortcuts / Paste Queue / History / Menu / Security / Advanced, hot-key recorders, (?) help popovers |
 | —                                            | Export / Import Backup: one password-encrypted `.keepit` file (history, templates, preferences); Merge or Replace on import |
 | —                                            | 21 interface languages: en, ru, uk, de, fr, es, it, pt-BR, nl, pl, cs, tr, lt, lv, et, ja, ko, zh-Hans, zh-Hant, ar, he |
 
@@ -133,7 +133,7 @@ make app SIGN_ID="Keepit Dev"
 
 ## Password protection (2.0)
 
-Preferences → *Require password at launch, encrypt history & templates*. You set a password once;
+Settings → *Require password at launch, encrypt history & templates*. You set a password once;
 from then on Keepit asks for it at every launch (three wrong attempts → quit) and nothing is loaded
 until it is entered. `history.json` and `templates.json` are then stored as AES-256-GCM blobs
 (key = PBKDF2-HMAC-SHA256, 200 000 rounds, random 16-byte salt kept in `vault.json` together
@@ -143,7 +143,7 @@ unticking the option asks for the password and writes the files back as plain JS
 
 ### Touch ID
 
-Preferences → *Unlock with Touch ID*. The data key is stored in the data-protection keychain behind
+Settings → *Unlock with Touch ID*. The data key is stored in the data-protection keychain behind
 a `biometryCurrentSet` access control (Secure Enclave backed; invalidated if fingerprints change),
 so at launch or after *Lock* a fingerprint fetches the same key the password would derive — the
 password is always available as a fallback ("Use Password" on the prompt). Changing the password
@@ -157,7 +157,7 @@ checksum). A key derived from the phrase (HKDF) wraps the data key inside `vault
 itself is never stored. Print it (the dialog offers the system print panel, which can also save a
 PDF) and keep it offline — anyone holding it can read the history. If you forget the password,
 the unlock prompt's *Use Recovery Phrase…* unlocks the data and immediately asks for a new
-password. The phrase keeps working after password changes; *New Recovery Phrase…* in Preferences
+password. The phrase keeps working after password changes; *New Recovery Phrase…* in Settings
 replaces it (the old sheet becomes useless). Lose both password and phrase and the data is
 unrecoverable — by design.
 
@@ -179,7 +179,7 @@ unrecoverable — by design.
   from memory, stops watching the clipboard and unregisters hot keys. The icon turns into a lock;
   click it → *Unlock Keepit…* to enter the password and resume. Pending edits are saved (encrypted)
   before the key is wiped.
-* *Lock Keepit when the screen locks or the Mac sleeps* (Preferences, on by default) does the same
+* *Lock Keepit when the screen locks or the Mac sleeps* (Settings, on by default) does the same
   automatically on screen lock, fast user switch and sleep.
 * While locked, nothing is decrypted and the hot keys do nothing. What is on the system
   clipboard itself is of course still readable by every app — that is outside Keepit's control.
@@ -207,7 +207,7 @@ spctl -a -vv -t install Keepit-<version>.dmg      # Developer ID + notarization
 * `swift test` — unit tests (models, menu parsing, settings, history/template stores, vault
   encryption and key zeroization). Runs on every push in GitHub Actions.
 * `Keepit --selftest` — end-to-end smoke test inside the real app: captures a clipboard change,
-  checks dedupe, inserts a template, builds the menus, opens the Viewer and Preferences and saves
+  checks dedupe, inserts a template, builds the menus, opens the Viewer and Settings and saves
   PNG snapshots of them to `selftest-output/`, round-trips the vault. Set `KEEPIT_DATA_DIR` to a
   temporary folder so your real data is untouched. CI runs it on every build and uploads the
   snapshots as an artifact (Actions → run → *selftest-…*), so UI regressions can be eyeballed.
@@ -260,7 +260,7 @@ Sources/Keepit/
   UI/
     MenuBuilder.swift          Menu.c: owner-drawn menu → NSMenu with images, key equivalents, tooltips
     HotKeyRecorderView.swift   SetHotkey.c
-    PreferencesWindow.swift    CLCLSet (subset)
+    SettingsWindow.swift    CLCLSet (subset)
     ViewerWindow.swift         Viewer.c / TreeView.c / ListView.c: tree + actions + drag & drop
     FormatViews.swift          fmt_text_view.c / fmt_bitmap_view.c / fmt_file_view.c / BinView.c
 ```

@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.11.0 — 2026-11-02
+
+- **Settings, the Mac way.** *Preferences* is now *Settings* (as in macOS 13+), with a toolbar of panes — General, Shortcuts, Paste Queue, History, Menu, Security, Advanced — and the window sized to each pane. Every change applies immediately; there is no Save or Cancel, ⌘W or Esc closes
+- Number fields have a stepper and a unit word (seconds, characters, pixels, items) and refuse values out of range; a shortcut that collides with another command is refused on the spot with the reason shown under the fields
+- Ignored apps are a list with icons: **+** picks an app from Applications (the bundle identifier is read from it), **−** removes, double-click edits an identifier by hand
+- Labels follow Apple's wording: *Shortcuts* instead of *Hot keys*, *Pause recording*, *Remove Keepit* instead of *Danger zone*; the window title is the pane name
+- Menu: *Settings…* (⌘,) replaces *Preferences…*
+
 ## 2.10.1 — 2026-11-02
 
 - Preferences: the paste queue has its own tab (keys, idle time, separator); on *Hot keys* the *Other* section is one straight column, so every field lines up

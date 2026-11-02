@@ -29,7 +29,7 @@ A clipboard manager keeps more than the last item, so clearing the system clipbo
 - **`⌥P`** pauses recording for ten minutes — for typing something you would rather not have in the history at all.
 - Copies from password managers (1Password, Bitwarden, KeePassXC, Apple Passwords and others) and anything the copying app marks as concealed are never recorded in the first place.
 
-If the history is encrypted (*Preferences → Security*), locking Keepit with `⌥L` wipes the key from memory, and the files on disk stay unreadable until you unlock. Deleting Keepit and all its data is one command in *Preferences → Advanced*.
+If the history is encrypted (*Settings → Security*), locking Keepit with `⌥L` wipes the key from memory, and the files on disk stay unreadable until you unlock. Deleting Keepit and all its data is one command in *Settings → Advanced*.
 
 ## Related
 
