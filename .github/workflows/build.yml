@@ -185,7 +185,12 @@ jobs:
           # A tag build checks out the tag alone, so --mirror would try to delete main on Codeberg
           # (refused there). Push every branch and tag explicitly instead; nothing is ever deleted.
           git fetch --quiet origin '+refs/heads/*:refs/remotes/origin/*' '+refs/tags/*:refs/tags/*'
-          git push --force --quiet git@codeberg.org:itcom/Keepit.git 'refs/remotes/origin/*:refs/heads/*' 'refs/tags/*:refs/tags/*'
+          # Real branches only: origin/HEAD is a symbolic ref and must not become a branch called "HEAD".
+          REFS=""
+          for b in $(git for-each-ref --format='%(refname:strip=3)' refs/remotes/origin | grep -vx HEAD); do
+            REFS="$REFS refs/remotes/origin/$b:refs/heads/$b"
+          done
+          git push --force --quiet git@codeberg.org:itcom/Keepit.git $REFS 'refs/tags/*:refs/tags/*'
           rm -f ~/.ssh/codeberg
           echo "Mirrored $(git rev-parse --short HEAD) to codeberg.org/itcom/Keepit"
 
