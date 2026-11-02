@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- App Store build: Advanced shows *Reset…* only (the sandbox cannot move the app to the Trash; store apps are removed from Launchpad)
 - `keepit://settings` opens Settings (replaces `keepit://preferences`)
 
 ## 2.11.1 — 2026-11-02

@@ -387,7 +387,17 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         let reveal = NSButton(title: L("Open Folder"), target: self, action: #selector(revealData))
         uninstall.target = self; uninstall.action = #selector(uninstallTapped)
         resetAll.target = self; resetAll.action = #selector(resetTapped)
+        // The App Store build is sandboxed: it cannot move itself to the Trash or reset the
+        // Accessibility grant, and store apps are removed from Launchpad anyway — Reset only.
+        #if APPSTORE
+        let dangerRow = NSStackView(views: [button(resetAll)])
+        let dangerTitle = L("Reset")
+        let dangerHelp = L("Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back.")
+        #else
         let dangerRow = NSStackView(views: [button(resetAll), button(uninstall)])
+        let dangerTitle = L("Reset and uninstall")
+        let dangerHelp = L("Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back.")
+        #endif
         dangerRow.orientation = .horizontal; dangerRow.spacing = 8
         let advanced = grid([
             header(L("Clipboard")),
@@ -395,8 +405,8 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
                                            L("How often Keepit looks at the clipboard. macOS sends no notification when it changes, so every clipboard manager polls; 0.3 s is unnoticeable and cheap."))),
             header(L("Data")),
             [NSView(), button(reveal)],
-            header(L("Reset and uninstall")),
-            [NSView(), help(dangerRow, L("Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back."))],
+            header(dangerTitle),
+            [NSView(), help(dangerRow, dangerHelp)],
         ])
 
         panes = [
