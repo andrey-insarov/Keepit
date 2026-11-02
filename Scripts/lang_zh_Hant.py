@@ -149,7 +149,6 @@ T = {
 "Unlock Keepit…": "解鎖 Keepit⋯",
 "Unlock with Touch ID (no Touch ID on this Mac)": "使用 Touch ID 解鎖（此 Mac 沒有 Touch ID）",
 "Up": "上移",
-"Use Recovery Phrase…": "使用復原助記詞⋯",
 "Use at least 8 characters": "至少使用 8 個字元",
 "Use “-” for a menu separator, “&x” to make x the menu shortcut, “&&” for a literal &.": "「-」表示選單分隔線，「&x」將 x 設為選單快速鍵，「&&」表示 & 字元本身。",
 "Viewer…": "檢視器⋯",
@@ -394,4 +393,5 @@ T = {
 'Reset Keepit to a fresh install?': '要將 Keepit 重置為全新安裝狀態嗎？',
 'Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back.': '將刪除剪貼板歷史記錄、範本、設定、密碼和 Touch ID 金鑰；範例範本會恢復。App、其權限和登入時啟動保持不變。無法還原——如果以後可能需要資料，請先匯出備份。',
 'Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back.': '「重置」將 Keepit 恢復為全新安裝狀態：刪除歷史記錄、範本、設定、密碼和 Touch ID 金鑰，恢復範例範本；App 及其權限保留。「解除安裝」在此基礎上再移除 App、登入時啟動、鑰匙圈項目和輔助使用權限。兩者都需要密碼或 Touch ID；解除安裝還需要鍵入確認。如果以後可能需要資料，請先匯出備份。',
+'Recovery Access…': '復原存取…',
 }

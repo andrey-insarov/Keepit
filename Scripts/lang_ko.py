@@ -149,7 +149,6 @@ T = {
 "Unlock Keepit…": "Keepit 잠금 해제…",
 "Unlock with Touch ID (no Touch ID on this Mac)": "Touch ID로 잠금 해제(이 Mac에는 Touch ID가 없음)",
 "Up": "위로",
-"Use Recovery Phrase…": "복구 문구 사용…",
 "Use at least 8 characters": "8자 이상 사용하세요",
 "Use “-” for a menu separator, “&x” to make x the menu shortcut, “&&” for a literal &.": "“-”는 메뉴 구분선, “&x”는 x를 메뉴 단축키로, “&&”는 & 문자 자체를 뜻합니다.",
 "Viewer…": "뷰어…",
@@ -394,4 +393,5 @@ T = {
 'Reset Keepit to a fresh install?': 'Keepit을 새로 설치한 상태로 재설정하시겠습니까?',
 'Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back.': '기록, 템플릿, 설정, 암호, Touch ID 키가 삭제되고 예제 템플릿이 돌아옵니다. 앱, 권한, 로그인 시 실행은 유지됩니다. 되돌릴 수 없으므로 데이터가 다시 필요할 수 있다면 먼저 백업을 내보내세요.',
 'Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back.': '‘재설정’은 Keepit을 새로 설치한 상태로 되돌립니다. 기록, 템플릿, 설정, 암호, Touch ID 키가 삭제되고 예제 템플릿이 돌아오며 앱과 권한은 유지됩니다. ‘설치 제거’는 같은 작업 후 앱, 로그인 시 실행, 키체인 항목, 손쉬운 사용 권한까지 제거합니다. 둘 다 암호 또는 Touch ID를 요구하며 설치 제거는 입력 확인도 요구합니다. 데이터가 다시 필요할 수 있다면 먼저 백업을 내보내세요.',
+'Recovery Access…': '접근 복구…',
 }

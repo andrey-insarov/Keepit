@@ -149,7 +149,6 @@
 "Unlock Keepit…" = "בטל את נעילת Keepit…";
 "Unlock with Touch ID (no Touch ID on this Mac)" = "בטל נעילה באמצעות Touch ID (אין Touch ID ב‑Mac זה)";
 "Up" = "למעלה";
-"Use Recovery Phrase…" = "השתמש במשפט שחזור…";
 "Use at least 8 characters" = "השתמש ב‑8 תווים לפחות";
 "Use “-” for a menu separator, “&x” to make x the menu shortcut, “&&” for a literal &." = "השתמש ב‑”-“ למפריד תפריט, ב‑”&x“ כדי להפוך את x לקיצור התפריט, וב‑”&&“ לסימן & רגיל.";
 "Viewer…" = "מציג…";
@@ -394,3 +393,4 @@
 "Reset Keepit to a fresh install?" = "לאפס את Keepit למצב התקנה חדשה?";
 "Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back." = "ההיסטוריה, התבניות, ההגדרות, הסיסמה ומפתח Touch ID נמחקים; תבניות הדוגמה חוזרות. היישום, ההרשאות וההפעלה בכניסה נשארים. אין ביטול — ייצאו גיבוי תחילה אם ייתכן שתרצו את הנתונים בחזרה.";
 "Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back." = "‚איפוס‘ מחזיר את Keepit למצב התקנה חדשה: ההיסטוריה, התבניות, ההגדרות, הסיסמה ומפתח Touch ID נמחקים ותבניות הדוגמה חוזרות; היישום וההרשאות נשארים. ‚הסרת התקנה‘ עושה את אותו הדבר ואז מסירה את היישום, ההפעלה בכניסה, פריט מחזיק המפתחות והרשאת הנגישות. שניהם מבקשים סיסמה או Touch ID; הסרת ההתקנה גם אישור מוקלד. ייצאו גיבוי תחילה אם ייתכן שתרצו את הנתונים בחזרה.";
+"Recovery Access…" = "שחזור גישה…";

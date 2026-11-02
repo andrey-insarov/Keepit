@@ -149,7 +149,6 @@
 "Unlock Keepit…" = "Keepit entsperren …";
 "Unlock with Touch ID (no Touch ID on this Mac)" = "Mit Touch ID entsperren (kein Touch ID auf diesem Mac)";
 "Up" = "Nach oben";
-"Use Recovery Phrase…" = "Wiederherstellungsphrase verwenden …";
 "Use at least 8 characters" = "Mindestens 8 Zeichen verwenden";
 "Use “-” for a menu separator, “&x” to make x the menu shortcut, “&&” for a literal &." = "„-“ für eine Trennlinie, „&x“ macht x zum Menükürzel, „&&“ für ein einfaches &.";
 "Viewer…" = "Viewer …";
@@ -394,3 +393,4 @@
 "Reset Keepit to a fresh install?" = "Keepit auf eine frische Installation zurücksetzen?";
 "Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back." = "Verlauf, Vorlagen, Einstellungen, Passwort und Touch-ID-Schlüssel werden gelöscht; die Beispielvorlagen kommen zurück. Programm, Berechtigungen und „Beim Anmelden starten“ bleiben. Kein Rückgängig – exportieren Sie zuerst ein Backup, falls Sie die Daten noch brauchen.";
 "Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back." = "„Zurücksetzen“ bringt Keepit in den Zustand einer frischen Installation: Verlauf, Vorlagen, Einstellungen, Passwort und Touch-ID-Schlüssel werden gelöscht, die Beispielvorlagen kommen zurück; Programm und Berechtigungen bleiben. „Deinstallieren“ tut dasselbe und entfernt danach das Programm, „Beim Anmelden starten“, den Schlüsselbund-Eintrag und die Bedienungshilfen-Berechtigung. Beide fragen nach Passwort oder Touch ID, Deinstallieren zusätzlich nach einer getippten Bestätigung. Exportieren Sie zuerst ein Backup, falls Sie die Daten noch brauchen.";
+"Recovery Access…" = "Zugang wiederherstellen…";

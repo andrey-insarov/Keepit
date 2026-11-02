@@ -149,7 +149,6 @@ T = {
 "Unlock Keepit…": "Keepit'in Kilidini Aç…",
 "Unlock with Touch ID (no Touch ID on this Mac)": "Touch ID ile kilidi aç (bu Mac'te Touch ID yok)",
 "Up": "Yukarı",
-"Use Recovery Phrase…": "Kurtarma İfadesini Kullan…",
 "Use at least 8 characters": "En az 8 karakter kullanın",
 "Use “-” for a menu separator, “&x” to make x the menu shortcut, “&&” for a literal &.": "Menü ayırıcısı için “-”, x'i menü kısayolu yapmak için “&x”, düz & için “&&” kullanın.",
 "Viewer…": "Görüntüleyici…",
@@ -394,4 +393,5 @@ T = {
 'Reset Keepit to a fresh install?': 'Keepit yeni kurulmuş haline sıfırlansın mı?',
 'Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back.': 'Geçmiş, şablonlar, ayarlar, parola ve Touch ID anahtarı silinir; örnek şablonlar geri gelir. Uygulama, izinleri ve oturum açılırken başlatma kalır. Geri alınamaz — verileri geri isteyebilirseniz önce bir yedek dışa aktarın.',
 'Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back.': '“Sıfırla” Keepit’i yeni kurulmuş haline getirir: geçmiş, şablonlar, ayarlar, parola ve Touch ID anahtarı silinir, örnek şablonlar geri gelir; uygulama ve izinleri kalır. “Kaldır” aynısını yapar ve ardından uygulamayı, oturum açılırken başlatmayı, anahtar zinciri girdisini ve Erişilebilirlik iznini kaldırır. İkisi de parola veya Touch ID ister; Kaldır ayrıca yazılı onay ister. Verileri geri isteyebilirseniz önce bir yedek dışa aktarın.',
+'Recovery Access…': 'Erişimi Kurtar…',
 }

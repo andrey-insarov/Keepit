@@ -149,7 +149,6 @@
 "Unlock Keepit…" = "Déverrouiller Keepit…";
 "Unlock with Touch ID (no Touch ID on this Mac)" = "Déverrouiller avec Touch ID (pas de Touch ID sur ce Mac)";
 "Up" = "Monter";
-"Use Recovery Phrase…" = "Utiliser la phrase de récupération…";
 "Use at least 8 characters" = "Utilisez au moins 8 caractères";
 "Use “-” for a menu separator, “&x” to make x the menu shortcut, “&&” for a literal &." = "« - » pour un séparateur de menu, « &x » pour faire de x le raccourci, « && » pour un & littéral.";
 "Viewer…" = "Visionneuse…";
@@ -394,3 +393,4 @@
 "Reset Keepit to a fresh install?" = "Réinitialiser Keepit comme après une installation ?";
 "Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back." = "L’historique, les modèles, les réglages, le mot de passe et la clé Touch ID sont supprimés ; les modèles d’exemple reviennent. L’app, ses autorisations et le lancement à l’ouverture de session restent. Aucune annulation possible — exportez d’abord une sauvegarde si vous pourriez vouloir récupérer les données.";
 "Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back." = "« Réinitialiser » ramène Keepit à une installation neuve : historique, modèles, réglages, mot de passe et clé Touch ID sont supprimés, les modèles d’exemple reviennent ; l’app et ses autorisations restent. « Désinstaller » fait de même puis supprime l’app, le lancement à l’ouverture de session, l’entrée du trousseau et l’autorisation Accessibilité. Les deux demandent le mot de passe ou Touch ID ; Désinstaller demande aussi une confirmation saisie. Exportez d’abord une sauvegarde si vous pourriez vouloir récupérer les données.";
+"Recovery Access…" = "Récupérer l’accès…";

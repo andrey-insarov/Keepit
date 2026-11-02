@@ -5,6 +5,7 @@
 - Hardening: images are checked by byte size *and* pixel count from the header before anything is decoded (40 MP cap), the paste queue stops at 500 items, a `{input:}` answer at 10 000 characters; the full table is on the security page
 - Cleanup: dead code and 39 localization strings left over from the old Preferences window removed from all 21 languages
 - Fix: quitting or updating Keepit while it was locked (password set, *Lock when the screen locks or the Mac sleeps*) wrote the empty in-memory history and templates over the files on disk — and in plain text, since the key was already gone. Nothing is written while locked now, and an encrypted file is never replaced by plaintext
+- Unlock dialog: narrower field and buttons; the third button is *Recovery Access…*
 - Preview panel: placed next to the menu as it actually sits on screen (it used to overlap the menu bar or slide under the menu when macOS had shifted the menu), with rounded corners to match
 - Guide: every screenshot retaken for the 2.11 Settings window, the paste queue and the Examples templates
 

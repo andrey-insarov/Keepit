@@ -149,7 +149,6 @@
 "Unlock Keepit…" = "Розблокувати Keepit…";
 "Unlock with Touch ID (no Touch ID on this Mac)" = "Розблоковувати через Touch ID (на цьому Mac немає Touch ID)";
 "Up" = "Вгору";
-"Use Recovery Phrase…" = "Використати фразу відновлення…";
 "Use at least 8 characters" = "Використовуйте щонайменше 8 символів";
 "Use “-” for a menu separator, “&x” to make x the menu shortcut, “&&” for a literal &." = "«-» — роздільник меню, «&x» — робить x клавішею меню, «&&» — звичайний символ &.";
 "Viewer…" = "Перегляд…";
@@ -394,3 +393,4 @@
 "Reset Keepit to a fresh install?" = "Скинути Keepit до стану нової інсталяції?";
 "Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back." = "Історія буфера, шаблони, налаштування, пароль і ключ Touch ID видаляються; шаблони-приклади повертаються. Програма, її дозволи і запуск при вході залишаються. Скасувати не можна — якщо дані можуть знадобитися, спершу експортуйте резервну копію.";
 "Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back." = "«Скинути» повертає Keepit до стану нової інсталяції: історія, шаблони, налаштування, пароль і ключ Touch ID видаляються, шаблони-приклади повертаються; програма та її дозволи залишаються. «Видалити програму» робить те саме, а потім прибирає програму, запуск при вході, запис у Keychain і дозвіл Accessibility. Обидві запитують пароль або Touch ID; видалення — ще й набране підтвердження. Якщо дані можуть знадобитися, спершу експортуйте резервну копію.";
+"Recovery Access…" = "Відновлення доступу…";

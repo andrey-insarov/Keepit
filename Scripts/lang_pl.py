@@ -149,7 +149,6 @@ T = {
 "Unlock Keepit…": "Odblokuj Keepit…",
 "Unlock with Touch ID (no Touch ID on this Mac)": "Odblokowuj przez Touch ID (ten Mac nie ma Touch ID)",
 "Up": "W górę",
-"Use Recovery Phrase…": "Użyj frazy odzyskiwania…",
 "Use at least 8 characters": "Użyj co najmniej 8 znaków",
 "Use “-” for a menu separator, “&x” to make x the menu shortcut, “&&” for a literal &.": "„-” to separator menu, „&x” czyni x skrótem menu, „&&” to zwykły znak &.",
 "Viewer…": "Przeglądarka…",
@@ -394,4 +393,5 @@ T = {
 'Reset Keepit to a fresh install?': 'Zresetować Keepit do stanu po instalacji?',
 'Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back.': 'Historia, szablony, ustawienia, hasło i klucz Touch ID zostaną usunięte; wrócą przykładowe szablony. Aplikacja, jej uprawnienia i uruchamianie przy logowaniu pozostają. Nie da się tego cofnąć — najpierw wyeksportuj kopię zapasową, jeśli dane mogą być jeszcze potrzebne.',
 'Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back.': '„Resetuj” przywraca Keepit do stanu po instalacji: historia, szablony, ustawienia, hasło i klucz Touch ID zostają usunięte, wracają przykładowe szablony; aplikacja i jej uprawnienia pozostają. „Odinstaluj” robi to samo, a potem usuwa aplikację, uruchamianie przy logowaniu, wpis w pęku kluczy i uprawnienie Dostępności. Oba proszą o hasło lub Touch ID; odinstalowanie także o wpisane potwierdzenie. Najpierw wyeksportuj kopię zapasową, jeśli dane mogą być jeszcze potrzebne.',
+'Recovery Access…': 'Odzyskaj dostęp…',
 }

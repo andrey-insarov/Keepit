@@ -149,7 +149,6 @@
 "Unlock Keepit…" = "إلغاء قفل Keepit…";
 "Unlock with Touch ID (no Touch ID on this Mac)" = "إلغاء القفل عبر Touch ID (لا يوجد Touch ID على هذا الجهاز)";
 "Up" = "لأعلى";
-"Use Recovery Phrase…" = "استخدام عبارة الاسترداد…";
 "Use at least 8 characters" = "استخدم 8 أحرف على الأقل";
 "Use “-” for a menu separator, “&x” to make x the menu shortcut, “&&” for a literal &." = "استخدم ”-“ كفاصل في القائمة، و”&x“ لجعل x اختصار القائمة، و”&&“ لعلامة & حرفية.";
 "Viewer…" = "العارض…";
@@ -394,3 +393,4 @@
 "Reset Keepit to a fresh install?" = "إعادة تعيين Keepit إلى حالة التثبيت الجديد؟";
 "Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back." = "يُحذف سجل الحافظة والقوالب والإعدادات وكلمة المرور ومفتاح Touch ID، وتعود قوالب الأمثلة. يبقى التطبيق وأذوناته والتشغيل عند تسجيل الدخول. لا تراجع — صدّر نسخة احتياطية أولًا إذا كنت قد تحتاج البيانات لاحقًا.";
 "Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back." = "«إعادة التعيين» تعيد Keepit إلى حالة التثبيت الجديد: يُحذف السجل والقوالب والإعدادات وكلمة المرور ومفتاح Touch ID وتعود قوالب الأمثلة؛ يبقى التطبيق وأذوناته. «إلغاء التثبيت» يفعل الشيء نفسه ثم يزيل التطبيق والتشغيل عند تسجيل الدخول وعنصر سلسلة المفاتيح وإذن تسهيلات الاستخدام. كلاهما يطلب كلمة المرور أو Touch ID؛ وإلغاء التثبيت يطلب أيضًا تأكيدًا مكتوبًا. صدّر نسخة احتياطية أولًا إذا كنت قد تحتاج البيانات لاحقًا.";
+"Recovery Access…" = "استعادة الوصول…";

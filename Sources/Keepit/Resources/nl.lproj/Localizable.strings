@@ -149,7 +149,6 @@
 "Unlock Keepit…" = "Ontgrendel Keepit…";
 "Unlock with Touch ID (no Touch ID on this Mac)" = "Ontgrendelen met Touch ID (geen Touch ID op deze Mac)";
 "Up" = "Omhoog";
-"Use Recovery Phrase…" = "Gebruik herstelzin…";
 "Use at least 8 characters" = "Gebruik minstens 8 tekens";
 "Use “-” for a menu separator, “&x” to make x the menu shortcut, “&&” for a literal &." = "Gebruik ‘-’ voor een scheidingslijn, ‘&x’ om x de menusneltoets te maken, ‘&&’ voor een letterlijke &.";
 "Viewer…" = "Weergave…";
@@ -394,3 +393,4 @@
 "Reset Keepit to a fresh install?" = "Keepit herstellen naar een verse installatie?";
 "Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back." = "Geschiedenis, sjablonen, instellingen, wachtwoord en Touch ID-sleutel worden verwijderd; de voorbeeldsjablonen komen terug. De app, zijn machtigingen en Open bij inloggen blijven. Dit kan niet ongedaan worden gemaakt — exporteer eerst een back-up als u de gegevens misschien nog wilt.";
 "Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back." = "‘Herstel’ zet Keepit terug naar een verse installatie: geschiedenis, sjablonen, instellingen, wachtwoord en Touch ID-sleutel worden verwijderd en de voorbeeldsjablonen komen terug; de app en zijn machtigingen blijven. ‘Verwijder’ doet hetzelfde en verwijdert daarna de app, Open bij inloggen, het sleutelhangeritem en de Toegankelijkheid-machtiging. Beide vragen uw wachtwoord of Touch ID; Verwijder ook een getypte bevestiging. Exporteer eerst een back-up als u de gegevens misschien nog wilt.";
+"Recovery Access…" = "Toegang herstellen…";

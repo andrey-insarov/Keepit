@@ -149,7 +149,6 @@
 "Unlock Keepit…" = "Desbloquear Keepit…";
 "Unlock with Touch ID (no Touch ID on this Mac)" = "Desbloquear con Touch ID (este Mac no tiene Touch ID)";
 "Up" = "Subir";
-"Use Recovery Phrase…" = "Usar frase de recuperación…";
 "Use at least 8 characters" = "Usa al menos 8 caracteres";
 "Use “-” for a menu separator, “&x” to make x the menu shortcut, “&&” for a literal &." = "“-” para un separador de menú, “&x” para hacer de x el atajo, “&&” para un & literal.";
 "Viewer…" = "Visor…";
@@ -394,3 +393,4 @@
 "Reset Keepit to a fresh install?" = "¿Restablecer Keepit como recién instalado?";
 "Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back." = "Se eliminan el historial, las plantillas, los ajustes, la contraseña y la clave de Touch ID; vuelven las plantillas de ejemplo. La app, sus permisos y el inicio al iniciar sesión se mantienen. No se puede deshacer: exporte antes una copia de seguridad si podría querer recuperar los datos.";
 "Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back." = "«Restablecer» deja Keepit como recién instalado: se eliminan historial, plantillas, ajustes, contraseña y clave de Touch ID y vuelven las plantillas de ejemplo; la app y sus permisos se mantienen. «Desinstalar» hace lo mismo y además elimina la app, el inicio al iniciar sesión, la entrada del llavero y el permiso de Accesibilidad. Ambas piden la contraseña o Touch ID; Desinstalar además una confirmación escrita. Exporte antes una copia de seguridad si podría querer recuperar los datos.";
+"Recovery Access…" = "Recuperar acceso…";

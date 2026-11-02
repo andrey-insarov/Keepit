@@ -149,7 +149,6 @@ T = {
 "Unlock Keepit…": "Odemknout Keepit…",
 "Unlock with Touch ID (no Touch ID on this Mac)": "Odemykat pomocí Touch ID (tento Mac nemá Touch ID)",
 "Up": "Nahoru",
-"Use Recovery Phrase…": "Použít frázi pro obnovení…",
 "Use at least 8 characters": "Použijte alespoň 8 znaků",
 "Use “-” for a menu separator, “&x” to make x the menu shortcut, “&&” for a literal &.": "„-“ je oddělovač nabídky, „&x“ udělá z x zkratku v nabídce, „&&“ je obyčejný znak &.",
 "Viewer…": "Prohlížeč…",
@@ -394,4 +393,5 @@ T = {
 'Reset Keepit to a fresh install?': 'Obnovit Keepit do stavu po instalaci?',
 'Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back.': 'Historie, šablony, nastavení, heslo a klíč Touch ID se smažou; ukázkové šablony se vrátí. Aplikace, její oprávnění a spouštění při přihlášení zůstávají. Nelze vrátit zpět — pokud byste data mohli chtít zpět, nejprve exportujte zálohu.',
 'Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back.': '„Obnovit“ vrátí Keepit do stavu po instalaci: historie, šablony, nastavení, heslo a klíč Touch ID se smažou a ukázkové šablony se vrátí; aplikace a její oprávnění zůstávají. „Odinstalovat“ udělá totéž a pak odstraní aplikaci, spouštění při přihlášení, položku v klíčence a oprávnění Zpřístupnění. Obojí vyžaduje heslo nebo Touch ID; odinstalace navíc napsané potvrzení. Pokud byste data mohli chtít zpět, nejprve exportujte zálohu.',
+'Recovery Access…': 'Obnovit přístup…',
 }

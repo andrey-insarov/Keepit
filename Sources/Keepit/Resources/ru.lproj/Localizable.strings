@@ -149,7 +149,6 @@
 "Unlock Keepit…" = "Разблокировать Keepit…";
 "Unlock with Touch ID (no Touch ID on this Mac)" = "Разблокировать по Touch ID (на этом Mac нет Touch ID)";
 "Up" = "Вверх";
-"Use Recovery Phrase…" = "Использовать фразу восстановления…";
 "Use at least 8 characters" = "Используйте не менее 8 символов";
 "Use “-” for a menu separator, “&x” to make x the menu shortcut, “&&” for a literal &." = "«-» — разделитель меню, «&x» — делает x клавишей меню, «&&» — обычный символ &.";
 "Viewer…" = "Просмотр…";
@@ -394,3 +393,4 @@
 "Reset Keepit to a fresh install?" = "Сбросить Keepit к состоянию новой установки?";
 "Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back." = "История буфера, шаблоны, настройки, пароль и ключ Touch ID удаляются; шаблоны-примеры возвращаются. Приложение, его разрешения и запуск при входе остаются. Отменить нельзя — если данные могут понадобиться, сначала экспортируйте резервную копию.";
 "Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back." = "«Сбросить» возвращает Keepit к состоянию новой установки: история, шаблоны, настройки, пароль и ключ Touch ID удаляются, шаблоны-примеры возвращаются; приложение и его разрешения остаются. «Удалить программу» делает то же и затем убирает приложение, запуск при входе, запись в Keychain и разрешение Accessibility. Обе запрашивают пароль или Touch ID; удаление — ещё и набранное подтверждение. Если данные могут понадобиться, сначала экспортируйте резервную копию.";
+"Recovery Access…" = "Восстановление доступа…";

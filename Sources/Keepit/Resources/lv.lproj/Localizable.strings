@@ -149,7 +149,6 @@
 "Unlock Keepit…" = "Atbloķēt Keepit…";
 "Unlock with Touch ID (no Touch ID on this Mac)" = "Atbloķēt ar Touch ID (šajā Mac nav Touch ID)";
 "Up" = "Uz augšu";
-"Use Recovery Phrase…" = "Lietot atkopšanas frāzi…";
 "Use at least 8 characters" = "Izmantojiet vismaz 8 rakstzīmes";
 "Use “-” for a menu separator, “&x” to make x the menu shortcut, “&&” for a literal &." = "“-” — izvēlnes atdalītājs, “&x” padara x par izvēlnes taustiņu, “&&” — parasta zīme &.";
 "Viewer…" = "Skatītājs…";
@@ -394,3 +393,4 @@
 "Reset Keepit to a fresh install?" = "Atiestatīt Keepit uz jaunas instalācijas stāvokli?";
 "Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back." = "Vēsture, veidnes, iestatījumi, parole un Touch ID atslēga tiek dzēsti; paraugveidnes atgriežas. Lietotne, tās atļaujas un palaišana pieteikšanās laikā paliek. Nevar atsaukt — ja dati vēl varētu būt vajadzīgi, vispirms eksportējiet dublējumu.";
 "Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back." = "“Atiestatīt” atgriež Keepit jaunas instalācijas stāvoklī: vēsture, veidnes, iestatījumi, parole un Touch ID atslēga tiek dzēsti, paraugveidnes atgriežas; lietotne un tās atļaujas paliek. “Atinstalēt” dara to pašu un pēc tam noņem lietotni, palaišanu pieteikšanās laikā, atslēgu saišķa ierakstu un pieejamības atļauju. Abi prasa paroli vai Touch ID; atinstalēšana — arī ierakstītu apstiprinājumu. Ja dati vēl varētu būt vajadzīgi, vispirms eksportējiet dublējumu.";
+"Recovery Access…" = "Atjaunot piekļuvi…";

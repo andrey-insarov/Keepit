@@ -237,7 +237,7 @@ enum Vault {
         return nil
     }
 
-    /// Same prompt, optionally with a third "Use Recovery Phrase…" button.
+    /// Same prompt, optionally with a third "Recovery Access…" button.
     static func prompt(title: String, message: String, confirm: Bool = false, cancelQuits: Bool = false, offerRecovery: Bool) -> PromptResult {
         while true {
             let a = NSAlert()
@@ -246,7 +246,7 @@ enum Vault {
             a.alertStyle = .informational
             a.icon = NSImage(systemSymbolName: "lock.fill", accessibilityDescription: nil)
 
-            let width: CGFloat = 300
+            let width: CGFloat = 220        // the alert (and its stacked buttons) take the accessory's width
             // Layout (top → bottom): layout/Caps Lock indicator, password, strength meter, repeat password.
             let indicatorHeight: CGFloat = 18
             let meterHeight: CGFloat = confirm ? 40 : 0
@@ -270,7 +270,7 @@ enum Vault {
             a.accessoryView = box
             a.addButton(withTitle: L("OK"))
             a.addButton(withTitle: cancelQuits ? L("Quit") : L("Cancel"))
-            if offerRecovery && hasRecovery { a.addButton(withTitle: L("Use Recovery Phrase…")) }
+            if offerRecovery && hasRecovery { a.addButton(withTitle: L("Recovery Access…")) }
             a.window.initialFirstResponder = f1
 
             NSApp.activate(ignoringOtherApps: true)

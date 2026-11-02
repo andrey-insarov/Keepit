@@ -149,7 +149,6 @@
 "Unlock Keepit…" = "Unlock Keepit…";
 "Unlock with Touch ID (no Touch ID on this Mac)" = "Unlock with Touch ID (no Touch ID on this Mac)";
 "Up" = "Up";
-"Use Recovery Phrase…" = "Use Recovery Phrase…";
 "Use at least 8 characters" = "Use at least 8 characters";
 "Use “-” for a menu separator, “&x” to make x the menu shortcut, “&&” for a literal &." = "Use “-” for a menu separator, “&x” to make x the menu shortcut, “&&” for a literal &.";
 "Viewer…" = "Viewer…";
@@ -438,3 +437,5 @@
 "Reset Keepit to a fresh install?" = "Reset Keepit to a fresh install?";
 "Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back." = "Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back.";
 "Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back." = "Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back.";
+
+"Recovery Access…" = "Recovery Access…";
