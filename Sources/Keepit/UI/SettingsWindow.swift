@@ -161,7 +161,14 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         field.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
         field.preferredMaxLayoutWidth = 400
         field.widthAnchor.constraint(lessThanOrEqualToConstant: 400).isActive = true
+        field.isHidden = true
         return [NSView(), field]
+    }
+
+    private func setStatus(_ field: NSTextField, _ text: String) {
+        field.stringValue = text
+        field.isHidden = text.isEmpty
+        if let pane = panes.first(where: { $0.view === shownPane }) { show(pane: pane, animate: true) }
     }
 
     /// `[ 0.08 ] ⇕ seconds` — a number field with a formatter, a stepper and the unit as a word.
@@ -201,6 +208,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         g.column(at: 0).xPlacement = .trailing
         g.column(at: 1).xPlacement = .leading
         // Hug the content: an empty label column must not be handed half of the window.
+        g.yPlacement = .center
         for r in 0..<g.numberOfRows { g.cell(atColumnIndex: 1, rowIndex: r).xPlacement = .leading }
         g.translatesAutoresizingMaskIntoConstraints = false
         return g
@@ -218,7 +226,10 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         b.translatesAutoresizingMaskIntoConstraints = false
         let side = b.intrinsicContentSize.height
         NSLayoutConstraint.activate([b.widthAnchor.constraint(equalToConstant: side), b.heightAnchor.constraint(equalToConstant: side)])
-        b.setContentHuggingPriority(.required, for: .horizontal)
+        for axis in [NSLayoutConstraint.Orientation.horizontal, .vertical] {
+            b.setContentHuggingPriority(.required, for: axis)
+            b.setContentCompressionResistancePriority(.required, for: axis)
+        }
         let row = NSStackView(views: [view, b])
         row.orientation = .horizontal
         row.alignment = .centerY
@@ -526,12 +537,12 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         viewerHK.hotKey = s.viewerHotKey; prefsHK.hotKey = s.preferencesHotKey
         clearHK.hotKey = s.clearHistoryHotKey; pauseHK.hotKey = s.pauseHotKey
         lockHK.hotKey = s.lockHotKey; quitHK.hotKey = s.quitHotKey
-        shortcutStatus.stringValue = ""
+        setStatus(shortcutStatus, "")
 
         queueHK.hotKey = s.queueHotKey; queuePasteHK.hotKey = s.queuePasteHotKey; queueAllHK.hotKey = s.queuePasteAllHotKey
         setNumber(queueTimeout, s.queueTimeout)
         queueSep.selectItem(at: Self.separators.firstIndex { $0.0 == s.queueSeparator } ?? 0)
-        queueStatus.stringValue = ""
+        setStatus(queueStatus, "")
 
         setNumber(historyMax, Double(s.historyMax))
         setNumber(imageMax, Double(s.historyImageMax))
@@ -657,13 +668,12 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         }
         let statusField = [queueHK, queuePasteHK, queueAllHK].contains(r) ? queueStatus : shortcutStatus
         if let conflict = conflict(in: s) {
-            statusField.stringValue = conflict
             NSSound.beep()
             load()                      // put the old value back into the recorder
-            statusField.stringValue = conflict
+            setStatus(statusField, conflict)
             return
         }
-        statusField.stringValue = ""
+        setStatus(statusField, "")
         app.apply(settings: s)
     }
 
