@@ -408,4 +408,7 @@ T = {
 'Time between bringing the app you were in back to the front and sending ⌘V. Raise it for apps that are slow to come forward.': '將原來的 App 帶回前景與送出 ⌘V 之間的間隔。對於切換到前景較慢的 App 請調大。',
 'Startup': '啟動',
 'Prefix items with 1-9, 0, A-Z; pressing the key pastes the item without the mouse. Hold ⇧ while the menu is open for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete. For the latest item the submenu also shows the global shortcuts that do the same without the menu.': '項目前加上 1-9、0、A-Z；按下對應按鍵即可不用滑鼠貼上。選單開啟時按住 ⇧ 進入延伸選單：每個歷史項目都會出現包含全部動作的子選單——以純文字貼上、大寫、合併為一行、僅複製、加入範本、刪除。最新項目的子選單還會顯示無需選單即可完成相同動作的全域快速鍵。',
+'Data': '資料',
+'Open Folder': '打開檔案夾',
+'Delete Keepit…': '刪除 Keepit…',
 }

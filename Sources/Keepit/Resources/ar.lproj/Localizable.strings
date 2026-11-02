@@ -408,3 +408,6 @@
 "Time between bringing the app you were in back to the front and sending ⌘V. Raise it for apps that are slow to come forward." = "الفاصل بين إعادة التطبيق الذي كنت فيه إلى المقدمة وإرسال ⌘V. زِده للتطبيقات البطيئة في الظهور.";
 "Startup" = "بدء التشغيل";
 "Prefix items with 1-9, 0, A-Z; pressing the key pastes the item without the mouse. Hold ⇧ while the menu is open for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete. For the latest item the submenu also shows the global shortcuts that do the same without the menu." = "تُسبق العناصر بـ 1-9 و0 وA-Z؛ والضغط على المفتاح يلصق العنصر دون الفأرة. اضغط ⇧ باستمرار والقائمة مفتوحة للقائمة الموسّعة: يحصل كل عنصر في السجل على قائمة فرعية بكل الإجراءات — لصق كنص عادي، أحرف كبيرة، سطر واحد، نسخ فقط، إضافة إلى القوالب، حذف. للعنصر الأحدث تعرض القائمة الفرعية أيضًا الاختصارات العامة التي تؤدي الشيء نفسه بدون القائمة.";
+"Data" = "البيانات";
+"Open Folder" = "فتح المجلد";
+"Delete Keepit…" = "حذف Keepit…";

@@ -408,4 +408,7 @@ T = {
 'Time between bringing the app you were in back to the front and sending ⌘V. Raise it for apps that are slow to come forward.': 'הזמן בין החזרת היישום שבו הייתם לחזית לבין שליחת ⌘V. הגדילו עבור יישומים שעוברים לחזית לאט.',
 'Startup': 'הפעלה',
 'Prefix items with 1-9, 0, A-Z; pressing the key pastes the item without the mouse. Hold ⇧ while the menu is open for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete. For the latest item the submenu also shows the global shortcuts that do the same without the menu.': 'הפריטים מקבלים קידומת 1-9, 0, A-Z; לחיצה על המקש מדביקה את הפריט ללא עכבר. החזיקו ⇧ כשהתפריט פתוח לתפריט המורחב: כל פריט היסטוריה מקבל תת-תפריט עם כל הפעולות — הדבקה כטקסט רגיל, אותיות גדולות, שורה אחת, העתקה בלבד, הוספה לתבניות, מחיקה. עבור הפריט האחרון תת-התפריט מציג גם את הקיצורים הגלובליים שעושים את אותו הדבר בלי התפריט.',
+'Data': 'נתונים',
+'Open Folder': 'פתיחת תיקייה',
+'Delete Keepit…': 'מחיקת Keepit…',
 }

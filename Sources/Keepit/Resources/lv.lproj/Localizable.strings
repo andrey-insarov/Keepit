@@ -408,3 +408,6 @@
 "Time between bringing the app you were in back to the front and sending ⌘V. Raise it for apps that are slow to come forward." = "Laiks starp lietotnes, kurā bijāt, atgriešanu priekšplānā un ⌘V nosūtīšanu. Palieliniet lietotnēm, kas lēni nāk priekšplānā.";
 "Startup" = "Palaišana";
 "Prefix items with 1-9, 0, A-Z; pressing the key pastes the item without the mouse. Hold ⇧ while the menu is open for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete. For the latest item the submenu also shows the global shortcuts that do the same without the menu." = "Vienumiem tiek pievienots prefikss 1-9, 0, A-Z; taustiņa nospiešana ielīmē vienumu bez peles. Turiet ⇧, kamēr izvēlne atvērta, lai iegūtu paplašināto izvēlni: katram vēstures elementam parādās apakšizvēlne ar visām darbībām — ielīmēt kā vienkāršu tekstu, LIELIE BURTI, viena rinda, tikai kopēt, pievienot veidnēm, dzēst. Jaunākajam elementam apakšizvēlne rāda arī globālos īsinājumtaustiņus, kas dara to pašu bez izvēlnes.";
+"Data" = "Dati";
+"Open Folder" = "Atvērt mapi";
+"Delete Keepit…" = "Dzēst Keepit…";

@@ -408,3 +408,6 @@
 "Time between bringing the app you were in back to the front and sending ⌘V. Raise it for apps that are slow to come forward." = "Laikas tarp programos, kurioje buvote, grąžinimo į priekį ir ⌘V išsiuntimo. Padidinkite programoms, kurios lėtai pereina į priekį.";
 "Startup" = "Paleistis";
 "Prefix items with 1-9, 0, A-Z; pressing the key pastes the item without the mouse. Hold ⇧ while the menu is open for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete. For the latest item the submenu also shows the global shortcuts that do the same without the menu." = "Elementai pažymimi 1-9, 0, A-Z; paspaudus klavišą elementas įklijuojamas be pelės. Atidarytame meniu laikykite ⇧ – išplėstinis meniu: kiekvienas istorijos elementas gauna submeniu su visais veiksmais – įklijuoti kaip paprastą tekstą, DIDŽIOSIOMIS, viena eilute, tik kopijuoti, pridėti į šablonus, ištrinti. Naujausiam elementui submeniu rodo ir globalius sparčiuosius klavišus, darančius tą patį be meniu.";
+"Data" = "Duomenys";
+"Open Folder" = "Atidaryti aplanką";
+"Delete Keepit…" = "Ištrinti Keepit…";

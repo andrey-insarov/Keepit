@@ -408,4 +408,7 @@ T = {
 'Time between bringing the app you were in back to the front and sending ⌘V. Raise it for apps that are slow to come forward.': 'Bulunduğunuz uygulamayı öne getirme ile ⌘V gönderme arasındaki süre. Öne gelmesi yavaş uygulamalar için artırın.',
 'Startup': 'Başlangıç',
 'Prefix items with 1-9, 0, A-Z; pressing the key pastes the item without the mouse. Hold ⇧ while the menu is open for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete. For the latest item the submenu also shows the global shortcuts that do the same without the menu.': 'Öğelerin önüne 1-9, 0, A-Z eklenir; tuşa basmak öğeyi fare olmadan yapıştırır. Menü açıkken genişletilmiş menü için ⇧ tuşunu basılı tutun: her geçmiş öğesi tüm eylemleri içeren bir alt menü alır — düz metin olarak yapıştır, BÜYÜK HARF, tek satır, yalnızca kopyala, şablonlara ekle, sil. En son öğe için alt menü, aynı işi menüsüz yapan genel kısayolları da gösterir.',
+'Data': 'Veriler',
+'Open Folder': 'Klasörü aç',
+'Delete Keepit…': 'Keepit’i sil…',
 }

@@ -408,4 +408,7 @@ T = {
 'Time between bringing the app you were in back to the front and sending ⌘V. Raise it for apps that are slow to come forward.': 'Doba mezi přenesením aplikace, v níž jste byli, do popředí a odesláním ⌘V. Zvyšte ji u aplikací, které se dostávají do popředí pomalu.',
 'Startup': 'Spuštění',
 'Prefix items with 1-9, 0, A-Z; pressing the key pastes the item without the mouse. Hold ⇧ while the menu is open for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete. For the latest item the submenu also shows the global shortcuts that do the same without the menu.': 'Položky dostanou předponu 1-9, 0, A-Z; stisk klávesy vloží položku bez myši. Při otevřené nabídce podržte ⇧ pro rozšířenou nabídku: každá položka historie dostane podnabídku se všemi akcemi — vložit jako prostý text, VELKÁ PÍSMENA, jeden řádek, jen kopírovat, přidat do šablon, smazat. U nejnovější položky podnabídka ukazuje i globální zkratky, které dělají totéž bez nabídky.',
+'Data': 'Data',
+'Open Folder': 'Otevřít složku',
+'Delete Keepit…': 'Smazat Keepit…',
 }

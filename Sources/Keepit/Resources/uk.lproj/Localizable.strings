@@ -408,3 +408,6 @@
 "Time between bringing the app you were in back to the front and sending ⌘V. Raise it for apps that are slow to come forward." = "Пауза між поверненням програми на передній план і надсиланням ⌘V. Збільште для програм, які активуються повільно.";
 "Startup" = "Запуск";
 "Prefix items with 1-9, 0, A-Z; pressing the key pastes the item without the mouse. Hold ⇧ while the menu is open for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete. For the latest item the submenu also shows the global shortcuts that do the same without the menu." = "Елементи отримують префікси 1-9, 0, A-Z; натискання клавіші вставляє елемент без миші. Утримуйте ⇧ у відкритому меню — розширене меню: кожен елемент історії отримує підменю з усіма діями — вставити як простий текст, ВЕРХНІЙ РЕГІСТР, в один рядок, лише скопіювати, додати до шаблонів, видалити. Для останнього елемента підменю показує й глобальні сполучення, що роблять те саме без меню.";
+"Data" = "Дані";
+"Open Folder" = "Відкрити теку";
+"Delete Keepit…" = "Видалити Keepit…";

@@ -408,3 +408,6 @@
 "Time between bringing the app you were in back to the front and sending ⌘V. Raise it for apps that are slow to come forward." = "Délai entre le retour au premier plan de l’app où vous étiez et l’envoi de ⌘V. Augmentez-le pour les apps lentes à passer au premier plan.";
 "Startup" = "Démarrage";
 "Prefix items with 1-9, 0, A-Z; pressing the key pastes the item without the mouse. Hold ⇧ while the menu is open for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete. For the latest item the submenu also shows the global shortcuts that do the same without the menu." = "Les éléments sont préfixés 1-9, 0, A-Z ; appuyer sur la touche colle l’élément sans la souris. Maintenez ⇧ dans le menu ouvert pour le menu étendu : chaque élément de l’historique reçoit un sous-menu avec toutes les actions — coller en texte brut, MAJUSCULES, une seule ligne, copier seulement, ajouter aux modèles, supprimer. Pour le dernier élément, le sous-menu montre aussi les raccourcis globaux qui font la même chose sans le menu.";
+"Data" = "Données";
+"Open Folder" = "Ouvrir le dossier";
+"Delete Keepit…" = "Supprimer Keepit…";

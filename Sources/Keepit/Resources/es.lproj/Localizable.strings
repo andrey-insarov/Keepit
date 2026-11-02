@@ -408,3 +408,6 @@
 "Time between bringing the app you were in back to the front and sending ⌘V. Raise it for apps that are slow to come forward." = "Tiempo entre traer al frente la app en la que estaba y enviar ⌘V. Auméntelo para apps que tardan en pasar al frente.";
 "Startup" = "Inicio";
 "Prefix items with 1-9, 0, A-Z; pressing the key pastes the item without the mouse. Hold ⇧ while the menu is open for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete. For the latest item the submenu also shows the global shortcuts that do the same without the menu." = "Los elementos llevan prefijo 1-9, 0, A-Z; pulsar la tecla pega el elemento sin ratón. Mantenga ⇧ con el menú abierto para el menú extendido: cada elemento del historial recibe un submenú con todas las acciones — pegar como texto sin formato, MAYÚSCULAS, una sola línea, solo copiar, añadir a plantillas, eliminar. Para el último elemento el submenú muestra también los atajos globales que hacen lo mismo sin el menú.";
+"Data" = "Datos";
+"Open Folder" = "Abrir carpeta";
+"Delete Keepit…" = "Eliminar Keepit…";

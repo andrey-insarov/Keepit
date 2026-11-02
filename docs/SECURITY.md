@@ -148,7 +148,7 @@ third-party action in the workflow is pinned to a commit hash rather than a mova
 
 ## Uninstalling and data removal
 
-*Settings → Advanced → Delete Keepit and All Data…* removes the app bundle, the data folder, the
+*Settings → Advanced → Remove Keepit → Delete Keepit…* removes the app bundle, the data folder, the
 keychain entry, the login item and the Accessibility grant, after asking for the password or Touch
 ID and a typed confirmation. Deleting the app by hand leaves the data folder in place — remove
 `~/Library/Application Support/Keepit/` yourself if you want it gone.

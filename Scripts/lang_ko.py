@@ -408,4 +408,7 @@ T = {
 'Time between bringing the app you were in back to the front and sending ⌘V. Raise it for apps that are slow to come forward.': '원래 앱을 앞으로 가져온 뒤 ⌘V를 보내기까지의 시간입니다. 앞으로 나오는 데 느린 앱이라면 늘리세요.',
 'Startup': '시작',
 'Prefix items with 1-9, 0, A-Z; pressing the key pastes the item without the mouse. Hold ⇧ while the menu is open for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete. For the latest item the submenu also shows the global shortcuts that do the same without the menu.': '항목 앞에 1-9, 0, A-Z를 붙이며, 해당 키를 누르면 마우스 없이 붙여넣습니다. 메뉴가 열린 상태에서 ⇧를 누르고 있으면 확장 메뉴가 됩니다. 각 기록 항목에 모든 동작(일반 텍스트로 붙여넣기, 대문자, 한 줄로, 복사만, 템플릿에 추가, 삭제)의 하위 메뉴가 생깁니다. 최신 항목의 하위 메뉴에는 메뉴 없이 같은 동작을 하는 전역 단축키도 표시됩니다.',
+'Data': '데이터',
+'Open Folder': '폴더 열기',
+'Delete Keepit…': 'Keepit 삭제…',
 }

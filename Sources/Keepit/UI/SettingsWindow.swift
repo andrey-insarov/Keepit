@@ -79,7 +79,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
     private let newPhrase    = NSButton(title: L("New Recovery Phrase…"), target: nil, action: nil)
 
     private let pollInterval = NSTextField()
-    private let uninstall    = NSButton(title: L("Delete Keepit and All Data…"), target: nil, action: nil)
+    private let uninstall    = NSButton(title: L("Delete Keepit…"), target: nil, action: nil)
 
     // MARK: Panes
 
@@ -95,6 +95,8 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
     /// One label column and one window width for all panes, measured from the real (localized) labels.
     private var labelWidth: CGFloat = 0
     private var windowWidth: CGFloat = 0
+    /// One width for every field, pop-up and button, so nothing is ever stretched.
+    private static let controlWidth: CGFloat = 160
     private static let lastPaneKey = "SettingsWindow.pane"
 
     init(app: AppDelegate) {
@@ -183,6 +185,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         s.alignment = .firstBaseline
         s.spacing = 4
         s.setCustomSpacing(8, after: stepper)
+        s.setContentHuggingPriority(.required, for: .horizontal)
         return s
     }
     private var steppers: [ObjectIdentifier: NSStepper] = [:]
@@ -198,6 +201,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         // Hug the content: an empty label column must not be handed half of the window.
         g.setContentHuggingPriority(.required, for: .horizontal)
         g.setContentCompressionResistancePriority(.required, for: .horizontal)
+        for r in 0..<g.numberOfRows { g.cell(atColumnIndex: 1, rowIndex: r).xPlacement = .leading }
         g.translatesAutoresizingMaskIntoConstraints = false
         return g
     }
@@ -219,6 +223,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         row.orientation = .horizontal
         row.alignment = .centerY
         row.spacing = 6
+        row.setContentHuggingPriority(.required, for: .horizontal)
         return row
     }
 
@@ -248,6 +253,12 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         pop.show(relativeTo: sender.bounds, of: sender, preferredEdge: .maxY)
     }
 
+    private func button(_ b: NSButton) -> NSButton {
+        b.translatesAutoresizingMaskIntoConstraints = false
+        b.widthAnchor.constraint(equalToConstant: Self.controlWidth).isActive = true
+        return b
+    }
+
     private func check(_ b: NSButton) -> NSButton {
         b.target = self; b.action = #selector(controlChanged(_:))
         return b
@@ -258,6 +269,8 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         r.modifiersOnly = modifiersOnly
         if let suffix { r.modifiersSuffix = suffix }
         r.onChange = { [weak self, weak r] hk in guard let self, let r else { return }; self.hotKeyChanged(r, hk) }
+        r.translatesAutoresizingMaskIntoConstraints = false
+        r.widthAnchor.constraint(equalToConstant: Self.controlWidth).isActive = true
         return r
     }
 
@@ -292,7 +305,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             row(L("Lock Keepit:"), recorder(lockHK)),
             row(L("Quit Keepit:"), recorder(quitHK)),
             status(shortcutStatus),
-            [NSView(), help(resetHK, L("Shortcuts set here and on the Paste Queue pane work from any app and are shown next to their commands in the menu. ⌫ in a field switches the shortcut off. Reset to Defaults restores every shortcut, including the paste queue's."))],
+            [NSView(), help(button(resetHK), L("Shortcuts set here and on the Paste Queue pane work from any app and are shown next to their commands in the menu. ⌫ in a field switches the shortcut off. Reset to Defaults restores every shortcut, including the paste queue's."))],
         ])
 
         let queue = grid([
@@ -341,7 +354,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
 
         let exportBtn = NSButton(title: L("Export Backup…"), target: self, action: #selector(exportTapped))
         let importBtn = NSButton(title: L("Import Backup…"), target: self, action: #selector(importTapped))
-        let backupRow = NSStackView(views: [exportBtn, importBtn])
+        let backupRow = NSStackView(views: [button(exportBtn), button(importBtn)])
         backupRow.orientation = .horizontal; backupRow.spacing = 8
         protect.target = self; protect.action = #selector(protectToggled)
         changePw.target = self; changePw.action = #selector(changePasswordTapped)
@@ -349,26 +362,27 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         let security = grid([
             header(L("Password")),
             [NSView(), help(protect, L("History and templates are stored AES-256 encrypted; the key is derived from the password and asked for every time Keepit starts."))],
-            [NSView(), changePw],
+            [NSView(), button(changePw)],
             [NSView(), help(check(touchID), L("Unlock with a fingerprint instead of typing the password. The password always remains as fallback."))],
             [NSView(), help(check(touchIDChange), L("Let Touch ID stand in for the current password when changing it. Off = always type the current password first."))],
             [NSView(), help(check(lockScreen), L("Wipes the key from memory and unloads history and templates when the screen locks or the Mac sleeps; unlock with Touch ID or the password afterwards."))],
             header(L("Backup")),
             [NSView(), help(backupRow, L("One password-encrypted .keepit file with history, templates and preferences — for moving to another Mac or between the App Store and direct editions."))],
             header(L("Recovery phrase")),
-            [NSView(), help(newPhrase, L("Issues a new 24-word phrase and invalidates the old one. Use it if the printed sheet was lost or seen by someone; you will then be offered to change the password too."))],
+            [NSView(), help(button(newPhrase), L("Issues a new 24-word phrase and invalidates the old one. Use it if the printed sheet was lost or seen by someone; you will then be offered to change the password too."))],
         ])
 
-        let reveal = NSButton(title: L("Open Data Folder"), target: self, action: #selector(revealData))
+        let reveal = NSButton(title: L("Open Folder"), target: self, action: #selector(revealData))
         uninstall.target = self; uninstall.action = #selector(uninstallTapped)
         uninstall.contentTintColor = .systemRed
         let advanced = grid([
             header(L("Clipboard")),
             row(L("Poll interval:"), help(number(pollInterval, unit: L("seconds"), min: 0.1, max: 5, step: 0.1, decimals: 2),
                                            L("How often Keepit looks at the clipboard. macOS sends no notification when it changes, so every clipboard manager polls; 0.3 s is unnoticeable and cheap."))),
-            [NSView(), reveal],
+            header(L("Data")),
+            [NSView(), button(reveal)],
             header(L("Remove Keepit")),
-            [NSView(), help(uninstall, L("Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back."))],
+            [NSView(), help(button(uninstall), L("Removes the app together with its history, templates, settings, Touch ID key and permissions. Asks for your password or Touch ID and a typed confirmation. Export a backup first if you may want the data back."))],
         ])
 
         panes = [
@@ -406,6 +420,8 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         p.removeAllItems()
         for t in titles { p.addItem(withTitle: t) }
         p.target = self; p.action = #selector(controlChanged(_:))
+        p.translatesAutoresizingMaskIntoConstraints = false
+        p.widthAnchor.constraint(equalToConstant: Self.controlWidth).isActive = true
         return p
     }
 

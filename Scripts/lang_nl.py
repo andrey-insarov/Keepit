@@ -408,4 +408,7 @@ T = {
 'Time between bringing the app you were in back to the front and sending ⌘V. Raise it for apps that are slow to come forward.': 'Tijd tussen het naar voren halen van de app waarin u zat en het sturen van ⌘V. Verhoog het voor apps die traag naar voren komen.',
 'Startup': 'Opstarten',
 'Prefix items with 1-9, 0, A-Z; pressing the key pastes the item without the mouse. Hold ⇧ while the menu is open for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete. For the latest item the submenu also shows the global shortcuts that do the same without the menu.': 'Items krijgen 1-9, 0, A-Z als voorvoegsel; de toets plakt het item zonder muis. Houd ⇧ ingedrukt terwijl het menu open is voor het uitgebreide menu: elk geschiedenisitem krijgt een submenu met alle acties — plakken als platte tekst, HOOFDLETTERS, één regel, alleen kopiëren, toevoegen aan sjablonen, verwijderen. Voor het nieuwste item toont het submenu ook de globale sneltoetsen die hetzelfde doen zonder menu.',
+'Data': 'Gegevens',
+'Open Folder': 'Open map',
+'Delete Keepit…': 'Verwijder Keepit…',
 }
