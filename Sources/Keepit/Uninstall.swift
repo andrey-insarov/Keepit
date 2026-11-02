@@ -43,6 +43,12 @@ extension AppDelegate {
         templates.resetToDefaults()
         viewer?.refresh()
         registerHotKeys()
+        // Same welcome as a fresh install: offer a password, then the Accessibility prompt if needed.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in
+            guard let self else { return }
+            self.offerPasswordOnFirstRun()
+            if !Paster.isTrusted() { self.showAccessibilityAlert() }
+        }
     }
 
     private func performUninstall() {

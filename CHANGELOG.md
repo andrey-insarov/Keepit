@@ -9,6 +9,8 @@
 - Menu: *Settings…* (⌘,) replaces *Preferences…*
 - Paste queue keys are now `⌥N` (start / stop) and `⌥⇧N` (paste all remaining); `⌥V` stays. Settings still on the 2.10 defaults are moved automatically
 - Advanced → *Reset…* puts Keepit back to a fresh install (history, templates, settings, password, Touch ID key) without touching the app or its permissions; *Uninstall…* does that and removes the app
+- Reset runs the same welcome as a fresh install: the password offer, then the Accessibility prompt if needed
+- Viewer: toolbar buttons that make no sense for the selection are disabled — *Add to Template* on a template, *New Folder* outside Template, *Delete* on a group heading, *Insert* unless a text template is being edited
 - A fresh install (and Reset) starts with an *Examples* template folder that shows placeholders at work — a greeting with `{input:Name}` and `{cursor}`, today's date, a clipboard quote, a signature — in the system language
 
 ## 2.10.1 — 2026-11-02

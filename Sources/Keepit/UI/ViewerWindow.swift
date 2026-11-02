@@ -108,6 +108,8 @@ final class ViewerWindowController: NSWindowController,
     private let searchField = NSSearchField()
     private let helpButton = NSButton(title: "", target: nil, action: nil)
     private let insertButton = NSPopUpButton(frame: .zero, pullsDown: true)
+    private var sendButton: NSButton!, pasteButton: NSButton!, addButton: NSButton!
+    private var newItemButton: NSButton!, newFolderButton: NSButton!, deleteButton: NSButton!
     private var query = ""   // lower-cased, trimmed; empty = no filter
     private var editingNode: VNode?
     private var showBinary = false
@@ -161,14 +163,14 @@ final class ViewerWindowController: NSWindowController,
             b.imagePosition = .imageLeading
             return b
         }
+        sendButton = btn(L("Send to Clipboard"), #selector(sendToClipboard), symbol: "doc.on.clipboard")
+        pasteButton = btn(L("Paste"), #selector(pasteItem), symbol: "arrow.right.doc.on.clipboard")
+        addButton = btn(L("Add to Template"), #selector(addToTemplate), symbol: "text.badge.plus")
+        newItemButton = btn(L("New Item"), #selector(newItem), symbol: "plus")
+        newFolderButton = btn(L("New Folder"), #selector(newFolder), symbol: "folder.badge.plus")
+        deleteButton = btn(L("Delete"), #selector(deleteSelected), symbol: "trash")
         let bar = NSStackView(views: [
-            searchField,
-            btn(L("Send to Clipboard"), #selector(sendToClipboard), symbol: "doc.on.clipboard"),
-            btn(L("Paste"), #selector(pasteItem), symbol: "arrow.right.doc.on.clipboard"),
-            btn(L("Add to Template"), #selector(addToTemplate), symbol: "text.badge.plus"),
-            btn(L("New Item"), #selector(newItem), symbol: "plus"),
-            btn(L("New Folder"), #selector(newFolder), symbol: "folder.badge.plus"),
-            btn(L("Delete"), #selector(deleteSelected), symbol: "trash"),
+            searchField, sendButton, pasteButton, addButton, newItemButton, newFolderButton, deleteButton,
             insertButton,
             Spacer(),
             helpButton,
@@ -413,6 +415,7 @@ final class ViewerWindowController: NSWindowController,
             if row >= 0 { outline.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false) }
         }
         suppressSelectionEvents = false
+        updateToolbar()
         if typing, let e = editingNode, live.contains(e.key) { return }
         showSelection()
     }
@@ -969,6 +972,27 @@ final class ViewerWindowController: NSWindowController,
         guard !suppressSelectionEvents else { return }
         textFormat.commit()
         showSelection()
+        updateToolbar()
+    }
+
+    /// Only the buttons that make sense for the selection are enabled:
+    ///  • Send / Paste: anything with content — a history item, the clipboard, a template item or a single format
+    ///  • Add to Template: content that is not already a template
+    ///  • New Item: under History (an empty text item) or anywhere in Template; New Folder: Template only
+    ///  • Delete: a history item, a template item or folder, or a single format — never a group heading
+    ///  • Insert: a text template whose text is being edited
+    private func updateToolbar() {
+        let n = selectedNode
+        let hasContent = n.map { clip(for: $0) != nil } ?? false
+        let item = n?.itemNode
+        sendButton.isEnabled = hasContent
+        pasteButton.isEnabled = hasContent
+        addButton.isEnabled = hasContent && !(n?.isInTemplate ?? false)
+        newItemButton.isEnabled = n.map { $0.isInHistory || $0.isInTemplate } ?? false
+        newFolderButton.isEnabled = n?.isInTemplate ?? false
+        deleteButton.isEnabled = n.map { !$0.isRoot && ($0.historyId != nil || $0.templateNode != nil || $0.isFormat) && $0.itemNode?.kind.isClipboardSide != true } ?? false
+        let textTemplate = (n?.isInTemplate ?? false) && (item?.templateNode.map { !$0.isFolder } ?? false) && textFormat.textView.isEditable
+        insertButton.isEnabled = textTemplate
     }
 
     // MARK: Drag & drop

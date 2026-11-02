@@ -113,7 +113,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     /// First launch: suggest turning protection on; be explicit about what "no" means.
-    private func offerPasswordOnFirstRun() {
+    func offerPasswordOnFirstRun() {
         guard !Vault.isEnabled else { return }
         let a = NSAlert()
         a.alertStyle = .informational
