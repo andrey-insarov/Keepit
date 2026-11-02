@@ -1,7 +1,16 @@
 # Changelog
 
-## Unreleased
+## 2.11.2 — 2026-11-03
 
+Security and robustness patch after an external review of 2.11.1. Nothing changes in the interface.
+
+- **Password-manager exclusion closes the copy-then-switch gap.** Which app wrote the clipboard was taken to be whatever was in front when Keepit noticed the change — wrong when you copy in a password manager and ⌘Tab away within one poll interval. Keepit now considers every app that was in front since its last look, and skips the change if any of them is a password manager or on your ignore list. Also: after a pause or unlock, the last thing copied while recording was off is no longer recorded
+- **Saving no longer blocks the interface.** Each history change re-encoded, encrypted and rewrote the whole history on the main thread — a visible pause with a large history. Debounced saves now run on a background queue (lock, quit and password changes still wait for the file). Data files are written as compact JSON; `settings.json` stays readable
+- **Vault format 2**: `vault.json` records the KDF name and round count, so parameters can change in a future version without breaking existing vaults. Vaults from earlier versions open unchanged. Return codes of the system RNG and PBKDF2 are checked instead of assumed; a refused `mlock` is logged
+- **Sparkle is pinned**: `Package.resolved` is committed and both CI jobs refuse to build if dependency resolution drifts from it, so a new Sparkle release never enters a signed Keepit build without a reviewed commit
+- Support form: the size limit is enforced on what was actually received, not only on `Content-Length`; attachments are identified by their bytes, not the declared type
+- keep.it.com sends HSTS, Content-Security-Policy, X-Frame-Options, Permissions-Policy and Cross-Origin-Opener-Policy
+- Docs: the security page separates what is reliable (a concealed mark set by the copying app) from what is best effort (exclusion by app); README, landing page, guide, privacy policy and App Store listing use the same wording; the README no longer says "there is no recovery" above the recovery-phrase section
 - App Store build: Advanced shows *Reset…* only (the sandbox cannot move the app to the Trash; store apps are removed from Launchpad)
 - `keepit://settings` opens Settings (replaces `keepit://preferences`)
 
