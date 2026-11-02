@@ -6,7 +6,7 @@
 //   TURNSTILE_SECRET  Turnstile secret key
 //   RESEND_API_KEY    Resend API key
 //   FEEDBACK_TO       recipient, e.g. admin@keep.it.com
-//   FEEDBACK_FROM     verified sender, e.g. Keepit Support <feedback@keep.it.com>
+//   FEEDBACK_FROM     verified sender, e.g. Keepit Support <support@keep.it.com>
 
 export const LIMITS = {
   nameMax: 100,
