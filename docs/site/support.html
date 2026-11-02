@@ -48,7 +48,7 @@ figure.shot figcaption{font-size:14px;color:var(--ink-3);margin-top:8px}
 .fb textarea{resize:vertical;min-height:140px}.fb input:focus,.fb select:focus,.fb textarea:focus{outline:2px solid var(--blue);outline-offset:1px;border-color:transparent}
 .fb input[type=file]{font-size:14px;color:var(--ink-2)}
 .fb .btn{justify-self:start;display:inline-flex;align-items:center;padding:12px 22px;border-radius:12px;font-weight:600;font-size:16px;line-height:1;border:0;cursor:pointer;background:var(--blue);color:#fff}
-.fb .btn[disabled]{opacity:.6;cursor:default}.fb-err{color:#c0392b;font-size:14px;margin:0}.fb-ok{color:var(--ink);font-weight:600;margin:0}
+.fb .btn[disabled]{opacity:.6;cursor:default}.fb-err{color:#c0392b;font-size:14px;margin:0}.fb-ok{color:var(--ink);margin:0;padding:18px 20px;border-radius:12px;background:var(--blue-tint);line-height:1.5}
 footer{border-top:1px solid var(--line);padding:36px 0 64px;color:var(--ink-3);font-size:14px}
 footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}footer a{color:var(--ink-2)}
 #lb{position:fixed;inset:0;background:rgba(5,7,20,.86);display:none;align-items:center;justify-content:center;padding:24px;z-index:30;cursor:zoom-out}
@@ -81,7 +81,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
   <div class="cf-turnstile" data-sitekey="0x4AAAAAAFxKO-1Iq_maRhEF" data-theme="light"></div>
   <p class="fb-err" id="fb-err" hidden></p>
   <button type="submit" class="btn">Send</button>
-  <p class="fb-ok" id="fb-ok" hidden>Thank you — your message is on its way.</p>
+  <div class="fb-ok" id="fb-ok" hidden><b>Thank you — your message has been sent.</b><br>A copy went to your e-mail address; we usually reply within a day or two.</div>
 </form>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script>
@@ -97,17 +97,18 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
     if(msg.value.trim().length<70)return show('Please describe it in at least 70 characters.');
     if(files.files.length>5)return show('At most 5 screenshots.');
     for(var i=0;i<files.files.length;i++){if(files.files[i].size>1048576)return show('“'+files.files[i].name+'” is larger than 1 MB.');}
+    if(msg.value.length>5000)return show('The message is too long (5000 characters at most).');
     if(!f.querySelector('[name=cf-turnstile-response]')||!f.querySelector('[name=cf-turnstile-response]').value)return show('Please complete the anti-spam check.');
     btn.disabled=true;btn.textContent='Sending…';
     fetch(f.action,{method:'POST',body:new FormData(f)}).then(function(r){return r.json().catch(function(){return{error:'Something went wrong.'};}).then(function(j){return[r.ok,j];});})
-      .then(function(x){if(x[0]){f.reset();ok.hidden=false;btn.hidden=true;count.textContent='at least 70 characters';}else{show(x[1].error||'Something went wrong.');if(window.turnstile)turnstile.reset();}})
-      .catch(function(){show('No connection. Please try again or e-mail admin@it.com.');})
+      .then(function(x){if(x[0]){[].forEach.call(f.querySelectorAll('label,.cf-turnstile,button'),function(el){el.hidden=true;});ok.hidden=false;ok.scrollIntoView({block:'center'});}else{show(x[1].error||'Something went wrong.');if(window.turnstile)turnstile.reset();}})
+      .catch(function(){show('No connection. Please try again or e-mail admin@keep.it.com.');})
       .finally(function(){btn.disabled=false;btn.textContent='Send';});
   });
 })();
 </script>
 
-<p>E-mail: <a href="mailto:admin@it.com">admin@it.com</a> · Step-by-step: <a href="guide.html">the user guide</a> · How your data is protected: <a href="security.html">security</a>.</p>
+<p>E-mail: <a href="mailto:admin@keep.it.com">admin@keep.it.com</a> · Step-by-step: <a href="guide.html">the user guide</a> · How your data is protected: <a href="security.html">security</a>.</p>
 <h2 id="quick-answers">Quick answers</h2>
 <p><strong>Nothing is pasted after I pick an item.</strong> Grant the Accessibility permission: System Settings → Privacy &amp; Security → Accessibility → enable Keepit (if it is already listed, toggle it off and on). Until then, press ⌘V yourself — the item is on the clipboard.</p>
 <p><strong>I forgot the password.</strong> Use <em>Recovery Access…</em> on the unlock dialog, or Touch ID on the same Mac. Without either, the data cannot be recovered.</p>

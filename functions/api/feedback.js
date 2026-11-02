@@ -15,6 +15,7 @@ export const LIMITS = {
   messageMax: 5000,
   files: 5,
   fileBytes: 1024 * 1024,
+  bodyBytes: 6 * 1024 * 1024,      // 5 screenshots + text + multipart overhead; checked before the body is read
   types: ["image/png", "image/jpeg", "image/gif", "image/webp", "image/heic"],
 };
 
@@ -67,6 +68,10 @@ function b64(buf) {
 const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
 export async function onRequestPost({ request, env }) {
+  const declared = Number(request.headers.get("content-length") || 0);
+  if (declared > LIMITS.bodyBytes) return json(413, { error: "The attachments are too large (5 screenshots of 1 MB at most)." });
+  const ctype = request.headers.get("content-type") || "";
+  if (!ctype.startsWith("multipart/form-data")) return json(400, { error: "Could not read the form." });
   let form;
   try {
     form = await request.formData();
@@ -98,5 +103,16 @@ export async function onRequestPost({ request, env }) {
     body: JSON.stringify({ from: env.FEEDBACK_FROM, to: [env.FEEDBACK_TO], reply_to: email, subject, text, html, attachments }),
   });
   if (!r.ok) return json(502, { error: "The message could not be sent right now. Please e-mail us instead." });
+
+  // Confirmation to the sender. Best effort: the message itself is already delivered.
+  await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, "content-type": "application/json" },
+    body: JSON.stringify({
+      from: env.FEEDBACK_FROM, to: [email], reply_to: env.FEEDBACK_TO,
+      subject: "We received your message — Keepit",
+      text: `Hi ${name},\n\nThank you — your message has reached Keepit support. We usually reply within a day or two.\n\nYour message:\n\n${message}\n\n— Keepit, keep.it.com`,
+    }),
+  }).catch(() => {});
   return json(200, { ok: true });
 }

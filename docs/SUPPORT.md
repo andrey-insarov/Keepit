@@ -23,7 +23,7 @@ Found a bug, a wrong translation, or have a question? Write below — a reply us
   <div class="cf-turnstile" data-sitekey="__TURNSTILE_SITE_KEY__" data-theme="light"></div>
   <p class="fb-err" id="fb-err" hidden></p>
   <button type="submit" class="btn">Send</button>
-  <p class="fb-ok" id="fb-ok" hidden>Thank you — your message is on its way.</p>
+  <div class="fb-ok" id="fb-ok" hidden><b>Thank you — your message has been sent.</b><br>A copy went to your e-mail address; we usually reply within a day or two.</div>
 </form>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script>
@@ -39,17 +39,18 @@ Found a bug, a wrong translation, or have a question? Write below — a reply us
     if(msg.value.trim().length<70)return show('Please describe it in at least 70 characters.');
     if(files.files.length>5)return show('At most 5 screenshots.');
     for(var i=0;i<files.files.length;i++){if(files.files[i].size>1048576)return show('“'+files.files[i].name+'” is larger than 1 MB.');}
+    if(msg.value.length>5000)return show('The message is too long (5000 characters at most).');
     if(!f.querySelector('[name=cf-turnstile-response]')||!f.querySelector('[name=cf-turnstile-response]').value)return show('Please complete the anti-spam check.');
     btn.disabled=true;btn.textContent='Sending…';
     fetch(f.action,{method:'POST',body:new FormData(f)}).then(function(r){return r.json().catch(function(){return{error:'Something went wrong.'};}).then(function(j){return[r.ok,j];});})
-      .then(function(x){if(x[0]){f.reset();ok.hidden=false;btn.hidden=true;count.textContent='at least 70 characters';}else{show(x[1].error||'Something went wrong.');if(window.turnstile)turnstile.reset();}})
-      .catch(function(){show('No connection. Please try again or e-mail admin@it.com.');})
+      .then(function(x){if(x[0]){[].forEach.call(f.querySelectorAll('label,.cf-turnstile,button'),function(el){el.hidden=true;});ok.hidden=false;ok.scrollIntoView({block:'center'});}else{show(x[1].error||'Something went wrong.');if(window.turnstile)turnstile.reset();}})
+      .catch(function(){show('No connection. Please try again or e-mail admin@keep.it.com.');})
       .finally(function(){btn.disabled=false;btn.textContent='Send';});
   });
 })();
 </script>
 
-E-mail: [admin@it.com](mailto:admin@it.com) · Step-by-step: [the user guide](guide.html) · How your data is protected: [security](security.html).
+E-mail: [admin@keep.it.com](mailto:admin@keep.it.com) · Step-by-step: [the user guide](guide.html) · How your data is protected: [security](security.html).
 
 ## Quick answers
 
