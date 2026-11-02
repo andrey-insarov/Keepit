@@ -79,6 +79,8 @@ Each line is one clip, newest first. The newest one is **bold** — it is what i
 right now. The icon shows the app you copied from; a title ending in `…` has more lines than the
 menu shows. Images show a thumbnail, file lists show the file names.
 
+![The preview panel next to the menu shows the highlighted item in full, with its source app, time and size](site/img/guide/menu-preview.png)
+
 ![An image in the history: thumbnail in the menu, full picture in the preview](site/img/guide/menu-image.png)
 
 To paste an item: click it, or move to it with ↑ ↓ and press Return, or press its number with
@@ -165,7 +167,11 @@ shortcut either works everywhere or is not shown.
 
 Templates are clips you keep for good: signatures, addresses, canned replies, code snippets, a logo
 you paste often. They live in a tree with folders and appear in the *Template* submenu of the history
-menu and under **⌥T**.
+menu and under **⌥T**. A fresh install comes with an *Examples* folder — a greeting, today's date,
+a quote of the clipboard and a signature — so you can see what templates can do before you write your own;
+delete or edit them as you like (*Reset…* in Settings brings them back).
+
+![The Examples folder: hovering an item shows its text](site/img/guide/template-examples.png)
 
 ![The template menu: folders open as submenus, &-letters become shortcuts](site/img/guide/template-menu-letters.png)
 
@@ -195,6 +201,8 @@ menu and under **⌥T**.
 Text templates can contain `{…}` placeholders that are filled in at paste time. Everything else is
 pasted unchanged. In the Viewer, **Insert ▾** lists every placeholder and puts the chosen one at the
 cursor, so there is nothing to memorise.
+
+![The Today's date example: `{date:EEEE, d MMMM yyyy}` becomes the current date when pasted](site/img/guide/template-examples-date.png)
 
 ![Insert ▾ in the Viewer lists every placeholder](site/img/guide/insert-menu.png)
 
