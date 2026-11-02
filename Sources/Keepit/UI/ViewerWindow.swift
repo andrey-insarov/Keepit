@@ -753,6 +753,9 @@ final class ViewerWindowController: NSWindowController,
 
     private func deleteItem(_ n: VNode) {
         switch n.kind {
+        case .clipboardItem:
+            // Delete on the clipboard = empty it (the history keeps its copy).
+            app.monitor.performIgnoringChange { NSPasteboard.general.clearContents() }
         case .history(let id):
             history.remove(id: id)
         case .template(let t):
@@ -985,12 +988,13 @@ final class ViewerWindowController: NSWindowController,
         let n = selectedNode
         let hasContent = n.map { clip(for: $0) != nil } ?? false
         let item = n?.itemNode
-        sendButton.isEnabled = hasContent
+        let isClipboard = item?.kind.isClipboardSide == true
+        sendButton.isEnabled = hasContent && !isClipboard            // the clipboard is already the clipboard
         pasteButton.isEnabled = hasContent
         addButton.isEnabled = hasContent && !(n?.isInTemplate ?? false)
         newItemButton.isEnabled = n.map { $0.isInHistory || $0.isInTemplate } ?? false
         newFolderButton.isEnabled = n?.isInTemplate ?? false
-        deleteButton.isEnabled = n.map { !$0.isRoot && ($0.historyId != nil || $0.templateNode != nil || $0.isFormat) && $0.itemNode?.kind.isClipboardSide != true } ?? false
+        deleteButton.isEnabled = n.map { !$0.isRoot && ($0.historyId != nil || $0.templateNode != nil || ($0.isFormat && !isClipboard) || $0.kind.isClipboardSide && !$0.isRoot) } ?? false
         let textTemplate = (n?.isInTemplate ?? false) && (item?.templateNode.map { !$0.isFolder } ?? false) && textFormat.textView.isEditable
         insertButton.isEnabled = textTemplate
     }

@@ -35,9 +35,14 @@ final class HotKeyRecorderView: NSControl {
         recording = true
     }
 
-    override func becomeFirstResponder() -> Bool {
-        recording = true
-        return true
+    /// Keyboard focus alone (Tab, or the window handing focus to its first field) does not start
+    /// recording — a click or Space / Return does, so a pane never opens in "Press keys…" state.
+    override func becomeFirstResponder() -> Bool { true }
+
+    override func keyDown(with event: NSEvent) {
+        if !recording, event.keyCode == 49 || event.keyCode == 36 { recording = true; return }   // Space / Return
+        if recording, handle(event) { return }
+        super.keyDown(with: event)
     }
 
     override func resignFirstResponder() -> Bool {
@@ -48,11 +53,6 @@ final class HotKeyRecorderView: NSControl {
     override func performKeyEquivalent(with event: NSEvent) -> Bool {
         guard recording, window?.firstResponder === self else { return false }
         return handle(event)
-    }
-
-    override func keyDown(with event: NSEvent) {
-        if recording, handle(event) { return }
-        super.keyDown(with: event)
     }
 
     private func handle(_ event: NSEvent) -> Bool {
