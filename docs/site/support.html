@@ -41,6 +41,14 @@ figure.shot{margin:1.6em 0;width:100%}figure.shot a{display:block}figure.shot im
 figure.shot figcaption{font-size:14px;color:var(--ink-3);margin-top:8px}
 .slot{border:2px dashed var(--line);border-radius:12px;padding:28px;text-align:center;color:var(--ink-3);font-size:15px}
 .contents{display:none}
+.fb{margin:1.4em 0 2em;padding:22px 24px;border:1px solid var(--line);border-radius:16px;background:var(--win);display:grid;gap:14px}
+.fb label{display:grid;gap:6px;font-size:14px;font-weight:600;color:var(--ink-2)}.fb .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:600px){.fb .row2{grid-template-columns:1fr}}
+.fb .hint{font-weight:400;color:var(--ink-3)}
+.fb input[type=text],.fb input[type=email],.fb select,.fb textarea{font:16px/1.4 inherit;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;box-sizing:border-box}
+.fb textarea{resize:vertical;min-height:140px}.fb input:focus,.fb select:focus,.fb textarea:focus{outline:2px solid var(--blue);outline-offset:1px;border-color:transparent}
+.fb input[type=file]{font-size:14px;color:var(--ink-2)}
+.fb .btn{justify-self:start;display:inline-flex;align-items:center;padding:12px 22px;border-radius:12px;font-weight:600;font-size:16px;line-height:1;border:0;cursor:pointer;background:var(--blue);color:#fff}
+.fb .btn[disabled]{opacity:.6;cursor:default}.fb-err{color:#c0392b;font-size:14px;margin:0}.fb-ok{color:var(--ink);font-weight:600;margin:0}
 footer{border-top:1px solid var(--line);padding:36px 0 64px;color:var(--ink-3);font-size:14px}
 footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}footer a{color:var(--ink-2)}
 #lb{position:fixed;inset:0;background:rgba(5,7,20,.86);display:none;align-items:center;justify-content:center;padding:24px;z-index:30;cursor:zoom-out}
@@ -51,12 +59,58 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
   <nav><a href="index.html#features">Features</a><a href="guide.html">Guide</a><a href="security.html">Security</a><a href="support.html">Support</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a></nav>
 </div></header>
 <main class="wrap narrow"><article><h1 id="keepit-support">Keepit support</h1>
-<p>Bugs and feature requests: <a href="https://github.com/andrey-insarov/Keepit/issues">GitHub Issues</a>.</p>
-<p>Email: <a href="mailto:dp@intistele.com">dp@intistele.com</a></p>
-<p>Step-by-step: <a href="guide.html">the user guide</a>. How your data is protected: <a href="security.html">security</a>.</p>
+<p>Found a bug, a wrong translation, or have a question? Write below — a reply usually comes within a day or two. Bugs can also go to <a href="https://github.com/andrey-insarov/Keepit/issues">GitHub Issues</a>.</p>
+<form id="fb" class="fb" action="/api/feedback" method="post" enctype="multipart/form-data" novalidate>
+  <div class="row2">
+    <label>Name<input name="name" type="text" maxlength="100" autocomplete="name" required></label>
+    <label>E-mail<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
+  </div>
+  <label>What is it about
+    <select name="type" required>
+      <option value="app">App issue</option>
+      <option value="translation">Translation issue</option>
+      <option value="other">Other</option>
+    </select>
+  </label>
+  <label>Message <span class="hint" id="fb-count">at least 70 characters</span>
+    <textarea name="message" rows="7" minlength="70" maxlength="5000" required placeholder="What happened, what you expected, macOS and Keepit versions…"></textarea>
+  </label>
+  <label>Screenshots <span class="hint">optional · up to 5 images, 1 MB each</span>
+    <input name="files" type="file" accept="image/png,image/jpeg,image/gif,image/webp,image/heic" multiple>
+  </label>
+  <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" data-theme="light"></div>
+  <p class="fb-err" id="fb-err" hidden></p>
+  <button type="submit" class="btn">Send</button>
+  <p class="fb-ok" id="fb-ok" hidden>Thank you — your message is on its way.</p>
+</form>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script>
+(function(){
+  var f=document.getElementById('fb'),err=document.getElementById('fb-err'),ok=document.getElementById('fb-ok'),
+      msg=f.elements.message,count=document.getElementById('fb-count'),files=f.elements.files,btn=f.querySelector('button');
+  function show(e){err.textContent=e;err.hidden=!e;}
+  msg.addEventListener('input',function(){var n=msg.value.trim().length;count.textContent=n<70?(70-n)+' more characters':n+' characters';});
+  f.addEventListener('submit',function(ev){
+    ev.preventDefault();show('');
+    if(!f.elements.name.value.trim())return show('Please enter your name.');
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(f.elements.email.value.trim()))return show('Please enter a valid e-mail address.');
+    if(msg.value.trim().length<70)return show('Please describe it in at least 70 characters.');
+    if(files.files.length>5)return show('At most 5 screenshots.');
+    for(var i=0;i<files.files.length;i++){if(files.files[i].size>1048576)return show('“'+files.files[i].name+'” is larger than 1 MB.');}
+    if(!f.querySelector('[name=cf-turnstile-response]')||!f.querySelector('[name=cf-turnstile-response]').value)return show('Please complete the anti-spam check.');
+    btn.disabled=true;btn.textContent='Sending…';
+    fetch(f.action,{method:'POST',body:new FormData(f)}).then(function(r){return r.json().catch(function(){return{error:'Something went wrong.'};}).then(function(j){return[r.ok,j];});})
+      .then(function(x){if(x[0]){f.reset();ok.hidden=false;btn.hidden=true;count.textContent='at least 70 characters';}else{show(x[1].error||'Something went wrong.');if(window.turnstile)turnstile.reset();}})
+      .catch(function(){show('No connection. Please try again or e-mail admin@keep.it.com.');})
+      .finally(function(){btn.disabled=false;btn.textContent='Send';});
+  });
+})();
+</script>
+
+<p>E-mail: <a href="mailto:admin@keep.it.com">admin@keep.it.com</a> · Step-by-step: <a href="guide.html">the user guide</a> · How your data is protected: <a href="security.html">security</a>.</p>
 <h2 id="quick-answers">Quick answers</h2>
 <p><strong>Nothing is pasted after I pick an item.</strong> Grant the Accessibility permission: System Settings → Privacy &amp; Security → Accessibility → enable Keepit (if it is already listed, toggle it off and on). Until then, press ⌘V yourself — the item is on the clipboard.</p>
-<p><strong>I forgot the password.</strong> Use <em>Use Recovery Phrase…</em> on the unlock dialog, or Touch ID on the same Mac. Without either, the data cannot be recovered.</p>
+<p><strong>I forgot the password.</strong> Use <em>Recovery Access…</em> on the unlock dialog, or Touch ID on the same Mac. Without either, the data cannot be recovered.</p>
 <p><strong>Where is my data?</strong> <code>~/Library/Application Support/Keepit/</code> (App Store edition: inside <code>~/Library/Containers/com.it.keep/</code>).</p></article></main>
 <footer><div class="wrap">
   <span>© 2026 UK Intis Telecom LTD · Keepit is MIT-licensed</span>
