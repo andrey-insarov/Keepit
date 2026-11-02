@@ -411,4 +411,10 @@ T = {
 'Data': 'Dati',
 'Open Folder': 'Atvērt mapi',
 'Delete Keepit…': 'Dzēst Keepit…',
+'Change…': 'Mainīt…',
+'Create New…': 'Izveidot jaunu…',
+'Delete…': 'Dzēst…',
+'Export…': 'Eksportēt…',
+'Import…': 'Importēt…',
+'letter': 'burts',
 }

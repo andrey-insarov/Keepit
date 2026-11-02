@@ -411,4 +411,10 @@ T = {
 'Data': 'נתונים',
 'Open Folder': 'פתיחת תיקייה',
 'Delete Keepit…': 'מחיקת Keepit…',
+'Change…': 'שינוי…',
+'Create New…': 'יצירת חדש…',
+'Delete…': 'מחיקה…',
+'Export…': 'ייצוא…',
+'Import…': 'ייבוא…',
+'letter': 'אות',
 }

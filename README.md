@@ -138,7 +138,7 @@ from then on Keepit asks for it at every launch (three wrong attempts → quit) 
 until it is entered. `history.json` and `templates.json` are then stored as AES-256-GCM blobs
 (key = PBKDF2-HMAC-SHA256, 200 000 rounds, random 16-byte salt kept in `vault.json` together
 with a sealed verifier). The password itself is never written anywhere and there is no recovery.
-`settings.json` stays in plain text (it holds no clipboard data). *Change Password…* re-encrypts;
+`settings.json` stays in plain text (it holds no clipboard data). *Password → Change…* re-encrypts;
 unticking the option asks for the password and writes the files back as plain JSON.
 
 ### Touch ID
@@ -157,7 +157,7 @@ checksum). A key derived from the phrase (HKDF) wraps the data key inside `vault
 itself is never stored. Print it (the dialog offers the system print panel, which can also save a
 PDF) and keep it offline — anyone holding it can read the history. If you forget the password,
 the unlock prompt's *Use Recovery Phrase…* unlocks the data and immediately asks for a new
-password. The phrase keeps working after password changes; *New Recovery Phrase…* in Settings
+password. The phrase keeps working after password changes; *Recovery phrase → Create New…* in Settings
 replaces it (the old sheet becomes useless). Lose both password and phrase and the data is
 unrecoverable — by design.
 

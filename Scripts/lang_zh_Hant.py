@@ -411,4 +411,10 @@ T = {
 'Data': '資料',
 'Open Folder': '打開檔案夾',
 'Delete Keepit…': '刪除 Keepit…',
+'Change…': '更改…',
+'Create New…': '新建…',
+'Delete…': '刪除…',
+'Export…': '匯出…',
+'Import…': '匯入…',
+'letter': '字母',
 }

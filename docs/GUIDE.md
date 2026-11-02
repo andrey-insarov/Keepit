@@ -267,7 +267,7 @@ that explains it.
 | **History** | How many text/file items and images to keep (1000 / 30) · forget items older than … · *Remove duplicates* (copying the same thing again moves it to the top) · *Ignore concealed clipboard data* · the ignored-apps list (bundle identifiers; password managers are always ignored) |
 | **Menu** | Search field · numbering · preview panel · tooltips · source-app icons · image thumbnails · title length · thumbnail height |
 | **Security** | Password, Touch ID, locking, recovery phrase, Export / Import Backup — [Part 6](#part-6--security) |
-| **Advanced** | Clipboard poll interval · Data: *Open Folder* · Remove Keepit: *Delete Keepit…* |
+| **Advanced** | Clipboard poll interval · Data: *Open Folder* · Remove Keepit: *Delete…* |
 
 ![Settings → Shortcuts](site/img/guide/prefs-hotkeys.png)
 
@@ -310,7 +310,7 @@ the old password when you change it.
 
 When you set a password Keepit shows a 24-word phrase once. Print it or keep it in a password
 manager. If you forget the password, *Use Recovery Phrase…* on the unlock dialog opens the data and
-lets you set a new one. *New Recovery Phrase…* issues a fresh phrase and invalidates the old.
+lets you set a new one. *Recovery phrase → Create New…* issues a fresh phrase and invalidates the old.
 
 Without the password, Touch ID on the same Mac, or the phrase, the data cannot be recovered: there
 is no server and nothing to reset.
@@ -319,7 +319,7 @@ is no server and nothing to reset.
 
 ### Backup
 
-*Export Backup…* writes one `.keepit` file with the history, templates and preferences, encrypted
+*Export Backup…* in the menu (or *Backup → Export…* in Settings → Security) writes one `.keepit` file with the history, templates and preferences, encrypted
 with a password you choose for the file. *Import Backup…* reads it back on any Mac — *Merge* adds to
 what is there, *Replace* starts from the backup. The same file moves data between the direct
 download and the App Store edition.
@@ -352,7 +352,7 @@ same. Checksums for every download are in `SHA256SUMS` on the release page.
 
 ### Uninstalling
 
-*Settings → Advanced → Remove Keepit → Delete Keepit…* removes the app, the data folder, the keychain
+*Settings → Advanced → Remove Keepit → Delete…* removes the app, the data folder, the keychain
 entries (including the Touch ID key), the login item and the Accessibility entry. It asks for your
 password or Touch ID, a typed `DELETE` and a confirmation — export a backup first if you might want
 the data back. With Homebrew, run `brew uninstall --cask --force keepit` afterwards so Homebrew

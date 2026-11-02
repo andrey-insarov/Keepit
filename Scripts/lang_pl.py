@@ -411,4 +411,10 @@ T = {
 'Data': 'Dane',
 'Open Folder': 'Otwórz folder',
 'Delete Keepit…': 'Usuń Keepit…',
+'Change…': 'Zmień…',
+'Create New…': 'Utwórz nową…',
+'Delete…': 'Usuń…',
+'Export…': 'Eksportuj…',
+'Import…': 'Importuj…',
+'letter': 'litera',
 }

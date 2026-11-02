@@ -91,7 +91,7 @@ entropy (HKDF) wraps the data key, and the entropy is in turn wrapped by the dat
 
 - the phrase can unlock the data and let you set a new password if you forget the old one;
 - changing the password does not change the phrase;
-- *New Recovery Phrase…* issues new entropy and invalidates the old phrase.
+- *Recovery phrase → Create New…* (Settings → Security) issues new entropy and invalidates the old phrase.
 
 The phrase itself is never written to disk. Print it, or keep it in a password manager. Without the
 password, Touch ID on the same Mac, or the phrase, the data is unrecoverable by design — there is no
@@ -99,7 +99,7 @@ server-side reset and Keepit's authors cannot help.
 
 ## Backups
 
-*Export Backup…* produces one `.keepit` file: a magic header, a format version, a random 16-byte
+*Backup → Export…* (Settings → Security, also *Export Backup…* in the menu) produces one `.keepit` file: a magic header, a format version, a random 16-byte
 salt, and the LZFSE-compressed JSON of history, templates and preferences sealed with AES-256-GCM
 under a PBKDF2 key from a password you choose for the file. The file is safe to keep on a cloud
 drive; its password is independent of the app password. *Import Backup…* verifies the
@@ -148,7 +148,7 @@ third-party action in the workflow is pinned to a commit hash rather than a mova
 
 ## Uninstalling and data removal
 
-*Settings → Advanced → Remove Keepit → Delete Keepit…* removes the app bundle, the data folder, the
+*Settings → Advanced → Remove Keepit → Delete…* removes the app bundle, the data folder, the
 keychain entry, the login item and the Accessibility grant, after asking for the password or Touch
 ID and a typed confirmation. Deleting the app by hand leaves the data folder in place — remove
 `~/Library/Application Support/Keepit/` yourself if you want it gone.

@@ -72,14 +72,14 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
     private let thumbSize    = NSTextField()
 
     private let protect      = NSButton(checkboxWithTitle: L("Require password at launch"), target: nil, action: nil)
-    private let changePw     = NSButton(title: L("Change Password…"), target: nil, action: nil)
+    private let changePw     = NSButton(title: L("Change…"), target: nil, action: nil)
     private let touchID      = NSButton(checkboxWithTitle: L("Unlock with Touch ID"), target: nil, action: nil)
     private let touchIDChange = NSButton(checkboxWithTitle: L("Allow changing the password with Touch ID"), target: nil, action: nil)
     private let lockScreen   = NSButton(checkboxWithTitle: L("Lock when the screen locks or the Mac sleeps"), target: nil, action: nil)
-    private let newPhrase    = NSButton(title: L("New Recovery Phrase…"), target: nil, action: nil)
+    private let newPhrase    = NSButton(title: L("Create New…"), target: nil, action: nil)
 
     private let pollInterval = NSTextField()
-    private let uninstall    = NSButton(title: L("Delete Keepit…"), target: nil, action: nil)
+    private let uninstall    = NSButton(title: L("Delete…"), target: nil, action: nil)
 
     // MARK: Panes
 
@@ -95,8 +95,12 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
     /// One label column and one window width for all panes, measured from the real (localized) labels.
     private var labelWidth: CGFloat = 0
     private var windowWidth: CGFloat = 0
-    /// One width for every field, pop-up and button, so nothing is ever stretched.
-    private static let controlWidth: CGFloat = 160
+    private var paneX: CGFloat = 20
+    /// One width for every field, pop-up and button, so nothing is ever stretched or truncated:
+    /// the widest button title in the current language decides, never less than 150 pt.
+    private var controlWidth: CGFloat = 150
+    private var sizedControls: [NSView] = []
+    private var widthConstraints: [NSLayoutConstraint] = []
     private static let lastPaneKey = "SettingsWindow.pane"
 
     init(app: AppDelegate) {
@@ -185,7 +189,6 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         s.alignment = .firstBaseline
         s.spacing = 4
         s.setCustomSpacing(8, after: stepper)
-        s.setContentHuggingPriority(.required, for: .horizontal)
         return s
     }
     private var steppers: [ObjectIdentifier: NSStepper] = [:]
@@ -199,8 +202,6 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         g.column(at: 0).xPlacement = .trailing
         g.column(at: 1).xPlacement = .leading
         // Hug the content: an empty label column must not be handed half of the window.
-        g.setContentHuggingPriority(.required, for: .horizontal)
-        g.setContentCompressionResistancePriority(.required, for: .horizontal)
         for r in 0..<g.numberOfRows { g.cell(atColumnIndex: 1, rowIndex: r).xPlacement = .leading }
         g.translatesAutoresizingMaskIntoConstraints = false
         return g
@@ -223,7 +224,6 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         row.orientation = .horizontal
         row.alignment = .centerY
         row.spacing = 6
-        row.setContentHuggingPriority(.required, for: .horizontal)
         return row
     }
 
@@ -255,7 +255,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
 
     private func button(_ b: NSButton) -> NSButton {
         b.translatesAutoresizingMaskIntoConstraints = false
-        b.widthAnchor.constraint(equalToConstant: Self.controlWidth).isActive = true
+        sizedControls.append(b)
         return b
     }
 
@@ -270,7 +270,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         if let suffix { r.modifiersSuffix = suffix }
         r.onChange = { [weak self, weak r] hk in guard let self, let r else { return }; self.hotKeyChanged(r, hk) }
         r.translatesAutoresizingMaskIntoConstraints = false
-        r.widthAnchor.constraint(equalToConstant: Self.controlWidth).isActive = true
+        sizedControls.append(r)
         return r
     }
 
@@ -296,7 +296,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             header(L("Paste without the menu")),
             row(L("Paste previous item:"), help(recorder(previousHK), L("Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off."))),
             row(L("Paste item by number:"), help(recorder(numbersHK, modifiersOnly: true), L("Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off."))),
-            row(L("Actions on the latest item:"), help(recorder(latestHK, modifiersOnly: true, suffix: "V U L T S W J A ⌫"), L("Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu."))),
+            row(L("Actions on the latest item:"), help(recorder(latestHK, modifiersOnly: true, suffix: L("letter")), L("Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu."))),
             header(L("Other")),
             row(L("Viewer:"), recorder(viewerHK)),
             row(L("Settings:"), recorder(prefsHK)),
@@ -305,7 +305,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             row(L("Lock Keepit:"), recorder(lockHK)),
             row(L("Quit Keepit:"), recorder(quitHK)),
             status(shortcutStatus),
-            [NSView(), help(button(resetHK), L("Shortcuts set here and on the Paste Queue pane work from any app and are shown next to their commands in the menu. ⌫ in a field switches the shortcut off. Reset to Defaults restores every shortcut, including the paste queue's."))],
+            [NSView(), help(resetHK, L("Shortcuts set here and on the Paste Queue pane work from any app and are shown next to their commands in the menu. ⌫ in a field switches the shortcut off. Reset to Defaults restores every shortcut, including the paste queue's."))],
         ])
 
         let queue = grid([
@@ -352,8 +352,8 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             row(L("Thumbnail height:"), number(thumbSize, unit: L("pixels"), min: 16, max: 128, step: 8)),
         ])
 
-        let exportBtn = NSButton(title: L("Export Backup…"), target: self, action: #selector(exportTapped))
-        let importBtn = NSButton(title: L("Import Backup…"), target: self, action: #selector(importTapped))
+        let exportBtn = NSButton(title: L("Export…"), target: self, action: #selector(exportTapped))
+        let importBtn = NSButton(title: L("Import…"), target: self, action: #selector(importTapped))
         let backupRow = NSStackView(views: [button(exportBtn), button(importBtn)])
         backupRow.orientation = .horizontal; backupRow.spacing = 8
         protect.target = self; protect.action = #selector(protectToggled)
@@ -394,14 +394,21 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             Pane(id: .init("security"), title: L("Security"), symbol: "lock", view: security),
             Pane(id: .init("advanced"), title: L("Advanced"), symbol: "wrench.and.screwdriver", view: advanced),
         ]
-        // Measure every pane once: the widest label fixes the colon axis for the whole window, the
-        // widest pane fixes the window width; every block is then centred (classic macOS settings).
+        // Measure once, in the current language:
+        //  • every button, field and pop-up gets the same width — the widest button title decides;
+        //  • the widest label fixes the colon axis for the whole window;
+        //  • the widest pane fixes the window width, and every pane starts at the same x, so the
+        //    axis never moves when switching panes and the widest pane sits exactly centred.
+        let widestTitle = sizedControls.compactMap { ($0 as? NSButton)?.fittingSize.width }.max() ?? 0
+        controlWidth = max(150, ceil(widestTitle) + 16)
+        for c in sizedControls { c.widthAnchor.constraint(equalToConstant: controlWidth).isActive = true }
         for p in panes { (p.view as? NSGridView)?.layoutSubtreeIfNeeded() }
         labelWidth = panes.compactMap { ($0.view as? NSGridView)?.column(at: 0).width }.max() ?? 0
         for p in panes { (p.view as? NSGridView)?.column(at: 0).width = labelWidth }
         for p in panes { (p.view as? NSGridView)?.layoutSubtreeIfNeeded() }
-        let widest = panes.map { $0.view.fittingSize.width }.max() ?? 480
-        windowWidth = max(560, ceil(widest) + 2 * 32)
+        let widest = ceil(panes.map { $0.view.fittingSize.width }.max() ?? 480)
+        windowWidth = max(560, widest + 2 * 28)
+        paneX = (windowWidth - widest) / 2
 
         container.translatesAutoresizingMaskIntoConstraints = false
         let guide = NSButton(title: "", target: self, action: #selector(openGuide))
@@ -421,7 +428,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         for t in titles { p.addItem(withTitle: t) }
         p.target = self; p.action = #selector(controlChanged(_:))
         p.translatesAutoresizingMaskIntoConstraints = false
-        p.widthAnchor.constraint(equalToConstant: Self.controlWidth).isActive = true
+        sizedControls.append(p)
         return p
     }
 
@@ -442,7 +449,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         scroll.hasVerticalScroller = true
         scroll.borderType = .bezelBorder
         scroll.translatesAutoresizingMaskIntoConstraints = false
-        scroll.widthAnchor.constraint(equalToConstant: 320).isActive = true
+        scroll.widthAnchor.constraint(equalToConstant: 360).isActive = true
         scroll.heightAnchor.constraint(equalToConstant: 120).isActive = true
         return scroll
     }
@@ -484,8 +491,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         container.addSubview(v)
         NSLayoutConstraint.activate([
             v.topAnchor.constraint(equalTo: container.topAnchor, constant: 20),
-            v.centerXAnchor.constraint(equalTo: container.centerXAnchor),
-            v.leadingAnchor.constraint(greaterThanOrEqualTo: container.leadingAnchor, constant: 20),
+            v.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: paneX),
         ])
         shownPane = v
         window.toolbar?.selectedItemIdentifier = pane.id

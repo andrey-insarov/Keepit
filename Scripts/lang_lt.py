@@ -411,4 +411,10 @@ T = {
 'Data': 'Duomenys',
 'Open Folder': 'Atidaryti aplanką',
 'Delete Keepit…': 'Ištrinti Keepit…',
+'Change…': 'Keisti…',
+'Create New…': 'Sukurti naują…',
+'Delete…': 'Ištrinti…',
+'Export…': 'Eksportuoti…',
+'Import…': 'Importuoti…',
+'letter': 'raidė',
 }

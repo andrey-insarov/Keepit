@@ -411,4 +411,10 @@ T = {
 'Data': 'Dados',
 'Open Folder': 'Abrir pasta',
 'Delete Keepit…': 'Apagar o Keepit…',
+'Change…': 'Alterar…',
+'Create New…': 'Criar nova…',
+'Delete…': 'Apagar…',
+'Export…': 'Exportar…',
+'Import…': 'Importar…',
+'letter': 'letra',
 }

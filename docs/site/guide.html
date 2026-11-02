@@ -331,7 +331,7 @@ that explains it.</p>
 </tr>
 <tr>
 <td><strong>Advanced</strong></td>
-<td>Clipboard poll interval · Data: <em>Open Folder</em> · Remove Keepit: <em>Delete Keepit…</em></td>
+<td>Clipboard poll interval · Data: <em>Open Folder</em> · Remove Keepit: <em>Delete…</em></td>
 </tr>
 </tbody>
 </table></div>
@@ -363,12 +363,12 @@ the old password when you change it.</p>
 <h3 id="recovery-phrase">Recovery phrase</h3>
 <p>When you set a password Keepit shows a 24-word phrase once. Print it or keep it in a password
 manager. If you forget the password, <em>Use Recovery Phrase…</em> on the unlock dialog opens the data and
-lets you set a new one. <em>New Recovery Phrase…</em> issues a fresh phrase and invalidates the old.</p>
+lets you set a new one. <em>Recovery phrase → Create New…</em> issues a fresh phrase and invalidates the old.</p>
 <p>Without the password, Touch ID on the same Mac, or the phrase, the data cannot be recovered: there
 is no server and nothing to reset.</p>
 <figure class="shot" style="max-width:537px"><a href="img/guide/recovery-phrase.png" class="zoom" title="Open full size"><img src="img/guide/recovery-phrase.png" alt="The 24-word recovery phrase (words hidden here)" width="537" height="538" loading="lazy"></a><figcaption>The 24-word recovery phrase (words hidden here)</figcaption></figure>
 <h3 id="backup">Backup</h3>
-<p><em>Export Backup…</em> writes one <code>.keepit</code> file with the history, templates and preferences, encrypted
+<p><em>Export Backup…</em> in the menu (or <em>Backup → Export…</em> in Settings → Security) writes one <code>.keepit</code> file with the history, templates and preferences, encrypted
 with a password you choose for the file. <em>Import Backup…</em> reads it back on any Mac — <em>Merge</em> adds to
 what is there, <em>Replace</em> starts from the backup. The same file moves data between the direct
 download and the App Store edition.</p>
@@ -420,7 +420,7 @@ download and the App Store edition.</p>
 now. Updates are signed (EdDSA) and notarized. With Homebrew, <code>brew upgrade --cask keepit</code> does the
 same. Checksums for every download are in <code>SHA256SUMS</code> on the release page.</p>
 <h3 id="uninstalling">Uninstalling</h3>
-<p><em>Settings → Advanced → Remove Keepit → Delete Keepit…</em> removes the app, the data folder, the keychain
+<p><em>Settings → Advanced → Remove Keepit → Delete…</em> removes the app, the data folder, the keychain
 entries (including the Touch ID key), the login item and the Accessibility entry. It asks for your
 password or Touch ID, a typed <code>DELETE</code> and a confirmation — export a backup first if you might want
 the data back. With Homebrew, run <code>brew uninstall --cask --force keepit</code> afterwards so Homebrew

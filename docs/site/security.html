@@ -153,13 +153,13 @@ entropy (HKDF) wraps the data key, and the entropy is in turn wrapped by the dat
 <ul>
 <li>the phrase can unlock the data and let you set a new password if you forget the old one;</li>
 <li>changing the password does not change the phrase;</li>
-<li><em>New Recovery Phrase…</em> issues new entropy and invalidates the old phrase.</li>
+<li><em>Recovery phrase → Create New…</em> (Settings → Security) issues new entropy and invalidates the old phrase.</li>
 </ul>
 <p>The phrase itself is never written to disk. Print it, or keep it in a password manager. Without the
 password, Touch ID on the same Mac, or the phrase, the data is unrecoverable by design — there is no
 server-side reset and Keepit's authors cannot help.</p>
 <h2 id="backups">Backups</h2>
-<p><em>Export Backup…</em> produces one <code>.keepit</code> file: a magic header, a format version, a random 16-byte
+<p><em>Backup → Export…</em> (Settings → Security, also <em>Export Backup…</em> in the menu) produces one <code>.keepit</code> file: a magic header, a format version, a random 16-byte
 salt, and the LZFSE-compressed JSON of history, templates and preferences sealed with AES-256-GCM
 under a PBKDF2 key from a password you choose for the file. The file is safe to keep on a cloud
 drive; its password is independent of the app password. <em>Import Backup…</em> verifies the
@@ -215,7 +215,7 @@ spctl -a -vv -t install Keepit-2.11.0.dmg      # &quot;accepted, source=Notarize
 build-and-test job that runs on every push and pull request has no access to secrets, and every
 third-party action in the workflow is pinned to a commit hash rather than a movable tag.</p>
 <h2 id="uninstalling-and-data-removal">Uninstalling and data removal</h2>
-<p><em>Settings → Advanced → Remove Keepit → Delete Keepit…</em> removes the app bundle, the data folder, the
+<p><em>Settings → Advanced → Remove Keepit → Delete…</em> removes the app bundle, the data folder, the
 keychain entry, the login item and the Accessibility grant, after asking for the password or Touch
 ID and a typed confirmation. Deleting the app by hand leaves the data folder in place — remove
 <code>~/Library/Application Support/Keepit/</code> yourself if you want it gone.</p>

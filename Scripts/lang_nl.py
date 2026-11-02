@@ -411,4 +411,10 @@ T = {
 'Data': 'Gegevens',
 'Open Folder': 'Open map',
 'Delete Keepit…': 'Verwijder Keepit…',
+'Change…': 'Wijzig…',
+'Create New…': 'Maak nieuwe…',
+'Delete…': 'Verwijder…',
+'Export…': 'Exporteer…',
+'Import…': 'Importeer…',
+'letter': 'letter',
 }

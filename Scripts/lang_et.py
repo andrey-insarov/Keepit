@@ -411,4 +411,10 @@ T = {
 'Data': 'Andmed',
 'Open Folder': 'Ava kaust',
 'Delete Keepit…': 'Kustuta Keepit…',
+'Change…': 'Muuda…',
+'Create New…': 'Loo uus…',
+'Delete…': 'Kustuta…',
+'Export…': 'Ekspordi…',
+'Import…': 'Impordi…',
+'letter': 'täht',
 }

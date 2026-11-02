@@ -411,4 +411,10 @@ T = {
 'Data': 'Data',
 'Open Folder': 'Otevřít složku',
 'Delete Keepit…': 'Smazat Keepit…',
+'Change…': 'Změnit…',
+'Create New…': 'Vytvořit novou…',
+'Delete…': 'Smazat…',
+'Export…': 'Exportovat…',
+'Import…': 'Importovat…',
+'letter': 'písmeno',
 }

@@ -434,6 +434,12 @@ T = {
 'Data': ('Данные', 'Daten', 'Données', 'Datos', 'データ', '数据'),
 'Open Folder': ('Открыть папку', 'Ordner öffnen', 'Ouvrir le dossier', 'Abrir carpeta', 'フォルダを開く', '打开文件夹'),
 'Delete Keepit…': ('Удалить Keepit…', 'Keepit löschen …', 'Supprimer Keepit…', 'Eliminar Keepit…', 'Keepit を削除…', '删除 Keepit…'),
+'Change…': ('Изменить…', 'Ändern …', 'Modifier…', 'Cambiar…', '変更…', '更改…'),
+'Create New…': ('Создать новую…', 'Neu erstellen …', 'Créer une nouvelle…', 'Crear nueva…', '新規作成…', '新建…'),
+'Delete…': ('Удалить…', 'Löschen …', 'Supprimer…', 'Eliminar…', '削除…', '删除…'),
+'Export…': ('Экспортировать…', 'Exportieren …', 'Exporter…', 'Exportar…', '書き出す…', '导出…'),
+'Import…': ('Импортировать…', 'Importieren …', 'Importer…', 'Importar…', '読み込む…', '导入…'),
+'letter': ('буква', 'Buchstabe', 'lettre', 'letra', '文字', '字母'),
 }
 
 PH = re.compile(r"%[@d]")

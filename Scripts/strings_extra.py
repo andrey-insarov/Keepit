@@ -422,4 +422,10 @@ T2 = {
 'Data': ('Дані', 'البيانات', 'Dati'),
 'Open Folder': ('Відкрити теку', 'فتح المجلد', 'Apri cartella'),
 'Delete Keepit…': ('Видалити Keepit…', 'حذف Keepit…', 'Elimina Keepit…'),
+'Change…': ('Змінити…', 'تغيير…', 'Cambia…'),
+'Create New…': ('Створити нову…', 'إنشاء جديدة…', 'Crea nuova…'),
+'Delete…': ('Видалити…', 'حذف…', 'Elimina…'),
+'Export…': ('Експортувати…', 'تصدير…', 'Esporta…'),
+'Import…': ('Імпортувати…', 'استيراد…', 'Importa…'),
+'letter': ('літера', 'حرف', 'lettera'),
 }

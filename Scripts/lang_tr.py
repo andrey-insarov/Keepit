@@ -411,4 +411,10 @@ T = {
 'Data': 'Veriler',
 'Open Folder': 'Klasörü aç',
 'Delete Keepit…': 'Keepit’i sil…',
+'Change…': 'Değiştir…',
+'Create New…': 'Yeni oluştur…',
+'Delete…': 'Sil…',
+'Export…': 'Dışa aktar…',
+'Import…': 'İçe aktar…',
+'letter': 'harf',
 }
