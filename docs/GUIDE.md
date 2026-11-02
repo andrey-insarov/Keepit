@@ -280,7 +280,7 @@ that explains it.
 
 | Pane | What is there |
 |-----|---------------|
-| **General** | Launch at login · save history on quit, restore on start · paste after choosing (off = only copy) · paste delay — raise it for apps that are slow to come to the front · open the menu at the text cursor · Backup: *Export…* / *Import…* — [Backup](#backup) |
+| **General** | Launch at login · save history on quit, restore on start · paste after choosing (off = only copy) · paste delay — raise it for apps that are slow to come to the front · open the menu at the text cursor · Backup: *Export…* / *Import…* — [Backup](#backup) · Updates: *Check for updates automatically* (direct-download edition; off = no network request at all) — [Updates](#updates) |
 | **Shortcuts** | Every global shortcut in one place — see below |
 | **Paste Queue** | The three queue keys, the idle time after which the queue switches off, and what to put between items for *Paste all remaining* — [The paste queue](#the-paste-queue) |
 | **History** | How many text/file items and images to keep (1000 / 30) · forget items older than … · *Remove duplicates* (copying the same thing again moves it to the top) · *Ignore concealed clipboard data* · the ignored-apps list (bundle identifiers; password managers are always ignored) |
@@ -372,6 +372,12 @@ Percent-encode the text (`%20` for a space). URLs are ignored while Keepit is lo
 Keepit checks GitHub Releases once a day and offers updates in a dialog; *Check for Updates…* does it
 now. Updates are signed (EdDSA) and notarized. With Homebrew, `brew upgrade --cask keepit` does the
 same. Checksums for every download are in `SHA256SUMS` on the release page.
+
+The check is the only network request Keepit makes, and it is optional: *Settings → General →
+Updates → Check for updates automatically*. Switched off, Keepit never contacts anything — not even
+when you ask — and *Check for Updates…* disappears from the menus; you then update by downloading
+from [keep.it.com](https://keep.it.com) or with Homebrew. The App Store edition has no updater and
+no such option; the App Store updates it.
 
 ### Uninstalling
 

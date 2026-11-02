@@ -13,6 +13,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     private var statusItem: NSStatusItem!
     private lazy var updater = Updater()
+    private var checkForUpdatesItem: NSMenuItem?
     private var preferencesWindow: SettingsWindowController?
     private(set) var viewer: ViewerWindowController?
     /// Set by the uninstaller: nothing may be written to disk any more (see Uninstall.swift).
@@ -92,7 +93,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         registerHotKeys()
         Storage.save(settings, to: Storage.settingsURL, encrypt: false, pretty: true)
         observeScreenLock()
-        _ = updater   // starts Sparkle's scheduled checks
+        updater.isEnabled = settings.checkForUpdates   // starts Sparkle's scheduled checks, if allowed
 
         if SelfTest.isActive {
             SelfTest.run(app: self)
@@ -500,6 +501,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         monitor.updateSettings(new)
         menuBuilder.settings = new
         menuBuilder.invalidateThumbnails()
+        if old.checkForUpdates != new.checkForUpdates {
+            updater.isEnabled = new.checkForUpdates
+            checkForUpdatesItem?.isHidden = !new.checkForUpdates
+        }
         if old.historyHotKey != new.historyHotKey || old.templateHotKey != new.templateHotKey || old.previousHotKey != new.previousHotKey
             || old.latestActionModifiers != new.latestActionModifiers || old.numberPasteModifiers != new.numberPasteModifiers
             || old.lockHotKey != new.lockHotKey || old.pauseHotKey != new.pauseHotKey
@@ -614,7 +619,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         appMenu.addItem(withTitle: L("About Keepit"), action: #selector(showAbout), keyEquivalent: "")
         appMenu.addItem(.separator())
         if updater.isConfigured {
-            appMenu.addItem(withTitle: L("Check for Updates…"), action: #selector(checkForUpdates), keyEquivalent: "")
+            let item = appMenu.addItem(withTitle: L("Check for Updates…"), action: #selector(checkForUpdates), keyEquivalent: "")
+            item.isHidden = !settings.checkForUpdates
+            checkForUpdatesItem = item
         }
         appMenu.addItem(withTitle: L("Viewer…"), action: #selector(openViewer), keyEquivalent: "l")
         appMenu.addItem(withTitle: L("Settings…"), action: #selector(openPreferences), keyEquivalent: ",")
@@ -893,7 +900,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             out.append(item(L("Lock Keepit"), #selector(lock), hotKey: settings.lockHotKey))
         }
         out.append(.separator())
-        if updater.isConfigured {
+        if updater.isConfigured, settings.checkForUpdates {
             out.append(item(L("Check for Updates…"), #selector(checkForUpdates)))
         }
         out.append(item(L("About Keepit"), #selector(showAbout)))

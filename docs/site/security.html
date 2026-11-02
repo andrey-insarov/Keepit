@@ -226,6 +226,11 @@ Updates…</em>) it fetches the Sparkle appcast from GitHub Releases over HTTPS.
 an EdDSA (Ed25519) signature embedded in the app before they are installed; a download that does
 not match is rejected. The App Store edition is updated by the App Store and makes no requests at
 all.</p>
+<p>That one request can be switched off: <em>Settings → General → Updates → Check for updates
+automatically</em>. Off, the updater is not started at all — no scheduled check, no check on demand —
+and <em>Check for Updates…</em> leaves the menus; the setting is kept in <code>settings.json</code>
+(<code>checkForUpdates</code>). You are then responsible for updating by hand (keep.it.com, GitHub Releases
+or Homebrew); security fixes reach you only when you look.</p>
 <p>No clipboard content, no usage data and no identifiers are ever sent anywhere. There is no crash
 reporter and no analytics library in the binary.</p>
 <h2 id="code-signing-and-verifying-a-download">Code signing and verifying a download</h2>

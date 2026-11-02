@@ -328,7 +328,7 @@ that explains it.</p>
 <tbody>
 <tr>
 <td><strong>General</strong></td>
-<td>Launch at login · save history on quit, restore on start · paste after choosing (off = only copy) · paste delay — raise it for apps that are slow to come to the front · open the menu at the text cursor · Backup: <em>Export…</em> / <em>Import…</em> — <a href="#backup">Backup</a></td>
+<td>Launch at login · save history on quit, restore on start · paste after choosing (off = only copy) · paste delay — raise it for apps that are slow to come to the front · open the menu at the text cursor · Backup: <em>Export…</em> / <em>Import…</em> — <a href="#backup">Backup</a> · Updates: <em>Check for updates automatically</em> (direct-download edition; off = no network request at all) — <a href="#updates">Updates</a></td>
 </tr>
 <tr>
 <td><strong>Shortcuts</strong></td>
@@ -442,6 +442,11 @@ download and the App Store edition.</p>
 <p>Keepit checks GitHub Releases once a day and offers updates in a dialog; <em>Check for Updates…</em> does it
 now. Updates are signed (EdDSA) and notarized. With Homebrew, <code>brew upgrade --cask keepit</code> does the
 same. Checksums for every download are in <code>SHA256SUMS</code> on the release page.</p>
+<p>The check is the only network request Keepit makes, and it is optional: <em>Settings → General →
+Updates → Check for updates automatically</em>. Switched off, Keepit never contacts anything — not even
+when you ask — and <em>Check for Updates…</em> disappears from the menus; you then update by downloading
+from <a href="https://keep.it.com">keep.it.com</a> or with Homebrew. The App Store edition has no updater and
+no such option; the App Store updates it.</p>
 <h3 id="uninstalling">Uninstalling</h3>
 <p><em>Settings → Advanced → Reset and uninstall → Uninstall…</em> removes the app, the data folder, the keychain
 entries (including the Touch ID key), the login item and the Accessibility entry. It asks for your

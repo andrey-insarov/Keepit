@@ -53,7 +53,7 @@ Or the DMG:
 * **Paste queue** — `⌥N` starts it, every ⌘C adds to a counter in the menu bar, `⌥V` pastes the items back one by one in the same order, `⌥⇧N` pastes all remaining joined with a separator.
 * **Templates** — folders, `-` separators, `&x` menu shortcuts, per-template hot keys, any format. Placeholders fill in at paste time: `{date…}`, `{time}`, `{clipboard}` with transforms, `{input:…}`, `{choice:a|b}`, `{cursor}`. An *Examples* folder on first launch.
 * **Viewer** — tree of Clipboard / History / Template, search with highlighted matches, in-place editing, hex dump, drag history into templates, save any format to a file.
-* **Private by design** — password-protected AES-256-GCM storage, Touch ID unlock, 24-word recovery phrase, lock on screen lock / sleep; concealed clipboard data is not recorded and known password managers are excluded by app (best effort — [how it works](https://keep.it.com/security#what-is-not-recorded)); per-app ignore list; no account; no network except the daily update check (none in the App Store edition).
+* **Private by design** — password-protected AES-256-GCM storage, Touch ID unlock, 24-word recovery phrase, lock on screen lock / sleep; concealed clipboard data is not recorded and known password managers are excluded by app (best effort — [how it works](https://keep.it.com/security#what-is-not-recorded)); per-app ignore list; no account; no network except the daily update check, which can be switched off (none in the App Store edition).
 * **Backup** — one password-encrypted `.keepit` file with history, templates and settings; Merge or Replace on import.
 * **Settings the Mac way** — General / Shortcuts / Paste Queue / History / Menu / Security / Advanced; every change applies at once; hot-key recorders with conflict checks; per-app paste key (⌘⇧V, ⌃V…).
 * **Automation** — `keepit://` URL scheme: `paste/N`, `copy/N`, `template/Name`, `add?text=`, `add-template?text=&name=`, `history`, `templates`, `viewer`, `settings`, `pause`, `resume` — from Shortcuts (“Open URL”), Raycast, Alfred or `open`.
@@ -173,6 +173,8 @@ unrecoverable — by design.
 Releases outside the App Store update themselves through Sparkle: once a day Keepit checks the
 latest GitHub Release and offers the new version; *Check for Updates…* in the menu does it on
 demand. Downloads are EdDSA-signed in addition to the Developer ID signature (see RELEASING.md).
+The check is optional — *Settings → General → Updates*; off, Keepit makes no network request at
+all and the menu item is gone.
 
 ### Verifying a download
 

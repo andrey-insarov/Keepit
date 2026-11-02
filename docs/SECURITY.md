@@ -143,6 +143,12 @@ an EdDSA (Ed25519) signature embedded in the app before they are installed; a do
 not match is rejected. The App Store edition is updated by the App Store and makes no requests at
 all.
 
+That one request can be switched off: *Settings → General → Updates → Check for updates
+automatically*. Off, the updater is not started at all — no scheduled check, no check on demand —
+and *Check for Updates…* leaves the menus; the setting is kept in `settings.json`
+(`checkForUpdates`). You are then responsible for updating by hand (keep.it.com, GitHub Releases
+or Homebrew); security fixes reach you only when you look.
+
 No clipboard content, no usage data and no identifiers are ever sent anywhere. There is no crash
 reporter and no analytics library in the binary.
 

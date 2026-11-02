@@ -14,6 +14,7 @@ final class SettingsAndStoreTests: XCTestCase {
         XCTAssertEqual(s.historyMax, 7)
         XCTAssertEqual(s.historyHotKey, Settings().historyHotKey)
         XCTAssertEqual(s.lockWithScreen, true)
+        XCTAssertEqual(s.checkForUpdates, true, "settings files from before 2.12 keep checking for updates")
     }
 
     func testSettingsRoundTrip() throws {

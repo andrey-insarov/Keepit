@@ -198,7 +198,7 @@
 {"@type":"WebSite","@id":"https://keep.it.com/#site","url":"https://keep.it.com/","name":"Keepit","publisher":{"@id":"https://keep.it.com/#org"}},
 {"@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"Why does Keepit ask for the Accessibility permission?","acceptedAnswer":{"@type":"Answer","text":"To send ⌘V to the app you were working in after you pick an item, and to find the text cursor so the menu opens next to it. Keepit does not read or monitor other apps. Without the permission it still records history and copies the chosen item to the clipboard."}},
-{"@type":"Question","name":"Does anything leave my Mac?","acceptedAnswer":{"@type":"Answer","text":"No. The only network request is the daily update check against GitHub Releases; the App Store edition does not make even that one. There is no account, no telemetry, no crash reporting."}},
+{"@type":"Question","name":"Does anything leave my Mac?","acceptedAnswer":{"@type":"Answer","text":"No. The only network request is the daily update check against GitHub Releases, and you can switch it off in Settings → General; the App Store edition does not make even that one. There is no account, no telemetry, no crash reporting."}},
 {"@type":"Question","name":"What if I forget the password?","acceptedAnswer":{"@type":"Answer","text":"Use the 24-word recovery phrase shown when you turned protection on, or Touch ID on the same Mac. With neither, the data cannot be recovered — there is no master key, by design."}},
 {"@type":"Question","name":"Is Keepit really free? What's the catch?","acceptedAnswer":{"@type":"Answer","text":"Free and MIT-licensed, source on GitHub. Keepit was built by the founder of the it.com domain zone to show what can live at a .it.com address. No ads, no in-app purchases, no pro tier."}},
 {"@type":"Question","name":"How do I move my data to another Mac?","acceptedAnswer":{"@type":"Answer","text":"Settings → General → Backup → Export writes one encrypted .keepit file with history, templates and preferences; Import on the other Mac merges or replaces."}},
@@ -312,7 +312,7 @@ open "keepit://pause"</div>
     <div class="ledger">
       <div><strong>0</strong><span>accounts, servers or sync. Nothing to log in to.</span></div>
       <div><strong>0</strong><span>analytics, crash reports or trackers — not even anonymous ones.</span></div>
-      <div><strong>1</strong><span>network request: the daily update check against GitHub. Off in the App Store edition.</span></div>
+      <div><strong>1</strong><span>network request: the daily update check against GitHub. Optional; off in the App Store edition.</span></div>
       <div><strong>1</strong><span>folder on your Mac with everything in it. Delete it and Keepit is gone.</span></div>
     </div>
     <div class="facts"><ul>
@@ -364,7 +364,7 @@ open "keepit://pause"</div>
   <section id="faq"><div class="wrap faq">
     <h2>Questions</h2>
     <details><summary>Why does Keepit ask for the Accessibility permission?</summary><p>For two things: to send ⌘V to the app you were working in after you pick an item, and to find the text cursor so the menu opens next to it. Keepit does not read or monitor other apps. Without the permission it still records history and copies the chosen item to the clipboard — you paste by hand.</p></details>
-    <details><summary>Does anything leave my Mac?</summary><p>No. The only network request is the daily update check against GitHub Releases, and the App Store edition does not make even that one. There is no account, no telemetry, no crash reporting.</p></details>
+    <details><summary>Does anything leave my Mac?</summary><p>No. The only network request is the daily update check against GitHub Releases — and you can switch it off in Settings → General, after which Keepit makes no request at all. The App Store edition does not make even that one. There is no account, no telemetry, no crash reporting.</p></details>
     <details><summary>What if I forget the password?</summary><p>Use the 24-word recovery phrase Keepit showed you when you turned protection on, or Touch ID on the same Mac. With neither, the data cannot be recovered — there is no master key, by design.</p></details>
     <details><summary>Is it really free? What's the catch?</summary><p>Free, MIT-licensed, source on <a href="https://github.com/andrey-insarov/Keepit">GitHub</a>. Keepit was built by the founder of the <a href="https://it.com">it.com</a> domain zone to show what can live at a .it.com address — the app is the advertisement. No ads, no in-app purchases, no pro tier, and therefore nothing to gain from your data.</p></details>
     <details><summary>Where does the design come from?</summary><p>Keepit started as a macOS take on the workflow of <a href="https://github.com/nakkag/CLCL">CLCL</a>, a classic Windows clipboard tool, and grew into an app of its own — written from scratch in Swift, with ideas drawn from many clipboard and snippet managers. It is not affiliated with the CLCL author.</p></details>
