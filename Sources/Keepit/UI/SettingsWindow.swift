@@ -92,6 +92,9 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
     private var panes: [Pane] = []
     private let container = NSView()
     private var shownPane: NSView?
+    /// One label column and one window width for all panes, measured from the real (localized) labels.
+    private var labelWidth: CGFloat = 0
+    private var windowWidth: CGFloat = 0
     private static let lastPaneKey = "SettingsWindow.pane"
 
     init(app: AppDelegate) {
@@ -148,18 +151,6 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         return [l, NSView()]
     }
 
-    private static let spanTag = 7001
-    /// Explanatory text that spans both columns, from the leading edge.
-    private func note(_ text: String, width: CGFloat = 480) -> [NSView] {
-        let l = NSTextField(wrappingLabelWithString: text)
-        l.textColor = .secondaryLabelColor
-        l.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
-        l.preferredMaxLayoutWidth = width
-        l.widthAnchor.constraint(lessThanOrEqualToConstant: width).isActive = true
-        l.tag = Self.spanTag
-        return [l, NSView()]
-    }
-
     private func status(_ field: NSTextField) -> [NSView] {
         field.textColor = .systemRed
         field.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
@@ -207,10 +198,6 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         // Hug the content: an empty label column must not be handed half of the window.
         g.setContentHuggingPriority(.required, for: .horizontal)
         g.setContentCompressionResistancePriority(.required, for: .horizontal)
-        for (i, r) in rows.enumerated() where (r.first as? NSTextField)?.tag == Self.spanTag {
-            g.mergeCells(inHorizontalRange: NSRange(location: 0, length: 2), verticalRange: NSRange(location: i, length: 1))
-            g.cell(atColumnIndex: 0, rowIndex: i).xPlacement = .leading
-        }
         g.translatesAutoresizingMaskIntoConstraints = false
         return g
     }
@@ -309,9 +296,8 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         ])
 
         let queue = grid([
-            note(L("Serial copy-and-paste. Start the queue, copy several things in a row (the menu bar icon counts them), then paste them back one by one in the same order with the key below. The queue ends when the last item has been pasted or after the idle time; ⌘V keeps working as usual.")),
             header(L("Shortcuts")),
-            row(L("Start / stop the queue:"), recorder(queueHK)),
+            row(L("Start / stop the queue:"), help(recorder(queueHK), L("Serial copy-and-paste. Start the queue, copy several things in a row (the menu bar icon counts them), then paste them back one by one in the same order with the key below. The queue ends when the last item has been pasted or after the idle time; ⌘V keeps working as usual."))),
             row(L("Paste next item:"), recorder(queuePasteHK)),
             row(L("Paste all remaining:"), help(recorder(queueAllHK), L("Pastes everything still in the queue as one text, items joined with the separator below, and ends the queue."))),
             status(queueStatus),
@@ -344,14 +330,13 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         let menu = grid([
             header(L("History menu")),
             [NSView(), help(check(searchMenu), L("A search field at the top of the history menu: typing filters the list in place, Return pastes the first match. Item shortcuts then become ⌘1–⌘0 instead of 1-9/0/A-Z."))],
-            [NSView(), help(check(numberItems), L("Prefix items with 1-9, 0, A-Z; pressing the key pastes the item without the mouse."))],
+            [NSView(), help(check(numberItems), L("Prefix items with 1-9, 0, A-Z; pressing the key pastes the item without the mouse. Hold ⇧ while the menu is open for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete. For the latest item the submenu also shows the global shortcuts that do the same without the menu."))],
             [NSView(), help(check(showPreview), L("Hovering a history item shows the full image or the first lines of text in a panel beside the menu. Tooltips are not shown while this is on."))],
             [NSView(), check(showTips)],
             [NSView(), check(showSource)],
             [NSView(), check(showThumbs)],
             row(L("Title length:"), number(titleLength, unit: L("characters"), min: 10, max: 500, step: 10)),
             row(L("Thumbnail height:"), number(thumbSize, unit: L("pixels"), min: 16, max: 128, step: 8)),
-            note(L("Hold ⇧ while the menu is open for the extended menu: every history item gets a submenu with all actions — paste as plain text, UPPERCASE, single line, copy only, add to Templates, delete. For the latest item the submenu also shows the global shortcuts that do the same without the menu.")),
         ])
 
         let exportBtn = NSButton(title: L("Export Backup…"), target: self, action: #selector(exportTapped))
@@ -395,6 +380,15 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             Pane(id: .init("security"), title: L("Security"), symbol: "lock", view: security),
             Pane(id: .init("advanced"), title: L("Advanced"), symbol: "wrench.and.screwdriver", view: advanced),
         ]
+        // Measure every pane once: the widest label fixes the colon axis for the whole window, the
+        // widest pane fixes the window width; every block is then centred (classic macOS settings).
+        for p in panes { (p.view as? NSGridView)?.layoutSubtreeIfNeeded() }
+        labelWidth = panes.compactMap { ($0.view as? NSGridView)?.column(at: 0).width }.max() ?? 0
+        for p in panes { (p.view as? NSGridView)?.column(at: 0).width = labelWidth }
+        for p in panes { (p.view as? NSGridView)?.layoutSubtreeIfNeeded() }
+        let widest = panes.map { $0.view.fittingSize.width }.max() ?? 480
+        windowWidth = max(560, ceil(widest) + 2 * 32)
+
         container.translatesAutoresizingMaskIntoConstraints = false
         let guide = NSButton(title: "", target: self, action: #selector(openGuide))
         guide.bezelStyle = .helpButton
@@ -474,8 +468,8 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         container.addSubview(v)
         NSLayoutConstraint.activate([
             v.topAnchor.constraint(equalTo: container.topAnchor, constant: 20),
-            v.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 20),
-            v.trailingAnchor.constraint(lessThanOrEqualTo: container.trailingAnchor, constant: -20),
+            v.centerXAnchor.constraint(equalTo: container.centerXAnchor),
+            v.leadingAnchor.constraint(greaterThanOrEqualTo: container.leadingAnchor, constant: 20),
         ])
         shownPane = v
         window.toolbar?.selectedItemIdentifier = pane.id
@@ -483,7 +477,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         UserDefaults.standard.set(pane.id.rawValue, forKey: Self.lastPaneKey)
 
         let fit = v.fittingSize
-        let size = NSSize(width: max(560, fit.width + 40), height: fit.height + 20 + 16 + 21 + 14)   // margins + help button
+        let size = NSSize(width: windowWidth, height: ceil(fit.height) + 20 + 16 + 21 + 14)   // margins + help button
         var frame = window.frameRect(forContentRect: NSRect(origin: .zero, size: size))
         let old = window.frame
         frame.origin = NSPoint(x: old.minX, y: old.maxY - frame.height)   // keep the title bar where it is
