@@ -162,6 +162,9 @@ cells into a form, lines from a page into a document. The paste queue does that 
    counter: <code>📎 ● 0</code>.</li>
 <li>Copy as usual with ⌘C, as many times as you like. The counter goes up with every copy: 1, 2, 3…
    Everything is recorded in the history too.</li>
+</ol>
+<figure class="shot" style="max-width:280px"><a href="img/guide/queue-menubar.png" class="zoom" title="Open full size"><img src="img/guide/queue-menubar.png" alt="The menu bar while the queue is on: red dot and counter" width="280" height="48" loading="lazy"></a><figcaption>The menu bar while the queue is on: red dot and counter</figcaption></figure>
+<ol>
 <li>Switch to where the text goes and press <strong>⌥V</strong> for each item. The first thing you copied is
    pasted first, the counter goes down. ⌘V still pastes the clipboard as usual, so you can mix both.</li>
 <li>The queue switches itself off after the last item is pasted, or after two minutes without a copy
@@ -170,6 +173,8 @@ cells into a form, lines from a page into a document. The paste queue does that 
 <p><strong>⌥⇧N</strong> pastes everything still in the queue in one go, items joined with a line break, a tab, a
 space or nothing — pick on the <em>Paste Queue</em> pane of Settings, where the idle time lives too. While the queue is on, the history menu marks its
 items: <code>▶</code> next to paste, <code>○</code> still queued, <code>✓</code> already pasted.</p>
+<figure class="shot" style="max-width:370px"><a href="img/guide/queue-menu.png" class="zoom" title="Open full size"><img src="img/guide/queue-menu.png" alt="The history menu with the queue on: ○ queued, ▶ next, ✓ pasted; the menu row shows how many are left" width="370" height="575" loading="lazy"></a><figcaption>The history menu with the queue on: ○ queued, ▶ next, ✓ pasted; the menu row shows how many are left</figcaption></figure>
+<figure class="shot" style="max-width:609px"><a href="img/guide/prefs-queue.png" class="zoom" title="Open full size"><img src="img/guide/prefs-queue.png" alt="Settings → Paste Queue" width="609" height="427" loading="lazy"></a><figcaption>Settings → Paste Queue</figcaption></figure>
 <h3 id="the-extended-menu">The extended menu</h3>
 <p>Hold <strong>⇧</strong> while the history menu is open and every item gets a <code>▸</code> submenu with all actions for
 that item: Paste, Paste as plain text, Copy only (clipboard, no paste), the <em>Paste as</em>
@@ -297,6 +302,7 @@ the empty line.</p>
 the Mac: pick a pane in the toolbar, and every change applies the moment you make it — there is no
 Save button; close the window with ⌘W or Esc. Every option with a <strong>?</strong> next to it has a popover
 that explains it.</p>
+<figure class="shot" style="max-width:609px"><a href="img/guide/prefs-general.png" class="zoom" title="Open full size"><img src="img/guide/prefs-general.png" alt="Settings → General" width="609" height="377" loading="lazy"></a><figcaption>Settings → General</figcaption></figure>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -335,12 +341,12 @@ that explains it.</p>
 </tr>
 </tbody>
 </table></div>
-<figure class="shot" style="max-width:689px"><a href="img/guide/prefs-hotkeys.png" class="zoom" title="Open full size"><img src="img/guide/prefs-hotkeys.png" alt="Settings → Shortcuts" width="689" height="468" loading="lazy"></a><figcaption>Settings → Shortcuts</figcaption></figure>
+<figure class="shot" style="max-width:609px"><a href="img/guide/prefs-history.png" class="zoom" title="Open full size"><img src="img/guide/prefs-history.png" alt="Settings → History: limits and the ignored-apps list" width="609" height="490" loading="lazy"></a><figcaption>Settings → History: limits and the ignored-apps list</figcaption></figure>
+<figure class="shot" style="max-width:609px"><a href="img/guide/prefs-hotkeys.png" class="zoom" title="Open full size"><img src="img/guide/prefs-hotkeys.png" alt="Settings → Shortcuts" width="609" height="679" loading="lazy"></a><figcaption>Settings → Shortcuts</figcaption></figure>
 <p>On the <strong>Shortcuts</strong> pane click a field and press a combination; ⌫ switches a key off; a
 combination already used by another command is refused and the reason is shown under the fields; <em>Reset to
 Defaults</em> brings back the ⌥-letter set (⌥M history, ⌥T templates, ⌥E Viewer, ⌥S Settings, ⌥C Clear History, ⌥P pause, ⌥L lock, ⌥Q quit), ⌥⇧V and ⌃⌥. <em>Paste item by number</em> and <em>Actions on the latest item</em>
-take only modifiers — the digit or letter is added by Keepit. Two of your own keys on the same
-combination are refused on Save; if macOS or another app already owns one, Keepit says so when it
+take only modifiers — the digit or letter is added by Keepit. If macOS or another app already owns one, Keepit says so when it
 starts. <em>Viewer</em> ⌥E, <em>Settings</em> ⌥S, <em>Clear History</em> ⌥C, <em>Pause recording</em> ⌥P, <em>Lock Keepit</em> ⌥L and <em>Quit Keepit</em> ⌥Q work from any app and are shown next to their commands in the menu. On a US layout ⌥+letter normally types a special character (⌥S = ß, ⌥C = ç …); if you need one of those, move the key.</p>
 <hr />
 <h2 id="part-6-security">Part 6 — Security</h2>
@@ -352,7 +358,7 @@ when the screen locks or the Mac sleeps.</p>
 <figure class="shot" style="max-width:372px"><a href="img/guide/set-password.png" class="zoom" title="Open full size"><img src="img/guide/set-password.png" alt="Setting the password: layout indicator and strength meter" width="372" height="380" loading="lazy"></a><figcaption>Setting the password: layout indicator and strength meter</figcaption></figure>
 <p>The password dialogs show the current keyboard layout and warn about Caps Lock, so a rejected
 password is rarely a mystery.</p>
-<figure class="shot" style="max-width:700px"><a href="img/guide/prefs-security.png" class="zoom" title="Open full size"><img src="img/guide/prefs-security.png" alt="Settings → Security" width="700" height="527" loading="lazy"></a><figcaption>Settings → Security</figcaption></figure>
+<figure class="shot" style="max-width:609px"><a href="img/guide/prefs-security.png" class="zoom" title="Open full size"><img src="img/guide/prefs-security.png" alt="Settings → Security" width="609" height="457" loading="lazy"></a><figcaption>Settings → Security</figcaption></figure>
 <h3 id="touch-id">Touch ID</h3>
 <p>With <em>Unlock with Touch ID</em> the key is also stored in the Secure Enclave behind your fingerprint:
 Keepit asks for a touch instead of the password. The password keeps working as a fallback — <em>Use
@@ -425,6 +431,7 @@ entries (including the Touch ID key), the login item and the Accessibility entry
 password or Touch ID, a typed <code>DELETE</code> and a confirmation — export a backup first if you might want
 the data back. With Homebrew, run <code>brew uninstall --cask --force keepit</code> afterwards so Homebrew
 forgets the cask.</p>
+<figure class="shot" style="max-width:609px"><a href="img/guide/prefs-advanced.png" class="zoom" title="Open full size"><img src="img/guide/prefs-advanced.png" alt="Settings → Advanced" width="609" height="361" loading="lazy"></a><figcaption>Settings → Advanced</figcaption></figure>
 <hr />
 <h2 id="reference">Reference</h2>
 <h3 id="troubleshooting">Troubleshooting</h3>

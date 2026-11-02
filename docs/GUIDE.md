@@ -128,6 +128,9 @@ cells into a form, lines from a page into a document. The paste queue does that 
    counter: `📎 ● 0`.
 2. Copy as usual with ⌘C, as many times as you like. The counter goes up with every copy: 1, 2, 3…
    Everything is recorded in the history too.
+
+   ![The menu bar while the queue is on: red dot and counter](site/img/guide/queue-menubar.png)
+
 3. Switch to where the text goes and press **⌥V** for each item. The first thing you copied is
    pasted first, the counter goes down. ⌘V still pastes the clipboard as usual, so you can mix both.
 4. The queue switches itself off after the last item is pasted, or after two minutes without a copy
@@ -136,6 +139,10 @@ cells into a form, lines from a page into a document. The paste queue does that 
 **⌥⇧N** pastes everything still in the queue in one go, items joined with a line break, a tab, a
 space or nothing — pick on the *Paste Queue* pane of Settings, where the idle time lives too. While the queue is on, the history menu marks its
 items: `▶` next to paste, `○` still queued, `✓` already pasted.
+
+![The history menu with the queue on: ○ queued, ▶ next, ✓ pasted; the menu row shows how many are left](site/img/guide/queue-menu.png)
+
+![Settings → Paste Queue](site/img/guide/prefs-queue.png)
 
 ### The extended menu
 
@@ -259,6 +266,8 @@ the Mac: pick a pane in the toolbar, and every change applies the moment you mak
 Save button; close the window with ⌘W or Esc. Every option with a **?** next to it has a popover
 that explains it.
 
+![Settings → General](site/img/guide/prefs-general.png)
+
 | Pane | What is there |
 |-----|---------------|
 | **General** | Launch at login · save history on quit, restore on start · paste after choosing (off = only copy) · paste delay — raise it for apps that are slow to come to the front · open the menu at the text cursor |
@@ -269,13 +278,14 @@ that explains it.
 | **Security** | Password, Touch ID, locking, recovery phrase, Backup (Export / Import) — [Part 6](#part-6--security) |
 | **Advanced** | Clipboard poll interval · Data: *Open Folder* · Reset and uninstall: *Reset…* (back to a fresh install, example templates return) · *Uninstall…* (reset, then remove the app, Launch at login, keychain entry and permissions) |
 
+![Settings → History: limits and the ignored-apps list](site/img/guide/prefs-history.png)
+
 ![Settings → Shortcuts](site/img/guide/prefs-hotkeys.png)
 
 On the **Shortcuts** pane click a field and press a combination; ⌫ switches a key off; a
 combination already used by another command is refused and the reason is shown under the fields; *Reset to
 Defaults* brings back the ⌥-letter set (⌥M history, ⌥T templates, ⌥E Viewer, ⌥S Settings, ⌥C Clear History, ⌥P pause, ⌥L lock, ⌥Q quit), ⌥⇧V and ⌃⌥. *Paste item by number* and *Actions on the latest item*
-take only modifiers — the digit or letter is added by Keepit. Two of your own keys on the same
-combination are refused on Save; if macOS or another app already owns one, Keepit says so when it
+take only modifiers — the digit or letter is added by Keepit. If macOS or another app already owns one, Keepit says so when it
 starts. *Viewer* ⌥E, *Settings* ⌥S, *Clear History* ⌥C, *Pause recording* ⌥P, *Lock Keepit* ⌥L and *Quit Keepit* ⌥Q work from any app and are shown next to their commands in the menu. On a US layout ⌥+letter normally types a special character (⌥S = ß, ⌥C = ç …); if you need one of those, move the key.
 
 ---
@@ -357,6 +367,8 @@ entries (including the Touch ID key), the login item and the Accessibility entry
 password or Touch ID, a typed `DELETE` and a confirmation — export a backup first if you might want
 the data back. With Homebrew, run `brew uninstall --cask --force keepit` afterwards so Homebrew
 forgets the cask.
+
+![Settings → Advanced](site/img/guide/prefs-advanced.png)
 
 ---
 
