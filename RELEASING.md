@@ -168,3 +168,20 @@ and is stored AES-GCM encrypted.
 
 Expect the sandbox to block one thing: the Viewer's "open file" from a FILE LIST item works only
 for files the user picked through a panel in this session; other paths open in Finder instead.
+
+## Off-site mirror (Codeberg)
+
+`https://codeberg.org/itcom/Keepit` is a push mirror: the `mirror` job pushes every branch and tag
+after each push to `main` or a tag (Codeberg itself no longer offers pull mirrors). One-time setup:
+
+1. `ssh-keygen -t ed25519 -f ~/Desktop/codeberg_keepit -N "" -C "github-actions mirror"`
+2. Codeberg → repo → Settings → **Deploy keys** → Add: paste `codeberg_keepit.pub`, tick
+   **Enable write access**.
+3. `gh secret set CODEBERG_DEPLOY_KEY -R andrey-insarov/Keepit < ~/Desktop/codeberg_keepit`
+   (a repository secret is fine: the key can only write to that one Codeberg repository).
+4. Delete both files from the Desktop (keep a copy in the password manager if you like; a lost key
+   is simply replaced by a new deploy key).
+
+Note `git push --mirror` makes Codeberg identical to GitHub, including deleting branches that were
+deleted here — do not push to the mirror by hand.
+

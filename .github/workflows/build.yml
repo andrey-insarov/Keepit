@@ -153,3 +153,28 @@ jobs:
           git add Casks/keepit.rb
           git diff --cached --quiet || git commit -m "cask: Keepit $(cat VERSION)"
           git push origin main
+
+  # Off-site backup: push every branch and tag to the Codeberg mirror after each push to main or a tag.
+  # Needs secret CODEBERG_DEPLOY_KEY: an SSH private key whose public half is a write-enabled
+  # deploy key on https://codeberg.org/itcom/Keepit (Settings → Deploy keys). Nothing else uses it.
+  mirror:
+    if: github.event_name == 'push'
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0
+      - name: Push to Codeberg
+        env:
+          CODEBERG_DEPLOY_KEY: ${{ secrets.CODEBERG_DEPLOY_KEY }}
+        run: |
+          if [ -z "$CODEBERG_DEPLOY_KEY" ]; then echo "CODEBERG_DEPLOY_KEY not set — skipping mirror"; exit 0; fi
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          echo "$CODEBERG_DEPLOY_KEY" > ~/.ssh/codeberg && chmod 600 ~/.ssh/codeberg
+          ssh-keyscan -t ed25519 codeberg.org >> ~/.ssh/known_hosts 2>/dev/null
+          export GIT_SSH_COMMAND="ssh -i ~/.ssh/codeberg -o IdentitiesOnly=yes"
+          git push --mirror --quiet git@codeberg.org:itcom/Keepit.git
+          rm -f ~/.ssh/codeberg
+          echo "Mirrored $(git rev-parse --short HEAD) to codeberg.org/itcom/Keepit"
+
