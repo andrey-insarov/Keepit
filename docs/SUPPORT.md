@@ -1,6 +1,6 @@
 # Keepit support
 
-Found a bug, a wrong translation, or have a question? Write below — a reply usually comes within a day or two. Bugs can also go to [GitHub Issues](https://github.com/andrey-insarov/Keepit/issues).
+Found a bug, a wrong translation, or have a question? Write below. Bugs can also go to [GitHub Issues](https://github.com/andrey-insarov/Keepit/issues).
 
 <form id="fb" class="fb" action="/api/feedback" method="post" enctype="multipart/form-data" novalidate>
   <div class="row2">
@@ -24,7 +24,7 @@ Found a bug, a wrong translation, or have a question? Write below — a reply us
   <div class="cf-turnstile" data-sitekey="__TURNSTILE_SITE_KEY__" data-theme="light"></div>
   <p class="fb-err" id="fb-err" hidden></p>
   <button type="submit" class="btn">Send</button>
-  <div class="fb-ok" id="fb-ok" hidden><b>Thank you — your message has been sent.</b><br>A copy went to your e-mail address; we usually reply within a day or two.</div>
+  <div class="fb-ok" id="fb-ok" hidden><b>Thank you — your message has been sent.</b><br>A copy went to your e-mail address.</div>
 </form>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script>

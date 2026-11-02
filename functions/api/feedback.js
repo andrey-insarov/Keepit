@@ -111,7 +111,7 @@ export async function onRequestPost({ request, env }) {
     body: JSON.stringify({
       from: env.FEEDBACK_FROM, to: [email], reply_to: env.FEEDBACK_TO,
       subject: "We received your message — Keepit",
-      text: `Hi ${name},\n\nThank you — your message has reached Keepit support. We usually reply within a day or two.\n\nYour message:\n\n${message}\n\n— Keepit, keep.it.com`,
+      text: `Hi ${name},\n\nThank you — your message has reached Keepit support.\n\nYour message:\n\n${message}\n\n— Keepit, keep.it.com`,
     }),
   }).catch(() => {});
   return json(200, { ok: true });
