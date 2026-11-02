@@ -4,4 +4,4 @@ How Keepit protects your data — storage, encryption, Touch ID, permissions, ne
 
 ## Reporting a vulnerability
 
-Use GitHub's private vulnerability reporting (Security → Report a vulnerability on the repository) or email dp@intistele.com instead of opening a public issue. You will hear back within a few days; fixes ship as soon as they are ready and are credited if you wish.
+Use GitHub's private vulnerability reporting (Security → Report a vulnerability on the repository) or email admin@keep.it.com instead of opening a public issue. You will hear back within a few days; fixes ship as soon as they are ready and are credited if you wish.

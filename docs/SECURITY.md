@@ -182,5 +182,5 @@ exhaust memory or disk:
 ## Reporting a vulnerability
 
 Please use GitHub's private vulnerability reporting (*Security → Report a vulnerability* on the
-repository) or write to dp@intistele.com rather than opening a public issue. You will get an answer within a
+repository) or write to admin@keep.it.com rather than opening a public issue. You will get an answer within a
 few days, and a fix is released as soon as it is ready; credit is given if you want it.

@@ -8,7 +8,7 @@ _Version 1.1, effective 1 November 2026._
 
 Keepit – Clipboard Manager ("Keepit", "the app") is published by **UK Intis Telecom LTD**, a company registered in England and Wales under company number **11767499**, registered office **20 Hammersmith Broadway, London, England, W6 7AF** ("we", "us"). We are the data controller for the purposes of the UK GDPR and the EU GDPR to the extent any personal data is processed in connection with Keepit — which, as explained below, we do not do.
 
-Privacy contact: **dp@intistele.com**
+Privacy contact: **admin@keep.it.com**
 
 ## 2. What Keepit does with your data
 
@@ -64,4 +64,4 @@ We may update this policy when the app or the law changes. The current version i
 
 ## 12. Contact
 
-UK Intis Telecom LTD · 20 Hammersmith Broadway, London, England, W6 7AF · **dp@intistele.com** · https://keep.it.com
+UK Intis Telecom LTD · 20 Hammersmith Broadway, London, England, W6 7AF · **admin@keep.it.com** · https://keep.it.com

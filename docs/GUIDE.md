@@ -409,7 +409,7 @@ keyboard). Keepit keeps the setting and asks for the fingerprint as soon as a se
 **Homebrew refuses to install over an existing app.** Quit Keepit and move
 `/Applications/Keepit.app` to the Trash first, or add `--force`.
 
-Still stuck? [GitHub Issues](https://github.com/andrey-insarov/Keepit/issues) · dp@intistele.com
+Still stuck? [GitHub Issues](https://github.com/andrey-insarov/Keepit/issues) · admin@keep.it.com
 
 ### Keyboard cheat sheet
 
