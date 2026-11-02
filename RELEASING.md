@@ -122,6 +122,19 @@ A build without the public key simply has no *Check for Updates…* item. Apps a
 only learn about updates from the first release that ships an appcast, so the first Sparkle-enabled
 version has to be installed by hand once.
 
+### Updating Sparkle itself
+
+The Sparkle revision is pinned in the committed `Package.resolved`, and both CI jobs run
+`Scripts/check_resolved.sh`, which fails the build if resolution lands anywhere else. So a new
+Sparkle release never enters a Keepit build by itself — it is a deliberate, reviewed commit:
+
+1. Read the Sparkle release notes for the new version.
+2. `swift package update Sparkle` (or edit `Package.resolved` by hand), then `swift build && swift test`.
+3. Commit `Package.resolved` on its own, with the version in the message ("Sparkle 2.10.1 → 2.11.0").
+
+Both variants (Developer ID and App Store) resolve the same dependency set; the App Store build just
+does not link Sparkle (`make appstore` checks that with `otool`).
+
 ## Mac App Store
 
 The App Store build is sandboxed (`Resources/Keepit-AppStore.entitlements`) and packaged as a

@@ -25,6 +25,14 @@ jobs:
       - name: Swift version
         run: swift --version
 
+      # Supply chain: the Sparkle revision is pinned in Package.resolved. If resolution on this
+      # toolchain lands anywhere else (new compatible release, moved tag), stop before anything
+      # is built — a release job must never sign a binary whose dependency nobody reviewed.
+      # Pins are compared semantically (identity / location / revision / version) so a change of
+      # the file's schema version by a newer SwiftPM does not count as drift.
+      - name: Dependencies match Package.resolved
+        run: Scripts/check_resolved.sh
+
       - name: Build (debug, warnings visible)
         run: swift build
 
@@ -79,6 +87,9 @@ jobs:
             echo "::error::Tag $GITHUB_REF_NAME but VERSION is $(cat VERSION) — the tag points at the wrong commit (forgot git pull?). Delete the tag and re-tag the right commit."
             exit 1
           fi
+
+      - name: Dependencies match Package.resolved
+        run: Scripts/check_resolved.sh
 
       - name: Import Developer ID certificate
         env:
