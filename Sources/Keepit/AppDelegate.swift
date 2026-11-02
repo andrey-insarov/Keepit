@@ -1175,7 +1175,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         NSApp.terminate(nil)
     }
 
-    private func showAccessibilityAlert() {
+    func showAccessibilityAlert() {
         let a = NSAlert()
         a.messageText = L("Keepit needs the Accessibility permission to paste")
         a.informativeText = L("Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit.")
