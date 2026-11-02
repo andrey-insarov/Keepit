@@ -169,7 +169,7 @@ final class HotKeySettingsTests: XCTestCase {
         let s = try JSONDecoder().decode(Settings.self, from: json)
         XCTAssertEqual(s.viewerHotKey, HotKey.option(kVK_ANSI_E))
         XCTAssertEqual(s.queuePasteHotKey, HotKey.option(kVK_ANSI_V))
-        XCTAssertEqual(s.queueHotKey, HotKey.option(kVK_ANSI_R))
+        XCTAssertEqual(s.queueHotKey, HotKey.option(kVK_ANSI_N))
         // But a file that already knows about the queue keeps whatever it says.
         let json2 = Data(#"{"viewerHotKey":{"keyCode":9,"modifiers":2048},"queuePasteHotKey":null}"#.utf8)
         let s2 = try JSONDecoder().decode(Settings.self, from: json2)
@@ -177,12 +177,22 @@ final class HotKeySettingsTests: XCTestCase {
         XCTAssertNil(s2.queuePasteHotKey)
     }
 
+    func testQueueKeysMoveFromRToN() throws {
+        // A 2.10.x file on the old defaults follows the new ones; a custom key stays.
+        let old = Data(#"{"queueHotKey":{"keyCode":15,"modifiers":2048},"queuePasteAllHotKey":{"keyCode":15,"modifiers":2560}}"#.utf8)
+        let s = try JSONDecoder().decode(Settings.self, from: old)
+        XCTAssertEqual(s.queueHotKey, HotKey.option(kVK_ANSI_N)); XCTAssertEqual(s.queuePasteAllHotKey, HotKey.optionShift(kVK_ANSI_N))
+        let custom = Data(#"{"queueHotKey":{"keyCode":15,"modifiers":2048},"viewerHotKey":{"keyCode":45,"modifiers":2048}}"#.utf8)   // Viewer on ⌥N
+        let c = try JSONDecoder().decode(Settings.self, from: custom)
+        XCTAssertEqual(c.queueHotKey, HotKey.option(kVK_ANSI_R), "⌥N is the Viewer here, so the queue keeps ⌥R")
+    }
+
     func testQueueSettingsRoundTrip() throws {
         var s = Settings()
         s.queueTimeout = 45; s.queueSeparator = "\t"; s.queuePasteAllHotKey = nil
         let back = try JSONDecoder().decode(Settings.self, from: JSONEncoder().encode(s))
         XCTAssertEqual(back.queueTimeout, 45); XCTAssertEqual(back.queueSeparator, "\t"); XCTAssertNil(back.queuePasteAllHotKey)
-        XCTAssertEqual(back.queueHotKey, HotKey.option(kVK_ANSI_R))
+        XCTAssertEqual(back.queueHotKey, HotKey.option(kVK_ANSI_N))
     }
 
     func testLatestActionKeyCodesAreDistinct() {

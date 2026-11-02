@@ -124,16 +124,16 @@ changed or switched off in *Settings → Shortcuts*.
 Sometimes you want to copy five things from one place and paste them, in order, somewhere else —
 cells into a form, lines from a page into a document. The paste queue does that without the menu:
 
-1. Press **⌥R** (or *Start Paste Queue* in the menu). The menu bar icon shows a red dot and a
+1. Press **⌥N** (or *Start Paste Queue* in the menu). The menu bar icon shows a red dot and a
    counter: `📎 ● 0`.
 2. Copy as usual with ⌘C, as many times as you like. The counter goes up with every copy: 1, 2, 3…
    Everything is recorded in the history too.
 3. Switch to where the text goes and press **⌥V** for each item. The first thing you copied is
    pasted first, the counter goes down. ⌘V still pastes the clipboard as usual, so you can mix both.
 4. The queue switches itself off after the last item is pasted, or after two minutes without a copy
-   or a paste (the time is adjustable). ⌥R again stops it early.
+   or a paste (the time is adjustable). ⌥N again stops it early.
 
-**⌥⇧R** pastes everything still in the queue in one go, items joined with a line break, a tab, a
+**⌥⇧N** pastes everything still in the queue in one go, items joined with a line break, a tab, a
 space or nothing — pick on the *Paste Queue* pane of Settings, where the idle time lives too. While the queue is on, the history menu marks its
 items: `▶` next to paste, `○` still queued, `✓` already pasted.
 
@@ -400,7 +400,7 @@ Still stuck? [GitHub Issues](https://github.com/andrey-insarov/Keepit/issues) ·
 | `⌃⌥W` `⌃⌥J` | Trimmed / single line |
 | `⌃⌥A` | Add the clipboard to Templates |
 | `⌃⌥⌫` | Delete the newest item |
-| `⌥R` · `⌥V` · `⌥⇧R` | Paste queue: start / stop · paste next · paste all remaining |
+| `⌥N` · `⌥V` · `⌥⇧N` | Paste queue: start / stop · paste next · paste all remaining |
 | `⌥E` `⌥S` `⌥C` `⌥P` `⌥L` `⌥Q` | Viewer · Settings · Clear History · Pause recording · Lock · Quit |
 | `⌘F` in the Viewer | Search |
 | `⌘,` | Settings |

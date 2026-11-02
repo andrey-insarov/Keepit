@@ -131,9 +131,9 @@ struct Settings: Codable, Equatable {
     var pasteAfterSelect = true    // action.paste
 
     // [queue] — serial copy-and-paste
-    var queueHotKey: HotKey? = HotKey.option(kVK_ANSI_R)         // start / stop the paste queue ("Record")
+    var queueHotKey: HotKey? = HotKey.option(kVK_ANSI_N)         // start / stop the paste queue ("Numbers")
     var queuePasteHotKey: HotKey? = HotKey.option(kVK_ANSI_V)    // paste the next queued item
-    var queuePasteAllHotKey: HotKey? = HotKey.optionShift(kVK_ANSI_R) // paste everything left, joined
+    var queuePasteAllHotKey: HotKey? = HotKey.optionShift(kVK_ANSI_N) // paste everything left, joined
     var queueTimeout: Double = 120 // seconds without a copy or a paste before the queue switches off (0 = never)
     var queueSeparator = "\n"      // between items for "paste all"
 
@@ -254,6 +254,9 @@ struct Settings: Codable, Equatable {
             viewerHotKey = HotKey.option(kVK_ANSI_E)
             if isTaken(viewerHotKey) { viewerHotKey = nil }
         }
+        // 2.11: the queue moved from ⌥R / ⌥⇧R (2.10.x) to ⌥N / ⌥⇧N. Files still on the old defaults follow.
+        if queueHotKey == HotKey.option(kVK_ANSI_R), !isUsed(HotKey.option(kVK_ANSI_N)) { queueHotKey = HotKey.option(kVK_ANSI_N) }
+        if queuePasteAllHotKey == HotKey.optionShift(kVK_ANSI_R), !isUsed(HotKey.optionShift(kVK_ANSI_N)) { queuePasteAllHotKey = HotKey.optionShift(kVK_ANSI_N) }
         // New defaults must not shadow keys an older settings file already uses (history was ⌥C before 2.9.1).
         for key in [CodingKeys.viewerHotKey, .preferencesHotKey, .clearHistoryHotKey, .pauseHotKey, .lockHotKey, .quitHotKey,
                     .queueHotKey, .queuePasteHotKey, .queuePasteAllHotKey]
@@ -337,6 +340,14 @@ struct Settings: Codable, Equatable {
         try c.encode(maxFileListEntries, forKey: .maxFileListEntries)
         try c.encode(maxHistoryBytes, forKey: .maxHistoryBytes)
         try c.encode(menuMaxItems, forKey: .menuMaxItems)
+    }
+
+    /// True when `hk` is used by any hot key of these settings (for a candidate that is not assigned yet).
+    private func isUsed(_ hk: HotKey) -> Bool {
+        let all: [HotKey?] = [historyHotKey, templateHotKey, previousHotKey, viewerHotKey, preferencesHotKey,
+                              clearHistoryHotKey, pauseHotKey, lockHotKey, quitHotKey,
+                              queueHotKey, queuePasteHotKey, queuePasteAllHotKey]
+        return all.contains { $0 == hk }
     }
 
     /// True when `hk` is already used by another hot key of these settings (duplicates counted once).

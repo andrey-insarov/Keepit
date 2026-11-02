@@ -7,6 +7,7 @@
 - Ignored apps are a list with icons: **+** picks an app from Applications (the bundle identifier is read from it), **−** removes, double-click edits an identifier by hand
 - Labels follow Apple's wording: *Shortcuts* instead of *Hot keys*, *Pause recording*, *Remove Keepit* instead of *Danger zone*; the window title is the pane name
 - Menu: *Settings…* (⌘,) replaces *Preferences…*
+- Paste queue keys are now `⌥N` (start / stop) and `⌥⇧N` (paste all remaining); `⌥V` stays. Settings still on the 2.10 defaults are moved automatically
 - Advanced → *Reset…* puts Keepit back to a fresh install (history, templates, settings, password, Touch ID key) without touching the app or its permissions; *Uninstall…* does that and removes the app
 - A fresh install (and Reset) starts with an *Examples* template folder that shows placeholders at work — a greeting with `{input:Name}` and `{cursor}`, today's date, a clipboard quote, a signature — in the system language
 
@@ -16,7 +17,7 @@
 
 ## 2.10.0 — 2026-11-02
 
-- **Paste queue** — serial copy-and-paste. `⌥R` starts it; every ⌘C adds to a counter next to the menu bar icon (`● 3`); `⌥V` pastes the items back one by one in the order they were copied; `⌥⇧R` pastes everything left, joined with a line break, tab, space or nothing. The queue ends by itself after the last item or after two minutes without activity (adjustable), ⌘V works as always, and while it is on the history menu marks its items (▶ next, ○ queued, ✓ pasted)
+- **Paste queue** — serial copy-and-paste. `⌥N` starts it; every ⌘C adds to a counter next to the menu bar icon (`● 3`); `⌥V` pastes the items back one by one in the order they were copied; `⌥⇧N` pastes everything left, joined with a line break, tab, space or nothing. The queue ends by itself after the last item or after two minutes without activity (adjustable), ⌘V works as always, and while it is on the history menu marks its items (▶ next, ○ queued, ✓ pasted)
 - The Viewer's default hot key is now `⌥E`; `⌥V` belongs to the paste queue. Existing settings that had the Viewer on ⌥V are moved to ⌥E automatically
 - Preferences → Hot keys: a *Paste queue* block (three keys, idle time, separator); *Reset to Defaults* now also refills the Viewer / Preferences / Clear History / Quit fields instead of blanking them
 
