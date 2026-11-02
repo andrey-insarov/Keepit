@@ -47,6 +47,7 @@ figure.shot figcaption{font-size:14px;color:var(--ink-3);margin-top:8px}
 .fb input[type=text],.fb input[type=email],.fb select,.fb textarea{font:16px/1.4 inherit;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;box-sizing:border-box}
 .fb textarea{resize:vertical;min-height:140px}.fb input:focus,.fb select:focus,.fb textarea:focus{outline:2px solid var(--blue);outline-offset:1px;border-color:transparent}
 .fb input[type=file]{font-size:14px;color:var(--ink-2)}
+.fb-list{list-style:none;margin:-6px 0 0;padding:0;display:grid;gap:6px}.fb-list li{font-size:14px;color:var(--ink-2);display:flex;align-items:center;gap:10px}.fb-list button{font:inherit;font-size:13px;color:var(--blue);background:none;border:0;padding:0;cursor:pointer}.fb-list button:hover{text-decoration:underline}
 .fb .btn{justify-self:start;display:inline-flex;align-items:center;padding:12px 22px;border-radius:12px;font-weight:600;font-size:16px;line-height:1;border:0;cursor:pointer;background:var(--blue);color:#fff}
 .fb .btn[disabled]{opacity:.6;cursor:default}.fb-err{color:#c0392b;font-size:14px;margin:0}.fb-ok{color:var(--ink);margin:0;padding:18px 20px;border-radius:12px;background:var(--blue-tint);line-height:1.5}
 footer{border-top:1px solid var(--line);padding:36px 0 64px;color:var(--ink-3);font-size:14px}
@@ -76,8 +77,9 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
     <textarea name="message" rows="7" minlength="70" maxlength="5000" required placeholder="What happened, what you expected, macOS and Keepit versions…"></textarea>
   </label>
   <label>Screenshots <span class="hint">optional · up to 5 images, 1 MB each</span>
-    <input name="files" type="file" accept="image/png,image/jpeg,image/gif,image/webp,image/heic" multiple>
+    <input id="fb-files" type="file" accept="image/png,image/jpeg,image/gif,image/webp,image/heic" multiple>
   </label>
+  <ul class="fb-list" id="fb-list" hidden></ul>
   <div class="cf-turnstile" data-sitekey="0x4AAAAAAFxKO-1Iq_maRhEF" data-theme="light"></div>
   <p class="fb-err" id="fb-err" hidden></p>
   <button type="submit" class="btn">Send</button>
@@ -87,21 +89,46 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
 <script>
 (function(){
   var f=document.getElementById('fb'),err=document.getElementById('fb-err'),ok=document.getElementById('fb-ok'),
-      msg=f.elements.message,count=document.getElementById('fb-count'),files=f.elements.files,btn=f.querySelector('button');
+      msg=f.elements.message,count=document.getElementById('fb-count'),picker=document.getElementById('fb-files'),
+      list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
   function show(e){err.textContent=e;err.hidden=!e;}
+  function kb(n){return n<1048576?Math.round(n/1024)+' KB':(n/1048576).toFixed(1)+' MB';}
+  function render(){
+    list.innerHTML='';list.hidden=!files.length;
+    files.forEach(function(file,i){
+      var li=document.createElement('li'),x=document.createElement('button');
+      li.textContent=file.name+' · '+kb(file.size)+' ';x.type='button';x.textContent='Remove';x.setAttribute('aria-label','Remove '+file.name);
+      x.addEventListener('click',function(){files.splice(i,1);render();show('');});li.appendChild(x);list.appendChild(li);
+    });
+    picker.hidden=files.length>=5;
+  }
+  picker.addEventListener('change',function(){
+    show('');
+    for(var i=0;i<picker.files.length;i++){
+      var file=picker.files[i];
+      if(files.length>=5){show('At most 5 screenshots — the rest were not added.');break;}
+      if(file.size>1048576){show('“'+file.name+'” is larger than 1 MB and was not added.');continue;}
+      if(!/^image\//.test(file.type)){show('“'+file.name+'” is not an image and was not added.');continue;}
+      files.push(file);
+    }
+    picker.value='';render();
+  });
   msg.addEventListener('input',function(){var n=msg.value.trim().length;count.textContent=n<70?(70-n)+' more characters':n+' characters';});
   f.addEventListener('submit',function(ev){
     ev.preventDefault();show('');
     if(!f.elements.name.value.trim())return show('Please enter your name.');
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(f.elements.email.value.trim()))return show('Please enter a valid e-mail address.');
     if(msg.value.trim().length<70)return show('Please describe it in at least 70 characters.');
-    if(files.files.length>5)return show('At most 5 screenshots.');
-    for(var i=0;i<files.files.length;i++){if(files.files[i].size>1048576)return show('“'+files.files[i].name+'” is larger than 1 MB.');}
     if(msg.value.length>5000)return show('The message is too long (5000 characters at most).');
-    if(!f.querySelector('[name=cf-turnstile-response]')||!f.querySelector('[name=cf-turnstile-response]').value)return show('Please complete the anti-spam check.');
+    var ts=f.querySelector('[name=cf-turnstile-response]');
+    if(!ts||!ts.value)return show('Please complete the anti-spam check.');
+    var fd=new FormData();
+    ['name','email','type','message'].forEach(function(k){fd.append(k,f.elements[k].value);});
+    fd.append('cf-turnstile-response',ts.value);
+    files.forEach(function(file){fd.append('files',file,file.name);});
     btn.disabled=true;btn.textContent='Sending…';
-    fetch(f.action,{method:'POST',body:new FormData(f)}).then(function(r){return r.json().catch(function(){return{error:'Something went wrong.'};}).then(function(j){return[r.ok,j];});})
-      .then(function(x){if(x[0]){[].forEach.call(f.querySelectorAll('label,.cf-turnstile,button'),function(el){el.hidden=true;});ok.hidden=false;ok.scrollIntoView({block:'center'});}else{show(x[1].error||'Something went wrong.');if(window.turnstile)turnstile.reset();}})
+    fetch(f.action,{method:'POST',body:fd}).then(function(r){return r.json().catch(function(){return{error:'Something went wrong.'};}).then(function(j){return[r.ok,j];});})
+      .then(function(x){if(x[0]){[].forEach.call(f.querySelectorAll('label,.fb-list,.cf-turnstile,button'),function(el){el.hidden=true;});ok.hidden=false;ok.scrollIntoView({block:'center'});}else{show(x[1].error||'Something went wrong.');if(window.turnstile)turnstile.reset();}})
       .catch(function(){show('No connection. Please try again or e-mail admin@keep.it.com.');})
       .finally(function(){btn.disabled=false;btn.textContent='Send';});
   });
