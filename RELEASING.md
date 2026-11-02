@@ -182,6 +182,6 @@ after each push to `main` or a tag (Codeberg itself no longer offers pull mirror
 4. Delete both files from the Desktop (keep a copy in the password manager if you like; a lost key
    is simply replaced by a new deploy key).
 
-Note `git push --mirror` makes Codeberg identical to GitHub, including deleting branches that were
-deleted here — do not push to the mirror by hand.
+The mirror push force-updates every branch and tag on Codeberg to match GitHub but never deletes
+anything there — do not push to the mirror by hand.
 

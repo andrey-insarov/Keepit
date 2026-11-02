@@ -182,7 +182,10 @@ jobs:
           echo "$CODEBERG_DEPLOY_KEY" > ~/.ssh/codeberg && chmod 600 ~/.ssh/codeberg
           ssh-keyscan -t ed25519 codeberg.org >> ~/.ssh/known_hosts 2>/dev/null
           export GIT_SSH_COMMAND="ssh -i ~/.ssh/codeberg -o IdentitiesOnly=yes"
-          git push --mirror --quiet git@codeberg.org:itcom/Keepit.git
+          # A tag build checks out the tag alone, so --mirror would try to delete main on Codeberg
+          # (refused there). Push every branch and tag explicitly instead; nothing is ever deleted.
+          git fetch --quiet origin '+refs/heads/*:refs/remotes/origin/*' '+refs/tags/*:refs/tags/*'
+          git push --force --quiet git@codeberg.org:itcom/Keepit.git 'refs/remotes/origin/*:refs/heads/*' 'refs/tags/*:refs/tags/*'
           rm -f ~/.ssh/codeberg
           echo "Mirrored $(git rev-parse --short HEAD) to codeberg.org/itcom/Keepit"
 
