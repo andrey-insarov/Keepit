@@ -90,7 +90,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         hotKeys.isSuppressed = { [weak self] in (self?.openMenus ?? 0) > 0 }
         registerHotKeys()
-        Storage.save(settings, to: Storage.settingsURL, encrypt: false)
+        Storage.save(settings, to: Storage.settingsURL, encrypt: false, pretty: true)
         observeScreenLock()
         _ = updater   // starts Sparkle's scheduled checks
 
@@ -153,8 +153,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if !uninstalling {
             history?.flush()
             templates?.flush()
-            Storage.save(settings, to: Storage.settingsURL, encrypt: false)
+            Storage.save(settings, to: Storage.settingsURL, encrypt: false, pretty: true)
         }
+        Storage.waitUntilSaved()    // a debounced write may still be in flight
         Storage.clearKey()          // wipe key bytes before the process goes away
     }
 
@@ -455,7 +456,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             } catch {
                 Vault.error(LF("Touch ID could not be set up: %@", error.localizedDescription))
                 settings.biometricUnlock = false
-                Storage.save(settings, to: Storage.settingsURL, encrypt: false)
+                Storage.save(settings, to: Storage.settingsURL, encrypt: false, pretty: true)
             }
         } else {
             BiometricUnlock.remove()
@@ -494,7 +495,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func apply(settings new: Settings) {
         let old = settings
         settings = new
-        Storage.save(new, to: Storage.settingsURL, encrypt: false)
+        Storage.save(new, to: Storage.settingsURL, encrypt: false, pretty: true)
         history.updateSettings(new)
         monitor.updateSettings(new)
         menuBuilder.settings = new
