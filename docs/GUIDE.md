@@ -161,6 +161,8 @@ shortcut either works everywhere or is not shown.
 
 ![For other items: the same actions, no shortcuts](site/img/guide/extended-menu-item2.png)
 
+![For an image the text actions are greyed out — only Paste, Copy only, Add to Templates, Show in Viewer and Delete apply](site/img/guide/extended-menu-image.png)
+
 ---
 
 ## Part 3 — Templates
@@ -310,7 +312,10 @@ when the screen locks or the Mac sleeps.
 ![Setting the password: layout indicator and strength meter](site/img/guide/set-password.png)
 
 The password dialogs show the current keyboard layout and warn about Caps Lock, so a rejected
-password is rarely a mystery.
+password is rarely a mystery. At launch, and after a lock, Keepit asks for the password (or Touch ID);
+*Recovery Access…* takes the 24-word phrase instead — see [Recovery phrase](#recovery-phrase).
+
+![Unlocking at launch: password, Quit, or the recovery phrase](site/img/guide/unlock.png)
 
 ![Settings → Security](site/img/guide/prefs-security.png)
 
@@ -352,13 +357,13 @@ Shortcuts (*Open URL*), Raycast, Alfred, Keyboard Maestro or `open` in a shell c
 
 | URL | Effect |
 |-----|--------|
-| `keepit://paste/2`, `keepit://paste/latest`, `keepit://paste/previous` | Paste history item N into the front app |
+| `keepit://paste/2`<br>`keepit://paste/latest`<br>`keepit://paste/previous` | Paste history item N (or the latest / the previous one) into the front app |
 | `keepit://copy/3` | Put item N on the clipboard without pasting |
-| `keepit://template/Signature`, `keepit://template/Work/Reply?copy=1` | Paste (or copy) a template by name or folder path |
+| `keepit://template/Signature`<br>`keepit://template/Work/Reply?copy=1` | Paste (or copy) a template by name or folder path |
 | `keepit://add?text=…` | Add text to the history and the clipboard |
 | `keepit://add-template?text=…&name=…` | Create a template |
-| `keepit://history` `keepit://templates` `keepit://viewer` `keepit://preferences` | Open the menus and windows |
-| `keepit://pause` `keepit://resume` | Pause recording for 10 minutes / resume |
+| `keepit://history`<br>`keepit://templates`<br>`keepit://viewer`<br>`keepit://settings` | Open the history menu, the template menu, the Viewer, Settings |
+| `keepit://pause`<br>`keepit://resume` | Pause recording for 10 minutes / resume |
 
 Percent-encode the text (`%20` for a space). URLs are ignored while Keepit is locked.
 

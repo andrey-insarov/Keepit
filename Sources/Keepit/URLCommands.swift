@@ -9,7 +9,7 @@ import AppKit
 ///     keepit://template/Name?copy=1
 ///     keepit://add?text=…         add text to the history (and the clipboard)
 ///     keepit://add-template?text=…&name=…
-///     keepit://history  keepit://templates  keepit://viewer  keepit://preferences
+///     keepit://history  keepit://templates  keepit://viewer  keepit://settings
 ///     keepit://pause    keepit://resume
 extension AppDelegate {
     static let urlScheme = "keepit"
@@ -64,7 +64,7 @@ extension AppDelegate {
         case "history":      showHistoryPopup()
         case "templates":    showTemplatePopup()
         case "viewer":       openViewer()
-        case "preferences":  openPreferences()
+        case "settings":     openPreferences()
         case "pause":        pauseRecording()
         case "resume":       resumeRecording()
         default:             NSSound.beep()

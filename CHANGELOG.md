@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- `keepit://settings` opens Settings (replaces `keepit://preferences`)
+
 ## 2.11.1 — 2026-11-02
 
 - Hardening: images are checked by byte size *and* pixel count from the header before anything is decoded (40 MP cap), the paste queue stops at 500 items, a `{input:}` answer at 10 000 characters; the full table is on the security page

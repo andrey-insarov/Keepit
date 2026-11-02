@@ -35,7 +35,7 @@ article hr{border:0;border-top:1px solid var(--line);margin:2.5em 0}
 code{font:.9em ui-monospace,"SF Mono",Menlo,monospace;background:color-mix(in srgb,var(--ink) 7%,transparent);padding:2px 6px;border-radius:6px;white-space:nowrap}
 pre{background:var(--blue-tint);padding:14px 18px;border-radius:12px;overflow:auto;font-size:14px;line-height:1.6;max-width:100%}pre code{background:none;padding:0;white-space:pre-wrap;word-break:break-word}
 kbd.k{display:inline-block;min-width:1.7em;padding:0 .4em;text-align:center;font:600 .82em/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text",Helvetica,Arial,sans-serif;color:var(--ink);background:var(--key);border:1px solid var(--key-edge);border-bottom-width:2px;border-radius:6px;white-space:nowrap;vertical-align:baseline}
-.tbl{overflow-x:auto;margin:1.2em 0}table{border-collapse:collapse;width:100%;font-size:15.5px}th,td{text-align:left;padding:9px 12px 9px 0;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--ink-3);font-weight:600;font-size:14px}
+.tbl{overflow-x:auto;margin:1.2em 0}table{border-collapse:collapse;width:100%;font-size:15.5px}th,td{text-align:left;padding:9px 12px 9px 0;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--ink-3);font-weight:600;font-size:14px}td code{display:inline-block;margin:1px 0}
 td:first-child{white-space:nowrap}@media(max-width:600px){td:first-child{white-space:normal}}
 figure.shot{margin:1.6em 0;width:100%}figure.shot a{display:block}figure.shot img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line);box-shadow:0 12px 32px -8px rgba(15,18,34,.25);cursor:zoom-in}
 figure.shot figcaption{font-size:14px;color:var(--ink-3);margin-top:8px}
@@ -54,7 +54,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
 <p>Keepit is a clipboard history and template manager for macOS. It lives in the menu bar, remembers
 everything you copy, and pastes any of it back with a hot key. All shortcuts below are the defaults;
 each can be changed in <em>Settings → Shortcuts</em>.</p>
-<figure class="shot" style="max-width:600px"><a href="img/guide/menu.png?v=ee7179a8" class="zoom" title="Open full size"><img src="img/guide/menu.png?v=ee7179a8" alt="The history menu" width="600" height="713" loading="lazy"></a><figcaption>The history menu</figcaption></figure>
+<figure class="shot" style="max-width:629px"><a href="img/guide/menu.png?v=59e0a3e7" class="zoom" title="Open full size"><img src="img/guide/menu.png?v=59e0a3e7" alt="The history menu" width="629" height="778" loading="lazy"></a><figcaption>The history menu</figcaption></figure>
 
 <h2 id="part-1-getting-started">Part 1 — Getting started</h2>
 <h3 id="install">Install</h3>
@@ -93,8 +93,8 @@ find it, otherwise at the mouse pointer.</p>
 <p>Each line is one clip, newest first. The newest one is <strong>bold</strong> — it is what is on the clipboard
 right now. The icon shows the app you copied from; a title ending in <code>…</code> has more lines than the
 menu shows. Images show a thumbnail, file lists show the file names.</p>
-<figure class="shot" style="max-width:1071px"><a href="img/guide/menu-preview.png?v=ad5fc666" class="zoom" title="Open full size"><img src="img/guide/menu-preview.png?v=ad5fc666" alt="The preview panel next to the menu shows the highlighted item in full, with its source app, time and size" width="1071" height="714" loading="lazy"></a><figcaption>The preview panel next to the menu shows the highlighted item in full, with its source app, time and size</figcaption></figure>
-<figure class="shot" style="max-width:1077px"><a href="img/guide/menu-image.png?v=32993a9c" class="zoom" title="Open full size"><img src="img/guide/menu-image.png?v=32993a9c" alt="An image in the history: thumbnail in the menu, full picture in the preview" width="1077" height="711" loading="lazy"></a><figcaption>An image in the history: thumbnail in the menu, full picture in the preview</figcaption></figure>
+<figure class="shot" style="max-width:1045px"><a href="img/guide/menu-preview.png?v=b1fd8faf" class="zoom" title="Open full size"><img src="img/guide/menu-preview.png?v=b1fd8faf" alt="The preview panel next to the menu shows the highlighted item in full, with its source app, time and size" width="1045" height="648" loading="lazy"></a><figcaption>The preview panel next to the menu shows the highlighted item in full, with its source app, time and size</figcaption></figure>
+<figure class="shot" style="max-width:1088px"><a href="img/guide/menu-image.png?v=7aa4de8d" class="zoom" title="Open full size"><img src="img/guide/menu-image.png?v=7aa4de8d" alt="An image in the history: thumbnail in the menu, full picture in the preview" width="1088" height="640" loading="lazy"></a><figcaption>An image in the history: thumbnail in the menu, full picture in the preview</figcaption></figure>
 <p>To paste an item: click it, or move to it with ↑ ↓ and press Return, or press its number with
 <strong>⌃⌥</strong> — <kbd class="k">⌃⌥3</kbd> pastes item 3. The same key works from anywhere, without opening the menu.</p>
 <p>Below the history: the <em>Template</em> submenu, the Viewer (⌥E), Settings (⌥S), <em>Clear History</em> (⌥C),
@@ -164,7 +164,7 @@ cells into a form, lines from a page into a document. The paste queue does that 
 <li>Copy as usual with ⌘C, as many times as you like. The counter goes up with every copy: 1, 2, 3…
    Everything is recorded in the history too.</li>
 </ol>
-<figure class="shot" style="max-width:280px"><a href="img/guide/queue-menubar.png?v=fa4ca107" class="zoom" title="Open full size"><img src="img/guide/queue-menubar.png?v=fa4ca107" alt="The menu bar while the queue is on: red dot and counter" width="280" height="48" loading="lazy"></a><figcaption>The menu bar while the queue is on: red dot and counter</figcaption></figure>
+<figure class="shot" style="max-width:350px"><a href="img/guide/queue-menubar.png?v=808fb52c" class="zoom" title="Open full size"><img src="img/guide/queue-menubar.png?v=808fb52c" alt="The menu bar while the queue is on: red dot and counter" width="350" height="40" loading="lazy"></a><figcaption>The menu bar while the queue is on: red dot and counter</figcaption></figure>
 <ol>
 <li>Switch to where the text goes and press <strong>⌥V</strong> for each item. The first thing you copied is
    pasted first, the counter goes down. ⌘V still pastes the clipboard as usual, so you can mix both.</li>
@@ -174,18 +174,19 @@ cells into a form, lines from a page into a document. The paste queue does that 
 <p><strong>⌥⇧N</strong> pastes everything still in the queue in one go, items joined with a line break, a tab, a
 space or nothing — pick on the <em>Paste Queue</em> pane of Settings, where the idle time lives too. While the queue is on, the history menu marks its
 items: <code>▶</code> next to paste, <code>○</code> still queued, <code>✓</code> already pasted.</p>
-<figure class="shot" style="max-width:370px"><a href="img/guide/queue-menu.png?v=325dd09b" class="zoom" title="Open full size"><img src="img/guide/queue-menu.png?v=325dd09b" alt="The history menu with the queue on: ○ queued, ▶ next, ✓ pasted; the menu row shows how many are left" width="370" height="575" loading="lazy"></a><figcaption>The history menu with the queue on: ○ queued, ▶ next, ✓ pasted; the menu row shows how many are left</figcaption></figure>
-<figure class="shot" style="max-width:609px"><a href="img/guide/prefs-queue.png?v=5417e11b" class="zoom" title="Open full size"><img src="img/guide/prefs-queue.png?v=5417e11b" alt="Settings → Paste Queue" width="609" height="427" loading="lazy"></a><figcaption>Settings → Paste Queue</figcaption></figure>
+<figure class="shot" style="max-width:610px"><a href="img/guide/queue-menu.png?v=f33f01f7" class="zoom" title="Open full size"><img src="img/guide/queue-menu.png?v=f33f01f7" alt="The history menu with the queue on: ○ queued, ▶ next, ✓ pasted; the menu row shows how many are left" width="610" height="772" loading="lazy"></a><figcaption>The history menu with the queue on: ○ queued, ▶ next, ✓ pasted; the menu row shows how many are left</figcaption></figure>
+<figure class="shot" style="max-width:657px"><a href="img/guide/prefs-queue.png?v=753987a4" class="zoom" title="Open full size"><img src="img/guide/prefs-queue.png?v=753987a4" alt="Settings → Paste Queue" width="657" height="429" loading="lazy"></a><figcaption>Settings → Paste Queue</figcaption></figure>
 <h3 id="the-extended-menu">The extended menu</h3>
 <p>Hold <strong>⇧</strong> while the history menu is open and every item gets a <code>▸</code> submenu with all actions for
 that item: Paste, Paste as plain text, Copy only (clipboard, no paste), the <em>Paste as</em>
 transformations, Add to Templates, Show in Viewer, Delete. Point at an item or press → to open it;
 you can release ⇧ once it is open.</p>
-<figure class="shot" style="max-width:854px"><a href="img/guide/extended-menu.png?v=a001d9a0" class="zoom" title="Open full size"><img src="img/guide/extended-menu.png?v=a001d9a0" alt="Hold ⇧: every item gets a submenu; for the newest item it shows the global hot keys" width="854" height="594" loading="lazy"></a><figcaption>Hold ⇧: every item gets a submenu; for the newest item it shows the global hot keys</figcaption></figure>
+<figure class="shot" style="max-width:835px"><a href="img/guide/extended-menu.png?v=bb6a7247" class="zoom" title="Open full size"><img src="img/guide/extended-menu.png?v=bb6a7247" alt="Hold ⇧: every item gets a submenu; for the newest item it shows the global hot keys" width="835" height="784" loading="lazy"></a><figcaption>Hold ⇧: every item gets a submenu; for the newest item it shows the global hot keys</figcaption></figure>
 <p>For the newest item the submenu lists the global hot keys from the table above — the same actions
 with the same keys, so you can learn them here. Other items show the actions without keys: a
 shortcut either works everywhere or is not shown.</p>
-<figure class="shot" style="max-width:750px"><a href="img/guide/extended-menu-item2.png?v=1dc6a38e" class="zoom" title="Open full size"><img src="img/guide/extended-menu-item2.png?v=1dc6a38e" alt="For other items: the same actions, no shortcuts" width="750" height="713" loading="lazy"></a><figcaption>For other items: the same actions, no shortcuts</figcaption></figure>
+<figure class="shot" style="max-width:763px"><a href="img/guide/extended-menu-item2.png?v=2541f520" class="zoom" title="Open full size"><img src="img/guide/extended-menu-item2.png?v=2541f520" alt="For other items: the same actions, no shortcuts" width="763" height="665" loading="lazy"></a><figcaption>For other items: the same actions, no shortcuts</figcaption></figure>
+<figure class="shot" style="max-width:765px"><a href="img/guide/extended-menu-image.png?v=de770b01" class="zoom" title="Open full size"><img src="img/guide/extended-menu-image.png?v=de770b01" alt="For an image the text actions are greyed out — only Paste, Copy only, Add to Templates, Show in Viewer and Delete apply" width="765" height="655" loading="lazy"></a><figcaption>For an image the text actions are greyed out — only Paste, Copy only, Add to Templates, Show in Viewer and Delete apply</figcaption></figure>
 <hr />
 <h2 id="part-3-templates">Part 3 — Templates</h2>
 <p>Templates are clips you keep for good: signatures, addresses, canned replies, code snippets, a logo
@@ -300,14 +301,14 @@ the empty line.</p>
   reorder by dragging or with <em>Up</em> / <em>Down</em>. ⌫ deletes the selected item.</li>
 <li>The status bar shows the date, source app, format and size.</li>
 </ul>
-<figure class="shot" style="max-width:1004px"><a href="img/guide/viewer-search.png?v=1c65e776" class="zoom" title="Open full size"><img src="img/guide/viewer-search.png?v=1c65e776" alt="Searching in the Viewer highlights matches" width="1004" height="637" loading="lazy"></a><figcaption>Searching in the Viewer highlights matches</figcaption></figure>
+<figure class="shot" style="max-width:1025px"><a href="img/guide/viewer-search.png?v=88476754" class="zoom" title="Open full size"><img src="img/guide/viewer-search.png?v=88476754" alt="Searching in the Viewer highlights matches" width="1025" height="682" loading="lazy"></a><figcaption>Searching in the Viewer highlights matches</figcaption></figure>
 <hr />
 <h2 id="part-5-settings">Part 5 — Settings</h2>
 <p><code>⌘,</code> in the menu, <em>Settings…</em>, or ⌥S from any app. The window works the way settings windows do on
 the Mac: pick a pane in the toolbar, and every change applies the moment you make it — there is no
 Save button; close the window with ⌘W or Esc. Every option with a <strong>?</strong> next to it has a popover
 that explains it.</p>
-<figure class="shot" style="max-width:609px"><a href="img/guide/prefs-general.png?v=81a76004" class="zoom" title="Open full size"><img src="img/guide/prefs-general.png?v=81a76004" alt="Settings → General" width="609" height="377" loading="lazy"></a><figcaption>Settings → General</figcaption></figure>
+<figure class="shot" style="max-width:609px"><a href="img/guide/prefs-general.png?v=cb3d7781" class="zoom" title="Open full size"><img src="img/guide/prefs-general.png?v=cb3d7781" alt="Settings → General" width="609" height="430" loading="lazy"></a><figcaption>Settings → General</figcaption></figure>
 <div class="tbl"><table>
 <thead>
 <tr>
@@ -362,8 +363,10 @@ memory; it is wiped when Keepit locks — <em>Lock Keepit</em> (<kbd class="k">�
 when the screen locks or the Mac sleeps.</p>
 <figure class="shot" style="max-width:372px"><a href="img/guide/set-password.png?v=87aaac5f" class="zoom" title="Open full size"><img src="img/guide/set-password.png?v=87aaac5f" alt="Setting the password: layout indicator and strength meter" width="372" height="380" loading="lazy"></a><figcaption>Setting the password: layout indicator and strength meter</figcaption></figure>
 <p>The password dialogs show the current keyboard layout and warn about Caps Lock, so a rejected
-password is rarely a mystery.</p>
-<figure class="shot" style="max-width:609px"><a href="img/guide/prefs-security.png?v=1889c9fa" class="zoom" title="Open full size"><img src="img/guide/prefs-security.png?v=1889c9fa" alt="Settings → Security" width="609" height="457" loading="lazy"></a><figcaption>Settings → Security</figcaption></figure>
+password is rarely a mystery. At launch, and after a lock, Keepit asks for the password (or Touch ID);
+<em>Recovery Access…</em> takes the 24-word phrase instead — see <a href="#recovery-phrase">Recovery phrase</a>.</p>
+<figure class="shot" style="max-width:309px"><a href="img/guide/unlock.png?v=bb23af54" class="zoom" title="Open full size"><img src="img/guide/unlock.png?v=bb23af54" alt="Unlocking at launch: password, Quit, or the recovery phrase" width="309" height="389" loading="lazy"></a><figcaption>Unlocking at launch: password, Quit, or the recovery phrase</figcaption></figure>
+<figure class="shot" style="max-width:609px"><a href="img/guide/prefs-security.png?v=397de99b" class="zoom" title="Open full size"><img src="img/guide/prefs-security.png?v=397de99b" alt="Settings → Security" width="609" height="405" loading="lazy"></a><figcaption>Settings → Security</figcaption></figure>
 <h3 id="touch-id">Touch ID</h3>
 <p>With <em>Unlock with Touch ID</em> the key is also stored in the Secure Enclave behind your fingerprint:
 Keepit asks for a touch instead of the password. The password keeps working as a fallback — <em>Use
@@ -396,15 +399,15 @@ download and the App Store edition.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>keepit://paste/2</code>, <code>keepit://paste/latest</code>, <code>keepit://paste/previous</code></td>
-<td>Paste history item N into the front app</td>
+<td><code>keepit://paste/2</code><br><code>keepit://paste/latest</code><br><code>keepit://paste/previous</code></td>
+<td>Paste history item N (or the latest / the previous one) into the front app</td>
 </tr>
 <tr>
 <td><code>keepit://copy/3</code></td>
 <td>Put item N on the clipboard without pasting</td>
 </tr>
 <tr>
-<td><code>keepit://template/Signature</code>, <code>keepit://template/Work/Reply?copy=1</code></td>
+<td><code>keepit://template/Signature</code><br><code>keepit://template/Work/Reply?copy=1</code></td>
 <td>Paste (or copy) a template by name or folder path</td>
 </tr>
 <tr>
@@ -416,11 +419,11 @@ download and the App Store edition.</p>
 <td>Create a template</td>
 </tr>
 <tr>
-<td><code>keepit://history</code> <code>keepit://templates</code> <code>keepit://viewer</code> <code>keepit://preferences</code></td>
-<td>Open the menus and windows</td>
+<td><code>keepit://history</code><br><code>keepit://templates</code><br><code>keepit://viewer</code><br><code>keepit://settings</code></td>
+<td>Open the history menu, the template menu, the Viewer, Settings</td>
 </tr>
 <tr>
-<td><code>keepit://pause</code> <code>keepit://resume</code></td>
+<td><code>keepit://pause</code><br><code>keepit://resume</code></td>
 <td>Pause recording for 10 minutes / resume</td>
 </tr>
 </tbody>

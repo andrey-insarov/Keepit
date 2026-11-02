@@ -125,6 +125,7 @@
   .cell.c4 { grid-column: span 4; } .cell.c3 { grid-column: span 3; } .cell.c2 { grid-column: span 2; } .cell.c6 { grid-column: span 6; }
   .cell img { display: block; width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--line); margin-top: 8px; }
   .cell.shot { padding-bottom: 0; } .cell.shot img { border-radius: 10px 10px 0 0; border-bottom: 0; margin-top: auto; max-height: 250px; object-fit: cover; object-position: top left; }
+  .cell.shot.soft { padding-bottom: 12px; } .cell.shot.soft img { border: 0; border-radius: 0; max-height: none; object-fit: contain; margin: auto -8px 0; width: calc(100% + 16px); }
   .tpl { margin-top: 10px; font: 14px/1.7 ui-monospace, "SF Mono", Menlo, monospace; background: var(--blue-tint); border-radius: 10px; padding: 14px 16px; color: var(--ink); white-space: pre-wrap; }
   .tpl b { font-weight: 600; color: var(--blue); }
   .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
@@ -229,17 +230,17 @@
     <div class="demo" aria-label="Animated demo: pressing Option-M opens the Keepit history menu at the text cursor and pastes the chosen item">
       <div class="win">
         <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div>New Message</div><div></div></div>
-        <div class="fields"><div><span>To:</span><b>Michael Reeve</b></div><div><span>Subject:</span><b>Office visit next week</b></div></div>
+        <div class="fields"><div><span>To:</span><b>Michael Reeve</b></div><div><span>Subject:</span><b>Your order has shipped</b></div></div>
         <div class="body" id="body"><span id="typed"></span><span class="caret" id="caret"></span></div>
         <div class="chip" id="chip"><span>press</span><kbd class="k" id="key">⌥M</kbd></div>
       </div>
       <div class="menu" id="menu" role="presentation">
         <div class="search">⌕ Search history…</div>
-        <div class="row latest" data-i="1"><span class="n">1</span><span class="app" style="background:#4f8ef7"></span><span class="t">Intis Telecom LTD, 71-75 Shelton Street, London WC2H 9JQ</span><span class="hk">⌃⌥1</span></div>
-        <div class="row" data-i="2"><span class="n">2</span><span class="app" style="background:#e5533d"></span><span class="t">keepit-build</span><span class="hk">⌃⌥2</span></div>
+        <div class="row latest" data-i="1"><span class="n">1</span><span class="app" style="background:#4f8ef7"></span><span class="t">1Z 999 AA1 01 2345 6784</span><span class="hk">⌃⌥1</span></div>
+        <div class="row" data-i="2"><span class="n">2</span><span class="app" style="background:#e5533d"></span><span class="t">Invoice INV-2026-0418.pdf</span><span class="hk">⌃⌥2</span></div>
         <div class="row" data-i="3"><span class="n">3</span><span class="app" style="background:#4f8ef7"></span><span class="t">https://keep.it.com/guide.html</span><span class="hk">⌃⌥3</span></div>
-        <div class="row" data-i="4"><span class="n">4</span><span class="app" style="background:#5a5f73"></span><span class="t">git tag -a v2.9.3 -m "Keepit 2.9.3"</span><span class="hk">⌃⌥4</span></div>
-        <div class="row" data-i="5"><span class="n">5</span><span class="app" style="background:#34c759"></span><span class="t"><img src="img/guide/menu.png" alt=""></span><span class="hk">⌃⌥5</span></div>
+        <div class="row" data-i="4"><span class="n">4</span><span class="app" style="background:#5a5f73"></span><span class="t">git tag -a v2.11.1 -m "Keepit 2.11.1"</span><span class="hk">⌃⌥4</span></div>
+        <div class="row" data-i="5"><span class="n">5</span><span class="app" style="background:#34c759"></span><span class="t"><img src="img/menu.png?v=1cef17ce" alt=""></span><span class="hk">⌃⌥5</span></div>
         <div class="sep"></div>
         <div class="row"><span class="n"></span><span></span><span class="t">Template</span><span class="hk">▸</span></div>
         <div class="row"><span class="n"></span><span></span><span class="t">Viewer</span><span class="hk">⌥E</span></div>
@@ -269,15 +270,15 @@ Tracking: <b>{clipboard}</b>
 Best, Andrey</div>
         <div class="tags"><span>{date}</span><span>{time}</span><span>{clipboard}</span><span>{input:…}</span><span>{choice:a|b}</span><span>{cursor}</span><span>|upper</span><span>|trim</span><span>|url</span></div>
       </div>
-      <div class="cell c2 shot">
+      <div class="cell c2 shot soft">
         <h3>Text, images, files</h3>
         <p>Rich text with formatting, screenshots with thumbnails, lists of files from Finder. Duplicates are merged into one entry.</p>
-        <img src="img/guide/menu.png" alt="History menu with a screenshot thumbnail">
+        <img src="img/menu.png?v=1cef17ce" alt="History menu with text, image thumbnails and a file">
       </div>
       <div class="cell c3 shot">
         <h3>The Viewer</h3>
         <p>Search everything at once, edit items in place, drag history into templates, inspect any item — even as a hex dump.</p>
-        <img src="img/viewer.png" alt="Keepit Viewer with a search highlighting matches">
+        <img src="img/viewer.png?v=34b7782d" alt="Keepit Viewer with a search highlighting matches">
       </div>
       <div class="cell c3">
         <h3>Works with Shortcuts, Raycast and Alfred</h3>
@@ -406,9 +407,9 @@ open "keepit://pause"</div>
   const typed = document.getElementById('typed'), caret = document.getElementById('caret'),
         menu = document.getElementById('menu'), chip = document.getElementById('chip'), key = document.getElementById('key'),
         body = document.getElementById('body'), demo = document.querySelector('.demo');
-  const before = 'Hi Michael,\n\nGreat to talk today. Our office is at ';
-  const paste = 'Intis Telecom LTD, 71-75 Shelton Street, London WC2H 9JQ';
-  const after = ' — ring the bell for the 3rd floor.';
+  const before = 'Hi Michael,\n\nThanks for your order — it left the warehouse this morning. Tracking number: ';
+  const paste = '1Z 999 AA1 01 2345 6784';
+  const after = '. Delivery takes two to three days.';
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const wait = ms => new Promise(r => setTimeout(r, ms));
   const rows = [...menu.querySelectorAll('.row[data-i]')];
