@@ -73,6 +73,13 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Tag must match VERSION
+        run: |
+          if [ "v$(cat VERSION)" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME but VERSION is $(cat VERSION) — the tag points at the wrong commit (forgot git pull?). Delete the tag and re-tag the right commit."
+            exit 1
+          fi
+
       - name: Import Developer ID certificate
         env:
           MACOS_CERT_P12: ${{ secrets.MACOS_CERT_P12 }}
