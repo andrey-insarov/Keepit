@@ -178,7 +178,7 @@ reporter and no analytics library in the binary.</p>
 Intis Telecom LTD, notarized by Apple and stapled. The release page carries, for each DMG, a
 <code>.dmg.sig</code> (Sparkle EdDSA signature) and a <code>SHA256SUMS</code> file. To verify a download by hand:</p>
 <pre><code class="language-bash">shasum -a 256 -c SHA256SUMS --ignore-missing
-spctl -a -vv -t install Keepit-2.9.2.dmg      # &quot;accepted, source=Notarized Developer ID&quot;
+spctl -a -vv -t install Keepit-2.9.3.dmg      # &quot;accepted, source=Notarized Developer ID&quot;
 </code></pre>
 <p>Homebrew installs the same DMG from the same release.</p>
 <p>The signing keys never leave GitHub's <code>release</code> environment: only <code>v*</code> tags can deploy to it, the

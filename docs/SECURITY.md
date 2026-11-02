@@ -137,7 +137,7 @@ Intis Telecom LTD, notarized by Apple and stapled. The release page carries, for
 
 ```bash
 shasum -a 256 -c SHA256SUMS --ignore-missing
-spctl -a -vv -t install Keepit-2.9.2.dmg      # "accepted, source=Notarized Developer ID"
+spctl -a -vv -t install Keepit-2.9.3.dmg      # "accepted, source=Notarized Developer ID"
 ```
 
 Homebrew installs the same DMG from the same release.

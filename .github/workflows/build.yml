@@ -99,7 +99,11 @@ jobs:
           APPSTORE_PRIVATE_KEY: ${{ secrets.APPSTORE_PRIVATE_KEY }}
           MACOS_DEVID_PROFILE: ${{ secrets.MACOS_DEVID_PROFILE }}
         run: |
-          if [ -n "$MACOS_DEVID_PROFILE" ]; then echo "$MACOS_DEVID_PROFILE" | base64 --decode > Resources/KeepitDevID.provisionprofile; fi
+          # The Developer ID provisioning profile is what gives the app access to the
+          # data-protection keychain; without it Touch ID unlock silently stops working.
+          if [ -z "$MACOS_DEVID_PROFILE" ]; then echo "::error::MACOS_DEVID_PROFILE secret is missing — refusing to ship a build without Touch ID (see RELEASING.md, section C)"; exit 1; fi
+          echo "$MACOS_DEVID_PROFILE" | base64 --decode > Resources/KeepitDevID.provisionprofile
+          security cms -D -i Resources/KeepitDevID.provisionprofile | plutil -extract Name raw - || { echo "::error::MACOS_DEVID_PROFILE is not a valid provisioning profile"; exit 1; }
           echo "$APPSTORE_PRIVATE_KEY" > $RUNNER_TEMP/AuthKey.p8
           make notarize VERSION=$(cat VERSION) SIGN_ID="$SIGN_ID" APPSTORE_KEY_PATH=$RUNNER_TEMP/AuthKey.p8
           rm $RUNNER_TEMP/AuthKey.p8

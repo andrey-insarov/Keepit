@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.9.3 — 2026-11-02
+
+- Fix: 2.9.2 was built without the Developer ID provisioning profile, so Touch ID unlock stopped working and Keepit asked for the password. This build restores it; the release job now refuses to run without the profile
+
 ## 2.9.2 — 2026-11-02
 
 - Preferences: a **?** button in the bottom-left corner opens the online user guide
