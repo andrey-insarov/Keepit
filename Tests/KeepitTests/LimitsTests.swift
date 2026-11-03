@@ -54,7 +54,8 @@ final class LimitsTests: XCTestCase {
         XCTAssertTrue(store.canInsert(shorter, under: parent))         // 13 + 1 + 2 = 16
         parent.insert(shorter)
         XCTAssertNoThrow(try Backup.validate(Backup.Payload(history: [], templates: store.root, settings: nil)))
-        XCTAssertFalse(store.canMove(parent, under: tall.children[0]))  // never into its own subtree
+        XCTAssertFalse(store.canMove(store.root.children[0], under: parent))   // L0 into its own descendant: never
+        XCTAssertTrue(store.canMove(parent, under: tall.children[0]))          // 2 + 1 + height(parent) = 6: fine
     }
 
     func testMenuCap() {
