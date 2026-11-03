@@ -4,6 +4,8 @@ import Foundation
 final class TemplateStore {
     private(set) var root = TemplateNode(name: "Template")
     var onChange: (() -> Void)?
+    /// Bumped on every change to the tree (edits, reload, purge). See HistoryStore.revision.
+    private(set) var revision = 0
     private lazy var saver = DebouncedSaver(delay: 1.0) { [weak self] background in self?.saveNow(background: background) }
     /// See HistoryStore.isPurged.
     private(set) var isPurged = false
@@ -15,6 +17,7 @@ final class TemplateStore {
     /// (Re)load from disk — used at start and after unlocking.
     func reload() {
         isPurged = false
+        revision += 1
         if let loaded = Storage.load(TemplateNode.self, from: Storage.templatesURL) {
             root = loaded
             root.relink()
@@ -41,6 +44,7 @@ final class TemplateStore {
     /// Back to the fresh-install tree (Reset).
     func resetToDefaults() {
         root = Self.defaultTree()
+        revision += 1
         saveNow()
         onChange?()
     }
@@ -49,6 +53,7 @@ final class TemplateStore {
     func purge() {
         saver.flush()
         isPurged = true
+        revision += 1
         root = TemplateNode(name: "Template")
         onChange?()
     }
@@ -66,17 +71,8 @@ final class TemplateStore {
         changed()
     }
 
-    /// Restore "Merge": a folder `RestorePlan` prepared (fresh ids, no hot keys, limits checked)
-    /// goes under the root. Returns false (and changes nothing) if it does not fit after all.
-    func insertImported(_ folder: TemplateNode) -> Bool {
-        guard canInsert(folder, under: root) else { return false }
-        root.insert(folder)
-        root.relink()
-        changed()
-        return true
-    }
-
     func changed() {
+        revision += 1
         onChange?()
         saver.schedule()
     }

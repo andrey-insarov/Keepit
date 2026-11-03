@@ -63,6 +63,8 @@ final class ClipboardMonitor {
         self.lastChangeCount = pb.changeCount
     }
 
+    var isRunning: Bool { timer != nil }
+
     func start() {
         stop()
         lastChangeCount = pb.changeCount        // whatever changed while we were not watching is not ours to record

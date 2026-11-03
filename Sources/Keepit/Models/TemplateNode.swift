@@ -92,6 +92,14 @@ final class TemplateNode: Codable {
         return false
     }
 
+    /// Deep copy that keeps ids and hot keys: a snapshot of the tree that later edits of the
+    /// live tree do not touch (RestorePlan composes the next tree on one of these).
+    func clone() -> TemplateNode {
+        let n = TemplateNode(id: id, name: name, clip: clip, children: children.map { $0.clone() })
+        n.hotKey = hotKey
+        return n
+    }
+
     /// Deep copy with fresh ids (used for drag-copy).
     func duplicate() -> TemplateNode {
         let n = TemplateNode(name: name, clip: clip, children: children.map { $0.duplicate() })

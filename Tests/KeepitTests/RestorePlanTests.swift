@@ -38,8 +38,9 @@ final class RestorePlanTests: XCTestCase {
         XCTAssertEqual(plan.historyAdded, 1)                       // only the old "beta"
         XCTAssertEqual(plan.history.map(\.plainText), ["beta v2", "alpha", "beta"])
         XCTAssertEqual(Set(plan.history.map(\.id)).count, 3)         // the merged "beta" has a new id
-        guard case .addFolder(let folder) = plan.templates else { return XCTFail("merge adds a folder") }
-        XCTAssertTrue(store.insertImported(folder))
+        XCTAssertFalse(plan.templates === store.root)                // the plan's tree shares nothing with the live one
+        XCTAssertEqual(store.root.subtreeCount, 4)                   // and the live one did not move
+        store.replaceRoot(plan.templates)
         let again = Backup.Payload(history: plan.history, templates: store.root, settings: nil)
         XCTAssertNoThrow(try Backup.validate(again))
         let bytes2 = try Backup.encode(again, password: SecureBuffer.of("pw"))
@@ -53,13 +54,14 @@ final class RestorePlanTests: XCTestCase {
         let payload = Backup.Payload(history: [], templates: tree([item]), settings: nil)
         let merge = try RestorePlan.make(mode: .merge, payload: payload, currentHistory: [], currentTemplates: tree([]),
                                          currentSettings: settings(), restorePreferences: false, folderName: "Imported")
-        guard case .addFolder(let folder) = merge.templates else { return XCTFail() }
+        let folder = merge.templates.children.last!
+        XCTAssertTrue(folder.isFolder)
         XCTAssertNil(folder.children[0].hotKey)
         XCTAssertNotEqual(folder.children[0].id, item.id)
         XCTAssertEqual(merge.templatesAdded, 2)                     // the folder and the item
         let replace = try RestorePlan.make(mode: .replace, payload: payload, currentHistory: [], currentTemplates: tree([]),
                                            currentSettings: settings(), restorePreferences: false, folderName: "Imported")
-        guard case .replace(let root) = replace.templates else { return XCTFail() }
+        let root = replace.templates
         XCTAssertEqual(root.children[0].hotKey, hk)
         XCTAssertEqual(root.children[0].id, item.id)
         XCTAssertEqual(replace.templatesAdded, 1)
@@ -135,6 +137,49 @@ final class RestorePlanTests: XCTestCase {
         XCTAssertEqual(plan.history.map(\.plainText), ["mine", "same", "new"])
         XCTAssertEqual(plan.history[1].id, shared.id)                // the current copy stays, untouched
         XCTAssertEqual(plan.historyAdded, 1)
+    }
+
+    // A plan is a snapshot: the stores' revisions say whether it still describes them.
+    func testStoreRevisionsMoveWithEveryChange() {
+        var s = Settings(); s.historySave = false
+        let h = HistoryStore(settings: s)
+        let r0 = h.revision
+        h.add(.text("x"))
+        XCTAssertEqual(h.revision, r0 + 1)
+        h.replaceAll([])
+        XCTAssertEqual(h.revision, r0 + 2)
+        let t = TemplateStore()
+        let t0 = t.revision
+        t.root.insert(TemplateNode(name: "n", text: "n")); t.changed()
+        XCTAssertEqual(t.revision, t0 + 1)
+        t.replaceRoot(TemplateNode(name: "Template"))
+        XCTAssertEqual(t.revision, t0 + 2)
+    }
+
+    // The disk half of a commit: all three files or none. Here history.json cannot be written
+    // (a directory sits in its place); templates.json, already written, must come back as it was.
+    func testCommitWritesAllFilesOrPutsThePreviousOnesBack() throws {
+        try FileManager.default.createDirectory(at: Storage.directory, withIntermediateDirectories: true)
+        try Data("old-templates".utf8).write(to: Storage.templatesURL)
+        try Data("old-settings".utf8).write(to: Storage.settingsURL)
+        try FileManager.default.createDirectory(at: Storage.historyURL, withIntermediateDirectories: true)
+        XCTAssertThrowsError(try RestoreCommit.writeFiles(templatesJSON: Data("new-templates".utf8), historyJSON: Data("new-history".utf8),
+                                                          settingsJSON: Data("new-settings".utf8)))
+        XCTAssertEqual(try Data(contentsOf: Storage.templatesURL), Data("old-templates".utf8))
+        XCTAssertEqual(try Data(contentsOf: Storage.settingsURL), Data("old-settings".utf8))
+        try FileManager.default.removeItem(at: Storage.historyURL)
+        // With the obstacle gone the same commit lands whole; nil history removes the file.
+        XCTAssertNoThrow(try RestoreCommit.writeFiles(templatesJSON: Data("new-templates".utf8), historyJSON: nil, settingsJSON: Data("new-settings".utf8)))
+        XCTAssertEqual(try Data(contentsOf: Storage.templatesURL), Data("new-templates".utf8))
+        XCTAssertEqual(try Data(contentsOf: Storage.settingsURL), Data("new-settings".utf8))
+        XCTAssertFalse(FileManager.default.fileExists(atPath: Storage.historyURL.path))
+        // Locked (password set, no key in memory): refused before touching anything.
+        try Vault.enable(password: SecureBuffer.of("pw")).zero()
+        Storage.clearKey()
+        XCTAssertThrowsError(try RestoreCommit.writeFiles(templatesJSON: Data("x".utf8), historyJSON: nil, settingsJSON: Data("y".utf8))) {
+            XCTAssertEqual($0 as? Storage.Failure, .locked)
+        }
+        XCTAssertEqual(try Data(contentsOf: Storage.templatesURL), Data("new-templates".utf8))
     }
 
     func testTrimmedIsTheStoreRule() {

@@ -120,6 +120,31 @@ enum Storage {
         write(to: url, encrypt: encrypt, background: background) { data }
     }
 
+    enum Failure: Error, Equatable { case locked }
+
+    /// The throwing, synchronous write for a caller that must know the outcome (a restore commit).
+    /// Same rules as `save`: encrypted with the current key, refused while locked, through `ioQueue`.
+    static func writeNow(_ data: Data, to url: URL, encrypt: Bool = true) throws {
+        if encrypt, key == nil, Vault.isEnabled { throw Failure.locked }
+        let k: SecureKey? = encrypt ? key : nil
+        try ioQueue.sync {
+            var d = data
+            if let k { d = try Vault.encrypt(d, key: k) }
+            try d.write(to: url, options: .atomic)
+        }
+    }
+
+    /// Put bytes back exactly as they were read (already encrypted, or not): undo for `writeNow`.
+    static func writeRawNow(_ bytes: Data, to url: URL) throws {
+        try ioQueue.sync { try bytes.write(to: url, options: .atomic) }
+    }
+
+    static func removeNow(_ url: URL) throws {
+        try ioQueue.sync {
+            if FileManager.default.fileExists(atPath: url.path) { try FileManager.default.removeItem(at: url) }
+        }
+    }
+
     private static func write(to url: URL, encrypt: Bool, background: Bool, _ produce: @escaping () throws -> Data) {
         // With a password set and no key in memory (locked), writing would replace an encrypted
         // file with plaintext — refuse rather than leak or clobber.

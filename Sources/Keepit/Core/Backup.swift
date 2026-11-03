@@ -53,10 +53,14 @@ enum Backup {
 
     /// Format 2, mode `manual`: fresh salt, `Container.defaultRounds`, the given password.
     static func encode(_ payload: Payload, password: SecureBuffer) throws -> Data {
-        let json = try Storage.encoder.encode(payload)
+        try encode(json: try Storage.encoder.encode(payload), created: payload.created, app: payload.app, password: password)
+    }
+
+    /// Same, for payload JSON already built (`payloadJSON`) from a snapshot taken on the main thread.
+    static func encode(json: Data, created: Date, app: String, password: SecureBuffer) throws -> Data {
         let salt = try KDF.randomBytes(Container.saltBytes)
         let header = Container.Header(mode: .manual, rounds: Container.defaultRounds, salt: salt,
-                                      created: payload.created, app: payload.app, minReader: minReader)
+                                      created: created, app: app, minReader: minReader)
         return try password.withBytes { pw in
             try KDF.pbkdf2(password: pw, salt: salt, rounds: header.rounds) { keyBytes in
                 try Container.sealV2(payload: json, header: header, key: SymmetricKey(data: keyBytes))

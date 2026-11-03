@@ -5,6 +5,9 @@ final class HistoryStore {
     private(set) var items: [ClipItem] = []
     var settings: Settings
     var onChange: (() -> Void)?
+    /// Bumped on every change to `items` (edits, reload, purge). A plan computed from the store is
+    /// valid only while this is what it was when the plan was made.
+    private(set) var revision = 0
 
     private lazy var saver = DebouncedSaver(delay: 1.5) { [weak self] background in self?.saveNow(background: background) }
     /// True between `purge()` (lock) and the next `reload()`: memory is empty on purpose and must
@@ -19,6 +22,7 @@ final class HistoryStore {
     /// (Re)load from disk — used at start and after unlocking.
     func reload() {
         isPurged = false
+        revision += 1
         items = []
         if settings.historySave, let loaded = Storage.load([ClipItem].self, from: Storage.historyURL) {
             items = loaded
@@ -31,6 +35,7 @@ final class HistoryStore {
     func purge() {
         saver.flush()
         isPurged = true
+        revision += 1
         items = []
         onChange?()
     }
@@ -166,6 +171,7 @@ final class HistoryStore {
     }
 
     private func changed() {
+        revision += 1
         onChange?()
         if settings.historySave { saver.schedule() }
     }
