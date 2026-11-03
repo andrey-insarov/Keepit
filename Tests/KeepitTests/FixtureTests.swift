@@ -25,6 +25,7 @@ final class FixtureTests: XCTestCase {
         var historyMax: Int?
         var historyImageMax: Int?
         var menuMaxItems: Int?
+        var formatHashes: [[String: String]]?
     }
 
     private func fixtures() throws -> [(name: String, data: Data, side: Sidecar)] {
@@ -62,6 +63,9 @@ final class FixtureTests: XCTestCase {
                 if let c = f.side.formatCounts { XCTAssertEqual(p.history.map { $0.formats.count }, c, f.name) }
                 if let b = f.side.pngBytes { XCTAssertEqual(p.history.map { $0.formats[ClipItem.Format.png]?.count ?? 0 }, b, f.name) }
                 if let fp = f.side.filePaths { XCTAssertEqual(p.history.map { $0.filePaths }, fp, f.name) }
+                if let fh = f.side.formatHashes {
+                    XCTAssertEqual(p.history.map { $0.formats.mapValues { ClipItem.hash(of: $0) } }, fh, "\(f.name) exact bytes of every format")
+                }
                 if let tp = f.side.templatePaths { XCTAssertEqual(paths(p.templates), tp, f.name) }
                 if let hk = f.side.hotKeys {
                     for (name, key) in hk {

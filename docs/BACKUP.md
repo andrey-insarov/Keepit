@@ -74,16 +74,18 @@ block ordinary saving:
 1. **Snapshot** (main thread, immediate): history array, encoded template tree, restorable settings,
    current KDF parameters and recovery block, fingerprint. One consistent state; the key, the
    recovery block and the data in a file always belong to the same moment.
-2. **Seal** (`Storage.ioQueue`): compress, encrypt with the HKDF key. This is the only stage that
-   needs the data key, and it is short.
+2. **Seal** (`Storage.ioQueue`): compress, encrypt with the HKDF key, then **verify the container
+   while the key is still available**: parse the header back, open the GCM box, compare the
+   plaintext hash with the snapshot's. Compute `SHA-256` of the complete file bytes and keep it in
+   the job. This is the only stage that needs the data key, and it is short.
 3. **Write** (`backupQueue`, separate): resolve the bookmark (start/stop security scope paired, in
    `defer`), write to a temporary file in the destination folder (`.Keepit-….keepit.part`), `fsync`,
-   **read it back and verify**: parse the header, check the GCM tag; only then rename atomically to
-   the final name; record `(sourceID, backupID, name, size, date)` in the local registry; update
-   *Last backup*.
+   **read it back and compare its SHA-256 with the job's** — a byte-exact check that needs no key;
+   only then rename atomically to the final name; record `(sourceID, backupID, name, size, date,
+   sha256)` in the local registry; update *Last backup*.
 
 Lock and key changes wait for stage 2, never for stage 3. If the key is wiped during stage 3,
-nothing happens: the bytes are already ciphertext.
+nothing happens: the bytes are already ciphertext and already verified.
 
 Atomicity and durability on network volumes depend on the file system and protocol. The security
 page says so and recommends a local or iCloud/Dropbox folder; a NAS is "verify your setup".
@@ -124,9 +126,17 @@ General → Backup → Restore…*; double-click on a `.keepit` file. All lead t
    decode and validate the payload against `Limits` as untrusted input. Nothing has changed yet.
 4. **Preview**: counts, date, device label (now trusted), what will happen.
 5. **Choose**: **Replace** or **Merge**.
-   - *Replace* first writes a mandatory copy of the current data (`Keepit-before-restore-…`) into
-     the backup folder — or, if there is none, next to the chosen file — and verifies it the same
-     way as a regular backup. If that copy cannot be written, Replace does not start.
+   - *Replace* first secures the current data, then replaces it. Three cases:
+     - **Nothing to lose** (history and templates empty — a fresh installation, or right after
+       *Reset…*): no rollback copy; Replace proceeds.
+     - **Existing data, vault on**: a mandatory rollback copy (`Keepit-before-restore-…`, mode
+       `auto`, current key) is written and verified like a regular backup — into the backup folder
+       if one is configured, otherwise into a folder the user picks now (choosing a *file* in
+       `NSOpenPanel` grants no right to write next to it, so Keepit asks for a folder explicitly).
+       If the copy cannot be written, Replace does not start.
+     - **Existing data, vault off**: the rollback copy is a manual-mode export; the user is asked
+       for a password for it (same dialog as *Export…*) and for a folder. Declining either cancels
+       Replace. Turning protection on first is offered as the simpler route.
    - *Merge* adds history items whose `contentHash` is not present and templates whose `id` is not
      present. A template with the same `id` but different content is **kept twice**: the imported one
      gets " (from backup)" appended to its name and appears in the report. Nothing is overwritten
@@ -165,7 +175,7 @@ Automatic tests (temporary folders, fakes where macOS is involved):
 - [ ] Rotation keeps N of own series; another series and foreign files in the folder are untouched; N = 1 still leaves the before-restore copy.
 - [ ] Registry out of sync (file deleted by hand) → no error, no deletion of anything else.
 - [ ] Restore: password opens; recovery phrase opens (no local vault.json involved); wrong password → clean error; tampered header → authentication failure; `minReader` above ours → "needs newer Keepit"; `rounds` out of range → rejected before PBKDF2; oversized payload → rejected during decompression.
-- [ ] Restore Replace without a possible before-restore copy → refused, data untouched.
+- [ ] Restore Replace: empty store → no rollback copy, proceeds; data + vault → rollback copy written and verified first; data, no vault → export password and folder asked, declining cancels; rollback copy cannot be written → refused, data untouched.
 - [ ] Restore Merge: duplicate hashes skipped, same-id different-content templates kept twice with the suffix and reported.
 - [ ] Trust settings never restored.
 - [ ] Every fixture in `Tests/KeepitTests/Fixtures` (v1 and v2) opens as its sidecar says.
@@ -179,5 +189,4 @@ Manual, before release (Andrey):
 ## Out of scope for 3.0
 
 Sync between Macs; restoring individual items from a backup; backups of a locked vault; scheduled
-backups while Keepit is not running; encryption of the before-restore copy with anything but the
-current key.
+backups while Keepit is not running.

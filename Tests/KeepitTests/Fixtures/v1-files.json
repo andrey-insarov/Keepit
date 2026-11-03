@@ -6,6 +6,11 @@
     ]
   ],
   "format": 1,
+  "formatHashes": [
+    {
+      "com.it.keep.file-list": "1c5b8edf7418a4c7ac8612d09dddf1cdbe704af9dd0a71ffae66ae984f4f096a"
+    }
+  ],
   "history": 1,
   "kinds": [
     "files"

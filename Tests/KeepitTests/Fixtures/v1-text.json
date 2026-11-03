@@ -5,6 +5,19 @@
     3,
     1
   ],
+  "formatHashes": [
+    {
+      "public.utf8-plain-text": "a7937b64b8caa58f03721bb6bacf5c78cb235febe0e70b1b84cd99541461a08e"
+    },
+    {
+      "public.html": "89d725f418d7e1a72e160f745b0a58d915e7288e348df4e37073b78fbcd6dfeb",
+      "public.rtf": "322f21fb8d315f7da497ac98da11dfeb736b5d90051459e96dc6f63c8a18f4bd",
+      "public.utf8-plain-text": "4ae7c3b6ac0beff671efa8cf57386151c06e58ca53a78d83f36107316cec125f"
+    },
+    {
+      "public.utf8-plain-text": "3c0feee32b1bc9cb8543851bfc6535bf5f897211339c017f0a5a87f550954bb0"
+    }
+  ],
   "history": 3,
   "kinds": [
     "text",

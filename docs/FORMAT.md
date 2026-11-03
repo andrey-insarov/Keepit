@@ -56,6 +56,12 @@ Reader rules:
 5. Decompress with a running limit of 512 MiB on the output; exceeding it → reject.
 6. Decode the payload (next section).
 
+**What the 2.x reader actually does** (Keepit 2.0 – 2.13, `Backup.decode`), for the record: rules
+1–4 as above; the decompressed size is checked *after* full decompression, not during it; the
+payload's `version` field is decoded but not enforced; `Import…` applies the restored `settings`
+object whole, including the trust-related keys listed under *Settings*. The 3.0 reader (stage 2 of
+the 3.0 plan) implements the rules as written here; files written by 2.x are unaffected either way.
+
 ## Container, format 2 (Keepit 3.0)
 
 ```
@@ -137,9 +143,9 @@ Keys are sorted; whitespace is insignificant. The payload must stay below 512 Mi
 
 **Compatibility rules.** A reader ignores fields it does not know. A writer must not change the
 meaning or type of an existing field; new fields are optional with a defined default. Breaking
-changes bump `version`, and a reader rejects a payload version it does not know. Readers also
-enforce `Limits` (item counts, template depth and count, image pixel caps) exactly as they do for
-live data — a backup is untrusted input.
+changes bump `version`, and a reader rejects a payload version it does not know (3.0 reader; the
+2.x reader does not check it). Readers also enforce `Limits` (item counts, template depth and count,
+image pixel caps) exactly as they do for live data — a backup is untrusted input.
 
 ### ClipItem
 
@@ -173,11 +179,11 @@ The root node is a folder whose `name` is ignored. Depth ≤ 16, total nodes ≤
 ### Settings
 
 The same keys as `settings.json`; every key optional, missing keys take the reader's defaults
-(exactly as `Settings.init(from:)` does). A restore **never** applies these keys from a backup,
+(exactly as `Settings.init(from:)` does). A 3.0 restore **never** applies these keys from a backup,
 because they express trust in a particular installation, not user preferences:
 `allowURLCommands`, `trustedURLSenders`, `biometricUnlock`, `biometricPasswordChange`, the backup
-folder bookmark and any key holding a local path. Readers from other platforms may ignore the whole
-object.
+folder bookmark and any key holding a local path. (The 2.x *Import…* applies the object whole —
+see the note under format 1.) Readers from other platforms may ignore the whole object.
 
 ## Reference files
 

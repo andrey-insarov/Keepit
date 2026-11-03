@@ -164,6 +164,8 @@ def main():
 
     for name, p, password, expect in fixtures:
         data = seal_v1(p, password, salt_for(name), nonce_for(name))
+        # Independent per-format hashes of every history item, so the reader is checked on exact bytes.
+        expect["formatHashes"] = [{uti: sha256hex(base64.b64decode(b)) for uti, b in item["formats"].items()} for item in p["history"]]
         write(name, data, {"format": 1, "password": password, **expect})
 
     # v1-wrong-password: same bytes as v1-text, sidecar says a different password
