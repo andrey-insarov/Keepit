@@ -81,7 +81,8 @@ enum Storage {
         do {
             return try decoder.decode(T.self, from: data)
         } catch {
-            Log.storage.error("failed to decode \(url.lastPathComponent): \(String(describing: type(of: error))) — a copy was kept next to it")
+            let kind = String(describing: Swift.type(of: error))     // the type only: the description can quote the file
+            Log.storage.error("failed to decode \(url.lastPathComponent): \(kind) — a copy was kept next to it")
             // Keep a copy so the user doesn't lose data to a parsing bug.
             let bak = url.appendingPathExtension("corrupt-\(Int(Date().timeIntervalSince1970))")
             try? FileManager.default.copyItem(at: url, to: bak)
