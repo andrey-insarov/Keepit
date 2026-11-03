@@ -2,15 +2,16 @@ import AppKit
 
 /// A small floating keyboard for entering the password without the physical keyboard.
 ///
-/// - Keys are shuffled every time the panel opens (and on *Shuffle*), so a recording of mouse
-///   positions does not reveal the password.
-/// - The panel is excluded from screen capture (`sharingType = .none`): screenshots, screen
-///   recording and screen sharing do not show it.
+/// What it actually protects against, in order of certainty:
 /// - Characters go straight into the `SecurePasswordField`'s locked buffer; no key event is
-///   generated, so a keylogger sees nothing.
-///
-/// It does not protect against a person looking at the screen, and macOS's capture exclusion is
-/// a system promise, not something Keepit can verify.
+///   generated, so anything that captures keyboard events sees nothing.
+/// - Keys are shuffled every time the panel opens (and on *Shuffle*), so mouse positions alone do
+///   not reveal the password.
+/// - The panel asks macOS to leave it out of screen capture (`sharingType = .none`). On current
+///   macOS that keeps it out of screenshots and most recordings, but Apple has deprecated the
+///   value and does not guarantee it — treat it as an obstacle, not a wall. A capture tool that
+///   macOS lets see the panel, combined with mouse positions, defeats the shuffle; so does a
+///   person watching the screen.
 final class OnScreenKeyboard: NSObject {
     /// Which field receives the characters (the focused one in the password dialog).
     var targetField: (() -> SecurePasswordField?)?
@@ -40,7 +41,7 @@ final class OnScreenKeyboard: NSObject {
         let p = NSPanel(contentRect: .zero, styleMask: [.titled, .closable, .nonactivatingPanel, .utilityWindow],
                         backing: .buffered, defer: false)
         p.title = L("On-screen keyboard")
-        p.sharingType = .none                 // not in screenshots, recordings or screen sharing
+        p.sharingType = .none                 // ask to be left out of screen capture; not guaranteed (see header)
         p.worksWhenModal = true               // the password dialog is modal
         p.level = .modalPanel
         p.isFloatingPanel = true

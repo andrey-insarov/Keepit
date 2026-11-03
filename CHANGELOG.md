@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- `keepit://`: a URL with a repeated parameter name (`?text=a&text=b`) crashed the handler; it is now refused. Senders are no longer trusted just for being identifiable: the first state-changing command from each app asks, *Always Allow* puts the app on a trusted list (Settings → Advanced → *Forget Trusted Apps* clears it); a browser or an unidentified sender asks every time. The sender PID comes from `keySenderPIDAttr`
+- On-screen keyboard: wording corrected. `NSWindow.sharingType = .none` is deprecated and not guaranteed by Apple — the panel *asks* to stay out of screen capture, which current macOS honours; the protection you can count on is the absence of keyboard events and the shuffled keys. Comments, tooltip, guide and security page now say so
+
 ## 2.13.0 — 2026-11-03
 
 - **On-screen keyboard for the password.** The keyboard button next to the password field opens a small panel with shuffled keys; the panel is excluded from screenshots, screen recording and screen sharing, and clicks go straight into the protected buffer without key events, so keyloggers see nothing. Shift, symbols, backspace, *Shuffle*

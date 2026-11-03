@@ -313,7 +313,7 @@ enum Vault {
             kb.bezelStyle = .texturedRounded
             kb.image = NSImage(systemSymbolName: "keyboard", accessibilityDescription: L("On-screen keyboard"))
             kb.imagePosition = .imageOnly
-            kb.toolTip = L("On-screen keyboard: shuffled keys, hidden from screenshots and screen recording")
+            kb.toolTip = L("On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture")
             kb.setButtonType(.momentaryPushIn)
             let keyboard = OnScreenKeyboard()
             kb.target = keyboard

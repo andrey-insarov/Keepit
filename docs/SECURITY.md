@@ -83,17 +83,20 @@ Turn on *Require password at launch* and the history and templates files are enc
 - **Password strength**: the password dialog shows an entropy estimate and explains it; Keepit does
   not enforce a minimum, because the recovery phrase and Touch ID are the usual way in.
 - **On-screen keyboard**: the keyboard button next to the password field opens a small panel for
-  entering the password with the mouse. Its keys are shuffled each time it opens (and on *Shuffle*),
-  the panel is excluded from screen capture (`NSWindow.sharingType = .none` — screenshots, screen
-  recording and screen sharing do not show it), and each click goes straight into the locked
-  buffer without generating a key event, so a keylogger sees nothing. It does not protect against a
-  person looking at the screen, and the capture exclusion is a promise macOS makes, not one Keepit
-  can verify.
+  entering the password with the mouse. What it does, in order of certainty: each click goes
+  straight into the locked buffer without generating a key event, so anything that captures
+  keyboard events sees nothing; the keys are shuffled each time the panel opens (and on *Shuffle*),
+  so mouse positions alone do not give the password away; and the panel asks macOS to leave it out
+  of screen capture (`NSWindow.sharingType = .none`). On current macOS that last part keeps it out
+  of screenshots and most screen recording — but Apple has deprecated that value and does not
+  guarantee it, so count on the first two and treat the third as an obstacle, not a wall. A capture
+  tool that macOS lets see the panel, together with mouse positions, defeats the shuffle; so does a
+  person looking at the screen.
 
 - **Wrong attempts**: after several wrong passwords Keepit backs off with increasing delays, and
   after too many it quits (at launch) or stays locked.
 
-![The unlock dialog with the on-screen keyboard open. Photographed with a phone: the panel is excluded from screen capture, so a screenshot of this scene shows the dialog alone](site/img/guide/unlock-keyboard.jpg)
+![The unlock dialog with the on-screen keyboard open. Photographed with a phone: on the author's Mac a screenshot of this scene shows the dialog alone](site/img/guide/unlock-keyboard.jpg)
 
 Changing the password re-wraps the recovery material; the data files are re-encrypted with the new
 key.
@@ -159,13 +162,15 @@ a URL — browsers do confirm the first time for a custom scheme, scripts do not
 off, Keepit ignores such URLs with a beep and logs that it did.
 
 With it on, Keepit checks the sender. macOS delivers the URL as an Apple Event that names the process
-behind it; if that process is a web browser (anything registered with the system to open `https://`
-links) or cannot be identified, every state-changing command is shown in a dialog with the full URL
-and runs only after *Allow*. Shortcuts, Raycast, Alfred, Terminal and other local apps run
-commands directly. Commands that only open Keepit's own windows (`history`, `templates`, `viewer`,
-`settings`) never ask. This is a reasonable barrier, not a proof: a local process that wanted to
-impersonate another could, and the sender of a URL opened while Keepit was not yet running may be
-unknown — which is why unknown means "ask".
+behind it. A state-changing command runs without asking only if that process is on your list of
+trusted apps; otherwise a dialog shows the full URL with *Allow*, *Always Allow* and *Cancel*, and
+*Always Allow* adds the app to the list (*Settings → Advanced → Forget Trusted Apps* clears it).
+A web browser (anything registered with the system to open `https://` links) or a sender that cannot
+be identified is asked every time and cannot be added — a web page could be behind it. Commands
+that only open Keepit's own windows (`history`, `templates`, `viewer`, `settings`) never ask. A URL
+with a repeated parameter name is refused. This is a reasonable barrier, not a proof: a local
+process that wanted to impersonate another could, and the sender of a URL opened while Keepit was
+not yet running may be unknown — which is why unknown means "ask".
 
 ## System log
 

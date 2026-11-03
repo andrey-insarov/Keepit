@@ -370,12 +370,13 @@ starts. <em>Viewer</em> ⌥E, <em>Settings</em> ⌥S, <em>Clear History</em> ⌥
 AES-256-GCM. The key is derived from your password (PBKDF2, 200 000 rounds) and lives only in
 memory; it is wiped when Keepit locks — <em>Lock Keepit</em> (<kbd class="k">⌥L</kbd>), on quit, and optionally
 when the screen locks or the Mac sleeps.</p>
-<figure class="shot" style="max-width:800px"><a href="img/guide/set-password-keyboard.jpg?v=08002f0c" class="zoom" title="Open full size"><img src="img/guide/set-password-keyboard.jpg?v=08002f0c" alt="Setting the password with the on-screen keyboard. This is a photograph of the screen, not a screenshot: the keyboard panel is excluded from screen capture, so a screenshot of this scene shows the dialog alone" width="800" height="600" loading="lazy"></a><figcaption>Setting the password with the on-screen keyboard. This is a photograph of the screen, not a screenshot: the keyboard panel is excluded from screen capture, so a screenshot of this scene shows the dialog alone</figcaption></figure>
+<figure class="shot" style="max-width:800px"><a href="img/guide/set-password-keyboard.jpg?v=08002f0c" class="zoom" title="Open full size"><img src="img/guide/set-password-keyboard.jpg?v=08002f0c" alt="Setting the password with the on-screen keyboard. A photograph of the screen, not a screenshot: on the author's Mac a screenshot of this scene shows the dialog alone" width="800" height="600" loading="lazy"></a><figcaption>Setting the password with the on-screen keyboard. A photograph of the screen, not a screenshot: on the author's Mac a screenshot of this scene shows the dialog alone</figcaption></figure>
 <p>The password dialogs show the current keyboard layout and warn about Caps Lock, so a rejected
 password is rarely a mystery. The keyboard button next to the field opens an <strong>on-screen keyboard</strong>
-for typing the password with the mouse: its keys are shuffled every time it opens, it is invisible to
-screenshots, screen recording and screen sharing, and the clicks never pass through the system as
-key presses — for a Mac you do not fully trust, or one that is being screen-shared. At launch, and after a lock, Keepit asks for the password (or Touch ID);
+for typing the password with the mouse: the clicks never pass through the system as key presses, its
+keys are shuffled every time it opens, and it asks macOS to keep it out of screenshots and screen
+recording (which current macOS honours, though Apple does not guarantee it) — for a Mac you do not
+fully trust, or one that is being screen-shared. At launch, and after a lock, Keepit asks for the password (or Touch ID);
 <em>Recovery Access…</em> takes the 24-word phrase instead — see <a href="#recovery-phrase">Recovery phrase</a>.</p>
 <figure class="shot" style="max-width:800px"><a href="img/guide/unlock-keyboard.jpg?v=4c0be394" class="zoom" title="Open full size"><img src="img/guide/unlock-keyboard.jpg?v=4c0be394" alt="Unlocking at launch: password, Quit, or the recovery phrase; OK stays disabled until something is typed. Photographed, for the same reason as above" width="800" height="600" loading="lazy"></a><figcaption>Unlocking at launch: password, Quit, or the recovery phrase; OK stays disabled until something is typed. Photographed, for the same reason as above</figcaption></figure>
 <figure class="shot" style="max-width:609px"><a href="img/guide/prefs-security.png?v=397de99b" class="zoom" title="Open full size"><img src="img/guide/prefs-security.png?v=397de99b" alt="Settings → Security" width="609" height="405" loading="lazy"></a><figcaption>Settings → Security</figcaption></figure>
@@ -405,10 +406,11 @@ download and the App Store edition.</p>
 <strong>once you turn it on</strong> in <em>Settings → Advanced → Automation → Allow keepit:// URL commands</em>. It is
 off by default because any app or web page can open a URL, and <code>add</code> / <code>paste</code> change the clipboard
 and type into the front app; with it off, Keepit ignores such URLs with a beep. With it on, Keepit
-looks at who opened the URL: Shortcuts, Raycast, Alfred, Terminal and other apps go straight through,
-while a web browser — or a sender macOS cannot name — gets a confirmation dialog for every command
-that changes something (<code>paste</code>, <code>copy</code>, <code>template</code>, <code>add</code>, <code>add-template</code>, <code>pause</code>, <code>resume</code>).
-Commands that only open Keepit's own windows never ask.</p>
+looks at who opened the URL: the first command that changes something (<code>paste</code>, <code>copy</code>, <code>template</code>,
+<code>add</code>, <code>add-template</code>, <code>pause</code>, <code>resume</code>) from each app is shown in a dialog — <em>Allow</em> runs it once,
+<em>Always Allow</em> puts the app on the trusted list (cleared with <em>Forget Trusted Apps</em> on the same
+pane). A web browser, or a sender macOS cannot name, is asked every time. Commands that only open
+Keepit's own windows never ask.</p>
 <div class="tbl"><table>
 <thead>
 <tr>
