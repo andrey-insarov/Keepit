@@ -26,6 +26,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
     private let loginItem    = NSButton(checkboxWithTitle: L("Launch at login"), target: nil, action: nil)
     private let updateCheck  = NSButton(checkboxWithTitle: L("Check for updates automatically"), target: nil, action: nil)
     private let urlCommands  = NSButton(checkboxWithTitle: L("Allow keepit:// URL commands"), target: nil, action: nil)
+    private let trustedReset = NSButton(title: L("Forget Trusted Apps"), target: nil, action: nil)
     private let saveHistory  = NSButton(checkboxWithTitle: L("Save history on quit, restore on start"), target: nil, action: nil)
     private let pasteAfter   = NSButton(checkboxWithTitle: L("Paste into the active app after choosing"), target: nil, action: nil)
     private let showAtCaret  = NSButton(checkboxWithTitle: L("Open menu at text cursor when possible"), target: nil, action: nil)
@@ -378,6 +379,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         ])
 
         protect.target = self; protect.action = #selector(protectToggled)
+        trustedReset.target = self; trustedReset.action = #selector(forgetTrustedSenders)
         changePw.target = self; changePw.action = #selector(changePasswordTapped)
         newPhrase.target = self; newPhrase.action = #selector(newPhraseTapped)
         let security = grid([
@@ -411,7 +413,8 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             row(L("Poll interval:"), help(number(pollInterval, unit: L("seconds"), min: 0.1, max: 5, step: 0.1, decimals: 2),
                                            L("How often Keepit looks at the clipboard. macOS sends no notification when it changes, so every clipboard manager polls; 0.3 s is unnoticeable and cheap."))),
             header(L("Automation")),
-            [NSView(), help(check(urlCommands), L("Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL. When on, a command that changes something is confirmed in a dialog if it came from a web browser or an unknown sender; other apps run it directly."))],
+            [NSView(), help(check(urlCommands), L("Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL. When on, a command that changes something is confirmed in a dialog the first time each app sends one; Always Allow puts the app on the trusted list. A web browser or an unidentified sender is asked every time."))],
+            [NSView(), help(button(trustedReset), L("Removes every app from the trusted list, so the next keepit:// command from each one asks again."))],
             header(L("Data")),
             [NSView(), button(reveal)],
             header(dangerTitle),
@@ -559,6 +562,8 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         loginItem.state = s.launchAtLogin ? .on : .off
         updateCheck.state = s.checkForUpdates ? .on : .off
         urlCommands.state = s.allowURLCommands ? .on : .off
+        trustedReset.isEnabled = !s.trustedURLSenders.isEmpty
+        trustedReset.title = s.trustedURLSenders.isEmpty ? L("Forget Trusted Apps") : LF("Forget Trusted Apps (%d)", s.trustedURLSenders.count)
         saveHistory.state = s.historySave ? .on : .off
         pasteAfter.state = s.pasteAfterSelect ? .on : .off
         showAtCaret.state = s.showAtCaret ? .on : .off
@@ -714,6 +719,12 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         }
         setStatus(statusField, "")
         app.apply(settings: s)
+    }
+
+    @objc private func forgetTrustedSenders() {
+        apply { s in s.trustedURLSenders = [] }
+        trustedReset.isEnabled = false
+        trustedReset.title = L("Forget Trusted Apps")
     }
 
     @objc private func resetShortcuts() {

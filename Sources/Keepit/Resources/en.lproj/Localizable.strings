@@ -449,7 +449,7 @@
 
 "Automation" = "Automation";
 "Allow keepit:// URL commands" = "Allow keepit:// URL commands";
-"Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL. When on, a command that changes something is confirmed in a dialog if it came from a web browser or an unknown sender; other apps run it directly." = "Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL. When on, a command that changes something is confirmed in a dialog if it came from a web browser or an unknown sender; other apps run it directly.";
+"Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL. When on, a command that changes something is confirmed in a dialog the first time each app sends one; Always Allow puts the app on the trusted list. A web browser or an unidentified sender is asked every time." = "Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL. When on, a command that changes something is confirmed in a dialog the first time each app sends one; Always Allow puts the app on the trusted list. A web browser or an unidentified sender is asked every time.";
 
 "Allow" = "Allow";
 "an unknown application" = "an unknown application";
@@ -457,5 +457,11 @@
 "%@\n\nA web page can open such links. Allow it only if you expect this." = "%@\n\nA web page can open such links. Allow it only if you expect this.";
 
 "On-screen keyboard" = "On-screen keyboard";
-"On-screen keyboard: shuffled keys, hidden from screenshots and screen recording" = "On-screen keyboard: shuffled keys, hidden from screenshots and screen recording";
 "Shuffle" = "Shuffle";
+
+"Always Allow" = "Always Allow";
+"Forget Trusted Apps" = "Forget Trusted Apps";
+"Forget Trusted Apps (%d)" = "Forget Trusted Apps (%d)";
+"Removes every app from the trusted list, so the next keepit:// command from each one asks again." = "Removes every app from the trusted list, so the next keepit:// command from each one asks again.";
+"%@\n\nAlways Allow adds this app to the trusted list (Settings → Advanced → Automation)." = "%@\n\nAlways Allow adds this app to the trusted list (Settings → Advanced → Automation).";
+"On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture" = "On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture";

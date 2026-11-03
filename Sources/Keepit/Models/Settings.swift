@@ -157,6 +157,8 @@ struct Settings: Codable, Equatable {
     /// `keepit://` URL commands (Shortcuts, Raycast, Alfred, `open`). Off by default since 2.13: any app
     /// or web page may open a URL, and `add`/`paste` change the clipboard and the front app without asking.
     var allowURLCommands = false
+    /// Bundle ids the user answered "Always Allow" for; browsers and unidentified senders never get in.
+    var trustedURLSenders: [String] = []
 
     /// Lock Keepit (wipe key, unload data) when the screen locks or the Mac sleeps. Only matters with a password set.
     var lockWithScreen = true
@@ -207,6 +209,7 @@ struct Settings: Codable, Equatable {
         case launchAtLogin
         case checkForUpdates
         case allowURLCommands
+        case trustedURLSenders
         case lockWithScreen
         case biometricUnlock
         case biometricPasswordChange
@@ -290,6 +293,7 @@ struct Settings: Codable, Equatable {
         launchAtLogin    = try c.decodeIfPresent(Bool.self,   forKey: .launchAtLogin)    ?? d.launchAtLogin
         checkForUpdates  = try c.decodeIfPresent(Bool.self,   forKey: .checkForUpdates)  ?? d.checkForUpdates
         allowURLCommands = try c.decodeIfPresent(Bool.self,   forKey: .allowURLCommands) ?? d.allowURLCommands
+        trustedURLSenders = try c.decodeIfPresent([String].self, forKey: .trustedURLSenders) ?? d.trustedURLSenders
         lockWithScreen   = try c.decodeIfPresent(Bool.self,   forKey: .lockWithScreen)   ?? d.lockWithScreen
         biometricUnlock  = try c.decodeIfPresent(Bool.self,   forKey: .biometricUnlock)  ?? d.biometricUnlock
         biometricPasswordChange = try c.decodeIfPresent(Bool.self, forKey: .biometricPasswordChange) ?? d.biometricPasswordChange
@@ -345,6 +349,7 @@ struct Settings: Codable, Equatable {
         try c.encode(launchAtLogin, forKey: .launchAtLogin)
         try c.encode(checkForUpdates, forKey: .checkForUpdates)
         try c.encode(allowURLCommands, forKey: .allowURLCommands)
+        try c.encode(trustedURLSenders, forKey: .trustedURLSenders)
         try c.encode(lockWithScreen, forKey: .lockWithScreen)
         try c.encode(biometricUnlock, forKey: .biometricUnlock)
         try c.encode(biometricPasswordChange, forKey: .biometricPasswordChange)

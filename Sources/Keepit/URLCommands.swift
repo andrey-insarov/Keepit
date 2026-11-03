@@ -32,20 +32,35 @@ extension AppDelegate {
             return
         }
         guard !isLocked else { NSSound.beep(); return }
-        let comps = URLComponents(url: url, resolvingAgainstBaseURL: false)
-        let q = Dictionary(uniqueKeysWithValues: (comps?.queryItems ?? []).map { ($0.name, $0.value ?? "") })
-        let command = url.host?.lowercased() ?? ""
-        let arg = url.path.split(separator: "/").map(String.init).joined(separator: "/")
+        guard let parsed = URLCommand.parse(url) else {
+            Log.system.notice("keepit:// URL rejected: malformed or duplicate query parameter")
+            NSSound.beep()
+            return
+        }
+        let command = parsed.command, arg = parsed.argument, q = parsed.params
         let target = NSWorkspace.shared.frontmostApplication
 
-        // Who asked? macOS delivers the URL as an Apple Event whose address attribute carries the
-        // sender's PID. A web browser — or a sender we cannot identify — gets a confirmation for any
-        // command that changes state; Shortcuts, Raycast, Alfred, Terminal and the like go straight through.
+        // Who asked? macOS delivers the URL as an Apple Event that carries the sender's PID. For a
+        // command that changes state, the sender must be on the user's list of trusted apps
+        // (Settings → Advanced); anything else gets a dialog. A web browser, or a sender we cannot
+        // identify, is asked every time and is never added to the list — a web page could be behind it.
         if !Self.readOnlyCommands.contains(command) {
             let sender = URLSender.current()
-            if sender.needsConfirmation, !confirmURLCommand(url, from: sender) {
-                Log.system.notice("keepit:// \(command) from \(sender.description) declined")
-                return
+            let trusted = sender.app?.bundleIdentifier.map { settings.trustedURLSenders.contains($0) } ?? false
+            if !trusted {
+                switch confirmURLCommand(url, from: sender) {
+                case .deny:
+                    Log.system.notice("keepit:// \(command) from \(sender.description) declined")
+                    return
+                case .allowOnce:
+                    break
+                case .allowAlways:
+                    if let id = sender.app?.bundleIdentifier, !sender.needsConfirmation {
+                        var s = settings
+                        s.trustedURLSenders.append(id)
+                        apply(settings: s)
+                    }
+                }
             }
         }
 
@@ -107,31 +122,58 @@ extension AppDelegate {
     }
 }
 
+/// A `keepit://` URL taken apart: host = command, path = argument, query = parameters.
+/// Kept free of AppKit so the parser can be tested; `parse` returns nil for anything it will not run.
+struct URLCommand: Equatable {
+    let command: String
+    let argument: String
+    let params: [String: String]
+
+    static func parse(_ url: URL) -> URLCommand? {
+        guard let comps = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return nil }
+        var params: [String: String] = [:]
+        for item in comps.queryItems ?? [] {
+            // A repeated name is ambiguous (keepit://add?text=a&text=b): refuse rather than guess.
+            guard params[item.name] == nil else { return nil }
+            params[item.name] = item.value ?? ""
+        }
+        return URLCommand(command: url.host?.lowercased() ?? "",
+                          argument: url.path.split(separator: "/").map(String.init).joined(separator: "/"),
+                          params: params)
+    }
+}
+
 /// The process that asked macOS to open a `keepit://` URL, as far as the Apple Event tells us.
 struct URLSender {
     let app: NSRunningApplication?
     let isBrowser: Bool
 
-    /// True when the sender is a web browser or could not be identified at all.
+    /// True when the sender is a web browser or could not be identified at all: such a sender is
+    /// asked every time and can never be added to the trusted list.
     var needsConfirmation: Bool { app == nil || isBrowser }
     var description: String { app?.bundleIdentifier ?? app?.localizedName ?? "unknown sender" }
     var displayName: String { app?.localizedName ?? L("an unknown application") }
 
     static func current() -> URLSender {
-        guard let event = NSAppleEventManager.shared().currentAppleEvent,
-              let addr = event.attributeDescriptor(forKeyword: AEKeyword(keyAddressAttr)) else {
+        guard let event = NSAppleEventManager.shared().currentAppleEvent else {
             return URLSender(app: nil, isBrowser: false)
         }
-        var pid: pid_t = 0
-        if addr.descriptorType == typeKernelProcessID, addr.data.count == MemoryLayout<pid_t>.size {
-            pid = addr.data.withUnsafeBytes { $0.load(as: pid_t.self) }
-        } else if let coerced = addr.coerce(toDescriptorType: typeKernelProcessID), coerced.data.count == MemoryLayout<pid_t>.size {
-            pid = coerced.data.withUnsafeBytes { $0.load(as: pid_t.self) }
-        }
-        guard pid > 0, let app = NSRunningApplication(processIdentifier: pid) else {
+        guard let pid = senderPID(of: event), pid > 0, let app = NSRunningApplication(processIdentifier: pid) else {
             return URLSender(app: nil, isBrowser: false)
         }
         return URLSender(app: app, isBrowser: isWebBrowser(app))
+    }
+
+    /// keySenderPIDAttr is the attribute meant for this; the address attribute is the fallback.
+    private static func senderPID(of event: NSAppleEventDescriptor) -> pid_t? {
+        func pid(_ d: NSAppleEventDescriptor?) -> pid_t? {
+            guard let d else { return nil }
+            let k = d.descriptorType == typeKernelProcessID ? d : d.coerce(toDescriptorType: typeKernelProcessID)
+            guard let k, k.data.count == MemoryLayout<pid_t>.size else { return nil }
+            return k.data.withUnsafeBytes { $0.load(as: pid_t.self) }
+        }
+        return pid(event.attributeDescriptor(forKeyword: AEKeyword(keySenderPIDAttr)))
+            ?? pid(event.attributeDescriptor(forKeyword: AEKeyword(keyAddressAttr)))
     }
 
     /// A browser is anything registered to open https:// links — asked of Launch Services, so the
@@ -144,17 +186,27 @@ struct URLSender {
     }
 }
 
+enum URLConfirmation { case allowOnce, allowAlways, deny }
+
 extension AppDelegate {
-    /// Modal yes/no for a state-changing URL command from a browser or an unidentified sender.
-    func confirmURLCommand(_ url: URL, from sender: URLSender) -> Bool {
+    /// Modal dialog for a state-changing URL command from a sender that is not yet trusted.
+    /// *Always Allow* is offered only to an identified, non-browser app.
+    func confirmURLCommand(_ url: URL, from sender: URLSender) -> URLConfirmation {
         let a = NSAlert()
         a.messageText = LF("“%@” wants Keepit to run a command", sender.displayName)
-        a.informativeText = LF("%@\n\nA web page can open such links. Allow it only if you expect this.", url.absoluteString)
+        a.informativeText = sender.needsConfirmation
+            ? LF("%@\n\nA web page can open such links. Allow it only if you expect this.", url.absoluteString)
+            : LF("%@\n\nAlways Allow adds this app to the trusted list (Settings → Advanced → Automation).", url.absoluteString)
         a.alertStyle = .warning
         a.icon = NSImage(systemSymbolName: "link.badge.plus", accessibilityDescription: nil)
         a.addButton(withTitle: L("Allow"))
         a.addButton(withTitle: L("Cancel"))
+        if !sender.needsConfirmation { a.addButton(withTitle: L("Always Allow")) }
         NSApp.activate(ignoringOtherApps: true)
-        return a.runModal() == .alertFirstButtonReturn
+        switch a.runModal() {
+        case .alertFirstButtonReturn: return .allowOnce
+        case .alertThirdButtonReturn: return .allowAlways
+        default: return .deny
+        }
     }
 }
