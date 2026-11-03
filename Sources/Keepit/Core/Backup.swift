@@ -3,12 +3,16 @@ import Foundation
 /// Export / import of history and templates as one password-protected file (`.keepit`).
 ///
 /// Layout: `KEEPITBK` · format version (1 byte) · 16-byte PBKDF2 salt · Vault.encrypt(LZFSE(JSON)).
-/// Format 1 implies PBKDF2-HMAC-SHA256 with `Vault.defaultRounds`; a later format carries its KDF parameters.
+/// Format 1 implies PBKDF2-HMAC-SHA256 with exactly 200 000 rounds (`v1Rounds`); format 2 carries its KDF parameters.
 /// The password is independent of the vault password, so a backup can be moved to a Mac
 /// where protection is off (or on with a different password).
 enum Backup {
     static let fileExtension = "keepit"
     static let formatVersion: UInt8 = 1
+    /// Format 1 derives the key with exactly this many PBKDF2 rounds — a literal, not
+    /// `Vault.defaultRounds`: raising the vault default must never change how v1 files are read.
+    /// The complete format is in docs/FORMAT.md.
+    static let v1Rounds: UInt32 = 200_000
     private static let magic = Data("KEEPITBK".utf8)
     private static let saltSize = 16
 
@@ -37,7 +41,7 @@ enum Backup {
         let json = try Storage.encoder.encode(payload)
         let packed = try (json as NSData).compressed(using: .lzfse) as Data
         let salt = try Vault.randomBytes(saltSize)
-        let key = try Vault.deriveKey(password: password, salt: salt)   // format 1 = Vault.defaultRounds
+        let key = try Vault.deriveKey(password: password, salt: salt, rounds: v1Rounds)
         defer { key.zero() }
         let sealed = try Vault.encrypt(packed, key: key)
         return magic + Data([formatVersion]) + salt + sealed
@@ -55,7 +59,7 @@ enum Backup {
         let saltStart = data.startIndex + magic.count + 1
         let salt = data[saltStart ..< saltStart + saltSize]
         let sealed = data[(saltStart + saltSize)...]
-        guard let key = try? Vault.deriveKey(password: password, salt: Data(salt)) else { throw Failure.corrupt }
+        guard let key = try? Vault.deriveKey(password: password, salt: Data(salt), rounds: v1Rounds) else { throw Failure.corrupt }
         defer { key.zero() }
         guard let packed = try? Vault.decrypt(Data(sealed), key: key) else { throw Failure.wrongPassword }
         guard let json = try? (packed as NSData).decompressed(using: .lzfse) as Data,
