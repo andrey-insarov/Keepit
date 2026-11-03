@@ -401,5 +401,9 @@ T = {
 "How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer.": 'Kolik nejnovějších položek historie nabídka zobrazuje. Starší položky zůstávají v historii a najdete je vyhledávacím polem v nabídce nebo ve Vieweru.',
 'Automation': 'Automatizace',
 'Allow keepit:// URL commands': 'Povolit příkazy URL keepit://',
-'Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL, and add/paste act on the clipboard and the front app without asking. Turn it on only if you use these integrations.': 'Umožní Zkratkám, Raycastu, Alfredu nebo příkazu `open` v shellu řídit Keepit přes URL keepit:// – vložit položku N, vložit šablonu, přidat text, pozastavit. Ve výchozím stavu vypnuto: takovou URL může otevřít jakákoli aplikace nebo webová stránka a add/paste působí na schránku a aplikaci v popředí bez dotazu. Zapněte jen tehdy, když tyto integrace používáte.',
+'Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL. When on, a command that changes something is confirmed in a dialog if it came from a web browser or an unknown sender; other apps run it directly.': 'Umožní Zkratkám, Raycastu, Alfredu nebo příkazu `open` v shellu řídit Keepit přes URL keepit:// – vložit položku N, vložit šablonu, přidat text, pozastavit. Ve výchozím stavu vypnuto: takovou URL může otevřít jakákoli aplikace nebo webová stránka. Je‑li zapnuto, příkaz, který něco mění, se potvrzuje v dialogu, pokud přišel z webového prohlížeče nebo od neznámého odesílatele; ostatní aplikace ho provedou rovnou.',
+'Allow': 'Povolit',
+'an unknown application': 'neznámá aplikace',
+'“%@” wants Keepit to run a command': '„%@“ žádá Keepit o provedení příkazu',
+'%@\n\nA web page can open such links. Allow it only if you expect this.': '%@\n\nTakový odkaz může otevřít i webová stránka. Povolte jen tehdy, pokud jste to čekali.',
 }

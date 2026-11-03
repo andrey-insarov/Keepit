@@ -401,5 +401,9 @@ T = {
 "How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer.": 'Ile najnowszych wpisów historii pokazuje menu. Starsze pozostają w historii — znajdziesz je polem wyszukiwania w menu lub w Viewerze.',
 'Automation': 'Automatyzacja',
 'Allow keepit:// URL commands': 'Zezwalaj na polecenia URL keepit://',
-'Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL, and add/paste act on the clipboard and the front app without asking. Turn it on only if you use these integrations.': 'Pozwala Skrótom, Raycastowi, Alfredowi lub poleceniu `open` w powłoce sterować Keepit przez adresy keepit:// — wkleić pozycję N, wkleić szablon, dodać tekst, wstrzymać. Domyślnie wyłączone: taki adres może otworzyć dowolna aplikacja lub strona WWW, a add/paste działają na schowek i aplikację na wierzchu bez pytania. Włącz tylko, jeśli korzystasz z tych integracji.',
+'Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL. When on, a command that changes something is confirmed in a dialog if it came from a web browser or an unknown sender; other apps run it directly.': 'Pozwala Skrótom, Raycastowi, Alfredowi lub poleceniu `open` w powłoce sterować Keepit przez adresy keepit:// — wkleić pozycję N, wkleić szablon, dodać tekst, wstrzymać. Domyślnie wyłączone: taki adres może otworzyć dowolna aplikacja lub strona WWW. Gdy włączone, polecenie zmieniające coś jest potwierdzane w oknie dialogowym, jeśli pochodzi z przeglądarki lub od nieznanego nadawcy; inne aplikacje wykonują je od razu.',
+'Allow': 'Zezwól',
+'an unknown application': 'nieznana aplikacja',
+'“%@” wants Keepit to run a command': '„%@” prosi Keepit o wykonanie polecenia',
+'%@\n\nA web page can open such links. Allow it only if you expect this.': '%@\n\nTakie łącza może otwierać także strona WWW. Zezwól tylko, jeśli się tego spodziewasz.',
 }

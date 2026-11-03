@@ -401,5 +401,9 @@ T = {
 "How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer.": 'Hoeveel van de nieuwste geschiedenisitems het menu toont. Oudere items blijven in de geschiedenis en zijn te vinden via het zoekveld in het menu of in de Viewer.',
 'Automation': 'Automatisering',
 'Allow keepit:// URL commands': 'keepit://-URL-opdrachten toestaan',
-'Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL, and add/paste act on the clipboard and the front app without asking. Turn it on only if you use these integrations.': 'Laat Opdrachten, Raycast, Alfred of `open` in een shell Keepit aansturen via keepit://-URL’s: item N plakken, een sjabloon plakken, tekst toevoegen, pauzeren. Standaard uit: elke app of webpagina kan zo’n URL openen, en add/paste werken zonder te vragen op het klembord en de voorste app. Zet het alleen aan als je deze integraties gebruikt.',
+'Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL. When on, a command that changes something is confirmed in a dialog if it came from a web browser or an unknown sender; other apps run it directly.': 'Laat Opdrachten, Raycast, Alfred of `open` in een shell Keepit aansturen via keepit://-URL’s: item N plakken, een sjabloon plakken, tekst toevoegen, pauzeren. Standaard uit: elke app of webpagina kan zo’n URL openen. Staat het aan, dan wordt een opdracht die iets verandert in een dialoogvenster bevestigd als die van een webbrowser of een onbekende afzender komt; andere apps voeren hem direct uit.',
+'Allow': 'Sta toe',
+'an unknown application': 'een onbekende app',
+'“%@” wants Keepit to run a command': '‘%@’ wil dat Keepit een opdracht uitvoert',
+'%@\n\nA web page can open such links. Allow it only if you expect this.': '%@\n\nOok een webpagina kan zulke links openen. Sta het alleen toe als je dit verwachtte.',
 }

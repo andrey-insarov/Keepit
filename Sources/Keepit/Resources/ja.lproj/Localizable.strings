@@ -401,4 +401,8 @@
 "How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer." = "メニューに表示する最新の履歴項目の数。古い項目は履歴に残り、メニューの検索フィールドや Viewer から見つけられます。";
 "Automation" = "自動化";
 "Allow keepit:// URL commands" = "keepit:// URL コマンドを許可";
-"Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL, and add/paste act on the clipboard and the front app without asking. Turn it on only if you use these integrations." = "ショートカット、Raycast、Alfred、シェルの `open` から keepit:// URL で Keepit を操作できるようにします（項目 N をペースト、テンプレートをペースト、テキストを追加、一時停止）。デフォルトはオフ：どのアプリや Web ページでもこの URL を開くことができ、add/paste は確認なしにクリップボードと最前面のアプリに作用します。これらの連携を使う場合のみオンにしてください。";
+"Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL. When on, a command that changes something is confirmed in a dialog if it came from a web browser or an unknown sender; other apps run it directly." = "ショートカット、Raycast、Alfred、シェルの `open` から keepit:// URL で Keepit を操作できるようにします（項目 N をペースト、テンプレートをペースト、テキストを追加、一時停止）。デフォルトはオフ：どのアプリや Web ページでもこの URL を開くことができます。オンの場合、何かを変更するコマンドは、Web ブラウザや不明な送信元から来たときにダイアログで確認されます。他のアプリからは直接実行されます。";
+"Allow" = "許可";
+"an unknown application" = "不明なアプリケーション";
+"“%@” wants Keepit to run a command" = "“%@”が Keepit にコマンドの実行を求めています";
+"%@\n\nA web page can open such links. Allow it only if you expect this." = "%@\n\nこのようなリンクは Web ページからも開けます。心当たりがある場合のみ許可してください。";

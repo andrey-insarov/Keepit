@@ -401,5 +401,9 @@ T = {
 "How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer.": 'כמה מהרשומות האחרונות בהיסטוריה מציג התפריט. רשומות ישנות יותר נשארות בהיסטוריה וניתן למצוא אותן דרך שדה החיפוש בתפריט או ב‑Viewer.',
 'Automation': 'אוטומציה',
 'Allow keepit:// URL commands': 'אפשר פקודות URL של keepit://',
-'Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL, and add/paste act on the clipboard and the front app without asking. Turn it on only if you use these integrations.': 'מאפשר לקיצורי דרך, Raycast, Alfred או ל‑`open` במעטפת לשלוט ב‑Keepit דרך כתובות keepit:// — להדביק פריט N, להדביק תבנית, להוסיף טקסט, להשהות. כבוי כברירת מחדל: כל אפליקציה או דף אינטרנט יכולים לפתוח כתובת כזו, ו‑add/paste פועלים על הלוח ועל האפליקציה הקדמית ללא אישור. הפעילו רק אם אתם משתמשים בשילובים אלה.',
+'Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL. When on, a command that changes something is confirmed in a dialog if it came from a web browser or an unknown sender; other apps run it directly.': 'מאפשר לקיצורי דרך, Raycast, Alfred או ל‑`open` במעטפת לשלוט ב‑Keepit דרך כתובות keepit:// — להדביק פריט N, להדביק תבנית, להוסיף טקסט, להשהות. כבוי כברירת מחדל: כל אפליקציה או דף אינטרנט יכולים לפתוח כתובת כזו. כשמופעל, פקודה שמשנה משהו מאושרת בתיבת דו‑שיח אם הגיעה מדפדפן או משולח לא ידוע; אפליקציות אחרות מריצות אותה ישירות.',
+'Allow': 'אפשר',
+'an unknown application': 'אפליקציה לא ידועה',
+'“%@” wants Keepit to run a command': '„%@“ מבקש מ‑Keepit להריץ פקודה',
+'%@\n\nA web page can open such links. Allow it only if you expect this.': '%@\n\nגם דף אינטרנט יכול לפתוח קישורים כאלה. אפשרו רק אם ציפיתם לכך.',
 }

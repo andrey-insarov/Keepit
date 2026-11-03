@@ -401,7 +401,11 @@ download and the App Store edition.</p>
 <p>Shortcuts (<em>Open URL</em>), Raycast, Alfred, Keyboard Maestro or <code>open</code> in a shell can drive Keepit —
 <strong>once you turn it on</strong> in <em>Settings → Advanced → Automation → Allow keepit:// URL commands</em>. It is
 off by default because any app or web page can open a URL, and <code>add</code> / <code>paste</code> change the clipboard
-and type into the front app without asking; with it off, Keepit ignores such URLs with a beep.</p>
+and type into the front app; with it off, Keepit ignores such URLs with a beep. With it on, Keepit
+looks at who opened the URL: Shortcuts, Raycast, Alfred, Terminal and other apps go straight through,
+while a web browser — or a sender macOS cannot name — gets a confirmation dialog for every command
+that changes something (<code>paste</code>, <code>copy</code>, <code>template</code>, <code>add</code>, <code>add-template</code>, <code>pause</code>, <code>resume</code>).
+Commands that only open Keepit's own windows never ask.</p>
 <div class="tbl"><table>
 <thead>
 <tr>

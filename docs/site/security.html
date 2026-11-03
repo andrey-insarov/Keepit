@@ -229,9 +229,15 @@ history being recorded — it is what a clipboard manager does — not a sign of
 and switched on in <em>Settings → Advanced → Automation</em>. Any process or web page can ask macOS to open
 a URL — browsers do confirm the first time for a custom scheme, scripts do not — and <code>add</code> and
 <code>paste</code> change the clipboard or type into the front application without a prompt. With the option
-off, Keepit ignores such URLs with a beep and logs that it did. Turn it on only if you use the
-Shortcuts, Raycast or Alfred integrations, and bear in mind that any URL then has the same power
-as you at the keyboard.</p>
+off, Keepit ignores such URLs with a beep and logs that it did.</p>
+<p>With it on, Keepit checks the sender. macOS delivers the URL as an Apple Event that names the process
+behind it; if that process is a web browser (anything registered with the system to open <code>https://</code>
+links) or cannot be identified, every state-changing command is shown in a dialog with the full URL
+and runs only after <em>Allow</em>. Shortcuts, Raycast, Alfred, Terminal and other local apps run
+commands directly. Commands that only open Keepit's own windows (<code>history</code>, <code>templates</code>, <code>viewer</code>,
+<code>settings</code>) never ask. This is a reasonable barrier, not a proof: a local process that wanted to
+impersonate another could, and the sender of a URL opened while Keepit was not yet running may be
+unknown — which is why unknown means "ask".</p>
 <h2 id="system-log">System log</h2>
 <p>Keepit writes to the unified system log (Console.app, <code>log show</code>, sysdiagnose) under the subsystem
 <code>com.it.keep</code>, and only about errors and unexpected states: a file that could not be saved or

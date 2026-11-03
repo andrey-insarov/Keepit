@@ -401,5 +401,9 @@ T = {
 "How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer.": '메뉴에 표시할 최근 기록 항목 수입니다. 더 오래된 항목은 기록에 남아 있으며 메뉴의 검색 필드나 Viewer에서 찾을 수 있습니다.',
 'Automation': '자동화',
 'Allow keepit:// URL commands': 'keepit:// URL 명령 허용',
-'Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL, and add/paste act on the clipboard and the front app without asking. Turn it on only if you use these integrations.': '단축어, Raycast, Alfred 또는 셸의 `open`이 keepit:// URL로 Keepit을 제어할 수 있게 합니다 — 항목 N 붙여넣기, 템플릿 붙여넣기, 텍스트 추가, 일시 정지. 기본값은 꺼짐: 어떤 앱이나 웹 페이지든 이런 URL을 열 수 있고, add/paste는 확인 없이 클립보드와 맨 앞 앱에 작용합니다. 이러한 연동을 사용하는 경우에만 켜세요.',
+'Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL. When on, a command that changes something is confirmed in a dialog if it came from a web browser or an unknown sender; other apps run it directly.': '단축어, Raycast, Alfred 또는 셸의 `open`이 keepit:// URL로 Keepit을 제어할 수 있게 합니다 — 항목 N 붙여넣기, 템플릿 붙여넣기, 텍스트 추가, 일시 정지. 기본값은 꺼짐: 어떤 앱이나 웹 페이지든 이런 URL을 열 수 있습니다. 켜져 있으면, 무언가를 변경하는 명령이 웹 브라우저나 알 수 없는 발신자에게서 온 경우 대화상자로 확인합니다. 다른 앱은 바로 실행됩니다.',
+'Allow': '허용',
+'an unknown application': '알 수 없는 응용 프로그램',
+'“%@” wants Keepit to run a command': '“%@”이(가) Keepit에 명령 실행을 요청합니다',
+'%@\n\nA web page can open such links. Allow it only if you expect this.': '%@\n\n웹 페이지도 이런 링크를 열 수 있습니다. 예상한 경우에만 허용하세요.',
 }

@@ -401,5 +401,9 @@ T = {
 "How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer.": 'Kiek naujausių istorijos įrašų rodo meniu. Senesni įrašai lieka istorijoje – juos rasite meniu paieškos lauku arba „Viewer“.',
 'Automation': 'Automatizavimas',
 'Allow keepit:// URL commands': 'Leisti keepit:// URL komandas',
-'Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL, and add/paste act on the clipboard and the front app without asking. Turn it on only if you use these integrations.': 'Leidžia „Shortcuts“, „Raycast“, „Alfred“ arba `open` komandai valdyti „Keepit“ per keepit:// URL – įklijuoti įrašą N, įklijuoti šabloną, pridėti tekstą, pristabdyti. Pagal numatytuosius nustatymus išjungta: tokį URL gali atverti bet kuri programa ar tinklalapis, o add/paste veikia iškarpinę ir priekinę programą neklausdami. Įjunkite tik jei naudojate šias integracijas.',
+'Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL. When on, a command that changes something is confirmed in a dialog if it came from a web browser or an unknown sender; other apps run it directly.': 'Leidžia „Shortcuts“, „Raycast“, „Alfred“ arba `open` komandai valdyti „Keepit“ per keepit:// URL – įklijuoti įrašą N, įklijuoti šabloną, pridėti tekstą, pristabdyti. Pagal numatytuosius nustatymus išjungta: tokį URL gali atverti bet kuri programa ar tinklalapis. Kai įjungta, ką nors keičianti komanda patvirtinama dialoge, jei ji atėjo iš naršyklės ar nežinomo siuntėjo; kitos programos ją vykdo iš karto.',
+'Allow': 'Leisti',
+'an unknown application': 'nežinoma programa',
+'“%@” wants Keepit to run a command': '„%@“ prašo „Keepit“ įvykdyti komandą',
+'%@\n\nA web page can open such links. Allow it only if you expect this.': '%@\n\nTokią nuorodą gali atverti ir tinklalapis. Leiskite tik jei to tikėjotės.',
 }

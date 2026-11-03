@@ -146,9 +146,16 @@ The `keepit://` URL scheme (paste item N, paste a template, add text, pause) is 
 and switched on in *Settings → Advanced → Automation*. Any process or web page can ask macOS to open
 a URL — browsers do confirm the first time for a custom scheme, scripts do not — and `add` and
 `paste` change the clipboard or type into the front application without a prompt. With the option
-off, Keepit ignores such URLs with a beep and logs that it did. Turn it on only if you use the
-Shortcuts, Raycast or Alfred integrations, and bear in mind that any URL then has the same power
-as you at the keyboard.
+off, Keepit ignores such URLs with a beep and logs that it did.
+
+With it on, Keepit checks the sender. macOS delivers the URL as an Apple Event that names the process
+behind it; if that process is a web browser (anything registered with the system to open `https://`
+links) or cannot be identified, every state-changing command is shown in a dialog with the full URL
+and runs only after *Allow*. Shortcuts, Raycast, Alfred, Terminal and other local apps run
+commands directly. Commands that only open Keepit's own windows (`history`, `templates`, `viewer`,
+`settings`) never ask. This is a reasonable barrier, not a proof: a local process that wanted to
+impersonate another could, and the sender of a URL opened while Keepit was not yet running may be
+unknown — which is why unknown means "ask".
 
 ## System log
 

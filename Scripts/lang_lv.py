@@ -401,5 +401,9 @@ T = {
 "How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer.": 'Cik jaunāko vēstures ierakstu rāda izvēlne. Vecākie ieraksti paliek vēsturē — tos var atrast ar izvēlnes meklēšanas lauku vai Viewer.',
 'Automation': 'Automatizācija',
 'Allow keepit:// URL commands': 'Atļaut keepit:// URL komandas',
-'Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL, and add/paste act on the clipboard and the front app without asking. Turn it on only if you use these integrations.': 'Ļauj Shortcuts, Raycast, Alfred vai čaulas `open` vadīt Keepit ar keepit:// URL — ielīmēt ierakstu N, ielīmēt veidni, pievienot tekstu, pauzēt. Pēc noklusējuma izslēgts: šādu URL var atvērt jebkura lietotne vai tīmekļa lapa, un add/paste iedarbojas uz starpliktuvi un priekšplāna lietotni bez jautāšanas. Ieslēdziet tikai tad, ja lietojat šīs integrācijas.',
+'Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL. When on, a command that changes something is confirmed in a dialog if it came from a web browser or an unknown sender; other apps run it directly.': 'Ļauj Shortcuts, Raycast, Alfred vai čaulas `open` vadīt Keepit ar keepit:// URL — ielīmēt ierakstu N, ielīmēt veidni, pievienot tekstu, pauzēt. Pēc noklusējuma izslēgts: šādu URL var atvērt jebkura lietotne vai tīmekļa lapa. Kad ieslēgts, komanda, kas kaut ko maina, tiek apstiprināta dialogā, ja tā nākusi no tīmekļa pārlūka vai nezināma sūtītāja; citas lietotnes to izpilda uzreiz.',
+'Allow': 'Atļaut',
+'an unknown application': 'nezināma lietotne',
+'“%@” wants Keepit to run a command': '“%@” vēlas, lai Keepit izpilda komandu',
+'%@\n\nA web page can open such links. Allow it only if you expect this.': '%@\n\nŠādu saiti var atvērt arī tīmekļa lapa. Atļaujiet tikai tad, ja to gaidījāt.',
 }
