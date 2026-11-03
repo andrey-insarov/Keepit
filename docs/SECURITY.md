@@ -90,9 +90,10 @@ Turn on *Require password at launch* and the history and templates files are enc
   person looking at the screen, and the capture exclusion is a promise macOS makes, not one Keepit
   can verify.
 
-![The unlock dialog with the on-screen keyboard open. Photographed with a phone: the panel is excluded from screen capture, so a screenshot of this scene shows the dialog alone](site/img/guide/unlock-keyboard.jpg)
 - **Wrong attempts**: after several wrong passwords Keepit backs off with increasing delays, and
   after too many it quits (at launch) or stays locked.
+
+![The unlock dialog with the on-screen keyboard open. Photographed with a phone: the panel is excluded from screen capture, so a screenshot of this scene shows the dialog alone](site/img/guide/unlock-keyboard.jpg)
 
 Changing the password re-wraps the recovery material; the data files are re-encrypted with the new
 key.
