@@ -42,9 +42,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private(set) var lockCount = 0
     /// Bumped by every `apply(settings:)`, for the same reason.
     private(set) var settingsRevision = 0
-    /// Set at the end of `applicationDidFinishLaunching`; file and URL opens before that are queued.
-    private(set) var isLaunched = false
+    /// Set once launch *and* the deferred welcome dialogs are over; file and URL opens before that are
+    /// queued (`pendingOpenURLs`) and run after, in order. A restore in progress queues them too.
+    private(set) var isReadyForOpens = false
     var pendingOpenURLs: [URL] = []
+    var restoreInProgress = false
 
     /// No settings file yet → first launch (onboarding, login item).
     private let isFirstRun: Bool
@@ -131,21 +133,25 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             return
         }
 
-        isLaunched = true
+        // The welcome dialogs run from a Timer, not a GCD block: they open modal loops, and work
+        // other code hands to the main queue (a progress panel's completion, a bookmark refresh)
+        // would otherwise wait until this block returned.
         if isFirstRun {
             if settings.launchAtLogin { setLaunchAtLogin(true) }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] _ in
                 guard let self else { return }
                 if self.hasPendingBackupFile { self.openPendingURLs() }   // the double-clicked backup is the answer
                 else { _ = self.offerRestoreOnFirstRun() }
                 if !Vault.isEnabled { self.offerPasswordOnFirstRun() }   // a restore may have set the password already
                 if !Paster.isTrusted() { self.showAccessibilityAlert() }
+                self.isReadyForOpens = true
                 self.openPendingURLs()
             }
         } else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + (Paster.isTrusted() ? 0.1 : 1.0)) { [weak self] in
+            Timer.scheduledTimer(withTimeInterval: Paster.isTrusted() ? 0.1 : 1.0, repeats: false) { [weak self] _ in
                 guard let self else { return }
                 if !Paster.isTrusted() { self.showAccessibilityAlert() }
+                self.isReadyForOpens = true
                 self.openPendingURLs()
             }
         }

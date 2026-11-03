@@ -1,4 +1,5 @@
 import XCTest
+import AppKit
 @testable import Keepit
 
 /// The restore transaction is planned before anything changes (docs/BACKUP.md "Restore", 5–6).
@@ -296,5 +297,25 @@ final class RestorePlanTests: XCTestCase {
         let old = ClipItem(id: UUID(), date: Date(timeIntervalSinceNow: -120), formats: [ClipItem.Format.text: Data("z".utf8)],
                            sourceApp: nil, contentHash: ClipItem.hash(of: Data("z".utf8)))
         XCTAssertEqual(HistoryStore.trimmed([old] + items, settings: s).map(\.plainText), ["a", "b"])
+    }
+
+    // The progress panel's wait must end when the work ends — also when the wait was entered from
+    // a main-queue block (the launch sequence is one): a completion sent with
+    // DispatchQueue.main.async would not run until that block returned, which it cannot.
+    func testModalWaitCompletesFromInsideAMainQueueBlock() {
+        _ = NSApplication.shared
+        let done = expectation(description: "both waits returned")
+        done.expectedFulfillmentCount = 2
+        var ok: Result<Void, Error>?, failed: Result<Void, Error>?
+        struct Boom: Error {}
+        DispatchQueue.main.async {
+            ok = AppDelegate.sealAndWriteOffMain(message: "test", seal: { Data("x".utf8) }, write: { _ in })
+            done.fulfill()
+            failed = AppDelegate.sealAndWriteOffMain(message: "test", seal: { throw Boom() }, write: { _ in XCTFail("no write after a failed seal") })
+            done.fulfill()
+        }
+        wait(for: [done], timeout: 15)
+        guard case .success? = ok else { return XCTFail("\(String(describing: ok))") }
+        guard case .failure(let e)? = failed, e is Boom else { return XCTFail("\(String(describing: failed))") }
     }
 }

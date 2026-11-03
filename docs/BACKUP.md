@@ -243,7 +243,7 @@ Automatic tests (temporary folders, fakes where macOS is involved):
 - [ ] Reset → add a template → quit → relaunch: the template is there (the store is live again after the purge); same after Reset → Restore → edit (`testStoresAreLiveAgainAfterPurgeAndRefill`).
 - [ ] The engine runs the reader's validation on what it sealed: a tree the reader would reject is a failed backup, not a file in the registry (`testEngineDoesNotReportSuccessForAPayloadTheReaderRejects`); the Viewer counts a moved subtree's full height, so it cannot build such a tree (`testSubtreeInsertAndMoveCountTheirFullHeight`).
 - [ ] Protection off → automatic backup goes off with it (checkbox, status, engine destination nil); protection on again → a folder still in settings becomes the destination again without reopening Settings.
-- [ ] Cold launch by double-clicking a `.keepit` (Keepit not running): the password gate comes first, then the restore; on a first run the double-clicked file replaces the "Restore from a backup?" offer. Opening a `.keepit` while locked asks for the password first.
+- [ ] Cold launch by double-clicking a `.keepit` (Keepit not running): the password gate comes first, then the restore — Replace included, with its "Saving a copy…" panel closing by itself (`testModalWaitCompletesFromInsideAMainQueueBlock`); on a first run the double-clicked file replaces the "Restore from a backup?" offer, and a file arriving during the welcome dialogs waits until they are over. Two `.keepit` files opened together → two restores one after the other, never one inside the other. Opening a `.keepit` while locked asks for the password first.
 - [ ] Every fixture in `Tests/KeepitTests/Fixtures` (v1 and v2) opens as its sidecar says.
 
 Manual, before release (Andrey):

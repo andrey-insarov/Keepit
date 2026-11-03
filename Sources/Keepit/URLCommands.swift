@@ -17,14 +17,15 @@ extension AppDelegate {
     static let urlScheme = "keepit"
 
     /// A double-clicked file or a keepit:// URL can arrive before `applicationDidFinishLaunching`
-    /// (Apple documents that order). Until the stores exist and the password gate has been passed,
-    /// the URLs wait; `openPendingURLs()` runs them once launch is complete.
+    /// (Apple documents that order), or during the welcome dialogs, or while a restore is running.
+    /// In all those cases the URLs wait in `pendingOpenURLs`; `openPendingURLs()` runs them, in
+    /// order, once the app is ready and no restore is in progress — never a restore inside another.
     func application(_ application: NSApplication, open urls: [URL]) {
-        guard isLaunched else { pendingOpenURLs += urls; return }
-        for url in urls { open(url) }
+        pendingOpenURLs += urls
+        openPendingURLs()
     }
 
-    func open(_ url: URL) {
+    private func open(_ url: URL) {
         if url.isFileURL, url.pathExtension.lowercased() == Backup.fileExtension {
             if isLocked, !unlock() { return }         // a backup opened while locked: ask for the password first
             restore(from: url)
@@ -33,12 +34,14 @@ extension AppDelegate {
         }
     }
 
-    /// Called at the end of launch. A `.keepit` file among the pending URLs is the restore the
-    /// user asked for, so the first-run "Restore from a backup?" offer is skipped in its favour.
+    /// Runs what is queued when nothing stands in the way; a no-op otherwise (called again when
+    /// the welcome dialogs finish and when a restore ends). A `.keepit` among the pending URLs at
+    /// first run is the restore the user asked for, so the generic offer is skipped in its favour.
     func openPendingURLs() {
-        let urls = pendingOpenURLs
-        pendingOpenURLs = []
-        for url in urls { open(url) }
+        guard isReadyForOpens, !restoreInProgress else { return }
+        while !pendingOpenURLs.isEmpty, !restoreInProgress {
+            open(pendingOpenURLs.removeFirst())
+        }
     }
 
     var hasPendingBackupFile: Bool {

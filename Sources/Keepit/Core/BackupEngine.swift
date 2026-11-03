@@ -79,6 +79,8 @@ struct BackupState: Codable, Equatable {
 final class BackupEngine {
     enum Failure: Error, Equatable, LocalizedError {
         case notEnabled, locked, noVault, folderUnavailable, writeFailed(String), verifyFailed, nothingToBackUp
+        /// The wait for a one-off copy ended before its completion arrived (the panel was stopped by something else).
+        case notFinished
         var errorDescription: String? {
             switch self {
             case .notEnabled: return "automatic backup is off"
@@ -88,6 +90,7 @@ final class BackupEngine {
             case .writeFailed(let why): return LF("Could not write the backup: %@", why)
             case .verifyFailed: return L("The written backup did not read back correctly")
             case .nothingToBackUp: return "nothing changed"
+            case .notFinished: return L("The copy was not finished")
             }
         }
     }

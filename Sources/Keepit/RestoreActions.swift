@@ -54,6 +54,9 @@ extension AppDelegate {
 
     func restore(from url: URL) {
         guard !isLocked else { NSSound.beep(); return }
+        guard !restoreInProgress else { pendingOpenURLs.append(url); return }   // one at a time; this one runs after
+        restoreInProgress = true
+        defer { restoreInProgress = false; RunLoop.main.perform { [weak self] in self?.openPendingURLs() } }   // next one, after this frame
         let lockAtStart = lockCount
         // 1–2. Read the whole file and inspect it: limits and minReader before any key work.
         let accessing = url.startAccessingSecurityScopedResource()
@@ -340,6 +343,13 @@ extension AppDelegate {
     /// Lock waits for that queue before zeroing it), `write` on a global queue (no key; a hung volume
     /// blocks nobody). The main thread waits in a modal progress panel, so its run loop keeps serving
     /// events — including the lock notification — meanwhile.
+    ///
+    /// The completion comes back through the run loop (`RunLoop.main.perform(inModes:)`), not
+    /// `DispatchQueue.main.async`: the caller may itself be running inside a main-queue block (the
+    /// launch sequence is one), and GCD does not run another main-queue block until that one
+    /// returns — which it cannot, it is waiting here. The modal loop services run-loop sources in
+    /// its own mode regardless. Until the completion arrives the result is `notFinished`, so a
+    /// panel stopped by anything else never reads as success.
     static func sealAndWriteOffMain(message: String, seal: @escaping () throws -> Data,
                                     write: @escaping (Data) throws -> Void) -> Result<Void, Error> {
         let panel = NSPanel(contentRect: NSRect(x: 0, y: 0, width: 360, height: 72), styleMask: [.titled], backing: .buffered, defer: false)
@@ -351,8 +361,10 @@ extension AppDelegate {
         bar.style = .bar; bar.isIndeterminate = true; bar.startAnimation(nil)
         panel.contentView?.addSubview(label); panel.contentView?.addSubview(bar)
         panel.center()
-        var result: Result<Void, Error> = .success(())
-        func finish(_ r: Result<Void, Error>) { DispatchQueue.main.async { result = r; NSApp.stopModal() } }
+        var result: Result<Void, Error> = .failure(BackupEngine.Failure.notFinished)
+        func finish(_ r: Result<Void, Error>) {
+            RunLoop.main.perform(inModes: [.modalPanel, .default, .common]) { result = r; NSApp.stopModal() }
+        }
         Storage.ioQueue.async {
             switch Result(catching: seal) {
             case .failure(let e): finish(.failure(e))
