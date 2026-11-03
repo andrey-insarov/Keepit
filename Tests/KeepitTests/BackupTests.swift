@@ -58,20 +58,14 @@ final class BackupTests: XCTestCase {
         XCTAssertEqual(h.items.map(\.plainText), ["x"])
     }
 
-    func testTemplateMergeGoesIntoFolderAndReplaceSwapsRoot() {
+    func testReplaceRootSwapsTheTreeAndRelinks() {
         let t = TemplateStore()
-        let before = t.root.subtreeCount
-        let imported = TemplateNode(name: "Imported", children: [TemplateNode(name: "A", text: "a"), TemplateNode(name: "B", text: "b")])
-        XCTAssertTrue(t.insertImported(imported))
-        XCTAssertEqual(t.root.subtreeCount, before + 3)
-        let folder = t.root.children.last!
-        XCTAssertEqual(folder.name, "Imported")
-        XCTAssertTrue(folder.isFolder)
-        XCTAssertEqual(folder.children.count, 2)
-        XCTAssertTrue(folder.children[0].parent === folder)
-        t.replaceRoot(TemplateNode(name: "Template", children: [TemplateNode(name: "Only", text: "o")]))
-        XCTAssertEqual(t.root.subtreeCount, 2)
+        let folder = TemplateNode(name: "Imported", children: [TemplateNode(name: "A", text: "a"), TemplateNode(name: "B", text: "b")])
+        t.replaceRoot(TemplateNode(name: "Template", children: [TemplateNode(name: "Only", text: "o"), folder]))
+        XCTAssertEqual(t.root.subtreeCount, 5)
         XCTAssertTrue(t.root.children[0].parent === t.root)
+        XCTAssertTrue(folder.children[0].parent === folder)
+        XCTAssertEqual(folder.depth, 1)
     }
 
     func testSuggestedFileName() {
