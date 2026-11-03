@@ -46,6 +46,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// queued (`pendingOpenURLs`) and run after, in order. A restore in progress queues them too.
     private(set) var isReadyForOpens = false
     var pendingOpenURLs: [URL] = []
+    /// One open at a time, the unlock dialog included; a restore from Settings sets the second.
+    var openInProgress = false
     var restoreInProgress = false
 
     /// No settings file yet → first launch (onboarding, login item).
@@ -140,7 +142,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             if settings.launchAtLogin { setLaunchAtLogin(true) }
             Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] _ in
                 guard let self else { return }
-                if self.hasPendingBackupFile { self.openPendingURLs() }   // the double-clicked backup is the answer
+                if self.hasPendingBackupFile { self.openPendingBackupFileAtWelcome() }   // the double-clicked backup is the answer
                 else { _ = self.offerRestoreOnFirstRun() }
                 if !Vault.isEnabled { self.offerPasswordOnFirstRun() }   // a restore may have set the password already
                 if !Paster.isTrusted() { self.showAccessibilityAlert() }

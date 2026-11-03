@@ -318,4 +318,45 @@ final class RestorePlanTests: XCTestCase {
         guard case .success? = ok else { return XCTFail("\(String(describing: ok))") }
         guard case .failure(let e)? = failed, e is Boom else { return XCTFail("\(String(describing: failed))") }
     }
+
+    // A seal still running after the wait ended keeps its own secret (the caller zeroes the
+    // original on its way out) and its late completion leaves the next modal session alone.
+    func testLateSealCompletionOwnsItsSecretAndStopsNoOtherModal() throws {
+        _ = NSApplication.shared
+        let original = SecureBuffer.of("chosen password")
+        let own = original.copy()
+        original.zero()
+        XCTAssertEqual(own.withBytes { Data($0) }, Data("chosen password".utf8))     // the copy is independent
+        XCTAssertEqual(original.count, 0)
+
+        let gate = DispatchSemaphore(value: 0)
+        let sealed = expectation(description: "seal ran to the end")
+        var sealedWith: Data?
+        var early: Result<Void, Error>?
+        var second: NSApplication.ModalResponse?
+        let done = expectation(description: "both waits returned")
+        DispatchQueue.main.async {
+            // Something stops the panel while the seal is still blocked (Lock, say).
+            Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in NSApp.stopModal() }
+            early = AppDelegate.sealAndWriteOffMain(message: "test", seal: {
+                gate.wait()
+                sealedWith = own.withBytes { Data($0) }     // still the chosen password, not zeroes
+                own.zero()
+                sealed.fulfill()
+                return Data("x".utf8)
+            }, write: { _ in })
+            // The next dialog is modal when the late completion arrives: it must stay up until *we* stop it.
+            let next = NSPanel(contentRect: NSRect(x: 0, y: 0, width: 100, height: 40), styleMask: [.titled], backing: .buffered, defer: false)
+            next.isReleasedWhenClosed = false
+            gate.signal()
+            Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in NSApp.stopModal(withCode: .OK) }
+            second = NSApp.runModal(for: next)
+            next.orderOut(nil)
+            done.fulfill()
+        }
+        wait(for: [sealed, done], timeout: 15)
+        guard case .failure(let e)? = early, e as? BackupEngine.Failure == .notFinished else { return XCTFail("\(String(describing: early))") }
+        XCTAssertEqual(sealedWith, Data("chosen password".utf8))
+        XCTAssertEqual(second, .OK)                                          // ours, not the stale completion's .stop
+    }
 }

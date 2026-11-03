@@ -26,6 +26,8 @@ extension AppDelegate {
     }
 
     private func open(_ url: URL) {
+        openInProgress = true                         // covers the unlock dialog too: nothing re-enters meanwhile
+        defer { openInProgress = false }
         if url.isFileURL, url.pathExtension.lowercased() == Backup.fileExtension {
             if isLocked, !unlock() { return }         // a backup opened while locked: ask for the password first
             restore(from: url)
@@ -34,12 +36,20 @@ extension AppDelegate {
         }
     }
 
+    /// The welcome step on a first run: the `.keepit` the user double-clicked is restored now, in
+    /// place of the generic "Restore from a backup?" offer and before the password offer — while
+    /// everything else that arrived stays queued until the welcome dialogs are over.
+    func openPendingBackupFileAtWelcome() {
+        guard let i = pendingOpenURLs.firstIndex(where: { $0.isFileURL && $0.pathExtension.lowercased() == Backup.fileExtension }) else { return }
+        open(pendingOpenURLs.remove(at: i))
+    }
+
     /// Runs what is queued when nothing stands in the way; a no-op otherwise (called again when
     /// the welcome dialogs finish and when a restore ends). A `.keepit` among the pending URLs at
     /// first run is the restore the user asked for, so the generic offer is skipped in its favour.
     func openPendingURLs() {
-        guard isReadyForOpens, !restoreInProgress else { return }
-        while !pendingOpenURLs.isEmpty, !restoreInProgress {
+        guard isReadyForOpens, !openInProgress, !restoreInProgress else { return }
+        while !pendingOpenURLs.isEmpty, !openInProgress, !restoreInProgress {
             open(pendingOpenURLs.removeFirst())
         }
     }

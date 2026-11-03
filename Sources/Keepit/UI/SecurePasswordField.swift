@@ -35,6 +35,14 @@ final class SecureBuffer {
         count -= k
     }
 
+    /// An independent copy, for a task that must keep the secret alive on its own terms (a
+    /// background seal outlives the dialog that typed the password). The copy's owner zeroes it.
+    func copy() -> SecureBuffer {
+        let c = SecureBuffer(capacity: max(count, 1))
+        withBytes { _ = c.append($0) }
+        return c
+    }
+
     func withBytes<T>(_ body: (UnsafeRawBufferPointer) throws -> T) rethrows -> T {
         try body(UnsafeRawBufferPointer(start: ptr, count: count))
     }

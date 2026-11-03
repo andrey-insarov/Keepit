@@ -150,7 +150,11 @@ General → Backup → Restore…*; double-click on a `.keepit` file. All lead t
      panel — but it is captured only in the commit stage (below), after the last dialog: the
      snapshot (history, the template tree as bytes, settings) and the key are taken and handed to
      `ioQueue` in one synchronous step, and Lock drains that queue before zeroing the key, so the
-     seal never meets a zeroed key. Replace proceeds only after the read-back matched.
+     seal never meets a zeroed key. A manual-mode copy's seal owns its own copy of the password,
+     zeroed by the seal itself, so a wait that ended early (Lock, a stopped panel) cannot leave a
+     seal running with a blanked password; and a completion arriving after its wait ended stops
+     only its own panel's session, never the dialog that is modal by then. Replace proceeds only
+     after the read-back matched.
 6. **Plan, then commit** (`RestorePlan`, `RestoreCommit`). Everything that needs the user is asked
    first — the limits check, the rollback copy's password and folder, a new password when the
    phrase opened the file — and nothing is captured or changed while those dialogs are open.

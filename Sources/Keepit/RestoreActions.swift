@@ -319,8 +319,15 @@ extension AppDelegate {
         catch { Vault.error(LF("Could not prepare the copy of the current data: %@", error.localizedDescription)); return false }
         let seal: () throws -> Data
         if let pw = inputs.password {
-            seal = { try Backup.encode(json: try Backup.payloadJSON(history: items, templatesJSON: templatesJSON, settings: forBackup, created: created, app: app),
-                                       created: created, app: app, password: pw) }
+            // The task owns its own copy of the password: the caller zeroes the original on its
+            // way out, and a wait that ended early (Lock, a stopped panel) must not leave a seal
+            // still running with a blank password — it would write a copy that opens with one.
+            let own = pw.copy()
+            seal = {
+                defer { own.zero() }
+                return try Backup.encode(json: try Backup.payloadJSON(history: items, templatesJSON: templatesJSON, settings: forBackup, created: created, app: app),
+                                         created: created, app: app, password: own)
+            }
         } else {
             guard let key = Storage.key, let header = Vault.backupHeader(app: app, sourceID: settings.backupSourceID) else {
                 Vault.error(RestoreCommit.Failure.locked.localizedDescription); return false
@@ -349,7 +356,9 @@ extension AppDelegate {
     /// launch sequence is one), and GCD does not run another main-queue block until that one
     /// returns — which it cannot, it is waiting here. The modal loop services run-loop sources in
     /// its own mode regardless. Until the completion arrives the result is `notFinished`, so a
-    /// panel stopped by anything else never reads as success.
+    /// panel stopped by anything else never reads as success — and a completion that arrives after
+    /// the wait ended (the task kept running) touches nothing: it stops only *its own* panel's
+    /// session, never whatever dialog is modal by then.
     static func sealAndWriteOffMain(message: String, seal: @escaping () throws -> Data,
                                     write: @escaping (Data) throws -> Void) -> Result<Void, Error> {
         let panel = NSPanel(contentRect: NSRect(x: 0, y: 0, width: 360, height: 72), styleMask: [.titled], backing: .buffered, defer: false)
@@ -361,9 +370,14 @@ extension AppDelegate {
         bar.style = .bar; bar.isIndeterminate = true; bar.startAnimation(nil)
         panel.contentView?.addSubview(label); panel.contentView?.addSubview(bar)
         panel.center()
-        var result: Result<Void, Error> = .failure(BackupEngine.Failure.notFinished)
+        final class Wait { var result: Result<Void, Error> = .failure(BackupEngine.Failure.notFinished); var active = true }
+        let wait = Wait()
         func finish(_ r: Result<Void, Error>) {
-            RunLoop.main.perform(inModes: [.modalPanel, .default, .common]) { result = r; NSApp.stopModal() }
+            RunLoop.main.perform(inModes: [.modalPanel, .default, .common]) {
+                guard wait.active, NSApp.modalWindow === panel else { return }   // our wait is over; not our session
+                wait.result = r
+                NSApp.stopModal()
+            }
         }
         Storage.ioQueue.async {
             switch Result(catching: seal) {
@@ -372,7 +386,8 @@ extension AppDelegate {
             }
         }
         NSApp.runModal(for: panel)
+        wait.active = false
         panel.orderOut(nil)
-        return result
+        return wait.result
     }
 }
