@@ -1,0 +1,387 @@
+<!DOCTYPE html><html lang="en"><head><meta name="robots" content="noindex,follow"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keepit Security – Encrypted Clipboard Manager for Mac</title><link rel="icon" href="../img/icon.png"><link rel="apple-touch-icon" href="../img/icon.png">
+<meta name="description" content="What Keepit stores and where, how the clipboard history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download.">
+<meta property="og:type" content="article"><meta property="og:site_name" content="Keepit"><meta property="og:title" content="Keepit Security – Encrypted Clipboard Manager for Mac"><meta property="og:description" content="What Keepit stores and where, how the clipboard history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download."><meta property="og:image" content="https://keep.it.com/img/social-preview.png"><meta property="og:url" content="https://keep.it.com/security.html"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Keepit Security – Encrypted Clipboard Manager for Mac"><meta name="twitter:description" content="What Keepit stores and where, how the clipboard history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download."><meta name="twitter:image" content="https://keep.it.com/img/social-preview.png"><meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "@id": "https://keep.it.com/security.html", "url": "https://keep.it.com/security.html", "name": "Keepit security", "headline": "Keepit security", "description": "What Keepit stores and where, how the clipboard history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download.", "inLanguage": "en", "isPartOf": {"@id": "https://keep.it.com/#site"}, "about": {"@id": "https://keep.it.com/#app"}, "author": {"@id": "https://keep.it.com/#org"}, "publisher": {"@id": "https://keep.it.com/#org"}, "image": "https://keep.it.com/img/social-preview.png", "dateModified": "2026-11-03"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Keepit", "item": "https://keep.it.com/"}, {"@type": "ListItem", "position": 2, "name": "Security", "item": "https://keep.it.com/security.html"}]}]}</script>
+<style>
+:root{--paper:#fbfbfd;--ink:#0f1222;--ink-2:#4b4f63;--ink-3:#8a8ea3;--blue:#2f4fd1;--blue-deep:#1f3aa6;--blue-tint:#eef2ff;--line:#e3e5ef;--key:#fff;--key-edge:#cfd2de;--win:#fff;--sel:#2f5cf0}
+@media(prefers-color-scheme:dark){:root{--paper:#0c0d14;--ink:#f2f3f8;--ink-2:#b7bacb;--ink-3:#7c8097;--blue:#7d9bff;--blue-deep:#a9bdff;--blue-tint:#151b35;--line:#23263a;--key:#1b1e2e;--key-edge:#3a3e56;--win:#1a1c28;--sel:#3d6bff}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;font:17px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+:focus-visible{outline:3px solid var(--sel);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:20;backdrop-filter:saturate(180%) blur(18px);background:color-mix(in srgb,var(--paper) 78%,transparent);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:650;color:var(--ink);font-size:20px}.brand img{width:44px;height:44px;border-radius:10px}
+nav{display:flex;gap:24px}nav a{color:var(--ink-2);font-size:15px}nav a:hover{color:var(--ink);text-decoration:none}
+@media(max-width:700px){nav a:not(.gh){display:none}}
+main.wrap{display:grid;grid-template-columns:230px minmax(0,1fr);gap:56px;padding-top:48px;padding-bottom:96px}
+main.wrap.narrow{grid-template-columns:minmax(0,1fr);max-width:820px}
+aside{position:sticky;top:76px;align-self:start;max-height:calc(100vh - 96px);overflow:auto;font-size:14px;line-height:1.45;padding-right:8px}
+aside .ttl{font-weight:650;color:var(--ink);margin:0 0 10px;font-size:13px}
+aside ol{list-style:none;margin:0;padding:0}aside li{margin:0}
+aside a{display:block;color:var(--ink-2);padding:4px 0 4px 12px;border-left:2px solid var(--line)}
+aside a:hover{color:var(--ink);text-decoration:none}aside a.on{color:var(--blue);border-left-color:var(--blue)}
+aside ol ol a{padding-left:24px;font-size:13px;color:var(--ink-3)}
+@media(max-width:900px){main.wrap{grid-template-columns:minmax(0,1fr);gap:0}aside{position:static;max-height:none;margin-bottom:32px;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--win)}aside ol ol{display:none}}
+article{max-width:72ch;min-width:0}
+article h1{font-size:clamp(34px,5vw,52px);line-height:1.05;letter-spacing:-.03em;font-weight:750;margin:0 0 .5em}
+article h1+p{font-size:19px;color:var(--ink-2)}
+article h2{font-size:30px;line-height:1.15;letter-spacing:-.02em;font-weight:700;margin:2.2em 0 .6em;padding-top:1em;border-top:1px solid var(--line)}
+article h3{font-size:20px;font-weight:650;margin:1.8em 0 .5em}
+article p,article li{color:var(--ink);}article li{margin:.25em 0}
+article hr{border:0;border-top:1px solid var(--line);margin:2.5em 0}
+code{font:.9em ui-monospace,"SF Mono",Menlo,monospace;background:color-mix(in srgb,var(--ink) 7%,transparent);padding:2px 6px;border-radius:6px;white-space:nowrap}
+pre{background:var(--blue-tint);padding:14px 18px;border-radius:12px;overflow:auto;font-size:14px;line-height:1.6;max-width:100%}pre code{background:none;padding:0;white-space:pre-wrap;word-break:break-word}
+kbd.k{display:inline-block;min-width:1.7em;padding:0 .4em;text-align:center;font:600 .82em/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text",Helvetica,Arial,sans-serif;color:var(--ink);background:var(--key);border:1px solid var(--key-edge);border-bottom-width:2px;border-radius:6px;white-space:nowrap;vertical-align:baseline}
+.tbl{overflow-x:auto;margin:1.2em 0}table{border-collapse:collapse;width:100%;font-size:15.5px}th,td{text-align:left;padding:9px 12px 9px 0;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--ink-3);font-weight:600;font-size:14px}td code{display:inline-block;margin:1px 0}
+td:first-child{white-space:nowrap}@media(max-width:600px){td:first-child{white-space:normal}}
+figure.shot{margin:1.6em 0;width:100%}figure.shot a{display:block}figure.shot img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line);box-shadow:0 12px 32px -8px rgba(15,18,34,.25);cursor:zoom-in}
+figure.shot figcaption{font-size:14px;color:var(--ink-3);margin-top:8px}
+.slot{border:2px dashed var(--line);border-radius:12px;padding:28px;text-align:center;color:var(--ink-3);font-size:15px}
+.contents{display:none}
+.fb{margin:1.4em 0 2em;padding:22px 24px;border:1px solid var(--line);border-radius:16px;background:var(--win);display:grid;gap:14px}
+.fb label{display:grid;gap:6px;font-size:14px;font-weight:600;color:var(--ink-2)}.fb .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:600px){.fb .row2{grid-template-columns:1fr}}
+.fb .hint{font-weight:400;color:var(--ink-3)}
+.fb input[type=text],.fb input[type=email],.fb select,.fb textarea{font:16px/1.4 inherit;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;box-sizing:border-box}
+.fb textarea{resize:vertical;min-height:140px}.fb input:focus,.fb select:focus,.fb textarea:focus{outline:2px solid var(--blue);outline-offset:1px;border-color:transparent}
+.fb input[type=file]{font-size:14px;color:var(--ink-2)}
+.fb-list{list-style:none;margin:-6px 0 0;padding:0;display:grid;gap:6px}.fb-list li{font-size:14px;color:var(--ink-2);display:flex;align-items:center;gap:10px}.fb-list button{font:inherit;font-size:13px;color:var(--blue);background:none;border:0;padding:0;cursor:pointer}.fb-list button:hover{text-decoration:underline}
+.fb .btn{justify-self:start;display:inline-flex;align-items:center;padding:12px 22px;border-radius:12px;font-weight:600;font-size:16px;line-height:1;border:0;cursor:pointer;background:var(--blue);color:#fff}
+.fb .btn[disabled]{opacity:.6;cursor:default}.fb-err{color:#c0392b;font-size:14px;margin:0}.fb-legal{font-size:13px;margin:-6px 0 0}.fb-ok{color:var(--ink);margin:0;padding:18px 20px;border-radius:12px;background:var(--blue-tint);line-height:1.5}
+footer{border-top:1px solid var(--line);padding:36px 0 64px;color:var(--ink-3);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}footer a{color:var(--ink-2)}
+#lb{position:fixed;inset:0;background:rgba(5,7,20,.86);display:none;align-items:center;justify-content:center;padding:24px;z-index:30;cursor:zoom-out}
+#lb.on{display:flex}#lb img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+</style></head>
+<body><div style="background:#fff4d6;border-bottom:1px solid #e6c97a;padding:.6em 1em;text-align:center;font:14px/1.4 -apple-system,system-ui,sans-serif">This is the help for <strong>Keepit 2.x</strong>, kept as it was. The current version is described in <a href="../guide.html">the current guide</a>.</div><header><div class="wrap">
+  <a class="brand" href="../index.html"><img src="../img/icon.png" alt="">Keepit</a>
+  <nav><a href="../index.html#features">Features</a><a href="guide.html">Guide</a><a href="security.html">Security</a><a href="support.html">Support</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a></nav>
+</div></header>
+<main class="wrap"><aside aria-label="Contents"><p class="ttl">On this page</p><ol><li><a href="#in-one-paragraph">In one paragraph</a></li><li><a href="#what-is-stored-and-where">What is stored, and where</a></li><li><a href="#what-is-not-recorded">What is not recorded</a></li><li><a href="#encryption">Encryption</a></li><li><a href="#touch-id">Touch ID</a></li><li><a href="#recovery-phrase">Recovery phrase</a></li><li><a href="#backups">Backups</a></li><li><a href="#permissions-keepit-asks-for">Permissions Keepit asks for</a></li><li><a href="#automation-keepit-urls">Automation (keepit:// URLs)</a></li><li><a href="#system-log">System log</a></li><li><a href="#network">Network</a></li><li><a href="#code-signing-and-verifying-a-download">Code signing and verifying a download</a></li><li><a href="#uninstalling-and-data-removal">Uninstalling and data removal</a></li><li><a href="#input-limits">Input limits</a></li><li><a href="#limitations-worth-knowing">Limitations worth knowing</a></li><li><a href="#reporting-a-vulnerability">Reporting a vulnerability</a></li></ol></aside><article><h1 id="keepit-security">Keepit security</h1>
+<p>A clipboard manager sees everything you copy, so it has to be clear about what it keeps, where, and
+who can get at it. This page is the complete picture for Keepit. The code is open
+(<a href="https://github.com/andrey-insarov/Keepit">github.com/andrey-insarov/Keepit</a>), so every claim here
+can be checked against it.</p>
+<h2 id="in-one-paragraph">In one paragraph</h2>
+<p>Keepit stores your clipboard history and templates in one folder on your Mac and nowhere else. There
+is no account, no cloud, no analytics, and the app makes exactly one kind of network request — the
+daily update check against GitHub — which you can switch off. Clipboard data that the copying app marks as concealed is not
+recorded, and copies from known password managers are excluded by app — a best-effort heuristic,
+explained below. If you set a password, everything on disk is AES-256-GCM encrypted with a key derived from that password; the key
+exists only in memory, is wiped when Keepit locks, and can optionally be released by Touch ID from
+the Secure Enclave. A 24-word recovery phrase is the only way back in if you forget the password —
+Keepit itself cannot reset it.</p>
+<h2 id="what-is-stored-and-where">What is stored, and where</h2>
+<p>Everything lives in <code>~/Library/Application Support/Keepit/</code> (App Store edition: the app's container
+under <code>~/Library/Containers/com.it.keep/</code>):</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>File</th>
+<th>Contents</th>
+<th>Encrypted with a password?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>history.json</code></td>
+<td>The clipboard history: text, RTF, HTML, PNG images, file lists, with date and source app</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>templates.json</code></td>
+<td>The template tree, including per-template hot keys</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>settings.json</code></td>
+<td>Settings: hot keys, limits, ignore list — no clipboard data</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>vault.json</code></td>
+<td>Encryption metadata: KDF name and round count, PBKDF2 salt, a sealed verifier, the wrapped recovery material</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p>The history is written when it changes and read on launch. Without a password the JSON is plain
+text on disk, protected only by your macOS account and FileVault. <em>Settings → Advanced → Open
+Data Folder</em> shows the folder.</p>
+<p>Keepit also writes to the macOS keychain — only the Touch ID entry described below — and registers
+itself as a login item if you let it start at login.</p>
+<h2 id="what-is-not-recorded">What is not recorded</h2>
+<p>Three layers, in decreasing order of certainty. It matters which one you are relying on.</p>
+<ol>
+<li><strong>Marked by the source — reliable.</strong> Anything the copying app marks as concealed or transient
+   (<code>org.nspasteboard.ConcealedType</code>, <code>org.nspasteboard.TransientType</code>, 1Password's own type) is
+   skipped on the strength of the mark alone; Keepit does not need to know which app wrote it.
+   1Password, Bitwarden, Apple Passwords, Keychain Access and many terminals set these marks. (The
+   check can be turned off on <em>Settings → History</em>; leave it on.)</li>
+<li><strong>Known by app — best effort.</strong> Copies from a password manager that sets no mark are excluded by
+   its bundle identifier: KeePassXC, MacPass, Strongbox, KeeWeb, LastPass, Dashlane, Enpass, Keeper,
+   NordPass, RoboForm (and, as a second line, the apps in layer 1) are built in and always active;
+   add your own apps on <em>Settings → History</em>. The limit here is macOS: the pasteboard does not record
+   which app wrote it, so Keepit works from which apps were in front since it last looked (every
+   300 ms by default). If any of them is on the list, the change is skipped — including when you copy
+   and switch to another app before Keepit notices. This errs towards skipping. It cannot cover a
+   copy made by a background process or a script, and it cannot tell a password from any other text
+   in an app that is not on the list.</li>
+<li><strong>By your choice.</strong> Anything copied while recording is paused (<em>Pause Recording for 10 Minutes</em>,
+   <kbd class="k">⌥P</kbd>), apps on your ignore list, and formats other than plain text, RTF, HTML, PNG and file lists.</li>
+</ol>
+<p>Keepit does not inspect text for things that look like passwords or one-time codes. If an app that
+is not on the list puts a secret on the clipboard without marking it, it is recorded like anything
+else: use the pause or the ignore list for such apps, and delete the item from the history.</p>
+<h2 id="encryption">Encryption</h2>
+<p>Turn on <em>Require password at launch</em> and the history and templates files are encrypted:</p>
+<ul>
+<li><strong>Key derivation</strong>: PBKDF2-HMAC-SHA256 with 200 000 rounds and a random 16-byte salt, producing a
+  256-bit key. The salt, the KDF name and the round count are stored in <code>vault.json</code> (so the
+  parameters can change in a later version without breaking existing vaults); nothing else derived
+  from the password is written except a small GCM-sealed verifier that lets Keepit tell a wrong
+  password from corrupt data.</li>
+<li><strong>Cipher</strong>: AES-256-GCM (CryptoKit), a fresh random nonce per file write, authenticated — a
+  modified file fails to open rather than decrypting to garbage.</li>
+<li><strong>Key in memory</strong>: the 32 key bytes live in a dedicated buffer that is overwritten with <code>memset_s</code>
+  when Keepit locks or quits; Keepit asks the kernel to keep that page out of swap (<code>mlock</code>) and
+  logs if the request is refused. A CryptoKit key object is built only for the duration of one call
+  and discarded. This covers Keepit's own key buffer. The decrypted history while Keepit is unlocked,
+  and the copies Swift and CryptoKit make internally, are ordinary process memory — see
+  <em>Limitations</em> below.</li>
+<li><strong>Locking</strong>: <em>Lock Keepit</em> (<kbd class="k">⌥L</kbd>), quitting, and — on by default — the screen locking
+  or the Mac sleeping wipe the key and unload the decrypted history and templates. After that nothing
+  readable is in memory until you unlock again.</li>
+<li><strong>Password strength</strong>: the password dialog shows an entropy estimate and explains it; Keepit does
+  not enforce a minimum, because the recovery phrase and Touch ID are the usual way in.</li>
+<li>
+<p><strong>On-screen keyboard</strong>: the keyboard button next to the password field opens a small panel for
+  entering the password with the mouse. What it does, in order of certainty: each click goes
+  straight into the locked buffer without generating a key event, so anything that captures
+  keyboard events sees nothing; the keys are shuffled each time the panel opens (and on <em>Shuffle</em>),
+  so mouse positions alone do not give the password away; and the panel asks macOS to leave it out
+  of screen capture (<code>NSWindow.sharingType = .none</code>). On some configurations that excludes the panel
+  from screenshots and screen recording; Apple has deprecated that value and says not to rely on it,
+  so protection from screenshots and screen recording is <strong>not guaranteed</strong> — count on the first two.
+  A capture tool that sees the panel, together with mouse positions, defeats the shuffle; so does a
+  person looking at the screen.</p>
+</li>
+<li>
+<p><strong>Wrong attempts</strong>: after several wrong passwords Keepit backs off with increasing delays, and
+  after too many it quits (at launch) or stays locked.</p>
+</li>
+</ul>
+<figure class="shot" style="max-width:800px"><a href="../img/guide/unlock-keyboard.jpg?v=4c0be394" class="zoom" title="Open full size"><img src="../img/guide/unlock-keyboard.jpg?v=4c0be394" alt="The unlock dialog with the on-screen keyboard open. Photographed with a phone: on the author's Mac a screenshot of this scene shows the dialog alone" width="800" height="600" loading="lazy"></a><figcaption>The unlock dialog with the on-screen keyboard open. Photographed with a phone: on the author's Mac a screenshot of this scene shows the dialog alone</figcaption></figure>
+<p>Changing the password re-wraps the recovery material; the data files are re-encrypted with the new
+key.</p>
+<h2 id="touch-id">Touch ID</h2>
+<p>With <em>Unlock with Touch ID</em> on, Keepit stores a copy of the data key in the keychain under an access
+control of <code>kSecAttrAccessibleWhenUnlockedThisDeviceOnly</code> + <code>biometryCurrentSet</code>. That means:</p>
+<ul>
+<li>the entry is protected by the Secure Enclave and released only after a successful fingerprint;</li>
+<li>it never leaves this Mac (not backed up, not synced);</li>
+<li>it is invalidated automatically if the set of enrolled fingerprints changes.</li>
+</ul>
+<p>The password keeps working as a fallback and is still required to change the password itself unless
+you allow Touch ID for that too. Turning Touch ID off deletes the keychain entry.</p>
+<h2 id="recovery-phrase">Recovery phrase</h2>
+<p>When you set a password Keepit generates 32 bytes of entropy and shows them once as a 24-word
+BIP-39-style phrase (2048-word English list, 8-bit checksum to catch typos). A key derived from that
+entropy (HKDF) wraps the data key, and the entropy is in turn wrapped by the data key, so:</p>
+<ul>
+<li>the phrase can unlock the data and let you set a new password if you forget the old one;</li>
+<li>changing the password does not change the phrase;</li>
+<li><em>Recovery phrase → Create New…</em> (Settings → Security) issues new entropy and invalidates the old phrase.</li>
+</ul>
+<p>The phrase itself is never written to disk. Print it, or keep it in a password manager. Without the
+password, Touch ID on the same Mac, or the phrase, the data is unrecoverable by design — there is no
+server-side reset and Keepit's authors cannot help.</p>
+<h2 id="backups">Backups</h2>
+<p><em>Settings → General → Backup → Export…</em> produces one <code>.keepit</code> file: a magic header, a format version, a random 16-byte
+salt, and the LZFSE-compressed JSON of history, templates and preferences sealed with AES-256-GCM
+under a PBKDF2 key from a password you choose for the file. The file is safe to keep on a cloud
+drive; its password is independent of the app password. <em>Import…</em> verifies the
+authentication tag before using anything.</p>
+<h2 id="permissions-keepit-asks-for">Permissions Keepit asks for</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Permission</th>
+<th>Why</th>
+<th>What happens without it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Accessibility</strong></td>
+<td>To send ⌘V to the app you were working in, and to find the text cursor so the menu opens there</td>
+<td>Items are copied to the clipboard; you press ⌘V yourself; the menu opens at the pointer</td>
+</tr>
+<tr>
+<td><strong>Touch ID / keychain</strong></td>
+<td>Only if you enable Touch ID unlock</td>
+<td>Password only</td>
+</tr>
+<tr>
+<td><strong>Login item</strong></td>
+<td>Launch at login (on by default, switchable on <em>General</em>)</td>
+<td>Start Keepit by hand</td>
+</tr>
+</tbody>
+</table></div>
+<p>Keepit does not ask for Full Disk Access, Screen Recording, Input Monitoring, Contacts, Calendars,
+Location or the camera, and does not use any of them. The Accessibility permission is powerful — it
+is the same one window managers and automation tools need — which is why the app is signed and
+notarized and the source is public.</p>
+<p><strong>Clipboard access as macOS sees it.</strong> Keepit reads the clipboard by polling (macOS sends no
+notification when it changes), so from macOS 15.4 on, <em>System Settings → Privacy &amp; Security</em> lists
+Keepit among the apps that read the pasteboard, and the system log records those reads. That is the
+history being recorded — it is what a clipboard manager does — not a sign of anything else going on.</p>
+<h2 id="automation-keepit-urls">Automation (keepit:// URLs)</h2>
+<p>The <code>keepit://</code> URL scheme (paste item N, paste a template, add text, pause) is <strong>off by default</strong>
+and switched on in <em>Settings → Advanced → Automation</em>. Any process or web page can ask macOS to open
+a URL — browsers do confirm the first time for a custom scheme, scripts do not — and <code>add</code> and
+<code>paste</code> change the clipboard or type into the front application without a prompt. With the option
+off, Keepit ignores such URLs with a beep and logs that it did.</p>
+<p>With it on, Keepit checks the sender. macOS delivers the URL as an Apple Event that names the process
+behind it. A state-changing command runs without asking only if that process is on your list of
+trusted apps; otherwise a dialog shows the full URL with <em>Allow</em>, <em>Always Allow</em> and <em>Cancel</em>, and
+<em>Always Allow</em> adds the app to the list (<em>Settings → Advanced → Forget Trusted Apps</em> clears it).
+A web browser (anything registered with the system to open <code>https://</code> links) or a sender that cannot
+be identified is asked every time and cannot be added — a web page could be behind it. Commands
+that only open Keepit's own windows (<code>history</code>, <code>templates</code>, <code>viewer</code>, <code>settings</code>) never ask. A URL
+with a repeated parameter name is refused. This is a reasonable barrier, not a proof: a local
+process that wanted to impersonate another could, and the sender of a URL opened while Keepit was
+not yet running may be unknown — which is why unknown means "ask".</p>
+<h2 id="system-log">System log</h2>
+<p>Keepit writes to the unified system log (Console.app, <code>log show</code>, sysdiagnose) under the subsystem
+<code>com.it.keep</code>, and only about errors and unexpected states: a file that could not be saved or
+decoded, a hot key the system refused to register, Touch ID or the login item failing, the updater
+not starting. It never logs a clipboard item, a template, a password, a key, the contents of a file,
+or whether a particular copy was recorded or skipped. Every value inserted into a message (a file
+name, an error, a key combination) is marked private, so Console shows <code>&lt;private&gt;</code> in its place
+unless an administrator explicitly turns private data on for the subsystem. There is no log file of
+Keepit's own, and nothing is sent anywhere.</p>
+<h2 id="network">Network</h2>
+<p>The direct-download edition makes one request: once a day (and when you choose <em>Check for
+Updates…</em>) it fetches the Sparkle appcast from GitHub Releases over HTTPS. Updates are verified with
+an EdDSA (Ed25519) signature embedded in the app before they are installed; a download that does
+not match is rejected. The App Store edition is updated by the App Store and makes no requests at
+all.</p>
+<p>That one request can be switched off: <em>Settings → General → Updates → Check for updates
+automatically</em>. Off, the updater is not started at all — no scheduled check, no check on demand —
+and <em>Check for Updates…</em> leaves the menus; the setting is kept in <code>settings.json</code>
+(<code>checkForUpdates</code>). You are then responsible for updating by hand (keep.it.com, GitHub Releases
+or Homebrew); security fixes reach you only when you look.</p>
+<p>No clipboard content, no usage data and no identifiers are ever sent anywhere. There is no crash
+reporter and no analytics library in the binary.</p>
+<h2 id="code-signing-and-verifying-a-download">Code signing and verifying a download</h2>
+<p>Every release is built on GitHub Actions from a tagged commit, signed with the Developer ID of UK
+Intis Telecom LTD, notarized by Apple and stapled. The release page carries, for each DMG, a
+<code>.dmg.sig</code> (Sparkle EdDSA signature) and a <code>SHA256SUMS</code> file. To verify a download by hand:</p>
+<pre><code class="language-bash">shasum -a 256 -c SHA256SUMS --ignore-missing
+spctl -a -vv -t install Keepit-2.11.0.dmg      # &quot;accepted, source=Notarized Developer ID&quot;
+</code></pre>
+<p>Homebrew installs the same DMG from the same release.</p>
+<p>The signing keys never leave GitHub's <code>release</code> environment: only <code>v*</code> tags can deploy to it, the
+build-and-test job that runs on every push and pull request has no access to secrets, and every
+third-party action in the workflow is pinned to a commit hash rather than a movable tag.</p>
+<h2 id="uninstalling-and-data-removal">Uninstalling and data removal</h2>
+<p><em>Settings → Advanced → Reset and uninstall → Uninstall…</em> removes the app bundle, the data folder, the
+keychain entry, the login item and the Accessibility grant, after asking for the password or Touch
+ID and a typed confirmation. Deleting the app by hand leaves the data folder in place — remove
+<code>~/Library/Application Support/Keepit/</code> yourself if you want it gone.</p>
+<h2 id="input-limits">Input limits</h2>
+<p>Whatever lands on the clipboard is checked before it is stored, so a hostile or runaway copy cannot
+exhaust memory or disk:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>What</th>
+<th>Limit</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Text</td>
+<td>2 MB of UTF-8 (rich text / HTML up to 4× that); larger copies are not recorded</td>
+<td>Settings → History</td>
+</tr>
+<tr>
+<td>Images</td>
+<td>10 MB and 40 megapixels; the pixel count is read from the image header, the image is never decoded first</td>
+<td>Settings → History</td>
+</tr>
+<tr>
+<td>File lists</td>
+<td>1 000 paths</td>
+<td>Settings → History</td>
+</tr>
+<tr>
+<td>History</td>
+<td>1 000 text / 30 image items, 256 MB in total; the oldest go first</td>
+<td>Settings → History</td>
+</tr>
+<tr>
+<td>Templates</td>
+<td>5 000 items, 16 levels deep, names of 200 characters</td>
+<td>fixed</td>
+</tr>
+<tr>
+<td>Paste queue</td>
+<td>500 items per session</td>
+<td>fixed</td>
+</tr>
+<tr>
+<td>Backup files</td>
+<td>512 MB</td>
+<td>fixed</td>
+</tr>
+<tr>
+<td>Password</td>
+<td>256 characters; a prompt answer (<code>{input:}</code>) 10 000</td>
+<td>fixed</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="limitations-worth-knowing">Limitations worth knowing</h2>
+<ul>
+<li>The clipboard itself is readable by any app on your Mac; Keepit cannot change that. It can only
+  make sure what it <em>stores</em> is protected.</li>
+<li>While Keepit is unlocked, the decrypted history is in its memory like in any running app. Locking
+  on sleep and screen lock (on by default) keeps that window short.</li>
+<li>Encryption protects the files at rest. Someone with your macOS password and Keepit unlocked sees
+  what you see.</li>
+<li>Items you paste leave Keepit's control the moment they land in another app.</li>
+<li>Which app wrote the clipboard is a guess (see <em>What is not recorded</em>). The reliable signal is the
+  concealed mark, and only the copying app can set it.</li>
+<li>macOS itself may keep traces Keepit does not control: the system log of pasteboard reads (above),
+  crash reports if the app ever crashes, and the Accessibility/TCC database.</li>
+</ul>
+<h2 id="reporting-a-vulnerability">Reporting a vulnerability</h2>
+<p>Please use GitHub's private vulnerability reporting (<em>Security → Report a vulnerability</em> on the
+repository) or write to admin@keep.it.com rather than opening a public issue. You will get an answer within a
+few days, and a fix is released as soon as it is ready; credit is given if you want it.</p></article></main>
+<footer><div class="wrap">
+  <span>© 2026 UK Intis Telecom LTD · Keepit is MIT-licensed</span>
+  <span><a href="privacy.html">Privacy policy</a> · <a href="security.html">Security</a> · <a href="support.html">Support</a> · <a href="https://github.com/andrey-insarov/Keepit/blob/main/CHANGELOG.md">Changelog</a> · <a href="https://it.com">it.com</a></span>
+</div></footer>
+<div id="lb" role="dialog" aria-label="Full-size screenshot"><img alt=""></div>
+<script>
+(function(){
+  var lb=document.getElementById('lb'),im=lb.querySelector('img');
+  document.querySelectorAll('a.zoom').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();im.src=a.getAttribute('href');im.alt=a.querySelector('img').alt;lb.classList.add('on');});});
+  function close(){lb.classList.remove('on');im.src='';}
+  lb.addEventListener('click',close);document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+  var links=[].slice.call(document.querySelectorAll('aside a')),heads=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  if(links.length&&'IntersectionObserver' in window){
+    var cur=null;function mark(id){links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+id);});}
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){cur=e.target.id;mark(cur);}});},{rootMargin:'-70px 0px -70% 0px'});
+    heads.forEach(function(h){if(h)io.observe(h);});
+  }
+})();
+</script>
+</body></html>
