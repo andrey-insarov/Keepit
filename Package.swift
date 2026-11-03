@@ -36,7 +36,9 @@ let package = Package(
         .testTarget(
             name: "KeepitTests",
             dependencies: ["Keepit"],
-            path: "Tests/KeepitTests"
+            path: "Tests/KeepitTests",
+            // Reference .keepit files (docs/FORMAT.md); FixtureTests opens them by path, not as a bundle resource.
+            exclude: ["Fixtures"]
         ),
     ]
 )

@@ -1,0 +1,26 @@
+{
+  "format": 1,
+  "formatCounts": [
+    1,
+    3,
+    1
+  ],
+  "history": 3,
+  "kinds": [
+    "text",
+    "text",
+    "text"
+  ],
+  "outcome": "ok",
+  "password": "correct horse battery staple",
+  "sourceApps": [
+    null,
+    null,
+    "com.apple.Safari"
+  ],
+  "texts": [
+    "first",
+    "Hello, world",
+    "from Safari"
+  ]
+}
