@@ -399,3 +399,6 @@
 "Once a day Keepit asks GitHub Releases whether a newer version exists — the only network request it makes; the download itself is signed and verified. Off = no request is ever made and Check for Updates… leaves the menus; you update by downloading from keep.it.com." = "Keepit 每天向 GitHub Releases 查询一次是否有新版本——这是它发出的唯一网络请求；下载本身经过签名和验证。关闭 = 永不发出请求，“检查更新…”从菜单中消失；可从 keep.it.com 下载更新。";
 "Items in menu:" = "菜单中的项目数：";
 "How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer." = "菜单列出最近多少条历史记录。更早的记录仍保留在历史中，可通过菜单中的搜索框或 Viewer 找到。";
+"Automation" = "自动化";
+"Allow keepit:// URL commands" = "允许 keepit:// URL 命令";
+"Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL, and add/paste act on the clipboard and the front app without asking. Turn it on only if you use these integrations." = "允许快捷指令、Raycast、Alfred 或 shell 中的 `open` 通过 keepit:// URL 控制 Keepit——粘贴第 N 项、粘贴模板、添加文本、暂停。默认关闭：任何应用或网页都能打开此类 URL，而 add/paste 会在不询问的情况下作用于剪贴板和前台应用。仅在使用这些集成时开启。";

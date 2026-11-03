@@ -15,6 +15,7 @@ final class SettingsAndStoreTests: XCTestCase {
         XCTAssertEqual(s.historyHotKey, Settings().historyHotKey)
         XCTAssertEqual(s.lockWithScreen, true)
         XCTAssertEqual(s.checkForUpdates, true, "settings files from before 2.12 keep checking for updates")
+        XCTAssertEqual(s.allowURLCommands, false, "URL commands are opt-in, also for existing settings files")
     }
 
     func testSettingsRoundTrip() throws {

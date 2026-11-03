@@ -59,7 +59,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
   <a class="brand" href="index.html"><img src="img/icon.png" alt="">Keepit</a>
   <nav><a href="index.html#features">Features</a><a href="guide.html">Guide</a><a href="security.html">Security</a><a href="support.html">Support</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a></nav>
 </div></header>
-<main class="wrap"><aside aria-label="Contents"><p class="ttl">On this page</p><ol><li><a href="#in-one-paragraph">In one paragraph</a></li><li><a href="#what-is-stored-and-where">What is stored, and where</a></li><li><a href="#what-is-not-recorded">What is not recorded</a></li><li><a href="#encryption">Encryption</a></li><li><a href="#touch-id">Touch ID</a></li><li><a href="#recovery-phrase">Recovery phrase</a></li><li><a href="#backups">Backups</a></li><li><a href="#permissions-keepit-asks-for">Permissions Keepit asks for</a></li><li><a href="#system-log">System log</a></li><li><a href="#network">Network</a></li><li><a href="#code-signing-and-verifying-a-download">Code signing and verifying a download</a></li><li><a href="#uninstalling-and-data-removal">Uninstalling and data removal</a></li><li><a href="#input-limits">Input limits</a></li><li><a href="#limitations-worth-knowing">Limitations worth knowing</a></li><li><a href="#reporting-a-vulnerability">Reporting a vulnerability</a></li></ol></aside><article><h1 id="keepit-security">Keepit security</h1>
+<main class="wrap"><aside aria-label="Contents"><p class="ttl">On this page</p><ol><li><a href="#in-one-paragraph">In one paragraph</a></li><li><a href="#what-is-stored-and-where">What is stored, and where</a></li><li><a href="#what-is-not-recorded">What is not recorded</a></li><li><a href="#encryption">Encryption</a></li><li><a href="#touch-id">Touch ID</a></li><li><a href="#recovery-phrase">Recovery phrase</a></li><li><a href="#backups">Backups</a></li><li><a href="#permissions-keepit-asks-for">Permissions Keepit asks for</a></li><li><a href="#automation-keepit-urls">Automation (keepit:// URLs)</a></li><li><a href="#system-log">System log</a></li><li><a href="#network">Network</a></li><li><a href="#code-signing-and-verifying-a-download">Code signing and verifying a download</a></li><li><a href="#uninstalling-and-data-removal">Uninstalling and data removal</a></li><li><a href="#input-limits">Input limits</a></li><li><a href="#limitations-worth-knowing">Limitations worth knowing</a></li><li><a href="#reporting-a-vulnerability">Reporting a vulnerability</a></li></ol></aside><article><h1 id="keepit-security">Keepit security</h1>
 <p>A clipboard manager sees everything you copy, so it has to be clear about what it keeps, where, and
 who can get at it. This page is the complete picture for Keepit. The code is open
 (<a href="https://github.com/andrey-insarov/Keepit">github.com/andrey-insarov/Keepit</a>), so every claim here
@@ -224,6 +224,14 @@ notarized and the source is public.</p>
 notification when it changes), so from macOS 15.4 on, <em>System Settings → Privacy &amp; Security</em> lists
 Keepit among the apps that read the pasteboard, and the system log records those reads. That is the
 history being recorded — it is what a clipboard manager does — not a sign of anything else going on.</p>
+<h2 id="automation-keepit-urls">Automation (keepit:// URLs)</h2>
+<p>The <code>keepit://</code> URL scheme (paste item N, paste a template, add text, pause) is <strong>off by default</strong>
+and switched on in <em>Settings → Advanced → Automation</em>. Any process or web page can ask macOS to open
+a URL — browsers do confirm the first time for a custom scheme, scripts do not — and <code>add</code> and
+<code>paste</code> change the clipboard or type into the front application without a prompt. With the option
+off, Keepit ignores such URLs with a beep and logs that it did. Turn it on only if you use the
+Shortcuts, Raycast or Alfred integrations, and bear in mind that any URL then has the same power
+as you at the keyboard.</p>
 <h2 id="system-log">System log</h2>
 <p>Keepit writes to the unified system log (Console.app, <code>log show</code>, sysdiagnose) under the subsystem
 <code>com.it.keep</code>, and only about errors and unexpected states: a file that could not be saved or

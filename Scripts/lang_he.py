@@ -399,4 +399,7 @@ T = {
 'Once a day Keepit asks GitHub Releases whether a newer version exists — the only network request it makes; the download itself is signed and verified. Off = no request is ever made and Check for Updates… leaves the menus; you update by downloading from keep.it.com.': 'פעם ביום Keepit שואל את GitHub Releases אם קיימת גרסה חדשה יותר — בקשת הרשת היחידה שהוא מבצע; ההורדה עצמה חתומה ומאומתת. כבוי = לא נשלחת שום בקשה, ו„בדוק עדכונים…“ נעלם מהתפריטים; מעדכנים בהורדה מ‑keep.it.com.',
 'Items in menu:': 'פריטים בתפריט:',
 "How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer.": 'כמה מהרשומות האחרונות בהיסטוריה מציג התפריט. רשומות ישנות יותר נשארות בהיסטוריה וניתן למצוא אותן דרך שדה החיפוש בתפריט או ב‑Viewer.',
+'Automation': 'אוטומציה',
+'Allow keepit:// URL commands': 'אפשר פקודות URL של keepit://',
+'Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL, and add/paste act on the clipboard and the front app without asking. Turn it on only if you use these integrations.': 'מאפשר לקיצורי דרך, Raycast, Alfred או ל‑`open` במעטפת לשלוט ב‑Keepit דרך כתובות keepit:// — להדביק פריט N, להדביק תבנית, להוסיף טקסט, להשהות. כבוי כברירת מחדל: כל אפליקציה או דף אינטרנט יכולים לפתוח כתובת כזו, ו‑add/paste פועלים על הלוח ועל האפליקציה הקדמית ללא אישור. הפעילו רק אם אתם משתמשים בשילובים אלה.',
 }

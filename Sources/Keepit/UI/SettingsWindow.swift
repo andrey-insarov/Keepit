@@ -25,6 +25,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
 
     private let loginItem    = NSButton(checkboxWithTitle: L("Launch at login"), target: nil, action: nil)
     private let updateCheck  = NSButton(checkboxWithTitle: L("Check for updates automatically"), target: nil, action: nil)
+    private let urlCommands  = NSButton(checkboxWithTitle: L("Allow keepit:// URL commands"), target: nil, action: nil)
     private let saveHistory  = NSButton(checkboxWithTitle: L("Save history on quit, restore on start"), target: nil, action: nil)
     private let pasteAfter   = NSButton(checkboxWithTitle: L("Paste into the active app after choosing"), target: nil, action: nil)
     private let showAtCaret  = NSButton(checkboxWithTitle: L("Open menu at text cursor when possible"), target: nil, action: nil)
@@ -409,6 +410,8 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             header(L("Clipboard")),
             row(L("Poll interval:"), help(number(pollInterval, unit: L("seconds"), min: 0.1, max: 5, step: 0.1, decimals: 2),
                                            L("How often Keepit looks at the clipboard. macOS sends no notification when it changes, so every clipboard manager polls; 0.3 s is unnoticeable and cheap."))),
+            header(L("Automation")),
+            [NSView(), help(check(urlCommands), L("Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL, and add/paste act on the clipboard and the front app without asking. Turn it on only if you use these integrations."))],
             header(L("Data")),
             [NSView(), button(reveal)],
             header(dangerTitle),
@@ -555,6 +558,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         let s = app.settings
         loginItem.state = s.launchAtLogin ? .on : .off
         updateCheck.state = s.checkForUpdates ? .on : .off
+        urlCommands.state = s.allowURLCommands ? .on : .off
         saveHistory.state = s.historySave ? .on : .off
         pasteAfter.state = s.pasteAfterSelect ? .on : .off
         showAtCaret.state = s.showAtCaret ? .on : .off
@@ -626,6 +630,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         apply { s in
             s.launchAtLogin = loginItem.state == .on
             s.checkForUpdates = updateCheck.state == .on
+            s.allowURLCommands = urlCommands.state == .on
             s.historySave = saveHistory.state == .on
             s.pasteAfterSelect = pasteAfter.state == .on
             s.showAtCaret = showAtCaret.state == .on

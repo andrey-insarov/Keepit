@@ -56,7 +56,7 @@ Or the DMG:
 * **Private by design** — password-protected AES-256-GCM storage, Touch ID unlock, 24-word recovery phrase, lock on screen lock / sleep; concealed clipboard data is not recorded and known password managers are excluded by app (best effort — [how it works](https://keep.it.com/security#what-is-not-recorded)); per-app ignore list; no account; no network except the daily update check, which can be switched off (none in the App Store edition).
 * **Backup** — one password-encrypted `.keepit` file with history, templates and settings; Merge or Replace on import.
 * **Settings the Mac way** — General / Shortcuts / Paste Queue / History / Menu / Security / Advanced; every change applies at once; hot-key recorders with conflict checks; per-app paste key (⌘⇧V, ⌃V…).
-* **Automation** — `keepit://` URL scheme: `paste/N`, `copy/N`, `template/Name`, `add?text=`, `add-template?text=&name=`, `history`, `templates`, `viewer`, `settings`, `pause`, `resume` — from Shortcuts (“Open URL”), Raycast, Alfred or `open`.
+* **Automation** — `keepit://` URL scheme: `paste/N`, `copy/N`, `template/Name`, `add?text=`, `add-template?text=&name=`, `history`, `templates`, `viewer`, `settings`, `pause`, `resume` — from Shortcuts (“Open URL”), Raycast, Alfred or `open`. Off by default; switch on in Settings → Advanced.
 * **21 interface languages** — en, ru, uk, de, fr, es, it, pt-BR, nl, pl, cs, tr, lt, lv, et, ja, ko, zh-Hans, zh-Hant, ar, he.
 * Menu-bar only, launch at login, universal binary (Apple silicon + Intel), signed and notarized, self-updating (Sparkle) in the direct edition.
 

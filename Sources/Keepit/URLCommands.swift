@@ -1,6 +1,8 @@
 import AppKit
 
 /// `keepit://` URL scheme — automation hooks for Shortcuts ("Open URL"), Alfred, Raycast, `open` in the shell.
+/// Off unless *Settings → Advanced → Allow keepit:// URL commands* is on: any process or web page can
+/// open a URL, and `add` / `paste` act on the clipboard and the front app without confirmation.
 ///
 ///     keepit://paste/1            paste history item N (1 = latest, 2 = previous) into the front app
 ///     keepit://paste/latest       keepit://paste/previous
@@ -20,6 +22,11 @@ extension AppDelegate {
 
     func handle(_ url: URL) {
         guard url.scheme?.lowercased() == Self.urlScheme else { return }
+        guard settings.allowURLCommands else {
+            Log.system.notice("keepit:// command ignored: URL commands are off (Settings → Advanced)")
+            NSSound.beep()
+            return
+        }
         guard !isLocked else { NSSound.beep(); return }
         let comps = URLComponents(url: url, resolvingAgainstBaseURL: false)
         let q = Dictionary(uniqueKeysWithValues: (comps?.queryItems ?? []).map { ($0.name, $0.value ?? "") })

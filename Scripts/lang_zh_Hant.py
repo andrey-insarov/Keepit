@@ -399,4 +399,7 @@ T = {
 'Once a day Keepit asks GitHub Releases whether a newer version exists — the only network request it makes; the download itself is signed and verified. Off = no request is ever made and Check for Updates… leaves the menus; you update by downloading from keep.it.com.': 'Keepit 每天向 GitHub Releases 查詢一次是否有新版本——這是它發出的唯一網路請求；下載本身經過簽署與驗證。關閉 = 永不發出請求，「檢查更新項目⋯」會從選單中消失；可從 keep.it.com 下載更新。',
 'Items in menu:': '選單中的項目數：',
 "How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer.": '選單列出最近多少筆歷史記錄。較舊的記錄仍保留在歷史中，可透過選單中的搜尋欄位或 Viewer 找到。',
+'Automation': '自動化',
+'Allow keepit:// URL commands': '允許 keepit:// URL 指令',
+'Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL, and add/paste act on the clipboard and the front app without asking. Turn it on only if you use these integrations.': '允許捷徑、Raycast、Alfred 或 shell 中的 `open` 透過 keepit:// URL 控制 Keepit——貼上第 N 項、貼上範本、加入文字、暫停。預設關閉：任何 App 或網頁都能開啟此類 URL，而 add/paste 會在不詢問的情況下作用於剪貼板和最前方的 App。僅在使用這些整合時開啟。',
 }

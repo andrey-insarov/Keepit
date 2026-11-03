@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- **`keepit://` URL commands are off by default** — Settings → Advanced → Automation → *Allow keepit:// URL commands*. Any app or web page can open a URL, and `add` / `paste` act on the clipboard and the front app without confirmation, so the scheme is now opt-in. **If you drive Keepit from Shortcuts, Raycast or Alfred, turn it on after updating.** While off, such URLs are ignored with a beep
 - Settings → Menu: *Items in menu* — how many of the latest entries the history menu lists (60 by default, up to 200). The setting existed in `settings.json` since 2.0 but had no field in Settings
 
 ## 2.12.0 — 2026-11-03

@@ -140,6 +140,16 @@ notification when it changes), so from macOS 15.4 on, *System Settings → Priva
 Keepit among the apps that read the pasteboard, and the system log records those reads. That is the
 history being recorded — it is what a clipboard manager does — not a sign of anything else going on.
 
+## Automation (keepit:// URLs)
+
+The `keepit://` URL scheme (paste item N, paste a template, add text, pause) is **off by default**
+and switched on in *Settings → Advanced → Automation*. Any process or web page can ask macOS to open
+a URL — browsers do confirm the first time for a custom scheme, scripts do not — and `add` and
+`paste` change the clipboard or type into the front application without a prompt. With the option
+off, Keepit ignores such URLs with a beep and logs that it did. Turn it on only if you use the
+Shortcuts, Raycast or Alfred integrations, and bear in mind that any URL then has the same power
+as you at the keyboard.
+
 ## System log
 
 Keepit writes to the unified system log (Console.app, `log show`, sysdiagnose) under the subsystem

@@ -286,7 +286,7 @@ that explains it.
 | **History** | How many text/file items and images to keep (1000 / 30) · forget items older than … · *Remove duplicates* (copying the same thing again moves it to the top) · *Ignore concealed clipboard data* · the ignored-apps list (bundle identifiers; password managers are always ignored) |
 | **Menu** | Search field · numbering · preview panel · tooltips · source-app icons · image thumbnails · items in menu (how many of the latest entries the menu lists, 60 by default; the rest stay searchable) · title length · thumbnail height |
 | **Security** | Password, Touch ID, locking, recovery phrase — [Part 6](#part-6--security) |
-| **Advanced** | Clipboard poll interval · Data: *Open Folder* · Reset and uninstall: *Reset…* (back to a fresh install, example templates return) · *Uninstall…* (reset, then remove the app, Launch at login, keychain entry and permissions) |
+| **Advanced** | Clipboard poll interval · Automation: *Allow keepit:// URL commands* (off by default — [Automation](#automation-the-keepit-url-scheme)) · Data: *Open Folder* · Reset and uninstall: *Reset…* (back to a fresh install, example templates return) · *Uninstall…* (reset, then remove the app, Launch at login, keychain entry and permissions) |
 
 ![Settings → History: limits and the ignored-apps list](site/img/guide/prefs-history.png)
 
@@ -353,7 +353,10 @@ download and the App Store edition.
 
 ### Automation: the keepit:// URL scheme
 
-Shortcuts (*Open URL*), Raycast, Alfred, Keyboard Maestro or `open` in a shell can drive Keepit:
+Shortcuts (*Open URL*), Raycast, Alfred, Keyboard Maestro or `open` in a shell can drive Keepit —
+**once you turn it on** in *Settings → Advanced → Automation → Allow keepit:// URL commands*. It is
+off by default because any app or web page can open a URL, and `add` / `paste` change the clipboard
+and type into the front app without asking; with it off, Keepit ignores such URLs with a beep.
 
 | URL | Effect |
 |-----|--------|

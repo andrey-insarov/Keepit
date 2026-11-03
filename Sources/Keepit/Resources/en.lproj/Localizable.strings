@@ -446,3 +446,7 @@
 
 "Items in menu:" = "Items in menu:";
 "How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer." = "How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer.";
+
+"Automation" = "Automation";
+"Allow keepit:// URL commands" = "Allow keepit:// URL commands";
+"Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL, and add/paste act on the clipboard and the front app without asking. Turn it on only if you use these integrations." = "Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL, and add/paste act on the clipboard and the front app without asking. Turn it on only if you use these integrations.";
