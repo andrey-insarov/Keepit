@@ -478,3 +478,6 @@
 "Could not set up the recovery phrase: %@" = "Не удалось настроить фразу восстановления: %@";
 "Could not save the restored data: %@" = "Не удалось сохранить восстановленные данные: %@";
 "Restore cancelled: the data kept changing. Please try again." = "Восстановление отменено: данные всё время менялись. Попробуйте ещё раз.";
+"Could not read the current %@ before replacing it: %@" = "Не удалось прочитать текущий %@ перед заменой: %@";
+"Could not write %@: %@ — the previous files were kept." = "Не удалось записать %@: %@ — прежние файлы сохранены.";
+"Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on." = "Не удалось записать %@: %@ — и вернуть прежние файлы тоже не удалось (%@). Проверьте папку данных, прежде чем продолжать.";

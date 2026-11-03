@@ -478,4 +478,7 @@ T = {
 'Could not set up the recovery phrase: %@': '無法設定復原助記詞：%@',
 'Could not save the restored data: %@': '無法儲存還原的資料：%@',
 'Restore cancelled: the data kept changing. Please try again.': '還原已取消：資料一直在變動。請再試一次。',
+'Could not read the current %@ before replacing it: %@': '取代前無法讀取目前的 %@：%@',
+'Could not write %@: %@ — the previous files were kept.': '無法寫入 %@：%@ — 已保留先前的檔案。',
+'Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on.': '無法寫入 %@：%@ — 且還原先前的檔案也失敗了（%@）。請先檢查資料夾再繼續。',
 }

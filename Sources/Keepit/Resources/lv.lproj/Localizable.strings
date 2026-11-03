@@ -478,3 +478,6 @@
 "Could not set up the recovery phrase: %@" = "Neizdevās iestatīt atkopšanas frāzi: %@";
 "Could not save the restored data: %@" = "Neizdevās saglabāt atjaunotos datus: %@";
 "Restore cancelled: the data kept changing. Please try again." = "Atjaunošana atcelta: dati visu laiku mainījās. Lūdzu, mēģiniet vēlreiz.";
+"Could not read the current %@ before replacing it: %@" = "Neizdevās nolasīt pašreizējo %@ pirms tā aizstāšanas: %@";
+"Could not write %@: %@ — the previous files were kept." = "Neizdevās ierakstīt %@: %@ — iepriekšējie faili tika saglabāti.";
+"Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on." = "Neizdevās ierakstīt %@: %@ — un arī iepriekšējo failu atgriešana neizdevās (%@). Pirms turpināt, pārbaudiet datu mapi.";

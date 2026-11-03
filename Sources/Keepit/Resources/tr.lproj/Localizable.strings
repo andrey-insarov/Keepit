@@ -478,3 +478,6 @@
 "Could not set up the recovery phrase: %@" = "Kurtarma ifadesi ayarlanamadı: %@";
 "Could not save the restored data: %@" = "Geri yüklenen veriler kaydedilemedi: %@";
 "Restore cancelled: the data kept changing. Please try again." = "Geri yükleme iptal edildi: veriler sürekli değişti. Lütfen yeniden deneyin.";
+"Could not read the current %@ before replacing it: %@" = "Değiştirmeden önce geçerli %@ okunamadı: %@";
+"Could not write %@: %@ — the previous files were kept." = "%@ yazılamadı: %@ — önceki dosyalar korundu.";
+"Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on." = "%@ yazılamadı: %@ — ve önceki dosyaları geri koymak da başarısız oldu (%@). Devam etmeden önce veri klasörünü kontrol edin.";

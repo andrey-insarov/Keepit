@@ -478,3 +478,6 @@
 "Could not set up the recovery phrase: %@" = "Taastefraasi ei õnnestunud seadistada: %@";
 "Could not save the restored data: %@" = "Taastatud andmeid ei õnnestunud salvestada: %@";
 "Restore cancelled: the data kept changing. Please try again." = "Taastamine tühistati: andmed muutusid pidevalt. Palun proovige uuesti.";
+"Could not read the current %@ before replacing it: %@" = "Praegust faili %@ ei õnnestunud enne asendamist lugeda: %@";
+"Could not write %@: %@ — the previous files were kept." = "Faili %@ ei õnnestunud kirjutada: %@ – varasemad failid jäid alles.";
+"Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on." = "Faili %@ ei õnnestunud kirjutada: %@ – ja ka varasemate failide tagasipanek ebaõnnestus (%@). Kontrollige enne jätkamist andmekausta.";

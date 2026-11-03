@@ -478,4 +478,7 @@ T = {
 'Could not set up the recovery phrase: %@': 'Herstelzin kon niet worden ingesteld: %@',
 'Could not save the restored data: %@': 'Kon de herstelde gegevens niet bewaren: %@',
 'Restore cancelled: the data kept changing. Please try again.': 'Herstel geannuleerd: de gegevens bleven veranderen. Probeer het opnieuw.',
+'Could not read the current %@ before replacing it: %@': 'Kon het huidige %@ niet lezen vóór het vervangen: %@',
+'Could not write %@: %@ — the previous files were kept.': 'Kon %@ niet schrijven: %@ — de vorige bestanden zijn bewaard.',
+'Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on.': 'Kon %@ niet schrijven: %@ — en het terugzetten van de vorige bestanden mislukte ook (%@). Controleer de gegevensmap voordat je verdergaat.',
 }

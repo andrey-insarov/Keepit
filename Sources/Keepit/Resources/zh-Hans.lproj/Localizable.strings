@@ -478,3 +478,6 @@
 "Could not set up the recovery phrase: %@" = "无法设置恢复助记词：%@";
 "Could not save the restored data: %@" = "无法保存恢复的数据：%@";
 "Restore cancelled: the data kept changing. Please try again." = "恢复已取消：数据一直在变化。请重试。";
+"Could not read the current %@ before replacing it: %@" = "替换前无法读取当前的 %@：%@";
+"Could not write %@: %@ — the previous files were kept." = "无法写入 %@：%@ — 已保留之前的文件。";
+"Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on." = "无法写入 %@：%@ — 且恢复之前的文件也失败了（%@）。请先检查数据文件夹再继续。";

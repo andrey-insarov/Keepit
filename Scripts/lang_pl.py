@@ -478,4 +478,7 @@ T = {
 'Could not set up the recovery phrase: %@': 'Nie udało się skonfigurować frazy odzyskiwania: %@',
 'Could not save the restored data: %@': 'Nie udało się zapisać przywróconych danych: %@',
 'Restore cancelled: the data kept changing. Please try again.': 'Przywracanie anulowane: dane ciągle się zmieniały. Spróbuj ponownie.',
+'Could not read the current %@ before replacing it: %@': 'Nie udało się odczytać bieżącego pliku %@ przed zastąpieniem: %@',
+'Could not write %@: %@ — the previous files were kept.': 'Nie udało się zapisać %@: %@ — poprzednie pliki zachowano.',
+'Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on.': 'Nie udało się zapisać %@: %@ — a przywrócenie poprzednich plików też się nie powiodło (%@). Sprawdź folder danych, zanim będziesz kontynuować.',
 }

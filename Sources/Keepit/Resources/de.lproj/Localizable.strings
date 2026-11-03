@@ -478,3 +478,6 @@
 "Could not set up the recovery phrase: %@" = "Wiederherstellungsphrase konnte nicht eingerichtet werden: %@";
 "Could not save the restored data: %@" = "Wiederhergestellte Daten konnten nicht gesichert werden: %@";
 "Restore cancelled: the data kept changing. Please try again." = "Wiederherstellung abgebrochen: Die Daten änderten sich laufend. Bitte erneut versuchen.";
+"Could not read the current %@ before replacing it: %@" = "Aktuelle %@ konnte vor dem Ersetzen nicht gelesen werden: %@";
+"Could not write %@: %@ — the previous files were kept." = "%@ konnte nicht geschrieben werden: %@ – die bisherigen Dateien wurden behalten.";
+"Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on." = "%@ konnte nicht geschrieben werden: %@ – und die bisherigen Dateien ließen sich auch nicht zurücksetzen (%@). Prüfen Sie den Datenordner, bevor Sie fortfahren.";

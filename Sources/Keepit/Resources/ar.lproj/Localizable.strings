@@ -478,3 +478,6 @@
 "Could not set up the recovery phrase: %@" = "تعذّر إعداد عبارة الاسترداد: %@";
 "Could not save the restored data: %@" = "تعذّر حفظ البيانات المستعادة: %@";
 "Restore cancelled: the data kept changing. Please try again." = "أُلغيت الاستعادة: ظلّت البيانات تتغير. يرجى المحاولة مرة أخرى.";
+"Could not read the current %@ before replacing it: %@" = "تعذّرت قراءة %@ الحالي قبل استبداله: %@";
+"Could not write %@: %@ — the previous files were kept." = "تعذّرت كتابة %@: %@ — تم الاحتفاظ بالملفات السابقة.";
+"Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on." = "تعذّرت كتابة %@: %@ — وفشلت أيضًا إعادة الملفات السابقة (%@). تحقق من مجلد البيانات قبل المتابعة.";

@@ -478,4 +478,7 @@ T = {
 'Could not set up the recovery phrase: %@': 'Não foi possível configurar a frase de recuperação: %@',
 'Could not save the restored data: %@': 'Não foi possível salvar os dados restaurados: %@',
 'Restore cancelled: the data kept changing. Please try again.': 'Restauração cancelada: os dados não paravam de mudar. Tente novamente.',
+'Could not read the current %@ before replacing it: %@': 'Não foi possível ler o %@ atual antes de substituí-lo: %@',
+'Could not write %@: %@ — the previous files were kept.': 'Não foi possível gravar %@: %@ — os arquivos anteriores foram mantidos.',
+'Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on.': 'Não foi possível gravar %@: %@ — e recolocar os arquivos anteriores também falhou (%@). Verifique a pasta de dados antes de continuar.',
 }

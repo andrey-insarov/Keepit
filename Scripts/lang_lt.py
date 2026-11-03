@@ -478,4 +478,7 @@ T = {
 'Could not set up the recovery phrase: %@': 'Nepavyko nustatyti atkūrimo frazės: %@',
 'Could not save the restored data: %@': 'Nepavyko išsaugoti atkurtų duomenų: %@',
 'Restore cancelled: the data kept changing. Please try again.': 'Atkūrimas atšauktas: duomenys nuolat keitėsi. Bandykite dar kartą.',
+'Could not read the current %@ before replacing it: %@': 'Nepavyko perskaityti dabartinio %@ prieš jį pakeičiant: %@',
+'Could not write %@: %@ — the previous files were kept.': 'Nepavyko įrašyti %@: %@ – ankstesni failai išsaugoti.',
+'Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on.': 'Nepavyko įrašyti %@: %@ – ir grąžinti ankstesnių failų taip pat nepavyko (%@). Prieš tęsdami patikrinkite duomenų aplanką.',
 }
