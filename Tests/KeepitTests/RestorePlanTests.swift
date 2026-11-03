@@ -201,6 +201,64 @@ final class RestorePlanTests: XCTestCase {
         XCTAssertEqual(try Data(contentsOf: Storage.templatesURL), Data("new-templates".utf8))
     }
 
+    // A process killed anywhere between arming the journal and clearing it: the next launch puts
+    // every file back — whatever number of the three writes had landed — and does so again if
+    // the replay itself is interrupted.
+    func testInterruptedCommitIsReplayedAtLaunch() throws {
+        let fm = FileManager.default
+        try fm.createDirectory(at: Storage.directory, withIntermediateDirectories: true)
+        let steps = RestoreCommit.steps(templatesJSON: Data("new-templates".utf8), historyJSON: Data("new-history".utf8), settingsJSON: Data("new-settings".utf8))
+        func resetLive() throws {
+            try Data("old-templates".utf8).write(to: Storage.templatesURL)
+            try Data("old-settings".utf8).write(to: Storage.settingsURL)
+            try Storage.removeNow(Storage.historyURL)                  // history was not kept on disk
+            try RestoreCommit.clearJournal()
+        }
+        func assertLiveIsOld(_ line: UInt = #line) {
+            XCTAssertEqual(try? Data(contentsOf: Storage.templatesURL), Data("old-templates".utf8), line: line)
+            XCTAssertEqual(try? Data(contentsOf: Storage.settingsURL), Data("old-settings".utf8), line: line)
+            XCTAssertFalse(fm.fileExists(atPath: Storage.historyURL.path), line: line)
+            XCTAssertFalse(fm.fileExists(atPath: RestoreCommit.journalDirectory.path), line: line)
+        }
+        for written in 0...3 {
+            try resetLive()
+            try RestoreCommit.writeJournal()
+            for s in steps.prefix(written) { try Storage.writeNow(s.data!, to: s.url, encrypt: s.encrypt) }
+            // "crash" here; next launch:
+            XCTAssertTrue(try RestoreCommit.recoverIfNeeded(), "\(written) writes")
+            assertLiveIsOld()
+            XCTAssertFalse(try RestoreCommit.recoverIfNeeded())            // nothing left to do
+        }
+        // Killed while the journal was being written (no marker): the commit never started, the
+        // live files are whatever they are, the half-journal is just removed.
+        try resetLive()
+        try fm.createDirectory(at: RestoreCommit.journalDirectory, withIntermediateDirectories: true)
+        try Data("stale".utf8).write(to: RestoreCommit.journalDirectory.appendingPathComponent("templates.json"))
+        XCTAssertFalse(try RestoreCommit.recoverIfNeeded())
+        assertLiveIsOld()
+        // Replay interrupted or failing on one file: the journal stays armed and the next attempt
+        // finishes the job. Here history.json cannot be removed (immutable) on the first attempt.
+        try resetLive()
+        try RestoreCommit.writeJournal()
+        for s in steps { try Storage.writeNow(s.data!, to: s.url, encrypt: s.encrypt) }
+        try fm.setAttributes([.immutable: true], ofItemAtPath: Storage.historyURL.path)
+        XCTAssertThrowsError(try RestoreCommit.recoverIfNeeded()) {
+            guard case RestoreCommit.Failure.undoFailed(_, _, let undo)? = $0 as? RestoreCommit.Failure else { return XCTFail("\($0)") }
+            XCTAssertEqual(undo.map(\.0), ["history.json"])
+        }
+        XCTAssertEqual(try Data(contentsOf: Storage.templatesURL), Data("old-templates".utf8))   // the rest was put back
+        XCTAssertTrue(fm.fileExists(atPath: RestoreCommit.journalMarker.path))                      // still armed
+        try fm.setAttributes([.immutable: false], ofItemAtPath: Storage.historyURL.path)
+        XCTAssertTrue(try RestoreCommit.recoverIfNeeded())
+        assertLiveIsOld()
+        // A completed commit leaves no journal behind.
+        try resetLive()
+        try RestoreCommit.writeFiles(steps)
+        XCTAssertEqual(try Data(contentsOf: Storage.historyURL), Data("new-history".utf8))
+        XCTAssertFalse(fm.fileExists(atPath: RestoreCommit.journalDirectory.path))
+        XCTAssertFalse(try RestoreCommit.recoverIfNeeded())
+    }
+
     func testTrimmedIsTheStoreRule() {
         var s = settings(historyMax: 2)
         s.historyImageMax = 1

@@ -46,7 +46,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// No settings file yet → first launch (onboarding, login item).
     private let isFirstRun: Bool
 
+    /// A restore journal that could not be replayed at launch: shown once the app is up (the
+    /// journal stays on disk, so the next launch tries again).
+    private var recoveryError: Error?
+
     override init() {
+        // A restore interrupted between its three file writes is put right before anything is read.
+        do { if try RestoreCommit.recoverIfNeeded() { Log.storage.notice("replayed an interrupted restore") } }
+        catch { recoveryError = error; Log.storage.error("restore journal could not be replayed: \(error.localizedDescription)") }
         let stored = Storage.load(Settings.self, from: Storage.settingsURL)
         isFirstRun = stored == nil
         settings = stored ?? Settings()
@@ -56,6 +63,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // MARK: - Lifecycle
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        if let e = recoveryError { Vault.error(e.localizedDescription) }
         NSApp.setActivationPolicy(.accessory)
         buildMainMenu()
 

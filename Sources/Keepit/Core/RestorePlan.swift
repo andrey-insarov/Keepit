@@ -113,24 +113,35 @@ extension ClipItem {
     }
 }
 
-/// The disk half of a restore: the three files written in one go, or none of them.
-/// `AppDelegate.commit(_:)` calls this first and assigns the live stores only when it returned.
+/// The disk half of a restore: the three files written in one go, or none of them — across a
+/// failed write *and* across a process killed between the writes.
+///
+/// Journal: before the first write, the previous bytes of every existing file are copied into
+/// `restore-journal/` and a marker `commit` is written last. Then the three files are written.
+/// Then the marker is removed, then the journal. At launch (`recoverIfNeeded`, before any store is
+/// loaded) a journal with the marker is replayed — every copied file put back, every file that had
+/// no copy removed — and only then deleted; a journal without the marker was never armed and is
+/// simply deleted. Replay is idempotent, so a crash during replay is replayed again next time.
+/// A failed write uses the same replay as its undo. `AppDelegate.commit(_:)` calls `writeFiles`
+/// first and assigns the live stores only when it returned.
 enum RestoreCommit {
     enum Failure: LocalizedError {
         case locked
         /// An existing file could not be read before the first write; nothing was written.
         case cannotReadPrevious(String, Error)
+        /// The journal could not be written; nothing was written.
+        case cannotJournal(Error)
         /// A write failed and the files written before it were put back.
         case writeFailed(String, Error)
         /// A write failed and putting a previous file back failed too: the data directory needs
-        /// a look (the file is named). Nothing in memory has changed; the next launch reloads
-        /// whatever is on disk.
+        /// a look (the file is named). The journal stays, so the next launch tries again.
         case undoFailed(String, Error, undo: [(String, Error)])
 
         var errorDescription: String? {
             switch self {
             case .locked: return L("Restore cancelled: Keepit was locked meanwhile.")
             case .cannotReadPrevious(let name, let e): return LF("Could not read the current %@ before replacing it: %@", name, e.localizedDescription)
+            case .cannotJournal(let e): return LF("Could not prepare the undo copy of the current data: %@", e.localizedDescription)
             case .writeFailed(let name, let e): return LF("Could not write %@: %@ — the previous files were kept.", name, e.localizedDescription)
             case .undoFailed(let name, let e, let undo):
                 let list = undo.map { "\($0.0): \($0.1.localizedDescription)" }.joined(separator: "; ")
@@ -142,46 +153,111 @@ enum RestoreCommit {
     /// What was on disk before the commit: a missing file is not the same as one that could not be read.
     enum Previous { case absent, bytes(Data) }
 
+    struct Step {
+        let name: String
+        let url: URL
+        let data: Data?       // nil: the file is removed (history not kept on disk)
+        let encrypt: Bool
+    }
+
+    static let names = ["templates.json", "history.json", "settings.json"]
+    static var journalDirectory: URL { Storage.directory.appendingPathComponent("restore-journal", isDirectory: true) }
+    static var journalMarker: URL { journalDirectory.appendingPathComponent("commit") }
+    static func liveURL(_ name: String) -> URL { Storage.directory.appendingPathComponent(name) }
+
+    static func steps(templatesJSON: Data, historyJSON: Data?, settingsJSON: Data) -> [Step] {
+        [Step(name: names[0], url: Storage.templatesURL, data: templatesJSON, encrypt: true),
+         Step(name: names[1], url: Storage.historyURL, data: historyJSON, encrypt: true),
+         Step(name: names[2], url: Storage.settingsURL, data: settingsJSON, encrypt: false)]
+    }
+
     static func readPrevious(_ url: URL) throws -> Previous {
         guard FileManager.default.fileExists(atPath: url.path) else { return .absent }
         return .bytes(try Data(contentsOf: url))
     }
 
-    /// Write templates, history (nil → the file is removed: history is not kept on disk) and
-    /// settings. Before the first write, every existing file is read in full; a read failure
-    /// cancels the commit untouched. If a write fails, the files written so far are put back to
-    /// their previous bytes (or removed, when there was none); a failure of that undo is reported
-    /// too, never swallowed. Nothing in memory has changed in any of these cases.
-    static func writeFiles(templatesJSON: Data, historyJSON: Data?, settingsJSON: Data) throws {
-        let steps: [(name: String, url: URL, data: Data?, encrypt: Bool)] = [
-            ("templates.json", Storage.templatesURL, templatesJSON, true),
-            ("history.json", Storage.historyURL, historyJSON, true),
-            ("settings.json", Storage.settingsURL, settingsJSON, false),
-        ]
-        var previous: [Previous] = []
-        for s in steps {
-            do { previous.append(try readPrevious(s.url)) }
-            catch { throw Failure.cannotReadPrevious(s.name, error) }
+    /// Copy the previous bytes of every existing file into the journal, then arm it with the marker.
+    /// Throws before anything is armed; a stale journal (crash while writing one) is replaced.
+    static func writeJournal() throws {
+        let fm = FileManager.default
+        if fm.fileExists(atPath: journalDirectory.path) { try fm.removeItem(at: journalDirectory) }
+        try fm.createDirectory(at: journalDirectory, withIntermediateDirectories: true)
+        for name in names {
+            switch try readPrevious(liveURL(name)) {
+            case .absent: break
+            case .bytes(let b): try b.write(to: journalDirectory.appendingPathComponent(name), options: .atomic)
+            }
         }
-        var done = 0
-        do {
-            for s in steps {
+        try Data("1".utf8).write(to: journalMarker, options: .atomic)
+    }
+
+    /// Put every file back as the journal has it, then drop the journal. Idempotent. Errors are
+    /// collected per file and returned, never swallowed; the journal stays when any remain.
+    static func replayJournal() -> [(String, Error)] {
+        let fm = FileManager.default
+        var errors: [(String, Error)] = []
+        for name in names {
+            let copy = journalDirectory.appendingPathComponent(name)
+            do {
+                if fm.fileExists(atPath: copy.path) {
+                    let bytes = try Data(contentsOf: copy)
+                    // Already as it should be (the write never happened, or a previous replay got
+                    // this far): leave it — a file that cannot be rewritten need not be.
+                    if (try? Data(contentsOf: liveURL(name))) != bytes { try Storage.writeRawNow(bytes, to: liveURL(name)) }
+                } else {
+                    try Storage.removeNow(liveURL(name))
+                }
+            } catch { errors.append((name, error)) }
+        }
+        if errors.isEmpty {
+            do { try fm.removeItem(at: journalMarker); try fm.removeItem(at: journalDirectory) }
+            catch { errors.append(("restore-journal", error)) }
+        }
+        return errors
+    }
+
+    /// At launch, before any store is loaded. Returns true when a journal was replayed.
+    /// An unarmed journal (no marker) is deleted: the commit never started.
+    @discardableResult
+    static func recoverIfNeeded() throws -> Bool {
+        let fm = FileManager.default
+        guard fm.fileExists(atPath: journalDirectory.path) else { return false }
+        guard fm.fileExists(atPath: journalMarker.path) else { try fm.removeItem(at: journalDirectory); return false }
+        let errors = replayJournal()
+        if let first = errors.first { throw Failure.undoFailed("restore-journal", first.1, undo: errors) }
+        return true
+    }
+
+    /// Write templates, history (nil → the file is removed) and settings, journaled: a failure of
+    /// any write puts the previous files back (`replayJournal`) and names the file; a process
+    /// killed in between is put right by `recoverIfNeeded` at the next launch. Nothing in memory
+    /// has changed in any failure case.
+    static func writeFiles(templatesJSON: Data, historyJSON: Data?, settingsJSON: Data) throws {
+        try writeFiles(steps(templatesJSON: templatesJSON, historyJSON: historyJSON, settingsJSON: settingsJSON))
+    }
+
+    static func writeFiles(_ steps: [Step]) throws {
+        for s in steps {
+            do { _ = try readPrevious(s.url) } catch { throw Failure.cannotReadPrevious(s.name, error) }
+        }
+        do { try writeJournal() } catch { throw Failure.cannotJournal(error) }
+        for s in steps {
+            do {
                 if let data = s.data { try Storage.writeNow(data, to: s.url, encrypt: s.encrypt) }
                 else { try Storage.removeNow(s.url) }
-                done += 1
+            } catch {
+                let undo = replayJournal()
+                if undo.isEmpty { throw Failure.writeFailed(s.name, error) }
+                throw Failure.undoFailed(s.name, error, undo: undo)
             }
-        } catch {
-            var undo: [(String, Error)] = []
-            for i in 0..<done {
-                do {
-                    switch previous[i] {
-                    case .bytes(let b): try Storage.writeRawNow(b, to: steps[i].url)
-                    case .absent: try Storage.removeNow(steps[i].url)
-                    }
-                } catch let e { undo.append((steps[i].name, e)) }
-            }
-            if undo.isEmpty { throw Failure.writeFailed(steps[done].name, error) }
-            throw Failure.undoFailed(steps[done].name, error, undo: undo)
         }
+        try clearJournal()
+    }
+
+    /// Marker first (disarms), then the copies.
+    static func clearJournal() throws {
+        let fm = FileManager.default
+        if fm.fileExists(atPath: journalMarker.path) { try fm.removeItem(at: journalMarker) }
+        if fm.fileExists(atPath: journalDirectory.path) { try fm.removeItem(at: journalDirectory) }
     }
 }
