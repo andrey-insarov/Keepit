@@ -164,7 +164,21 @@ final class RestorePlanTests: XCTestCase {
         try Data("old-settings".utf8).write(to: Storage.settingsURL)
         try FileManager.default.createDirectory(at: Storage.historyURL, withIntermediateDirectories: true)
         XCTAssertThrowsError(try RestoreCommit.writeFiles(templatesJSON: Data("new-templates".utf8), historyJSON: Data("new-history".utf8),
-                                                          settingsJSON: Data("new-settings".utf8)))
+                                                          settingsJSON: Data("new-settings".utf8))) {
+            guard case RestoreCommit.Failure.writeFailed(let name, _)? = $0 as? RestoreCommit.Failure else { return XCTFail("\($0)") }
+            XCTAssertEqual(name, "history.json")
+        }
+        XCTAssertEqual(try Data(contentsOf: Storage.templatesURL), Data("old-templates".utf8))
+        XCTAssertEqual(try Data(contentsOf: Storage.settingsURL), Data("old-settings".utf8))
+        // An existing file that cannot be read is not a missing file: the commit is refused before
+        // the first write, so the undo can never "put back" nothing over it.
+        try FileManager.default.setAttributes([.posixPermissions: 0o000], ofItemAtPath: Storage.templatesURL.path)
+        XCTAssertThrowsError(try RestoreCommit.writeFiles(templatesJSON: Data("new-templates".utf8), historyJSON: Data("new-history".utf8),
+                                                          settingsJSON: Data("new-settings".utf8))) {
+            guard case RestoreCommit.Failure.cannotReadPrevious(let name, _)? = $0 as? RestoreCommit.Failure else { return XCTFail("\($0)") }
+            XCTAssertEqual(name, "templates.json")
+        }
+        try FileManager.default.setAttributes([.posixPermissions: 0o644], ofItemAtPath: Storage.templatesURL.path)
         XCTAssertEqual(try Data(contentsOf: Storage.templatesURL), Data("old-templates".utf8))
         XCTAssertEqual(try Data(contentsOf: Storage.settingsURL), Data("old-settings".utf8))
         try FileManager.default.removeItem(at: Storage.historyURL)
@@ -177,7 +191,9 @@ final class RestorePlanTests: XCTestCase {
         try Vault.enable(password: SecureBuffer.of("pw")).zero()
         Storage.clearKey()
         XCTAssertThrowsError(try RestoreCommit.writeFiles(templatesJSON: Data("x".utf8), historyJSON: nil, settingsJSON: Data("y".utf8))) {
-            XCTAssertEqual($0 as? Storage.Failure, .locked)
+            guard case RestoreCommit.Failure.writeFailed(let name, let e)? = $0 as? RestoreCommit.Failure else { return XCTFail("\($0)") }
+            XCTAssertEqual(name, "templates.json")
+            XCTAssertEqual(e as? Storage.Failure, .locked)
         }
         XCTAssertEqual(try Data(contentsOf: Storage.templatesURL), Data("new-templates".utf8))
     }

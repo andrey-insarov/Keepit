@@ -116,25 +116,53 @@ extension ClipItem {
 /// The disk half of a restore: the three files written in one go, or none of them.
 /// `AppDelegate.commit(_:)` calls this first and assigns the live stores only when it returned.
 enum RestoreCommit {
-    enum Failure: LocalizedError, Equatable {
+    enum Failure: LocalizedError {
         case locked
+        /// An existing file could not be read before the first write; nothing was written.
+        case cannotReadPrevious(String, Error)
+        /// A write failed and the files written before it were put back.
+        case writeFailed(String, Error)
+        /// A write failed and putting a previous file back failed too: the data directory needs
+        /// a look (the file is named). Nothing in memory has changed; the next launch reloads
+        /// whatever is on disk.
+        case undoFailed(String, Error, undo: [(String, Error)])
+
         var errorDescription: String? {
             switch self {
             case .locked: return L("Restore cancelled: Keepit was locked meanwhile.")
+            case .cannotReadPrevious(let name, let e): return LF("Could not read the current %@ before replacing it: %@", name, e.localizedDescription)
+            case .writeFailed(let name, let e): return LF("Could not write %@: %@ — the previous files were kept.", name, e.localizedDescription)
+            case .undoFailed(let name, let e, let undo):
+                let list = undo.map { "\($0.0): \($0.1.localizedDescription)" }.joined(separator: "; ")
+                return LF("Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on.", name, e.localizedDescription, list)
             }
         }
     }
 
+    /// What was on disk before the commit: a missing file is not the same as one that could not be read.
+    enum Previous { case absent, bytes(Data) }
+
+    static func readPrevious(_ url: URL) throws -> Previous {
+        guard FileManager.default.fileExists(atPath: url.path) else { return .absent }
+        return .bytes(try Data(contentsOf: url))
+    }
+
     /// Write templates, history (nil → the file is removed: history is not kept on disk) and
-    /// settings. If any write fails, the files written so far are put back to their previous bytes
-    /// and the error is rethrown — nothing in memory has changed yet, so the app is where it was.
+    /// settings. Before the first write, every existing file is read in full; a read failure
+    /// cancels the commit untouched. If a write fails, the files written so far are put back to
+    /// their previous bytes (or removed, when there was none); a failure of that undo is reported
+    /// too, never swallowed. Nothing in memory has changed in any of these cases.
     static func writeFiles(templatesJSON: Data, historyJSON: Data?, settingsJSON: Data) throws {
-        let steps: [(url: URL, data: Data?, encrypt: Bool)] = [
-            (Storage.templatesURL, templatesJSON, true),
-            (Storage.historyURL, historyJSON, true),
-            (Storage.settingsURL, settingsJSON, false),
+        let steps: [(name: String, url: URL, data: Data?, encrypt: Bool)] = [
+            ("templates.json", Storage.templatesURL, templatesJSON, true),
+            ("history.json", Storage.historyURL, historyJSON, true),
+            ("settings.json", Storage.settingsURL, settingsJSON, false),
         ]
-        let previous = steps.map { try? Data(contentsOf: $0.url) }      // raw bytes as they are on disk
+        var previous: [Previous] = []
+        for s in steps {
+            do { previous.append(try readPrevious(s.url)) }
+            catch { throw Failure.cannotReadPrevious(s.name, error) }
+        }
         var done = 0
         do {
             for s in steps {
@@ -143,11 +171,17 @@ enum RestoreCommit {
                 done += 1
             }
         } catch {
+            var undo: [(String, Error)] = []
             for i in 0..<done {
-                if let bytes = previous[i] { try? Storage.writeRawNow(bytes, to: steps[i].url) }
-                else { try? Storage.removeNow(steps[i].url) }
+                do {
+                    switch previous[i] {
+                    case .bytes(let b): try Storage.writeRawNow(b, to: steps[i].url)
+                    case .absent: try Storage.removeNow(steps[i].url)
+                    }
+                } catch let e { undo.append((steps[i].name, e)) }
             }
-            throw error
+            if undo.isEmpty { throw Failure.writeFailed(steps[done].name, error) }
+            throw Failure.undoFailed(steps[done].name, error, undo: undo)
         }
     }
 }

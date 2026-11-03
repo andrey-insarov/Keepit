@@ -168,10 +168,16 @@ General → Backup → Restore…*; double-click on a `.keepit` file. All lead t
      again and the copy taken again, up to three times; after that the restore is cancelled with a
      message rather than replacing something the copy does not hold.
    - Commit: templates, history and settings are written to disk as one step
-     (`RestoreCommit.writeFiles`, throwing); if any write fails, the files written so far are put
-     back to their previous bytes and the error is shown — nothing in memory has moved. Only when
-     all three are on disk are the live stores assigned, then hot keys, menus and the Viewer
-     refreshed, then "Restore finished".
+     (`RestoreCommit.writeFiles`, throwing). Before the first write every existing file is read in
+     full — a file that is there but cannot be read cancels the commit untouched (it is not treated
+     as absent). If a write fails, the files written so far are put back to their previous bytes
+     (or removed, when there was none) and the error names the file; if that undo fails too, the
+     error says so and which files, never silently. Nothing in memory has moved in any of these
+     cases. Only when all three are on disk are the live stores assigned, then hot keys, menus and
+     the Viewer refreshed, then "Restore finished".
+     Known limit: this is undo-on-error, not crash-atomic — a process killed between the three
+     writes leaves the files mixed. A journal (copies of the three files plus a marker, replayed at
+     the next launch) would close that; it is a 3.x item, not in 3.0.
    - A lock at any point before the commit cancels the restore with a message: the stores were
      purged and reloaded and the plan is stale.
 7. **Settings** come back selectively. Never restored: `allowURLCommands`, `trustedURLSenders`,
@@ -216,7 +222,7 @@ Automatic tests (temporary folders, fakes where macOS is involved):
 - [ ] Restore opened with the phrase, vault off: password asked and vault created before anything is applied; cancel → data unchanged; "Keep This Phrase" → the backup's phrase unlocks the new vault.
 - [ ] Lock during any restore dialog → restore cancelled, stores untouched; rollback copy written off the main thread (progress panel stays responsive); Lock while the folder chooser is open, then choosing a folder → cancelled, no crash.
 - [ ] Data changing during the commit stage (paste from the menu while the rollback copy is being written) → the copy is taken again; the restored state is what the last copy holds; nothing recorded during the dialogs is lost on Merge.
-- [ ] Disk write failing during commit (history.json unwritable) → error shown, previous files intact, stores unchanged (`RestorePlanTests.testCommitWritesAllFilesOrPutsThePreviousOnesBack`).
+- [ ] Disk write failing during commit (history.json unwritable) → error names the file, previous files intact, stores unchanged; an existing but unreadable file → commit refused before any write (`RestorePlanTests.testCommitWritesAllFilesOrPutsThePreviousOnesBack`).
 - [ ] Trust settings never restored.
 - [ ] Every fixture in `Tests/KeepitTests/Fixtures` (v1 and v2) opens as its sidecar says.
 
