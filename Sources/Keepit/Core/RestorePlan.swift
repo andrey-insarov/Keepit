@@ -131,6 +131,9 @@ enum RestoreCommit {
         case cannotReadPrevious(String, Error)
         /// The journal could not be written; nothing was written.
         case cannotJournal(Error)
+        /// An armed journal is on disk: a previous restore's undo did not finish. It is never
+        /// discarded by a new commit — the launch replay owns it.
+        case journalArmed
         /// A write failed and the files written before it were put back.
         case writeFailed(String, Error)
         /// A write failed and putting a previous file back failed too: the data directory needs
@@ -142,6 +145,7 @@ enum RestoreCommit {
             case .locked: return L("Restore cancelled: Keepit was locked meanwhile.")
             case .cannotReadPrevious(let name, let e): return LF("Could not read the current %@ before replacing it: %@", name, e.localizedDescription)
             case .cannotJournal(let e): return LF("Could not prepare the undo copy of the current data: %@", e.localizedDescription)
+            case .journalArmed: return L("An earlier restore could not be undone completely. Quit and launch Keepit again so it can finish putting the data back.")
             case .writeFailed(let name, let e): return LF("Could not write %@: %@ — the previous files were kept.", name, e.localizedDescription)
             case .undoFailed(let name, let e, let undo):
                 let list = undo.map { "\($0.0): \($0.1.localizedDescription)" }.joined(separator: "; ")
@@ -177,18 +181,24 @@ enum RestoreCommit {
     }
 
     /// Copy the previous bytes of every existing file into the journal, then arm it with the marker.
-    /// Throws before anything is armed; a stale journal (crash while writing one) is replaced.
+    /// Throws before anything is armed. The copies are read on `Storage.ioQueue`, behind every save
+    /// queued so far, so the journal holds what the stores last wrote, not what was on disk a
+    /// moment earlier; the commit's own writes go through the same queue afterwards. An unarmed
+    /// journal (a crash while one was being written) is replaced; an armed one is never touched.
     static func writeJournal() throws {
         let fm = FileManager.default
+        if fm.fileExists(atPath: journalMarker.path) { throw Failure.journalArmed }
         if fm.fileExists(atPath: journalDirectory.path) { try fm.removeItem(at: journalDirectory) }
         try fm.createDirectory(at: journalDirectory, withIntermediateDirectories: true)
-        for name in names {
-            switch try readPrevious(liveURL(name)) {
-            case .absent: break
-            case .bytes(let b): try b.write(to: journalDirectory.appendingPathComponent(name), options: .atomic)
+        try Storage.ioQueue.sync {
+            for name in names {
+                switch try readPrevious(liveURL(name)) {
+                case .absent: break
+                case .bytes(let b): try b.write(to: journalDirectory.appendingPathComponent(name), options: .atomic)
+                }
             }
+            try Data("1".utf8).write(to: journalMarker, options: .atomic)
         }
-        try Data("1".utf8).write(to: journalMarker, options: .atomic)
     }
 
     /// Put every file back as the journal has it, then drop the journal. Idempotent. Errors are
@@ -240,7 +250,7 @@ enum RestoreCommit {
         for s in steps {
             do { _ = try readPrevious(s.url) } catch { throw Failure.cannotReadPrevious(s.name, error) }
         }
-        do { try writeJournal() } catch { throw Failure.cannotJournal(error) }
+        do { try writeJournal() } catch let e as Failure { throw e } catch { throw Failure.cannotJournal(error) }
         for s in steps {
             do {
                 if let data = s.data { try Storage.writeNow(data, to: s.url, encrypt: s.encrypt) }

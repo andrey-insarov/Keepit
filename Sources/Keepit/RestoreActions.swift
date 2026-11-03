@@ -190,6 +190,7 @@ extension AppDelegate {
     /// The transaction: the three files first, as one; the live stores only when they are on disk.
     /// A failed write leaves the files as they were and throws — nothing in memory has moved.
     func commit(_ plan: RestorePlan) throws {
+        history.flush(); templates.flush()          // pending debounced saves land first; the journal copies what they wrote
         let templatesJSON = try Storage.encoder.encode(plan.templates)
         let historyJSON = plan.settings.historySave ? try Storage.encoder.encode(plan.history) : nil
         let settingsJSON = try Storage.prettyEncoder.encode(plan.settings)

@@ -46,8 +46,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// No settings file yet → first launch (onboarding, login item).
     private let isFirstRun: Bool
 
-    /// A restore journal that could not be replayed at launch: shown once the app is up (the
-    /// journal stays on disk, so the next launch tries again).
+    /// A restore journal that could not be replayed at launch. The files are a mix of before and
+    /// after; working on them would write that mix back and the journal would be the only intact
+    /// copy. So the app explains and quits before any store is created (the journal stays on disk;
+    /// the next launch tries again).
     private var recoveryError: Error?
 
     override init() {
@@ -63,7 +65,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // MARK: - Lifecycle
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        if let e = recoveryError { Vault.error(e.localizedDescription) }
+        if let e = recoveryError {
+            Vault.error(LF("Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again.", e.localizedDescription))
+            exit(1)                                   // not terminate(): applicationWillTerminate would save over the mixed files
+        }
         NSApp.setActivationPolicy(.accessory)
         buildMainMenu()
 

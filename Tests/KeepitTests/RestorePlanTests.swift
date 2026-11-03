@@ -259,6 +259,34 @@ final class RestorePlanTests: XCTestCase {
         XCTAssertFalse(try RestoreCommit.recoverIfNeeded())
     }
 
+    // The journal is taken behind every save already queued on Storage.ioQueue: what the stores
+    // last wrote, not what happened to be on disk a moment earlier.
+    func testJournalWaitsForQueuedSaves() throws {
+        try FileManager.default.createDirectory(at: Storage.directory, withIntermediateDirectories: true)
+        try Data("older".utf8).write(to: Storage.templatesURL)
+        try Data("older".utf8).write(to: Storage.settingsURL)
+        Storage.saveEncoded(Data("latest".utf8), to: Storage.templatesURL, encrypt: false, background: true)   // queued, not yet landed
+        try RestoreCommit.writeJournal()
+        XCTAssertEqual(try Data(contentsOf: RestoreCommit.journalDirectory.appendingPathComponent("templates.json")), Data("latest".utf8))
+        try RestoreCommit.clearJournal()
+    }
+
+    // An armed journal belongs to the launch replay: a new commit never discards it.
+    func testArmedJournalIsNeverReplacedByANewCommit() throws {
+        try FileManager.default.createDirectory(at: Storage.directory, withIntermediateDirectories: true)
+        try Data("precious".utf8).write(to: Storage.templatesURL)
+        try Data("s".utf8).write(to: Storage.settingsURL)
+        try RestoreCommit.writeJournal()                                     // armed, as if a replay had failed
+        try Data("mixed".utf8).write(to: Storage.templatesURL)
+        XCTAssertThrowsError(try RestoreCommit.writeFiles(templatesJSON: Data("new".utf8), historyJSON: nil, settingsJSON: Data("new".utf8))) {
+            guard case RestoreCommit.Failure.journalArmed? = $0 as? RestoreCommit.Failure else { return XCTFail("\($0)") }
+        }
+        XCTAssertEqual(try Data(contentsOf: Storage.templatesURL), Data("mixed".utf8))                 // nothing written
+        XCTAssertEqual(try Data(contentsOf: RestoreCommit.journalDirectory.appendingPathComponent("templates.json")), Data("precious".utf8))
+        XCTAssertTrue(try RestoreCommit.recoverIfNeeded())                                              // the replay still can
+        XCTAssertEqual(try Data(contentsOf: Storage.templatesURL), Data("precious".utf8))
+    }
+
     func testTrimmedIsTheStoreRule() {
         var s = settings(historyMax: 2)
         s.historyImageMax = 1

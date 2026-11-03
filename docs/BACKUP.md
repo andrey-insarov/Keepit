@@ -175,15 +175,19 @@ General → Backup → Restore…*; double-click on a `.keepit` file. All lead t
      error says so and which files, never silently. Nothing in memory has moved in any of these
      cases. Only when all three are on disk are the live stores assigned, then hot keys, menus and
      the Viewer refreshed, then "Restore finished".
-     Crash safety — the **restore journal**: before the first write, the previous bytes of every
-     existing file are copied into `restore-journal/` and a marker `commit` is written last (arms
-     it). After the three writes the marker is removed, then the journal. At launch, before any
+     Crash safety — the **restore journal**: the stores are flushed, then — on `Storage.ioQueue`,
+     behind every save queued so far, so the copies are what the stores last wrote — the previous
+     bytes of every existing file are copied into `restore-journal/` and a marker `commit` is
+     written last (arms it). An armed journal is never replaced by a new commit (the commit is
+     refused); only an unarmed one, left by a crash while it was being written, is. After the three writes the marker is removed, then the journal. At launch, before any
      store is read, an armed journal is replayed — every copied file put back, every file that had
      no copy removed — and only then deleted; a journal without the marker was never armed and is
      just deleted. Replay is idempotent (a file already holding the journal's bytes is left alone,
      so an immutable or already-correct file does not stop it) and a replay that fails on one
-     file leaves the journal armed, reports the file at launch, and is tried again next time. The
-     same replay is the undo of a failed write. Tests interrupt after the journal and after each
+     file leaves the journal armed and is tried again next time; until it succeeds Keepit does not
+     run on the mixed files — at launch it names the file, changes nothing and quits (so no save,
+     and no new restore, can overwrite the journal's only intact copy). The same replay is the undo
+     of a failed write. Tests interrupt after the journal and after each
      of the three writes, during a replay, and while the journal itself was being written.
    - A lock at any point before the commit cancels the restore with a message: the stores were
      purged and reloaded and the plan is stale.
@@ -230,7 +234,8 @@ Automatic tests (temporary folders, fakes where macOS is involved):
 - [ ] Lock during any restore dialog → restore cancelled, stores untouched; rollback copy written off the main thread (progress panel stays responsive); Lock while the folder chooser is open, then choosing a folder → cancelled, no crash.
 - [ ] Data changing during the commit stage (paste from the menu while the rollback copy is being written) → the copy is taken again; the restored state is what the last copy holds; nothing recorded during the dialogs is lost on Merge.
 - [ ] Disk write failing during commit (history.json unwritable) → error names the file, previous files intact, stores unchanged; an existing but unreadable file → commit refused before any write (`RestorePlanTests.testCommitWritesAllFilesOrPutsThePreviousOnesBack`).
-- [ ] Process killed between the three writes → next launch puts the previous files back and reports nothing; killed during the replay → replayed again; journal without marker → removed, files untouched (`RestorePlanTests.testInterruptedCommitIsReplayedAtLaunch`). Manual: `kill -9` Keepit right after "Saving a copy…" closes, relaunch, data as before the restore.
+- [ ] Process killed between the three writes → next launch puts the previous files back and reports nothing; killed during the replay → replayed again; journal without marker → removed, files untouched (`RestorePlanTests.testInterruptedCommitIsReplayedAtLaunch`); the journal holds the last queued save (`testJournalWaitsForQueuedSaves`); an armed journal is never discarded by a new commit (`testArmedJournalIsNeverReplacedByANewCommit`).
+- [ ] Replay failing at launch (e.g. `chflags uchg history.json`) → alert naming the file, Keepit quits without writing; after `chflags nouchg` the next launch replays and runs normally. Manual: `kill -9` Keepit right after "Saving a copy…" closes, relaunch, data as before the restore.
 - [ ] Trust settings never restored.
 - [ ] Every fixture in `Tests/KeepitTests/Fixtures` (v1 and v2) opens as its sidecar says.
 
