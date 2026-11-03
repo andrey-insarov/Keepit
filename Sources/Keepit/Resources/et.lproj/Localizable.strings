@@ -200,13 +200,13 @@
 "All Keepit data has been deleted." = "Kõik Keepiti andmed on kustutatud.";
 "Finish by dragging Keepit from the Applications folder to the Trash." = "Lõpetamiseks lohista Keepit rakenduste kaustast prügikasti.";
 "Protect your clipboard history with a password?" = "Kas kaitsta lõikelaua ajalugu parooliga?";
-"Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts. You will also get a 24-word recovery phrase in case you forget the password." = "Keepit saab ajaloo ja mallid krüpteerida (AES-256) ning küsida käivitumisel parooli või Touch ID-d. Saad ka 24-sõnalise taastefraasi juhuks, kui parooli unustad.";
+"Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts." = "Keepit saab ajaloo ja mallid krüpteerida (AES-256) ning küsida käivitumisel parooli või Touch ID-d.";
 "Set Password…" = "Määra parool…";
 "Not Now" = "Mitte praegu";
 "Your data will not be encrypted" = "Sinu andmeid ei krüpteerita";
 "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "Ilma selleta salvestab Keepit endiselt ajalugu ja kopeerib üksusi lõikelauale, kuid ei saa saata ⌘V aktiivsesse rakendusse ega avada menüüd tekstikursori juures.\n\nSüsteemiseaded → Privaatsus ja turvalisus → Ligipääsetavus → luba Keepit (System Settings → Privacy & Security → Accessibility).";
 "Keepit removes its Accessibility permission." = "Keepit eemaldab oma ligipääsetavuse loa.";
-"Also unlock with Touch ID (the password stays as fallback)" = "Ava ka Touch ID-ga (parool jääb varuvariandiks)";
+"Also unlock with Touch ID" = "Ava ka Touch ID-ga";
 "Search history…" = "Otsi ajaloost…";
 "(no matches)" = "(vasteid pole)";
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "Touch ID pole praegu kasutatav (kaas suletud, klaviatuur unerežiimis või sõrmejälge pole registreeritud). Keepit lülitab selle automaatselt sisse järgmisel parooliga avamisel.";
@@ -406,3 +406,6 @@
 "an unknown application" = "tundmatu rakendus";
 "“%@” wants Keepit to run a command" = "„%@“ soovib, et Keepit käivitaks käsu";
 "%@\n\nA web page can open such links. Allow it only if you expect this." = "%@\n\nSellise lingi võib avada ka veebileht. Lubage ainult siis, kui ootasite seda.";
+"On-screen keyboard" = "Ekraaniklaviatuur";
+"On-screen keyboard: shuffled keys, hidden from screenshots and screen recording" = "Ekraaniklaviatuur: segatud klahvid, peidetud ekraanipiltide ja -salvestuse eest";
+"Shuffle" = "Sega";

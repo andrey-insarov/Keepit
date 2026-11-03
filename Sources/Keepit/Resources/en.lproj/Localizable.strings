@@ -208,13 +208,13 @@
 
 /* First run */
 "Protect your clipboard history with a password?" = "Protect your clipboard history with a password?";
-"Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts. You will also get a 24-word recovery phrase in case you forget the password." = "Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts. You will also get a 24-word recovery phrase in case you forget the password.";
+"Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts." = "Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts.";
 "Set Password…" = "Set Password…";
 "Not Now" = "Not Now";
 "Your data will not be encrypted" = "Your data will not be encrypted";
 "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit.";
 "Keepit removes its Accessibility permission." = "Keepit removes its Accessibility permission.";
-"Also unlock with Touch ID (the password stays as fallback)" = "Also unlock with Touch ID (the password stays as fallback)";
+"Also unlock with Touch ID" = "Also unlock with Touch ID";
 
 "Search history…" = "Search history…";
 "(no matches)" = "(no matches)";
@@ -455,3 +455,7 @@
 "an unknown application" = "an unknown application";
 "“%@” wants Keepit to run a command" = "“%@” wants Keepit to run a command";
 "%@\n\nA web page can open such links. Allow it only if you expect this." = "%@\n\nA web page can open such links. Allow it only if you expect this.";
+
+"On-screen keyboard" = "On-screen keyboard";
+"On-screen keyboard: shuffled keys, hidden from screenshots and screen recording" = "On-screen keyboard: shuffled keys, hidden from screenshots and screen recording";
+"Shuffle" = "Shuffle";

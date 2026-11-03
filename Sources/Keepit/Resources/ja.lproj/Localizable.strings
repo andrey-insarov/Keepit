@@ -200,13 +200,13 @@
 "All Keepit data has been deleted." = "Keepit のすべてのデータを削除しました。";
 "Finish by dragging Keepit from the Applications folder to the Trash." = "最後に、アプリケーションフォルダから Keepit をゴミ箱にドラッグしてください。";
 "Protect your clipboard history with a password?" = "クリップボード履歴をパスワードで保護しますか？";
-"Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts. You will also get a 24-word recovery phrase in case you forget the password." = "Keepit は履歴とテンプレートを暗号化（AES-256）し、起動時にパスワードまたは Touch ID を求めることができます。パスワードを忘れた場合に備えて 24 語のリカバリーフレーズも発行されます。";
+"Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts." = "Keepit は履歴とテンプレートを暗号化（AES-256）し、起動時にパスワードまたは Touch ID を求めることができます。";
 "Set Password…" = "パスワードを設定…";
 "Not Now" = "後で";
 "Your data will not be encrypted" = "データは暗号化されません";
 "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "許可がなくても Keepit は履歴を記録し、項目をクリップボードにコピーできますが、アクティブなアプリに ⌘V を送ったり、テキストカーソル位置にメニューを表示したりできません。\n\nシステム設定 → プライバシーとセキュリティ → アクセシビリティ → Keepit を有効にしてください。";
 "Keepit removes its Accessibility permission." = "Keepit がアクセシビリティの許可を削除します。";
-"Also unlock with Touch ID (the password stays as fallback)" = "Touch ID でもロック解除（パスワードは代替手段として残ります）";
+"Also unlock with Touch ID" = "Touch ID でもロック解除";
 "Search history…" = "履歴を検索…";
 "(no matches)" = "(一致なし)";
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "現在 Touch ID を使用できません（ふたが閉じている、キーボードがスリープ中、または指紋が未登録）。次回パスワードでロック解除したときに Keepit が自動的に有効にします。";
@@ -406,3 +406,6 @@
 "an unknown application" = "不明なアプリケーション";
 "“%@” wants Keepit to run a command" = "“%@”が Keepit にコマンドの実行を求めています";
 "%@\n\nA web page can open such links. Allow it only if you expect this." = "%@\n\nこのようなリンクは Web ページからも開けます。心当たりがある場合のみ許可してください。";
+"On-screen keyboard" = "スクリーンキーボード";
+"On-screen keyboard: shuffled keys, hidden from screenshots and screen recording" = "スクリーンキーボード：キーはシャッフルされ、スクリーンショットや画面収録には写りません";
+"Shuffle" = "シャッフル";

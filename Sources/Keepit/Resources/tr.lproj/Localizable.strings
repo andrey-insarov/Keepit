@@ -200,13 +200,13 @@
 "All Keepit data has been deleted." = "Tüm Keepit verileri silindi.";
 "Finish by dragging Keepit from the Applications folder to the Trash." = "Bitirmek için Keepit'i Uygulamalar klasöründen Çöp Sepeti'ne sürükleyin.";
 "Protect your clipboard history with a password?" = "Pano geçmişiniz bir parolayla korunsun mu?";
-"Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts. You will also get a 24-word recovery phrase in case you forget the password." = "Keepit geçmişinizi ve şablonlarınızı şifreleyebilir (AES-256) ve başlarken parola — veya Touch ID — isteyebilir. Parolayı unutmanız durumunda 24 sözcüklük bir kurtarma ifadesi de alırsınız.";
+"Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts." = "Keepit geçmişinizi ve şablonlarınızı şifreleyebilir (AES-256) ve başlarken parola — veya Touch ID — isteyebilir.";
 "Set Password…" = "Parola Belirle…";
 "Not Now" = "Şimdi Değil";
 "Your data will not be encrypted" = "Verileriniz şifrelenmeyecek";
 "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "Bu izin olmadan Keepit yine de geçmişi kaydeder ve öğeleri panoya kopyalar, ancak etkin uygulamaya ⌘V gönderemez veya menüyü metin imlecinde açamaz.\n\nSistem Ayarları → Gizlilik ve Güvenlik → Erişilebilirlik → Keepit'i etkinleştirin.";
 "Keepit removes its Accessibility permission." = "Keepit, Erişilebilirlik iznini kaldırıyor.";
-"Also unlock with Touch ID (the password stays as fallback)" = "Touch ID ile de kilidi aç (parola yedek olarak kalır)";
+"Also unlock with Touch ID" = "Touch ID ile de kilidi aç";
 "Search history…" = "Geçmişte ara…";
 "(no matches)" = "(eşleşme yok)";
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "Touch ID şu anda kullanılamıyor (kapak kapalı, klavye uykuda veya parmak izi kayıtlı değil). Keepit, parolayla bir sonraki kilit açışınızda bunu otomatik olarak etkinleştirecek.";
@@ -406,3 +406,6 @@
 "an unknown application" = "bilinmeyen bir uygulama";
 "“%@” wants Keepit to run a command" = "“%@” Keepit’in bir komut çalıştırmasını istiyor";
 "%@\n\nA web page can open such links. Allow it only if you expect this." = "%@\n\nBu tür bağlantıları bir web sayfası da açabilir. Yalnızca bunu bekliyorsanız izin verin.";
+"On-screen keyboard" = "Ekran klavyesi";
+"On-screen keyboard: shuffled keys, hidden from screenshots and screen recording" = "Ekran klavyesi: karışık tuşlar, ekran görüntüsü ve ekran kaydında görünmez";
+"Shuffle" = "Karıştır";

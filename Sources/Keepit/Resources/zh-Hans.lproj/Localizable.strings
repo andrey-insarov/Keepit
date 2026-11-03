@@ -200,13 +200,13 @@
 "All Keepit data has been deleted." = "Keepit 的全部数据已删除。";
 "Finish by dragging Keepit from the Applications folder to the Trash." = "最后请将 Keepit 从“应用程序”文件夹拖到废纸篓。";
 "Protect your clipboard history with a password?" = "使用密码保护剪贴板历史记录？";
-"Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts. You will also get a 24-word recovery phrase in case you forget the password." = "Keepit 可以加密历史记录和模板（AES-256），并在启动时要求输入密码或使用 Touch ID。您还将获得 24 词恢复助记词，以防忘记密码。";
+"Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts." = "Keepit 可以加密历史记录和模板（AES-256），并在启动时要求输入密码或使用 Touch ID。";
 "Set Password…" = "设置密码…";
 "Not Now" = "暂不";
 "Your data will not be encrypted" = "您的数据将不会被加密";
 "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "没有该权限，Keepit 仍能记录历史并将项目复制到剪贴板，但无法向当前应用发送 ⌘V，也无法在文本光标处显示菜单。\n\n系统设置 → 隐私与安全性 → 辅助功能 → 启用 Keepit。";
 "Keepit removes its Accessibility permission." = "Keepit 正在移除其辅助功能权限。";
-"Also unlock with Touch ID (the password stays as fallback)" = "同时使用 Touch ID 解锁（密码仍可作为备用）";
+"Also unlock with Touch ID" = "同时使用 Touch ID 解锁";
 "Search history…" = "搜索历史记录…";
 "(no matches)" = "(无匹配项)";
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "Touch ID 目前不可用（合盖、键盘休眠或未录入指纹）。下次使用密码解锁时，Keepit 会自动启用它。";
@@ -406,3 +406,6 @@
 "an unknown application" = "未知应用";
 "“%@” wants Keepit to run a command" = "“%@”请求 Keepit 执行命令";
 "%@\n\nA web page can open such links. Allow it only if you expect this." = "%@\n\n网页也能打开此类链接。仅在您预期此操作时允许。";
+"On-screen keyboard" = "屏幕键盘";
+"On-screen keyboard: shuffled keys, hidden from screenshots and screen recording" = "屏幕键盘：按键随机排列，不会出现在截图和屏幕录制中";
+"Shuffle" = "打乱";

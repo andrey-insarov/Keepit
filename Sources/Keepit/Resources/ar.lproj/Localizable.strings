@@ -200,13 +200,13 @@
 "All Keepit data has been deleted." = "تم حذف جميع بيانات Keepit.";
 "Finish by dragging Keepit from the Applications folder to the Trash." = "أكمل بسحب Keepit من مجلد التطبيقات إلى سلة المهملات.";
 "Protect your clipboard history with a password?" = "هل تريد حماية سجل الحافظة بكلمة مرور؟";
-"Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts. You will also get a 24-word recovery phrase in case you forget the password." = "يمكن لـ Keepit تشفير السجل والقوالب (AES-256) وطلب كلمة المرور — أو Touch ID — عند بدء التشغيل. ستحصل أيضًا على عبارة استرداد من 24 كلمة تحسبًا لنسيان كلمة المرور.";
+"Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts." = "يمكن لـ Keepit تشفير السجل والقوالب (AES-256) وطلب كلمة المرور — أو Touch ID — عند بدء التشغيل.";
 "Set Password…" = "تعيين كلمة مرور…";
 "Not Now" = "ليس الآن";
 "Your data will not be encrypted" = "لن يتم تشفير بياناتك";
 "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "بدونه يستمر Keepit في تسجيل السجل ونسخ العناصر إلى الحافظة، لكنه لا يستطيع إرسال ⌘V إلى التطبيق النشط أو وضع القائمة عند مؤشر النص.\n\nإعدادات النظام ← الخصوصية والأمن ← تسهيلات الاستخدام ← تفعيل Keepit.";
 "Keepit removes its Accessibility permission." = "يزيل Keepit إذن تسهيلات الاستخدام الخاص به.";
-"Also unlock with Touch ID (the password stays as fallback)" = "إلغاء القفل أيضًا عبر Touch ID (تبقى كلمة المرور كبديل)";
+"Also unlock with Touch ID" = "إلغاء القفل أيضًا عبر Touch ID";
 "Search history…" = "البحث في السجل…";
 "(no matches)" = "(لا نتائج)";
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "لا يمكن استخدام Touch ID الآن (الغطاء مغلق أو لوحة المفاتيح في وضع السكون أو لا توجد بصمة مسجلة). سيفعّله Keepit تلقائيًا عند فتح القفل بكلمة المرور في المرة القادمة.";
@@ -406,3 +406,6 @@
 "an unknown application" = "تطبيق غير معروف";
 "“%@” wants Keepit to run a command" = "يطلب ”%@“ من Keepit تنفيذ أمر";
 "%@\n\nA web page can open such links. Allow it only if you expect this." = "%@\n\nيمكن لصفحة ويب فتح مثل هذه الروابط. اسمح بذلك فقط إذا كنت تتوقعه.";
+"On-screen keyboard" = "لوحة مفاتيح على الشاشة";
+"On-screen keyboard: shuffled keys, hidden from screenshots and screen recording" = "لوحة مفاتيح على الشاشة: مفاتيح مبعثرة، مخفية عن لقطات الشاشة وتسجيلها";
+"Shuffle" = "بعثرة";

@@ -200,13 +200,13 @@
 "All Keepit data has been deleted." = "Se han eliminado todos los datos de Keepit.";
 "Finish by dragging Keepit from the Applications folder to the Trash." = "Para terminar, arrastra Keepit de la carpeta Aplicaciones a la Papelera.";
 "Protect your clipboard history with a password?" = "¿Proteger el historial del portapapeles con una contraseña?";
-"Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts. You will also get a 24-word recovery phrase in case you forget the password." = "Keepit puede cifrar el historial y las plantillas (AES-256) y pedir la contraseña —o Touch ID— al iniciarse. También recibirás una frase de recuperación de 24 palabras por si olvidas la contraseña.";
+"Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts." = "Keepit puede cifrar el historial y las plantillas (AES-256) y pedir la contraseña —o Touch ID— al iniciarse.";
 "Set Password…" = "Definir contraseña…";
 "Not Now" = "Ahora no";
 "Your data will not be encrypted" = "Tus datos no se cifrarán";
 "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "Sin él, Keepit sigue registrando el historial y copiando elementos al portapapeles, pero no puede enviar ⌘V a la app activa ni colocar el menú en el cursor de texto.\n\nAjustes del Sistema → Privacidad y seguridad → Accesibilidad → activar Keepit.";
 "Keepit removes its Accessibility permission." = "Keepit elimina su permiso de Accesibilidad.";
-"Also unlock with Touch ID (the password stays as fallback)" = "Desbloquear también con Touch ID (la contraseña sigue como alternativa)";
+"Also unlock with Touch ID" = "Desbloquear también con Touch ID";
 "Search history…" = "Buscar en el historial…";
 "(no matches)" = "(sin coincidencias)";
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "Touch ID no se puede usar ahora (tapa cerrada, teclado en reposo o sin huella registrada). Keepit lo activará automáticamente la próxima vez que desbloquees con la contraseña.";
@@ -406,3 +406,6 @@
 "an unknown application" = "una aplicación desconocida";
 "“%@” wants Keepit to run a command" = "«%@» quiere que Keepit ejecute un comando";
 "%@\n\nA web page can open such links. Allow it only if you expect this." = "%@\n\nUna página web puede abrir estos enlaces. Permítalo solo si lo esperaba.";
+"On-screen keyboard" = "Teclado en pantalla";
+"On-screen keyboard: shuffled keys, hidden from screenshots and screen recording" = "Teclado en pantalla: teclas mezcladas, oculto para capturas y grabación de pantalla";
+"Shuffle" = "Mezclar";

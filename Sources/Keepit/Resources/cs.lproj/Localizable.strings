@@ -200,13 +200,13 @@
 "All Keepit data has been deleted." = "Všechna data Keepit byla smazána.";
 "Finish by dragging Keepit from the Applications folder to the Trash." = "Dokončete přetažením Keepit ze složky Aplikace do Koše.";
 "Protect your clipboard history with a password?" = "Chránit historii schránky heslem?";
-"Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts. You will also get a 24-word recovery phrase in case you forget the password." = "Keepit může historii a šablony šifrovat (AES-256) a při spuštění vyžadovat heslo — nebo Touch ID. Dostanete také frázi pro obnovení o 24 slovech pro případ, že heslo zapomenete.";
+"Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts." = "Keepit může historii a šablony šifrovat (AES-256) a při spuštění vyžadovat heslo — nebo Touch ID.";
 "Set Password…" = "Nastavit heslo…";
 "Not Now" = "Teď ne";
 "Your data will not be encrypted" = "Vaše data nebudou šifrována";
 "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "Bez něj Keepit stále zaznamenává historii a kopíruje položky do schránky, ale nemůže odeslat ⌘V aktivní aplikaci ani umístit nabídku k textovému kurzoru.\n\nNastavení systému → Soukromí a zabezpečení → Zpřístupnění → zapněte Keepit.";
 "Keepit removes its Accessibility permission." = "Keepit odstraňuje své oprávnění Zpřístupnění.";
-"Also unlock with Touch ID (the password stays as fallback)" = "Odemykat také pomocí Touch ID (heslo zůstává jako záloha)";
+"Also unlock with Touch ID" = "Odemykat také pomocí Touch ID";
 "Search history…" = "Hledat v historii…";
 "(no matches)" = "(žádné shody)";
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "Touch ID teď nelze použít (zavřené víko, klávesnice spí nebo není zaregistrován otisk). Keepit ho zapne automaticky při příštím odemknutí heslem.";
@@ -406,3 +406,6 @@
 "an unknown application" = "neznámá aplikace";
 "“%@” wants Keepit to run a command" = "„%@“ žádá Keepit o provedení příkazu";
 "%@\n\nA web page can open such links. Allow it only if you expect this." = "%@\n\nTakový odkaz může otevřít i webová stránka. Povolte jen tehdy, pokud jste to čekali.";
+"On-screen keyboard" = "Klávesnice na obrazovce";
+"On-screen keyboard: shuffled keys, hidden from screenshots and screen recording" = "Klávesnice na obrazovce: zamíchané klávesy, skrytá před snímky a nahráváním obrazovky";
+"Shuffle" = "Zamíchat";

@@ -200,13 +200,13 @@
 "All Keepit data has been deleted." = "Visi Keepit dati ir dzēsti.";
 "Finish by dragging Keepit from the Applications folder to the Trash." = "Pabeidziet, velkot Keepit no mapes Lietotnes uz atkritni.";
 "Protect your clipboard history with a password?" = "Aizsargāt starpliktuves vēsturi ar paroli?";
-"Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts. You will also get a 24-word recovery phrase in case you forget the password." = "Keepit var šifrēt vēsturi un veidnes (AES-256) un palaižot prasīt paroli — vai Touch ID. Jūs saņemsiet arī 24 vārdu atkopšanas frāzi gadījumam, ja aizmirstat paroli.";
+"Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts." = "Keepit var šifrēt vēsturi un veidnes (AES-256) un palaižot prasīt paroli — vai Touch ID.";
 "Set Password…" = "Iestatīt paroli…";
 "Not Now" = "Ne tagad";
 "Your data will not be encrypted" = "Jūsu dati netiks šifrēti";
 "Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "Bez tās Keepit joprojām ieraksta vēsturi un kopē vienumus starpliktuvē, bet nevar nosūtīt ⌘V aktīvajai lietotnei vai atvērt izvēlni pie teksta kursora.\n\nSistēmas iestatījumi → Privātums un drošība → Pieejamība → ieslēdziet Keepit (System Settings → Privacy & Security → Accessibility).";
 "Keepit removes its Accessibility permission." = "Keepit noņem savu pieejamības atļauju.";
-"Also unlock with Touch ID (the password stays as fallback)" = "Atbloķēt arī ar Touch ID (parole paliek kā rezerves variants)";
+"Also unlock with Touch ID" = "Atbloķēt arī ar Touch ID";
 "Search history…" = "Meklēt vēsturē…";
 "(no matches)" = "(nav atbilstību)";
 "Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password." = "Touch ID pašlaik nav izmantojams (aizvērts vāks, tastatūra guļ vai nav reģistrēts pirksta nospiedums). Keepit to ieslēgs automātiski nākamajā atbloķēšanā ar paroli.";
@@ -406,3 +406,6 @@
 "an unknown application" = "nezināma lietotne";
 "“%@” wants Keepit to run a command" = "“%@” vēlas, lai Keepit izpilda komandu";
 "%@\n\nA web page can open such links. Allow it only if you expect this." = "%@\n\nŠādu saiti var atvērt arī tīmekļa lapa. Atļaujiet tikai tad, ja to gaidījāt.";
+"On-screen keyboard" = "Ekrāna tastatūra";
+"On-screen keyboard: shuffled keys, hidden from screenshots and screen recording" = "Ekrāna tastatūra: sajaukti taustiņi, neredzama ekrānuzņēmumos un ekrāna ierakstā";
+"Shuffle" = "Sajaukt";

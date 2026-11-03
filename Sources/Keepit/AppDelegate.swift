@@ -120,8 +120,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         a.alertStyle = .informational
         a.icon = NSImage(systemSymbolName: "lock.shield", accessibilityDescription: nil)
         a.messageText = L("Protect your clipboard history with a password?")
-        a.informativeText = L("Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts. You will also get a 24-word recovery phrase in case you forget the password.")
-        let touchID = NSButton(checkboxWithTitle: L("Also unlock with Touch ID (the password stays as fallback)"), target: nil, action: nil)
+        a.informativeText = L("Keepit can encrypt your history and templates (AES-256) and ask for the password — or Touch ID — when it starts.")
+        let touchID = NSButton(checkboxWithTitle: L("Also unlock with Touch ID"), target: nil, action: nil)
         // Always offered: Touch ID on a closed MacBook or a sleeping Magic Keyboard reports "not available"
         // for a moment, and the key is simply stored later, at the next password unlock.
         touchID.state = BiometricUnlock.hasSensor ? .on : .off
