@@ -58,6 +58,11 @@ Keepit needs the Accessibility permission to paste for you; without it, chosen i
 ## Keywords (100 chars, comma-separated)
 clipboard,history,paste,copy,snippets,templates,manager,queue,text expander,productivity
 
+## What's new (version 2.13.1)
+• keepit:// automation: a browser is always asked, each other app is asked once and can be trusted; a malformed URL no longer stops the app.
+• On-screen keyboard: shuffled keys, no keyboard events for anything to log.
+• Settings → Menu: choose how many recent items the history menu lists.
+
 ## What's new (version 2.13.0)
 • On-screen keyboard for the password: shuffled keys, no keyboard events for anything to log.
 • Settings → Menu: choose how many recent items the history menu lists.

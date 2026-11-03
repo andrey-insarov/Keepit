@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## 2.13.1 — 2026-11-03
+
+Follow-ups from the second review pass; the reviewer has no further findings.
 
 - `keepit://`: a URL with a repeated parameter name (`?text=a&text=b`) crashed the handler; it is now refused. Senders are no longer trusted just for being identifiable: the first state-changing command from each app asks, *Always Allow* puts the app on a trusted list (Settings → Advanced → *Forget Trusted Apps* clears it); a browser or an unidentified sender asks every time. The sender PID comes from `keySenderPIDAttr`
 - `keepit://`: a browser, or an unidentified sender, is never treated as trusted — even if its bundle id was added to the list before the app registered itself as an https:// handler
