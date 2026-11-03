@@ -156,6 +156,13 @@ else: use the pause or the ignore list for such apps, and delete the item from t
   readable is in memory until you unlock again.</li>
 <li><strong>Password strength</strong>: the password dialog shows an entropy estimate and explains it; Keepit does
   not enforce a minimum, because the recovery phrase and Touch ID are the usual way in.</li>
+<li><strong>On-screen keyboard</strong>: the keyboard button next to the password field opens a small panel for
+  entering the password with the mouse. Its keys are shuffled each time it opens (and on <em>Shuffle</em>),
+  the panel is excluded from screen capture (<code>NSWindow.sharingType = .none</code> — screenshots, screen
+  recording and screen sharing do not show it), and each click goes straight into the locked
+  buffer without generating a key event, so a keylogger sees nothing. It does not protect against a
+  person looking at the screen, and the capture exclusion is a promise macOS makes, not one Keepit
+  can verify.</li>
 <li><strong>Wrong attempts</strong>: after several wrong passwords Keepit backs off with increasing delays, and
   after too many it quits (at launch) or stays locked.</li>
 </ul>

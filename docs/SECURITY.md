@@ -82,6 +82,13 @@ Turn on *Require password at launch* and the history and templates files are enc
   readable is in memory until you unlock again.
 - **Password strength**: the password dialog shows an entropy estimate and explains it; Keepit does
   not enforce a minimum, because the recovery phrase and Touch ID are the usual way in.
+- **On-screen keyboard**: the keyboard button next to the password field opens a small panel for
+  entering the password with the mouse. Its keys are shuffled each time it opens (and on *Shuffle*),
+  the panel is excluded from screen capture (`NSWindow.sharingType = .none` — screenshots, screen
+  recording and screen sharing do not show it), and each click goes straight into the locked
+  buffer without generating a key event, so a keylogger sees nothing. It does not protect against a
+  person looking at the screen, and the capture exclusion is a promise macOS makes, not one Keepit
+  can verify.
 - **Wrong attempts**: after several wrong passwords Keepit backs off with increasing delays, and
   after too many it quits (at launch) or stays locked.
 

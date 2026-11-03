@@ -312,7 +312,10 @@ when the screen locks or the Mac sleeps.
 ![Setting the password: layout indicator and strength meter](site/img/guide/set-password.png)
 
 The password dialogs show the current keyboard layout and warn about Caps Lock, so a rejected
-password is rarely a mystery. At launch, and after a lock, Keepit asks for the password (or Touch ID);
+password is rarely a mystery. The keyboard button next to the field opens an **on-screen keyboard**
+for typing the password with the mouse: its keys are shuffled every time it opens, it is invisible to
+screenshots, screen recording and screen sharing, and the clicks never pass through the system as
+key presses — for a Mac you do not fully trust, or one that is being screen-shared. At launch, and after a lock, Keepit asks for the password (or Touch ID);
 *Recovery Access…* takes the 24-word phrase instead — see [Recovery phrase](#recovery-phrase).
 
 ![Unlocking at launch: password, Quit, or the recovery phrase](site/img/guide/unlock.png)

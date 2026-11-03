@@ -304,14 +304,30 @@ enum Vault {
             let indicatorHeight: CGFloat = 18
             let meterHeight: CGFloat = confirm ? 40 : 0
             let boxHeight: CGFloat = indicatorHeight + 24 + (confirm ? 6 + meterHeight + 6 + 24 : 0)
-            let f1 = SecurePasswordField(frame: NSRect(x: 0, y: boxHeight - indicatorHeight - 24, width: width, height: 24))
+            // The first field leaves room for the on-screen keyboard button; the keyboard types into
+            // whichever of the two fields has focus.
+            let kbWidth: CGFloat = 24, kbGap: CGFloat = 4
+            let f1 = SecurePasswordField(frame: NSRect(x: 0, y: boxHeight - indicatorHeight - 24, width: width - kbWidth - kbGap, height: 24))
             let f2 = SecurePasswordField(frame: NSRect(x: 0, y: 0, width: width, height: 24))
+            let kb = NSButton(frame: NSRect(x: width - kbWidth, y: f1.frame.minY, width: kbWidth, height: 24))
+            kb.bezelStyle = .texturedRounded
+            kb.image = NSImage(systemSymbolName: "keyboard", accessibilityDescription: L("On-screen keyboard"))
+            kb.imagePosition = .imageOnly
+            kb.toolTip = L("On-screen keyboard: shuffled keys, hidden from screenshots and screen recording")
+            kb.setButtonType(.momentaryPushIn)
+            let keyboard = OnScreenKeyboard()
+            kb.target = keyboard
+            kb.action = #selector(OnScreenKeyboard.toggle(_:))
+            keyboard.targetField = { [weak f1, weak f2] in
+                (f1?.window?.firstResponder as? SecurePasswordField).flatMap { $0 === f1 || $0 === f2 ? $0 : nil } ?? f1
+            }
             f2.placeholder = L("Repeat password")
             let box = NSView(frame: NSRect(x: 0, y: 0, width: width, height: boxHeight))
             let indicator = InputSourceIndicator(width: width)
             indicator.frame.origin = NSPoint(x: 0, y: boxHeight - indicatorHeight + 1)
             box.addSubview(indicator)
             box.addSubview(f1)
+            box.addSubview(kb)
             if confirm {
                 let meter = PasswordStrengthView(frame: NSRect(x: 0, y: 24 + 6, width: width, height: meterHeight))
                 box.addSubview(meter)
@@ -328,6 +344,7 @@ enum Vault {
 
             NSApp.activate(ignoringOtherApps: true)
             let result = a.runModal()
+            keyboard.close()
             defer { f2.buffer.zero() }
             if result == .alertThirdButtonReturn {
                 f1.buffer.zero()

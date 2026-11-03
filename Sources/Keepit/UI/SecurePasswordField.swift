@@ -122,14 +122,25 @@ final class SecurePasswordField: NSView {
         // event.characters is a transient system String of (usually) one character; we copy its UTF-8
         // bytes into the locked buffer and never concatenate characters anywhere else.
         guard let chars = event.characters, !chars.isEmpty else { return }
+        for scalar in chars.unicodeScalars { append(scalar) }
+    }
+
+    /// Append one character to the secret — from a key event or from the on-screen keyboard.
+    /// Control characters are ignored; the UTF-8 copy is wiped after it is in the locked buffer.
+    func append(_ scalar: Unicode.Scalar) {
+        guard scalar.value >= 0x20, scalar.value != 0x7F else { return }
         if charLengths.count >= Limits.passwordMaxChars { NSSound.beep(); return }
-        for scalar in chars.unicodeScalars {
-            guard scalar.value >= 0x20, scalar.value != 0x7F else { continue }   // skip control chars
-            var utf8 = Array(String(scalar).utf8)
-            let added = utf8.withUnsafeBytes { buffer.append($0) }
-            utf8.withUnsafeMutableBytes { _ = memset_s($0.baseAddress, $0.count, 0, $0.count) }
-            if added > 0 { charLengths.append(added) }
-        }
+        var utf8 = Array(String(scalar).utf8)
+        let added = utf8.withUnsafeBytes { buffer.append($0) }
+        utf8.withUnsafeMutableBytes { _ = memset_s($0.baseAddress, $0.count, 0, $0.count) }
+        if added > 0 { charLengths.append(added) }
+        needsDisplay = true
+        onChange?(buffer)
+    }
+
+    /// Remove the last character (⌫ on the on-screen keyboard).
+    func deleteBackward() {
+        if let n = charLengths.popLast() { buffer.removeLast(n) }
         needsDisplay = true
         onChange?(buffer)
     }
