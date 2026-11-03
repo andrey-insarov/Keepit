@@ -1,7 +1,23 @@
 # Releasing Keepit
 
-1. Bump the version: edit `VERSION` (e.g. `2.2.0`), commit.
-2. Tag and push: `git tag -a v2.2.0 -m "Keepit 2.2.0" && git push origin main v2.2.0`.
+1. Bump the version: edit `VERSION` (e.g. `2.2.0`), commit. When the release was prepared on a
+   branch, merge its PR first — the tag has to point at a commit that already carries the new `VERSION`.
+2. Tag and push, **checking the version right before tagging**:
+   ```
+   git checkout main && git pull
+   cat VERSION
+   git tag v2.2.0 && git push origin v2.2.0
+   ```
+   If `cat VERSION` shows the old number, stop: the merge has not landed or the pull did not happen.
+   If a tag of that name already exists from a failed attempt, delete it on both sides before
+   trying again — `git pull` refuses to update a tag that differs from the remote one, and
+   `git tag v2.2.0` silently keeps an existing tag where it is:
+   ```
+   git tag -d v2.2.0
+   git push origin :refs/tags/v2.2.0
+   git fetch origin && git reset --hard origin/main
+   cat VERSION
+   ```
 3. GitHub Actions runs the `build` job (tests, ad-hoc build, UI smoke test), then the `release` job
    waits for approval: Actions → the run → **Review deployments** → `release` → Approve.
 4. The release job signs with Developer ID, notarizes with Apple, staples the ticket, signs the
@@ -97,6 +113,10 @@ alias keepit-build='cd ~/keepit && git pull && make install SIGN_ID="Developer I
   shows why; the usual causes are a missing `--timestamp`/hardened runtime (already set in the
   Makefile) or a stale certificate.
 * The Finder window layout step of `make dmg` is best effort and is silently skipped on CI.
+* The `release` job fails at *Tag must match VERSION* → the tag points at a commit whose `VERSION` is
+  the previous number (merge not landed, `git pull` blocked by a stale local tag, or the tag already
+  existed). Nothing was signed or published. Cancel that run rather than approving it, then follow
+  step 2 above. A run that is *waiting* for approval on the wrong commit must not be approved.
 
 ## Sparkle auto-updates (GitHub Releases)
 
