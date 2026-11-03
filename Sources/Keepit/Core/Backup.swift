@@ -156,23 +156,26 @@ enum Backup {
         // Settings carry no rejectable content: they are clamped when applied.
     }
 
+    /// Per-item limits are the *ceilings* of the corresponding settings, not their defaults: any
+    /// installation may have been configured up to the ceiling, and what it recorded must restore.
+    /// The user's own (narrower) settings govern recording, never reading a backup — and nothing
+    /// inside the backup is trusted to set a limit.
     private static func validate(_ item: ClipItem, where place: String) throws {
         guard !item.formats.isEmpty else { throw Failure.invalidContent("\(place): item without formats") }
-        let d = Settings()
         for (uti, data) in item.formats {
             guard !uti.isEmpty, uti.count <= 255 else { throw Failure.invalidContent("\(place): bad format name") }
             switch uti {
             case ClipItem.Format.text:
-                guard data.count <= d.maxTextBytes else { throw Failure.invalidContent("\(place): text too large") }
+                guard data.count <= Limits.textBytesCeiling else { throw Failure.invalidContent("\(place): text too large") }
             case ClipItem.Format.rtf, ClipItem.Format.html:
-                guard data.count <= d.maxTextBytes * 4 else { throw Failure.invalidContent("\(place): rich text too large") }
+                guard data.count <= Limits.textBytesCeiling * 4 else { throw Failure.invalidContent("\(place): rich text too large") }
             case ClipItem.Format.png:
-                guard data.count <= d.maxImageBytes, ClipItem.pixelCountOK(data) else { throw Failure.invalidContent("\(place): image too large") }
+                guard data.count <= Limits.imageBytesCeiling, ClipItem.pixelCountOK(data) else { throw Failure.invalidContent("\(place): image too large") }
             case ClipItem.Format.files:
-                guard data.count <= d.maxTextBytes, let paths = try? JSONDecoder().decode([String].self, from: data),
-                      paths.count <= d.maxFileListEntries else { throw Failure.invalidContent("\(place): bad file list") }
+                guard data.count <= Limits.textBytesCeiling, let paths = try? JSONDecoder().decode([String].self, from: data),
+                      paths.count <= Limits.fileListEntriesCeiling else { throw Failure.invalidContent("\(place): bad file list") }
             default:
-                guard data.count <= d.maxImageBytes else { throw Failure.invalidContent("\(place): format too large") }
+                guard data.count <= Limits.imageBytesCeiling else { throw Failure.invalidContent("\(place): format too large") }
             }
         }
         if let app = item.sourceApp, app.count > Limits.bundleIdMaxChars { throw Failure.invalidContent("\(place): bad source app") }

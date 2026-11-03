@@ -146,6 +146,24 @@ final class CoreTests: XCTestCase {
         XCTAssertNoThrow(try Backup.decode(try file(Backup.Payload(history: [.text("ok")], templates: root(), settings: nil)), password: .of("p")))
     }
 
+    /// An installation configured above the defaults records larger items; its own backup must restore.
+    func testItemsUpToTheSettingCeilingsRoundTrip() throws {
+        let root = TemplateNode(name: "Template")
+        let bigText = ClipItem.text(String(repeating: "x", count: Settings().maxTextBytes + 1))          // over the default, under the ceiling
+        let paths = (0 ..< (Settings().maxFileListEntries + 1)).map { "/tmp/f\($0)" }
+        let list = try JSONEncoder().encode(paths)
+        let bigList = ClipItem(id: UUID(), date: Date(), formats: [ClipItem.Format.files: list], sourceApp: nil, contentHash: ClipItem.hash(of: list))
+        let file = try Backup.encode(Backup.Payload(history: [bigText, bigList], templates: root, settings: nil), password: .of("p"))
+        let back = try Backup.decode(file, password: .of("p"))
+        XCTAssertEqual(back.history[0].plainText?.count, Settings().maxTextBytes + 1)
+        XCTAssertEqual(back.history[1].filePaths.count, Settings().maxFileListEntries + 1)
+        // Over the ceiling is still refused, whatever a backup claims.
+        let huge = ClipItem.text(String(repeating: "y", count: Limits.textBytesCeiling + 1))
+        XCTAssertThrowsError(try Backup.decode(try Backup.encode(Backup.Payload(history: [huge], templates: root, settings: nil), password: .of("p")), password: .of("p"))) {
+            if case .invalidContent = ($0 as? Backup.Failure) {} else { XCTFail("\($0)") }
+        }
+    }
+
     func testReaderVersionMatchesVERSIONFile() throws {
         let versionFile = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().appendingPathComponent("VERSION")
         let v = try String(contentsOf: versionFile, encoding: .utf8).trimmingCharacters(in: .whitespacesAndNewlines)

@@ -143,8 +143,10 @@ Encoding: JSON, UTF-8. Dates are ISO 8601 (`yyyy-MM-ddTHH:mm:ssZ`, UTC, as writt
 Keys are sorted; whitespace is insignificant. The payload must stay below 512 MiB decompressed.
 
 **Validation (3.0 reader).** After decoding, before anything is returned: every item has at least
-one format; text ≤ 2 MiB, RTF/HTML ≤ 8 MiB, PNG ≤ 10 MiB and ≤ 40 megapixels by header, file list
-≤ 1 000 entries; `sourceApp` ≤ 255 characters; `contentHash` matches the rule above; ids are unique;
+one format; text ≤ 50 MiB, RTF/HTML ≤ 200 MiB, PNG ≤ 100 MiB and ≤ 40 megapixels by header, file
+list ≤ 10 000 entries — these are the *ceilings* of the corresponding settings, so whatever any
+installation could record will restore; a user's narrower settings govern recording only, and no
+limit is ever taken from the backup itself; `sourceApp` ≤ 255 characters; `contentHash` matches the rule above; ids are unique;
 templates ≤ 5 000 nodes, ≤ 16 deep, names ≤ 200 characters, ≤ 50 hot keys. A violation is
 `invalidContent`, naming the rule. Settings are clamped on apply, not rejected.
 

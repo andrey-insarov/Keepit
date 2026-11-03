@@ -386,9 +386,9 @@ struct Settings: Codable, Equatable {
         pollInterval = Limits.clamp(pollInterval, 0.1, 5)
         pasteDelay = Limits.clamp(pasteDelay, 0, 5)
         queueTimeout = queueTimeout <= 0 ? 0 : Limits.clamp(queueTimeout, 10, 3600)
-        maxImageBytes = Limits.clamp(maxImageBytes, 64 * 1024, 100 * 1024 * 1024)
-        maxTextBytes = Limits.clamp(maxTextBytes, 1024, 50 * 1024 * 1024)
-        maxFileListEntries = Limits.clamp(maxFileListEntries, 1, 10_000)
+        maxImageBytes = Limits.clamp(maxImageBytes, 64 * 1024, Limits.imageBytesCeiling)
+        maxTextBytes = Limits.clamp(maxTextBytes, 1024, Limits.textBytesCeiling)
+        maxFileListEntries = Limits.clamp(maxFileListEntries, 1, Limits.fileListEntriesCeiling)
         maxHistoryBytes = Limits.clamp(maxHistoryBytes, 1024 * 1024, 4 * 1024 * 1024 * 1024)
         menuMaxItems = Limits.clamp(menuMaxItems, 1, Limits.menuMaxItemsCeiling)
         ignoreApps = Array(ignoreApps.prefix(Limits.ignoreAppsMaxLines)).map { String($0.prefix(Limits.bundleIdMaxChars)) }
