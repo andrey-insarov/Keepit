@@ -41,6 +41,16 @@ final class TemplateStore {
         ])
     }
 
+    /// True while the tree is still the fresh-install example set, untouched: nothing of the user's
+    /// in it. A first-run Replace has nothing to lose then and needs no rollback copy.
+    var isDefaultTree: Bool { Self.same(root, Self.defaultTree()) }
+
+    private static func same(_ a: TemplateNode, _ b: TemplateNode) -> Bool {
+        guard a.name == b.name, a.clip?.plainText == b.clip?.plainText, a.isFolder == b.isFolder,
+              a.hotKey == b.hotKey, a.children.count == b.children.count else { return false }
+        return zip(a.children, b.children).allSatisfy { same($0, $1) }
+    }
+
     /// Back to the fresh-install tree (Reset).
     func resetToDefaults() {
         isPurged = false                       // Reset purges first; the store is live again from here

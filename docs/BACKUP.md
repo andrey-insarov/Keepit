@@ -127,8 +127,8 @@ General → Backup → Restore…*; double-click on a `.keepit` file. All lead t
 4. **Preview**: counts, date, device label (now trusted), what will happen.
 5. **Choose**: **Replace** or **Merge**.
    - *Replace* first secures the current data, then replaces it. Three cases:
-     - **Nothing to lose** (history and templates empty — a fresh installation, or right after
-       *Reset…*): no rollback copy; Replace proceeds.
+     - **Nothing to lose** (history empty and the templates still the untouched example set — a
+       fresh installation, or right after *Reset…*): no rollback copy; Replace proceeds.
      - **Existing data, vault on**: a mandatory rollback copy (`Keepit-before-restore-…`, mode
        `auto`, current key) is written and verified like a regular backup — into the backup folder
        if one is configured, otherwise into a folder the user picks now (choosing a *file* in

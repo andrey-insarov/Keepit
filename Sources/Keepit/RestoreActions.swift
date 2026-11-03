@@ -177,7 +177,7 @@ extension AppDelegate {
         if !Vault.isEnabled, let pw = unlocked.password {
             let k = NSAlert()
             k.messageText = L("Protect Keepit with the same password?")
-            k.informativeText = L("Use the password you just entered as this Mac's Keepit password. Automatic backups into the same folder then continue without setup. You can set a different one instead.")
+            k.informativeText = L("Use the password you just entered as this Mac's Keepit password. Automatic backup can then be switched on for this Mac in Settings → General. You can set a different password instead.")
             k.addButton(withTitle: L("Use This Password"))
             k.addButton(withTitle: L("Set a Different Password…"))
             k.addButton(withTitle: L("Not Now"))
@@ -194,7 +194,9 @@ extension AppDelegate {
     struct DataStamp: Equatable { var history: Int; var templates: Int; var settings: Int; var lock: Int }
     var dataStamp: DataStamp { DataStamp(history: history.revision, templates: templates.revision, settings: settingsRevision, lock: lockCount) }
 
-    var hasDataToLose: Bool { !(history.items.isEmpty && templates.root.children.isEmpty) }
+    /// A fresh installation (or one right after Reset) holds only the example templates: nothing of
+    /// the user's, so Replace needs no rollback copy there — and asks for nothing.
+    var hasDataToLose: Bool { !history.items.isEmpty || !(templates.root.children.isEmpty || templates.isDefaultTree) }
 
     /// The transaction: the three files first, as one; the live stores only when they are on disk.
     /// A failed write leaves the files as they were and throws — nothing in memory has moved.
