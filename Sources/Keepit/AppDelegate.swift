@@ -40,6 +40,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// Bumped by every `lock()`. A flow that ran a modal dialog compares it before touching the
     /// stores: a lock meanwhile purged them, and whatever the flow computed is stale.
     private(set) var lockCount = 0
+    /// Bumped by every `apply(settings:)`, for the same reason.
+    private(set) var settingsRevision = 0
 
     /// No settings file yet → first launch (onboarding, login item).
     private let isFirstRun: Bool
@@ -521,6 +523,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func apply(settings new: Settings) {
         let old = settings
         settings = new
+        settingsRevision += 1
         Storage.save(new, to: Storage.settingsURL, encrypt: false, pretty: true)
         history.updateSettings(new)
         if old.backupEnabled != new.backupEnabled || old.backupBookmark != new.backupBookmark

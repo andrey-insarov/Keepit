@@ -145,20 +145,35 @@ General → Backup → Restore…*; double-click on a `.keepit` file. All lead t
      **without hot keys** (a copy never inherits a key, as with drag-copy), so the user sees exactly
      what came from the backup and can move or delete it. Nothing is overwritten and nothing is
      matched by `id` — two Macs editing "the same" template are two templates.
-   - The rollback copy is produced like a regular backup: sealed on `Storage.ioQueue` (Lock waits
-     for that), written, fsynced and read back on a background queue; the main thread waits in a
-     small progress panel, so a hung volume blocks neither the interface nor Lock. Replace proceeds
-     only after the read-back matched.
-6. **Plan, then apply** (`RestorePlan`). Before any store changes, the whole outcome is computed and
-   checked: the final settings first (when preferences are restored, the backup's — minus the local
-   keys below — clamped), the history trimmed by *those* settings (restoring 3 items together with
-   `historyMax = 3` keeps 3, whatever the limit was before), the template folder against the count
-   and depth ceilings. A plan that does not fit fails as a whole and nothing has happened; items the
-   final limits would drop are reported before the user confirms. Then the plan is applied as one
-   transaction — settings, history, templates — followed by hot keys, menus and the Viewer.
-   Every modal dialog on the way (preview, folder, passwords, the rollback wait) is followed by a
-   check that Lock did not run meanwhile; if it did, the stores were purged and reloaded and the
-   plan is stale: the restore is cancelled with a message, nothing applied.
+   - The rollback copy is produced like a regular backup — sealed on `Storage.ioQueue`, written,
+     fsynced and read back on a background queue, the main thread waiting in a small progress
+     panel — but it is captured only in the commit stage (below), after the last dialog: the
+     snapshot (history, the template tree as bytes, settings) and the key are taken and handed to
+     `ioQueue` in one synchronous step, and Lock drains that queue before zeroing the key, so the
+     seal never meets a zeroed key. Replace proceeds only after the read-back matched.
+6. **Plan, then commit** (`RestorePlan`, `RestoreCommit`). Everything that needs the user is asked
+   first — the limits check, the rollback copy's password and folder, a new password when the
+   phrase opened the file — and nothing is captured or changed while those dialogs are open.
+   Then the commit stage runs with no more questions:
+   - The clipboard watcher is paused, so the stores stand still; their revisions
+     (`HistoryStore.revision`, `TemplateStore.revision`, `settingsRevision`, `lockCount`) are the proof.
+   - The plan is computed as the complete next state: the final settings first (when preferences
+     are restored, the backup's — minus the local keys below — clamped), the history trimmed by
+     *those* settings (restoring 3 items together with `historyMax = 3` keeps 3, whatever the
+     limit was before), the template tree composed on a clone of the current one and checked
+     against the count and depth ceilings. A plan that does not fit fails as a whole; items the
+     final limits would drop were reported before the user confirmed.
+   - For Replace, the rollback copy is written of exactly the state the plan was made from. If the
+     revisions moved while it was being written (a paste from the menu, say), the plan is made
+     again and the copy taken again, up to three times; after that the restore is cancelled with a
+     message rather than replacing something the copy does not hold.
+   - Commit: templates, history and settings are written to disk as one step
+     (`RestoreCommit.writeFiles`, throwing); if any write fails, the files written so far are put
+     back to their previous bytes and the error is shown — nothing in memory has moved. Only when
+     all three are on disk are the live stores assigned, then hot keys, menus and the Viewer
+     refreshed, then "Restore finished".
+   - A lock at any point before the commit cancels the restore with a message: the stores were
+     purged and reloaded and the plan is stale.
 7. **Settings** come back selectively. Never restored: `allowURLCommands`, `trustedURLSenders`,
    `biometricUnlock`, `biometricPasswordChange`, the backup folder bookmark, anything with a local
    path. The user is told what was skipped.
@@ -199,7 +214,9 @@ Automatic tests (temporary folders, fakes where macOS is involved):
 - [ ] Restore Merge: duplicate hashes skipped; added items and the "Imported <date>" folder carry fresh ids and no hot keys; merging this Mac's own backup leaves the next backup valid; over the template count or depth limit → refused, nothing changed (`RestorePlanTests`).
 - [ ] Restore plan: history trimmed by the restored settings, not the previous ones; items that do not fit are reported before confirmation; trust and backup setup never restored (`RestorePlanTests`).
 - [ ] Restore opened with the phrase, vault off: password asked and vault created before anything is applied; cancel → data unchanged; "Keep This Phrase" → the backup's phrase unlocks the new vault.
-- [ ] Lock during any restore dialog → restore cancelled, stores untouched; rollback copy written off the main thread (progress panel stays responsive).
+- [ ] Lock during any restore dialog → restore cancelled, stores untouched; rollback copy written off the main thread (progress panel stays responsive); Lock while the folder chooser is open, then choosing a folder → cancelled, no crash.
+- [ ] Data changing during the commit stage (paste from the menu while the rollback copy is being written) → the copy is taken again; the restored state is what the last copy holds; nothing recorded during the dialogs is lost on Merge.
+- [ ] Disk write failing during commit (history.json unwritable) → error shown, previous files intact, stores unchanged (`RestorePlanTests.testCommitWritesAllFilesOrPutsThePreviousOnesBack`).
 - [ ] Trust settings never restored.
 - [ ] Every fixture in `Tests/KeepitTests/Fixtures` (v1 and v2) opens as its sidecar says.
 

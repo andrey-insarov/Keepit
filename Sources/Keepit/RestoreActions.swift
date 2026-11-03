@@ -91,36 +91,35 @@ extension AppDelegate {
         case .alertSecondButtonReturn: mode = .replace
         default: return
         }
-        guard lockCount == lockAtStart else { Vault.error(L("Restore cancelled: Keepit was locked meanwhile.")); return }
+        let restorePreferences = restorePrefs.state == .on
+        let folderName = { () -> String in let f = DateFormatter(); f.dateStyle = .medium; return LF("Imported %@", f.string(from: p.created)) }()
+        let makePlan = { try RestorePlan.make(mode: mode, payload: p, currentHistory: self.history.items, currentTemplates: self.templates.root,
+                                              currentSettings: self.settings, restorePreferences: restorePreferences, folderName: folderName) }
 
-        // 5. Plan: the whole outcome, checked against the final settings and every limit, before
-        //    anything changes. If the plan fails, nothing has happened.
-        let folder = DateFormatter(); folder.dateStyle = .medium
-        let plan: RestorePlan
-        do {
-            plan = try RestorePlan.make(mode: mode, payload: p, currentHistory: history.items, currentTemplates: templates.root,
-                                        currentSettings: settings, restorePreferences: restorePrefs.state == .on,
-                                        folderName: LF("Imported %@", folder.string(from: p.created)))
-        } catch { Vault.error(error.localizedDescription); return }
-        if plan.historyDropped > 0 {
+        // 5. Everything that needs the user is asked now, before anything is captured or changed:
+        //    the limits check, what a rollback copy needs, a password when the phrase opened the file.
+        guard lockCount == lockAtStart else { Vault.error(RestoreCommit.Failure.locked.localizedDescription); return }
+        let preview: RestorePlan
+        do { preview = try makePlan() } catch { Vault.error(error.localizedDescription); return }
+        if preview.historyDropped > 0 {
             let c = NSAlert()
             c.messageText = L("Not everything fits")
             c.informativeText = LF("%d of the backup's history items fit the current limits; %d would be left out. You can raise the limits in Settings → History first.",
-                                   plan.historyAdded, plan.historyDropped)
+                                   preview.historyAdded, preview.historyDropped)
             c.addButton(withTitle: L("Continue"))
             c.addButton(withTitle: L("Cancel"))
-            guard c.runModal() == .alertFirstButtonReturn, lockCount == lockAtStart else { return }
+            guard c.runModal() == .alertFirstButtonReturn else { return }
         }
-
-        // Replace first secures the current data; the copy is sealed and written off the main thread.
+        var rollback: RollbackInputs?
         if mode == .replace {
-            guard makeRollbackCopy() else { return }
-            guard lockCount == lockAtStart else { Vault.error(L("Restore cancelled: Keepit was locked meanwhile.")); return }
+            guard let r = askRollbackInputs() else { return }
+            rollback = r
         }
-
+        defer { rollback?.password?.zero() }
         // A backup opened with its phrase on a Mac without a password: the data must not land
         // unprotected (docs/BACKUP.md, Restore 8). Password and vault first; cancelling changes nothing.
         if !Vault.isEnabled, unlocked.viaRecovery {
+            guard lockCount == lockAtStart else { Vault.error(RestoreCommit.Failure.locked.localizedDescription); return }
             guard let pw = Vault.askPassword(title: L("Set Keepit password"),
                                              message: L("This backup was opened with its recovery phrase. Choose a password for Keepit on this Mac; the restored data is protected with it."),
                                              confirm: true) else { return }
@@ -138,11 +137,32 @@ extension AppDelegate {
             default: return
             }
             guard enableProtection(with: pw, recoveryEntropy: keep ? unlocked.recoveryEntropy : nil) else { return }
-            guard lockCount == lockAtStart else { Vault.error(L("Restore cancelled: Keepit was locked meanwhile.")); return }
         }
 
-        // 6. Apply as one transaction: settings first (the history is trimmed by them), then the stores.
-        apply(plan)
+        // 6. Commit stage: no more questions. The clipboard watcher is paused so the stores stand
+        //    still; the stores' revisions are the proof. Plan → (rollback copy of exactly that
+        //    state) → files on disk → live stores. If the stores moved while the copy was being
+        //    written (a paste from the menu, say), plan again and copy again; the copy on disk must
+        //    be of what Replace discards.
+        let wasWatching = monitor.isRunning
+        monitor.stop()
+        defer { if wasWatching, !isLocked, !(pausedUntil.map { $0 > Date() } ?? false) { monitor.start() } }
+        var committed = false
+        for _ in 1...3 {
+            guard lockCount == lockAtStart else { Vault.error(RestoreCommit.Failure.locked.localizedDescription); return }
+            let stamp = dataStamp
+            let plan: RestorePlan
+            do { plan = try makePlan() } catch { Vault.error(error.localizedDescription); return }
+            if mode == .replace, hasDataToLose, let inputs = rollback {
+                guard writeRollbackCopy(inputs) else { return }
+                guard lockCount == lockAtStart else { Vault.error(RestoreCommit.Failure.locked.localizedDescription); return }
+                if dataStamp != stamp { continue }                     // the copy is of an older state: once more
+            }
+            do { try commit(plan) } catch { Vault.error(LF("Could not save the restored data: %@", error.localizedDescription)); return }
+            committed = true
+            break
+        }
+        guard committed else { Vault.error(L("Restore cancelled: the data kept changing. Please try again.")); return }
 
         // 8. A fresh installation restored with a password: offer to keep it as the vault password.
         if !Vault.isEnabled, let pw = unlocked.password {
@@ -161,15 +181,22 @@ extension AppDelegate {
         info(LF("Restore finished — history: %d item(s), templates: %d item(s).", history.items.count, templates.root.subtreeCount - 1))
     }
 
-    /// The transaction. Nothing here can fail: every check was made when the plan was built.
-    func apply(_ plan: RestorePlan) {
+    /// Where the stores stand: a plan or a rollback copy made at one stamp is valid only at the same.
+    struct DataStamp: Equatable { var history: Int; var templates: Int; var settings: Int; var lock: Int }
+    var dataStamp: DataStamp { DataStamp(history: history.revision, templates: templates.revision, settings: settingsRevision, lock: lockCount) }
+
+    var hasDataToLose: Bool { !(history.items.isEmpty && templates.root.children.isEmpty) }
+
+    /// The transaction: the three files first, as one; the live stores only when they are on disk.
+    /// A failed write leaves the files as they were and throws — nothing in memory has moved.
+    func commit(_ plan: RestorePlan) throws {
+        let templatesJSON = try Storage.encoder.encode(plan.templates)
+        let historyJSON = plan.settings.historySave ? try Storage.encoder.encode(plan.history) : nil
+        let settingsJSON = try Storage.prettyEncoder.encode(plan.settings)
+        try RestoreCommit.writeFiles(templatesJSON: templatesJSON, historyJSON: historyJSON, settingsJSON: settingsJSON)
         apply(settings: plan.settings)          // trust and backup setup stayed this installation's (RestorePlan)
         history.replaceAll(plan.history)
-        switch plan.templates {
-        case .replace(let root): templates.replaceRoot(root)
-        case .addFolder(let folder):
-            if !templates.insertImported(folder) { Vault.error(RestorePlan.Failure.templateLimit.localizedDescription) }
-        }
+        templates.replaceRoot(plan.templates)
         registerHotKeys()
         viewer?.refresh()
         backup?.noteChange()
@@ -232,40 +259,64 @@ extension AppDelegate {
 
     // MARK: Rollback copy before Replace (docs/BACKUP.md)
 
-    /// Secure the current data before it is replaced. Returns false when Replace must not proceed.
-    /// What needs the user (a password for a manual copy, a folder) is asked on the main thread;
-    /// sealing and writing — PBKDF2, compression, fsync, the read-back — run on a background queue
-    /// while a small progress panel keeps the run loop alive, so a slow or hung volume never blocks
-    /// the interface or Lock. Replace proceeds only after the copy was written and read back.
-    func makeRollbackCopy() -> Bool {
-        if history.items.isEmpty && templates.root.children.isEmpty { return true }      // nothing to lose
-        history.flush(); templates.flush()
-        let name = String(BackupEngine.beforeRestorePrefix + BackupEngine.fileName(created: Date(), sourceID: settings.backupSourceID ?? "local",
-                                                                                   backupID: UUID().uuidString.lowercased()).dropFirst("Keepit-".count))
-        let payload = Backup.Payload(history: history.items, templates: templates.root, settings: settings.forBackup)
-        // The sealing step, decided here, run there. A manual copy needs a password now.
-        let seal: () throws -> Data
-        if Vault.isEnabled, let key = Storage.key, let header = Vault.backupHeader(app: "Keepit \(AppInfo.version)", sourceID: settings.backupSourceID) {
-            seal = { try Backup.encodeAutomatic(payload, dataKey: key, vault: header) }
-        } else {
+    /// What a rollback copy needs from the user, asked before the commit stage: a password when the
+    /// vault is off (the copy is a manual export), and a folder when no backup folder is configured
+    /// (a file chosen in an open panel grants no right to write next to it). nil: the user declined.
+    struct RollbackInputs {
+        var password: SecureBuffer?
+        /// nil: there was nothing to lose when the user was asked, so no folder was asked for.
+        var destination: BackupDestination?
+    }
+
+    func askRollbackInputs() -> RollbackInputs? {
+        var password: SecureBuffer?
+        if !Vault.isEnabled, hasDataToLose {
             guard let pw = Vault.askPassword(title: L("Password for the copy of your current data"),
                                              message: L("Before replacing, Keepit saves what you have now as a .keepit file. Choose a password for that file; you will need it to go back."),
-                                             confirm: true) else { return false }
-            seal = { defer { pw.zero() }; return try Backup.encode(payload, password: pw) }
+                                             confirm: true) else { return nil }
+            password = pw
         }
-        // Where: the backup folder if there is one, otherwise a folder the user picks now
-        // (a file chosen in an open panel grants no right to write next to it).
-        let destination: BackupDestination
-        if let d = backup.destination {
-            destination = d
+        if let d = backup.destination { return RollbackInputs(password: password, destination: d) }
+        guard hasDataToLose else { return RollbackInputs(password: nil, destination: nil) }
+        let panel = NSOpenPanel()
+        panel.title = L("Where to save the copy of your current data")
+        panel.message = L("Choose a folder for the copy of your current history and templates.")
+        panel.canChooseDirectories = true; panel.canChooseFiles = false; panel.canCreateDirectories = true
+        NSApp.activate(ignoringOtherApps: true)
+        guard panel.runModal() == .OK, let folder = panel.url else { password?.zero(); return nil }
+        return RollbackInputs(password: password, destination: PlainFolderDestination(folder))
+    }
+
+    /// Secure the current data before it is replaced. Returns false when Replace must not proceed.
+    /// Called in the commit stage, after every dialog: the snapshot (history, the template tree as
+    /// bytes, settings) and the key are captured here and handed straight to `Storage.ioQueue`, so
+    /// Lock — which drains that queue before zeroing the key — can never run between the two.
+    /// Sealing runs there; writing, fsync and the read-back on a global queue; the main thread waits
+    /// in a progress panel. Replace proceeds only after the read-back matched.
+    func writeRollbackCopy(_ inputs: RollbackInputs) -> Bool {
+        guard let destination = inputs.destination else {              // empty when asked, not any more
+            Vault.error(L("Restore cancelled: the data kept changing. Please try again.")); return false
+        }
+        history.flush(); templates.flush()
+        let created = Date()
+        let name = String(BackupEngine.beforeRestorePrefix + BackupEngine.fileName(created: created, sourceID: settings.backupSourceID ?? "local",
+                                                                                   backupID: UUID().uuidString.lowercased()).dropFirst("Keepit-".count))
+        let items = history.items
+        let forBackup = settings.forBackup
+        let app = "Keepit \(AppInfo.version)"
+        let templatesJSON: Data
+        do { templatesJSON = try Storage.encoder.encode(templates.root) }
+        catch { Vault.error(LF("Could not prepare the copy of the current data: %@", error.localizedDescription)); return false }
+        let seal: () throws -> Data
+        if let pw = inputs.password {
+            seal = { try Backup.encode(json: try Backup.payloadJSON(history: items, templatesJSON: templatesJSON, settings: forBackup, created: created, app: app),
+                                       created: created, app: app, password: pw) }
         } else {
-            let panel = NSOpenPanel()
-            panel.title = L("Where to save the copy of your current data")
-            panel.message = L("Choose a folder for the copy of your current history and templates.")
-            panel.canChooseDirectories = true; panel.canChooseFiles = false; panel.canCreateDirectories = true
-            NSApp.activate(ignoringOtherApps: true)
-            guard panel.runModal() == .OK, let folder = panel.url else { return false }
-            destination = PlainFolderDestination(folder)
+            guard let key = Storage.key, let header = Vault.backupHeader(app: app, sourceID: settings.backupSourceID) else {
+                Vault.error(RestoreCommit.Failure.locked.localizedDescription); return false
+            }
+            seal = { try Backup.encodeAutomatic(json: try Backup.payloadJSON(history: items, templatesJSON: templatesJSON, settings: forBackup, created: created, app: app),
+                                                dataKey: key, vault: header) }
         }
         let result = Self.sealAndWriteOffMain(message: L("Saving a copy of your current data…"), seal: seal) { bytes in
             _ = try BackupEngine.write(bytes, sha: BackupEngine.sha256(bytes), name: name, to: destination)
