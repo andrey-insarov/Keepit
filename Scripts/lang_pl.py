@@ -482,4 +482,6 @@ T = {
 'Could not write %@: %@ — the previous files were kept.': 'Nie udało się zapisać %@: %@ — poprzednie pliki zachowano.',
 'Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on.': 'Nie udało się zapisać %@: %@ — a przywrócenie poprzednich plików też się nie powiodło (%@). Sprawdź folder danych, zanim będziesz kontynuować.',
 'Could not prepare the undo copy of the current data: %@': 'Nie udało się przygotować kopii do cofnięcia bieżących danych: %@',
+'An earlier restore could not be undone completely. Quit and launch Keepit again so it can finish putting the data back.': 'Poprzedniego przywracania nie udało się w pełni cofnąć. Zakończ i uruchom Keepit ponownie, aby dokończył przywracanie danych.',
+'Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again.': 'Keepit nie zdołał dokończyć cofania przerwanego przywracania: %@\n\nNic nie zostanie zmienione. Napraw wskazany wyżej plik (uprawnienia, flaga blokady, miejsce na dysku) i uruchom Keepit ponownie.',
 }

@@ -482,3 +482,5 @@
 "Could not write %@: %@ — the previous files were kept." = "Impossibile scrivere %@: %@ — i file precedenti sono stati conservati.";
 "Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on." = "Impossibile scrivere %@: %@ — e anche il ripristino dei file precedenti non è riuscito (%@). Controlla la cartella dei dati prima di continuare.";
 "Could not prepare the undo copy of the current data: %@" = "Impossibile preparare la copia di annullamento dei dati attuali: %@";
+"An earlier restore could not be undone completely. Quit and launch Keepit again so it can finish putting the data back." = "Un ripristino precedente non è stato annullato del tutto. Esci e riavvia Keepit perché finisca di rimettere a posto i dati.";
+"Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again." = "Keepit non è riuscito a completare l’annullamento di un ripristino interrotto: %@\n\nNon verrà modificato nulla. Sistema il file indicato sopra (permessi, flag di blocco, spazio su disco) e riavvia Keepit.";

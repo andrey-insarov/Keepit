@@ -482,4 +482,6 @@ T = {
 'Could not write %@: %@ — the previous files were kept.': 'לא ניתן לכתוב את %@: %@ — הקבצים הקודמים נשמרו.',
 'Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on.': 'לא ניתן לכתוב את %@: %@ — וגם החזרת הקבצים הקודמים נכשלה (%@). בדקו את תיקיית הנתונים לפני שממשיכים.',
 'Could not prepare the undo copy of the current data: %@': 'לא ניתן להכין את עותק הביטול של הנתונים הנוכחיים: %@',
+'An earlier restore could not be undone completely. Quit and launch Keepit again so it can finish putting the data back.': 'לא ניתן היה לבטל לגמרי שחזור קודם. צאו והפעילו את Keepit מחדש כדי שיסיים להחזיר את הנתונים.',
+'Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again.': 'Keepit לא הצליח להשלים את ביטול השחזור שנקטע: %@\n\nדבר לא ישתנה. תקנו את הקובץ שצוין למעלה (הרשאות, דגל נעילה, מקום בדיסק) והפעילו את Keepit מחדש.',
 }

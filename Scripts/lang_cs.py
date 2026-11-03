@@ -482,4 +482,6 @@ T = {
 'Could not write %@: %@ — the previous files were kept.': '%@ se nepodařilo zapsat: %@ – předchozí soubory byly zachovány.',
 'Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on.': '%@ se nepodařilo zapsat: %@ – a vrácení předchozích souborů také selhalo (%@). Než budete pokračovat, zkontrolujte složku s daty.',
 'Could not prepare the undo copy of the current data: %@': 'Kopii aktuálních dat pro vrácení zpět se nepodařilo připravit: %@',
+'An earlier restore could not be undone completely. Quit and launch Keepit again so it can finish putting the data back.': 'Dřívější obnovení se nepodařilo zcela vrátit zpět. Ukončete Keepit a spusťte jej znovu, aby vrácení dat dokončil.',
+'Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again.': 'Keepit nedokázal dokončit vrácení přerušeného obnovení: %@\n\nNic se nezmění. Opravte výše uvedený soubor (oprávnění, příznak zámku, místo na disku) a spusťte Keepit znovu.',
 }

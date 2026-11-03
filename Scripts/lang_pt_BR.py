@@ -482,4 +482,6 @@ T = {
 'Could not write %@: %@ — the previous files were kept.': 'Não foi possível gravar %@: %@ — os arquivos anteriores foram mantidos.',
 'Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on.': 'Não foi possível gravar %@: %@ — e recolocar os arquivos anteriores também falhou (%@). Verifique a pasta de dados antes de continuar.',
 'Could not prepare the undo copy of the current data: %@': 'Não foi possível preparar a cópia de reversão dos dados atuais: %@',
+'An earlier restore could not be undone completely. Quit and launch Keepit again so it can finish putting the data back.': 'Uma restauração anterior não pôde ser desfeita por completo. Saia e abra o Keepit de novo para que ele termine de recolocar os dados.',
+'Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again.': 'O Keepit não conseguiu concluir o desfazer de uma restauração interrompida: %@\n\nNada será alterado. Corrija o arquivo indicado acima (permissões, sinalizador de bloqueio, espaço em disco) e abra o Keepit de novo.',
 }

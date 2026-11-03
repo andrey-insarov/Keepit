@@ -482,4 +482,6 @@ T = {
 'Could not write %@: %@ — the previous files were kept.': 'Kon %@ niet schrijven: %@ — de vorige bestanden zijn bewaard.',
 'Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on.': 'Kon %@ niet schrijven: %@ — en het terugzetten van de vorige bestanden mislukte ook (%@). Controleer de gegevensmap voordat je verdergaat.',
 'Could not prepare the undo copy of the current data: %@': 'Kon de terugzetkopie van de huidige gegevens niet voorbereiden: %@',
+'An earlier restore could not be undone completely. Quit and launch Keepit again so it can finish putting the data back.': 'Een eerder herstel kon niet volledig ongedaan worden gemaakt. Stop Keepit en start het opnieuw zodat het de gegevens kan terugzetten.',
+'Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again.': 'Keepit kon het ongedaan maken van een onderbroken herstel niet afmaken: %@\n\nEr wordt niets gewijzigd. Los het probleem met het hierboven genoemde bestand op (rechten, vergrendeling, schijfruimte) en start Keepit opnieuw.',
 }

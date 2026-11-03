@@ -482,4 +482,6 @@ T = {
 'Could not write %@: %@ — the previous files were kept.': '%@을(를) 쓸 수 없습니다: %@ — 이전 파일은 유지되었습니다.',
 'Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on.': '%@을(를) 쓸 수 없습니다: %@ — 이전 파일을 되돌리는 것도 실패했습니다(%@). 계속하기 전에 데이터 폴더를 확인하세요.',
 'Could not prepare the undo copy of the current data: %@': '현재 데이터의 되돌리기용 복사본을 준비할 수 없습니다: %@',
+'An earlier restore could not be undone completely. Quit and launch Keepit again so it can finish putting the data back.': '이전 복원을 완전히 되돌리지 못했습니다. Keepit을 종료하고 다시 실행하면 데이터 복구를 마칩니다.',
+'Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again.': 'Keepit이 중단된 복원의 되돌리기를 마치지 못했습니다: %@\n\n아무것도 변경되지 않습니다. 위에 표시된 파일 문제(권한, 잠금 플래그, 디스크 공간)를 해결하고 Keepit을 다시 실행하세요.',
 }

@@ -482,3 +482,5 @@
 "Could not write %@: %@ — the previous files were kept." = "Не удалось записать %@: %@ — прежние файлы сохранены.";
 "Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on." = "Не удалось записать %@: %@ — и вернуть прежние файлы тоже не удалось (%@). Проверьте папку данных, прежде чем продолжать.";
 "Could not prepare the undo copy of the current data: %@" = "Не удалось подготовить копию для отката текущих данных: %@";
+"An earlier restore could not be undone completely. Quit and launch Keepit again so it can finish putting the data back." = "Предыдущее восстановление не удалось откатить полностью. Выйдите и запустите Keepit снова, чтобы он довёл возврат данных до конца.";
+"Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again." = "Keepit не смог завершить откат прерванного восстановления: %@\n\nНичего изменено не будет. Исправьте названный выше файл (права, флаг блокировки, место на диске) и запустите Keepit снова.";

@@ -482,4 +482,6 @@ T = {
 'Could not write %@: %@ — the previous files were kept.': 'Faili %@ ei õnnestunud kirjutada: %@ – varasemad failid jäid alles.',
 'Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on.': 'Faili %@ ei õnnestunud kirjutada: %@ – ja ka varasemate failide tagasipanek ebaõnnestus (%@). Kontrollige enne jätkamist andmekausta.',
 'Could not prepare the undo copy of the current data: %@': 'Praeguste andmete tagasivõtukoopiat ei õnnestunud ette valmistada: %@',
+'An earlier restore could not be undone completely. Quit and launch Keepit again so it can finish putting the data back.': 'Varasemat taastamist ei õnnestunud täielikult tagasi võtta. Sulgege Keepit ja käivitage see uuesti, et andmete tagasipanek lõpule viia.',
+'Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again.': 'Keepit ei saanud katkestatud taastamise tagasivõtmist lõpetada: %@\n\nMidagi ei muudeta. Parandage ülal nimetatud fail (õigused, lukulipp, kettaruum) ja käivitage Keepit uuesti.',
 }

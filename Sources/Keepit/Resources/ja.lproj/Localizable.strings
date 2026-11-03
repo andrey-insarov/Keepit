@@ -482,3 +482,5 @@
 "Could not write %@: %@ — the previous files were kept." = "%@ を書き込めませんでした：%@ — 以前のファイルは保持されています。";
 "Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on." = "%@ を書き込めませんでした：%@ — さらに以前のファイルを戻すことにも失敗しました（%@）。続ける前にデータフォルダを確認してください。";
 "Could not prepare the undo copy of the current data: %@" = "現在のデータの取り消し用コピーを準備できませんでした：%@";
+"An earlier restore could not be undone completely. Quit and launch Keepit again so it can finish putting the data back." = "以前の復元を完全に取り消せませんでした。Keepit を終了して再起動すると、データの復旧が完了します。";
+"Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again." = "Keepit は中断された復元の取り消しを完了できませんでした：%@\n\n何も変更されません。上記のファイルの問題（権限、ロックフラグ、ディスク容量）を解決して、Keepit を再起動してください。";

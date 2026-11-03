@@ -482,4 +482,6 @@ T = {
 'Could not write %@: %@ — the previous files were kept.': '無法寫入 %@：%@ — 已保留先前的檔案。',
 'Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on.': '無法寫入 %@：%@ — 且還原先前的檔案也失敗了（%@）。請先檢查資料夾再繼續。',
 'Could not prepare the undo copy of the current data: %@': '無法準備目前資料的復原副本：%@',
+'An earlier restore could not be undone completely. Quit and launch Keepit again so it can finish putting the data back.': '先前的還原未能完全撤銷。請結束並重新啟動 Keepit，以便完成資料回復。',
+'Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again.': 'Keepit 無法完成對中斷還原的撤銷：%@\n\n不會更改任何內容。請修正上述檔案（權限、鎖定旗標、磁碟空間）後重新啟動 Keepit。',
 }

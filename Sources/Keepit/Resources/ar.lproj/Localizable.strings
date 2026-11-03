@@ -482,3 +482,5 @@
 "Could not write %@: %@ — the previous files were kept." = "تعذّرت كتابة %@: %@ — تم الاحتفاظ بالملفات السابقة.";
 "Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on." = "تعذّرت كتابة %@: %@ — وفشلت أيضًا إعادة الملفات السابقة (%@). تحقق من مجلد البيانات قبل المتابعة.";
 "Could not prepare the undo copy of the current data: %@" = "تعذّر تجهيز نسخة التراجع للبيانات الحالية: %@";
+"An earlier restore could not be undone completely. Quit and launch Keepit again so it can finish putting the data back." = "تعذّر التراجع عن استعادة سابقة بالكامل. أنهِ Keepit وشغّله من جديد ليكمل إعادة البيانات.";
+"Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again." = "لم يتمكن Keepit من إكمال التراجع عن استعادة متقطعة: %@\n\nلن يتغير شيء. أصلح الملف المذكور أعلاه (الأذونات، علامة القفل، مساحة القرص) ثم شغّل Keepit من جديد.";
