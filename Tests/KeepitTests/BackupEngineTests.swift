@@ -234,13 +234,13 @@ final class BackupEngineTests: XCTestCase {
         history.add(.text("a")); clock.addTimeInterval(BackupEngine.quietInterval)
         XCTAssertNoThrow(try run().get())
         let first = folder.appendingPathComponent(ownFiles()[0])
-        try FileManager.default.setAttributes([.immutable: true], ofItemAt: first)
-        defer { try? FileManager.default.setAttributes([.immutable: false], ofItemAt: first) }
+        try FileManager.default.setAttributes([.immutable: true], ofItemAtPath: first.path)
+        defer { try? FileManager.default.setAttributes([.immutable: false], ofItemAtPath: first.path) }
         history.add(.text("b")); clock.addTimeInterval(BackupEngine.quietInterval)
         XCTAssertNoThrow(try run().get())
         XCTAssertEqual(ownFiles().count, 2, "the immutable file could not be removed")
         XCTAssertEqual(engine.state.records.count, 2, "and stays in the registry for the next rotation")
-        try FileManager.default.setAttributes([.immutable: false], ofItemAt: first)
+        try FileManager.default.setAttributes([.immutable: false], ofItemAtPath: first.path)
         history.add(.text("c")); clock.addTimeInterval(BackupEngine.quietInterval)
         XCTAssertNoThrow(try run().get())
         XCTAssertEqual(ownFiles().count, 1)
