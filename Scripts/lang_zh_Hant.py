@@ -159,7 +159,7 @@ T = {
 "Wrong password (%d of 3 attempts used).": "密碼錯誤（已用 %d/3 次）。",
 "Wrong password.": "密碼錯誤。",
 "You unlocked with the recovery phrase. Choose a new password now; the recovery phrase stays valid.": "你已使用復原助記詞解鎖。請現在設定新密碼；復原助記詞仍然有效。",
-"You'll be asked for it every time Keepit starts. There is no recovery if you forget it.": "每次啟動 Keepit 時都會要求輸入。忘記後將無法復原。",
+"You'll be asked for it every time Keepit starts. A recovery phrase for it is shown next.": "每次啟動 Keepit 時都會要求輸入。接下來會顯示復原助記詞。",
 "Your new recovery phrase (the old one no longer works)": "你的新復原助記詞（舊的已失效）",
 "Your recovery phrase": "你的復原助記詞",
 "change the Keepit password": "更改 Keepit 密碼",

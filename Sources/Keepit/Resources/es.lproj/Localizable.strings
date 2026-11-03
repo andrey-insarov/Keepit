@@ -159,7 +159,7 @@
 "Wrong password (%d of 3 attempts used)." = "Contraseña incorrecta (%d de 3 intentos usados).";
 "Wrong password." = "Contraseña incorrecta.";
 "You unlocked with the recovery phrase. Choose a new password now; the recovery phrase stays valid." = "Has desbloqueado con la frase de recuperación. Elige ahora una contraseña nueva; la frase sigue siendo válida.";
-"You'll be asked for it every time Keepit starts. There is no recovery if you forget it." = "Se te pedirá cada vez que se inicie Keepit. No hay recuperación si la olvidas.";
+"You'll be asked for it every time Keepit starts. A recovery phrase for it is shown next." = "Se te pedirá cada vez que se inicie Keepit. A continuación se mostrará una frase de recuperación.";
 "Your new recovery phrase (the old one no longer works)" = "Tu nueva frase de recuperación (la anterior ya no funciona)";
 "Your recovery phrase" = "Tu frase de recuperación";
 "change the Keepit password" = "cambiar la contraseña de Keepit";

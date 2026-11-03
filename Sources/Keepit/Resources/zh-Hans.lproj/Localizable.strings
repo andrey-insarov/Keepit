@@ -159,7 +159,7 @@
 "Wrong password (%d of 3 attempts used)." = "密码错误（已用 %d/3 次）。";
 "Wrong password." = "密码错误。";
 "You unlocked with the recovery phrase. Choose a new password now; the recovery phrase stays valid." = "您已使用恢复助记词解锁。请现在设置新密码；恢复助记词仍然有效。";
-"You'll be asked for it every time Keepit starts. There is no recovery if you forget it." = "每次启动 Keepit 时都会要求输入。忘记后将无法恢复。";
+"You'll be asked for it every time Keepit starts. A recovery phrase for it is shown next." = "每次启动 Keepit 时都会要求输入。接下来会显示恢复助记词。";
 "Your new recovery phrase (the old one no longer works)" = "您的新恢复助记词（旧的已失效）";
 "Your recovery phrase" = "您的恢复助记词";
 "change the Keepit password" = "更改 Keepit 密码";

@@ -159,7 +159,7 @@
 "Wrong password (%d of 3 attempts used)." = "كلمة مرور خاطئة (استُخدمت %d من 3 محاولات).";
 "Wrong password." = "كلمة مرور خاطئة.";
 "You unlocked with the recovery phrase. Choose a new password now; the recovery phrase stays valid." = "لقد فتحت القفل بعبارة الاسترداد. اختر كلمة مرور جديدة الآن؛ تبقى عبارة الاسترداد صالحة.";
-"You'll be asked for it every time Keepit starts. There is no recovery if you forget it." = "سيُطلب منك عند كل تشغيل لـ Keepit. لا يمكن الاسترداد إذا نسيتها.";
+"You'll be asked for it every time Keepit starts. A recovery phrase for it is shown next." = "سيُطلب منك عند كل تشغيل لـ Keepit. ستُعرض عبارة استرداد لها في الخطوة التالية.";
 "Your new recovery phrase (the old one no longer works)" = "عبارة الاسترداد الجديدة (القديمة لم تعد تعمل)";
 "Your recovery phrase" = "عبارة الاسترداد الخاصة بك";
 "change the Keepit password" = "تغيير كلمة مرور Keepit";

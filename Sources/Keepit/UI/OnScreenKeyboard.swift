@@ -48,9 +48,17 @@ final class OnScreenKeyboard: NSObject {
         p.isReleasedWhenClosed = false
         p.contentView = buildContent()
         p.setContentSize(p.contentView!.fittingSize)
+        // Beside the dialog, not beside the button: clear of the dialog's edge and shadow, top edge
+        // level with the password field. Falls back to the left side when the right is off-screen.
         if let a = anchor, let w = a.window {
-            let r = w.convertToScreen(a.convert(a.bounds, to: nil))
-            p.setFrameTopLeftPoint(NSPoint(x: r.maxX + 12, y: r.maxY + 8))
+            let field = w.convertToScreen(a.convert(a.bounds, to: nil))
+            let gap: CGFloat = 20
+            let size = p.frame.size
+            var origin = NSPoint(x: w.frame.maxX + gap, y: field.maxY + 8)
+            if let screen = w.screen ?? NSScreen.main, origin.x + size.width > screen.visibleFrame.maxX {
+                origin.x = w.frame.minX - gap - size.width
+            }
+            p.setFrameTopLeftPoint(origin)
         } else {
             p.center()
         }

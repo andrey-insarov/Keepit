@@ -159,7 +159,7 @@ T = {
 "Wrong password (%d of 3 attempts used).": "Vale parool (kasutatud %d katset 3-st).",
 "Wrong password.": "Vale parool.",
 "You unlocked with the recovery phrase. Choose a new password now; the recovery phrase stays valid.": "Avasid luku taastefraasiga. Vali nüüd uus parool; taastefraas jääb kehtima.",
-"You'll be asked for it every time Keepit starts. There is no recovery if you forget it.": "Seda küsitakse igal Keepiti käivitamisel. Unustamise korral taastada ei saa.",
+"You'll be asked for it every time Keepit starts. A recovery phrase for it is shown next.": "Seda küsitakse igal Keepiti käivitamisel. Järgmisena näidatakse selle taastefraasi.",
 "Your new recovery phrase (the old one no longer works)": "Sinu uus taastefraas (vana enam ei tööta)",
 "Your recovery phrase": "Sinu taastefraas",
 "change the Keepit password": "muuta Keepiti parooli",

@@ -159,7 +159,7 @@
 "Wrong password (%d of 3 attempts used)." = "Wrong password (%d of 3 attempts used).";
 "Wrong password." = "Wrong password.";
 "You unlocked with the recovery phrase. Choose a new password now; the recovery phrase stays valid." = "You unlocked with the recovery phrase. Choose a new password now; the recovery phrase stays valid.";
-"You'll be asked for it every time Keepit starts. There is no recovery if you forget it." = "You'll be asked for it every time Keepit starts. There is no recovery if you forget it.";
+"You'll be asked for it every time Keepit starts. A recovery phrase for it is shown next." = "You'll be asked for it every time Keepit starts. A recovery phrase for it is shown next.";
 "Your new recovery phrase (the old one no longer works)" = "Your new recovery phrase (the old one no longer works)";
 "Your recovery phrase" = "Your recovery phrase";
 "change the Keepit password" = "change the Keepit password";

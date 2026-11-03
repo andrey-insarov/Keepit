@@ -328,19 +328,32 @@ enum Vault {
             box.addSubview(indicator)
             box.addSubview(f1)
             box.addSubview(kb)
+            var meter: PasswordStrengthView?
             if confirm {
-                let meter = PasswordStrengthView(frame: NSRect(x: 0, y: 24 + 6, width: width, height: meterHeight))
-                box.addSubview(meter)
-                f1.onChange = { [weak meter] buf in meter?.update(PasswordStrength.evaluate(buf)) }
+                let m = PasswordStrengthView(frame: NSRect(x: 0, y: 24 + 6, width: width, height: meterHeight))
+                box.addSubview(m)
+                meter = m
                 box.addSubview(f2)
                 f1.onTab = { [weak f2] in f2?.window?.makeFirstResponder(f2) }
                 f2.onTab = { [weak f1] in f1?.window?.makeFirstResponder(f1) }
             }
             a.accessoryView = box
-            a.addButton(withTitle: L("OK"))
+            let ok = a.addButton(withTitle: L("OK"))
             a.addButton(withTitle: cancelQuits ? L("Quit") : L("Cancel"))
             if offerRecovery && hasRecovery { a.addButton(withTitle: L("Recovery Access…")) }
             a.window.initialFirstResponder = f1
+
+            // OK (and ↩) only once there is a password — and, when confirming, once both fields
+            // agree. Checked on every change, from either keyboard; the compare is constant-time.
+            let refresh: () -> Void = { [weak f1, weak f2, weak ok, weak meter] in
+                guard let f1, let ok else { return }
+                if let meter { meter.update(PasswordStrength.evaluate(f1.buffer)) }
+                let filled = !f1.buffer.isEmpty
+                ok.isEnabled = confirm ? (filled && f2.map { SecureBuffer.equal(f1.buffer, $0.buffer) } == true) : filled
+            }
+            f1.onChange = { _ in refresh() }
+            f2.onChange = { _ in refresh() }
+            refresh()
 
             NSApp.activate(ignoringOtherApps: true)
             let result = a.runModal()

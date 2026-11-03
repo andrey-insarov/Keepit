@@ -159,7 +159,7 @@
 "Wrong password (%d of 3 attempts used)." = "Yanlış parola (3 denemeden %d kullanıldı).";
 "Wrong password." = "Yanlış parola.";
 "You unlocked with the recovery phrase. Choose a new password now; the recovery phrase stays valid." = "Kurtarma ifadesiyle kilidi açtınız. Şimdi yeni bir parola seçin; kurtarma ifadesi geçerli kalır.";
-"You'll be asked for it every time Keepit starts. There is no recovery if you forget it." = "Keepit her başladığında sorulacak. Unutursanız kurtarma yolu yoktur.";
+"You'll be asked for it every time Keepit starts. A recovery phrase for it is shown next." = "Keepit her başladığında sorulacak. Ardından bunun için bir kurtarma ifadesi gösterilecek.";
 "Your new recovery phrase (the old one no longer works)" = "Yeni kurtarma ifadeniz (eskisi artık çalışmaz)";
 "Your recovery phrase" = "Kurtarma ifadeniz";
 "change the Keepit password" = "Keepit parolasını değiştirmek";

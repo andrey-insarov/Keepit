@@ -159,7 +159,7 @@ T = {
 "Wrong password (%d of 3 attempts used).": "סיסמה שגויה (נוצלו %d מתוך 3 ניסיונות).",
 "Wrong password.": "סיסמה שגויה.",
 "You unlocked with the recovery phrase. Choose a new password now; the recovery phrase stays valid.": "ביטלת את הנעילה באמצעות משפט השחזור. בחר סיסמה חדשה עכשיו; משפט השחזור נשאר תקף.",
-"You'll be asked for it every time Keepit starts. There is no recovery if you forget it.": "תתבקש להזין אותה בכל הפעלה של Keepit. אין אפשרות שחזור אם תשכח אותה.",
+"You'll be asked for it every time Keepit starts. A recovery phrase for it is shown next.": "תתבקש להזין אותה בכל הפעלה של Keepit. משפט שחזור עבורה יוצג מיד אחר כך.",
 "Your new recovery phrase (the old one no longer works)": "משפט השחזור החדש שלך (הישן כבר לא פועל)",
 "Your recovery phrase": "משפט השחזור שלך",
 "change the Keepit password": "לשנות את סיסמת Keepit",

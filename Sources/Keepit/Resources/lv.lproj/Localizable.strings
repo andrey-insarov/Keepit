@@ -159,7 +159,7 @@
 "Wrong password (%d of 3 attempts used)." = "Nepareiza parole (izmantoti %d no 3 mēģinājumiem).";
 "Wrong password." = "Nepareiza parole.";
 "You unlocked with the recovery phrase. Choose a new password now; the recovery phrase stays valid." = "Jūs atbloķējāt ar atkopšanas frāzi. Tagad izvēlieties jaunu paroli; atkopšanas frāze paliek derīga.";
-"You'll be asked for it every time Keepit starts. There is no recovery if you forget it." = "Tā tiks prasīta katru reizi, palaižot Keepit. Ja to aizmirstat, atkopšana nav iespējama.";
+"You'll be asked for it every time Keepit starts. A recovery phrase for it is shown next." = "Tā tiks prasīta katru reizi, palaižot Keepit. Tālāk tiks parādīta tās atkopšanas frāze.";
 "Your new recovery phrase (the old one no longer works)" = "Jūsu jaunā atkopšanas frāze (vecā vairs nedarbojas)";
 "Your recovery phrase" = "Jūsu atkopšanas frāze";
 "change the Keepit password" = "mainītu Keepit paroli";

@@ -159,7 +159,7 @@
 "Wrong password (%d of 3 attempts used)." = "Неверный пароль (использовано попыток: %d из 3).";
 "Wrong password." = "Неверный пароль.";
 "You unlocked with the recovery phrase. Choose a new password now; the recovery phrase stays valid." = "Вы разблокировали данные фразой восстановления. Задайте новый пароль; фраза восстановления остаётся действительной.";
-"You'll be asked for it every time Keepit starts. There is no recovery if you forget it." = "Он будет запрашиваться при каждом запуске Keepit. Если вы его забудете, восстановить данные невозможно.";
+"You'll be asked for it every time Keepit starts. A recovery phrase for it is shown next." = "Он будет запрашиваться при каждом запуске Keepit. Следом будет показана фраза восстановления.";
 "Your new recovery phrase (the old one no longer works)" = "Ваша новая фраза восстановления (старая больше не работает)";
 "Your recovery phrase" = "Ваша фраза восстановления";
 "change the Keepit password" = "сменить пароль Keepit";

@@ -424,7 +424,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// Turn protection on: set a password, re-save data encrypted.
     func enableProtection() -> Bool {
         guard let pw = Vault.askPassword(title: L("Set Keepit password"),
-                                         message: L("You'll be asked for it every time Keepit starts. There is no recovery if you forget it."),
+                                         message: L("You'll be asked for it every time Keepit starts. A recovery phrase for it is shown next."),
                                          confirm: true) else { return false }
         defer { pw.zero() }
         do {

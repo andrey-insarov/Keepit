@@ -159,7 +159,7 @@
 "Wrong password (%d of 3 attempts used)." = "암호가 틀렸습니다(3회 중 %d회 사용).";
 "Wrong password." = "암호가 틀렸습니다.";
 "You unlocked with the recovery phrase. Choose a new password now; the recovery phrase stays valid." = "복구 문구로 잠금을 해제했습니다. 지금 새 암호를 설정하세요. 복구 문구는 계속 유효합니다.";
-"You'll be asked for it every time Keepit starts. There is no recovery if you forget it." = "Keepit을 시작할 때마다 입력해야 합니다. 잊어버리면 복구할 수 없습니다.";
+"You'll be asked for it every time Keepit starts. A recovery phrase for it is shown next." = "Keepit을 시작할 때마다 입력해야 합니다. 다음 단계에서 복구 문구가 표시됩니다.";
 "Your new recovery phrase (the old one no longer works)" = "새 복구 문구(이전 문구는 더 이상 사용할 수 없음)";
 "Your recovery phrase" = "복구 문구";
 "change the Keepit password" = "Keepit 암호를 변경";

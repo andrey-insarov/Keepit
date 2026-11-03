@@ -159,7 +159,7 @@ T = {
 "Wrong password (%d of 3 attempts used).": "Chybné heslo (využito %d ze 3 pokusů).",
 "Wrong password.": "Chybné heslo.",
 "You unlocked with the recovery phrase. Choose a new password now; the recovery phrase stays valid.": "Odemkli jste frází pro obnovení. Zvolte nyní nové heslo; fráze zůstává platná.",
-"You'll be asked for it every time Keepit starts. There is no recovery if you forget it.": "Bude vyžadováno při každém spuštění Keepit. Pokud ho zapomenete, není možné ho obnovit.",
+"You'll be asked for it every time Keepit starts. A recovery phrase for it is shown next.": "Bude vyžadováno při každém spuštění Keepit. Fráze pro jeho obnovení se zobrazí vzápětí.",
 "Your new recovery phrase (the old one no longer works)": "Vaše nová fráze pro obnovení (stará už nefunguje)",
 "Your recovery phrase": "Vaše fráze pro obnovení",
 "change the Keepit password": "změnit heslo Keepit",

@@ -159,7 +159,7 @@
 "Wrong password (%d of 3 attempts used)." = "Neteisingas slaptažodis (panaudota bandymų: %d iš 3).";
 "Wrong password." = "Neteisingas slaptažodis.";
 "You unlocked with the recovery phrase. Choose a new password now; the recovery phrase stays valid." = "Atrakinote atkūrimo fraze. Dabar pasirinkite naują slaptažodį; atkūrimo frazė lieka galioti.";
-"You'll be asked for it every time Keepit starts. There is no recovery if you forget it." = "Jo bus prašoma kiekvieną kartą paleidžiant „Keepit“. Pamiršus atkurti neįmanoma.";
+"You'll be asked for it every time Keepit starts. A recovery phrase for it is shown next." = "Jo bus prašoma kiekvieną kartą paleidžiant „Keepit“. Toliau bus parodyta jo atkūrimo frazė.";
 "Your new recovery phrase (the old one no longer works)" = "Jūsų nauja atkūrimo frazė (senoji nebeveikia)";
 "Your recovery phrase" = "Jūsų atkūrimo frazė";
 "change the Keepit password" = "pakeisti „Keepit“ slaptažodį";

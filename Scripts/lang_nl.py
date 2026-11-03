@@ -159,7 +159,7 @@ T = {
 "Wrong password (%d of 3 attempts used).": "Verkeerd wachtwoord (%d van 3 pogingen gebruikt).",
 "Wrong password.": "Verkeerd wachtwoord.",
 "You unlocked with the recovery phrase. Choose a new password now; the recovery phrase stays valid.": "Je hebt ontgrendeld met de herstelzin. Kies nu een nieuw wachtwoord; de herstelzin blijft geldig.",
-"You'll be asked for it every time Keepit starts. There is no recovery if you forget it.": "Het wordt gevraagd telkens als Keepit start. Er is geen herstel als je het vergeet.",
+"You'll be asked for it every time Keepit starts. A recovery phrase for it is shown next.": "Het wordt gevraagd telkens als Keepit start. Hierna wordt een herstelzin ervoor getoond.",
 "Your new recovery phrase (the old one no longer works)": "Je nieuwe herstelzin (de oude werkt niet meer)",
 "Your recovery phrase": "Je herstelzin",
 "change the Keepit password": "het Keepit-wachtwoord te wijzigen",

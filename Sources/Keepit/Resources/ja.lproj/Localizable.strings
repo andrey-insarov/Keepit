@@ -159,7 +159,7 @@
 "Wrong password (%d of 3 attempts used)." = "パスワードが違います（3 回中 %d 回使用）。";
 "Wrong password." = "パスワードが違います。";
 "You unlocked with the recovery phrase. Choose a new password now; the recovery phrase stays valid." = "リカバリーフレーズでロックを解除しました。新しいパスワードを設定してください。フレーズは引き続き有効です。";
-"You'll be asked for it every time Keepit starts. There is no recovery if you forget it." = "Keepit の起動時に毎回求められます。忘れた場合、復元はできません。";
+"You'll be asked for it every time Keepit starts. A recovery phrase for it is shown next." = "Keepit の起動時に毎回求められます。続いてリカバリーフレーズが表示されます。";
 "Your new recovery phrase (the old one no longer works)" = "新しいリカバリーフレーズ（古いものは使えません）";
 "Your recovery phrase" = "リカバリーフレーズ";
 "change the Keepit password" = "Keepit のパスワードを変更する";
