@@ -476,4 +476,6 @@ T = {
 'Saving a copy of your current data…': 'Geçerli verilerinizin bir kopyası kaydediliyor…',
 'Protection is on. The recovery phrase from the backup also opens Keepit on this Mac.': 'Koruma açık. Yedekteki kurtarma ifadesi bu Mac’teki Keepit’i de açar.',
 'Could not set up the recovery phrase: %@': 'Kurtarma ifadesi ayarlanamadı: %@',
+'Could not save the restored data: %@': 'Geri yüklenen veriler kaydedilemedi: %@',
+'Restore cancelled: the data kept changing. Please try again.': 'Geri yükleme iptal edildi: veriler sürekli değişti. Lütfen yeniden deneyin.',
 }

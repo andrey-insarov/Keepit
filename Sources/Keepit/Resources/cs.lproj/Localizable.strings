@@ -476,3 +476,5 @@
 "Saving a copy of your current data…" = "Ukládám kopii aktuálních dat…";
 "Protection is on. The recovery phrase from the backup also opens Keepit on this Mac." = "Ochrana je zapnutá. Fráze pro obnovení ze zálohy nyní otevírá Keepit i na tomto Macu.";
 "Could not set up the recovery phrase: %@" = "Frázi pro obnovení se nepodařilo nastavit: %@";
+"Could not save the restored data: %@" = "Obnovená data se nepodařilo uložit: %@";
+"Restore cancelled: the data kept changing. Please try again." = "Obnovení zrušeno: data se neustále měnila. Zkuste to znovu.";

@@ -476,3 +476,5 @@
 "Saving a copy of your current data…" = "Enregistrement d’une copie de vos données actuelles…";
 "Protection is on. The recovery phrase from the backup also opens Keepit on this Mac." = "La protection est activée. La phrase de récupération de la sauvegarde ouvre aussi Keepit sur ce Mac.";
 "Could not set up the recovery phrase: %@" = "Impossible de configurer la phrase de récupération : %@";
+"Could not save the restored data: %@" = "Impossible d’enregistrer les données restaurées : %@";
+"Restore cancelled: the data kept changing. Please try again." = "Restauration annulée : les données n’arrêtaient pas de changer. Réessayez.";

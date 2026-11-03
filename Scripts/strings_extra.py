@@ -487,4 +487,6 @@ T2 = {
 'Saving a copy of your current data…': ('Зберігаю копію поточних даних…', 'جارٍ حفظ نسخة من بياناتك الحالية…', 'Salvataggio di una copia dei dati attuali…'),
 'Protection is on. The recovery phrase from the backup also opens Keepit on this Mac.': ('Захист увімкнено. Фраза відновлення з копії тепер відкриває Keepit і на цьому Mac.', 'الحماية مفعّلة. عبارة الاسترداد من النسخة الاحتياطية تفتح Keepit على هذا الـ Mac أيضًا.', 'La protezione è attiva. La frase di recupero del backup apre Keepit anche su questo Mac.'),
 'Could not set up the recovery phrase: %@': ('Не вдалося налаштувати фразу відновлення: %@', 'تعذّر إعداد عبارة الاسترداد: %@', 'Impossibile impostare la frase di recupero: %@'),
+'Could not save the restored data: %@': ('Не вдалося зберегти відновлені дані: %@', 'تعذّر حفظ البيانات المستعادة: %@', 'Impossibile salvare i dati ripristinati: %@'),
+'Restore cancelled: the data kept changing. Please try again.': ('Відновлення скасовано: дані весь час змінювалися. Спробуйте ще раз.', 'أُلغيت الاستعادة: ظلّت البيانات تتغير. يرجى المحاولة مرة أخرى.', 'Ripristino annullato: i dati continuavano a cambiare. Riprova.'),
 }

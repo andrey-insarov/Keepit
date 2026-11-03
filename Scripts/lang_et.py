@@ -476,4 +476,6 @@ T = {
 'Saving a copy of your current data…': 'Praeguste andmete koopia salvestamine…',
 'Protection is on. The recovery phrase from the backup also opens Keepit on this Mac.': 'Kaitse on sees. Varukoopia taastefraas avab Keepiti nüüd ka sellel Macil.',
 'Could not set up the recovery phrase: %@': 'Taastefraasi ei õnnestunud seadistada: %@',
+'Could not save the restored data: %@': 'Taastatud andmeid ei õnnestunud salvestada: %@',
+'Restore cancelled: the data kept changing. Please try again.': 'Taastamine tühistati: andmed muutusid pidevalt. Palun proovige uuesti.',
 }

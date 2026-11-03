@@ -476,4 +476,6 @@ T = {
 'Saving a copy of your current data…': 'Išsaugoma dabartinių duomenų kopija…',
 'Protection is on. The recovery phrase from the backup also opens Keepit on this Mac.': 'Apsauga įjungta. Atsarginės kopijos atkūrimo frazė dabar atveria „Keepit“ ir šiame „Mac“.',
 'Could not set up the recovery phrase: %@': 'Nepavyko nustatyti atkūrimo frazės: %@',
+'Could not save the restored data: %@': 'Nepavyko išsaugoti atkurtų duomenų: %@',
+'Restore cancelled: the data kept changing. Please try again.': 'Atkūrimas atšauktas: duomenys nuolat keitėsi. Bandykite dar kartą.',
 }

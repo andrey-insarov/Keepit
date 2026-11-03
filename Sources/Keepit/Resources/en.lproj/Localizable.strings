@@ -532,3 +532,6 @@
 "Saving a copy of your current data…" = "Saving a copy of your current data…";
 "Protection is on. The recovery phrase from the backup also opens Keepit on this Mac." = "Protection is on. The recovery phrase from the backup also opens Keepit on this Mac.";
 "Could not set up the recovery phrase: %@" = "Could not set up the recovery phrase: %@";
+
+"Could not save the restored data: %@" = "Could not save the restored data: %@";
+"Restore cancelled: the data kept changing. Please try again." = "Restore cancelled: the data kept changing. Please try again.";

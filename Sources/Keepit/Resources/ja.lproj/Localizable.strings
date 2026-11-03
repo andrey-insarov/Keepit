@@ -476,3 +476,5 @@
 "Saving a copy of your current data…" = "現在のデータのコピーを保存中…";
 "Protection is on. The recovery phrase from the backup also opens Keepit on this Mac." = "保護が有効になりました。バックアップのリカバリーフレーズでこの Mac の Keepit も開けます。";
 "Could not set up the recovery phrase: %@" = "リカバリーフレーズを設定できませんでした：%@";
+"Could not save the restored data: %@" = "復元したデータを保存できませんでした：%@";
+"Restore cancelled: the data kept changing. Please try again." = "復元を中止しました：データが変化し続けました。もう一度お試しください。";

@@ -476,3 +476,5 @@
 "Saving a copy of your current data…" = "正在保存当前数据的副本…";
 "Protection is on. The recovery phrase from the backup also opens Keepit on this Mac." = "保护已开启。备份的恢复助记词现在也能打开本机的 Keepit。";
 "Could not set up the recovery phrase: %@" = "无法设置恢复助记词：%@";
+"Could not save the restored data: %@" = "无法保存恢复的数据：%@";
+"Restore cancelled: the data kept changing. Please try again." = "恢复已取消：数据一直在变化。请重试。";

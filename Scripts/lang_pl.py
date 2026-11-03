@@ -476,4 +476,6 @@ T = {
 'Saving a copy of your current data…': 'Zapisywanie kopii bieżących danych…',
 'Protection is on. The recovery phrase from the backup also opens Keepit on this Mac.': 'Ochrona jest włączona. Fraza odzyskiwania z kopii otwiera teraz Keepit także na tym Macu.',
 'Could not set up the recovery phrase: %@': 'Nie udało się skonfigurować frazy odzyskiwania: %@',
+'Could not save the restored data: %@': 'Nie udało się zapisać przywróconych danych: %@',
+'Restore cancelled: the data kept changing. Please try again.': 'Przywracanie anulowane: dane ciągle się zmieniały. Spróbuj ponownie.',
 }

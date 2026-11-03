@@ -476,3 +476,5 @@
 "Saving a copy of your current data…" = "Kopie van je huidige gegevens wordt bewaard…";
 "Protection is on. The recovery phrase from the backup also opens Keepit on this Mac." = "Beveiliging staat aan. De herstelzin uit de back-up opent Keepit nu ook op deze Mac.";
 "Could not set up the recovery phrase: %@" = "Herstelzin kon niet worden ingesteld: %@";
+"Could not save the restored data: %@" = "Kon de herstelde gegevens niet bewaren: %@";
+"Restore cancelled: the data kept changing. Please try again." = "Herstel geannuleerd: de gegevens bleven veranderen. Probeer het opnieuw.";

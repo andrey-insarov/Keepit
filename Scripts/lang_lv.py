@@ -476,4 +476,6 @@ T = {
 'Saving a copy of your current data…': 'Saglabā pašreizējo datu kopiju…',
 'Protection is on. The recovery phrase from the backup also opens Keepit on this Mac.': 'Aizsardzība ir ieslēgta. Dublējumkopijas atkopšanas frāze tagad atver Keepit arī šajā Mac.',
 'Could not set up the recovery phrase: %@': 'Neizdevās iestatīt atkopšanas frāzi: %@',
+'Could not save the restored data: %@': 'Neizdevās saglabāt atjaunotos datus: %@',
+'Restore cancelled: the data kept changing. Please try again.': 'Atjaunošana atcelta: dati visu laiku mainījās. Lūdzu, mēģiniet vēlreiz.',
 }

@@ -476,3 +476,5 @@
 "Saving a copy of your current data…" = "Сохраняю копию текущих данных…";
 "Protection is on. The recovery phrase from the backup also opens Keepit on this Mac." = "Защита включена. Фраза восстановления из копии теперь открывает Keepit и на этом Mac.";
 "Could not set up the recovery phrase: %@" = "Не удалось настроить фразу восстановления: %@";
+"Could not save the restored data: %@" = "Не удалось сохранить восстановленные данные: %@";
+"Restore cancelled: the data kept changing. Please try again." = "Восстановление отменено: данные всё время менялись. Попробуйте ещё раз.";

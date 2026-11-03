@@ -476,3 +476,5 @@
 "Saving a copy of your current data…" = "현재 데이터의 복사본 저장 중…";
 "Protection is on. The recovery phrase from the backup also opens Keepit on this Mac." = "보호가 켜졌습니다. 백업의 복구 문구로 이 Mac의 Keepit도 열 수 있습니다.";
 "Could not set up the recovery phrase: %@" = "복구 문구를 설정할 수 없습니다: %@";
+"Could not save the restored data: %@" = "복원된 데이터를 저장할 수 없습니다: %@";
+"Restore cancelled: the data kept changing. Please try again." = "복원 취소됨: 데이터가 계속 바뀌었습니다. 다시 시도하세요.";

@@ -476,3 +476,5 @@
 "Saving a copy of your current data…" = "שומר עותק של הנתונים הנוכחיים…";
 "Protection is on. The recovery phrase from the backup also opens Keepit on this Mac." = "ההגנה פעילה. משפט השחזור מהגיבוי פותח את Keepit גם ב‑Mac זה.";
 "Could not set up the recovery phrase: %@" = "לא ניתן להגדיר את משפט השחזור: %@";
+"Could not save the restored data: %@" = "לא ניתן לשמור את הנתונים המשוחזרים: %@";
+"Restore cancelled: the data kept changing. Please try again." = "השחזור בוטל: הנתונים המשיכו להשתנות. נסו שוב.";
