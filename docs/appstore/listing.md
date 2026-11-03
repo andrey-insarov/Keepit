@@ -58,6 +58,12 @@ Keepit needs the Accessibility permission to paste for you; without it, chosen i
 ## Keywords (100 chars, comma-separated)
 clipboard,history,paste,copy,snippets,templates,manager,queue,text expander,productivity
 
+## What's new (version 2.13.0)
+• On-screen keyboard for the password: shuffled keys, invisible to screenshots and screen recording, no key events for keyloggers.
+• Settings → Menu: choose how many recent items the history menu lists.
+• keepit:// automation is now opt-in (Settings → Advanced); commands from a web browser ask for confirmation.
+• Password dialog: OK only once both fields match.
+
 ## What's new (version 2.12.0)
 • Copies from password managers are skipped more reliably — including when you switch apps right after copying.
 • Saving a large history no longer pauses the interface.
