@@ -1,6 +1,6 @@
 # Privacy Policy — Keepit – Clipboard Manager
 
-*Version 1.3, effective 3 November 2026.*
+*Version 1.4, effective 3 November 2026.*
 
 **In short: Keepit does not collect, transmit, sell or share any personal data. Everything the app stores stays on your Mac, under your control.**
 
@@ -15,6 +15,8 @@ Privacy contact: **admin@keep.it.com**
 Keepit records what you copy to the macOS clipboard — text, images and file references — so that you can paste it again later, and stores the templates you create. This content may contain personal data (yours or other people's), depending on what you copy.
 
 All of it is stored **only on your computer**, in `~/Library/Application Support/Keepit/` (App Store edition: inside the app's sandbox container, `~/Library/Containers/com.it.keep/`). It is never uploaded to us or to anyone else, and we have no access to it. You can delete it at any time from the Viewer, with *Clear History*, or by removing the folder.
+
+**Backups you choose to make.** If you switch on automatic backup (*Settings → General → Backup*) or use *Export…*, Keepit writes encrypted copies of the history, templates and preferences into a folder *you* select. If that folder is synced by a cloud service (iCloud Drive, Dropbox, Google Drive, …), the files go to that service under *your* account and *its* privacy policy — not to us; Keepit has no server and never receives them. The content is AES-256-GCM encrypted and unreadable without your Keepit password or recovery phrase (or, for exported files, the password you chose). Each file carries a small unencrypted header with the date, the Keepit version, a random installation identifier and, only if you enable the option, your Mac's name — nothing else. Automatic backup is off by default; a backup is deleted by deleting the file.
 
 ## 3. What Keepit does not do
 

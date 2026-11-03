@@ -62,7 +62,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
 <main class="wrap"><aside aria-label="Contents"><p class="ttl">On this page</p><ol><li><a href="#part-1-getting-started">Part 1 — Getting started</a><ol><li><a href="#install">Install</a></li><li><a href="#first-launch">First launch</a></li></ol></li><li><a href="#part-2-everyday-use">Part 2 — Everyday use</a><ol><li><a href="#the-history-menu">The history menu</a></li><li><a href="#search-and-preview">Search and preview</a></li><li><a href="#paste-without-the-menu">Paste without the menu</a></li><li><a href="#the-paste-queue">The paste queue</a></li><li><a href="#the-extended-menu">The extended menu</a></li></ol></li><li><a href="#part-3-templates">Part 3 — Templates</a><ol><li><a href="#creating-and-organising">Creating and organising</a></li><li><a href="#placeholders">Placeholders</a></li><li><a href="#templates-that-ask-questions">Templates that ask questions</a></li></ol></li><li><a href="#part-4-the-viewer">Part 4 — The Viewer</a></li><li><a href="#part-5-settings">Part 5 — Settings</a></li><li><a href="#part-6-security">Part 6 — Security</a><ol><li><a href="#password-and-encryption">Password and encryption</a></li><li><a href="#touch-id">Touch ID</a></li><li><a href="#recovery-phrase">Recovery phrase</a></li><li><a href="#backup">Backup</a></li></ol></li><li><a href="#part-7-advanced">Part 7 — Advanced</a><ol><li><a href="#automation-the-keepit-url-scheme">Automation: the keepit:// URL scheme</a></li><li><a href="#updates">Updates</a></li><li><a href="#uninstalling">Uninstalling</a></li></ol></li><li><a href="#reference">Reference</a><ol><li><a href="#troubleshooting">Troubleshooting</a></li><li><a href="#keyboard-cheat-sheet">Keyboard cheat sheet</a></li><li><a href="#placeholder-cheat-sheet">Placeholder cheat sheet</a></li></ol></li></ol></aside><article><h1 id="keepit-user-guide">Keepit user guide</h1>
 <p>Keepit is a clipboard history and template manager for macOS. It lives in the menu bar, remembers
 everything you copy, and pastes any of it back with a hot key. All shortcuts below are the defaults;
-each can be changed in <em>Settings → Shortcuts</em>.</p>
+each can be changed in <em>Settings → Shortcuts</em>. This guide describes Keepit 3; the guide for
+Keepit 2.x is kept unchanged at <a href="https://keep.it.com/v2/guide.html">keep.it.com/v2/guide.html</a>.</p>
 <figure class="shot" style="max-width:629px"><a href="img/guide/menu.png?v=59e0a3e7" class="zoom" title="Open full size"><img src="img/guide/menu.png?v=59e0a3e7" alt="The history menu" width="629" height="778" loading="lazy"></a><figcaption>The history menu</figcaption></figure>
 
 <h2 id="part-1-getting-started">Part 1 — Getting started</h2>
@@ -82,17 +83,24 @@ Apple. Click <em>Open</em>.</p>
 with macOS 13 Ventura or newer.</p>
 <h3 id="first-launch">First launch</h3>
 <p>Keepit is a menu-bar app: no Dock icon, no window until you open one. After the first launch the 📎
-icon appears in the menu bar, and Keepit asks two things.</p>
-<p><strong>1. The Accessibility permission.</strong> To paste for you, Keepit sends ⌘V to the app you were working
+icon appears in the menu bar, and Keepit asks three things.</p>
+<p><strong>1. Restore from a backup?</strong> If this is a new Mac and you have a Keepit backup — an automatic one
+in iCloud Drive or another folder, or an exported <code>.keepit</code> file — <em>Restore from Backup…</em> brings
+your history and templates back before anything else happens; you unlock the file with the
+password of the Mac it came from, or its recovery phrase. <em>Start Fresh</em> skips this; the same
+restore is available later from <em>Settings → General → Backup → Restore…</em>, and double-clicking a
+<code>.keepit</code> file in the Finder opens it too. <a href="#backup">Backup</a> has the details.</p>
+<p><strong>2. A password (optional).</strong> Keepit can store the history and templates encrypted and unlock with
+Touch ID. You can decide now or later in <em>Settings → Security</em>; <a href="#part-6--security">Part 6</a>
+explains how it works. <em>Not Now</em> keeps everything unencrypted on disk. If you restored a backup
+with its password a moment ago, Keepit offers to keep that password for this Mac.</p>
+<figure class="shot" style="max-width:345px"><a href="img/guide/password-offer.png?v=82c5af4a" class="zoom" title="Open full size"><img src="img/guide/password-offer.png?v=82c5af4a" alt="The password offer on first launch" width="345" height="379" loading="lazy"></a><figcaption>The password offer on first launch</figcaption></figure>
+<p><strong>3. The Accessibility permission.</strong> To paste for you, Keepit sends ⌘V to the app you were working
 in; macOS allows that only for apps listed under <em>System Settings → Privacy &amp; Security →
 Accessibility</em>. Click <em>Open System Settings</em> and switch Keepit on. Without it Keepit still records
 and copies, but you press ⌘V yourself.</p>
 <figure class="shot" style="max-width:316px"><a href="img/guide/accessibility-prompt.png?v=02e5af1e" class="zoom" title="Open full size"><img src="img/guide/accessibility-prompt.png?v=02e5af1e" alt="Keepit asks for the Accessibility permission" width="316" height="410" loading="lazy"></a><figcaption>Keepit asks for the Accessibility permission</figcaption></figure>
 <figure class="shot" style="max-width:492px"><a href="img/guide/accessibility-settings.png?v=cea1e62b" class="zoom" title="Open full size"><img src="img/guide/accessibility-settings.png?v=cea1e62b" alt="Keepit enabled under Privacy &amp; Security → Accessibility" width="492" height="373" loading="lazy"></a><figcaption>Keepit enabled under Privacy &amp; Security → Accessibility</figcaption></figure>
-<p><strong>2. A password (optional).</strong> Keepit can store the history and templates encrypted and unlock with
-Touch ID. You can decide now or later in <em>Settings → Security</em>; <a href="#part-6--security">Part 6</a>
-explains how it works. <em>Not Now</em> keeps everything unencrypted on disk.</p>
-<figure class="shot" style="max-width:345px"><a href="img/guide/password-offer.png?v=82c5af4a" class="zoom" title="Open full size"><img src="img/guide/password-offer.png?v=82c5af4a" alt="The password offer on first launch" width="345" height="379" loading="lazy"></a><figcaption>The password offer on first launch</figcaption></figure>
 <p>Keepit starts at login by default — <em>Settings → General</em> switches that off.</p>
 <hr />
 <h2 id="part-2-everyday-use">Part 2 — Everyday use</h2>
@@ -328,7 +336,7 @@ that explains it.</p>
 <tbody>
 <tr>
 <td><strong>General</strong></td>
-<td>Launch at login · save history on quit, restore on start · paste after choosing (off = only copy) · paste delay — raise it for apps that are slow to come to the front · open the menu at the text cursor · Backup: <em>Export…</em> / <em>Import…</em> — <a href="#backup">Backup</a> · Updates: <em>Check for updates automatically</em> (direct-download edition; off = no network request at all) — <a href="#updates">Updates</a></td>
+<td>Launch at login · save history on quit, restore on start · paste after choosing (off = only copy) · paste delay — raise it for apps that are slow to come to the front · open the menu at the text cursor · Backup: <em>Back up automatically to a folder</em>, the folder, how many copies to keep, <em>Back Up Now</em>, <em>Restore…</em>, <em>Export…</em> / <em>Import…</em> — <a href="#backup">Backup</a> · Updates: <em>Check for updates automatically</em> (direct-download edition; off = no network request at all) — <a href="#updates">Updates</a></td>
 </tr>
 <tr>
 <td><strong>Shortcuts</strong></td>
@@ -395,10 +403,60 @@ lets you set a new one. <em>Recovery phrase → Create New…</em> issues a fres
 is no server and nothing to reset.</p>
 <figure class="shot" style="max-width:537px"><a href="img/guide/recovery-phrase.png?v=881e6de5" class="zoom" title="Open full size"><img src="img/guide/recovery-phrase.png?v=881e6de5" alt="The 24-word recovery phrase (words hidden here)" width="537" height="538" loading="lazy"></a><figcaption>The 24-word recovery phrase (words hidden here)</figcaption></figure>
 <h3 id="backup">Backup</h3>
-<p><em>Settings → General → Backup → Export…</em> writes one <code>.keepit</code> file with the history, templates and preferences, encrypted
-with a password you choose for the file. <em>Import…</em> reads it back on any Mac — <em>Merge</em> adds to
-what is there, <em>Replace</em> starts from the backup. The same file moves data between the direct
-download and the App Store edition.</p>
+<p>Keepit can keep an encrypted copy of your history and templates in a folder of your choice — iCloud
+Drive, Dropbox, Google Drive, an external disk, a NAS — and write a new one whenever something has
+changed. There is no Keepit server: the folder is yours, and the provider behind it only ever sees
+ciphertext.</p>
+<p><strong>Switching it on.</strong> <em>Settings → General → Backup → Back up automatically to a folder</em>, then
+<em>Choose…</em> a folder (the chooser opens in iCloud Drive). Automatic backup needs the password
+protection from <em>Settings → Security</em>: the copies are sealed with the same key as your data, so they
+open with your Keepit password — or your recovery phrase — on this Mac or any other, and nothing
+has to be set up for them. Without a password the checkbox is disabled and says so.</p>
+<p><strong>What happens then.</strong> About five minutes after the last change (and at the latest once a day while
+Keepit runs) Keepit writes a file named <code>Keepit-&lt;date and time&gt;-&lt;installation&gt;-&lt;id&gt;.keepit</code> into the
+folder, reads it back to check it, and only then deletes the oldest of its own copies beyond <em>Keep
+last</em> (10 by default, 1–100). Each copy is complete on its own — not an increment — so one file is
+all you ever need. Copies made by another Mac, or files you put there yourself, are never touched:
+two Macs sharing a folder write two independent series. A status line under the checkbox shows the
+last copy's time and size, or why the last attempt failed; <em>Back Up Now</em> makes a copy right away.
+Nothing happens while Keepit is locked.</p>
+<p><strong>Include this Mac's name</strong> (off by default) puts the computer's name into the unencrypted header
+of each file, so two series in one folder are easy to tell apart in the Finder. The storage provider
+can see that name; that is why it is optional.</p>
+<p><strong>Restore.</strong> <em>Restore…</em> opens a backup — one of this Mac's, another Mac's, or an exported file —
+after you unlock it: with the password of the Mac it was made on, or with the recovery phrase that
+Mac showed when its password was set (<em>Recovery Access…</em> in the password dialog). A preview shows
+when and where the file was made and how many items it holds, then:</p>
+<ul>
+<li><em>Merge</em> adds what is not already there — history items by content, and the backup's templates as
+  one new folder named <em>Imported <date></em>, without their hot keys — so you can see exactly what came
+  from the backup and move or delete it. Nothing of yours is overwritten.</li>
+<li><em>Replace</em> discards the current history and templates and takes the backup's instead. Before it
+  does, Keepit writes a copy of what you have now (<code>Keepit-before-restore-…</code>) into the backup
+  folder, or into a folder you pick; if that copy cannot be written, Replace does not start. If
+  Keepit has no password yet, you are asked for one for that copy, as with <em>Export…</em>.</li>
+</ul>
+<p><em>Also restore preferences</em> brings the hot keys, limits and options from the backup; the settings
+that express trust in a particular Mac — Touch ID, URL automation and its trusted apps, the backup
+folder itself — always stay as they are here. If the backup's history is larger than this Mac's
+limits allow, Keepit says how much would fit before you confirm.</p>
+<p>Restored a backup with its recovery phrase on a Mac that has no password yet? Keepit asks you to set
+one first, so the restored data never lands unencrypted, and lets you keep that phrase for this Mac
+or get a new one. Restored with the password? Keepit offers to keep it as this Mac's password, so
+automatic backups into the same folder continue without setup.</p>
+<p><strong>Moving to a new Mac</strong> is the whole point: install Keepit, choose <em>Restore from Backup…</em> on the
+first launch, pick the newest file in your folder, enter the old Mac's password, <em>Replace</em>.</p>
+<p><strong>Export… and Import…</strong> are still there for a single file by hand: <em>Export…</em> writes one <code>.keepit</code>
+with a password you choose for that file (it does not need Keepit's password protection), and
+<em>Import…</em> is the same restore flow for any <code>.keepit</code> file. The same file moves data between the
+direct download and the App Store edition, and between Keepit 2.x and 3.x — a file written by 3.0
+needs 3.0 or newer to open; 3.0 reads everything 2.x wrote.</p>
+<p><strong>If something goes wrong.</strong> A failed copy is reported in the status line and retried with growing
+pauses; the previous copies stay. If Keepit was quit or the Mac went down in the middle of a
+restore, the next launch quietly puts everything back as it was before the restore; in the rare
+case that it cannot (a file it cannot write, a full disk), it names the file and quits without
+changing anything — fix the file, launch again. Details, including what the file format looks like
+inside, are on the <a href="security.html#backups">security page</a>.</p>
 <hr />
 <h2 id="part-7-advanced">Part 7 — Advanced</h2>
 <h3 id="automation-the-keepit-url-scheme">Automation: the keepit:// URL scheme</h3>
@@ -483,6 +541,13 @@ was in front — including the app you switched away from a moment ago. See <em>
 and the <a href="security.html#what-is-not-recorded">security page</a>.</p>
 <p><strong>Touch ID is not offered.</strong> No Touch ID sensor is reachable at the moment (lid closed, no Touch ID
 keyboard). Keepit keeps the setting and asks for the fingerprint as soon as a sensor is available.</p>
+<p><strong>The backup status says the folder is not available.</strong> The folder was moved, renamed, unmounted
+or (iCloud Drive) evicted. Mount or restore it and the next copy goes through; or <em>Choose…</em> a new
+folder — a new folder starts a new series, the old files stay where they are.</p>
+<p><strong>A backup file will not open.</strong> <em>Wrong password</em> means the file's authentication tag did not
+match: make sure you are using the password of the Mac that <em>wrote</em> the file (after a password
+change, old copies still open with the old password), or its recovery phrase. <em>This backup needs
+Keepit 3.0 or newer</em> means the file was written by a newer version than the one opening it.</p>
 <p><strong>Homebrew refuses to install over an existing app.</strong> Quit Keepit and move
 <code>/Applications/Keepit.app</code> to the Trash first, or add <code>--force</code>.</p>
 <p>Still stuck? <a href="https://github.com/andrey-insarov/Keepit/issues">GitHub Issues</a> · admin@keep.it.com</p>

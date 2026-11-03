@@ -7,9 +7,11 @@ can be checked against it.
 
 ## In one paragraph
 
-Keepit stores your clipboard history and templates in one folder on your Mac and nowhere else. There
-is no account, no cloud, no analytics, and the app makes exactly one kind of network request — the
-daily update check against GitHub — which you can switch off. Clipboard data that the copying app marks as concealed is not
+Keepit stores your clipboard history and templates in one folder on your Mac and nowhere else — plus,
+if you switch it on, encrypted copies in a folder *you* choose (iCloud Drive, Dropbox, a disk); the
+provider behind that folder sees only ciphertext. There is no account, no Keepit cloud, no
+analytics, and the app makes exactly one kind of network request — the daily update check against
+GitHub — which you can switch off. Clipboard data that the copying app marks as concealed is not
 recorded, and copies from known password managers are excluded by app — a best-effort heuristic,
 explained below. If you set a password, everything on disk is AES-256-GCM encrypted with a key derived from that password; the key
 exists only in memory, is wiped when Keepit locks, and can optionally be released by Touch ID from
@@ -129,11 +131,45 @@ server-side reset and Keepit's authors cannot help.
 
 ## Backups
 
-*Settings → General → Backup → Export…* produces one `.keepit` file: a magic header, a format version, a random 16-byte
-salt, and the LZFSE-compressed JSON of history, templates and preferences sealed with AES-256-GCM
-under a PBKDF2 key from a password you choose for the file. The file is safe to keep on a cloud
-drive; its password is independent of the app password. *Import…* verifies the
-authentication tag before using anything.
+A backup is one `.keepit` file holding the history, the templates and (optionally) the preferences,
+compressed with LZFSE and sealed with AES-256-GCM. Two ways to make one, same file format:
+
+- **Automatic** (*Settings → General → Backup*, needs password protection): Keepit writes a new
+  complete copy into the folder you chose about five minutes after the last change (at the latest
+  once a day), reads it back and checks it before deleting the oldest of *its own* copies beyond
+  *Keep last*. The file key is derived from your vault's data key (HKDF-SHA256, a fixed label), so
+  the file opens with your Keepit password or your recovery phrase on any Mac, and a backup can never
+  be opened by a key that does not also open the vault.
+- **Export…** (any time, no password protection needed): the file key comes from a password you
+  choose for that file, PBKDF2-HMAC-SHA256 with 200 000 rounds and a random salt.
+
+**What a file looks like inside.** A magic string and a format version, then a small JSON header,
+then the ciphertext. The header is authenticated as GCM additional data — it cannot be altered
+without the file failing to open — but it is *not* encrypted, because the reader needs it to know how
+to derive the key. It contains: the mode (automatic or exported), the KDF name and round count, the
+salt, when the file was written and by which Keepit version, the minimum Keepit version able to read
+it, an installation identifier (random, not tied to hardware), a random file identifier, the
+vault's recovery block if there is one, and — only if you switched it on — your Mac's name. That is
+what a storage provider, or anyone who finds the file, can learn: that it is a Keepit backup, when
+it was made, and from which installation. Not what is in it, not how big the history is beyond the
+file size, not the password. The complete specification is in
+[`docs/FORMAT.md`](https://github.com/andrey-insarov/Keepit/blob/main/docs/FORMAT.md) in the
+repository, with reference files produced by an independent implementation; backups written by
+Keepit 2.x (format 1) still open.
+
+**Restore** verifies the GCM tag before anything else, decompresses with a hard size limit, and
+then checks every item against the same limits the app applies when recording — a backup is
+untrusted input even when it is your own. *Replace* first writes a verified copy of the current
+data; the swap itself is written to disk as one transaction with a journal, so a crash in the
+middle is put right at the next launch. Trust settings (Touch ID, URL automation and its trusted
+apps, the backup folder) are never taken from a backup.
+
+**Where the copies go** is up to you, and so is who else can reach that folder. The ciphertext is
+only as safe as the password behind it: the same advice as for the vault applies, and for
+*Export…* files, which carry their own password, a short one is the weak point. Deleting a copy
+from the folder is the only way to revoke it. On the App Store edition, access to the folder is a
+security-scoped bookmark granted when you choose it; Keepit never scans iCloud Drive or anything
+else on its own.
 
 ## Permissions Keepit asks for
 
@@ -249,6 +285,10 @@ exhaust memory or disk:
 - Encryption protects the files at rest. Someone with your macOS password and Keepit unlocked sees
   what you see.
 - Items you paste leave Keepit's control the moment they land in another app.
+- A backup in a cloud folder is as safe as that folder's account and the password behind the
+  file. The provider cannot read it, but can delete it, keep old versions of it, or — if the account
+  is compromised — hand the ciphertext to someone who then has unlimited time to guess the
+  password.
 - Which app wrote the clipboard is a guess (see *What is not recorded*). The reliable signal is the
   concealed mark, and only the copying app can set it.
 - macOS itself may keep traces Keepit does not control: the system log of pasteboard reads (above),
