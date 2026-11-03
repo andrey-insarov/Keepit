@@ -156,13 +156,15 @@ final class RestorePlanTests: XCTestCase {
         XCTAssertEqual(t.revision, t0 + 2)
     }
 
-    // The disk half of a commit: all three files or none. Here history.json cannot be written
-    // (a directory sits in its place); templates.json, already written, must come back as it was.
+    // The disk half of a commit: all three files or none. Here history.json cannot be replaced
+    // (it is immutable); templates.json, already written, must come back as it was.
     func testCommitWritesAllFilesOrPutsThePreviousOnesBack() throws {
         try FileManager.default.createDirectory(at: Storage.directory, withIntermediateDirectories: true)
         try Data("old-templates".utf8).write(to: Storage.templatesURL)
         try Data("old-settings".utf8).write(to: Storage.settingsURL)
-        try FileManager.default.createDirectory(at: Storage.historyURL, withIntermediateDirectories: true)
+        try Data("old-history".utf8).write(to: Storage.historyURL)
+        try FileManager.default.setAttributes([.immutable: true], ofItemAtPath: Storage.historyURL.path)
+        defer { try? FileManager.default.setAttributes([.immutable: false], ofItemAtPath: Storage.historyURL.path) }
         XCTAssertThrowsError(try RestoreCommit.writeFiles(templatesJSON: Data("new-templates".utf8), historyJSON: Data("new-history".utf8),
                                                           settingsJSON: Data("new-settings".utf8))) {
             guard case RestoreCommit.Failure.writeFailed(let name, _)? = $0 as? RestoreCommit.Failure else { return XCTFail("\($0)") }
@@ -170,6 +172,7 @@ final class RestorePlanTests: XCTestCase {
         }
         XCTAssertEqual(try Data(contentsOf: Storage.templatesURL), Data("old-templates".utf8))
         XCTAssertEqual(try Data(contentsOf: Storage.settingsURL), Data("old-settings".utf8))
+        XCTAssertEqual(try Data(contentsOf: Storage.historyURL), Data("old-history".utf8))
         // An existing file that cannot be read is not a missing file: the commit is refused before
         // the first write, so the undo can never "put back" nothing over it.
         try FileManager.default.setAttributes([.posixPermissions: 0o000], ofItemAtPath: Storage.templatesURL.path)
@@ -181,7 +184,7 @@ final class RestorePlanTests: XCTestCase {
         try FileManager.default.setAttributes([.posixPermissions: 0o644], ofItemAtPath: Storage.templatesURL.path)
         XCTAssertEqual(try Data(contentsOf: Storage.templatesURL), Data("old-templates".utf8))
         XCTAssertEqual(try Data(contentsOf: Storage.settingsURL), Data("old-settings".utf8))
-        try FileManager.default.removeItem(at: Storage.historyURL)
+        try FileManager.default.setAttributes([.immutable: false], ofItemAtPath: Storage.historyURL.path)
         // With the obstacle gone the same commit lands whole; nil history removes the file.
         XCTAssertNoThrow(try RestoreCommit.writeFiles(templatesJSON: Data("new-templates".utf8), historyJSON: nil, settingsJSON: Data("new-settings".utf8)))
         XCTAssertEqual(try Data(contentsOf: Storage.templatesURL), Data("new-templates".utf8))
