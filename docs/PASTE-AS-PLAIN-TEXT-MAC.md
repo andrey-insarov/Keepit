@@ -18,7 +18,7 @@ You can remap the shortcut per app in *System Settings → Keyboard → Keyboard
 
 ## Paste plain text anywhere with one key
 
-[Keepit](index.html), a free clipboard manager for Mac, adds a global plain-text paste that works the same in every app:
+[Keepit](/), a free clipboard manager for Mac, adds a global plain-text paste that works the same in every app:
 
 - **`⌃⌥V`** pastes the current clipboard as plain text, formatting stripped. It is a global hot key, so it works in apps that have no *Paste and Match Style* of their own.
 - In the history menu (`⌥M`), **`⌘` + number** pastes that item as plain text, and holding `⇧` gives every item a submenu with *Paste as Plain Text* and the other transformations.
@@ -28,10 +28,10 @@ You can remap the shortcut per app in *System Settings → Keyboard → Keyboard
 
 Every key can be changed in *Settings → Shortcuts*, and if you want plain text to be the default, set a per-app paste key in *Settings → Menu* for the apps that need it.
 
-Keepit is open source and keeps everything on your Mac; the [security page](security.html) explains what is stored and how.
+Keepit is open source and keeps everything on your Mac; the [security page](/security) explains what is stored and how.
 
 ## Related
 
-- [How to see your clipboard history on a Mac](clipboard-history-mac.html)
-- [How to clear the clipboard on a Mac](clear-clipboard-mac.html)
-- [The user guide](guide.html)
+- [How to see your clipboard history on a Mac](/clipboard-history-mac)
+- [How to clear the clipboard on a Mac](/clear-clipboard-mac)
+- [The user guide](/guide)

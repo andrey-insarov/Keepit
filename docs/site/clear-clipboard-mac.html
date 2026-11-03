@@ -1,8 +1,8 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>How to Clear the Clipboard on a Mac</title><link rel="icon" href="img/icon.png"><link rel="apple-touch-icon" href="img/icon.png">
-<meta name="description" content="Ways to empty the macOS clipboard — copy an empty selection, pbcopy from Terminal — and how to clear or pause a clipboard history.">
-<link rel="canonical" href="https://keep.it.com/clear-clipboard-mac.html"><meta property="og:type" content="article"><meta property="og:site_name" content="Keepit"><meta property="og:title" content="How to Clear the Clipboard on a Mac"><meta property="og:description" content="Ways to empty the macOS clipboard — copy an empty selection, pbcopy from Terminal — and how to clear or pause a clipboard history."><meta property="og:image" content="https://keep.it.com/img/social-preview.png"><meta property="og:url" content="https://keep.it.com/clear-clipboard-mac.html"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="How to Clear the Clipboard on a Mac"><meta name="twitter:description" content="Ways to empty the macOS clipboard — copy an empty selection, pbcopy from Terminal — and how to clear or pause a clipboard history."><meta name="twitter:image" content="https://keep.it.com/img/social-preview.png"><meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "HowTo", "@id": "https://keep.it.com/clear-clipboard-mac.html", "url": "https://keep.it.com/clear-clipboard-mac.html", "name": "How to clear the clipboard on a Mac", "headline": "How to clear the clipboard on a Mac", "description": "Ways to empty the macOS clipboard — copy an empty selection, pbcopy from Terminal — and how to clear or pause a clipboard history.", "inLanguage": "en", "isPartOf": {"@id": "https://keep.it.com/#site"}, "about": {"@id": "https://keep.it.com/#app"}, "author": {"@id": "https://keep.it.com/#org"}, "publisher": {"@id": "https://keep.it.com/#org"}, "image": "https://keep.it.com/img/social-preview.png", "dateModified": "2026-11-02"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Keepit", "item": "https://keep.it.com/"}, {"@type": "ListItem", "position": 2, "name": "Clear the clipboard on a Mac", "item": "https://keep.it.com/clear-clipboard-mac.html"}]}]}</script>
+<meta name="description" content="Three things to clear on a Mac: the system clipboard (copy an empty selection, pbcopy from Terminal), Spotlight's clipboard history in macOS 26 Tahoe, and a clipboard manager's history.">
+<link rel="canonical" href="https://keep.it.com/clear-clipboard-mac"><meta property="og:type" content="article"><meta property="og:site_name" content="Keepit"><meta property="og:title" content="How to Clear the Clipboard on a Mac"><meta property="og:description" content="Three things to clear on a Mac: the system clipboard (copy an empty selection, pbcopy from Terminal), Spotlight's clipboard history in macOS 26 Tahoe, and a clipboard manager's history."><meta property="og:image" content="https://keep.it.com/img/social-preview.png"><meta property="og:url" content="https://keep.it.com/clear-clipboard-mac"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="How to Clear the Clipboard on a Mac"><meta name="twitter:description" content="Three things to clear on a Mac: the system clipboard (copy an empty selection, pbcopy from Terminal), Spotlight's clipboard history in macOS 26 Tahoe, and a clipboard manager's history."><meta name="twitter:image" content="https://keep.it.com/img/social-preview.png"><meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "HowTo", "@id": "https://keep.it.com/clear-clipboard-mac", "url": "https://keep.it.com/clear-clipboard-mac", "name": "How to clear the clipboard on a Mac", "headline": "How to clear the clipboard on a Mac", "description": "Three things to clear on a Mac: the system clipboard (copy an empty selection, pbcopy from Terminal), Spotlight's clipboard history in macOS 26 Tahoe, and a clipboard manager's history.", "inLanguage": "en", "isPartOf": {"@id": "https://keep.it.com/#site"}, "about": {"@id": "https://keep.it.com/#app"}, "author": {"@id": "https://keep.it.com/#org"}, "publisher": {"@id": "https://keep.it.com/#org"}, "image": "https://keep.it.com/img/social-preview.png", "dateModified": "2026-11-03"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Keepit", "item": "https://keep.it.com/"}, {"@type": "ListItem", "position": 2, "name": "Clear the clipboard on a Mac", "item": "https://keep.it.com/clear-clipboard-mac"}]}]}</script>
 <style>
 :root{--paper:#fbfbfd;--ink:#0f1222;--ink-2:#4b4f63;--ink-3:#8a8ea3;--blue:#2f4fd1;--blue-deep:#1f3aa6;--blue-tint:#eef2ff;--line:#e3e5ef;--key:#fff;--key-edge:#cfd2de;--win:#fff;--sel:#2f5cf0}
 @media(prefers-color-scheme:dark){:root{--paper:#0c0d14;--ink:#f2f3f8;--ink-2:#b7bacb;--ink-3:#7c8097;--blue:#7d9bff;--blue-deep:#a9bdff;--blue-tint:#151b35;--line:#23263a;--key:#1b1e2e;--key-edge:#3a3e56;--win:#1a1c28;--sel:#3d6bff}}
@@ -56,38 +56,69 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
 #lb.on{display:flex}#lb img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
 </style></head>
 <body><header><div class="wrap">
-  <a class="brand" href="index.html"><img src="img/icon.png" alt="">Keepit</a>
-  <nav><a href="index.html#features">Features</a><a href="guide.html">Guide</a><a href="security.html">Security</a><a href="support.html">Support</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a></nav>
+  <a class="brand" href="/"><img src="img/icon.png" alt="">Keepit</a>
+  <nav><a href="/#features">Features</a><a href="/guide">Guide</a><a href="/security">Security</a><a href="/support">Support</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a></nav>
 </div></header>
 <main class="wrap narrow"><article><h1 id="how-to-clear-the-clipboard-on-a-mac">How to clear the clipboard on a Mac</h1>
-<p>There is no <em>Clear Clipboard</em> command in macOS, but the clipboard only ever holds one item, so replacing it is the same as clearing it. Here are the ways to do that, and how to wipe a clipboard history if you use a clipboard manager.</p>
-<h2 id="replace-the-clipboard-with-nothing">Replace the clipboard with nothing</h2>
+<p>"Clearing the clipboard" can mean three different things on a Mac, and each is done in a different place:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>What you clear</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The system clipboard</td>
+<td>The one item that <kbd class="k">⌘V</kbd> pastes right now</td>
+</tr>
+<tr>
+<td>Spotlight's clipboard history</td>
+<td>The items macOS 26 Tahoe keeps for a while after you copied them</td>
+</tr>
+<tr>
+<td>A clipboard manager's history</td>
+<td>Everything an app such as Keepit has recorded</td>
+</tr>
+</tbody>
+</table></div>
+<p>Clearing one does not clear the others. Here is how to do each.</p>
+<h2 id="1-clear-the-system-clipboard">1. Clear the system clipboard</h2>
+<p>There is no <em>Clear Clipboard</em> command in macOS, but the clipboard only ever holds one item, so replacing it is the same as clearing it.</p>
 <p><strong>Copy an empty selection.</strong> In any text field, select a single space (or nothing at all in some apps) and press <kbd class="k">⌘C</kbd>. The previous item is gone; pasting now gives you a space or nothing.</p>
 <p><strong>From Terminal.</strong> This empties the clipboard outright:</p>
 <pre><code class="language-bash">pbcopy &lt; /dev/null
 </code></pre>
 <p>Put it in a Shortcuts action or an Automator Quick Action if you want it on a key.</p>
 <p><strong>Restart.</strong> The clipboard lives in memory and does not survive logging out or restarting.</p>
-<h2 id="check-what-is-on-the-clipboard">Check what is on the clipboard</h2>
-<p>In Finder, <em>Edit → Show Clipboard</em> shows the current item, so you can confirm it is empty — or see what you are about to paste.</p>
-<h2 id="clear-a-clipboard-history">Clear a clipboard history</h2>
-<p>A clipboard manager keeps more than the last item, so clearing the system clipboard does not clear its history. In <a href="index.html">Keepit</a>:</p>
+<p><strong>Check the result.</strong> In Finder, <em>Edit → Show Clipboard</em> shows the current item, so you can confirm it is empty — or see what you are about to paste.</p>
+<h2 id="2-clear-spotlights-clipboard-history-macos-26-tahoe">2. Clear Spotlight's clipboard history (macOS 26 Tahoe)</h2>
+<p>If you are on macOS 26, Spotlight keeps a history of what you copy (<code>⌘Space</code>, then <kbd class="k">⌘4</kbd> to see it), and emptying the system clipboard does not touch it. To clear or limit it:</p>
+<ul>
+<li><strong>Clear it now.</strong> Open <em>System Settings → Spotlight</em> and click <em>Clear Clipboard History</em>. The button arrived in macOS 26.1.</li>
+<li><strong>Let it expire.</strong> Items are removed on their own after the window set in the same pane — 30 minutes, 8 hours (the default) or 7 days.</li>
+<li><strong>Switch it off.</strong> Turning clipboard history off in <em>System Settings → Spotlight</em> stops recording.</li>
+</ul>
+<p>On macOS 15 Sequoia and earlier there is no Spotlight history, so there is nothing to clear.</p>
+<h2 id="3-clear-a-clipboard-managers-history">3. Clear a clipboard manager's history</h2>
+<p>A clipboard manager keeps its own record, independent of the system clipboard and of Spotlight. In <a href="/">Keepit</a>:</p>
 <ul>
 <li><strong><kbd class="k">⌥C</kbd></strong> or <em>Clear History</em> in the menu removes every history item. Templates are kept.</li>
 <li>Delete one item: hold <kbd class="k">⇧</kbd> in the history menu and choose <em>Delete</em> from the item's submenu, or <kbd class="k">⌃⌥⌫</kbd> for the newest item.</li>
 <li><strong><kbd class="k">⌥P</kbd></strong> pauses recording for ten minutes — for typing something you would rather not have in the history at all.</li>
-<li>Anything the copying app marks as concealed is not recorded in the first place, and copies made from password managers (1Password, Bitwarden, KeePassXC, Apple Passwords and others) are excluded by app — best effort, as the <a href="security.html#what-is-not-recorded">security page</a> explains.</li>
+<li>Anything the copying app marks as concealed is not recorded in the first place, and copies made from password managers (1Password, Bitwarden, KeePassXC, Apple Passwords and others) are excluded by app — best effort, as the <a href="/security#what-is-not-recorded">security page</a> explains.</li>
 </ul>
 <p>If the history is encrypted (<em>Settings → Security</em>), locking Keepit with <kbd class="k">⌥L</kbd> wipes the key from memory, and the files on disk stay unreadable until you unlock. Deleting Keepit and all its data is one command in <em>Settings → Advanced</em>.</p>
 <h2 id="related">Related</h2>
 <ul>
-<li><a href="clipboard-history-mac.html">How to see your clipboard history on a Mac</a></li>
-<li><a href="paste-as-plain-text-mac.html">How to paste as plain text on a Mac</a></li>
-<li><a href="security.html">Security: what Keepit stores and where</a></li>
+<li><a href="/clipboard-history-mac">How to see your clipboard history on a Mac</a></li>
+<li><a href="/paste-as-plain-text-mac">How to paste as plain text on a Mac</a></li>
+<li><a href="/security">Security: what Keepit stores and where</a></li>
 </ul></article></main>
 <footer><div class="wrap">
   <span>© 2026 UK Intis Telecom LTD · Keepit is MIT-licensed</span>
-  <span><a href="privacy.html">Privacy policy</a> · <a href="security.html">Security</a> · <a href="support.html">Support</a> · <a href="https://github.com/andrey-insarov/Keepit/blob/main/CHANGELOG.md">Changelog</a> · <a href="https://it.com">it.com</a></span>
+  <span><a href="/privacy">Privacy policy</a> · <a href="/security">Security</a> · <a href="/support">Support</a> · <a href="https://github.com/andrey-insarov/Keepit/blob/main/CHANGELOG.md">Changelog</a> · <a href="https://it.com">it.com</a></span>
 </div></footer>
 <div id="lb" role="dialog" aria-label="Full-size screenshot"><img alt=""></div>
 <script>

@@ -19,6 +19,13 @@ DATE = datetime.date.today().isoformat()
 
 SITE = "https://keep.it.com/"
 
+
+def page_url(out_name: str) -> str:
+    """Public URL of a rendered page. Cloudflare Pages serves guide.html at /guide and redirects
+    /guide.html there (308), so canonical, sitemap, JSON-LD and every internal link use the
+    extensionless form; the files on disk keep their .html names."""
+    return SITE + out_name.removesuffix(".html")
+
 # (source, output, <title>, meta description, sidebar TOC?, schema.org type, breadcrumb label)
 PAGES = [
     ("GUIDE.md", "guide.html", "Keepit User Guide – Clipboard Manager for Mac",
@@ -30,21 +37,21 @@ PAGES = [
     ("PRIVACY.md", "privacy.html", "Keepit Privacy Policy",
      "Keepit's privacy policy: the app collects, transmits and shares nothing; everything stays on your Mac, and optional backups go only to a folder you choose, encrypted.", False, "WebPage", "Privacy policy"),
     ("CLIPBOARD-HISTORY-MAC.md", "clipboard-history-mac.html", "How to See Clipboard History on a Mac (2026)",
-     "macOS keeps only the last thing you copied. Here is what Finder's Show Clipboard can do, and how to get a searchable clipboard history on your Mac with a free, open-source app.", False, "HowTo", "Clipboard history on a Mac"),
+     "macOS 26 Tahoe keeps a short clipboard history in Spotlight (⌘Space, then ⌘4); earlier versions keep one item. How to open it, what it does not keep, and how to get a full, searchable clipboard history with a free, open-source app.", False, "HowTo", "Clipboard history on a Mac"),
     ("PASTE-AS-PLAIN-TEXT-MAC.md", "paste-as-plain-text-mac.html", "How to Paste as Plain Text on a Mac",
      "The macOS shortcut for pasting without formatting (Paste and Match Style, ⌥⇧⌘V), how to remap it per app, and a one-key plain-text paste that works in every app.", False, "HowTo", "Paste as plain text on a Mac"),
     ("CLEAR-CLIPBOARD-MAC.md", "clear-clipboard-mac.html", "How to Clear the Clipboard on a Mac",
-     "Ways to empty the macOS clipboard — copy an empty selection, pbcopy from Terminal — and how to clear or pause a clipboard history.", False, "HowTo", "Clear the clipboard on a Mac"),
+     "Three things to clear on a Mac: the system clipboard (copy an empty selection, pbcopy from Terminal), Spotlight's clipboard history in macOS 26 Tahoe, and a clipboard manager's history.", False, "HowTo", "Clear the clipboard on a Mac"),
 ]
 
 HEADER = """<header><div class="wrap">
-  <a class="brand" href="index.html"><img src="img/icon.png" alt="">Keepit</a>
-  <nav><a href="index.html#features">Features</a><a href="guide.html">Guide</a><a href="security.html">Security</a><a href="support.html">Support</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a></nav>
+  <a class="brand" href="/"><img src="img/icon.png" alt="">Keepit</a>
+  <nav><a href="/#features">Features</a><a href="/guide">Guide</a><a href="/security">Security</a><a href="/support">Support</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a></nav>
 </div></header>"""
 
 FOOTER = """<footer><div class="wrap">
   <span>© 2026 UK Intis Telecom LTD · Keepit is MIT-licensed</span>
-  <span><a href="privacy.html">Privacy policy</a> · <a href="security.html">Security</a> · <a href="support.html">Support</a> · <a href="https://github.com/andrey-insarov/Keepit/blob/main/CHANGELOG.md">Changelog</a> · <a href="https://it.com">it.com</a></span>
+  <span><a href="/privacy">Privacy policy</a> · <a href="/security">Security</a> · <a href="/support">Support</a> · <a href="https://github.com/andrey-insarov/Keepit/blob/main/CHANGELOG.md">Changelog</a> · <a href="https://it.com">it.com</a></span>
 </div></footer>"""
 
 CSS = """
@@ -156,7 +163,7 @@ def toc_html(tokens, depth=0) -> str:
 
 
 def json_ld(out_name: str, title: str, description: str, kind: str, crumb: str, headline: str) -> str:
-    url = SITE + out_name
+    url = page_url(out_name)
     crumbs = {"@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": "Keepit", "item": SITE},
         {"@type": "ListItem", "position": 2, "name": crumb, "item": url}]}
@@ -202,22 +209,25 @@ def render(src_name: str, out_name: str, title: str, description: str, with_toc:
             f'<meta name="viewport" content="width=device-width, initial-scale=1">\n'
             f'<title>{title}</title><link rel="icon" href="img/icon.png"><link rel="apple-touch-icon" href="img/icon.png">\n'
             f'<meta name="description" content="{description}">\n'
-            f'<link rel="canonical" href="{SITE}{out_name}">'
+            f'<link rel="canonical" href="{page_url(out_name)}">'
             f'<meta property="og:type" content="article"><meta property="og:site_name" content="Keepit">'
             f'<meta property="og:title" content="{title}"><meta property="og:description" content="{description}">'
-            f'<meta property="og:image" content="{SITE}img/social-preview.png"><meta property="og:url" content="{SITE}{out_name}">'
+            f'<meta property="og:image" content="{SITE}img/social-preview.png"><meta property="og:url" content="{page_url(out_name)}">'
             f'<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{title}"><meta name="twitter:description" content="{description}"><meta name="twitter:image" content="{SITE}img/social-preview.png">'
             f'<meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">\n'
             f'{json_ld(out_name, title, description, kind, crumb, headline)}\n'
             f'<style>{CSS}</style></head>\n<body>{HEADER}\n<main class="{main_cls}">{aside}<article>{body}</article></main>\n{FOOTER}\n'
             f'<div id="lb" role="dialog" aria-label="Full-size screenshot"><img alt=""></div>\n'
             f'<script>{JS}</script>\n</body></html>')
+    stray = re.findall(r'href="(?:\.\./|/)?[a-z0-9-]+\.html[^"]*"', page)
+    if stray:
+        raise SystemExit(f"{out_name}: internal links must not end in .html (Cloudflare Pages redirects them): {sorted(set(stray))}")
     (site / out_name).write_text(page, encoding="utf-8")
     print(out_name, len(page), "bytes;", body.count('class="shot"'), "figures;", body.count('<kbd'), "keycaps")
 
 
 def write_sitemap() -> None:
-    urls = [("", "1.0", "weekly", modified("../docs/site/index.html"))] + [(p[1], "0.8" if p[5] != "WebPage" else "0.3", "monthly", modified(p[0])) for p in PAGES]
+    urls = [("", "1.0", "weekly", modified("../docs/site/index.html"))] + [(p[1].removesuffix(".html"), "0.8" if p[5] != "WebPage" else "0.3", "monthly", modified(p[0])) for p in PAGES]
     body = "".join(f"<url><loc>{SITE}{u}</loc><lastmod>{d}</lastmod><changefreq>{f}</changefreq><priority>{pr}</priority></url>" for u, pr, f, d in urls)
     (site / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{body}</urlset>\n', encoding="utf-8")
     (site / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE}sitemap.xml\n", encoding="utf-8")

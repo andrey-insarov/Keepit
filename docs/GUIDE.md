@@ -3,7 +3,7 @@
 Keepit is a clipboard history and template manager for macOS. It lives in the menu bar, remembers
 everything you copy, and pastes any of it back with a hot key. All shortcuts below are the defaults;
 each can be changed in *Settings → Shortcuts*. This guide describes Keepit 3; the guide for
-Keepit 2.x is kept unchanged at [keep.it.com/v2/guide.html](https://keep.it.com/v2/guide.html).
+Keepit 2.x is kept unchanged at [keep.it.com/v2/guide](https://keep.it.com/v2/guide).
 
 ![The history menu](site/img/guide/menu.png)
 
@@ -360,7 +360,7 @@ Drive, Dropbox, Google Drive, an external disk, a NAS — and write a new one wh
 changed. There is no Keepit server: the folder is yours. What the provider behind it can see is the
 encrypted file, its size and a small unencrypted header (when and by which Keepit it was written,
 how the key is derived, random identifiers — and your Mac's name only if you switch that on); the
-[security page](security.html#backups) lists it field by field.
+[security page](/security#backups) lists it field by field.
 
 **Switching it on.** *Settings → General → Backup → Back up automatically to a folder*, then
 *Choose…* a folder (the chooser opens in iCloud Drive). Automatic backup needs the password
@@ -422,7 +422,7 @@ pauses; the previous copies stay. If Keepit was quit or the Mac went down in the
 restore, the next launch quietly puts everything back as it was before the restore; in the rare
 case that it cannot (a file it cannot write, a full disk), it names the file and quits without
 changing anything — fix the file, launch again. Details, including what the file format looks like
-inside, are on the [security page](security.html#backups).
+inside, are on the [security page](/security#backups).
 
 ---
 
@@ -494,7 +494,7 @@ lookup off if you prefer the pointer always.
 **Something I copied is missing.** Anything marked concealed by the copying app is not recorded,
 and neither is a copy made while a password manager (built-in list) or an app on your ignore list
 was in front — including the app you switched away from a moment ago. See *Settings → History*
-and the [security page](security.html#what-is-not-recorded).
+and the [security page](/security#what-is-not-recorded).
 
 **Touch ID is not offered.** No Touch ID sensor is reachable at the moment (lid closed, no Touch ID
 keyboard). Keepit keeps the setting and asks for the fingerprint as soon as a sensor is available.

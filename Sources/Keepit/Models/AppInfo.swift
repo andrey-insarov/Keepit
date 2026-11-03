@@ -22,7 +22,7 @@ enum AppInfo {
     }
     static let supportURL = "https://keep.it.com/support"
     static let homepage = "https://keep.it.com"
-    static let guideURL = URL(string: "https://keep.it.com/guide.html")!
+    static let guideURL = URL(string: "https://keep.it.com/guide")!
 
     /// Accent for everything "Template": navy in light mode, a readable lighter navy in dark mode.
     static let templateColor = NSColor(name: "keepit.template") { appearance in

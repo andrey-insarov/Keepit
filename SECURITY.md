@@ -1,6 +1,6 @@
 # Security policy
 
-How Keepit protects your data — storage, encryption, Touch ID, permissions, network, verifying downloads — is described in [docs/SECURITY.md](docs/SECURITY.md) (also at https://keep.it.com/security.html).
+How Keepit protects your data — storage, encryption, Touch ID, permissions, network, verifying downloads — is described in [docs/SECURITY.md](docs/SECURITY.md) (also at https://keep.it.com/security).
 
 ## Reporting a vulnerability
 

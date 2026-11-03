@@ -64,7 +64,7 @@ We do not transfer your data anywhere, because we do not receive it. GitHub, App
 
 ## 11. Changes to this policy
 
-We may update this policy when the app or the law changes. The current version is always at <https://keep.it.com/privacy.html>, with its version number and effective date at the top; material changes will also be noted in the app's release notes.
+We may update this policy when the app or the law changes. The current version is always at <https://keep.it.com/privacy>, with its version number and effective date at the top; material changes will also be noted in the app's release notes.
 
 ## 12. Contact
 

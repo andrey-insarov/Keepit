@@ -20,6 +20,7 @@
 - Touch ID keychain item is per data directory — a `KEEPIT_DATA_DIR` or self-test run can no longer remove the real installation's key
 - Import no longer applies trust settings (URL automation, trusted apps, Touch ID) from a backup
 - Password change dialog says that earlier backups still open with the old password
+- Site: pages are addressed without `.html` everywhere (canonical, sitemap, JSON-LD, links) to match what Cloudflare Pages serves; the clipboard-history and clear-clipboard how-tos cover Spotlight's clipboard history in macOS 26 Tahoe; the Help link in the app opens `keep.it.com/guide`
 
 ## 2.13.1 — 2026-11-03
 
