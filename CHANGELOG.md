@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 2.13.0 — 2026-11-03
 
 - **On-screen keyboard for the password.** The keyboard button next to the password field opens a small panel with shuffled keys; the panel is excluded from screenshots, screen recording and screen sharing, and clicks go straight into the protected buffer without key events, so keyloggers see nothing. Shift, symbols, backspace, *Shuffle*
 - Password dialog: *OK* is enabled only once a password is typed and, when setting one, once both fields match — checked as you type, from either keyboard. The text no longer claims "there is no recovery": the recovery phrase follows right after
