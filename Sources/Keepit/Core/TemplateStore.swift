@@ -66,10 +66,9 @@ final class TemplateStore {
         changed()
     }
 
-    /// Backup import, "Merge": the imported tree goes into a new folder under the root.
-    /// Returns false (and changes nothing) if that would exceed the template limits.
-    func mergeImported(_ node: TemplateNode, folderName: String) -> Bool {
-        let folder = TemplateNode(name: folderName, children: node.children)
+    /// Restore "Merge": a folder `RestorePlan` prepared (fresh ids, no hot keys, limits checked)
+    /// goes under the root. Returns false (and changes nothing) if it does not fit after all.
+    func insertImported(_ folder: TemplateNode) -> Bool {
         guard canInsert(folder, under: root) else { return false }
         root.insert(folder)
         root.relink()

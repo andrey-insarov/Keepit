@@ -61,8 +61,8 @@ final class BackupTests: XCTestCase {
     func testTemplateMergeGoesIntoFolderAndReplaceSwapsRoot() {
         let t = TemplateStore()
         let before = t.root.subtreeCount
-        let imported = TemplateNode(name: "Template", children: [TemplateNode(name: "A", text: "a"), TemplateNode(name: "B", text: "b")])
-        XCTAssertTrue(t.mergeImported(imported, folderName: "Imported"))
+        let imported = TemplateNode(name: "Imported", children: [TemplateNode(name: "A", text: "a"), TemplateNode(name: "B", text: "b")])
+        XCTAssertTrue(t.insertImported(imported))
         XCTAssertEqual(t.root.subtreeCount, before + 3)
         let folder = t.root.children.last!
         XCTAssertEqual(folder.name, "Imported")

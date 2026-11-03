@@ -137,8 +137,15 @@ final class HistoryStore {
 
     /// Two independent rings: text/file items and image items, each dropping its oldest first.
     private func trim() {
+        items = Self.trimmed(items, settings: settings)
+    }
+
+    /// The ring rules as a pure function: age, the text and image rings, then the byte budget.
+    /// Used by `trim()` and by `RestorePlan`, which must know the outcome before anything changes.
+    static func trimmed(_ input: [ClipItem], settings: Settings, now: Date = Date()) -> [ClipItem] {
+        var items = input
         if settings.historyMaxAge > 0 {
-            let cutoff = Date().addingTimeInterval(-settings.historyMaxAge)
+            let cutoff = now.addingTimeInterval(-settings.historyMaxAge)
             items.removeAll { $0.date < cutoff }
         }
         var textSeen = 0, imageSeen = 0
@@ -155,6 +162,7 @@ final class HistoryStore {
         while total > settings.maxHistoryBytes, items.count > 1 {
             total -= items.removeLast().byteSize
         }
+        return items
     }
 
     private func changed() {
