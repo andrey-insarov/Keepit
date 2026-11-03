@@ -16,10 +16,33 @@ import AppKit
 extension AppDelegate {
     static let urlScheme = "keepit"
 
+    /// A double-clicked file or a keepit:// URL can arrive before `applicationDidFinishLaunching`
+    /// (Apple documents that order). Until the stores exist and the password gate has been passed,
+    /// the URLs wait; `openPendingURLs()` runs them once launch is complete.
     func application(_ application: NSApplication, open urls: [URL]) {
-        for url in urls {
-            if url.isFileURL, url.pathExtension.lowercased() == Backup.fileExtension { restore(from: url) } else { handle(url) }
+        guard isLaunched else { pendingOpenURLs += urls; return }
+        for url in urls { open(url) }
+    }
+
+    func open(_ url: URL) {
+        if url.isFileURL, url.pathExtension.lowercased() == Backup.fileExtension {
+            if isLocked, !unlock() { return }         // a backup opened while locked: ask for the password first
+            restore(from: url)
+        } else {
+            handle(url)
         }
+    }
+
+    /// Called at the end of launch. A `.keepit` file among the pending URLs is the restore the
+    /// user asked for, so the first-run "Restore from a backup?" offer is skipped in its favour.
+    func openPendingURLs() {
+        let urls = pendingOpenURLs
+        pendingOpenURLs = []
+        for url in urls { open(url) }
+    }
+
+    var hasPendingBackupFile: Bool {
+        pendingOpenURLs.contains { $0.isFileURL && $0.pathExtension.lowercased() == Backup.fileExtension }
     }
 
     /// Commands that only show Keepit's own UI. Everything else changes the clipboard, the history,

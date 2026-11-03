@@ -42,6 +42,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private(set) var lockCount = 0
     /// Bumped by every `apply(settings:)`, for the same reason.
     private(set) var settingsRevision = 0
+    /// Set at the end of `applicationDidFinishLaunching`; file and URL opens before that are queued.
+    private(set) var isLaunched = false
+    var pendingOpenURLs: [URL] = []
 
     /// No settings file yet → first launch (onboarding, login item).
     private let isFirstRun: Bool
@@ -128,17 +131,22 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             return
         }
 
+        isLaunched = true
         if isFirstRun {
             if settings.launchAtLogin { setLaunchAtLogin(true) }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
                 guard let self else { return }
-                _ = self.offerRestoreOnFirstRun()
+                if self.hasPendingBackupFile { self.openPendingURLs() }   // the double-clicked backup is the answer
+                else { _ = self.offerRestoreOnFirstRun() }
                 if !Vault.isEnabled { self.offerPasswordOnFirstRun() }   // a restore may have set the password already
                 if !Paster.isTrusted() { self.showAccessibilityAlert() }
+                self.openPendingURLs()
             }
-        } else if !Paster.isTrusted() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-                self?.showAccessibilityAlert()
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + (Paster.isTrusted() ? 0.1 : 1.0)) { [weak self] in
+                guard let self else { return }
+                if !Paster.isTrusted() { self.showAccessibilityAlert() }
+                self.openPendingURLs()
             }
         }
     }
@@ -477,6 +485,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         history.saveNow()
         templates.saveNow()
         syncBiometricKey()
+        configureBackup()                             // a folder kept in settings becomes a destination again
         if let key = Storage.key {
             do {
                 let words = try Vault.createRecovery(for: key, entropy: recoveryEntropy)
@@ -528,6 +537,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         BiometricUnlock.remove()
         history.saveNow()
         templates.saveNow()
+        if settings.backupEnabled {                   // automatic backup needs the vault: off together, visibly
+            var s = settings; s.backupEnabled = false
+            apply(settings: s)                        // → configureBackup(): destination nil
+        }
         return true
     }
 

@@ -240,6 +240,10 @@ Automatic tests (temporary folders, fakes where macOS is involved):
 - [ ] Process killed between the three writes → next launch puts the previous files back and reports nothing; killed during the replay → replayed again; journal without marker → removed, files untouched (`RestorePlanTests.testInterruptedCommitIsReplayedAtLaunch`); the journal holds the last queued save (`testJournalWaitsForQueuedSaves`); an armed journal is never discarded by a new commit (`testArmedJournalIsNeverReplacedByANewCommit`).
 - [ ] Replay failing at launch (e.g. `chflags uchg history.json`) → alert naming the file, Keepit quits without writing; after `chflags nouchg` the next launch replays and runs normally. Manual: `kill -9` Keepit right after "Saving a copy…" closes, relaunch, data as before the restore.
 - [ ] Trust settings never restored.
+- [ ] Reset → add a template → quit → relaunch: the template is there (the store is live again after the purge); same after Reset → Restore → edit (`testStoresAreLiveAgainAfterPurgeAndRefill`).
+- [ ] The engine runs the reader's validation on what it sealed: a tree the reader would reject is a failed backup, not a file in the registry (`testEngineDoesNotReportSuccessForAPayloadTheReaderRejects`); the Viewer counts a moved subtree's full height, so it cannot build such a tree (`testSubtreeInsertAndMoveCountTheirFullHeight`).
+- [ ] Protection off → automatic backup goes off with it (checkbox, status, engine destination nil); protection on again → a folder still in settings becomes the destination again without reopening Settings.
+- [ ] Cold launch by double-clicking a `.keepit` (Keepit not running): the password gate comes first, then the restore; on a first run the double-clicked file replaces the "Restore from a backup?" offer. Opening a `.keepit` while locked asks for the password first.
 - [ ] Every fixture in `Tests/KeepitTests/Fixtures` (v1 and v2) opens as its sidecar says.
 
 Manual, before release (Andrey):
