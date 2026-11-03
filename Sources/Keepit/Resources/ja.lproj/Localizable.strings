@@ -484,3 +484,5 @@
 "Could not prepare the undo copy of the current data: %@" = "現在のデータの取り消し用コピーを準備できませんでした：%@";
 "An earlier restore could not be undone completely. Quit and launch Keepit again so it can finish putting the data back." = "以前の復元を完全に取り消せませんでした。Keepit を終了して再起動すると、データの復旧が完了します。";
 "Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again." = "Keepit は中断された復元の取り消しを完了できませんでした：%@\n\n何も変更されません。上記のファイルの問題（権限、ロックフラグ、ディスク容量）を解決して、Keepit を再起動してください。";
+"Use the password you just entered as this Mac's Keepit password. Automatic backup can then be switched on for this Mac in Settings → General. You can set a different password instead." = "今入力したパスワードをこの Mac の Keepit パスワードとして使います。その後、設定 → 一般 でこの Mac の自動バックアップをオンにできます。別のパスワードを設定することもできます。";
+"The copy was not finished" = "コピーは完了しませんでした";

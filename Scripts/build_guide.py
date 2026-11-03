@@ -28,7 +28,7 @@ PAGES = [
     ("SUPPORT.md", "support.html", "Keepit Support",
      "How to get help with Keepit, the clipboard manager for Mac, and quick answers to the usual questions.", False, "WebPage", "Support"),
     ("PRIVACY.md", "privacy.html", "Keepit Privacy Policy",
-     "Keepit's privacy policy: the app collects, transmits and shares nothing; everything stays on your Mac.", False, "WebPage", "Privacy policy"),
+     "Keepit's privacy policy: the app collects, transmits and shares nothing; everything stays on your Mac, and optional backups go only to a folder you choose, encrypted.", False, "WebPage", "Privacy policy"),
     ("CLIPBOARD-HISTORY-MAC.md", "clipboard-history-mac.html", "How to See Clipboard History on a Mac (2026)",
      "macOS keeps only the last thing you copied. Here is what Finder's Show Clipboard can do, and how to get a searchable clipboard history on your Mac with a free, open-source app.", False, "HowTo", "Clipboard history on a Mac"),
     ("PASTE-AS-PLAIN-TEXT-MAC.md", "paste-as-plain-text-mac.html", "How to Paste as Plain Text on a Mac",

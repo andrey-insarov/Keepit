@@ -484,4 +484,6 @@ T = {
 'Could not prepare the undo copy of the current data: %@': 'Kon de terugzetkopie van de huidige gegevens niet voorbereiden: %@',
 'An earlier restore could not be undone completely. Quit and launch Keepit again so it can finish putting the data back.': 'Een eerder herstel kon niet volledig ongedaan worden gemaakt. Stop Keepit en start het opnieuw zodat het de gegevens kan terugzetten.',
 'Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again.': 'Keepit kon het ongedaan maken van een onderbroken herstel niet afmaken: %@\n\nEr wordt niets gewijzigd. Los het probleem met het hierboven genoemde bestand op (rechten, vergrendeling, schijfruimte) en start Keepit opnieuw.',
+"Use the password you just entered as this Mac's Keepit password. Automatic backup can then be switched on for this Mac in Settings → General. You can set a different password instead.": 'Gebruik het zojuist ingevoerde wachtwoord als Keepit-wachtwoord van deze Mac. Daarna kan automatische back-up voor deze Mac worden ingeschakeld in Instellingen → Algemeen. Je kunt ook een ander wachtwoord instellen.',
+'The copy was not finished': 'De kopie is niet voltooid',
 }

@@ -484,4 +484,6 @@ T = {
 'Could not prepare the undo copy of the current data: %@': 'Praeguste andmete tagasivõtukoopiat ei õnnestunud ette valmistada: %@',
 'An earlier restore could not be undone completely. Quit and launch Keepit again so it can finish putting the data back.': 'Varasemat taastamist ei õnnestunud täielikult tagasi võtta. Sulgege Keepit ja käivitage see uuesti, et andmete tagasipanek lõpule viia.',
 'Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again.': 'Keepit ei saanud katkestatud taastamise tagasivõtmist lõpetada: %@\n\nMidagi ei muudeta. Parandage ülal nimetatud fail (õigused, lukulipp, kettaruum) ja käivitage Keepit uuesti.',
+"Use the password you just entered as this Mac's Keepit password. Automatic backup can then be switched on for this Mac in Settings → General. You can set a different password instead.": 'Kasutage äsja sisestatud parooli selle Maci Keepiti paroolina. Seejärel saab selle Maci automaatse varundamise sisse lülitada: Seaded → Üldine. Võite määrata ka teise parooli.',
+'The copy was not finished': 'Koopiat ei viidud lõpule',
 }

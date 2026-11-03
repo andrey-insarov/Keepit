@@ -484,4 +484,6 @@ T = {
 'Could not prepare the undo copy of the current data: %@': 'Neizdevās sagatavot pašreizējo datu atsaukšanas kopiju: %@',
 'An earlier restore could not be undone completely. Quit and launch Keepit again so it can finish putting the data back.': 'Iepriekšējo atjaunošanu neizdevās pilnībā atsaukt. Aizveriet Keepit un palaidiet to vēlreiz, lai tas pabeigtu datu atgriešanu.',
 'Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again.': 'Keepit nevarēja pabeigt pārtrauktas atjaunošanas atsaukšanu: %@\n\nNekas netiks mainīts. Salabojiet iepriekš nosaukto failu (atļaujas, bloķēšanas karodziņš, vieta diskā) un palaidiet Keepit vēlreiz.',
+"Use the password you just entered as this Mac's Keepit password. Automatic backup can then be switched on for this Mac in Settings → General. You can set a different password instead.": 'Lietot tikko ievadīto paroli kā šī Mac Keepit paroli. Pēc tam automātisko dublēšanu šim Mac var ieslēgt sadaļā Iestatījumi → Vispārīgi. Varat iestatīt arī citu paroli.',
+'The copy was not finished': 'Kopija netika pabeigta',
 }

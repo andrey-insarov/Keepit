@@ -484,3 +484,5 @@
 "Could not prepare the undo copy of the current data: %@" = "無法準備目前資料的復原副本：%@";
 "An earlier restore could not be undone completely. Quit and launch Keepit again so it can finish putting the data back." = "先前的還原未能完全撤銷。請結束並重新啟動 Keepit，以便完成資料回復。";
 "Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again." = "Keepit 無法完成對中斷還原的撤銷：%@\n\n不會更改任何內容。請修正上述檔案（權限、鎖定旗標、磁碟空間）後重新啟動 Keepit。";
+"Use the password you just entered as this Mac's Keepit password. Automatic backup can then be switched on for this Mac in Settings → General. You can set a different password instead." = "將剛輸入的密碼用作本機的 Keepit 密碼。之後可在 設定 → 一般 中為本機開啟自動備份。也可以設定其他密碼。";
+"The copy was not finished" = "副本未完成";

@@ -484,4 +484,6 @@ T = {
 'Could not prepare the undo copy of the current data: %@': 'לא ניתן להכין את עותק הביטול של הנתונים הנוכחיים: %@',
 'An earlier restore could not be undone completely. Quit and launch Keepit again so it can finish putting the data back.': 'לא ניתן היה לבטל לגמרי שחזור קודם. צאו והפעילו את Keepit מחדש כדי שיסיים להחזיר את הנתונים.',
 'Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again.': 'Keepit לא הצליח להשלים את ביטול השחזור שנקטע: %@\n\nדבר לא ישתנה. תקנו את הקובץ שצוין למעלה (הרשאות, דגל נעילה, מקום בדיסק) והפעילו את Keepit מחדש.',
+"Use the password you just entered as this Mac's Keepit password. Automatic backup can then be switched on for this Mac in Settings → General. You can set a different password instead.": 'להשתמש בסיסמה שהזנתם זה עתה כסיסמת Keepit של ה‑Mac הזה. לאחר מכן אפשר להפעיל גיבוי אוטומטי ל‑Mac זה בהגדרות ← כללי. אפשר להגדיר סיסמה אחרת במקום.',
+'The copy was not finished': 'העותק לא הושלם',
 }

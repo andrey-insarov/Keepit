@@ -544,3 +544,7 @@
 
 "An earlier restore could not be undone completely. Quit and launch Keepit again so it can finish putting the data back." = "An earlier restore could not be undone completely. Quit and launch Keepit again so it can finish putting the data back.";
 "Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again." = "Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again.";
+
+"Use the password you just entered as this Mac's Keepit password. Automatic backup can then be switched on for this Mac in Settings → General. You can set a different password instead." = "Use the password you just entered as this Mac's Keepit password. Automatic backup can then be switched on for this Mac in Settings → General. You can set a different password instead.";
+
+"The copy was not finished" = "The copy was not finished";

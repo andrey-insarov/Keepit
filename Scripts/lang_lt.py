@@ -484,4 +484,6 @@ T = {
 'Could not prepare the undo copy of the current data: %@': 'Nepavyko paruošti dabartinių duomenų atšaukimo kopijos: %@',
 'An earlier restore could not be undone completely. Quit and launch Keepit again so it can finish putting the data back.': 'Ankstesnio atkūrimo nepavyko visiškai atšaukti. Išeikite ir paleiskite „Keepit“ iš naujo, kad ji baigtų grąžinti duomenis.',
 'Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again.': '„Keepit“ nepavyko užbaigti nutraukto atkūrimo atšaukimo: %@\n\nNiekas nebus keičiama. Sutvarkykite aukščiau nurodytą failą (teisės, užrakto žyma, vieta diske) ir paleiskite „Keepit“ iš naujo.',
+"Use the password you just entered as this Mac's Keepit password. Automatic backup can then be switched on for this Mac in Settings → General. You can set a different password instead.": 'Naudoti ką tik įvestą slaptažodį kaip šio „Mac“ „Keepit“ slaptažodį. Tada automatinį atsarginių kopijų kūrimą šiam „Mac“ galima įjungti Nustatymai → Bendrieji. Galite nustatyti ir kitą slaptažodį.',
+'The copy was not finished': 'Kopija nebuvo baigta',
 }

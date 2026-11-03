@@ -484,3 +484,5 @@
 "Could not prepare the undo copy of the current data: %@" = "تعذّر تجهيز نسخة التراجع للبيانات الحالية: %@";
 "An earlier restore could not be undone completely. Quit and launch Keepit again so it can finish putting the data back." = "تعذّر التراجع عن استعادة سابقة بالكامل. أنهِ Keepit وشغّله من جديد ليكمل إعادة البيانات.";
 "Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again." = "لم يتمكن Keepit من إكمال التراجع عن استعادة متقطعة: %@\n\nلن يتغير شيء. أصلح الملف المذكور أعلاه (الأذونات، علامة القفل، مساحة القرص) ثم شغّل Keepit من جديد.";
+"Use the password you just entered as this Mac's Keepit password. Automatic backup can then be switched on for this Mac in Settings → General. You can set a different password instead." = "استخدام كلمة المرور التي أدخلتها للتو ككلمة مرور Keepit لهذا الـ Mac. يمكن بعد ذلك تفعيل النسخ الاحتياطي التلقائي لهذا الـ Mac من الإعدادات ← عام. يمكنك تعيين كلمة مرور مختلفة بدلًا من ذلك.";
+"The copy was not finished" = "لم تكتمل النسخة";

@@ -484,4 +484,6 @@ T = {
 'Could not prepare the undo copy of the current data: %@': '현재 데이터의 되돌리기용 복사본을 준비할 수 없습니다: %@',
 'An earlier restore could not be undone completely. Quit and launch Keepit again so it can finish putting the data back.': '이전 복원을 완전히 되돌리지 못했습니다. Keepit을 종료하고 다시 실행하면 데이터 복구를 마칩니다.',
 'Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again.': 'Keepit이 중단된 복원의 되돌리기를 마치지 못했습니다: %@\n\n아무것도 변경되지 않습니다. 위에 표시된 파일 문제(권한, 잠금 플래그, 디스크 공간)를 해결하고 Keepit을 다시 실행하세요.',
+"Use the password you just entered as this Mac's Keepit password. Automatic backup can then be switched on for this Mac in Settings → General. You can set a different password instead.": '방금 입력한 암호를 이 Mac의 Keepit 암호로 사용합니다. 그런 다음 설정 → 일반에서 이 Mac의 자동 백업을 켤 수 있습니다. 다른 암호를 설정할 수도 있습니다.',
+'The copy was not finished': '복사본이 완료되지 않았습니다',
 }
