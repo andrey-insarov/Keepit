@@ -5,7 +5,7 @@
 <h1 align="center">Keepit – Clipboard Manager</h1>
 
 <p align="center">
-  Everything you copy, one hot key away. History, templates, Touch ID lock and encrypted storage — all on your Mac, nothing in the cloud.<br>
+  Everything you copy, one hot key away. History, templates, Touch ID lock and encrypted storage — all on your Mac, no Keepit cloud. Encrypted backups to a folder of yours, like the update check, are optional and off by default.<br>
   <a href="https://keep.it.com"><b>keep.it.com</b></a> · <a href="docs/GUIDE.md">User guide</a> · <a href="docs/SECURITY.md">Security</a> · <a href="https://github.com/andrey-insarov/Keepit/releases/latest">Download for macOS</a> · Free &amp; open source (MIT)
 </p>
 

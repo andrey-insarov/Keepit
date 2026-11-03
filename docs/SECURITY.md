@@ -12,7 +12,10 @@ if you switch it on, encrypted copies in a folder *you* choose (iCloud Drive, Dr
 provider behind that folder sees the ciphertext, the file size and a short unencrypted header
 (listed below), nothing of the content. There is no account, no Keepit cloud, no analytics, and the
 app makes exactly one kind of network request — the daily update check against GitHub — which you
-can switch off. Clipboard data that the copying app marks as concealed is not
+can switch off. Both the backup folder and the update check are options, off until you turn them
+on; so is the password. Keepit is built so that leaving any of them off costs nothing in safety —
+with no password the data is simply unencrypted files in your own Library folder, with no backup
+folder nothing ever leaves the Mac — and turning one on adds exactly what it says and no more. Clipboard data that the copying app marks as concealed is not
 recorded, and copies from known password managers are excluded by app — a best-effort heuristic,
 explained below. If you set a password, everything on disk is AES-256-GCM encrypted with a key derived from that password; the key
 exists only in memory, is wiped when Keepit locks, and can optionally be released by Touch ID from
