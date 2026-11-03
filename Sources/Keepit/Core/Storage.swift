@@ -96,7 +96,21 @@ enum Storage {
     ///   changes and tests rely on that. `background: true` queues the work and returns at once;
     ///   the debounced savers use it. Both go through `ioQueue`, so writes never overtake each other.
     /// - `pretty`: human-readable JSON (settings.json only).
+    ///
+    /// `value` must be a value type (or otherwise immutable) when `background` is true: it is encoded
+    /// on the I/O queue. A reference-type graph that the main thread keeps editing — the template
+    /// tree — must be encoded first and handed over as bytes: see `saveEncoded`.
     static func save<T: Encodable>(_ value: T, to url: URL, encrypt: Bool = true, background: Bool = false, pretty: Bool = false) {
+        let enc = pretty ? prettyEncoder : encoder
+        write(to: url, encrypt: encrypt, background: background) { try enc.encode(value) }
+    }
+
+    /// Like `save`, for data already encoded on the caller's thread (a snapshot of mutable state).
+    static func saveEncoded(_ data: Data, to url: URL, encrypt: Bool = true, background: Bool = false) {
+        write(to: url, encrypt: encrypt, background: background) { data }
+    }
+
+    private static func write(to url: URL, encrypt: Bool, background: Bool, _ produce: @escaping () throws -> Data) {
         // With a password set and no key in memory (locked), writing would replace an encrypted
         // file with plaintext — refuse rather than leak or clobber.
         if encrypt, key == nil, Vault.isEnabled {
@@ -106,10 +120,9 @@ enum Storage {
         // The key is captured here, on the caller's thread. `key.didSet` zeroes an old key only
         // after draining the queue, so this reference stays usable for the whole write.
         let k: SecureKey? = encrypt ? key : nil
-        let enc = pretty ? prettyEncoder : encoder
         let work = {
             do {
-                var data = try enc.encode(value)
+                var data = try produce()
                 if let k { data = try Vault.encrypt(data, key: k) }
                 try data.write(to: url, options: .atomic)
             } catch {

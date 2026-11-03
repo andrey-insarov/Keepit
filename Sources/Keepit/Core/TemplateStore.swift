@@ -82,9 +82,17 @@ final class TemplateStore {
         saver.schedule()
     }
 
+    /// The tree is a graph of reference objects the UI keeps editing, so it is encoded here, on the
+    /// caller's thread, and only the bytes go to the I/O queue — a background writer must never
+    /// serialise a structure that is changing under it. Templates are small; this is cheap.
     func saveNow(background: Bool = false) {
         if isPurged { return }
-        Storage.save(root, to: Storage.templatesURL, background: background)
+        do {
+            let snapshot = try Storage.encoder.encode(root)
+            Storage.saveEncoded(snapshot, to: Storage.templatesURL, background: background)
+        } catch {
+            Log.storage.error("failed to encode templates: \(error.localizedDescription)")
+        }
     }
 
     func flush() { saver.flush() }

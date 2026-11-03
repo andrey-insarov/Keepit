@@ -100,6 +100,21 @@ final class SettingsAndStoreTests: XCTestCase {
                        "data files are compact JSON")
     }
 
+    func testTemplateBackgroundSaveIsASnapshot() throws {
+        // The tree is a reference graph: a background save must write what the tree was when the
+        // save was requested, not whatever it has become by the time the I/O queue gets to it.
+        let t = TemplateStore()
+        let a = TemplateNode(name: "a", text: "a")
+        t.root.insert(a)
+        t.saveNow(background: true)
+        let b = TemplateNode(name: "b", text: "b")
+        t.root.insert(b)                                    // mutate right after queuing
+        Storage.waitUntilSaved()
+        let reloaded = TemplateStore()
+        XCTAssertNotNil(reloaded.root.find(id: a.id))
+        XCTAssertNil(reloaded.root.find(id: b.id), "b was added after the snapshot was taken")
+    }
+
     func testTemplateStorePurgeAndReload() {
         let store = TemplateStore()
         let n = TemplateNode(name: "n", text: "t")
