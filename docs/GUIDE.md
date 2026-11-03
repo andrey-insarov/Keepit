@@ -14,7 +14,7 @@ Keepit 2.x is kept unchanged at [keep.it.com/v2/guide.html](https://keep.it.com/
 - [Part 3 — Templates](#part-3--templates): [Creating and organising](#creating-and-organising) · [Placeholders](#placeholders) · [Templates that ask questions](#templates-that-ask-questions)
 - [Part 4 — The Viewer](#part-4--the-viewer)
 - [Part 5 — Settings](#part-5--settings)
-- [Part 6 — Security](#part-6--security): [Password and encryption](#password-and-encryption) · [Touch ID](#touch-id) · [Recovery phrase](#recovery-phrase) · [Backup](#backup)
+- [Part 6 — Security](#part-6-security): [Password and encryption](#password-and-encryption) · [Touch ID](#touch-id) · [Recovery phrase](#recovery-phrase) · [Backup](#backup)
 - [Part 7 — Advanced](#part-7--advanced): [Automation](#automation-the-keepit-url-scheme) · [Updates](#updates) · [Uninstalling](#uninstalling)
 - [Reference](#reference): [Troubleshooting](#troubleshooting) · [Keyboard cheat sheet](#keyboard-cheat-sheet) · [Placeholder cheat sheet](#placeholder-cheat-sheet)
 
@@ -58,7 +58,7 @@ restore is available later from *Settings → General → Backup → Restore…*
 `.keepit` file in the Finder opens it too. [Backup](#backup) has the details.
 
 **2. A password (optional).** Keepit can store the history and templates encrypted and unlock with
-Touch ID. You can decide now or later in *Settings → Security*; [Part 6](#part-6--security)
+Touch ID. You can decide now or later in *Settings → Security*; [Part 6](#part-6-security)
 explains how it works. *Not Now* keeps everything unencrypted on disk. If you restored a backup
 with its password a moment ago, Keepit offers to keep that password for this Mac.
 
@@ -294,7 +294,7 @@ that explains it.
 | **Paste Queue** | The three queue keys, the idle time after which the queue switches off, and what to put between items for *Paste all remaining* — [The paste queue](#the-paste-queue) |
 | **History** | How many text/file items and images to keep (1000 / 30) · forget items older than … · *Remove duplicates* (copying the same thing again moves it to the top) · *Ignore concealed clipboard data* · the ignored-apps list (bundle identifiers; password managers are always ignored) |
 | **Menu** | Search field · numbering · preview panel · tooltips · source-app icons · image thumbnails · items in menu (how many of the latest entries the menu lists, 60 by default; the rest stay searchable) · title length · thumbnail height |
-| **Security** | Password, Touch ID, locking, recovery phrase — [Part 6](#part-6--security) |
+| **Security** | Password, Touch ID, locking, recovery phrase — [Part 6](#part-6-security) |
 | **Advanced** | Clipboard poll interval · Automation: *Allow keepit:// URL commands* (off by default — [Automation](#automation-the-keepit-url-scheme)) · Data: *Open Folder* · Reset and uninstall: *Reset…* (back to a fresh install, example templates return) · *Uninstall…* (reset, then remove the app, Launch at login, keychain entry and permissions) |
 
 ![Settings → History: limits and the ignored-apps list](site/img/guide/prefs-history.png)
@@ -357,14 +357,16 @@ is no server and nothing to reset.
 
 Keepit can keep an encrypted copy of your history and templates in a folder of your choice — iCloud
 Drive, Dropbox, Google Drive, an external disk, a NAS — and write a new one whenever something has
-changed. There is no Keepit server: the folder is yours, and the provider behind it only ever sees
-ciphertext.
+changed. There is no Keepit server: the folder is yours. What the provider behind it can see is the
+encrypted file, its size and a small unencrypted header (when and by which Keepit it was written,
+how the key is derived, random identifiers — and your Mac's name only if you switch that on); the
+[security page](security.html#backups) lists it field by field.
 
 **Switching it on.** *Settings → General → Backup → Back up automatically to a folder*, then
 *Choose…* a folder (the chooser opens in iCloud Drive). Automatic backup needs the password
-protection from *Settings → Security*: the copies are sealed with the same key as your data, so they
-open with your Keepit password — or your recovery phrase — on this Mac or any other, and nothing
-has to be set up for them. Without a password the checkbox is disabled and says so.
+protection from *Settings → Security*: each copy is sealed with a key derived from your vault's key,
+so it opens with your Keepit password — or your recovery phrase — on this Mac or any other, and
+nothing has to be set up for it. Without a password the checkbox is disabled and says so.
 
 **What happens then.** About five minutes after the last change (and at the latest once a day while
 Keepit runs) Keepit writes a file named `Keepit-<date and time>-<installation>-<id>.keepit` into the
@@ -399,11 +401,15 @@ limits allow, Keepit says how much would fit before you confirm.
 
 Restored a backup with its recovery phrase on a Mac that has no password yet? Keepit asks you to set
 one first, so the restored data never lands unencrypted, and lets you keep that phrase for this Mac
-or get a new one. Restored with the password? Keepit offers to keep it as this Mac's password, so
-automatic backups into the same folder continue without setup.
+or get a new one. Restored with the password? Keepit offers to keep it as this Mac's password. In
+both cases automatic backup itself is a per-Mac setting: switch it on here and choose the folder —
+the same one is fine — and this Mac starts its own series of files next to the old Mac's.
 
 **Moving to a new Mac** is the whole point: install Keepit, choose *Restore from Backup…* on the
-first launch, pick the newest file in your folder, enter the old Mac's password, *Replace*.
+first launch, pick the newest file in your folder, enter the old Mac's password, *Replace*; then
+switch automatic backup on for the new Mac. Copies made so far open with the password and phrase
+that were in force when each was written — after a password change, the old ones still need the old
+password.
 
 **Export… and Import…** are still there for a single file by hand: *Export…* writes one `.keepit`
 with a password you choose for that file (it does not need Keepit's password protection), and

@@ -12,7 +12,7 @@
 **App Privacy**: Data Not Collected
 
 ## Promotional text (170 chars)
-Everything you copy, one hot key away. History, templates, a paste queue, Touch ID lock and encrypted storage — all on your Mac, nothing in the cloud.
+Everything you copy, one hot key away. History, templates, a paste queue, Touch ID lock and encrypted storage — all on your Mac, no Keepit cloud.
 
 ## Description (4000 chars max)
 
@@ -38,7 +38,7 @@ A VIEWER FOR EVERYTHING
 • Drag history items into templates. Save any format to a file.
 
 PRIVATE BY DESIGN
-• Everything stays on your Mac. No account, no cloud, no analytics, no network.
+• Everything stays on your Mac; backups, if you switch them on, go encrypted to a folder you choose. No account, no Keepit server, no analytics, no network.
 • Concealed clipboard data is not recorded; copies from known password managers are excluded; any app can be excluded.
 • Optional password: history and templates are stored AES-256 encrypted; the key is wiped from memory when Keepit locks — manually, when the screen locks, or when the Mac sleeps.
 • Touch ID unlock, and a 24-word recovery phrase in case you forget the password.

@@ -20,7 +20,7 @@
 [it.com](https://it.com) domain zone. Press `⌥M` in any app to paste anything you copied recently;
 `⌥T` for your templates. Images, files and rich text are kept too. Optional password protection
 stores everything AES-256 encrypted, unlocks with Touch ID, and comes with a 24-word recovery phrase.
-Clipboard data marked concealed by the copying app is not recorded, and known password managers are excluded. No account, no cloud, no analytics.
+Clipboard data marked concealed by the copying app is not recorded, and known password managers are excluded. No account, no Keepit cloud, no analytics.
 
 Keepit started as a macOS take on the workflow of [CLCL](https://github.com/nakkag/CLCL), Ohno
 Tomoaki's Windows clipboard tool, and has since been rewritten and extended into an app of its own,
@@ -256,7 +256,7 @@ The historical map from CLCL's C sources to these files is in [docs/ORIGINS.md](
 
 ## Roadmap
 
-**3.0 — shipped**
+**3.0 — on `release/3.0`, tag pending**
 
 1. **Automatic encrypted backup to your own cloud folder** — iCloud Drive, Google Drive, Dropbox or
    any folder: complete `.keepit` files written a few minutes after each change, rotated, opened with

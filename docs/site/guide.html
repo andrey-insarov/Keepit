@@ -91,7 +91,7 @@ password of the Mac it came from, or its recovery phrase. <em>Start Fresh</em> s
 restore is available later from <em>Settings → General → Backup → Restore…</em>, and double-clicking a
 <code>.keepit</code> file in the Finder opens it too. <a href="#backup">Backup</a> has the details.</p>
 <p><strong>2. A password (optional).</strong> Keepit can store the history and templates encrypted and unlock with
-Touch ID. You can decide now or later in <em>Settings → Security</em>; <a href="#part-6--security">Part 6</a>
+Touch ID. You can decide now or later in <em>Settings → Security</em>; <a href="#part-6-security">Part 6</a>
 explains how it works. <em>Not Now</em> keeps everything unencrypted on disk. If you restored a backup
 with its password a moment ago, Keepit offers to keep that password for this Mac.</p>
 <figure class="shot" style="max-width:345px"><a href="img/guide/password-offer.png?v=82c5af4a" class="zoom" title="Open full size"><img src="img/guide/password-offer.png?v=82c5af4a" alt="The password offer on first launch" width="345" height="379" loading="lazy"></a><figcaption>The password offer on first launch</figcaption></figure>
@@ -356,7 +356,7 @@ that explains it.</p>
 </tr>
 <tr>
 <td><strong>Security</strong></td>
-<td>Password, Touch ID, locking, recovery phrase — <a href="#part-6--security">Part 6</a></td>
+<td>Password, Touch ID, locking, recovery phrase — <a href="#part-6-security">Part 6</a></td>
 </tr>
 <tr>
 <td><strong>Advanced</strong></td>
@@ -405,13 +405,15 @@ is no server and nothing to reset.</p>
 <h3 id="backup">Backup</h3>
 <p>Keepit can keep an encrypted copy of your history and templates in a folder of your choice — iCloud
 Drive, Dropbox, Google Drive, an external disk, a NAS — and write a new one whenever something has
-changed. There is no Keepit server: the folder is yours, and the provider behind it only ever sees
-ciphertext.</p>
+changed. There is no Keepit server: the folder is yours. What the provider behind it can see is the
+encrypted file, its size and a small unencrypted header (when and by which Keepit it was written,
+how the key is derived, random identifiers — and your Mac's name only if you switch that on); the
+<a href="security.html#backups">security page</a> lists it field by field.</p>
 <p><strong>Switching it on.</strong> <em>Settings → General → Backup → Back up automatically to a folder</em>, then
 <em>Choose…</em> a folder (the chooser opens in iCloud Drive). Automatic backup needs the password
-protection from <em>Settings → Security</em>: the copies are sealed with the same key as your data, so they
-open with your Keepit password — or your recovery phrase — on this Mac or any other, and nothing
-has to be set up for them. Without a password the checkbox is disabled and says so.</p>
+protection from <em>Settings → Security</em>: each copy is sealed with a key derived from your vault's key,
+so it opens with your Keepit password — or your recovery phrase — on this Mac or any other, and
+nothing has to be set up for it. Without a password the checkbox is disabled and says so.</p>
 <p><strong>What happens then.</strong> About five minutes after the last change (and at the latest once a day while
 Keepit runs) Keepit writes a file named <code>Keepit-&lt;date and time&gt;-&lt;installation&gt;-&lt;id&gt;.keepit</code> into the
 folder, reads it back to check it, and only then deletes the oldest of its own copies beyond <em>Keep
@@ -442,10 +444,14 @@ folder itself — always stay as they are here. If the backup's history is large
 limits allow, Keepit says how much would fit before you confirm.</p>
 <p>Restored a backup with its recovery phrase on a Mac that has no password yet? Keepit asks you to set
 one first, so the restored data never lands unencrypted, and lets you keep that phrase for this Mac
-or get a new one. Restored with the password? Keepit offers to keep it as this Mac's password, so
-automatic backups into the same folder continue without setup.</p>
+or get a new one. Restored with the password? Keepit offers to keep it as this Mac's password. In
+both cases automatic backup itself is a per-Mac setting: switch it on here and choose the folder —
+the same one is fine — and this Mac starts its own series of files next to the old Mac's.</p>
 <p><strong>Moving to a new Mac</strong> is the whole point: install Keepit, choose <em>Restore from Backup…</em> on the
-first launch, pick the newest file in your folder, enter the old Mac's password, <em>Replace</em>.</p>
+first launch, pick the newest file in your folder, enter the old Mac's password, <em>Replace</em>; then
+switch automatic backup on for the new Mac. Copies made so far open with the password and phrase
+that were in force when each was written — after a password change, the old ones still need the old
+password.</p>
 <p><strong>Export… and Import…</strong> are still there for a single file by hand: <em>Export…</em> writes one <code>.keepit</code>
 with a password you choose for that file (it does not need Keepit's password protection), and
 <em>Import…</em> is the same restore flow for any <code>.keepit</code> file. The same file moves data between the
