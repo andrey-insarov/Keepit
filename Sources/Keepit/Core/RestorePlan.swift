@@ -168,6 +168,9 @@ enum RestoreCommit {
     static var journalDirectory: URL { Storage.directory.appendingPathComponent("restore-journal", isDirectory: true) }
     static var journalMarker: URL { journalDirectory.appendingPathComponent("commit") }
     static func liveURL(_ name: String) -> URL { Storage.directory.appendingPathComponent(name) }
+    /// True while an undo is unfinished: the files may be a mix and the journal is their only
+    /// intact copy. Nothing may be saved over them until a replay succeeds.
+    static var hasArmedJournal: Bool { FileManager.default.fileExists(atPath: journalMarker.path) }
 
     static func steps(templatesJSON: Data, historyJSON: Data?, settingsJSON: Data) -> [Step] {
         [Step(name: names[0], url: Storage.templatesURL, data: templatesJSON, encrypt: true),

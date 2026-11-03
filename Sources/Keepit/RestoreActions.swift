@@ -158,7 +158,13 @@ extension AppDelegate {
                 guard lockCount == lockAtStart else { Vault.error(RestoreCommit.Failure.locked.localizedDescription); return }
                 if dataStamp != stamp { continue }                     // the copy is of an older state: once more
             }
-            do { try commit(plan) } catch { Vault.error(LF("Could not save the restored data: %@", error.localizedDescription)); return }
+            do { try commit(plan) } catch {
+                // Undo done (writeFailed, cannotJournal, …): the files are as they were, work goes on.
+                // Undo not done (the journal is still armed): the files are a mix and nothing may be
+                // saved over them — not by the watcher the `defer` would restart, not by anything.
+                if RestoreCommit.hasArmedJournal { stopForUnfinishedUndo(error) }
+                Vault.error(LF("Could not save the restored data: %@", error.localizedDescription)); return
+            }
             committed = true
             break
         }

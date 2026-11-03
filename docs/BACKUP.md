@@ -185,8 +185,11 @@ General → Backup → Restore…*; double-click on a `.keepit` file. All lead t
      just deleted. Replay is idempotent (a file already holding the journal's bytes is left alone,
      so an immutable or already-correct file does not stop it) and a replay that fails on one
      file leaves the journal armed and is tried again next time; until it succeeds Keepit does not
-     run on the mixed files — at launch it names the file, changes nothing and quits (so no save,
-     and no new restore, can overwrite the journal's only intact copy). The same replay is the undo
+     run on the mixed files — whether the failed replay was the launch one or the undo of a write
+     that failed during a restore, it names the file, changes nothing and quits at once, before
+     the clipboard watcher or anything else could save over the journal's only intact copy
+     (`stopForUnfinishedUndo`). An undo that *did* finish (`writeFailed`) just reports and work
+     goes on. The same replay is the undo
      of a failed write. Tests interrupt after the journal and after each
      of the three writes, during a replay, and while the journal itself was being written.
    - A lock at any point before the commit cancels the restore with a message: the stores were

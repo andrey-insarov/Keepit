@@ -62,13 +62,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         super.init()
     }
 
+    /// An undo of a restore did not finish — at launch, or during a restore just now: the files
+    /// are a mix of before and after and the armed journal is their only intact copy. Working on
+    /// would save over that mix (and the next launch's replay would then discard whatever was
+    /// saved), so: explain, change nothing, leave. `exit`, not `terminate()`: the latter runs
+    /// `applicationWillTerminate`, which saves; and no `defer` on the way restarts the watcher.
+    func stopForUnfinishedUndo(_ error: Error) -> Never {
+        Log.storage.error("unfinished restore undo; quitting without saving: \(error.localizedDescription)")
+        Vault.error(LF("Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again.", error.localizedDescription))
+        exit(1)
+    }
+
     // MARK: - Lifecycle
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        if let e = recoveryError {
-            Vault.error(LF("Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again.", e.localizedDescription))
-            exit(1)                                   // not terminate(): applicationWillTerminate would save over the mixed files
-        }
+        if let e = recoveryError { stopForUnfinishedUndo(e) }
         NSApp.setActivationPolicy(.accessory)
         buildMainMenu()
 
