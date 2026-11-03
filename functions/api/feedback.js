@@ -82,6 +82,25 @@ function b64(buf) {
   return btoa(s);
 }
 
+/** Collect the request body, or return null as soon as it exceeds `max` bytes (the stream is cancelled). */
+export async function readBodyUpTo(request, max) {
+  if (!request.body) return new Uint8Array(0);
+  const reader = request.body.getReader();
+  const chunks = [];
+  let total = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    total += value.byteLength;
+    if (total > max) { await reader.cancel().catch(() => {}); return null; }
+    chunks.push(value);
+  }
+  const out = new Uint8Array(total);
+  let off = 0;
+  for (const c of chunks) { out.set(c, off); off += c.byteLength; }
+  return out;
+}
+
 const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
 export async function onRequestPost({ request, env }) {
@@ -92,9 +111,13 @@ export async function onRequestPost({ request, env }) {
   if (declared > LIMITS.bodyBytes) return json(413, { error: "The attachments are too large (5 screenshots of 1 MB at most)." });
   const ctype = request.headers.get("content-type") || "";
   if (!ctype.startsWith("multipart/form-data")) return json(400, { error: "Could not read the form." });
+  // Read the body ourselves with a running total and stop at the limit — formData() would buffer
+  // the whole stream first, so a lying Content-Length would still cost the memory.
+  const body = await readBodyUpTo(request, LIMITS.bodyBytes);
+  if (body === null) return json(413, { error: "The attachments are too large (5 screenshots of 1 MB at most)." });
   let form;
   try {
-    form = await request.formData();
+    form = await new Response(body, { headers: { "content-type": ctype } }).formData();
   } catch {
     return json(400, { error: "Could not read the form." });
   }
