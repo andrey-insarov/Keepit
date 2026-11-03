@@ -230,6 +230,7 @@ final class BackupEngine {
                 let insp = try Container.inspect(bytes, readerVersion: Backup.readerVersion, maxBytes: Limits.dataFileMaxBytes)
                 let back = try snap.dataKey.withKey { k in try Container.openV2(bytes, inspection: insp, key: KDF.backupKey(dataKey: k), limit: Limits.dataFileMaxBytes) }
                 guard back == json else { throw Failure.verifyFailed }
+                _ = try Backup.payload(fromJSON: back)              // and the reader's own checks pass on it
                 sealed = (bytes, Self.sha256(bytes))
             } catch {
                 DispatchQueue.main.async {

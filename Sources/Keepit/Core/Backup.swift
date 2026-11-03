@@ -156,6 +156,12 @@ enum Backup {
         } catch let e as Container.Failure {
             throw map(e)
         }
+        return try payload(fromJSON: json)
+    }
+
+    /// Payload JSON → model, checked as the reader will check it. The engine runs this on what it
+    /// just sealed, so a file that would not open is never reported as a successful backup.
+    static func payload(fromJSON json: Data) throws -> Payload {
         let payload: Payload
         do { payload = try Storage.decoder.decode(Payload.self, from: json) } catch { throw Failure.corrupt }
         guard payload.version == payloadVersion else { throw Failure.unsupportedPayloadVersion(payload.version) }

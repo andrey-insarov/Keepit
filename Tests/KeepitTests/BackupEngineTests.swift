@@ -59,6 +59,20 @@ final class BackupEngineTests: XCTestCase {
     private func allFiles() -> [String] { ((try? FileManager.default.contentsOfDirectory(atPath: folder.path)) ?? []).sorted() }
     private func failure(_ r: Result<Void, Error>) -> BackupEngine.Failure? { if case .failure(let e) = r { return e as? BackupEngine.Failure } else { return nil } }
 
+    // What the engine sealed must pass the reader's own checks, not only "the GCM tag opens and
+    // the bytes match": a tree the reader rejects is a failed backup, never a file that enters
+    // the registry and later rotates good copies out.
+    func testEngineDoesNotReportSuccessForAPayloadTheReaderRejects() throws {
+        var deep = TemplateNode(name: "leaf", text: "x")
+        for i in 0...Limits.templateMaxDepth { deep = TemplateNode(name: "d\(i)", children: [deep]) }   // one level too many
+        templates.replaceRoot(TemplateNode(name: "Template", children: [deep]))
+        let r = run(force: true)
+        guard case .failure(let e) = r, case Backup.Failure.invalidContent? = e as? Backup.Failure else { return XCTFail("\(r)") }
+        XCTAssertEqual(ownFiles(), [])
+        XCTAssertNil(engine.state.lastSuccess)
+        XCTAssertNotNil(engine.state.lastError)
+    }
+
     func testQuietPeriodThenOneFileThatOpensWithPasswordAndPhrase() throws {
         history.add(.text("one")); history.add(.text("two")); history.add(.text("three"))
         XCTAssertTrue(engine.state.dirty)

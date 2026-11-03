@@ -84,7 +84,7 @@ struct RestorePlan {
             root.insert(folder)
             // The validator's rule for what may be stored: count ≤ max, deepest node ≤ max (root is 0).
             guard root.subtreeCount <= Limits.templateMaxCount,
-                  Self.height(of: root) <= Limits.templateMaxDepth else { throw Failure.templateLimit }
+                  root.height <= Limits.templateMaxDepth else { throw Failure.templateLimit }
             templates = root
             templatesAdded = folder.subtreeCount
         }
@@ -100,10 +100,6 @@ struct RestorePlan {
                            historyAdded: keptFresh, historyDropped: fresh - keptFresh, templatesAdded: templatesAdded)
     }
 
-    /// Levels below `node` (0 for a leaf or an empty folder).
-    static func height(of node: TemplateNode) -> Int {
-        node.children.reduce(0) { max($0, 1 + height(of: $1)) }
-    }
 }
 
 extension ClipItem {

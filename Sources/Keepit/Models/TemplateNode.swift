@@ -59,6 +59,9 @@ final class TemplateNode: Codable {
     /// Nodes in this subtree, including self.
     var subtreeCount: Int { 1 + children.reduce(0) { $0 + $1.subtreeCount } }
 
+    /// Levels below this node: 0 for an item or an empty folder.
+    var height: Int { children.reduce(0) { max($0, 1 + $1.height) } }
+
     func insert(_ node: TemplateNode, at index: Int? = nil) {
         node.name = String(node.name.prefix(Limits.templateNameMaxChars))
         node.parent = self
