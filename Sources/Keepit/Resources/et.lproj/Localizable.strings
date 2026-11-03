@@ -463,3 +463,16 @@
 "Use the password you just entered as this Mac's Keepit password. Automatic backups into the same folder then continue without setup. You can set a different one instead." = "Kasutage äsja sisestatud parooli selle Maci Keepiti paroolina. Automaatne varundamine samasse kausta jätkub ilma seadistamata. Võite määrata ka teise.";
 "Where to save the copy of your current data" = "Kuhu salvestada praeguste andmete koopia";
 "backups" = "varukoopiat";
+"Created %@ with %@ — %d history item(s), %d template item(s).\n\nMerge adds what is not already there (templates go into a new folder, without their hot keys). Replace discards the current history and templates first — a copy of them is saved before that." = "Loodud %@ rakendusega %@ – %d ajalookirjet, %d malli.\n\n„Liida“ lisab selle, mida veel pole (mallid lähevad uude kausta, ilma kiirklahvideta). „Asenda“ loobub kõigepealt praegusest ajaloost ja mallidest – enne seda salvestatakse nende koopia.";
+"Restore cancelled: Keepit was locked meanwhile." = "Taastamine tühistati: Keepit lukustati vahepeal.";
+"Not everything fits" = "Kõik ei mahu";
+"%d of the backup's history items fit the current limits; %d would be left out. You can raise the limits in Settings → History first." = "Praegustesse piiridesse mahub %d varukoopia ajalookirjet; %d jääks välja. Piire saab enne suurendada: Seaded → Ajalugu.";
+"Continue" = "Jätka";
+"This backup was opened with its recovery phrase. Choose a password for Keepit on this Mac; the restored data is protected with it." = "See varukoopia avati taastefraasiga. Valige Keepitile sellel Macil parool; taastatud andmed kaitstakse sellega.";
+"Keep the recovery phrase?" = "Kas jätta taastefraas alles?";
+"The phrase you just entered can keep working for this Mac, or Keepit can make a new one and show it to you." = "Äsja sisestatud fraas võib sellel Macil edasi kehtida või Keepit loob uue ja näitab seda teile.";
+"Keep This Phrase" = "Jäta see fraas";
+"Make a New Phrase" = "Loo uus fraas";
+"Saving a copy of your current data…" = "Praeguste andmete koopia salvestamine…";
+"Protection is on. The recovery phrase from the backup also opens Keepit on this Mac." = "Kaitse on sees. Varukoopia taastefraas avab Keepiti nüüd ka sellel Macil.";
+"Could not set up the recovery phrase: %@" = "Taastefraasi ei õnnestunud seadistada: %@";

@@ -463,3 +463,16 @@
 "Use the password you just entered as this Mac's Keepit password. Automatic backups into the same folder then continue without setup. You can set a different one instead." = "今入力したパスワードをこの Mac の Keepit パスワードとして使います。同じフォルダへの自動バックアップは設定なしで続きます。別のものを設定することもできます。";
 "Where to save the copy of your current data" = "現在のデータのコピーの保存先";
 "backups" = "個";
+"Created %@ with %@ — %d history item(s), %d template item(s).\n\nMerge adds what is not already there (templates go into a new folder, without their hot keys). Replace discards the current history and templates first — a copy of them is saved before that." = "%@ に %@ で作成 — 履歴 %d 件、テンプレート %d 件。\n\n「統合」はまだない項目を追加します（テンプレートはホットキーなしで新しいフォルダへ）。「置き換え」は現在の履歴とテンプレートを先に破棄します — その前にコピーが保存されます。";
+"Restore cancelled: Keepit was locked meanwhile." = "復元を中止しました：その間に Keepit がロックされました。";
+"Not everything fits" = "すべては収まりません";
+"%d of the backup's history items fit the current limits; %d would be left out. You can raise the limits in Settings → History first." = "バックアップの履歴のうち %d 件が現在の上限に収まり、%d 件は除外されます。先に 設定 → 履歴 で上限を上げることもできます。";
+"Continue" = "続ける";
+"This backup was opened with its recovery phrase. Choose a password for Keepit on this Mac; the restored data is protected with it." = "このバックアップはリカバリーフレーズで開かれました。この Mac の Keepit のパスワードを決めてください。復元したデータはそれで保護されます。";
+"Keep the recovery phrase?" = "リカバリーフレーズを維持しますか？";
+"The phrase you just entered can keep working for this Mac, or Keepit can make a new one and show it to you." = "今入力したフレーズをこの Mac でも使い続けるか、Keepit が新しいフレーズを作成して表示します。";
+"Keep This Phrase" = "このフレーズを維持";
+"Make a New Phrase" = "新しいフレーズを作成";
+"Saving a copy of your current data…" = "現在のデータのコピーを保存中…";
+"Protection is on. The recovery phrase from the backup also opens Keepit on this Mac." = "保護が有効になりました。バックアップのリカバリーフレーズでこの Mac の Keepit も開けます。";
+"Could not set up the recovery phrase: %@" = "リカバリーフレーズを設定できませんでした：%@";

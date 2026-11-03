@@ -463,3 +463,16 @@
 "Use the password you just entered as this Mac's Keepit password. Automatic backups into the same folder then continue without setup. You can set a different one instead." = "Az önce girdiğiniz parolayı bu Mac’in Keepit parolası olarak kullanın. Aynı klasöre otomatik yedeklemeler kurulum gerekmeden sürer. Bunun yerine farklı bir parola da belirleyebilirsiniz.";
 "Where to save the copy of your current data" = "Geçerli verilerin kopyası nereye kaydedilsin";
 "backups" = "yedek";
+"Created %@ with %@ — %d history item(s), %d template item(s).\n\nMerge adds what is not already there (templates go into a new folder, without their hot keys). Replace discards the current history and templates first — a copy of them is saved before that." = "%@ tarihinde %@ ile oluşturuldu — %d geçmiş öğesi, %d şablon.\n\n“Birleştir” henüz olmayanları ekler (şablonlar kısayolları olmadan yeni bir klasöre gider). “Değiştir” önce geçerli geçmişi ve şablonları atar — bundan önce bir kopyaları kaydedilir.";
+"Restore cancelled: Keepit was locked meanwhile." = "Geri yükleme iptal edildi: Keepit bu sırada kilitlendi.";
+"Not everything fits" = "Hepsi sığmıyor";
+"%d of the backup's history items fit the current limits; %d would be left out. You can raise the limits in Settings → History first." = "Yedeğin geçmiş öğelerinden %d tanesi geçerli sınırlara sığıyor; %d tanesi dışarıda kalır. Önce Ayarlar → Geçmiş’ten sınırları yükseltebilirsiniz.";
+"Continue" = "Devam";
+"This backup was opened with its recovery phrase. Choose a password for Keepit on this Mac; the restored data is protected with it." = "Bu yedek kurtarma ifadesiyle açıldı. Bu Mac’teki Keepit için bir parola seçin; geri yüklenen veriler onunla korunur.";
+"Keep the recovery phrase?" = "Kurtarma ifadesi korunsun mu?";
+"The phrase you just entered can keep working for this Mac, or Keepit can make a new one and show it to you." = "Az önce girdiğiniz ifade bu Mac için geçerli kalabilir ya da Keepit yeni bir tane oluşturup size gösterebilir.";
+"Keep This Phrase" = "Bu İfadeyi Koru";
+"Make a New Phrase" = "Yeni İfade Oluştur";
+"Saving a copy of your current data…" = "Geçerli verilerinizin bir kopyası kaydediliyor…";
+"Protection is on. The recovery phrase from the backup also opens Keepit on this Mac." = "Koruma açık. Yedekteki kurtarma ifadesi bu Mac’teki Keepit’i de açar.";
+"Could not set up the recovery phrase: %@" = "Kurtarma ifadesi ayarlanamadı: %@";

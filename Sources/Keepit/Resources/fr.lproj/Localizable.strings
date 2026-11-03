@@ -463,3 +463,16 @@
 "Use the password you just entered as this Mac's Keepit password. Automatic backups into the same folder then continue without setup. You can set a different one instead." = "Utiliser le mot de passe que vous venez de saisir comme mot de passe Keepit de ce Mac. Les sauvegardes automatiques dans le même dossier continuent alors sans configuration. Vous pouvez aussi en définir un autre.";
 "Where to save the copy of your current data" = "Où enregistrer la copie des données actuelles";
 "backups" = "sauvegardes";
+"Created %@ with %@ — %d history item(s), %d template item(s).\n\nMerge adds what is not already there (templates go into a new folder, without their hot keys). Replace discards the current history and templates first — a copy of them is saved before that." = "Créée le %@ avec %@ — %d élément(s) d’historique, %d modèle(s).\n\n« Fusionner » ajoute ce qui manque (les modèles vont dans un nouveau dossier, sans leurs raccourcis). « Remplacer » supprime d’abord l’historique et les modèles actuels — une copie en est enregistrée avant.";
+"Restore cancelled: Keepit was locked meanwhile." = "Restauration annulée : Keepit a été verrouillé entre-temps.";
+"Not everything fits" = "Tout ne rentre pas";
+"%d of the backup's history items fit the current limits; %d would be left out. You can raise the limits in Settings → History first." = "%d éléments d’historique de la sauvegarde tiennent dans les limites actuelles ; %d seraient laissés de côté. Vous pouvez d’abord augmenter les limites dans Réglages → Historique.";
+"Continue" = "Continuer";
+"This backup was opened with its recovery phrase. Choose a password for Keepit on this Mac; the restored data is protected with it." = "Cette sauvegarde a été ouverte avec sa phrase de récupération. Choisissez un mot de passe pour Keepit sur ce Mac ; les données restaurées seront protégées par lui.";
+"Keep the recovery phrase?" = "Conserver la phrase de récupération ?";
+"The phrase you just entered can keep working for this Mac, or Keepit can make a new one and show it to you." = "La phrase que vous venez de saisir peut rester valable pour ce Mac, ou Keepit peut en créer une nouvelle et vous la montrer.";
+"Keep This Phrase" = "Conserver cette phrase";
+"Make a New Phrase" = "Créer une nouvelle phrase";
+"Saving a copy of your current data…" = "Enregistrement d’une copie de vos données actuelles…";
+"Protection is on. The recovery phrase from the backup also opens Keepit on this Mac." = "La protection est activée. La phrase de récupération de la sauvegarde ouvre aussi Keepit sur ce Mac.";
+"Could not set up the recovery phrase: %@" = "Impossible de configurer la phrase de récupération : %@";

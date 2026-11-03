@@ -463,3 +463,16 @@
 "Use the password you just entered as this Mac's Keepit password. Automatic backups into the same folder then continue without setup. You can set a different one instead." = "將剛輸入的密碼用作本機的 Keepit 密碼。寫入同一資料夾的自動備份無需設定即可繼續。也可以設定其他密碼。";
 "Where to save the copy of your current data" = "目前資料副本的儲存位置";
 "backups" = "份";
+"Created %@ with %@ — %d history item(s), %d template item(s).\n\nMerge adds what is not already there (templates go into a new folder, without their hot keys). Replace discards the current history and templates first — a copy of them is saved before that." = "建立於 %@，使用 %@ — %d 筆歷史記錄，%d 個範本。\n\n「合併」會加入尚未存在的內容（範本放入新資料夾，不含快速鍵）。「取代」會先捨棄目前的歷史記錄和範本——此前會儲存它們的副本。";
+"Restore cancelled: Keepit was locked meanwhile." = "還原已取消：期間 Keepit 已鎖定。";
+"Not everything fits" = "並非全部容納";
+"%d of the backup's history items fit the current limits; %d would be left out. You can raise the limits in Settings → History first." = "備份中的歷史記錄有 %d 筆符合目前限制，%d 筆將被捨棄。可先在 設定 → 歷史記錄 中提高限制。";
+"Continue" = "繼續";
+"This backup was opened with its recovery phrase. Choose a password for Keepit on this Mac; the restored data is protected with it." = "此備份是用復原助記詞開啟的。請為本機的 Keepit 設定密碼，還原的資料將以它保護。";
+"Keep the recovery phrase?" = "保留復原助記詞？";
+"The phrase you just entered can keep working for this Mac, or Keepit can make a new one and show it to you." = "剛輸入的助記詞可繼續用於本機，或由 Keepit 產生新的並顯示給你。";
+"Keep This Phrase" = "保留此助記詞";
+"Make a New Phrase" = "產生新助記詞";
+"Saving a copy of your current data…" = "正在儲存目前資料的副本…";
+"Protection is on. The recovery phrase from the backup also opens Keepit on this Mac." = "保護已開啟。備份的復原助記詞現在也能開啟本機的 Keepit。";
+"Could not set up the recovery phrase: %@" = "無法設定復原助記詞：%@";
