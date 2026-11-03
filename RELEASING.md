@@ -132,6 +132,9 @@ Sparkle release never enters a Keepit build by itself — it is a deliberate, re
 2. `swift package update Sparkle` (or edit `Package.resolved` by hand), then `swift build && swift test`.
 3. Commit `Package.resolved` on its own, with the version in the message ("Sparkle 2.10.1 → 2.11.0").
 
+Dependabot (`.github/dependabot.yml`, swift ecosystem) opens exactly such a PR each week there is a
+new Sparkle; CI on the PR is the compile check, the release notes are the review.
+
 Both variants (Developer ID and App Store) resolve the same dependency set; the App Store build just
 does not link Sparkle (`make appstore` checks that with `otool`).
 

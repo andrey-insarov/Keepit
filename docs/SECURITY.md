@@ -8,8 +8,8 @@ can be checked against it.
 ## In one paragraph
 
 Keepit stores your clipboard history and templates in one folder on your Mac and nowhere else. There
-is no account, no cloud, no analytics, and the app makes exactly one kind of network request: the
-daily update check against GitHub. Clipboard data that the copying app marks as concealed is not
+is no account, no cloud, no analytics, and the app makes exactly one kind of network request — the
+daily update check against GitHub — which you can switch off. Clipboard data that the copying app marks as concealed is not
 recorded, and copies from known password managers are excluded by app — a best-effort heuristic,
 explained below. If you set a password, everything on disk is AES-256-GCM encrypted with a key derived from that password; the key
 exists only in memory, is wiped when Keepit locks, and can optionally be released by Touch ID from
@@ -26,7 +26,7 @@ under `~/Library/Containers/com.it.keep/`):
 | `history.json` | The clipboard history: text, RTF, HTML, PNG images, file lists, with date and source app | Yes |
 | `templates.json` | The template tree, including per-template hot keys | Yes |
 | `settings.json` | Settings: hot keys, limits, ignore list — no clipboard data | No |
-| `vault.json` | Encryption metadata: PBKDF2 salt, a sealed verifier, the wrapped recovery material | — |
+| `vault.json` | Encryption metadata: KDF name and round count, PBKDF2 salt, a sealed verifier, the wrapped recovery material | — |
 
 The history is written when it changes and read on launch. Without a password the JSON is plain
 text on disk, protected only by your macOS account and FileVault. *Settings → Advanced → Open

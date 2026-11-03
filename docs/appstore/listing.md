@@ -58,6 +58,12 @@ Keepit needs the Accessibility permission to paste for you; without it, chosen i
 ## Keywords (100 chars, comma-separated)
 clipboard,history,paste,copy,snippets,templates,manager,queue,text expander,productivity
 
+## What's new (version 2.12.0)
+• Copies from password managers are skipped more reliably — including when you switch apps right after copying.
+• Saving a large history no longer pauses the interface.
+• Encryption metadata is versioned, so future improvements will not disturb existing data.
+• Clearer security documentation: what is guaranteed, what is best effort.
+
 ## What's new (version 2.11.1)
 • Settings redesigned the Mac way: panes in the toolbar, every change applies at once.
 • Paste queue: press ⌥N, copy several things, then ⌥V pastes them back one by one.

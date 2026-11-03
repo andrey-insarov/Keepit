@@ -1,6 +1,6 @@
 # Privacy Policy — Keepit – Clipboard Manager
 
-*Version 1.2, effective 2 November 2026.*
+*Version 1.3, effective 3 November 2026.*
 
 **In short: Keepit does not collect, transmit, sell or share any personal data. Everything the app stores stays on your Mac, under your control.**
 

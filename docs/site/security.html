@@ -2,7 +2,7 @@
 <title>Keepit Security – Encrypted Clipboard Manager for Mac</title><link rel="icon" href="img/icon.png"><link rel="apple-touch-icon" href="img/icon.png">
 <meta name="description" content="What Keepit stores and where, how the clipboard history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download.">
 <link rel="canonical" href="https://keep.it.com/security.html"><meta property="og:type" content="article"><meta property="og:site_name" content="Keepit"><meta property="og:title" content="Keepit Security – Encrypted Clipboard Manager for Mac"><meta property="og:description" content="What Keepit stores and where, how the clipboard history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download."><meta property="og:image" content="https://keep.it.com/img/social-preview.png"><meta property="og:url" content="https://keep.it.com/security.html"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Keepit Security – Encrypted Clipboard Manager for Mac"><meta name="twitter:description" content="What Keepit stores and where, how the clipboard history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download."><meta name="twitter:image" content="https://keep.it.com/img/social-preview.png"><meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "@id": "https://keep.it.com/security.html", "url": "https://keep.it.com/security.html", "name": "Keepit security", "headline": "Keepit security", "description": "What Keepit stores and where, how the clipboard history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download.", "inLanguage": "en", "isPartOf": {"@id": "https://keep.it.com/#site"}, "about": {"@id": "https://keep.it.com/#app"}, "author": {"@id": "https://keep.it.com/#org"}, "publisher": {"@id": "https://keep.it.com/#org"}, "image": "https://keep.it.com/img/social-preview.png", "dateModified": "2026-11-02"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Keepit", "item": "https://keep.it.com/"}, {"@type": "ListItem", "position": 2, "name": "Security", "item": "https://keep.it.com/security.html"}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "@id": "https://keep.it.com/security.html", "url": "https://keep.it.com/security.html", "name": "Keepit security", "headline": "Keepit security", "description": "What Keepit stores and where, how the clipboard history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download.", "inLanguage": "en", "isPartOf": {"@id": "https://keep.it.com/#site"}, "about": {"@id": "https://keep.it.com/#app"}, "author": {"@id": "https://keep.it.com/#org"}, "publisher": {"@id": "https://keep.it.com/#org"}, "image": "https://keep.it.com/img/social-preview.png", "dateModified": "2026-11-03"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Keepit", "item": "https://keep.it.com/"}, {"@type": "ListItem", "position": 2, "name": "Security", "item": "https://keep.it.com/security.html"}]}]}</script>
 <style>
 :root{--paper:#fbfbfd;--ink:#0f1222;--ink-2:#4b4f63;--ink-3:#8a8ea3;--blue:#2f4fd1;--blue-deep:#1f3aa6;--blue-tint:#eef2ff;--line:#e3e5ef;--key:#fff;--key-edge:#cfd2de;--win:#fff;--sel:#2f5cf0}
 @media(prefers-color-scheme:dark){:root{--paper:#0c0d14;--ink:#f2f3f8;--ink-2:#b7bacb;--ink-3:#7c8097;--blue:#7d9bff;--blue-deep:#a9bdff;--blue-tint:#151b35;--line:#23263a;--key:#1b1e2e;--key-edge:#3a3e56;--win:#1a1c28;--sel:#3d6bff}}
@@ -66,8 +66,8 @@ who can get at it. This page is the complete picture for Keepit. The code is ope
 can be checked against it.</p>
 <h2 id="in-one-paragraph">In one paragraph</h2>
 <p>Keepit stores your clipboard history and templates in one folder on your Mac and nowhere else. There
-is no account, no cloud, no analytics, and the app makes exactly one kind of network request: the
-daily update check against GitHub. Clipboard data that the copying app marks as concealed is not
+is no account, no cloud, no analytics, and the app makes exactly one kind of network request — the
+daily update check against GitHub — which you can switch off. Clipboard data that the copying app marks as concealed is not
 recorded, and copies from known password managers are excluded by app — a best-effort heuristic,
 explained below. If you set a password, everything on disk is AES-256-GCM encrypted with a key derived from that password; the key
 exists only in memory, is wiped when Keepit locks, and can optionally be released by Touch ID from
@@ -102,7 +102,7 @@ under <code>~/Library/Containers/com.it.keep/</code>):</p>
 </tr>
 <tr>
 <td><code>vault.json</code></td>
-<td>Encryption metadata: PBKDF2 salt, a sealed verifier, the wrapped recovery material</td>
+<td>Encryption metadata: KDF name and round count, PBKDF2 salt, a sealed verifier, the wrapped recovery material</td>
 <td>—</td>
 </tr>
 </tbody>

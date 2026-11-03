@@ -214,7 +214,7 @@ with the Playwright/Chromium script, or on a Mac render the PNGs any way you lik
   settings.json    options (editable by hand; missing keys fall back to defaults)
   history.json     clipboard history (base64 data per format)
   templates.json   template tree
-  vault.json       salt + verifier, only when password protection is on
+  vault.json       KDF parameters, salt + verifier, recovery material — only when password protection is on
 ```
 
 Example `pasteKeys` override in `settings.json` (an app that pastes with ⇧⌘V):

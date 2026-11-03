@@ -58,7 +58,7 @@ enum Vault {
     static let magic = Data("KEEPITENC1".utf8)
     private static let okToken = Data("KEEPIT-OK".utf8)
 
-    // KDF parameters are recorded in vault.json (format 2, Keepit 2.11.2+) so they can change
+    // KDF parameters are recorded in vault.json (format 2, Keepit 2.12+) so they can change
     // later without breaking existing vaults. A file without them (format 1, ≤ 2.11.1) means
     // the values below; a vault that names a KDF this build does not know is refused, not guessed.
     // Raising `defaultRounds` only affects vaults created from then on — the data key is derived
