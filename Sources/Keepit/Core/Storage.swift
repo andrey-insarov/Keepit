@@ -67,13 +67,13 @@ enum Storage {
     static func load<T: Decodable>(_ type: T.Type, from url: URL) -> T? {
         if let size = (try? FileManager.default.attributesOfItem(atPath: url.path)[.size] as? NSNumber)?.intValue,
            size > Limits.dataFileMaxBytes {
-            NSLog("Keepit: refusing to load \(url.lastPathComponent): \(size) bytes exceeds the limit")
+            Log.storage.error("refusing to load \(url.lastPathComponent): \(size) bytes exceeds the limit")
             return nil
         }
         guard var data = try? Data(contentsOf: url) else { return nil }
         if Vault.isEncrypted(data) {
             guard let k = key, let plain = try? Vault.decrypt(data, key: k) else {
-                NSLog("Keepit: \(url.lastPathComponent) is encrypted and no valid key is available")
+                Log.storage.notice("\(url.lastPathComponent) is encrypted and no valid key is available")
                 return nil
             }
             data = plain
@@ -81,7 +81,7 @@ enum Storage {
         do {
             return try decoder.decode(T.self, from: data)
         } catch {
-            NSLog("Keepit: failed to decode \(url.lastPathComponent): \(error)")
+            Log.storage.error("failed to decode \(url.lastPathComponent): \(String(describing: type(of: error))) — a copy was kept next to it")
             // Keep a copy so the user doesn't lose data to a parsing bug.
             let bak = url.appendingPathExtension("corrupt-\(Int(Date().timeIntervalSince1970))")
             try? FileManager.default.copyItem(at: url, to: bak)
@@ -99,7 +99,7 @@ enum Storage {
         // With a password set and no key in memory (locked), writing would replace an encrypted
         // file with plaintext — refuse rather than leak or clobber.
         if encrypt, key == nil, Vault.isEnabled {
-            NSLog("Keepit: not saving \(url.lastPathComponent) while locked")
+            Log.storage.notice("not saving \(url.lastPathComponent) while locked")
             return
         }
         // The key is captured here, on the caller's thread. `key.didSet` zeroes an old key only
@@ -112,7 +112,7 @@ enum Storage {
                 if let k { data = try Vault.encrypt(data, key: k) }
                 try data.write(to: url, options: .atomic)
             } catch {
-                NSLog("Keepit: failed to save \(url.lastPathComponent): \(error)")
+                Log.storage.error("failed to save \(url.lastPathComponent): \(error.localizedDescription)")
             }
         }
         if background { ioQueue.async(execute: work) } else { ioQueue.sync(execute: work) }

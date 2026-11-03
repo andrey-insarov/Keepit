@@ -37,7 +37,7 @@ final class Updater {
             if isEnabled {
                 if !started {
                     do { try controller.startUpdater(); started = true } catch {
-                        NSLog("Keepit: Sparkle did not start: \(error)")
+                        Log.system.error("Sparkle did not start: \(error.localizedDescription)")
                         return
                     }
                 }

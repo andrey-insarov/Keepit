@@ -302,7 +302,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                     return true
                 }
                 key.zero()
-                NSLog("Keepit: Touch ID key does not open the vault (password changed elsewhere?)")
+                Log.vault.notice("Touch ID key does not open the vault (password changed elsewhere?)")
             }
             // fall through to the password prompt
         }
@@ -450,7 +450,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         guard Vault.isEnabled, let key = Storage.key else { BiometricUnlock.remove(); return }
         if settings.biometricUnlock {
             do { try BiometricUnlock.store(key) } catch BiometricUnlock.Failure.notAvailable {
-                NSLog("Keepit: Touch ID not usable right now; will store the key at the next password unlock")
+                Log.vault.notice("Touch ID not usable right now; will store the key at the next password unlock")
                 if !quiet {
                     Vault.error(L("Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password."))
                 }
@@ -527,7 +527,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         do {
             if on { try SMAppService.mainApp.register() } else { try SMAppService.mainApp.unregister() }
         } catch {
-            NSLog("Keepit: launch at login change failed: \(error)")
+            Log.system.error("launch at login change failed: \(error.localizedDescription)")
         }
     }
 

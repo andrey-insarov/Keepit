@@ -19,7 +19,7 @@ final class SecureKey {
         precondition(bytes.count == SecureKey.size)
         ptr = UnsafeMutableRawPointer.allocate(byteCount: SecureKey.size, alignment: 16)
         isPageLocked = mlock(ptr, SecureKey.size) == 0      // keep out of swap
-        if !isPageLocked { NSLog("Keepit: mlock failed for a key buffer (errno \(errno)); continuing without page lock") }
+        if !isPageLocked { Log.vault.notice("mlock failed for a key buffer (errno \(errno)); continuing without page lock") }
         ptr.copyMemory(from: bytes.baseAddress!, byteCount: SecureKey.size)
     }
 
@@ -127,7 +127,7 @@ enum Vault {
     /// Key for an existing vault's parameters; nil (logged) if the vault names a KDF this build lacks.
     private static func deriveKey(password: SecureBuffer, meta: Meta) -> SecureKey? {
         guard meta.kdfName == kdfPBKDF2SHA256 else {
-            NSLog("Keepit: vault.json uses KDF \(meta.kdfName), which this version does not support")
+            Log.vault.error("vault.json uses KDF \(meta.kdfName), which this version does not support")
             return nil
         }
         return try? deriveKey(password: password, salt: meta.salt, rounds: meta.kdfRounds)

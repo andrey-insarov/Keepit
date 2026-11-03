@@ -12,7 +12,7 @@ final class SecureBuffer {
         self.capacity = capacity
         ptr = UnsafeMutablePointer<UInt8>.allocate(capacity: capacity)
         ptr.initialize(repeating: 0, count: capacity)
-        if mlock(ptr, capacity) != 0 { NSLog("Keepit: mlock failed for a password buffer (errno \(errno)); continuing without page lock") }
+        if mlock(ptr, capacity) != 0 { Log.vault.notice("mlock failed for a password buffer (errno \(errno)); continuing without page lock") }
     }
 
     var isEmpty: Bool { count == 0 }

@@ -55,7 +55,7 @@ final class HotKeyManager {
         let status = RegisterEventHotKey(hotKey.keyCode, hotKey.modifiers, hkID,
                                          GetApplicationEventTarget(), 0, &ref)
         guard status == noErr, let r = ref else {
-            NSLog("Keepit: RegisterEventHotKey failed for \(hotKey.displayString): \(status)")
+            Log.system.error("RegisterEventHotKey failed for \(hotKey.displayString): \(status)")
             return false
         }
         refs[id] = r

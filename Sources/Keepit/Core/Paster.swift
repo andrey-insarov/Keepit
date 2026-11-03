@@ -51,7 +51,7 @@ enum Paster {
 
         guard isTrusted() else {
             // No permission → the data is on the clipboard; the user can ⌘V by hand.
-            NSLog("Keepit: Accessibility not granted, skipping synthetic paste")
+            Log.system.notice("Accessibility not granted, skipping synthetic paste")
             return
         }
 

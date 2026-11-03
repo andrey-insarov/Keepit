@@ -135,6 +135,22 @@ Location or the camera, and does not use any of them. The Accessibility permissi
 is the same one window managers and automation tools need — which is why the app is signed and
 notarized and the source is public.
 
+**Clipboard access as macOS sees it.** Keepit reads the clipboard by polling (macOS sends no
+notification when it changes), so from macOS 15.4 on, *System Settings → Privacy & Security* lists
+Keepit among the apps that read the pasteboard, and the system log records those reads. That is the
+history being recorded — it is what a clipboard manager does — not a sign of anything else going on.
+
+## System log
+
+Keepit writes to the unified system log (Console.app, `log show`, sysdiagnose) under the subsystem
+`com.it.keep`, and only about errors and unexpected states: a file that could not be saved or
+decoded, a hot key the system refused to register, Touch ID or the login item failing, the updater
+not starting. It never logs a clipboard item, a template, a password, a key, the contents of a file,
+or whether a particular copy was recorded or skipped. Every value inserted into a message (a file
+name, an error, a key combination) is marked private, so Console shows `<private>` in its place
+unless an administrator explicitly turns private data on for the subsystem. There is no log file of
+Keepit's own, and nothing is sent anywhere.
+
 ## Network
 
 The direct-download edition makes one request: once a day (and when you choose *Check for
@@ -203,6 +219,8 @@ exhaust memory or disk:
 - Items you paste leave Keepit's control the moment they land in another app.
 - Which app wrote the clipboard is a guess (see *What is not recorded*). The reliable signal is the
   concealed mark, and only the copying app can set it.
+- macOS itself may keep traces Keepit does not control: the system log of pasteboard reads (above),
+  crash reports if the app ever crashes, and the Accessibility/TCC database.
 
 ## Reporting a vulnerability
 
