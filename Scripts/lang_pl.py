@@ -397,4 +397,6 @@ T = {
 'Updates': 'Aktualizacje',
 'Check for updates automatically': 'Automatycznie sprawdzaj aktualizacje',
 'Once a day Keepit asks GitHub Releases whether a newer version exists — the only network request it makes; the download itself is signed and verified. Off = no request is ever made and Check for Updates… leaves the menus; you update by downloading from keep.it.com.': 'Raz dziennie Keepit pyta GitHub Releases, czy istnieje nowsza wersja — to jedyne żądanie sieciowe, jakie wykonuje; samo pobieranie jest podpisane i weryfikowane. Wył. = żadne żądanie nie jest wysyłane, a „Sprawdź uaktualnienia…” znika z menu; aktualizujesz, pobierając z keep.it.com.',
+'Items in menu:': 'Pozycji w menu:',
+"How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer.": 'Ile najnowszych wpisów historii pokazuje menu. Starsze pozostają w historii — znajdziesz je polem wyszukiwania w menu lub w Viewerze.',
 }

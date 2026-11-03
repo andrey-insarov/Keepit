@@ -397,3 +397,5 @@
 "Updates" = "Actualizaciones";
 "Check for updates automatically" = "Buscar actualizaciones automáticamente";
 "Once a day Keepit asks GitHub Releases whether a newer version exists — the only network request it makes; the download itself is signed and verified. Off = no request is ever made and Check for Updates… leaves the menus; you update by downloading from keep.it.com." = "Una vez al día, Keepit pregunta a GitHub Releases si existe una versión más reciente: la única petición de red que realiza; la descarga en sí está firmada y se verifica. Desactivado = nunca se hace ninguna petición y «Buscar actualizaciones…» desaparece de los menús; se actualiza descargando desde keep.it.com.";
+"Items in menu:" = "Elementos en el menú:";
+"How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer." = "Cuántas de las últimas entradas del historial muestra el menú. Las más antiguas permanecen en el historial y se encuentran con el campo de búsqueda del menú o en el Viewer.";

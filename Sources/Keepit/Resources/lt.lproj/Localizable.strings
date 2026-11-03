@@ -397,3 +397,5 @@
 "Updates" = "Atnaujinimai";
 "Check for updates automatically" = "Automatiškai tikrinti atnaujinimus";
 "Once a day Keepit asks GitHub Releases whether a newer version exists — the only network request it makes; the download itself is signed and verified. Off = no request is ever made and Check for Updates… leaves the menus; you update by downloading from keep.it.com." = "Kartą per dieną „Keepit“ paklausia „GitHub Releases“, ar yra naujesnė versija – tai vienintelė jo tinklo užklausa; pats atsisiuntimas pasirašytas ir patikrinamas. Išjungta = užklausų nesiunčiama, o „Tikrinti, ar yra naujinių…“ dingsta iš meniu; atnaujinkite atsisiųsdami iš keep.it.com.";
+"Items in menu:" = "Įrašų meniu:";
+"How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer." = "Kiek naujausių istorijos įrašų rodo meniu. Senesni įrašai lieka istorijoje – juos rasite meniu paieškos lauku arba „Viewer“.";

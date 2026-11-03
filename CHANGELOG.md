@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Settings → Menu: *Items in menu* — how many of the latest entries the history menu lists (60 by default, up to 200). The setting existed in `settings.json` since 2.0 but had no field in Settings
+
 ## 2.12.0 — 2026-11-03
 
 Security and robustness release after an external review of 2.11.1, plus one new option.

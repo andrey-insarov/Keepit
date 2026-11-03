@@ -397,3 +397,5 @@
 "Updates" = "التحديثات";
 "Check for updates automatically" = "التحقق من التحديثات تلقائيًا";
 "Once a day Keepit asks GitHub Releases whether a newer version exists — the only network request it makes; the download itself is signed and verified. Off = no request is ever made and Check for Updates… leaves the menus; you update by downloading from keep.it.com." = "مرة واحدة يوميًا يسأل Keepit موقع GitHub Releases عمّا إذا كان هناك إصدار أحدث — وهو طلب الشبكة الوحيد الذي يجريه؛ التنزيل نفسه موقّع ويتم التحقق منه. إيقاف = لا يُجرى أي طلب أبدًا ويختفي «التحقق من التحديثات…» من القوائم؛ يمكنك التحديث بالتنزيل من keep.it.com.";
+"Items in menu:" = "العناصر في القائمة:";
+"How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer." = "عدد أحدث إدخالات السجل التي تعرضها القائمة. تبقى الإدخالات الأقدم في السجل ويمكن العثور عليها عبر حقل البحث في القائمة أو في Viewer.";

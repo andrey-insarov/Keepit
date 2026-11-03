@@ -397,4 +397,6 @@ T = {
 'Updates': '업데이트',
 'Check for updates automatically': '자동으로 업데이트 확인',
 'Once a day Keepit asks GitHub Releases whether a newer version exists — the only network request it makes; the download itself is signed and verified. Off = no request is ever made and Check for Updates… leaves the menus; you update by downloading from keep.it.com.': 'Keepit은 하루에 한 번 GitHub Releases에 새 버전이 있는지 물어봅니다. 이것이 유일한 네트워크 요청이며, 다운로드 자체는 서명되고 검증됩니다. 끔 = 요청을 전혀 보내지 않으며 ‘업데이트 확인…’이 메뉴에서 사라집니다. keep.it.com에서 다운로드하여 업데이트하세요.',
+'Items in menu:': '메뉴 항목 수:',
+"How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer.": '메뉴에 표시할 최근 기록 항목 수입니다. 더 오래된 항목은 기록에 남아 있으며 메뉴의 검색 필드나 Viewer에서 찾을 수 있습니다.',
 }

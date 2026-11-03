@@ -397,3 +397,5 @@
 "Updates" = "Aktualizace";
 "Check for updates automatically" = "Automaticky kontrolovat aktualizace";
 "Once a day Keepit asks GitHub Releases whether a newer version exists — the only network request it makes; the download itself is signed and verified. Off = no request is ever made and Check for Updates… leaves the menus; you update by downloading from keep.it.com." = "Jednou denně se Keepit zeptá GitHub Releases, zda existuje novější verze – jediný síťový požadavek, který provádí; samotné stažení je podepsané a ověřené. Vypnuto = žádný požadavek se nikdy neodešle a „Zkontrolovat aktualizace…“ zmizí z nabídek; aktualizujete stažením z keep.it.com.";
+"Items in menu:" = "Položek v nabídce:";
+"How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer." = "Kolik nejnovějších položek historie nabídka zobrazuje. Starší položky zůstávají v historii a najdete je vyhledávacím polem v nabídce nebo ve Vieweru.";

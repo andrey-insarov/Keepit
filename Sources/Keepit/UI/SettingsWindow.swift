@@ -70,6 +70,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
     private let showSource   = NSButton(checkboxWithTitle: L("Show source app icons"), target: nil, action: nil)
     private let showThumbs   = NSButton(checkboxWithTitle: L("Show image thumbnails in menu"), target: nil, action: nil)
     private let titleLength  = NSTextField()
+    private let menuItems    = NSTextField()
     private let thumbSize    = NSTextField()
 
     private let protect      = NSButton(checkboxWithTitle: L("Require password at launch"), target: nil, action: nil)
@@ -369,6 +370,8 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             [NSView(), check(showTips)],
             [NSView(), check(showSource)],
             [NSView(), check(showThumbs)],
+            row(L("Items in menu:"), help(number(menuItems, unit: L("items"), min: 1, max: Double(Limits.menuMaxItemsCeiling), step: 10),
+                                          L("How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer."))),
             row(L("Title length:"), number(titleLength, unit: L("characters"), min: 10, max: 500, step: 10)),
             row(L("Thumbnail height:"), number(thumbSize, unit: L("pixels"), min: 16, max: 128, step: 8)),
         ])
@@ -587,6 +590,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         showSource.state = s.showSourceIcons ? .on : .off
         showThumbs.state = s.showThumbnails ? .on : .off
         setNumber(titleLength, Double(s.titleLength))
+        setNumber(menuItems, Double(s.menuMaxItems))
         setNumber(thumbSize, Double(s.thumbnailSize))
 
         protect.state = Vault.isEnabled ? .on : .off
@@ -662,6 +666,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             s.historyMax = historyMax.integerValue
             s.historyImageMax = imageMax.integerValue
             s.titleLength = titleLength.integerValue
+            s.menuMaxItems = menuItems.integerValue
             s.thumbnailSize = thumbSize.integerValue
             s.pollInterval = pollInterval.doubleValue
         }
@@ -669,7 +674,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         let s = app.settings
         setNumber(pasteDelay, s.pasteDelay); setNumber(queueTimeout, s.queueTimeout)
         setNumber(historyMax, Double(s.historyMax)); setNumber(imageMax, Double(s.historyImageMax))
-        setNumber(titleLength, Double(s.titleLength)); setNumber(thumbSize, Double(s.thumbnailSize))
+        setNumber(titleLength, Double(s.titleLength)); setNumber(thumbSize, Double(s.thumbnailSize)); setNumber(menuItems, Double(s.menuMaxItems))
         setNumber(pollInterval, s.pollInterval)
     }
 

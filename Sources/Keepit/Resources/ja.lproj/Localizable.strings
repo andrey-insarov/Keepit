@@ -397,3 +397,5 @@
 "Updates" = "アップデート";
 "Check for updates automatically" = "アップデートを自動的に確認";
 "Once a day Keepit asks GitHub Releases whether a newer version exists — the only network request it makes; the download itself is signed and verified. Off = no request is ever made and Check for Updates… leaves the menus; you update by downloading from keep.it.com." = "Keepit は1日に1回、新しいバージョンがあるか GitHub Releases に問い合わせます。これが行う唯一のネットワーク通信で、ダウンロード自体は署名され検証されます。オフ = 通信は一切行われず、「アップデートを確認…」がメニューから消えます。更新は keep.it.com からダウンロードして行います。";
+"Items in menu:" = "メニューの項目数:";
+"How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer." = "メニューに表示する最新の履歴項目の数。古い項目は履歴に残り、メニューの検索フィールドや Viewer から見つけられます。";

@@ -397,4 +397,6 @@ T = {
 'Updates': '更新',
 'Check for updates automatically': '自動檢查更新',
 'Once a day Keepit asks GitHub Releases whether a newer version exists — the only network request it makes; the download itself is signed and verified. Off = no request is ever made and Check for Updates… leaves the menus; you update by downloading from keep.it.com.': 'Keepit 每天向 GitHub Releases 查詢一次是否有新版本——這是它發出的唯一網路請求；下載本身經過簽署與驗證。關閉 = 永不發出請求，「檢查更新項目⋯」會從選單中消失；可從 keep.it.com 下載更新。',
+'Items in menu:': '選單中的項目數：',
+"How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer.": '選單列出最近多少筆歷史記錄。較舊的記錄仍保留在歷史中，可透過選單中的搜尋欄位或 Viewer 找到。',
 }

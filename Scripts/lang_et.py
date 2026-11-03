@@ -397,4 +397,6 @@ T = {
 'Updates': 'Uuendused',
 'Check for updates automatically': 'Kontrolli uuendusi automaatselt',
 'Once a day Keepit asks GitHub Releases whether a newer version exists — the only network request it makes; the download itself is signed and verified. Off = no request is ever made and Check for Updates… leaves the menus; you update by downloading from keep.it.com.': 'Kord päevas küsib Keepit GitHub Releasesilt, kas on uuem versioon – ainus võrgupäring, mida ta teeb; allalaadimine ise on allkirjastatud ja kontrollitud. Väljas = päringuid ei tehta kunagi ja „Otsi uuendusi…“ kaob menüüdest; uuendate, laadides alla aadressilt keep.it.com.',
+'Items in menu:': 'Kirjeid menüüs:',
+"How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer.": 'Mitut viimast ajaloo kirjet menüü näitab. Vanemad kirjed jäävad ajalukku ja need leiab menüü otsinguväljalt või Vieweris.',
 }

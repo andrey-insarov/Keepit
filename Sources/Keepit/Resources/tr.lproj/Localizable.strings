@@ -397,3 +397,5 @@
 "Updates" = "Güncellemeler";
 "Check for updates automatically" = "Güncellemeleri otomatik denetle";
 "Once a day Keepit asks GitHub Releases whether a newer version exists — the only network request it makes; the download itself is signed and verified. Off = no request is ever made and Check for Updates… leaves the menus; you update by downloading from keep.it.com." = "Keepit günde bir kez GitHub Releases’e daha yeni bir sürüm olup olmadığını sorar — yaptığı tek ağ isteği budur; indirmenin kendisi imzalıdır ve doğrulanır. Kapalı = hiçbir istek yapılmaz ve “Güncellemeleri Denetle…” menülerden kalkar; keep.it.com’dan indirerek güncellersiniz.";
+"Items in menu:" = "Menüdeki öğe sayısı:";
+"How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer." = "Menünün listelediği en son geçmiş girdisi sayısı. Daha eski girdiler geçmişte kalır; menüdeki arama alanıyla veya Viewer’da bulunur.";

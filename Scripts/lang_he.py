@@ -397,4 +397,6 @@ T = {
 'Updates': 'עדכונים',
 'Check for updates automatically': 'בדיקת עדכונים אוטומטית',
 'Once a day Keepit asks GitHub Releases whether a newer version exists — the only network request it makes; the download itself is signed and verified. Off = no request is ever made and Check for Updates… leaves the menus; you update by downloading from keep.it.com.': 'פעם ביום Keepit שואל את GitHub Releases אם קיימת גרסה חדשה יותר — בקשת הרשת היחידה שהוא מבצע; ההורדה עצמה חתומה ומאומתת. כבוי = לא נשלחת שום בקשה, ו„בדוק עדכונים…“ נעלם מהתפריטים; מעדכנים בהורדה מ‑keep.it.com.',
+'Items in menu:': 'פריטים בתפריט:',
+"How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer.": 'כמה מהרשומות האחרונות בהיסטוריה מציג התפריט. רשומות ישנות יותר נשארות בהיסטוריה וניתן למצוא אותן דרך שדה החיפוש בתפריט או ב‑Viewer.',
 }

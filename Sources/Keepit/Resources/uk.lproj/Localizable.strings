@@ -397,3 +397,5 @@
 "Updates" = "Оновлення";
 "Check for updates automatically" = "Перевіряти оновлення автоматично";
 "Once a day Keepit asks GitHub Releases whether a newer version exists — the only network request it makes; the download itself is signed and verified. Off = no request is ever made and Check for Updates… leaves the menus; you update by downloading from keep.it.com." = "Раз на день Keepit запитує GitHub Releases, чи є новіша версія, — це єдиний мережевий запит, який він робить; саме завантаження підписане й перевіряється. Вимк. = запитів немає взагалі, а пункт «Перевірити оновлення…» зникає з меню; оновлюйтеся, завантажуючи з keep.it.com.";
+"Items in menu:" = "Записів у меню:";
+"How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer." = "Скільки останніх записів історії показує меню. Старіші залишаються в історії — їх можна знайти через поле пошуку в меню або у Viewer.";

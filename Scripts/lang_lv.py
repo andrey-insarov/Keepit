@@ -397,4 +397,6 @@ T = {
 'Updates': 'Atjauninājumi',
 'Check for updates automatically': 'Automātiski pārbaudīt atjauninājumus',
 'Once a day Keepit asks GitHub Releases whether a newer version exists — the only network request it makes; the download itself is signed and verified. Off = no request is ever made and Check for Updates… leaves the menus; you update by downloading from keep.it.com.': 'Reizi dienā Keepit vaicā GitHub Releases, vai ir jaunāka versija – vienīgais tīkla pieprasījums, ko tas veic; pati lejupielāde ir parakstīta un tiek pārbaudīta. Izslēgts = pieprasījumi netiek sūtīti, un “Meklēt atjauninājumus…” pazūd no izvēlnēm; atjauniniet, lejupielādējot no keep.it.com.',
+'Items in menu:': 'Ierakstu izvēlnē:',
+"How many of the latest history entries the menu lists. Older entries stay in the history and are found with the menu's search field or in the Viewer.": 'Cik jaunāko vēstures ierakstu rāda izvēlne. Vecākie ieraksti paliek vēsturē — tos var atrast ar izvēlnes meklēšanas lauku vai Viewer.',
 }
