@@ -301,7 +301,8 @@ enum Vault {
     }
 
     /// Same prompt, optionally with a third "Recovery Access…" button.
-    static func prompt(title: String, message: String, confirm: Bool = false, cancelQuits: Bool = false, offerRecovery: Bool) -> PromptResult {
+    /// `recoveryAvailable` overrides the local vault's state — a backup file carries its own recovery block.
+    static func prompt(title: String, message: String, confirm: Bool = false, cancelQuits: Bool = false, offerRecovery: Bool, recoveryAvailable: Bool? = nil) -> PromptResult {
         while true {
             let a = NSAlert()
             a.messageText = title
@@ -350,7 +351,7 @@ enum Vault {
             a.accessoryView = box
             let ok = a.addButton(withTitle: L("OK"))
             a.addButton(withTitle: cancelQuits ? L("Quit") : L("Cancel"))
-            if offerRecovery && hasRecovery { a.addButton(withTitle: L("Recovery Access…")) }
+            if offerRecovery && (recoveryAvailable ?? hasRecovery) { a.addButton(withTitle: L("Recovery Access…")) }
             a.window.initialFirstResponder = f1
 
             // OK (and ↩) only once there is a password — and, when confirming, once both fields

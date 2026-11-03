@@ -137,10 +137,12 @@ General → Backup → Restore…*; double-click on a `.keepit` file. All lead t
      - **Existing data, vault off**: the rollback copy is a manual-mode export; the user is asked
        for a password for it (same dialog as *Export…*) and for a folder. Declining either cancels
        Replace. Turning protection on first is offered as the simpler route.
-   - *Merge* adds history items whose `contentHash` is not present and templates whose `id` is not
-     present. A template with the same `id` but different content is **kept twice**: the imported one
-     gets " (from backup)" appended to its name and appears in the report. Nothing is overwritten
-     silently.
+   - *Merge* adds history items whose `contentHash` is not present. The backup's template tree is
+     added whole as a new top-level folder named "Imported <date>" (the same rule *Import…* has used
+     since 2.x), so the user sees exactly what came from the backup and can move or delete it; the
+     usual template limits apply and Merge refuses, changing nothing, if they would be exceeded.
+     Nothing is overwritten and nothing is matched by `id` — two Macs editing "the same" template
+     are two templates.
 6. **Apply** as one transaction on the local store; then reload, rebuild menus, refresh the Viewer.
 7. **Settings** come back selectively. Never restored: `allowURLCommands`, `trustedURLSenders`,
    `biometricUnlock`, `biometricPasswordChange`, the backup folder bookmark, anything with a local
@@ -176,7 +178,7 @@ Automatic tests (temporary folders, fakes where macOS is involved):
 - [ ] Registry out of sync (file deleted by hand) → no error, no deletion of anything else.
 - [ ] Restore: password opens; recovery phrase opens (no local vault.json involved); wrong password → clean error; tampered header → authentication failure; `minReader` above ours → "needs newer Keepit"; `rounds` out of range → rejected before PBKDF2; oversized payload → rejected during decompression.
 - [ ] Restore Replace: empty store → no rollback copy, proceeds; data + vault → rollback copy written and verified first; data, no vault → export password and folder asked, declining cancels; rollback copy cannot be written → refused, data untouched.
-- [ ] Restore Merge: duplicate hashes skipped, same-id different-content templates kept twice with the suffix and reported.
+- [ ] Restore Merge: duplicate hashes skipped; templates arrive as one "Imported <date>" folder; over the template limit → refused, nothing changed.
 - [ ] Trust settings never restored.
 - [ ] Every fixture in `Tests/KeepitTests/Fixtures` (v1 and v2) opens as its sidecar says.
 
