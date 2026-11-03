@@ -145,7 +145,7 @@ def main():
         node(15, "Sig", clip(23, {TEXT: "-- Alice".encode()}), hot_key={"keyCode": 17, "modifiers": 2048}),
     ])
     fixtures.append(("v1-templates", payload([], tree), pw, {
-        "outcome": "ok", "history": 0, "templateNodes": 8,
+        "outcome": "ok", "history": 0, "templateNodes": 7,
         "templatePaths": ["Work", "Work/Replies", "Work/Replies/Thanks", "Work/-", "Work/", "Sig"],
         "hotKeys": {"Sig": [17, 2048]},
     }))
