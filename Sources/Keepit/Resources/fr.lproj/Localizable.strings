@@ -414,3 +414,4 @@
 "Removes every app from the trusted list, so the next keepit:// command from each one asks again." = "Retire toutes les apps de la liste de confiance : la prochaine commande keepit:// de chacune redemandera confirmation.";
 "%@\n\nAlways Allow adds this app to the trusted list (Settings → Advanced → Automation)." = "%@\n\n« Toujours autoriser » ajoute cette app à la liste de confiance (Réglages → Avancé → Automatisation).";
 "On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture" = "Clavier à l’écran : touches mélangées, aucun événement clavier, demande à macOS d’être exclu de la capture d’écran";
+"This backup needs Keepit %@ or newer." = "Cette sauvegarde nécessite Keepit %@ ou plus récent.";

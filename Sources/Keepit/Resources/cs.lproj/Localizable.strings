@@ -414,3 +414,4 @@
 "Removes every app from the trusted list, so the next keepit:// command from each one asks again." = "Odstraní všechny aplikace z důvěryhodného seznamu; další příkaz keepit:// od každé z nich se znovu zeptá.";
 "%@\n\nAlways Allow adds this app to the trusted list (Settings → Advanced → Automation)." = "%@\n\n„Vždy povolit“ přidá tuto aplikaci na důvěryhodný seznam (Nastavení → Pokročilé → Automatizace).";
 "On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture" = "Klávesnice na obrazovce: zamíchané klávesy, žádné události klávesnice, žádá macOS o vyloučení ze snímání obrazovky";
+"This backup needs Keepit %@ or newer." = "Tato záloha vyžaduje Keepit %@ nebo novější.";

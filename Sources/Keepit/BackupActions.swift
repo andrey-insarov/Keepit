@@ -5,7 +5,8 @@ extension Backup.Failure: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .notABackup: return L("This is not a Keepit backup file.")
-        case .unsupportedVersion: return L("The backup was made with a newer version of Keepit.")
+        case .unsupportedVersion, .unsupportedPayloadVersion: return L("The backup was made with a newer version of Keepit.")
+        case .needsNewerKeepit(let v): return LF("This backup needs Keepit %@ or newer.", v)
         case .tooLarge: return L("The backup file is too large.")
         case .wrongPassword: return L("Wrong password.")
         case .corrupt: return L("The backup file is damaged.")
@@ -108,7 +109,7 @@ extension AppDelegate {
             return
         }
         if restorePrefs.state == .on, let s = p.settings {
-            apply(settings: s)
+            apply(settings: settings.applyingRestorable(from: s))   // trust settings stay this installation's
         }
         registerHotKeys()
         info(LF("Import finished — history: %d item(s), templates: %d item(s).", history.items.count, templates.root.subtreeCount - 1))

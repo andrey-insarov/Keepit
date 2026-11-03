@@ -414,3 +414,4 @@
 "Removes every app from the trusted list, so the next keepit:// command from each one asks again." = "Noņem visas lietotnes no uzticamo saraksta; nākamā katras lietotnes keepit:// komanda atkal jautās.";
 "%@\n\nAlways Allow adds this app to the trusted list (Settings → Advanced → Automation)." = "%@\n\n“Vienmēr atļaut” pievieno šo lietotni uzticamo sarakstam (Iestatījumi → Papildu → Automatizācija).";
 "On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture" = "Ekrāna tastatūra: sajaukti taustiņi, bez tastatūras notikumiem, lūdz macOS izslēgt no ekrāna tveršanas";
+"This backup needs Keepit %@ or newer." = "Šai dublējumkopijai nepieciešams Keepit %@ vai jaunāks.";

@@ -2,6 +2,7 @@ import AppKit
 import CommonCrypto
 import CryptoKit
 import Foundation
+import KeepitCore
 import Security
 
 /// 32 key bytes in a buffer that is wiped with memset_s on `zero()` and on deinit. The buffer is
@@ -251,6 +252,15 @@ enum Vault {
 
     /// Snapshot of the current recovery block (take it before `enable` replaces the meta file).
     static var currentRecovery: Recovery? { readMeta()?.recovery }
+
+    /// The header an automatic backup carries: this vault's KDF parameters and recovery block, so
+    /// the same password — or phrase — opens the file on any Mac. nil when protection is off.
+    static func backupHeader(app: String, label: String? = nil, sourceID: String? = nil, backupID: String? = nil) -> Container.Header? {
+        guard let m = readMeta() else { return nil }
+        let rec = m.recovery.map { Container.Recovery(salt: $0.salt, wrappedKey: $0.wrappedKey, wrappedEntropy: $0.wrappedEntropy) }
+        return Container.Header(mode: .auto, kdf: m.kdfName, rounds: m.kdfRounds, salt: m.salt, recovery: rec,
+                                app: app, minReader: Backup.minReader, label: label, sourceID: sourceID, backupID: backupID)
+    }
 
     /// Returns the key if the password matches, nil otherwise.
     static func unlock(password: SecureBuffer) -> SecureKey? {

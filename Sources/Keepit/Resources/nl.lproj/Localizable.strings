@@ -414,3 +414,4 @@
 "Removes every app from the trusted list, so the next keepit:// command from each one asks again." = "Verwijdert alle apps uit de vertrouwde lijst; de volgende keepit://-opdracht van elke app vraagt opnieuw.";
 "%@\n\nAlways Allow adds this app to the trusted list (Settings → Advanced → Automation)." = "%@\n\n‘Altijd toestaan’ zet deze app op de vertrouwde lijst (Instellingen → Geavanceerd → Automatisering).";
 "On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture" = "Schermtoetsenbord: geschudde toetsen, geen toetsenbordgebeurtenissen, vraagt macOS om buiten schermopname te blijven";
+"This backup needs Keepit %@ or newer." = "Deze back-up vereist Keepit %@ of nieuwer.";

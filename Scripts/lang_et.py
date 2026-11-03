@@ -414,4 +414,5 @@ T = {
 'Removes every app from the trusted list, so the next keepit:// command from each one asks again.': 'Eemaldab kõik rakendused usaldatud nimekirjast; iga rakenduse järgmine keepit:// käsk küsib uuesti.',
 '%@\n\nAlways Allow adds this app to the trusted list (Settings → Advanced → Automation).': '%@\n\n„Luba alati“ lisab selle rakenduse usaldatud nimekirja (Seaded → Täpsemalt → Automatiseerimine).',
 'On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture': 'Ekraaniklaviatuur: segatud klahvid, klaviatuurisündmusi pole, palub macOS-il jätta see ekraanihõivest välja',
+'This backup needs Keepit %@ or newer.': 'See varukoopia vajab Keepitit %@ või uuemat.',
 }

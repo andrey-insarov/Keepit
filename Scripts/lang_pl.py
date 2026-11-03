@@ -414,4 +414,5 @@ T = {
 'Removes every app from the trusted list, so the next keepit:// command from each one asks again.': 'Usuwa wszystkie aplikacje z listy zaufanych; następne polecenie keepit:// od każdej z nich znów zapyta.',
 '%@\n\nAlways Allow adds this app to the trusted list (Settings → Advanced → Automation).': '%@\n\n„Zawsze zezwalaj” dodaje tę aplikację do listy zaufanych (Ustawienia → Zaawansowane → Automatyzacja).',
 'On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture': 'Klawiatura ekranowa: przetasowane klawisze, brak zdarzeń klawiatury, prosi macOS o wyłączenie z przechwytywania ekranu',
+'This backup needs Keepit %@ or newer.': 'Ta kopia zapasowa wymaga Keepit %@ lub nowszego.',
 }

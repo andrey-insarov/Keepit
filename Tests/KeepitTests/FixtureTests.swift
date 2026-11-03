@@ -1,5 +1,7 @@
+import CryptoKit
 import XCTest
 @testable import Keepit
+@testable import KeepitCore
 
 /// Opens every reference file in Fixtures/ — written by Scripts/make_fixtures.py, an independent
 /// Python implementation of docs/FORMAT.md — and checks the outcome its sidecar promises.
@@ -26,12 +28,25 @@ final class FixtureTests: XCTestCase {
         var historyImageMax: Int?
         var menuMaxItems: Int?
         var formatHashes: [[String: String]]?
+        var mode: String?
+        var recoveryEntropyHex: String?
+        var dataKeyHex: String?
+        var label: String?
+        var minReader: String?
+        var payloadVersion: Int?
+    }
+
+    private func bytes(_ hex: String) -> [UInt8] {
+        stride(from: 0, to: hex.count, by: 2).map { i in
+            let a = hex.index(hex.startIndex, offsetBy: i)
+            return UInt8(hex[a ..< hex.index(a, offsetBy: 2)], radix: 16)!
+        }
     }
 
     private func fixtures() throws -> [(name: String, data: Data, side: Sidecar)] {
         let files = try FileManager.default.contentsOfDirectory(at: Self.dir, includingPropertiesForKeys: nil)
             .filter { $0.pathExtension == "keepit" }.sorted { $0.lastPathComponent < $1.lastPathComponent }
-        XCTAssertGreaterThanOrEqual(files.count, 11, "fixtures missing — run Scripts/make_fixtures.py")
+        XCTAssertGreaterThanOrEqual(files.count, 21, "fixtures missing — run Scripts/make_fixtures.py")
         return try files.map { url in
             let side = try JSONDecoder().decode(Sidecar.self, from: Data(contentsOf: url.deletingPathExtension().appendingPathExtension("json")))
             return (url.deletingPathExtension().lastPathComponent, try Data(contentsOf: url), side)
@@ -54,6 +69,22 @@ final class FixtureTests: XCTestCase {
                 let p: Backup.Payload
                 do { p = try Backup.decode(f.data, password: pw) } catch { XCTFail("\(f.name): \(error)"); continue }
                 XCTAssertEqual(p.version, 1, f.name)
+                XCTAssertEqual(try Backup.inspect(f.data).format, UInt8(f.side.format ?? 0), "\(f.name) container format")
+                if case .v2(let h, _) = try Backup.inspect(f.data) {
+                    XCTAssertEqual(h.mode.rawValue, f.side.mode, "\(f.name) mode")
+                    XCTAssertEqual(h.label, f.side.label, "\(f.name) label")
+                }
+                // auto files also open with the data key and with the recovery phrase's entropy, no vault.json involved
+                if let hex = f.side.dataKeyHex {
+                    let keyBytes = bytes(hex)
+                    let sk = keyBytes.withUnsafeBytes { SecureKey(bytes: $0) }
+                    defer { sk.zero() }
+                    XCTAssertEqual(try Backup.decode(f.data, dataKey: sk).history.count, p.history.count, "\(f.name) via data key")
+                }
+                if let hex = f.side.recoveryEntropyHex {
+                    XCTAssertEqual(try Backup.decode(f.data, recoveryEntropy: bytes(hex)).history.count, p.history.count, "\(f.name) via recovery entropy")
+                    XCTAssertThrowsError(try Backup.decode(f.data, recoveryEntropy: [UInt8](repeating: 7, count: 32)), "\(f.name) wrong entropy")
+                }
                 if let n = f.side.history { XCTAssertEqual(p.history.count, n, "\(f.name) history count") }
                 if let n = f.side.templateNodes { XCTAssertEqual(p.templates.subtreeCount, n, "\(f.name) template nodes") }
                 if let s = f.side.settings { XCTAssertEqual(p.settings != nil, s, "\(f.name) settings presence") }
@@ -88,6 +119,12 @@ final class FixtureTests: XCTestCase {
                     let e = $0 as? Backup.Failure
                     XCTAssertTrue(e == .corrupt || e == .wrongPassword, "\(f.name): \(String(describing: e))")
                 }
+            case "needsNewerKeepit":
+                XCTAssertThrowsError(try Backup.decode(f.data, password: pw), f.name) { XCTAssertEqual($0 as? Backup.Failure, .needsNewerKeepit(f.side.minReader ?? ""), f.name) }
+            case "corrupt":
+                XCTAssertThrowsError(try Backup.decode(f.data, password: pw), f.name) { XCTAssertEqual($0 as? Backup.Failure, .corrupt, f.name) }
+            case "unsupportedPayloadVersion":
+                XCTAssertThrowsError(try Backup.decode(f.data, password: pw), f.name) { XCTAssertEqual($0 as? Backup.Failure, .unsupportedPayloadVersion(f.side.payloadVersion ?? 0), f.name) }
             case "notABackup":
                 XCTAssertThrowsError(try Backup.decode(f.data, password: pw), f.name) { XCTAssertEqual($0 as? Backup.Failure, .notABackup, f.name) }
             case "unsupportedVersion":

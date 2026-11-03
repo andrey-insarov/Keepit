@@ -208,8 +208,18 @@ ones are never modified.
 | `v1-truncated.keepit` | 1 | `corrupt` (or `wrongPassword` — both acceptable) |
 | `v1-bad-magic.keepit` | — | `notABackup` |
 | `v1-future-format.keepit` | 9 | `unsupportedVersion` |
-| `v2-*.keepit` | 2 | added with the format-2 implementation |
+| `v2-manual.keepit` | 2 | opens with the file password; mode `manual`, no recovery block |
+| `v2-auto.keepit` | 2 | opens with the vault password, with the data key, and with the recovery entropy; label `Fixture Mac` |
+| `v2-auto-no-recovery.keepit` | 2 | opens with the vault password and the data key; no recovery block |
+| `v2-unknown-header-fields.keepit` | 2 | opens; unknown header fields ignored (and authenticated) |
+| `v2-tampered-header.keepit` | 2 | one character of the label changed after sealing → `wrongPassword` (authentication failure) |
+| `v2-minreader-future.keepit` | 2 | `minReader` 99.0 → `needsNewerKeepit` |
+| `v2-rounds-out-of-range.keepit` | 2 | `rounds` 10 → `corrupt`, before any key derivation |
+| `v2-unknown-kdf.keepit` | 2 | `kdf` argon2id → `corrupt`, before any key derivation |
+| `v2-bad-header-length.keepit` | 2 | length field beyond the file → `corrupt` |
+| `v2-payload-future.keepit` | 2 | container opens, `payload.version` 999 → `unsupportedPayloadVersion` |
 
 ## Change log
 
 - 2026-11-03 — document written for format 1 as shipped since Keepit 2.0; format 2 specified for 3.0.
+- 2026-11-03 — format 2 implemented in `KeepitCore` (`Container`, `KDF`, `SealedBlob`, `LZFSE`); Export… writes format 2 `manual`; reader enforces payload version, streaming decompression limit and the trust-settings rule.
