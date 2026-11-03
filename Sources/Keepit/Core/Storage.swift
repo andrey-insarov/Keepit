@@ -9,13 +9,23 @@ enum Storage {
         if let env = ProcessInfo.processInfo.environment["KEEPIT_DATA_DIR"], !env.isEmpty {
             dir = URL(fileURLWithPath: env, isDirectory: true)
         } else {
-            let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-            dir = base.appendingPathComponent("Keepit", isDirectory: true)
+            dir = defaultDirectory
         }
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         return dir
     }() {
         didSet { try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true) }
+    }
+
+    /// Where a normal installation keeps its data (Application Support, or the sandbox container).
+    static let defaultDirectory: URL = {
+        let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        return base.appendingPathComponent("Keepit", isDirectory: true)
+    }()
+
+    /// True when `directory` is the normal one — not a test, self-test or KEEPIT_DATA_DIR location.
+    static var isDefaultDirectory: Bool {
+        directory.standardizedFileURL.path == defaultDirectory.standardizedFileURL.path
     }
 
     static var settingsURL: URL  { directory.appendingPathComponent("settings.json") }
