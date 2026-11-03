@@ -229,6 +229,36 @@ final class BackupEngineTests: XCTestCase {
         XCTAssertNil(engine.state.lastSuccess)
     }
 
+    /// A seal failure of a job started for the old folder must not set the new folder's error state.
+    func testSealFailureOfAnOldGenerationIsIgnored() throws {
+        // A header the container refuses (rounds below the range) makes the seal throw; the seal stage
+        // is held back on ioQueue so the destination can be changed while the job is in flight.
+        let gate = DispatchSemaphore(value: 0)
+        Storage.ioQueue.async { gate.wait() }
+        history.add(.text("x")); clock.addTimeInterval(BackupEngine.quietInterval)
+        engine.snapshotProvider = { [unowned self] in
+            var snap = self.snapshot()!
+            snap.header.rounds = 10
+            return snap
+        }
+        let done = expectation(description: "backup")
+        var result: Result<Void, Error>?
+        engine.runIfDue { result = $0; done.fulfill() }
+        let other = folder.appendingPathComponent("other", isDirectory: true)
+        try FileManager.default.createDirectory(at: other, withIntermediateDirectories: true)
+        engine.destination = PlainFolderDestination(other)                     // Choose… a new folder while the job waits
+        engine.resetRegistry()
+        gate.signal()
+        wait(for: [done], timeout: 30)
+        if case .success = result! { XCTFail("the old job should have failed") }
+        XCTAssertEqual(engine.state.failures, 0, "the new generation saw no failure")
+        XCTAssertNil(engine.state.lastError)
+        XCTAssertNil(engine.state.nextRetryAt)
+        engine.snapshotProvider = { [unowned self] in self.snapshot() }
+        XCTAssertTrue(engine.isDue(), "the new folder gets its first copy without a backoff")
+        XCTAssertNoThrow(try run().get())
+    }
+
     func testRotationRunsOffMainAndKeepsRecordsItCouldNotDelete() throws {
         engine.keepCount = 1
         history.add(.text("a")); clock.addTimeInterval(BackupEngine.quietInterval)

@@ -232,7 +232,11 @@ final class BackupEngine {
                 guard back == json else { throw Failure.verifyFailed }
                 sealed = (bytes, Self.sha256(bytes))
             } catch {
-                DispatchQueue.main.async { self.record(failure: error); self.inFlight = false; completion?(.failure(error)) }
+                DispatchQueue.main.async {
+                    self.inFlight = false
+                    if gen == self.generation { self.record(failure: error) }   // an old generation's failure is not the new folder's
+                    completion?(.failure(error))
+                }
                 return
             }
             // Stage 3 — write, then rotate, without the key and off the main thread.
