@@ -8,9 +8,10 @@ can be checked against it.
 ## In one paragraph
 
 Keepit stores your clipboard history and templates in one folder on your Mac and nowhere else. There
-is no account, no cloud, no analytics, and the app makes exactly one kind of network request: the
-daily update check against GitHub. Copies from password managers are never recorded. If you set a
-password, everything on disk is AES-256-GCM encrypted with a key derived from that password; the key
+is no account, no cloud, no analytics, and the app makes exactly one kind of network request — the
+daily update check against GitHub — which you can switch off. Clipboard data that the copying app marks as concealed is not
+recorded, and copies from known password managers are excluded by app — a best-effort heuristic,
+explained below. If you set a password, everything on disk is AES-256-GCM encrypted with a key derived from that password; the key
 exists only in memory, is wiped when Keepit locks, and can optionally be released by Touch ID from
 the Secure Enclave. A 24-word recovery phrase is the only way back in if you forget the password —
 Keepit itself cannot reset it.
@@ -25,7 +26,7 @@ under `~/Library/Containers/com.it.keep/`):
 | `history.json` | The clipboard history: text, RTF, HTML, PNG images, file lists, with date and source app | Yes |
 | `templates.json` | The template tree, including per-template hot keys | Yes |
 | `settings.json` | Settings: hot keys, limits, ignore list — no clipboard data | No |
-| `vault.json` | Encryption metadata: PBKDF2 salt, a sealed verifier, the wrapped recovery material | — |
+| `vault.json` | Encryption metadata: KDF name and round count, PBKDF2 salt, a sealed verifier, the wrapped recovery material | — |
 
 The history is written when it changes and read on launch. Without a password the JSON is plain
 text on disk, protected only by your macOS account and FileVault. *Settings → Advanced → Open
@@ -34,32 +35,48 @@ Data Folder* shows the folder.
 Keepit also writes to the macOS keychain — only the Touch ID entry described below — and registers
 itself as a login item if you let it start at login.
 
-## What is never recorded
+## What is not recorded
 
-- Anything copied from a known password manager: 1Password, Bitwarden, KeePassXC, MacPass,
-  Strongbox, KeeWeb, LastPass, Dashlane, Enpass, Keeper, NordPass, RoboForm, Apple Passwords and
-  Keychain Access. These bundle identifiers are built in and always active; you can add your own
-  apps on *Settings → History*.
-- Anything the copying app marks as concealed or transient (`org.nspasteboard.ConcealedType`,
-  `org.nspasteboard.TransientType`). Password managers and many terminals set these.
-- Anything copied while recording is paused (*Pause Recording for 10 Minutes* in the menu).
-- Formats other than plain text, RTF, HTML, PNG and file lists.
+Three layers, in decreasing order of certainty. It matters which one you are relying on.
 
-Note that Keepit cannot tell a password typed into a form from any other text if the app that put it
-on the clipboard did not mark it. Use the pause, or the ignore list, for such apps.
+1. **Marked by the source — reliable.** Anything the copying app marks as concealed or transient
+   (`org.nspasteboard.ConcealedType`, `org.nspasteboard.TransientType`, 1Password's own type) is
+   skipped on the strength of the mark alone; Keepit does not need to know which app wrote it.
+   1Password, Bitwarden, Apple Passwords, Keychain Access and many terminals set these marks. (The
+   check can be turned off on *Settings → History*; leave it on.)
+2. **Known by app — best effort.** Copies from a password manager that sets no mark are excluded by
+   its bundle identifier: KeePassXC, MacPass, Strongbox, KeeWeb, LastPass, Dashlane, Enpass, Keeper,
+   NordPass, RoboForm (and, as a second line, the apps in layer 1) are built in and always active;
+   add your own apps on *Settings → History*. The limit here is macOS: the pasteboard does not record
+   which app wrote it, so Keepit works from which apps were in front since it last looked (every
+   300 ms by default). If any of them is on the list, the change is skipped — including when you copy
+   and switch to another app before Keepit notices. This errs towards skipping. It cannot cover a
+   copy made by a background process or a script, and it cannot tell a password from any other text
+   in an app that is not on the list.
+3. **By your choice.** Anything copied while recording is paused (*Pause Recording for 10 Minutes*,
+   `⌥P`), apps on your ignore list, and formats other than plain text, RTF, HTML, PNG and file lists.
+
+Keepit does not inspect text for things that look like passwords or one-time codes. If an app that
+is not on the list puts a secret on the clipboard without marking it, it is recorded like anything
+else: use the pause or the ignore list for such apps, and delete the item from the history.
 
 ## Encryption
 
 Turn on *Require password at launch* and the history and templates files are encrypted:
 
 - **Key derivation**: PBKDF2-HMAC-SHA256 with 200 000 rounds and a random 16-byte salt, producing a
-  256-bit key. The salt is stored in `vault.json`; nothing else derived from the password is written
-  except a small GCM-sealed verifier that lets Keepit tell a wrong password from corrupt data.
+  256-bit key. The salt, the KDF name and the round count are stored in `vault.json` (so the
+  parameters can change in a later version without breaking existing vaults); nothing else derived
+  from the password is written except a small GCM-sealed verifier that lets Keepit tell a wrong
+  password from corrupt data.
 - **Cipher**: AES-256-GCM (CryptoKit), a fresh random nonce per file write, authenticated — a
   modified file fails to open rather than decrypting to garbage.
-- **Key in memory**: the 32 key bytes live in a page-locked (`mlock`) buffer that is never swapped
-  out and is overwritten with `memset_s` when Keepit locks or quits. A CryptoKit key object is built
-  only for the duration of one call and discarded.
+- **Key in memory**: the 32 key bytes live in a dedicated buffer that is overwritten with `memset_s`
+  when Keepit locks or quits; Keepit asks the kernel to keep that page out of swap (`mlock`) and
+  logs if the request is refused. A CryptoKit key object is built only for the duration of one call
+  and discarded. This covers Keepit's own key buffer. The decrypted history while Keepit is unlocked,
+  and the copies Swift and CryptoKit make internally, are ordinary process memory — see
+  *Limitations* below.
 - **Locking**: *Lock Keepit* (`⌥L`), quitting, and — on by default — the screen locking
   or the Mac sleeping wipe the key and unload the decrypted history and templates. After that nothing
   readable is in memory until you unlock again.
@@ -118,6 +135,22 @@ Location or the camera, and does not use any of them. The Accessibility permissi
 is the same one window managers and automation tools need — which is why the app is signed and
 notarized and the source is public.
 
+**Clipboard access as macOS sees it.** Keepit reads the clipboard by polling (macOS sends no
+notification when it changes), so from macOS 15.4 on, *System Settings → Privacy & Security* lists
+Keepit among the apps that read the pasteboard, and the system log records those reads. That is the
+history being recorded — it is what a clipboard manager does — not a sign of anything else going on.
+
+## System log
+
+Keepit writes to the unified system log (Console.app, `log show`, sysdiagnose) under the subsystem
+`com.it.keep`, and only about errors and unexpected states: a file that could not be saved or
+decoded, a hot key the system refused to register, Touch ID or the login item failing, the updater
+not starting. It never logs a clipboard item, a template, a password, a key, the contents of a file,
+or whether a particular copy was recorded or skipped. Every value inserted into a message (a file
+name, an error, a key combination) is marked private, so Console shows `<private>` in its place
+unless an administrator explicitly turns private data on for the subsystem. There is no log file of
+Keepit's own, and nothing is sent anywhere.
+
 ## Network
 
 The direct-download edition makes one request: once a day (and when you choose *Check for
@@ -125,6 +158,12 @@ Updates…*) it fetches the Sparkle appcast from GitHub Releases over HTTPS. Upd
 an EdDSA (Ed25519) signature embedded in the app before they are installed; a download that does
 not match is rejected. The App Store edition is updated by the App Store and makes no requests at
 all.
+
+That one request can be switched off: *Settings → General → Updates → Check for updates
+automatically*. Off, the updater is not started at all — no scheduled check, no check on demand —
+and *Check for Updates…* leaves the menus; the setting is kept in `settings.json`
+(`checkForUpdates`). You are then responsible for updating by hand (keep.it.com, GitHub Releases
+or Homebrew); security fixes reach you only when you look.
 
 No clipboard content, no usage data and no identifiers are ever sent anywhere. There is no crash
 reporter and no analytics library in the binary.
@@ -178,6 +217,10 @@ exhaust memory or disk:
 - Encryption protects the files at rest. Someone with your macOS password and Keepit unlocked sees
   what you see.
 - Items you paste leave Keepit's control the moment they land in another app.
+- Which app wrote the clipboard is a guess (see *What is not recorded*). The reliable signal is the
+  concealed mark, and only the copying app can set it.
+- macOS itself may keep traces Keepit does not control: the system log of pasteboard reads (above),
+  crash reports if the app ever crashes, and the Accessibility/TCC database.
 
 ## Reporting a vulnerability
 

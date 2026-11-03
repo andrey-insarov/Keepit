@@ -151,6 +151,9 @@ struct Settings: Codable, Equatable {
     var ignoreConcealed = true     // honour org.nspasteboard.ConcealedType (password managers)
 
     var launchAtLogin = true           // new installs start at login; existing settings files keep their value
+    /// Daily Sparkle check against GitHub Releases (direct-download edition; the App Store build has no updater).
+    /// Off = Keepit makes no network request at all and *Check for Updates…* leaves the menus.
+    var checkForUpdates = true
 
     /// Lock Keepit (wipe key, unload data) when the screen locks or the Mac sleeps. Only matters with a password set.
     var lockWithScreen = true
@@ -199,6 +202,7 @@ struct Settings: Codable, Equatable {
         case ignoreApps
         case ignoreConcealed
         case launchAtLogin
+        case checkForUpdates
         case lockWithScreen
         case biometricUnlock
         case biometricPasswordChange
@@ -280,6 +284,7 @@ struct Settings: Codable, Equatable {
         ignoreApps       = try c.decodeIfPresent([String].self, forKey: .ignoreApps)     ?? d.ignoreApps
         ignoreConcealed  = try c.decodeIfPresent(Bool.self,   forKey: .ignoreConcealed)  ?? d.ignoreConcealed
         launchAtLogin    = try c.decodeIfPresent(Bool.self,   forKey: .launchAtLogin)    ?? d.launchAtLogin
+        checkForUpdates  = try c.decodeIfPresent(Bool.self,   forKey: .checkForUpdates)  ?? d.checkForUpdates
         lockWithScreen   = try c.decodeIfPresent(Bool.self,   forKey: .lockWithScreen)   ?? d.lockWithScreen
         biometricUnlock  = try c.decodeIfPresent(Bool.self,   forKey: .biometricUnlock)  ?? d.biometricUnlock
         biometricPasswordChange = try c.decodeIfPresent(Bool.self, forKey: .biometricPasswordChange) ?? d.biometricPasswordChange
@@ -333,6 +338,7 @@ struct Settings: Codable, Equatable {
         try c.encode(ignoreApps, forKey: .ignoreApps)
         try c.encode(ignoreConcealed, forKey: .ignoreConcealed)
         try c.encode(launchAtLogin, forKey: .launchAtLogin)
+        try c.encode(checkForUpdates, forKey: .checkForUpdates)
         try c.encode(lockWithScreen, forKey: .lockWithScreen)
         try c.encode(biometricUnlock, forKey: .biometricUnlock)
         try c.encode(biometricPasswordChange, forKey: .biometricPasswordChange)

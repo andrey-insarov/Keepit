@@ -20,7 +20,7 @@
 [it.com](https://it.com) domain zone. Press `⌥M` in any app to paste anything you copied recently;
 `⌥T` for your templates. Images, files and rich text are kept too. Optional password protection
 stores everything AES-256 encrypted, unlocks with Touch ID, and comes with a 24-word recovery phrase.
-Copies from password managers are never recorded. No account, no cloud, no analytics.
+Clipboard data marked concealed by the copying app is not recorded, and known password managers are excluded. No account, no cloud, no analytics.
 
 Keepit started as a macOS take on the workflow of [CLCL](https://github.com/nakkag/CLCL), Ohno
 Tomoaki's Windows clipboard tool, and has since been rewritten and extended into an app of its own,
@@ -53,7 +53,7 @@ Or the DMG:
 * **Paste queue** — `⌥N` starts it, every ⌘C adds to a counter in the menu bar, `⌥V` pastes the items back one by one in the same order, `⌥⇧N` pastes all remaining joined with a separator.
 * **Templates** — folders, `-` separators, `&x` menu shortcuts, per-template hot keys, any format. Placeholders fill in at paste time: `{date…}`, `{time}`, `{clipboard}` with transforms, `{input:…}`, `{choice:a|b}`, `{cursor}`. An *Examples* folder on first launch.
 * **Viewer** — tree of Clipboard / History / Template, search with highlighted matches, in-place editing, hex dump, drag history into templates, save any format to a file.
-* **Private by design** — password-protected AES-256-GCM storage, Touch ID unlock, 24-word recovery phrase, lock on screen lock / sleep; password managers and concealed clipboard data are never recorded; per-app ignore list; no account, no network.
+* **Private by design** — password-protected AES-256-GCM storage, Touch ID unlock, 24-word recovery phrase, lock on screen lock / sleep; concealed clipboard data is not recorded and known password managers are excluded by app (best effort — [how it works](https://keep.it.com/security#what-is-not-recorded)); per-app ignore list; no account; no network except the daily update check, which can be switched off (none in the App Store edition).
 * **Backup** — one password-encrypted `.keepit` file with history, templates and settings; Merge or Replace on import.
 * **Settings the Mac way** — General / Shortcuts / Paste Queue / History / Menu / Security / Advanced; every change applies at once; hot-key recorders with conflict checks; per-app paste key (⌘⇧V, ⌃V…).
 * **Automation** — `keepit://` URL scheme: `paste/N`, `copy/N`, `template/Name`, `add?text=`, `add-template?text=&name=`, `history`, `templates`, `viewer`, `settings`, `pause`, `resume` — from Shortcuts (“Open URL”), Raycast, Alfred or `open`.
@@ -121,7 +121,7 @@ Settings → *Require password at launch, encrypt history & templates*. You set 
 from then on Keepit asks for it at every launch (three wrong attempts → quit) and nothing is loaded
 until it is entered. `history.json` and `templates.json` are then stored as AES-256-GCM blobs
 (key = PBKDF2-HMAC-SHA256, 200 000 rounds, random 16-byte salt kept in `vault.json` together
-with a sealed verifier). The password itself is never written anywhere and there is no recovery.
+with a sealed verifier, plus the KDF name and round count). The password itself is never written anywhere; without it, the only way back in is the recovery phrase below.
 `settings.json` stays in plain text (it holds no clipboard data). *Password → Change…* re-encrypts;
 unticking the option asks for the password and writes the files back as plain JSON.
 
@@ -147,7 +147,7 @@ unrecoverable — by design.
 
 ### Key handling and locking
 
-* The derived key lives in a dedicated `mlock`ed buffer (never swapped) and is wiped with
+* The derived key lives in a dedicated buffer, `mlock`ed where the kernel allows it, and is wiped with
   `memset_s` when Keepit locks, when the password is changed/removed, and at quit. A CryptoKit
   `SymmetricKey` is created only for the duration of one encrypt/decrypt call and its temporary
   copy is wiped afterwards. Password bytes and the PBKDF2 output buffer are wiped right after
@@ -173,6 +173,8 @@ unrecoverable — by design.
 Releases outside the App Store update themselves through Sparkle: once a day Keepit checks the
 latest GitHub Release and offers the new version; *Check for Updates…* in the menu does it on
 demand. Downloads are EdDSA-signed in addition to the Developer ID signature (see RELEASING.md).
+The check is optional — *Settings → General → Updates*; off, Keepit makes no network request at
+all and the menu item is gone.
 
 ### Verifying a download
 
@@ -212,7 +214,7 @@ with the Playwright/Chromium script, or on a Mac render the PNGs any way you lik
   settings.json    options (editable by hand; missing keys fall back to defaults)
   history.json     clipboard history (base64 data per format)
   templates.json   template tree
-  vault.json       salt + verifier, only when password protection is on
+  vault.json       KDF parameters, salt + verifier, recovery material — only when password protection is on
 ```
 
 Example `pasteKeys` override in `settings.json` (an app that pastes with ⇧⌘V):

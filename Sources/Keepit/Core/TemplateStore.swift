@@ -4,7 +4,7 @@ import Foundation
 final class TemplateStore {
     private(set) var root = TemplateNode(name: "Template")
     var onChange: (() -> Void)?
-    private lazy var saver = DebouncedSaver(delay: 1.0) { [weak self] in self?.saveNow() }
+    private lazy var saver = DebouncedSaver(delay: 1.0) { [weak self] background in self?.saveNow(background: background) }
     /// See HistoryStore.isPurged.
     private(set) var isPurged = false
 
@@ -82,9 +82,9 @@ final class TemplateStore {
         saver.schedule()
     }
 
-    func saveNow() {
+    func saveNow(background: Bool = false) {
         if isPurged { return }
-        Storage.save(root, to: Storage.templatesURL)
+        Storage.save(root, to: Storage.templatesURL, background: background)
     }
 
     func flush() { saver.flush() }

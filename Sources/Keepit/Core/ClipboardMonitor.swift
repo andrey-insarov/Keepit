@@ -2,11 +2,24 @@ import AppKit
 
 /// Watches NSPasteboard.general for changes.
 /// macOS has no equivalent of AddClipboardFormatListener, so we poll `changeCount` (cheap).
+///
+/// Where a change came from is a guess: the pasteboard records no writer, only that it changed.
+/// The guess used to be "whatever is frontmost when the poll notices", which is wrong whenever
+/// the user copies and switches apps within one poll interval (⌘C in a password manager, ⌘Tab,
+/// ⌘V — all inside 300 ms). The monitor therefore keeps the set of applications that were in
+/// front at any point since the previous poll, and treats a change as excluded if *any* of them
+/// is on the ignore list. That errs towards not recording, which is the right direction for a
+/// clipboard history; it is still a heuristic, and only a concealed/transient pasteboard type
+/// set by the source itself is a guarantee (see `concealedTypes`).
 final class ClipboardMonitor {
     private let pb = NSPasteboard.general
     private var lastChangeCount: Int
     private var timer: Timer?
     private var skipChangeCount: Int?
+    /// Bundle ids of the apps that have been frontmost since the last poll: the one in front when
+    /// the last poll ended plus every app activated since. Reset at each poll.
+    private var appsSinceLastPoll: Set<String> = []
+    private var activationObserver: NSObjectProtocol?
 
     var settings: Settings
     /// Called on the main thread with the captured item.
@@ -52,6 +65,15 @@ final class ClipboardMonitor {
 
     func start() {
         stop()
+        lastChangeCount = pb.changeCount        // whatever changed while we were not watching is not ours to record
+        appsSinceLastPoll = Set([NSWorkspace.shared.frontmostApplication?.bundleIdentifier].compactMap { $0 })
+        activationObserver = NSWorkspace.shared.notificationCenter.addObserver(
+            forName: NSWorkspace.didActivateApplicationNotification, object: nil, queue: .main
+        ) { [weak self] note in
+            guard let app = note.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication,
+                  let id = app.bundleIdentifier else { return }
+            self?.appsSinceLastPoll.insert(id)
+        }
         let t = Timer(timeInterval: max(0.1, settings.pollInterval), repeats: true) { [weak self] _ in
             self?.tick()
         }
@@ -63,6 +85,18 @@ final class ClipboardMonitor {
     func stop() {
         timer?.invalidate()
         timer = nil
+        if let o = activationObserver { NSWorkspace.shared.notificationCenter.removeObserver(o) }
+        activationObserver = nil
+        appsSinceLastPoll = []
+    }
+
+    /// The exclusion decision, kept free of AppKit so it can be tested. `candidates` are the bundle
+    /// ids that were in front at any point since the previous poll; macOS does not say which of them
+    /// wrote the pasteboard, so if any of them is excluded the change is not recorded.
+    static func isExcludedSource(_ candidates: Set<String>, userIgnored: [String], ownBundleId: String?) -> Bool {
+        candidates.contains { id in
+            builtInIgnoredApps.contains(id) || userIgnored.contains(id) || id == ownBundleId
+        }
     }
 
     func updateSettings(_ s: Settings) {
@@ -88,12 +122,15 @@ final class ClipboardMonitor {
             return
         }
 
-        let frontApp = NSWorkspace.shared.frontmostApplication
-        let bundleId = frontApp?.bundleIdentifier
+        let bundleId = NSWorkspace.shared.frontmostApplication?.bundleIdentifier
+        var candidates = appsSinceLastPoll
+        if let id = bundleId { candidates.insert(id) }
+        // From here on the next interval starts with whoever is in front now.
+        appsSinceLastPoll = Set([bundleId].compactMap { $0 })
 
-        // Ignore list by bundle id: built-in password managers + the user's own list.
-        if let id = bundleId, Self.builtInIgnoredApps.contains(id) || settings.ignoreApps.contains(id) { return }
-        if let id = bundleId, id == Bundle.main.bundleIdentifier { return }
+        // Ignore list by bundle id: built-in password managers + the user's own list + Keepit itself,
+        // applied to every app that was in front since the last poll, not just the current one.
+        if Self.isExcludedSource(candidates, userIgnored: settings.ignoreApps, ownBundleId: Bundle.main.bundleIdentifier) { return }
 
         if settings.ignoreConcealed, let types = pb.types {
             for t in types {

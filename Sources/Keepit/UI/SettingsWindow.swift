@@ -24,6 +24,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
     // MARK: Controls
 
     private let loginItem    = NSButton(checkboxWithTitle: L("Launch at login"), target: nil, action: nil)
+    private let updateCheck  = NSButton(checkboxWithTitle: L("Check for updates automatically"), target: nil, action: nil)
     private let saveHistory  = NSButton(checkboxWithTitle: L("Save history on quit, restore on start"), target: nil, action: nil)
     private let pasteAfter   = NSButton(checkboxWithTitle: L("Paste into the active app after choosing"), target: nil, action: nil)
     private let showAtCaret  = NSButton(checkboxWithTitle: L("Open menu at text cursor when possible"), target: nil, action: nil)
@@ -293,7 +294,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         let importBtn = NSButton(title: L("Import…"), target: self, action: #selector(importTapped))
         let backupRow = NSStackView(views: [button(exportBtn), button(importBtn)])
         backupRow.orientation = .horizontal; backupRow.spacing = 8
-        let general = grid([
+        var generalRows: [[NSView]] = [
             header(L("Startup")),
             [NSView(), check(loginItem)],
             [NSView(), check(saveHistory)],
@@ -304,7 +305,9 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             [NSView(), check(showAtCaret)],
             header(L("Backup")),
             [NSView(), help(backupRow, L("One password-encrypted .keepit file with history, templates and preferences — for moving to another Mac or between the App Store and direct editions."))],
-        ])
+        ]
+        generalRows += updatesRows()
+        let general = grid(generalRows)
 
         let resetHK = NSButton(title: L("Reset to Defaults"), target: self, action: #selector(resetShortcuts))
         let shortcuts = grid([
@@ -529,6 +532,18 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         window.setFrame(frame, display: true, animate: animate && window.isVisible)
     }
 
+    /// The App Store edition has no updater (the store updates it), so the option is not shown there.
+    private func updatesRows() -> [[NSView]] {
+        #if APPSTORE
+        return []
+        #else
+        return [
+            header(L("Updates")),
+            [NSView(), help(check(updateCheck), L("Once a day Keepit asks GitHub Releases whether a newer version exists — the only network request it makes; the download itself is signed and verified. Off = no request is ever made and Check for Updates… leaves the menus; you update by downloading from keep.it.com."))],
+        ]
+        #endif
+    }
+
     // MARK: Load
 
     private func load() {
@@ -536,6 +551,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         defer { loading = false }
         let s = app.settings
         loginItem.state = s.launchAtLogin ? .on : .off
+        updateCheck.state = s.checkForUpdates ? .on : .off
         saveHistory.state = s.historySave ? .on : .off
         pasteAfter.state = s.pasteAfterSelect ? .on : .off
         showAtCaret.state = s.showAtCaret ? .on : .off
@@ -605,6 +621,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
     @objc private func controlChanged(_ sender: Any?) {
         apply { s in
             s.launchAtLogin = loginItem.state == .on
+            s.checkForUpdates = updateCheck.state == .on
             s.historySave = saveHistory.state == .on
             s.pasteAfterSelect = pasteAfter.state == .on
             s.showAtCaret = showAtCaret.state == .on

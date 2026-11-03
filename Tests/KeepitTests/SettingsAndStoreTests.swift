@@ -14,6 +14,7 @@ final class SettingsAndStoreTests: XCTestCase {
         XCTAssertEqual(s.historyMax, 7)
         XCTAssertEqual(s.historyHotKey, Settings().historyHotKey)
         XCTAssertEqual(s.lockWithScreen, true)
+        XCTAssertEqual(s.checkForUpdates, true, "settings files from before 2.12 keep checking for updates")
     }
 
     func testSettingsRoundTrip() throws {
@@ -69,6 +70,33 @@ final class SettingsAndStoreTests: XCTestCase {
         XCTAssertEqual(HistoryStore(settings: Settings()).items.first?.plainText, "keep me")
         XCTAssertEqual(TemplateStore().root.find(id: n.id)?.clip?.plainText, "sig")
         XCTAssertTrue(Vault.isEncrypted(try Data(contentsOf: Storage.historyURL)), "never rewritten as plaintext")
+    }
+
+    func testBackgroundSaveLandsBeforeKeyIsWiped() throws {
+        // A debounced (background) save queued just before lock must be written with the key it
+        // captured; clearing the key waits for it instead of zeroing the bytes under the writer.
+        let key = try Vault.enable(password: .of("pw"))
+        Storage.key = key
+        let h = HistoryStore(settings: Settings())
+        for i in 0..<200 { h.add(.text("item \(i) " + String(repeating: "x", count: 4096))) }
+        h.saveNow(background: true)
+        Storage.clearKey()                                  // returns only after the write above
+        XCTAssertTrue(key.isZeroed)
+        Storage.key = try XCTUnwrap(Vault.unlock(password: .of("pw")))
+        let reloaded = HistoryStore(settings: Settings())
+        XCTAssertEqual(reloaded.items.count, 200)
+        XCTAssertEqual(reloaded.items.first?.plainText, "item 199 " + String(repeating: "x", count: 4096))
+    }
+
+    func testBackgroundSavesKeepOrderWithSynchronousOnes() throws {
+        let h = HistoryStore(settings: Settings())
+        h.add(.text("first"))
+        h.saveNow(background: true)
+        h.add(.text("second"))
+        h.saveNow()                                         // synchronous: queued after the background one
+        XCTAssertEqual(HistoryStore(settings: Settings()).items.map(\.plainText), ["second", "first"])
+        XCTAssertFalse(String(decoding: try Data(contentsOf: Storage.historyURL), as: UTF8.self).contains("\n  "),
+                       "data files are compact JSON")
     }
 
     func testTemplateStorePurgeAndReload() {

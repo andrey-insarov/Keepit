@@ -2,15 +2,19 @@
 import PackageDescription
 import Foundation
 
-// KEEPIT_APPSTORE=1 builds the Mac App Store variant: no Sparkle (the store forbids self-updating),
-// and the APPSTORE compile flag hides the "Check for Updates" UI.
+// KEEPIT_APPSTORE=1 builds the Mac App Store variant: Sparkle is not linked (the store forbids
+// self-updating; `make appstore` verifies the binary with otool), and the APPSTORE compile flag
+// hides the "Check for Updates" UI. The dependency itself is declared for both variants so that
+// Package.resolved — the pinned Sparkle revision every release is built from — stays the same file
+// whichever variant was resolved last.
 let appStore = ProcessInfo.processInfo.environment["KEEPIT_APPSTORE"] == "1"
 
 let package = Package(
     name: "Keepit",
     defaultLocalization: "en",
     platforms: [.macOS(.v13)],
-    dependencies: appStore ? [] : [
+    dependencies: [
+        // Exact revision is pinned in Package.resolved (committed); CI refuses to build if it drifts.
         .package(url: "https://github.com/sparkle-project/Sparkle", from: "2.6.0"),
     ],
     targets: [

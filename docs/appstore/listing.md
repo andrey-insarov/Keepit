@@ -39,7 +39,7 @@ A VIEWER FOR EVERYTHING
 
 PRIVATE BY DESIGN
 • Everything stays on your Mac. No account, no cloud, no analytics, no network.
-• Copies from password managers are never recorded; concealed clipboard data is ignored; any app can be excluded.
+• Concealed clipboard data is not recorded; copies from known password managers are excluded; any app can be excluded.
 • Optional password: history and templates are stored AES-256 encrypted; the key is wiped from memory when Keepit locks — manually, when the screen locks, or when the Mac sleeps.
 • Touch ID unlock, and a 24-word recovery phrase in case you forget the password.
 • Export / Import: one password-encrypted backup file moves everything to another Mac.
@@ -57,6 +57,12 @@ Keepit needs the Accessibility permission to paste for you; without it, chosen i
 
 ## Keywords (100 chars, comma-separated)
 clipboard,history,paste,copy,snippets,templates,manager,queue,text expander,productivity
+
+## What's new (version 2.12.0)
+• Copies from password managers are skipped more reliably — including when you switch apps right after copying.
+• Saving a large history no longer pauses the interface.
+• Encryption metadata is versioned, so future improvements will not disturb existing data.
+• Clearer security documentation: what is guaranteed, what is best effort.
 
 ## What's new (version 2.11.1)
 • Settings redesigned the Mac way: panes in the toolbar, every change applies at once.

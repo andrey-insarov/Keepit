@@ -3,6 +3,7 @@ import Foundation
 /// Export / import of history and templates as one password-protected file (`.keepit`).
 ///
 /// Layout: `KEEPITBK` · format version (1 byte) · 16-byte PBKDF2 salt · Vault.encrypt(LZFSE(JSON)).
+/// Format 1 implies PBKDF2-HMAC-SHA256 with `Vault.defaultRounds`; a later format carries its KDF parameters.
 /// The password is independent of the vault password, so a backup can be moved to a Mac
 /// where protection is off (or on with a different password).
 enum Backup {
@@ -35,9 +36,8 @@ enum Backup {
     static func encode(_ payload: Payload, password: SecureBuffer) throws -> Data {
         let json = try Storage.encoder.encode(payload)
         let packed = try (json as NSData).compressed(using: .lzfse) as Data
-        var salt = Data(count: saltSize)
-        _ = salt.withUnsafeMutableBytes { SecRandomCopyBytes(kSecRandomDefault, saltSize, $0.baseAddress!) }
-        let key = Vault.deriveKey(password: password, salt: salt)
+        let salt = try Vault.randomBytes(saltSize)
+        let key = try Vault.deriveKey(password: password, salt: salt)   // format 1 = Vault.defaultRounds
         defer { key.zero() }
         let sealed = try Vault.encrypt(packed, key: key)
         return magic + Data([formatVersion]) + salt + sealed
@@ -55,7 +55,7 @@ enum Backup {
         let saltStart = data.startIndex + magic.count + 1
         let salt = data[saltStart ..< saltStart + saltSize]
         let sealed = data[(saltStart + saltSize)...]
-        let key = Vault.deriveKey(password: password, salt: Data(salt))
+        guard let key = try? Vault.deriveKey(password: password, salt: Data(salt)) else { throw Failure.corrupt }
         defer { key.zero() }
         guard let packed = try? Vault.decrypt(Data(sealed), key: key) else { throw Failure.wrongPassword }
         guard let json = try? (packed as NSData).decompressed(using: .lzfse) as Data,

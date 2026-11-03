@@ -280,7 +280,7 @@ that explains it.
 
 | Pane | What is there |
 |-----|---------------|
-| **General** | Launch at login · save history on quit, restore on start · paste after choosing (off = only copy) · paste delay — raise it for apps that are slow to come to the front · open the menu at the text cursor · Backup: *Export…* / *Import…* — [Backup](#backup) |
+| **General** | Launch at login · save history on quit, restore on start · paste after choosing (off = only copy) · paste delay — raise it for apps that are slow to come to the front · open the menu at the text cursor · Backup: *Export…* / *Import…* — [Backup](#backup) · Updates: *Check for updates automatically* (direct-download edition; off = no network request at all) — [Updates](#updates) |
 | **Shortcuts** | Every global shortcut in one place — see below |
 | **Paste Queue** | The three queue keys, the idle time after which the queue switches off, and what to put between items for *Paste all remaining* — [The paste queue](#the-paste-queue) |
 | **History** | How many text/file items and images to keep (1000 / 30) · forget items older than … · *Remove duplicates* (copying the same thing again moves it to the top) · *Ignore concealed clipboard data* · the ignored-apps list (bundle identifiers; password managers are always ignored) |
@@ -373,6 +373,12 @@ Keepit checks GitHub Releases once a day and offers updates in a dialog; *Check 
 now. Updates are signed (EdDSA) and notarized. With Homebrew, `brew upgrade --cask keepit` does the
 same. Checksums for every download are in `SHA256SUMS` on the release page.
 
+The check is the only network request Keepit makes, and it is optional: *Settings → General →
+Updates → Check for updates automatically*. Switched off, Keepit never contacts anything — not even
+when you ask — and *Check for Updates…* disappears from the menus; you then update by downloading
+from [keep.it.com](https://keep.it.com) or with Homebrew. The App Store edition has no updater and
+no such option; the App Store updates it.
+
 ### Uninstalling
 
 *Settings → Advanced → Reset and uninstall → Uninstall…* removes the app, the data folder, the keychain
@@ -400,8 +406,10 @@ different combination on the *Shortcuts* pane. ⌃⌥ with digits and letters is
 menu falls back to the mouse pointer. *Open menu at text cursor* on the General tab turns the
 lookup off if you prefer the pointer always.
 
-**Something I copied is missing.** Copies from password managers and anything marked concealed are
-never recorded; apps on the ignore list are skipped. See *Settings → History*.
+**Something I copied is missing.** Anything marked concealed by the copying app is not recorded,
+and neither is a copy made while a password manager (built-in list) or an app on your ignore list
+was in front — including the app you switched away from a moment ago. See *Settings → History*
+and the [security page](security.html#what-is-not-recorded).
 
 **Touch ID is not offered.** No Touch ID sensor is reachable at the moment (lid closed, no Touch ID
 keyboard). Keepit keeps the setting and asks for the fingerprint as soon as a sensor is available.

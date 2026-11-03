@@ -4,17 +4,22 @@ import CryptoKit
 import Foundation
 import Security
 
-/// 32 key bytes in a page-locked (mlock) buffer that is wiped with memset_s on `zero()` and on deinit.
-/// CryptoKit's SymmetricKey cannot be zeroed on demand, so one is built only for the duration of a call.
+/// 32 key bytes in a buffer that is wiped with memset_s on `zero()` and on deinit. The buffer is
+/// mlock'ed to keep it out of swap; if the kernel refuses (resource limits), that is logged and the
+/// key still works — the wipe is the guarantee, the page lock is best effort. CryptoKit's SymmetricKey
+/// cannot be zeroed on demand, so one is built only for the duration of a call.
 final class SecureKey {
     static let size = 32
     private let ptr: UnsafeMutableRawPointer
     private(set) var isZeroed = false
+    /// True when mlock succeeded for this buffer.
+    private(set) var isPageLocked = false
 
     init(bytes: UnsafeRawBufferPointer) {
         precondition(bytes.count == SecureKey.size)
         ptr = UnsafeMutableRawPointer.allocate(byteCount: SecureKey.size, alignment: 16)
-        _ = mlock(ptr, SecureKey.size)                      // keep out of swap
+        isPageLocked = mlock(ptr, SecureKey.size) == 0      // keep out of swap
+        if !isPageLocked { Log.vault.notice("mlock failed for a key buffer (errno \(errno)); continuing without page lock") }
         ptr.copyMemory(from: bytes.baseAddress!, byteCount: SecureKey.size)
     }
 
@@ -40,19 +45,33 @@ final class SecureKey {
 
     deinit {
         zero()
-        _ = munlock(ptr, SecureKey.size)
+        if isPageLocked { _ = munlock(ptr, SecureKey.size) }
         ptr.deallocate()
     }
 }
 
 /// Password-based encryption of the data files.
-/// Key = PBKDF2-HMAC-SHA256(password, salt, 200k rounds) → AES-256-GCM per file.
+/// Key = PBKDF2-HMAC-SHA256(password, salt, rounds) → AES-256-GCM per file.
 /// Nothing derived from the password is written to disk except a GCM-sealed verifier.
 /// Intermediate buffers (password bytes, derived key) are wiped as soon as they are no longer needed.
 enum Vault {
     static let magic = Data("KEEPITENC1".utf8)
     private static let okToken = Data("KEEPIT-OK".utf8)
-    private static let rounds: UInt32 = 200_000
+
+    // KDF parameters are recorded in vault.json (format 2, Keepit 2.12+) so they can change
+    // later without breaking existing vaults. A file without them (format 1, ≤ 2.11.1) means
+    // the values below; a vault that names a KDF this build does not know is refused, not guessed.
+    // Raising `defaultRounds` only affects vaults created from then on — the data key is derived
+    // from the password, so moving an existing vault to new parameters is a re-key (see rekey).
+    static let formatVersion = 2
+    static let kdfPBKDF2SHA256 = "pbkdf2-hmac-sha256"
+    static let defaultRounds: UInt32 = 200_000
+
+    enum Failure: Error, Equatable {
+        case randomBytes(OSStatus)        // SecRandomCopyBytes refused
+        case keyDerivation(Int32)         // CCKeyDerivationPBKDF status
+        case unsupportedKDF(String)
+    }
 
     struct Recovery: Codable {
         var salt: Data            // HKDF salt for the phrase-derived key
@@ -61,9 +80,23 @@ enum Vault {
     }
 
     struct Meta: Codable {
+        var formatVersion: Int?  // nil = 1 (no KDF fields)
+        var kdf: String?         // nil = pbkdf2-hmac-sha256
+        var rounds: UInt32?      // nil = 200 000
         var salt: Data
         var check: Data          // encrypt(okToken) with the key
         var recovery: Recovery?  // optional: 24-word recovery phrase
+
+        var kdfName: String { kdf ?? Vault.kdfPBKDF2SHA256 }
+        var kdfRounds: UInt32 { rounds ?? Vault.defaultRounds }
+    }
+
+    /// Cryptographically random bytes; throws instead of returning zeros if the system RNG refuses.
+    static func randomBytes(_ count: Int) throws -> Data {
+        var d = Data(count: count)
+        let status = d.withUnsafeMutableBytes { SecRandomCopyBytes(kSecRandomDefault, count, $0.baseAddress!) }
+        guard status == errSecSuccess else { throw Failure.randomBytes(status) }
+        return d
     }
 
     static var metaURL: URL { Storage.directory.appendingPathComponent("vault.json") }
@@ -73,21 +106,31 @@ enum Vault {
     // MARK: Key derivation
 
     /// The password arrives as locked bytes (see SecurePasswordField); no String of it exists.
-    static func deriveKey(password: SecureBuffer, salt: Data) -> SecureKey {
+    static func deriveKey(password: SecureBuffer, salt: Data, rounds: UInt32 = defaultRounds) throws -> SecureKey {
         var out = [UInt8](repeating: 0, count: SecureKey.size)
         defer {
             out.withUnsafeMutableBytes { _ = memset_s($0.baseAddress, $0.count, 0, $0.count) }
         }
-        password.withBytes { pw in
+        let status: Int32 = password.withBytes { pw in
             salt.withUnsafeBytes { saltPtr in
-                _ = CCKeyDerivationPBKDF(CCPBKDFAlgorithm(kCCPBKDF2),
-                                         pw.baseAddress?.assumingMemoryBound(to: CChar.self), pw.count,
-                                         saltPtr.bindMemory(to: UInt8.self).baseAddress, salt.count,
-                                         CCPseudoRandomAlgorithm(kCCPRFHmacAlgSHA256), rounds,
-                                         &out, out.count)
+                CCKeyDerivationPBKDF(CCPBKDFAlgorithm(kCCPBKDF2),
+                                     pw.baseAddress?.assumingMemoryBound(to: CChar.self), pw.count,
+                                     saltPtr.bindMemory(to: UInt8.self).baseAddress, salt.count,
+                                     CCPseudoRandomAlgorithm(kCCPRFHmacAlgSHA256), rounds,
+                                     &out, out.count)
             }
         }
+        guard status == Int32(kCCSuccess) else { throw Failure.keyDerivation(status) }
         return out.withUnsafeBytes { SecureKey(bytes: $0) }
+    }
+
+    /// Key for an existing vault's parameters; nil (logged) if the vault names a KDF this build lacks.
+    private static func deriveKey(password: SecureBuffer, meta: Meta) -> SecureKey? {
+        guard meta.kdfName == kdfPBKDF2SHA256 else {
+            Log.vault.error("vault.json uses KDF \(meta.kdfName), which this version does not support")
+            return nil
+        }
+        return try? deriveKey(password: password, salt: meta.salt, rounds: meta.kdfRounds)
     }
 
     // MARK: Encrypt / decrypt blobs
@@ -124,13 +167,20 @@ enum Vault {
 
     /// Create the vault for a new password and return its key. Any existing recovery block is
     /// dropped (it wrapped the old key) — call `rewrapRecovery(from:to:)` afterwards to keep it.
-    static func enable(password: SecureBuffer) throws -> SecureKey {
-        var salt = Data(count: 16)
-        _ = salt.withUnsafeMutableBytes { SecRandomCopyBytes(kSecRandomDefault, 16, $0.baseAddress!) }
-        let key = deriveKey(password: password, salt: salt)
+    static func enable(password: SecureBuffer, rounds: UInt32 = defaultRounds) throws -> SecureKey {
+        let salt = try randomBytes(16)
+        let key = try deriveKey(password: password, salt: salt, rounds: rounds)
         let check = try encrypt(okToken, key: key)
-        try writeMeta(Meta(salt: salt, check: check, recovery: nil))
+        try writeMeta(Meta(formatVersion: formatVersion, kdf: kdfPBKDF2SHA256, rounds: rounds,
+                           salt: salt, check: check, recovery: nil))
         return key
+    }
+
+    /// The KDF parameters of the current vault (nil when protection is off) — for the security
+    /// page's "about this vault" line and for tests.
+    static var kdfDescription: String? {
+        guard let m = readMeta() else { return nil }
+        return "\(m.kdfName), \(m.kdfRounds) rounds (format \(m.formatVersion ?? 1))"
     }
 
     // MARK: Recovery phrase
@@ -146,11 +196,9 @@ enum Vault {
     /// Generate a fresh 24-word phrase that can recover `key`, store its wrapped form, return the words.
     static func createRecovery(for key: SecureKey) throws -> [String] {
         guard var meta = readMeta() else { throw CocoaError(.fileNoSuchFile) }
-        var entropy = [UInt8](repeating: 0, count: Mnemonic.entropyBytes)
-        _ = SecRandomCopyBytes(kSecRandomDefault, entropy.count, &entropy)
+        var entropy = try [UInt8](randomBytes(Mnemonic.entropyBytes))
         defer { entropy.withUnsafeMutableBytes { _ = memset_s($0.baseAddress, $0.count, 0, $0.count) } }
-        var salt = Data(count: 16)
-        _ = salt.withUnsafeMutableBytes { SecRandomCopyBytes(kSecRandomDefault, 16, $0.baseAddress!) }
+        let salt = try randomBytes(16)
         let rkey = recoveryKey(entropy: entropy, salt: salt)
         defer { rkey.zero() }
         var keyBytes = key.withBytes { Data($0) }
@@ -199,9 +247,7 @@ enum Vault {
 
     /// Returns the key if the password matches, nil otherwise.
     static func unlock(password: SecureBuffer) -> SecureKey? {
-        guard let data = try? Data(contentsOf: metaURL),
-              let meta = try? JSONDecoder().decode(Meta.self, from: data) else { return nil }
-        let key = deriveKey(password: password, salt: meta.salt)
+        guard let meta = readMeta(), let key = deriveKey(password: password, meta: meta) else { return nil }
         guard let plain = try? decrypt(meta.check, key: key), plain == okToken else {
             key.zero()
             return nil

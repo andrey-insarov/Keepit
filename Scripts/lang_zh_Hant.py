@@ -394,4 +394,7 @@ T = {
 'Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back.': '將刪除剪貼板歷史記錄、範本、設定、密碼和 Touch ID 金鑰；範例範本會恢復。App、其權限和登入時啟動保持不變。無法還原——如果以後可能需要資料，請先匯出備份。',
 'Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back.': '「重置」將 Keepit 恢復為全新安裝狀態：刪除歷史記錄、範本、設定、密碼和 Touch ID 金鑰，恢復範例範本；App 及其權限保留。「解除安裝」在此基礎上再移除 App、登入時啟動、鑰匙圈項目和輔助使用權限。兩者都需要密碼或 Touch ID；解除安裝還需要鍵入確認。如果以後可能需要資料，請先匯出備份。',
 'Recovery Access…': '復原存取…',
+'Updates': '更新',
+'Check for updates automatically': '自動檢查更新',
+'Once a day Keepit asks GitHub Releases whether a newer version exists — the only network request it makes; the download itself is signed and verified. Off = no request is ever made and Check for Updates… leaves the menus; you update by downloading from keep.it.com.': 'Keepit 每天向 GitHub Releases 查詢一次是否有新版本——這是它發出的唯一網路請求；下載本身經過簽署與驗證。關閉 = 永不發出請求，「檢查更新項目⋯」會從選單中消失；可從 keep.it.com 下載更新。',
 }

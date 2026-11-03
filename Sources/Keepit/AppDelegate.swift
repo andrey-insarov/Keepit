@@ -13,6 +13,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     private var statusItem: NSStatusItem!
     private lazy var updater = Updater()
+    private var checkForUpdatesItem: NSMenuItem?
     private var preferencesWindow: SettingsWindowController?
     private(set) var viewer: ViewerWindowController?
     /// Set by the uninstaller: nothing may be written to disk any more (see Uninstall.swift).
@@ -90,9 +91,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         hotKeys.isSuppressed = { [weak self] in (self?.openMenus ?? 0) > 0 }
         registerHotKeys()
-        Storage.save(settings, to: Storage.settingsURL, encrypt: false)
+        Storage.save(settings, to: Storage.settingsURL, encrypt: false, pretty: true)
         observeScreenLock()
-        _ = updater   // starts Sparkle's scheduled checks
+        updater.isEnabled = settings.checkForUpdates   // starts Sparkle's scheduled checks, if allowed
 
         if SelfTest.isActive {
             SelfTest.run(app: self)
@@ -153,8 +154,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if !uninstalling {
             history?.flush()
             templates?.flush()
-            Storage.save(settings, to: Storage.settingsURL, encrypt: false)
+            Storage.save(settings, to: Storage.settingsURL, encrypt: false, pretty: true)
         }
+        Storage.waitUntilSaved()    // a debounced write may still be in flight
         Storage.clearKey()          // wipe key bytes before the process goes away
     }
 
@@ -300,7 +302,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                     return true
                 }
                 key.zero()
-                NSLog("Keepit: Touch ID key does not open the vault (password changed elsewhere?)")
+                Log.vault.notice("Touch ID key does not open the vault (password changed elsewhere?)")
             }
             // fall through to the password prompt
         }
@@ -448,14 +450,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         guard Vault.isEnabled, let key = Storage.key else { BiometricUnlock.remove(); return }
         if settings.biometricUnlock {
             do { try BiometricUnlock.store(key) } catch BiometricUnlock.Failure.notAvailable {
-                NSLog("Keepit: Touch ID not usable right now; will store the key at the next password unlock")
+                Log.vault.notice("Touch ID not usable right now; will store the key at the next password unlock")
                 if !quiet {
                     Vault.error(L("Touch ID is not usable right now (closed lid, keyboard asleep, or no fingerprint enrolled). Keepit will enable it automatically the next time you unlock with the password."))
                 }
             } catch {
                 Vault.error(LF("Touch ID could not be set up: %@", error.localizedDescription))
                 settings.biometricUnlock = false
-                Storage.save(settings, to: Storage.settingsURL, encrypt: false)
+                Storage.save(settings, to: Storage.settingsURL, encrypt: false, pretty: true)
             }
         } else {
             BiometricUnlock.remove()
@@ -494,11 +496,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func apply(settings new: Settings) {
         let old = settings
         settings = new
-        Storage.save(new, to: Storage.settingsURL, encrypt: false)
+        Storage.save(new, to: Storage.settingsURL, encrypt: false, pretty: true)
         history.updateSettings(new)
         monitor.updateSettings(new)
         menuBuilder.settings = new
         menuBuilder.invalidateThumbnails()
+        if old.checkForUpdates != new.checkForUpdates {
+            updater.isEnabled = new.checkForUpdates
+            checkForUpdatesItem?.isHidden = !new.checkForUpdates
+        }
         if old.historyHotKey != new.historyHotKey || old.templateHotKey != new.templateHotKey || old.previousHotKey != new.previousHotKey
             || old.latestActionModifiers != new.latestActionModifiers || old.numberPasteModifiers != new.numberPasteModifiers
             || old.lockHotKey != new.lockHotKey || old.pauseHotKey != new.pauseHotKey
@@ -521,7 +527,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         do {
             if on { try SMAppService.mainApp.register() } else { try SMAppService.mainApp.unregister() }
         } catch {
-            NSLog("Keepit: launch at login change failed: \(error)")
+            Log.system.error("launch at login change failed: \(error.localizedDescription)")
         }
     }
 
@@ -613,7 +619,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         appMenu.addItem(withTitle: L("About Keepit"), action: #selector(showAbout), keyEquivalent: "")
         appMenu.addItem(.separator())
         if updater.isConfigured {
-            appMenu.addItem(withTitle: L("Check for Updates…"), action: #selector(checkForUpdates), keyEquivalent: "")
+            let item = appMenu.addItem(withTitle: L("Check for Updates…"), action: #selector(checkForUpdates), keyEquivalent: "")
+            item.isHidden = !settings.checkForUpdates
+            checkForUpdatesItem = item
         }
         appMenu.addItem(withTitle: L("Viewer…"), action: #selector(openViewer), keyEquivalent: "l")
         appMenu.addItem(withTitle: L("Settings…"), action: #selector(openPreferences), keyEquivalent: ",")
@@ -892,7 +900,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             out.append(item(L("Lock Keepit"), #selector(lock), hotKey: settings.lockHotKey))
         }
         out.append(.separator())
-        if updater.isConfigured {
+        if updater.isConfigured, settings.checkForUpdates {
             out.append(item(L("Check for Updates…"), #selector(checkForUpdates)))
         }
         out.append(item(L("About Keepit"), #selector(showAbout)))

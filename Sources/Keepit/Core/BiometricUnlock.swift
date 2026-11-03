@@ -105,7 +105,7 @@ enum BiometricUnlock {
         var out: CFTypeRef?
         let st = SecItemCopyMatching(q as CFDictionary, &out)
         guard st == errSecSuccess, var d = out as? Data, d.count == SecureKey.size else {
-            if st != errSecUserCanceled && st != errSecItemNotFound { NSLog("Keepit: Touch ID unlock failed: \(st)") }
+            if st != errSecUserCanceled && st != errSecItemNotFound { Log.vault.error("Touch ID unlock failed: \(st)") }
             return nil
         }
         let key = d.withUnsafeBytes { SecureKey(bytes: $0) }

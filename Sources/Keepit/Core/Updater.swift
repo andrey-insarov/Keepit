@@ -5,16 +5,23 @@ import Sparkle
 
 /// Update checks. Direct-download builds use Sparkle 2 (feed on GitHub Releases, EdDSA-verified);
 /// the Mac App Store build has no updater at all — the store handles updates.
+///
+/// The check is optional (Settings → General → *Check for updates automatically*). Sparkle is not
+/// started until the setting is on, and turning it off switches its scheduler off, so with the
+/// option off Keepit makes no network request at all and the menu item is not shown.
 final class Updater {
 #if APPSTORE
     var isConfigured: Bool { false }
+    var isEnabled = false
     @objc func checkForUpdates(_ sender: Any?) {}
 #else
     private let controller: SPUStandardUpdaterController
+    private var started = false
 
     init() {
-        // startingUpdater: false in --selftest so CI runs don't phone home.
-        controller = SPUStandardUpdaterController(startingUpdater: !SelfTest.isActive, updaterDelegate: nil, userDriverDelegate: nil)
+        // Never started here: `isEnabled` starts it when the setting says so
+        // (and never in --selftest, so CI runs don't phone home).
+        controller = SPUStandardUpdaterController(startingUpdater: false, updaterDelegate: nil, userDriverDelegate: nil)
     }
 
     var isConfigured: Bool {
@@ -22,7 +29,28 @@ final class Updater {
         return !key.isEmpty && !key.hasPrefix("__")
     }
 
+    /// Mirrors `Settings.checkForUpdates`. Sparkle persists `automaticallyChecksForUpdates` in
+    /// user defaults, so it is set explicitly on every change rather than left to the Info.plist default.
+    var isEnabled = false {
+        didSet {
+            guard isConfigured, !SelfTest.isActive else { return }
+            if isEnabled {
+                if !started {
+                    do { try controller.startUpdater(); started = true } catch {
+                        Log.system.error("Sparkle did not start: \(error.localizedDescription)")
+                        return
+                    }
+                }
+                controller.updater.automaticallyChecksForUpdates = true
+            } else if started {
+                controller.updater.automaticallyChecksForUpdates = false
+            }
+        }
+    }
+
+    /// Menu-driven check; a no-op while the option is off (the item is hidden then anyway).
     @objc func checkForUpdates(_ sender: Any?) {
+        guard isEnabled, started else { return }
         NSApp.activate(ignoringOtherApps: true)
         controller.checkForUpdates(sender)
     }

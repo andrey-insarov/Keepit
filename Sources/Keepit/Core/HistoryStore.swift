@@ -6,7 +6,7 @@ final class HistoryStore {
     var settings: Settings
     var onChange: (() -> Void)?
 
-    private lazy var saver = DebouncedSaver(delay: 1.5) { [weak self] in self?.saveNow() }
+    private lazy var saver = DebouncedSaver(delay: 1.5) { [weak self] background in self?.saveNow(background: background) }
     /// True between `purge()` (lock) and the next `reload()`: memory is empty on purpose and must
     /// never be written over the file on disk — quitting or updating while locked used to do that.
     private(set) var isPurged = false
@@ -162,10 +162,12 @@ final class HistoryStore {
         if settings.historySave { saver.schedule() }
     }
 
-    func saveNow() {
+    /// Write the history to disk. `background: true` (debounced saves) queues the encode/encrypt/write
+    /// off the main thread; the default waits for it.
+    func saveNow(background: Bool = false) {
         if isPurged { return }
         if settings.historySave {
-            Storage.save(items, to: Storage.historyURL)
+            Storage.save(items, to: Storage.historyURL, background: background)
         } else {
             try? FileManager.default.removeItem(at: Storage.historyURL)
         }
