@@ -59,8 +59,9 @@ appstore …` for the sandboxed one).
 - [ ] **C1. Quiet period.** Copy three things within a minute → exactly one new file ~5 min after the
   last copy, not three.
 - [ ] **C2. Nothing changed, no file.** *Back Up Now* always writes (it is forced). The fingerprint is
-  for the automatic run: copy something, wait for the copy, then copy the *same* text again with
-  *Remove duplicates* on (the item only moves to the top) → no new file after the quiet period.
+  for the automatic run, and copying anything — even the same text again — makes a new item (new
+  id and date), so: rename a template folder, then rename it **back** within the quiet period → the
+  content is what the last copy holds → no new file after five minutes.
 - [ ] **C3. Rotation.** *Keep last* = 3, make 5 copies (change + Back Up Now) → exactly 3 of this
   instance's files remain, oldest gone. A file you put there yourself named `Keepit-foo.keepit`, and
   a copy from another instance (P2 side instance into the same folder), are **not** deleted.
@@ -70,12 +71,14 @@ appstore …` for the sandboxed one).
   Now* → status *Last backup failed: Backup folder is not available*; put it back → next change or
   Back Up Now succeeds; status clears. Nothing crashed, no partial file.
 - [ ] **C6. New folder = new series.** *Choose…* another folder → the old files stay where they were; the
-  next copy is forced (the engine checks once a minute, so within about a minute, not instantly) and
-  goes to the new folder; rotation there does not count the old ones.
+  next copy is forced — it skips the "nothing changed" check, not the schedule: it comes after the
+  quiet period (five minutes after the last change, or at once via *Back Up Now*) and goes to the
+  new folder; rotation there does not count the old ones.
 - [ ] **C7. Locked = nothing.** Lock (⌥L), change nothing, wait → no file; unlock → the pending copy, if
   any, is written.
-- [ ] **C8. Password change / new phrase** → a fresh copy within about a minute (forced, same timing as
-  C6); the old copies still open with the **old** password (D4), the new one with the new.
+- [ ] **C8. Password change / new phrase** → a fresh copy at the next run (forced, same timing as C6:
+  after the quiet period or via *Back Up Now*); the old copies still open with the **old** password
+  (D4), the new one with the new.
 - [ ] **C9. Same file twice is impossible:** after C3 compare SHA-256 of two consecutive copies — they
   differ (random nonce, different backupID).
 
@@ -174,8 +177,10 @@ Side instance; watch `/tmp/keepit-acc/`.
   → launch → an alert naming `history.json`, Keepit **quits**, `templates.json` and `settings.json`
   unchanged (compare mtimes), `restore-journal/commit` still there → `chflags nouchg history.json` →
   launch → replay succeeds (history back to the copy), Keepit runs, `restore-journal/` gone.
-- [ ] **G3. Unarmed journal.** Same but **without** `commit` → launch → no alert, journal removed, files
-  untouched.
+- [ ] **G3. Unarmed journal.** With Keepit quit and the live files **untouched** (no appended byte, no
+  immutable flag — this is not G2's setup): `mkdir restore-journal && cp history.json restore-journal/`
+  and **no** `commit` file → launch → no alert, `restore-journal/` removed, the three files' mtimes
+  unchanged.
 
 ## H. App Store build — the sandbox
 

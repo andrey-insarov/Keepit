@@ -24,7 +24,7 @@ All of it is stored **only on your computer**, in `~/Library/Application Support
 - No analytics, telemetry, crash reporting, advertising or tracking of any kind.
 - No third-party SDKs that collect data.
 - No network connections, with the single exception described in section 6 — and that one can be switched off.
-- No data leaves your Mac unless you switch on a backup folder (section 2) — an option, off by default, that you can leave off; what it writes is encrypted before it leaves.
+- Keepit itself writes nothing outside your Mac unless you switch on a backup folder (section 2) — an option, off by default — or export a file by hand and put it somewhere; in both cases the content is encrypted before it is written, and only the small header described in section 2 is readable.
 - No background reading of other applications' content: Keepit only observes the system clipboard, which applications write to deliberately when you copy.
 
 ## 4. Security of locally stored data
