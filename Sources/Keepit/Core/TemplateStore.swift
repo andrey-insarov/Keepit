@@ -45,9 +45,12 @@ final class TemplateStore {
     /// in it. A first-run Replace has nothing to lose then and needs no rollback copy.
     var isDefaultTree: Bool { Self.same(root, Self.defaultTree()) }
 
+    /// Name, every format byte for byte, source app, hot key, children — not a hash or the plain
+    /// text alone: an RTF added to an example keeps the same plain text and is the user's work.
     private static func same(_ a: TemplateNode, _ b: TemplateNode) -> Bool {
-        guard a.name == b.name, a.clip?.plainText == b.clip?.plainText, a.isFolder == b.isFolder,
-              a.hotKey == b.hotKey, a.children.count == b.children.count else { return false }
+        guard a.name == b.name, a.isFolder == b.isFolder, a.hotKey == b.hotKey,
+              a.clip?.formats == b.clip?.formats, a.clip?.sourceApp == b.clip?.sourceApp,
+              a.children.count == b.children.count else { return false }
         return zip(a.children, b.children).allSatisfy { same($0, $1) }
     }
 

@@ -373,6 +373,11 @@ final class InputLimitTests: XCTestCase {
         XCTAssertFalse(store.isDefaultTree)
         store.resetToDefaults()
         XCTAssertTrue(store.isDefaultTree)
+        // Another format added to an example, plain text unchanged: still the user's work.
+        store.root.children[0].children[0].clip?.formats[ClipItem.Format.rtf] = Data("{\\rtf1 x}".utf8); store.changed()
+        XCTAssertFalse(store.isDefaultTree)
+        store.resetToDefaults()
+        XCTAssertTrue(store.isDefaultTree)
         store.root.insert(TemplateNode(name: "Mine", text: "m")); store.changed()
         XCTAssertFalse(store.isDefaultTree)
         store.replaceRoot(TemplateNode(name: "Template"))
