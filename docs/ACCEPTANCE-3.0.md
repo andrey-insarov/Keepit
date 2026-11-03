@@ -179,8 +179,9 @@ Side instance; watch `/tmp/keepit-acc/`.
   launch → replay succeeds (history back to the copy), Keepit runs, `restore-journal/` gone.
 - [ ] **G3. Unarmed journal.** With Keepit quit and the live files **untouched** (no appended byte, no
   immutable flag — this is not G2's setup): `mkdir restore-journal && cp history.json restore-journal/`
-  and **no** `commit` file → launch → no alert, `restore-journal/` removed, the three files' mtimes
-  unchanged.
+  and **no** `commit` file → launch → no alert, `restore-journal/` removed, history and templates as
+  they were (`shasum history.json templates.json` before and after — `settings.json` is rewritten
+  by every launch, so compare its contents, not its mtime).
 
 ## H. App Store build — the sandbox
 
