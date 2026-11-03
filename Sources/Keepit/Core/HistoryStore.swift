@@ -96,6 +96,7 @@ final class HistoryStore {
 
     /// Backup import, "Replace": the imported list becomes the history (trimmed to the limits).
     func replaceAll(_ newItems: [ClipItem]) {
+        isPurged = false
         items = newItems
         trim()
         changed()

@@ -336,5 +336,30 @@ final class InputLimitTests: XCTestCase {
         for i in 0..<(Limits.queueMaxItems + 20) { q.record(ClipItem.text("\(i)")) }
         XCTAssertEqual(q.remaining, Limits.queueMaxItems)
     }
-}
 
+    // Reset purges the stores, then refills them: they must be live again — edits after a Reset
+    // (and after a Restore that followed one) have to reach the disk.
+    func testStoresAreLiveAgainAfterPurgeAndRefill() throws {
+        let tmp = TempStorage(); defer { tmp.restore() }
+        let store = TemplateStore()
+        store.purge()
+        try? FileManager.default.removeItem(at: Storage.templatesURL)
+        store.resetToDefaults()                                        // the exact calls performReset() makes
+        XCTAssertFalse(store.isPurged)
+        let added = TemplateNode(name: "After Reset", text: "must survive restart")
+        store.root.insert(added); store.changed(); store.flush()
+        XCTAssertNotNil(TemplateStore().root.find(id: added.id))
+        store.purge()
+        store.replaceRoot(TemplateNode(name: "Template", children: [TemplateNode(name: "Restored", text: "r")]))
+        XCTAssertFalse(store.isPurged)
+        store.flush()
+        XCTAssertEqual(TemplateStore().root.children.first?.name, "Restored")
+        var s = Settings(); s.historySave = true
+        let h = HistoryStore(settings: s)
+        h.purge()
+        h.replaceAll([.text("back")])
+        XCTAssertFalse(h.isPurged)
+        h.flush()
+        XCTAssertEqual(HistoryStore(settings: s).items.map(\.plainText), ["back"])
+    }
+}

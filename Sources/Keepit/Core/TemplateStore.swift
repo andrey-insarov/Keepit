@@ -43,6 +43,7 @@ final class TemplateStore {
 
     /// Back to the fresh-install tree (Reset).
     func resetToDefaults() {
+        isPurged = false                       // Reset purges first; the store is live again from here
         root = Self.defaultTree()
         revision += 1
         saveNow()
@@ -58,14 +59,23 @@ final class TemplateStore {
         onChange?()
     }
 
-    /// Would adding `node` under `parent` exceed the depth/count ceilings?
+    /// Would adding `node` (with everything below it) under `parent` exceed the depth or count
+    /// ceilings? The depth rule is the validator's: the deepest node of the result ≤ templateMaxDepth,
+    /// root being 0 — so a subtree counts with its full height, not just its top.
     func canInsert(_ node: TemplateNode, under parent: TemplateNode) -> Bool {
-        guard parent.depth + 1 < Limits.templateMaxDepth else { return false }
+        guard parent.depth + 1 + node.height <= Limits.templateMaxDepth else { return false }
         return root.subtreeCount + node.subtreeCount <= Limits.templateMaxCount
+    }
+
+    /// Same for moving a node that is already in the tree: the count does not change, the depth may.
+    func canMove(_ node: TemplateNode, under parent: TemplateNode) -> Bool {
+        guard !parent.isDescendant(of: node) else { return false }
+        return parent.depth + 1 + node.height <= Limits.templateMaxDepth
     }
 
     /// Backup import, "Replace".
     func replaceRoot(_ node: TemplateNode) {
+        isPurged = false
         root = node
         root.relink()
         changed()
