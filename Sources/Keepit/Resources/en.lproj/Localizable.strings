@@ -539,3 +539,5 @@
 "Could not read the current %@ before replacing it: %@" = "Could not read the current %@ before replacing it: %@";
 "Could not write %@: %@ — the previous files were kept." = "Could not write %@: %@ — the previous files were kept.";
 "Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on." = "Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on.";
+
+"Could not prepare the undo copy of the current data: %@" = "Could not prepare the undo copy of the current data: %@";

@@ -481,4 +481,5 @@ T = {
 'Could not read the current %@ before replacing it: %@': 'לא ניתן לקרוא את %@ הנוכחי לפני החלפתו: %@',
 'Could not write %@: %@ — the previous files were kept.': 'לא ניתן לכתוב את %@: %@ — הקבצים הקודמים נשמרו.',
 'Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on.': 'לא ניתן לכתוב את %@: %@ — וגם החזרת הקבצים הקודמים נכשלה (%@). בדקו את תיקיית הנתונים לפני שממשיכים.',
+'Could not prepare the undo copy of the current data: %@': 'לא ניתן להכין את עותק הביטול של הנתונים הנוכחיים: %@',
 }

@@ -481,4 +481,5 @@ T = {
 'Could not read the current %@ before replacing it: %@': 'Não foi possível ler o %@ atual antes de substituí-lo: %@',
 'Could not write %@: %@ — the previous files were kept.': 'Não foi possível gravar %@: %@ — os arquivos anteriores foram mantidos.',
 'Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on.': 'Não foi possível gravar %@: %@ — e recolocar os arquivos anteriores também falhou (%@). Verifique a pasta de dados antes de continuar.',
+'Could not prepare the undo copy of the current data: %@': 'Não foi possível preparar a cópia de reversão dos dados atuais: %@',
 }

@@ -481,3 +481,4 @@
 "Could not read the current %@ before replacing it: %@" = "替换前无法读取当前的 %@：%@";
 "Could not write %@: %@ — the previous files were kept." = "无法写入 %@：%@ — 已保留之前的文件。";
 "Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on." = "无法写入 %@：%@ — 且恢复之前的文件也失败了（%@）。请先检查数据文件夹再继续。";
+"Could not prepare the undo copy of the current data: %@" = "无法准备当前数据的撤销副本：%@";

@@ -481,4 +481,5 @@ T = {
 'Could not read the current %@ before replacing it: %@': 'Praegust faili %@ ei õnnestunud enne asendamist lugeda: %@',
 'Could not write %@: %@ — the previous files were kept.': 'Faili %@ ei õnnestunud kirjutada: %@ – varasemad failid jäid alles.',
 'Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on.': 'Faili %@ ei õnnestunud kirjutada: %@ – ja ka varasemate failide tagasipanek ebaõnnestus (%@). Kontrollige enne jätkamist andmekausta.',
+'Could not prepare the undo copy of the current data: %@': 'Praeguste andmete tagasivõtukoopiat ei õnnestunud ette valmistada: %@',
 }

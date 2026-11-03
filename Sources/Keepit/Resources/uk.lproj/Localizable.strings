@@ -481,3 +481,4 @@
 "Could not read the current %@ before replacing it: %@" = "Не вдалося прочитати поточний %@ перед заміною: %@";
 "Could not write %@: %@ — the previous files were kept." = "Не вдалося записати %@: %@ — попередні файли збережено.";
 "Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on." = "Не вдалося записати %@: %@ — і повернути попередні файли також не вдалося (%@). Перевірте теку даних, перш ніж продовжувати.";
+"Could not prepare the undo copy of the current data: %@" = "Не вдалося підготувати копію для відкату поточних даних: %@";

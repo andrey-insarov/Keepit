@@ -481,4 +481,5 @@ T = {
 'Could not read the current %@ before replacing it: %@': 'Neizdevās nolasīt pašreizējo %@ pirms tā aizstāšanas: %@',
 'Could not write %@: %@ — the previous files were kept.': 'Neizdevās ierakstīt %@: %@ — iepriekšējie faili tika saglabāti.',
 'Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on.': 'Neizdevās ierakstīt %@: %@ — un arī iepriekšējo failu atgriešana neizdevās (%@). Pirms turpināt, pārbaudiet datu mapi.',
+'Could not prepare the undo copy of the current data: %@': 'Neizdevās sagatavot pašreizējo datu atsaukšanas kopiju: %@',
 }

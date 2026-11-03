@@ -481,3 +481,4 @@
 "Could not read the current %@ before replacing it: %@" = "Nepavyko perskaityti dabartinio %@ prieš jį pakeičiant: %@";
 "Could not write %@: %@ — the previous files were kept." = "Nepavyko įrašyti %@: %@ – ankstesni failai išsaugoti.";
 "Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on." = "Nepavyko įrašyti %@: %@ – ir grąžinti ankstesnių failų taip pat nepavyko (%@). Prieš tęsdami patikrinkite duomenų aplanką.";
+"Could not prepare the undo copy of the current data: %@" = "Nepavyko paruošti dabartinių duomenų atšaukimo kopijos: %@";

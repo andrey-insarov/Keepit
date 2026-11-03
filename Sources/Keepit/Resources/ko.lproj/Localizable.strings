@@ -481,3 +481,4 @@
 "Could not read the current %@ before replacing it: %@" = "대체하기 전에 현재 %@을(를) 읽을 수 없습니다: %@";
 "Could not write %@: %@ — the previous files were kept." = "%@을(를) 쓸 수 없습니다: %@ — 이전 파일은 유지되었습니다.";
 "Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on." = "%@을(를) 쓸 수 없습니다: %@ — 이전 파일을 되돌리는 것도 실패했습니다(%@). 계속하기 전에 데이터 폴더를 확인하세요.";
+"Could not prepare the undo copy of the current data: %@" = "현재 데이터의 되돌리기용 복사본을 준비할 수 없습니다: %@";

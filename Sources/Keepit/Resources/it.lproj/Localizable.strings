@@ -481,3 +481,4 @@
 "Could not read the current %@ before replacing it: %@" = "Impossibile leggere il %@ attuale prima di sostituirlo: %@";
 "Could not write %@: %@ — the previous files were kept." = "Impossibile scrivere %@: %@ — i file precedenti sono stati conservati.";
 "Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on." = "Impossibile scrivere %@: %@ — e anche il ripristino dei file precedenti non è riuscito (%@). Controlla la cartella dei dati prima di continuare.";
+"Could not prepare the undo copy of the current data: %@" = "Impossibile preparare la copia di annullamento dei dati attuali: %@";

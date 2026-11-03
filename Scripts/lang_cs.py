@@ -481,4 +481,5 @@ T = {
 'Could not read the current %@ before replacing it: %@': 'Aktuální %@ se před nahrazením nepodařilo přečíst: %@',
 'Could not write %@: %@ — the previous files were kept.': '%@ se nepodařilo zapsat: %@ – předchozí soubory byly zachovány.',
 'Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on.': '%@ se nepodařilo zapsat: %@ – a vrácení předchozích souborů také selhalo (%@). Než budete pokračovat, zkontrolujte složku s daty.',
+'Could not prepare the undo copy of the current data: %@': 'Kopii aktuálních dat pro vrácení zpět se nepodařilo připravit: %@',
 }

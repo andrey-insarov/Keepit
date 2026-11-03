@@ -481,3 +481,4 @@
 "Could not read the current %@ before replacing it: %@" = "置き換える前に現在の %@ を読み取れませんでした：%@";
 "Could not write %@: %@ — the previous files were kept." = "%@ を書き込めませんでした：%@ — 以前のファイルは保持されています。";
 "Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on." = "%@ を書き込めませんでした：%@ — さらに以前のファイルを戻すことにも失敗しました（%@）。続ける前にデータフォルダを確認してください。";
+"Could not prepare the undo copy of the current data: %@" = "現在のデータの取り消し用コピーを準備できませんでした：%@";

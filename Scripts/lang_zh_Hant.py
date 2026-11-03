@@ -481,4 +481,5 @@ T = {
 'Could not read the current %@ before replacing it: %@': '取代前無法讀取目前的 %@：%@',
 'Could not write %@: %@ — the previous files were kept.': '無法寫入 %@：%@ — 已保留先前的檔案。',
 'Could not write %@: %@ — and putting the previous files back failed too (%@). Check the data folder before going on.': '無法寫入 %@：%@ — 且還原先前的檔案也失敗了（%@）。請先檢查資料夾再繼續。',
+'Could not prepare the undo copy of the current data: %@': '無法準備目前資料的復原副本：%@',
 }
