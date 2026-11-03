@@ -416,3 +416,6 @@
 "On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture" = "Экранная клавиатура: клавиши перемешаны, клавиатурных событий нет, окно просит macOS не включать его в захват экрана";
 "This backup needs Keepit %@ or newer." = "Для этой резервной копии нужен Keepit %@ или новее.";
 "The backup contains invalid data (%@)." = "Резервная копия содержит недопустимые данные (%@).";
+"Backup folder is not available" = "Папка резервных копий недоступна";
+"Could not write the backup: %@" = "Не удалось записать резервную копию: %@";
+"The written backup did not read back correctly" = "Записанная копия не прочиталась обратно без ошибок";

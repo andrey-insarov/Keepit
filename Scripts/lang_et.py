@@ -416,4 +416,7 @@ T = {
 'On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture': 'Ekraaniklaviatuur: segatud klahvid, klaviatuurisündmusi pole, palub macOS-il jätta see ekraanihõivest välja',
 'This backup needs Keepit %@ or newer.': 'See varukoopia vajab Keepitit %@ või uuemat.',
 'The backup contains invalid data (%@).': 'Varukoopia sisaldab vigaseid andmeid (%@).',
+'Backup folder is not available': 'Varukoopiate kaust pole saadaval',
+'Could not write the backup: %@': 'Varukoopiat ei õnnestunud kirjutada: %@',
+'The written backup did not read back correctly': 'Kirjutatud varukoopiat ei õnnestunud õigesti tagasi lugeda',
 }

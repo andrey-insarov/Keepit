@@ -416,3 +416,6 @@
 "On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture" = "Ekran klavyesi: karışık tuşlar, klavye olayı yok, macOS’tan ekran yakalamanın dışında kalmasını ister";
 "This backup needs Keepit %@ or newer." = "Bu yedek, Keepit %@ veya daha yenisini gerektirir.";
 "The backup contains invalid data (%@)." = "Yedek geçersiz veri içeriyor (%@).";
+"Backup folder is not available" = "Yedekleme klasörü kullanılamıyor";
+"Could not write the backup: %@" = "Yedek yazılamadı: %@";
+"The written backup did not read back correctly" = "Yazılan yedek doğru şekilde geri okunamadı";

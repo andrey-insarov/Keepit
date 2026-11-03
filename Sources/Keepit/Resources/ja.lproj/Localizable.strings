@@ -416,3 +416,6 @@
 "On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture" = "スクリーンキーボード：キーはシャッフル、キーボードイベントなし、画面キャプチャからの除外を macOS に要求";
 "This backup needs Keepit %@ or newer." = "このバックアップには Keepit %@ 以降が必要です。";
 "The backup contains invalid data (%@)." = "バックアップに無効なデータが含まれています（%@）。";
+"Backup folder is not available" = "バックアップフォルダを利用できません";
+"Could not write the backup: %@" = "バックアップを書き込めませんでした：%@";
+"The written backup did not read back correctly" = "書き込んだバックアップを正しく読み戻せませんでした";

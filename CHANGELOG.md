@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0.0 — in progress (branch release/3.0)
+
+- **Automatic encrypted backup** to a folder of your choice (docs/BACKUP.md). Stage 3: the engine — quiet period 5 min / deadline 24 h, dirty state that survives relaunch, fingerprint so unchanged content makes no file, forced copy after a password or phrase change, three-stage pipeline (snapshot → seal and verify with the key → write, read back and rename without it; Lock never waits for the folder), rotation of this installation's own series only, retry with backoff. Behind `backupEnabled` / `backupBookmark` in settings.json until the UI lands (stage 4)
+- **`.keepit` format 2** (docs/FORMAT.md) in the new `KeepitCore` target: header authenticated as GCM additional data, `auto` and `manual` modes, HKDF-derived file key, recovery block in the file, `minReader`, streaming decompression limit, model validation on read. Export… writes format 2; Import reads 1 and 2. Reference fixtures from an independent Python implementation
+- Touch ID keychain item is per data directory — a `KEEPIT_DATA_DIR` or self-test run can no longer remove the real installation's key
+- Backup format 1 pinned to 200 000 PBKDF2 rounds regardless of future vault defaults
+- Import no longer applies trust settings (URL automation, trusted apps, Touch ID) from a backup
+
 ## 2.13.1 — 2026-11-03
 
 Follow-ups from the second review pass; the reviewer has no further findings.

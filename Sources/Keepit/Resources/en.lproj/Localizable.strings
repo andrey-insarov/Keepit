@@ -469,3 +469,7 @@
 "This backup needs Keepit %@ or newer." = "This backup needs Keepit %@ or newer.";
 
 "The backup contains invalid data (%@)." = "The backup contains invalid data (%@).";
+
+"Backup folder is not available" = "Backup folder is not available";
+"Could not write the backup: %@" = "Could not write the backup: %@";
+"The written backup did not read back correctly" = "The written backup did not read back correctly";

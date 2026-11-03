@@ -416,4 +416,7 @@ T = {
 'On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture': 'מקלדת על המסך: מקשים מעורבבים, ללא אירועי מקלדת, מבקשת מ‑macOS להישאר מחוץ ללכידת מסך',
 'This backup needs Keepit %@ or newer.': 'גיבוי זה דורש Keepit %@ או חדש יותר.',
 'The backup contains invalid data (%@).': 'הגיבוי מכיל נתונים לא תקינים (%@).',
+'Backup folder is not available': 'תיקיית הגיבוי אינה זמינה',
+'Could not write the backup: %@': 'לא ניתן לכתוב את הגיבוי: %@',
+'The written backup did not read back correctly': 'לא ניתן לקרוא בחזרה את הגיבוי שנכתב',
 }

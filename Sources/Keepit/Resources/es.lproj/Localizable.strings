@@ -416,3 +416,6 @@
 "On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture" = "Teclado en pantalla: teclas mezcladas, sin eventos de teclado, pide a macOS quedar fuera de la captura de pantalla";
 "This backup needs Keepit %@ or newer." = "Esta copia de seguridad necesita Keepit %@ o posterior.";
 "The backup contains invalid data (%@)." = "La copia de seguridad contiene datos no válidos (%@).";
+"Backup folder is not available" = "La carpeta de copias de seguridad no está disponible";
+"Could not write the backup: %@" = "No se pudo escribir la copia de seguridad: %@";
+"The written backup did not read back correctly" = "La copia escrita no se pudo releer correctamente";

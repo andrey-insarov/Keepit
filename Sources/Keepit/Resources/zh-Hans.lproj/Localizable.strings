@@ -416,3 +416,6 @@
 "On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture" = "屏幕键盘：按键随机排列，不产生键盘事件，请求 macOS 将其排除在屏幕捕获之外";
 "This backup needs Keepit %@ or newer." = "此备份需要 Keepit %@ 或更新版本。";
 "The backup contains invalid data (%@)." = "备份包含无效数据（%@）。";
+"Backup folder is not available" = "备份文件夹不可用";
+"Could not write the backup: %@" = "无法写入备份：%@";
+"The written backup did not read back correctly" = "写入的备份无法正确读回";

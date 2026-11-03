@@ -416,3 +416,6 @@
 "On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture" = "Clavier à l’écran : touches mélangées, aucun événement clavier, demande à macOS d’être exclu de la capture d’écran";
 "This backup needs Keepit %@ or newer." = "Cette sauvegarde nécessite Keepit %@ ou plus récent.";
 "The backup contains invalid data (%@)." = "La sauvegarde contient des données non valides (%@).";
+"Backup folder is not available" = "Le dossier de sauvegarde n’est pas disponible";
+"Could not write the backup: %@" = "Impossible d’écrire la sauvegarde : %@";
+"The written backup did not read back correctly" = "La sauvegarde écrite n’a pas pu être relue correctement";

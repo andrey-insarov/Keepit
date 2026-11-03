@@ -427,4 +427,7 @@ T2 = {
 'On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture': ('Екранна клавіатура: клавіші перемішані, подій клавіатури немає, вікно просить macOS не включати його в захоплення екрана', 'لوحة مفاتيح على الشاشة: مفاتيح مبعثرة، بلا أحداث لوحة مفاتيح، تطلب من macOS استثناءها من التقاط الشاشة', 'Tastiera su schermo: tasti mescolati, nessun evento di tastiera, chiede a macOS di restare fuori dalla cattura dello schermo'),
 'This backup needs Keepit %@ or newer.': ('Для цієї резервної копії потрібен Keepit %@ або новіший.', 'تتطلب هذه النسخة الاحتياطية Keepit %@ أو أحدث.', 'Questo backup richiede Keepit %@ o successivo.'),
 'The backup contains invalid data (%@).': ('Резервна копія містить неприпустимі дані (%@).', 'تحتوي النسخة الاحتياطية على بيانات غير صالحة (%@).', 'Il backup contiene dati non validi (%@).'),
+'Backup folder is not available': ('Тека резервних копій недоступна', 'مجلد النسخ الاحتياطي غير متاح', 'La cartella dei backup non è disponibile'),
+'Could not write the backup: %@': ('Не вдалося записати резервну копію: %@', 'تعذّر كتابة النسخة الاحتياطية: %@', 'Impossibile scrivere il backup: %@'),
+'The written backup did not read back correctly': ('Записану копію не вдалося коректно прочитати', 'تعذّرت قراءة النسخة الاحتياطية المكتوبة بشكل صحيح', 'Il backup scritto non è stato riletto correttamente'),
 }

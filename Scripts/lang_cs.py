@@ -416,4 +416,7 @@ T = {
 'On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture': 'Klávesnice na obrazovce: zamíchané klávesy, žádné události klávesnice, žádá macOS o vyloučení ze snímání obrazovky',
 'This backup needs Keepit %@ or newer.': 'Tato záloha vyžaduje Keepit %@ nebo novější.',
 'The backup contains invalid data (%@).': 'Záloha obsahuje neplatná data (%@).',
+'Backup folder is not available': 'Složka záloh není dostupná',
+'Could not write the backup: %@': 'Zálohu se nepodařilo zapsat: %@',
+'The written backup did not read back correctly': 'Zapsanou zálohu se nepodařilo správně přečíst zpět',
 }

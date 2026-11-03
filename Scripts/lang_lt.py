@@ -416,4 +416,7 @@ T = {
 'On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture': 'Ekrano klaviatūra: sumaišyti klavišai, jokių klaviatūros įvykių, prašo macOS neįtraukti į ekrano fiksavimą',
 'This backup needs Keepit %@ or newer.': 'Šiai atsarginei kopijai reikia „Keepit“ %@ arba naujesnės.',
 'The backup contains invalid data (%@).': 'Atsarginėje kopijoje yra netinkamų duomenų (%@).',
+'Backup folder is not available': 'Atsarginių kopijų aplankas nepasiekiamas',
+'Could not write the backup: %@': 'Nepavyko įrašyti atsarginės kopijos: %@',
+'The written backup did not read back correctly': 'Įrašytos atsarginės kopijos nepavyko teisingai perskaityti',
 }

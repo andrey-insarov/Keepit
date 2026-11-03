@@ -68,10 +68,30 @@ enum Backup {
     /// header carries the vault's KDF parameters and recovery block so the same password — or the
     /// phrase — opens it anywhere.
     static func encodeAutomatic(_ payload: Payload, dataKey: SecureKey, vault: Container.Header) throws -> Data {
-        let json = try Storage.encoder.encode(payload)
-        return try dataKey.withKey { k in
+        try encodeAutomatic(json: try Storage.encoder.encode(payload), dataKey: dataKey, vault: vault)
+    }
+
+    static func encodeAutomatic(json: Data, dataKey: SecureKey, vault: Container.Header) throws -> Data {
+        try dataKey.withKey { k in
             try Container.sealV2(payload: json, header: vault, key: KDF.backupKey(dataKey: k))
         }
+    }
+
+    /// Payload JSON from parts encoded at different moments: the template tree is encoded on the main
+    /// thread (it is a mutable reference graph), the history (values) wherever convenient. Splicing
+    /// the three JSON documents avoids decoding the tree again just to re-encode it.
+    static func payloadJSON(history: [ClipItem], templatesJSON: Data, settings: Settings?, created: Date, app: String) throws -> Data {
+        let h = try Storage.encoder.encode(history)
+        let created = try Storage.encoder.encode([created])            // "[\"…\"]" → strip the brackets
+        let appJSON = try Storage.encoder.encode([app])
+        var out = Data("{\"app\":".utf8)
+        out.append(appJSON.dropFirst().dropLast())
+        out.append(Data(",\"created\":".utf8)); out.append(created.dropFirst().dropLast())
+        out.append(Data(",\"history\":".utf8)); out.append(h)
+        if let s = settings { out.append(Data(",\"settings\":".utf8)); out.append(try Storage.encoder.encode(s)) }
+        out.append(Data(",\"templates\":".utf8)); out.append(templatesJSON)
+        out.append(Data(",\"version\":\(payloadVersion)}".utf8))
+        return out
     }
 
     // MARK: Decode
@@ -219,6 +239,23 @@ extension Settings {
         s.trustedURLSenders = trustedURLSenders
         s.biometricUnlock = biometricUnlock
         s.biometricPasswordChange = biometricPasswordChange
+        s.backupEnabled = backupEnabled
+        s.backupBookmark = backupBookmark
+        s.backupSourceID = backupSourceID
+        return s
+    }
+
+    /// What goes into a backup: preferences, not this installation's trust or its own backup setup.
+    var forBackup: Settings {
+        let d = Settings()
+        var s = self
+        s.allowURLCommands = d.allowURLCommands
+        s.trustedURLSenders = d.trustedURLSenders
+        s.biometricUnlock = d.biometricUnlock
+        s.biometricPasswordChange = d.biometricPasswordChange
+        s.backupEnabled = d.backupEnabled
+        s.backupBookmark = nil
+        s.backupSourceID = nil
         return s
     }
 }

@@ -416,3 +416,6 @@
 "On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture" = "لوحة مفاتيح على الشاشة: مفاتيح مبعثرة، بلا أحداث لوحة مفاتيح، تطلب من macOS استثناءها من التقاط الشاشة";
 "This backup needs Keepit %@ or newer." = "تتطلب هذه النسخة الاحتياطية Keepit %@ أو أحدث.";
 "The backup contains invalid data (%@)." = "تحتوي النسخة الاحتياطية على بيانات غير صالحة (%@).";
+"Backup folder is not available" = "مجلد النسخ الاحتياطي غير متاح";
+"Could not write the backup: %@" = "تعذّر كتابة النسخة الاحتياطية: %@";
+"The written backup did not read back correctly" = "تعذّرت قراءة النسخة الاحتياطية المكتوبة بشكل صحيح";

@@ -416,4 +416,7 @@ T = {
 'On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture': 'Schermtoetsenbord: geschudde toetsen, geen toetsenbordgebeurtenissen, vraagt macOS om buiten schermopname te blijven',
 'This backup needs Keepit %@ or newer.': 'Deze back-up vereist Keepit %@ of nieuwer.',
 'The backup contains invalid data (%@).': 'De back-up bevat ongeldige gegevens (%@).',
+'Backup folder is not available': 'Back-upmap is niet beschikbaar',
+'Could not write the backup: %@': 'Kon de back-up niet schrijven: %@',
+'The written backup did not read back correctly': 'De geschreven back-up kon niet correct worden teruggelezen',
 }
