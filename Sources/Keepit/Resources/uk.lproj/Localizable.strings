@@ -415,3 +415,4 @@
 "%@\n\nAlways Allow adds this app to the trusted list (Settings → Advanced → Automation)." = "%@\n\n«Завжди дозволяти» додасть цей застосунок до списку довірених (Параметри → Advanced → Automation).";
 "On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture" = "Екранна клавіатура: клавіші перемішані, подій клавіатури немає, вікно просить macOS не включати його в захоплення екрана";
 "This backup needs Keepit %@ or newer." = "Для цієї резервної копії потрібен Keepit %@ або новіший.";
+"The backup contains invalid data (%@)." = "Резервна копія містить неприпустимі дані (%@).";

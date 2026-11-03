@@ -18,6 +18,10 @@ enum Backup {
     static let payloadVersion = 1
     /// Lowest Keepit that can read what this version writes.
     static let minReader = "3.0"
+    /// The format this build can read, compared with a file's `minReader`. Deliberately not
+    /// `AppInfo.version` (the bundle's string — the test host's in XCTest) and kept equal to
+    /// `VERSION` by a test, so a packaged build always reads its own exports.
+    static let readerVersion = "3.0.0"
     /// Format 1 derives the key with exactly this many PBKDF2 rounds (docs/FORMAT.md).
     static let v1Rounds: UInt32 = Container.v1Rounds
 
@@ -33,6 +37,8 @@ enum Backup {
     enum Failure: Error, Equatable {
         case notABackup, unsupportedVersion(UInt8), needsNewerKeepit(String), unsupportedPayloadVersion(Int)
         case tooLarge, wrongPassword, corrupt
+        /// The container opened but the content breaks a model rule (docs/FORMAT.md, `Limits`).
+        case invalidContent(String)
     }
 
     static func suggestedFileName(date: Date = Date()) -> String {
@@ -73,7 +79,7 @@ enum Backup {
     /// What can be known about a file before it is opened.
     static func inspect(_ data: Data) throws -> Container.Inspection {
         do {
-            return try Container.inspect(data, readerVersion: AppInfo.version, maxBytes: Limits.dataFileMaxBytes)
+            return try Container.inspect(data, readerVersion: readerVersion, maxBytes: Limits.dataFileMaxBytes)
         } catch let e as Container.Failure {
             throw map(e)
         }
@@ -129,7 +135,64 @@ enum Backup {
         let payload: Payload
         do { payload = try Storage.decoder.decode(Payload.self, from: json) } catch { throw Failure.corrupt }
         guard payload.version == payloadVersion else { throw Failure.unsupportedPayloadVersion(payload.version) }
+        try validate(payload)
         return payload
+    }
+
+    // MARK: Validation
+
+    /// A backup is untrusted input: every rule the app applies when it records or creates data is
+    /// applied here before anything is returned, so nothing out of bounds can enter the store.
+    static func validate(_ p: Payload) throws {
+        guard p.history.count <= Limits.historyMaxCeiling * 2 else { throw Failure.invalidContent("too many history items") }
+        var ids = Set<UUID>()
+        for item in p.history {
+            try validate(item, where: "history")
+            guard ids.insert(item.id).inserted else { throw Failure.invalidContent("duplicate history id") }
+        }
+        var count = 0, hotKeys = 0
+        var nodeIDs = Set<UUID>()
+        try validate(p.templates, depth: 0, count: &count, hotKeys: &hotKeys, ids: &nodeIDs)
+        // Settings carry no rejectable content: they are clamped when applied.
+    }
+
+    private static func validate(_ item: ClipItem, where place: String) throws {
+        guard !item.formats.isEmpty else { throw Failure.invalidContent("\(place): item without formats") }
+        let d = Settings()
+        for (uti, data) in item.formats {
+            guard !uti.isEmpty, uti.count <= 255 else { throw Failure.invalidContent("\(place): bad format name") }
+            switch uti {
+            case ClipItem.Format.text:
+                guard data.count <= d.maxTextBytes else { throw Failure.invalidContent("\(place): text too large") }
+            case ClipItem.Format.rtf, ClipItem.Format.html:
+                guard data.count <= d.maxTextBytes * 4 else { throw Failure.invalidContent("\(place): rich text too large") }
+            case ClipItem.Format.png:
+                guard data.count <= d.maxImageBytes, ClipItem.pixelCountOK(data) else { throw Failure.invalidContent("\(place): image too large") }
+            case ClipItem.Format.files:
+                guard data.count <= d.maxTextBytes, let paths = try? JSONDecoder().decode([String].self, from: data),
+                      paths.count <= d.maxFileListEntries else { throw Failure.invalidContent("\(place): bad file list") }
+            default:
+                guard data.count <= d.maxImageBytes else { throw Failure.invalidContent("\(place): format too large") }
+            }
+        }
+        if let app = item.sourceApp, app.count > Limits.bundleIdMaxChars { throw Failure.invalidContent("\(place): bad source app") }
+        let primary = item.formats[ClipItem.Format.files] ?? item.formats[ClipItem.Format.text] ?? item.formats[ClipItem.Format.png]
+            ?? item.formats.sorted { $0.key < $1.key }.first!.value
+        guard item.contentHash == ClipItem.hash(of: primary) else { throw Failure.invalidContent("\(place): contentHash does not match") }
+    }
+
+    private static func validate(_ node: TemplateNode, depth: Int, count: inout Int, hotKeys: inout Int, ids: inout Set<UUID>) throws {
+        count += 1
+        guard count <= Limits.templateMaxCount else { throw Failure.invalidContent("too many templates") }
+        guard depth <= Limits.templateMaxDepth else { throw Failure.invalidContent("template tree too deep") }
+        guard node.name.count <= Limits.templateNameMaxChars else { throw Failure.invalidContent("template name too long") }
+        guard ids.insert(node.id).inserted else { throw Failure.invalidContent("duplicate template id") }
+        if let c = node.clip { try validate(c, where: "templates") }
+        if node.hotKey != nil {
+            hotKeys += 1
+            guard hotKeys <= Limits.templateHotKeysMax else { throw Failure.invalidContent("too many template hot keys") }
+        }
+        for child in node.children { try validate(child, depth: depth + 1, count: &count, hotKeys: &hotKeys, ids: &ids) }
     }
 
     private static func map(_ e: Container.Failure) -> Failure {

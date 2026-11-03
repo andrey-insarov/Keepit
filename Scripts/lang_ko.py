@@ -415,4 +415,5 @@ T = {
 '%@\n\nAlways Allow adds this app to the trusted list (Settings → Advanced → Automation).': '%@\n\n‘항상 허용’은 이 앱을 신뢰 목록에 추가합니다(설정 → 고급 → 자동화).',
 'On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture': '화면 키보드: 키 배열 무작위, 키보드 이벤트 없음, macOS에 화면 캡처 제외를 요청',
 'This backup needs Keepit %@ or newer.': '이 백업에는 Keepit %@ 이상이 필요합니다.',
+'The backup contains invalid data (%@).': '백업에 잘못된 데이터가 있습니다(%@).',
 }

@@ -467,3 +467,5 @@
 "On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture" = "On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture";
 
 "This backup needs Keepit %@ or newer." = "This backup needs Keepit %@ or newer.";
+
+"The backup contains invalid data (%@)." = "The backup contains invalid data (%@).";

@@ -415,3 +415,4 @@
 "%@\n\nAlways Allow adds this app to the trusted list (Settings → Advanced → Automation)." = "%@\n\n「永遠允許」會將此 App 加入信任清單（設定 → 進階 → 自動化）。";
 "On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture" = "螢幕鍵盤：按鍵隨機排列，不產生鍵盤事件，請求 macOS 將其排除在螢幕擷取之外";
 "This backup needs Keepit %@ or newer." = "此備份需要 Keepit %@ 或更新版本。";
+"The backup contains invalid data (%@)." = "備份包含無效資料（%@）。";

@@ -415,4 +415,5 @@ T = {
 '%@\n\nAlways Allow adds this app to the trusted list (Settings → Advanced → Automation).': '%@\n\n“Vienmēr atļaut” pievieno šo lietotni uzticamo sarakstam (Iestatījumi → Papildu → Automatizācija).',
 'On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture': 'Ekrāna tastatūra: sajaukti taustiņi, bez tastatūras notikumiem, lūdz macOS izslēgt no ekrāna tveršanas',
 'This backup needs Keepit %@ or newer.': 'Šai dublējumkopijai nepieciešams Keepit %@ vai jaunāks.',
+'The backup contains invalid data (%@).': 'Dublējumkopijā ir nederīgi dati (%@).',
 }

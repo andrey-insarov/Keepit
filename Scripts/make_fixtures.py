@@ -217,6 +217,12 @@ def main():
     # v1-future-format: format byte 9
     write("v1-future-format", MAGIC + b"\x09" + full[9:], {"format": 9, "password": pw, "outcome": "unsupportedVersion"})
 
+    # v1-unsealed: the body is plain LZFSE(JSON) — no KEEPITENC1, no nonce, no tag. Must be refused,
+    # not imported "successfully" with any password (review of 6a0e532).
+    plain_js = json.dumps(payload([clip(1, {TEXT: "not encrypted".encode()})], root()), sort_keys=True, separators=(",", ":")).encode()
+    write("v1-unsealed", MAGIC + b"\x01" + salt_for("v1-unsealed") + lzfse.compress(plain_js),
+          {"format": 1, "password": pw, "outcome": "corrupt"})
+
     # ---- format 2 ----
     v2_payload = payload([clip(30, {TEXT: "v2 text".encode()}), clip(31, rich)], root([node(40, "Sig", clip(41, {TEXT: "-- Bob".encode()}))]))
     v2_expect = {"history": 2, "texts": ["v2 text", "Hello, world"], "templateNodes": 2,
@@ -279,6 +285,17 @@ def main():
     name = "v2-bad-header-length"
     good = seal_v2(v2_payload, v2_header("manual", 200_000, salt_for("v2-manual")), key, nonce_for(name))
     write(name, good[:9] + struct.pack(">I", 10_000_000) + good[13:], {"format": 2, "password": pw, "outcome": "corrupt"})
+
+    # v2-invalid-content: container and payload version fine, a template name of 201 characters
+    name = "v2-invalid-content"
+    bad = payload([], root([node(60, "n" * 201, clip(61, {TEXT: "x".encode()}))]))
+    write(name, seal_v2(bad, v2_header("manual", 200_000, salt_for("v2-manual")), key, nonce_for(name)),
+          {"format": 2, "password": pw, "outcome": "invalidContent"})
+    # v2-bad-hash: contentHash that does not match the primary format
+    name = "v2-bad-hash"
+    item = clip(62, {TEXT: "hash me".encode()}); item["contentHash"] = "0" * 64
+    write(name, seal_v2(payload([item], root()), v2_header("manual", 200_000, salt_for("v2-manual")), key, nonce_for(name)),
+          {"format": 2, "password": pw, "outcome": "invalidContent"})
 
     # v2-payload-future: container fine, payload.version = 999
     name = "v2-payload-future"

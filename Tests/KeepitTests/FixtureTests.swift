@@ -46,7 +46,7 @@ final class FixtureTests: XCTestCase {
     private func fixtures() throws -> [(name: String, data: Data, side: Sidecar)] {
         let files = try FileManager.default.contentsOfDirectory(at: Self.dir, includingPropertiesForKeys: nil)
             .filter { $0.pathExtension == "keepit" }.sorted { $0.lastPathComponent < $1.lastPathComponent }
-        XCTAssertGreaterThanOrEqual(files.count, 21, "fixtures missing — run Scripts/make_fixtures.py")
+        XCTAssertGreaterThanOrEqual(files.count, 24, "fixtures missing — run Scripts/make_fixtures.py")
         return try files.map { url in
             let side = try JSONDecoder().decode(Sidecar.self, from: Data(contentsOf: url.deletingPathExtension().appendingPathExtension("json")))
             return (url.deletingPathExtension().lastPathComponent, try Data(contentsOf: url), side)
@@ -123,6 +123,10 @@ final class FixtureTests: XCTestCase {
                 XCTAssertThrowsError(try Backup.decode(f.data, password: pw), f.name) { XCTAssertEqual($0 as? Backup.Failure, .needsNewerKeepit(f.side.minReader ?? ""), f.name) }
             case "corrupt":
                 XCTAssertThrowsError(try Backup.decode(f.data, password: pw), f.name) { XCTAssertEqual($0 as? Backup.Failure, .corrupt, f.name) }
+            case "invalidContent":
+                XCTAssertThrowsError(try Backup.decode(f.data, password: pw), f.name) {
+                    if case .invalidContent = ($0 as? Backup.Failure) {} else { XCTFail("\(f.name): \($0)") }
+                }
             case "unsupportedPayloadVersion":
                 XCTAssertThrowsError(try Backup.decode(f.data, password: pw), f.name) { XCTAssertEqual($0 as? Backup.Failure, .unsupportedPayloadVersion(f.side.payloadVersion ?? 0), f.name) }
             case "notABackup":

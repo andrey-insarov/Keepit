@@ -415,3 +415,4 @@
 "%@\n\nAlways Allow adds this app to the trusted list (Settings → Advanced → Automation)." = "%@\n\n„Vždy povolit“ přidá tuto aplikaci na důvěryhodný seznam (Nastavení → Pokročilé → Automatizace).";
 "On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture" = "Klávesnice na obrazovce: zamíchané klávesy, žádné události klávesnice, žádá macOS o vyloučení ze snímání obrazovky";
 "This backup needs Keepit %@ or newer." = "Tato záloha vyžaduje Keepit %@ nebo novější.";
+"The backup contains invalid data (%@)." = "Záloha obsahuje neplatná data (%@).";

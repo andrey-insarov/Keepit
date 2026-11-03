@@ -174,7 +174,9 @@ public enum Container {
     public static func openV1(_ data: Data, key: SymmetricKey, limit: Int) throws -> Data {
         let sealed = data[(data.startIndex + magic.count + 1 + saltBytes)...]
         let packed: Data
-        do { packed = try SealedBlob.open(Data(sealed), key: key) } catch { throw Failure.wrongKeyOrCorrupt }
+        do { packed = try SealedBlob.open(Data(sealed), key: key) }
+        catch SealedBlob.Failure.notSealed { throw Failure.corrupt }        // plaintext body: not a backup Keepit wrote
+        catch { throw Failure.wrongKeyOrCorrupt }
         return try decompress(packed, limit: limit)
     }
 

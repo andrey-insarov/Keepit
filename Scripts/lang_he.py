@@ -415,4 +415,5 @@ T = {
 '%@\n\nAlways Allow adds this app to the trusted list (Settings → Advanced → Automation).': '%@\n\n„אפשר תמיד“ מוסיף אפליקציה זו לרשימת המהימנות (הגדרות ← מתקדם ← אוטומציה).',
 'On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture': 'מקלדת על המסך: מקשים מעורבבים, ללא אירועי מקלדת, מבקשת מ‑macOS להישאר מחוץ ללכידת מסך',
 'This backup needs Keepit %@ or newer.': 'גיבוי זה דורש Keepit %@ או חדש יותר.',
+'The backup contains invalid data (%@).': 'הגיבוי מכיל נתונים לא תקינים (%@).',
 }

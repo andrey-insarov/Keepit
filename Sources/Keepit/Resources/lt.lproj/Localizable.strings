@@ -415,3 +415,4 @@
 "%@\n\nAlways Allow adds this app to the trusted list (Settings → Advanced → Automation)." = "%@\n\n„Visada leisti“ įtraukia šią programą į patikimų sąrašą (Nustatymai → Išplėstiniai → Automatizavimas).";
 "On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture" = "Ekrano klaviatūra: sumaišyti klavišai, jokių klaviatūros įvykių, prašo macOS neįtraukti į ekrano fiksavimą";
 "This backup needs Keepit %@ or newer." = "Šiai atsarginei kopijai reikia „Keepit“ %@ arba naujesnės.";
+"The backup contains invalid data (%@)." = "Atsarginėje kopijoje yra netinkamų duomenų (%@).";

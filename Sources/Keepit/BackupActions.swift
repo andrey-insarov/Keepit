@@ -10,6 +10,7 @@ extension Backup.Failure: LocalizedError {
         case .tooLarge: return L("The backup file is too large.")
         case .wrongPassword: return L("Wrong password.")
         case .corrupt: return L("The backup file is damaged.")
+        case .invalidContent(let what): return LF("The backup contains invalid data (%@).", what)
         }
     }
 }

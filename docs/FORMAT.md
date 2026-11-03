@@ -57,7 +57,8 @@ Reader rules:
 6. Decode the payload (next section).
 
 **What the 2.x reader actually does** (Keepit 2.0 – 2.13, `Backup.decode`), for the record: rules
-1–4 as above; the decompressed size is checked *after* full decompression, not during it; the
+1–4 as above, except that a body without the `KEEPITENC1` prefix was returned as plaintext (the
+3.0 reader rejects it); the decompressed size is checked *after* full decompression, not during it; the
 payload's `version` field is decoded but not enforced; `Import…` applies the restored `settings`
 object whole, including the trust-related keys listed under *Settings*. The 3.0 reader (stage 2 of
 the 3.0 plan) implements the rules as written here; files written by 2.x are unaffected either way.
@@ -141,6 +142,12 @@ Encoding: JSON, UTF-8. Dates are ISO 8601 (`yyyy-MM-ddTHH:mm:ssZ`, UTC, as writt
 `JSONEncoder.dateEncodingStrategy = .iso8601`). Binary data is base64 (standard alphabet, padded).
 Keys are sorted; whitespace is insignificant. The payload must stay below 512 MiB decompressed.
 
+**Validation (3.0 reader).** After decoding, before anything is returned: every item has at least
+one format; text ≤ 2 MiB, RTF/HTML ≤ 8 MiB, PNG ≤ 10 MiB and ≤ 40 megapixels by header, file list
+≤ 1 000 entries; `sourceApp` ≤ 255 characters; `contentHash` matches the rule above; ids are unique;
+templates ≤ 5 000 nodes, ≤ 16 deep, names ≤ 200 characters, ≤ 50 hot keys. A violation is
+`invalidContent`, naming the rule. Settings are clamped on apply, not rejected.
+
 **Compatibility rules.** A reader ignores fields it does not know. A writer must not change the
 meaning or type of an existing field; new fields are optional with a defined default. Breaking
 changes bump `version`, and a reader rejects a payload version it does not know (3.0 reader; the
@@ -159,8 +166,8 @@ image pixel caps) exactly as they do for live data — a backup is untrusted inp
 
 Known UTIs: `public.utf8-plain-text` (UTF-8 text), `public.rtf`, `public.html`, `public.png`,
 `com.it.keep.file-list` (JSON array of absolute paths, UTF-8). Readers keep unknown UTIs as opaque
-data. Primary format for hashing: file list, else text, else PNG, else the first format in
-dictionary order.
+data. Primary format for hashing: file list, else text, else PNG, else the format whose UTI sorts
+first by byte value.
 
 Kind is derived, not stored: file list → `files`; PNG present and plain text absent or shorter than 200 characters → `image` (browsers add a URL or alt text next to a copied picture); otherwise `text`.
 
@@ -208,6 +215,7 @@ ones are never modified.
 | `v1-truncated.keepit` | 1 | `corrupt` (or `wrongPassword` — both acceptable) |
 | `v1-bad-magic.keepit` | — | `notABackup` |
 | `v1-future-format.keepit` | 9 | `unsupportedVersion` |
+| `v1-unsealed.keepit` | 1 | body is plain LZFSE(JSON) without the sealed blob → `corrupt`; never imported |
 | `v2-manual.keepit` | 2 | opens with the file password; mode `manual`, no recovery block |
 | `v2-auto.keepit` | 2 | opens with the vault password, with the data key, and with the recovery entropy; label `Fixture Mac` |
 | `v2-auto-no-recovery.keepit` | 2 | opens with the vault password and the data key; no recovery block |
@@ -218,6 +226,8 @@ ones are never modified.
 | `v2-unknown-kdf.keepit` | 2 | `kdf` argon2id → `corrupt`, before any key derivation |
 | `v2-bad-header-length.keepit` | 2 | length field beyond the file → `corrupt` |
 | `v2-payload-future.keepit` | 2 | container opens, `payload.version` 999 → `unsupportedPayloadVersion` |
+| `v2-invalid-content.keepit` | 2 | opens, but a template name has 201 characters → `invalidContent` |
+| `v2-bad-hash.keepit` | 2 | opens, but an item's `contentHash` does not match its content → `invalidContent` |
 
 ## Change log
 

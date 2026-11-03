@@ -69,8 +69,12 @@ public enum SealedBlob {
         data.count > magic.count && data.prefix(magic.count) == magic
     }
 
+    public enum Failure: Error, Equatable { case notSealed }
+
+    /// Opens a sealed blob. Input without the magic (or too short to hold nonce and tag) is an
+    /// error, never returned as plaintext: an archive that was not authenticated must not import.
     public static func open(_ data: Data, key: SymmetricKey) throws -> Data {
-        guard isSealed(data) else { return data }
+        guard isSealed(data), data.count >= magic.count + 12 + 16 else { throw Failure.notSealed }
         let box = try AES.GCM.SealedBox(combined: data.dropFirst(magic.count))
         return try AES.GCM.open(box, using: key)
     }

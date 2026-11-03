@@ -110,4 +110,49 @@ final class CoreTests: XCTestCase {
         XCTAssertEqual(merged.trustedURLSenders, [])
         XCTAssertTrue(merged.biometricUnlock)
     }
+
+    func testUnsealedBodyIsRefused() throws {
+        // "KEEPITBK" | 1 | salt | LZFSE(json) — no KEEPITENC1, no nonce, no tag.
+        let json = Data("{\"version\":1,\"history\":[],\"templates\":{\"id\":\"00000000-0000-0000-0000-000000000000\",\"name\":\"T\",\"children\":[]},\"created\":\"2026-01-01T00:00:00Z\",\"app\":\"x\"}".utf8)
+        let file = Container.magic + Data([1]) + Data(repeating: 9, count: 16) + (try LZFSE.compress(json))
+        XCTAssertThrowsError(try Backup.decode(file, password: .of("anything"))) { XCTAssertEqual($0 as? Backup.Failure, .corrupt) }
+        XCTAssertThrowsError(try SealedBlob.open(Data("plain".utf8), key: SymmetricKey(size: .bits256))) {
+            XCTAssertEqual($0 as? SealedBlob.Failure, .notSealed)
+        }
+    }
+
+    func testContentIsValidatedBeforeReturn() throws {
+        func file(_ p: Backup.Payload) throws -> Data { try Backup.encode(p, password: .of("p")) }
+        func expectInvalid(_ p: Backup.Payload, _ what: String, line: UInt = #line) {
+            XCTAssertThrowsError(try Backup.decode(try file(p), password: .of("p")), what, line: line) {
+                if case .invalidContent = ($0 as? Backup.Failure) {} else { XCTFail("\(what): \($0)", line: line) }
+            }
+        }
+        let root = { TemplateNode(name: "Template") }
+        // template name over the limit
+        expectInvalid(Backup.Payload(history: [], templates: TemplateNode(name: "Template", children: [TemplateNode(name: String(repeating: "n", count: Limits.templateNameMaxChars + 1), text: "t")]), settings: nil), "long name")
+        // item without formats
+        expectInvalid(Backup.Payload(history: [ClipItem(id: UUID(), date: Date(), formats: [:], sourceApp: nil, contentHash: "")], templates: root(), settings: nil), "no formats")
+        // wrong contentHash
+        expectInvalid(Backup.Payload(history: [ClipItem(id: UUID(), date: Date(), formats: [ClipItem.Format.text: Data("a".utf8)], sourceApp: nil, contentHash: String(repeating: "0", count: 64))], templates: root(), settings: nil), "bad hash")
+        // duplicate ids
+        let dup = ClipItem.text("same")
+        expectInvalid(Backup.Payload(history: [dup, dup], templates: root(), settings: nil), "duplicate id")
+        // too deep
+        var deep = TemplateNode(name: "leaf", text: "x")
+        for i in 0 ..< (Limits.templateMaxDepth + 1) { deep = TemplateNode(name: "d\(i)", children: [deep]) }
+        expectInvalid(Backup.Payload(history: [], templates: TemplateNode(name: "Template", children: [deep]), settings: nil), "too deep")
+        // a good one still opens
+        XCTAssertNoThrow(try Backup.decode(try file(Backup.Payload(history: [.text("ok")], templates: root(), settings: nil)), password: .of("p")))
+    }
+
+    func testReaderVersionMatchesVERSIONFile() throws {
+        let versionFile = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().appendingPathComponent("VERSION")
+        let v = try String(contentsOf: versionFile, encoding: .utf8).trimmingCharacters(in: .whitespacesAndNewlines)
+        XCTAssertEqual(Backup.readerVersion, v, "Backup.readerVersion must be bumped with VERSION")
+        XCTAssertFalse(Container.versionLess(Backup.readerVersion, than: Backup.minReader), "this build must read its own exports")
+        // What Export… writes must open with this reader — without going through the test host's bundle version.
+        let f = try Backup.encode(Backup.Payload(history: [], templates: TemplateNode(name: "T"), settings: nil), password: .of("p"))
+        XCTAssertNoThrow(try Backup.inspect(f))
+    }
 }

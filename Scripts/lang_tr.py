@@ -415,4 +415,5 @@ T = {
 '%@\n\nAlways Allow adds this app to the trusted list (Settings → Advanced → Automation).': '%@\n\n“Her zaman izin ver” bu uygulamayı güvenilenler listesine ekler (Ayarlar → Gelişmiş → Otomasyon).',
 'On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture': 'Ekran klavyesi: karışık tuşlar, klavye olayı yok, macOS’tan ekran yakalamanın dışında kalmasını ister',
 'This backup needs Keepit %@ or newer.': 'Bu yedek, Keepit %@ veya daha yenisini gerektirir.',
+'The backup contains invalid data (%@).': 'Yedek geçersiz veri içeriyor (%@).',
 }

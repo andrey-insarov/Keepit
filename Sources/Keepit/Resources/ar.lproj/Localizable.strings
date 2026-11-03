@@ -415,3 +415,4 @@
 "%@\n\nAlways Allow adds this app to the trusted list (Settings → Advanced → Automation)." = "%@\n\n«السماح دائمًا» يضيف هذا التطبيق إلى قائمة الموثوقين (الإعدادات ← متقدم ← الأتمتة).";
 "On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture" = "لوحة مفاتيح على الشاشة: مفاتيح مبعثرة، بلا أحداث لوحة مفاتيح، تطلب من macOS استثناءها من التقاط الشاشة";
 "This backup needs Keepit %@ or newer." = "تتطلب هذه النسخة الاحتياطية Keepit %@ أو أحدث.";
+"The backup contains invalid data (%@)." = "تحتوي النسخة الاحتياطية على بيانات غير صالحة (%@).";

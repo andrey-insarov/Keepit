@@ -415,4 +415,5 @@ T = {
 '%@\n\nAlways Allow adds this app to the trusted list (Settings → Advanced → Automation).': '%@\n\n‘Altijd toestaan’ zet deze app op de vertrouwde lijst (Instellingen → Geavanceerd → Automatisering).',
 'On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture': 'Schermtoetsenbord: geschudde toetsen, geen toetsenbordgebeurtenissen, vraagt macOS om buiten schermopname te blijven',
 'This backup needs Keepit %@ or newer.': 'Deze back-up vereist Keepit %@ of nieuwer.',
+'The backup contains invalid data (%@).': 'De back-up bevat ongeldige gegevens (%@).',
 }

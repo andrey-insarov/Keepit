@@ -415,4 +415,5 @@ T = {
 '%@\n\nAlways Allow adds this app to the trusted list (Settings → Advanced → Automation).': '%@\n\n“Sempre permitir” adiciona este app à lista confiável (Ajustes → Avançado → Automação).',
 'On-screen keyboard: shuffled keys, no keyboard events, asks macOS to stay out of screen capture': 'Teclado na tela: teclas embaralhadas, sem eventos de teclado, pede ao macOS para ficar fora da captura de tela',
 'This backup needs Keepit %@ or newer.': 'Este backup requer o Keepit %@ ou mais recente.',
+'The backup contains invalid data (%@).': 'O backup contém dados inválidos (%@).',
 }
