@@ -337,7 +337,8 @@ final class RestorePlanTests: XCTestCase {
         let done = expectation(description: "both waits returned")
         DispatchQueue.main.async {
             // Something stops the panel while the seal is still blocked (Lock, say).
-            Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in NSApp.stopModal() }
+            // Timers must be in the common modes to fire inside a modal loop.
+            RunLoop.main.add(Timer(timeInterval: 0.3, repeats: false) { _ in NSApp.stopModal() }, forMode: .common)
             early = AppDelegate.sealAndWriteOffMain(message: "test", seal: {
                 gate.wait()
                 sealedWith = own.withBytes { Data($0) }     // still the chosen password, not zeroes
@@ -349,7 +350,7 @@ final class RestorePlanTests: XCTestCase {
             let next = NSPanel(contentRect: NSRect(x: 0, y: 0, width: 100, height: 40), styleMask: [.titled], backing: .buffered, defer: false)
             next.isReleasedWhenClosed = false
             gate.signal()
-            Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in NSApp.stopModal(withCode: .OK) }
+            RunLoop.main.add(Timer(timeInterval: 1.0, repeats: false) { _ in NSApp.stopModal(withCode: .OK) }, forMode: .common)
             second = NSApp.runModal(for: next)
             next.orderOut(nil)
             done.fulfill()
