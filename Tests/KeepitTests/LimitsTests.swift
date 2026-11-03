@@ -54,7 +54,8 @@ final class LimitsTests: XCTestCase {
         XCTAssertTrue(store.canInsert(shorter, under: parent))         // 13 + 1 + 2 = 16
         parent.insert(shorter)
         XCTAssertNoThrow(try Backup.validate(Backup.Payload(history: [], templates: store.root, settings: nil)))
-        XCTAssertFalse(store.canMove(store.root.children[0], under: parent))   // L0 into its own descendant: never
+        var l0 = parent; while l0.depth > 1 { l0 = l0.parent! }                // the default tree has its own first child
+        XCTAssertFalse(store.canMove(l0, under: parent))                        // L0 into its own descendant: never
         XCTAssertTrue(store.canMove(parent, under: tall.children[0]))          // 2 + 1 + height(parent) = 6: fine
     }
 
