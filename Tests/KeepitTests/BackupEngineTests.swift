@@ -168,11 +168,6 @@ final class BackupEngineTests: XCTestCase {
 
     /// Lock must not wait for a slow destination: the key is wiped while the write is still going.
     func testLockDoesNotWaitForTheWrite() {
-        final class Slow: BackupDestination {
-            let url: URL; init(_ u: URL) { url = u }
-            var displayPath: String { url.path }
-            func withFolder<T>(_ body: (URL) throws -> T) throws -> T { Thread.sleep(forTimeInterval: 2); return try body(url) }
-        }
         engine.destination = Slow(folder)
         history.add(.text("x")); clock.addTimeInterval(BackupEngine.quietInterval)
         let done = expectation(description: "backup")
@@ -185,6 +180,88 @@ final class BackupEngineTests: XCTestCase {
         wait(for: [done], timeout: 30)
         XCTAssertNoThrow(try result!.get(), "the bytes were sealed and verified before the key went away")
         XCTAssertEqual(ownFiles().count, 1)
+    }
+
+    final class Slow: BackupDestination {
+        let url: URL; let delay: TimeInterval
+        init(_ u: URL, delay: TimeInterval = 2) { url = u; self.delay = delay }
+        var displayPath: String { url.path }
+        func withFolder<T>(_ body: (URL) throws -> T) throws -> T { Thread.sleep(forTimeInterval: delay); return try body(url) }
+    }
+
+    /// Changes made while a job is writing belong to the next backup: the old job may not clear them.
+    func testChangesDuringWriteStayDirtyAndForceIsNotSwallowed() throws {
+        engine.destination = Slow(folder)
+        history.add(.text("first")); clock.addTimeInterval(BackupEngine.quietInterval)
+        let done = expectation(description: "backup")
+        engine.runIfDue { _ in done.fulfill() }
+        Thread.sleep(forTimeInterval: 0.3)                             // seal is done, write is sleeping
+        history.add(.text("second"))                                   // noteChange during write
+        engine.forceNext()                                             // e.g. password changed meanwhile
+        wait(for: [done], timeout: 30)
+        XCTAssertEqual(ownFiles().count, 1)
+        let file = try Data(contentsOf: folder.appendingPathComponent(ownFiles()[0]))
+        XCTAssertEqual(try Backup.decode(file, password: .of("vault pw")).history.count, 1, "the snapshot had one item")
+        XCTAssertTrue(engine.state.dirty, "the second item and the force are still pending")
+        XCTAssertNil(engine.state.lastFingerprint, "the forced copy has not been written yet")
+        XCTAssertNotNil(engine.state.firstDirtyAt)
+        clock.addTimeInterval(BackupEngine.quietInterval)
+        XCTAssertTrue(engine.isDue())
+        XCTAssertNoThrow(try run().get())
+        XCTAssertEqual(ownFiles().count, 2)
+        XCTAssertFalse(engine.state.dirty)
+    }
+
+    /// A job that started for the old folder must not update the state of the new one.
+    func testResultOfAnOldGenerationIsIgnored() throws {
+        engine.destination = Slow(folder)
+        history.add(.text("x")); clock.addTimeInterval(BackupEngine.quietInterval)
+        let done = expectation(description: "backup")
+        engine.runIfDue { _ in done.fulfill() }
+        Thread.sleep(forTimeInterval: 0.3)
+        let other = folder.appendingPathComponent("other", isDirectory: true)
+        try FileManager.default.createDirectory(at: other, withIntermediateDirectories: true)
+        engine.destination = PlainFolderDestination(other)             // Choose… another folder
+        engine.resetRegistry()
+        wait(for: [done], timeout: 30)
+        XCTAssertEqual(ownFiles().count, 1, "the old job still finished its write")
+        XCTAssertEqual(engine.state.records.count, 0, "but the new folder's registry does not list it")
+        XCTAssertNil(engine.state.lastSuccess)
+    }
+
+    func testRotationRunsOffMainAndKeepsRecordsItCouldNotDelete() throws {
+        engine.keepCount = 1
+        history.add(.text("a")); clock.addTimeInterval(BackupEngine.quietInterval)
+        XCTAssertNoThrow(try run().get())
+        let first = folder.appendingPathComponent(ownFiles()[0])
+        try FileManager.default.setAttributes([.immutable: true], ofItemAt: first)
+        defer { try? FileManager.default.setAttributes([.immutable: false], ofItemAt: first) }
+        history.add(.text("b")); clock.addTimeInterval(BackupEngine.quietInterval)
+        XCTAssertNoThrow(try run().get())
+        XCTAssertEqual(ownFiles().count, 2, "the immutable file could not be removed")
+        XCTAssertEqual(engine.state.records.count, 2, "and stays in the registry for the next rotation")
+        try FileManager.default.setAttributes([.immutable: false], ofItemAt: first)
+        history.add(.text("c")); clock.addTimeInterval(BackupEngine.quietInterval)
+        XCTAssertNoThrow(try run().get())
+        XCTAssertEqual(ownFiles().count, 1)
+        XCTAssertEqual(engine.state.records.count, 1)
+        // With keepCount = 1 every run rotates; Lock must still not wait for a slow folder.
+        engine.destination = Slow(folder)
+        history.add(.text("d")); clock.addTimeInterval(BackupEngine.quietInterval)
+        let done = expectation(description: "backup")
+        engine.runIfDue { _ in done.fulfill() }
+        let t0 = Date()
+        Storage.clearKey()
+        XCTAssertLessThan(Date().timeIntervalSince(t0), 1.0, "rotation is on the backup queue, not main/ioQueue")
+        wait(for: [done], timeout: 30)
+    }
+
+    func testReadBackMismatchLeavesNoPartAndNoFile() throws {
+        try Data("old".utf8).write(to: folder.appendingPathComponent("Keepit-old-src-a-1.keepit"))
+        XCTAssertThrowsError(try BackupEngine.write(Data("bytes".utf8), sha: "not the hash", name: "Keepit-new.keepit", to: PlainFolderDestination(folder))) {
+            XCTAssertEqual($0 as? BackupEngine.Failure, .verifyFailed)
+        }
+        XCTAssertEqual(allFiles(), ["Keepit-old-src-a-1.keepit"], "no .part, no final file, old copy intact")
     }
 
     func testFileNameAndFingerprintRules() {

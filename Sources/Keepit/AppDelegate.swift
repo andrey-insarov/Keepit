@@ -67,8 +67,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         templates = TemplateStore()
         monitor = ClipboardMonitor(settings: settings)
+        setUpBackup()                                  // before completeRecovery(): rekey() tells the engine about the new key
         if needsPasswordReset { completeRecovery() }
-        setUpBackup()
 
         buildStatusItem()
 
@@ -379,7 +379,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         history.saveNow()
         templates.saveNow()
         syncBiometricKey()
-        backup.forceNext()                           // the next copy must open with the new password
+        backup?.forceNext()                           // the next copy must open with the new password
     }
 
     /// Confirm identity for sensitive changes: Touch ID (if allowed) or the current password.
@@ -407,7 +407,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         guard authenticateForChange(reasonKey: "generate a new recovery phrase") else { return }
         do {
             let words = try Vault.createRecovery(for: key)
-            backup.forceNext()                       // a copy with the new phrase in its header
+            backup?.forceNext()                       // a copy with the new phrase in its header
             RecoveryDialogs.present(words: words, title: L("Your new recovery phrase (the old one no longer works)"))
         } catch {
             Vault.error(LF("Could not create the recovery phrase: %@", error.localizedDescription))
@@ -442,7 +442,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         templates.saveNow()
         syncBiometricKey()
         if let key = Storage.key, let words = try? Vault.createRecovery(for: key) {
-            backup.forceNext()
+            backup?.forceNext()
             RecoveryDialogs.present(words: words)
         }
         return true
@@ -507,7 +507,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if old.backupEnabled != new.backupEnabled || old.backupBookmark != new.backupBookmark
             || old.backupKeepCount != new.backupKeepCount || old.backupLabel != new.backupLabel {
             configureBackup()
-            if old.backupBookmark != new.backupBookmark { backup.resetRegistry(); backup.forceNext() }   // a new folder starts a new series
+            if old.backupBookmark != new.backupBookmark { backup.resetRegistry(); backup?.forceNext() }   // a new folder starts a new series
         }
         monitor.updateSettings(new)
         menuBuilder.settings = new
@@ -1234,11 +1234,13 @@ extension AppDelegate {
         backup.sourceID = settings.backupSourceID ?? ""
         if settings.backupEnabled, Vault.isEnabled, let bm = settings.backupBookmark {
             let dest = BookmarkDestination(bookmark: bm)
-            dest.onBookmarkRefreshed = { [weak self] fresh in
-                guard let self else { return }
-                var s = self.settings; s.backupBookmark = fresh
-                self.settings = s                       // no apply(): nothing else changed, avoid a reconfigure loop
-                Storage.save(s, to: Storage.settingsURL, encrypt: false, pretty: true)
+            dest.onBookmarkRefreshed = { [weak self, weak dest] fresh in
+                DispatchQueue.main.async {                   // settings are main-thread state
+                    guard let self, let dest, self.backup.destination === dest else { return }   // still the current folder?
+                    var s = self.settings; s.backupBookmark = fresh
+                    self.settings = s                       // no apply(): nothing else changed, avoid a reconfigure loop
+                    Storage.save(s, to: Storage.settingsURL, encrypt: false, pretty: true)
+                }
             }
             backup.destination = dest
         } else {

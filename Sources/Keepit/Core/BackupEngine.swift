@@ -99,7 +99,9 @@ final class BackupEngine {
     static let beforeRestorePrefix = "Keepit-before-restore-"
 
     // Dependencies, injected so tests run without AppKit or a vault.
-    var destination: BackupDestination?
+    /// Changing the destination starts a new generation: a job begun for the old folder may finish
+    /// writing there, but its result does not touch the state of the new one.
+    var destination: BackupDestination? { didSet { generation &+= 1 } }
     var keepCount = 10
     var label: String?
     var sourceID: String
@@ -124,6 +126,14 @@ final class BackupEngine {
     private let stateURL: URL
     private var lastChangeAt: Date?
     private var inFlight = false
+    /// Every noteChange / forceNext advances this; a job remembers the value at its snapshot and
+    /// may clear `dirty` only if nothing advanced it since.
+    private(set) var changeSeq: UInt64 = 0
+    /// Set by forceNext while a job is in flight: that job's result must not count as the forced copy.
+    private var forcedSinceSnapshot = false
+    /// First change after the in-flight snapshot: becomes `firstDirtyAt` when the job completes.
+    private var firstChangeAfterSnapshot: Date?
+    private(set) var generation: UInt64 = 0
     private let backupQueue = DispatchQueue(label: "com.it.keep.backup", qos: .utility)
 
     init(stateURL: URL, sourceID: String) {
@@ -138,6 +148,8 @@ final class BackupEngine {
     func noteChange() {
         let t = now()
         lastChangeAt = t
+        changeSeq &+= 1
+        if inFlight, firstChangeAfterSnapshot == nil { firstChangeAfterSnapshot = t }
         if !state.dirty { state.dirty = true; state.firstDirtyAt = t; persist() }
     }
 
@@ -145,7 +157,10 @@ final class BackupEngine {
     func forceNext() {
         state.lastFingerprint = nil
         state.credentialsStamp = nil
-        if !state.dirty { state.dirty = true; state.firstDirtyAt = now(); persist() } else { persist() }
+        changeSeq &+= 1
+        if inFlight { forcedSinceSnapshot = true; if firstChangeAfterSnapshot == nil { firstChangeAfterSnapshot = now() } }
+        if !state.dirty { state.dirty = true; state.firstDirtyAt = now() }
+        persist()
     }
 
     /// Whether a backup should run now (launch, unlock, wake, timer).
@@ -176,6 +191,11 @@ final class BackupEngine {
         guard let destination else { finish(.failure(Failure.notEnabled), completion); return }
         guard let snap = snapshotProvider?() else { finish(.failure(Failure.locked), completion); return }
         inFlight = true
+        forcedSinceSnapshot = false
+        firstChangeAfterSnapshot = nil
+        let seqAtSnapshot = changeSeq
+        let gen = generation
+        let recordsAtStart = state.records
         let backupID = UUID().uuidString.lowercased()
         var header = snap.header
         header.sourceID = sourceID
@@ -200,8 +220,7 @@ final class BackupEngine {
                 if !force, fingerprint == lastFingerprint, stamp == lastStamp {
                     DispatchQueue.main.async {
                         self.inFlight = false
-                        self.state.dirty = false; self.state.firstDirtyAt = nil; self.state.failures = 0; self.state.nextRetryAt = nil
-                        self.persist()
+                        if gen == self.generation { self.settle(seqAtSnapshot: seqAtSnapshot) }
                         completion?(.failure(Failure.nothingToBackUp))
                     }
                     return
@@ -216,26 +235,34 @@ final class BackupEngine {
                 DispatchQueue.main.async { self.record(failure: error); self.inFlight = false; completion?(.failure(error)) }
                 return
             }
-            // Stage 3 — write without the key.
+            // Stage 3 — write, then rotate, without the key and off the main thread.
             self.backupQueue.async {
-                let result = Result { try Self.write(sealed.bytes, sha: sealed.sha, name: name, to: destination) }
+                let result = Result { () -> (records: [BackupState.Record], size: Int) in
+                    let size = try Self.write(sealed.bytes, sha: sealed.sha, name: name, to: destination)
+                    let newRecord = BackupState.Record(backupID: backupID, name: name, size: size, date: header.created, sha256: sealed.sha)
+                    let records = Self.rotate(recordsAtStart + [newRecord], keep: keep, in: destination)
+                    return (records, size)
+                }
                 DispatchQueue.main.async {
                     self.inFlight = false
+                    guard gen == self.generation else {                 // folder changed or Reset meanwhile: this result is history
+                        completion?(result.map { _ in () })
+                        return
+                    }
                     switch result {
-                    case .success(let size):
-                        self.state.records.append(.init(backupID: backupID, name: name, size: size, date: header.created, sha256: sealed.sha))
-                        self.state.lastFingerprint = fingerprint
-                        self.state.credentialsStamp = stamp
+                    case .success(let r):
+                        self.state.records = r.records
+                        if !self.forcedSinceSnapshot {               // a force after the snapshot keeps these nil → next run writes again
+                            self.state.lastFingerprint = fingerprint
+                            self.state.credentialsStamp = stamp
+                        }
                         self.state.lastSuccess = header.created
                         self.state.lastName = name
-                        self.state.lastSize = size
+                        self.state.lastSize = r.size
                         self.state.lastError = nil
                         self.state.failures = 0
                         self.state.nextRetryAt = nil
-                        self.state.dirty = false
-                        self.state.firstDirtyAt = nil
-                        self.rotate(keep: keep, in: destination)
-                        self.persist()
+                        self.settle(seqAtSnapshot: seqAtSnapshot)
                         completion?(.success(()))
                     case .failure(let error):
                         self.record(failure: error)
@@ -244,6 +271,18 @@ final class BackupEngine {
                 }
             }
         }
+    }
+
+    /// A finished job accounts for its own snapshot only: changes made since it was taken stay dirty.
+    private func settle(seqAtSnapshot: UInt64) {
+        if changeSeq == seqAtSnapshot {
+            state.dirty = false
+            state.firstDirtyAt = nil
+        } else {
+            state.dirty = true
+            state.firstDirtyAt = firstChangeAfterSnapshot ?? now()
+        }
+        persist()
     }
 
     private func finish(_ r: Result<Void, Error>, _ completion: ((Result<Void, Error>) -> Void)?) {
@@ -283,21 +322,22 @@ final class BackupEngine {
     }
 
     /// Keep the last `keep` files of *this* series — by the registry, never by what the folder
-    /// looks like. Foreign files, other series and before-restore copies are untouched.
-    private func rotate(keep: Int, in destination: BackupDestination) {
-        let sorted = state.records.sorted { $0.date < $1.date }
-        guard sorted.count > keep else { return }
+    /// looks like. Foreign files, other series and before-restore copies are untouched. Runs on the
+    /// backup queue; returns the registry as it should be afterwards: a record whose file could
+    /// not be deleted stays, so the next rotation tries again.
+    static func rotate(_ records: [BackupState.Record], keep: Int, in destination: BackupDestination) -> [BackupState.Record] {
+        let sorted = records.sorted { $0.date < $1.date }
+        guard sorted.count > keep else { return records }
         let doomed = sorted.prefix(sorted.count - keep)
+        var gone = Set<String>()
         try? destination.withFolder { folder in
             for r in doomed {
                 let url = folder.appendingPathComponent(r.name)
-                if FileManager.default.fileExists(atPath: url.path) {
-                    try? FileManager.default.removeItem(at: url)
-                }
+                if !FileManager.default.fileExists(atPath: url.path) { gone.insert(r.backupID); continue }   // deleted by hand: forget it
+                if (try? FileManager.default.removeItem(at: url)) != nil { gone.insert(r.backupID) }
             }
         }
-        let gone = Set(doomed.map(\.backupID))
-        state.records.removeAll { gone.contains($0.backupID) }
+        return records.filter { !gone.contains($0.backupID) }
     }
 
     // MARK: Helpers
@@ -331,7 +371,7 @@ final class BackupEngine {
         return h.finalize().map { String(format: "%02x", $0) }.joined()
     }
 
-    func resetRegistry() { state.records = []; persist() }
+    func resetRegistry() { state.records = []; generation &+= 1; persist() }
 
     private func persist() {
         if let d = try? JSONEncoder.iso.encode(state) { try? d.write(to: stateURL, options: .atomic) }

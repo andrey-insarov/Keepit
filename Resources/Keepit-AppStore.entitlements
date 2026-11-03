@@ -8,6 +8,9 @@
     <!-- Needed to show the "open this file" and "save format to file" panels in the Viewer. -->
     <key>com.apple.security.files.user-selected.read-write</key>
     <true/>
+    <!-- Automatic backup keeps the chosen folder as an app-scoped security bookmark across launches. -->
+    <key>com.apple.security.files.bookmarks.app-scope</key>
+    <true/>
     <!-- Team identifier placeholder; the Makefile fills it from the signing identity. -->
     <key>com.apple.application-identifier</key>
     <string>__TEAM_ID__.com.it.keep</string>
