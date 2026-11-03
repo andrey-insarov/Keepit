@@ -113,6 +113,14 @@ final class ClipboardMonitor {
     }
 
     private func tick() {
+        // The "who was in front since the last poll" window closes on every poll, whether or not the
+        // pasteboard changed — otherwise a password manager opened minutes ago would still veto the
+        // next ordinary copy.
+        let bundleId = NSWorkspace.shared.frontmostApplication?.bundleIdentifier
+        var candidates = appsSinceLastPoll
+        if let id = bundleId { candidates.insert(id) }
+        appsSinceLastPoll = Set([bundleId].compactMap { $0 })
+
         let cc = pb.changeCount
         guard cc != lastChangeCount else { return }
         lastChangeCount = cc
@@ -121,12 +129,6 @@ final class ClipboardMonitor {
             skipChangeCount = nil
             return
         }
-
-        let bundleId = NSWorkspace.shared.frontmostApplication?.bundleIdentifier
-        var candidates = appsSinceLastPoll
-        if let id = bundleId { candidates.insert(id) }
-        // From here on the next interval starts with whoever is in front now.
-        appsSinceLastPoll = Set([bundleId].compactMap { $0 })
 
         // Ignore list by bundle id: built-in password managers + the user's own list + Keepit itself,
         // applied to every app that was in front since the last poll, not just the current one.
