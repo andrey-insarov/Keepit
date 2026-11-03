@@ -66,6 +66,9 @@ enum Vault {
     static let formatVersion = 2
     static let kdfPBKDF2SHA256 = "pbkdf2-hmac-sha256"
     static let defaultRounds: UInt32 = 200_000
+    /// Accepted range for `rounds` read from vault.json. Below: too weak to be ours. Above: a tampered
+    /// file could make every unlock take hours (UInt32.max ≈ 20 000 × the default).
+    static let roundsRange: ClosedRange<UInt32> = 1_000 ... 5_000_000
 
     enum Failure: Error, Equatable {
         case randomBytes(OSStatus)        // SecRandomCopyBytes refused
@@ -128,6 +131,10 @@ enum Vault {
     private static func deriveKey(password: SecureBuffer, meta: Meta) -> SecureKey? {
         guard meta.kdfName == kdfPBKDF2SHA256 else {
             Log.vault.error("vault.json uses KDF \(meta.kdfName), which this version does not support")
+            return nil
+        }
+        guard roundsRange.contains(meta.kdfRounds) else {
+            Log.vault.error("vault.json asks for \(meta.kdfRounds) KDF rounds, outside the accepted range")
             return nil
         }
         return try? deriveKey(password: password, salt: meta.salt, rounds: meta.kdfRounds)

@@ -76,6 +76,13 @@ final class VaultTests: XCTestCase {
         json["kdf"] = "argon2id"
         try JSONSerialization.data(withJSONObject: json).write(to: Vault.metaURL)
         XCTAssertNil(Vault.unlock(password: .of("pw")), "a KDF this build does not know is refused, not guessed")
+        json["kdf"] = Vault.kdfPBKDF2SHA256
+        json["rounds"] = UInt32.max
+        try JSONSerialization.data(withJSONObject: json).write(to: Vault.metaURL)
+        XCTAssertNil(Vault.unlock(password: .of("pw")), "an absurd round count is refused instead of taking hours")
+        json["rounds"] = 10
+        try JSONSerialization.data(withJSONObject: json).write(to: Vault.metaURL)
+        XCTAssertNil(Vault.unlock(password: .of("pw")), "too few rounds is not a vault Keepit wrote")
     }
 
     func testRandomBytesAreFreshAndRightSized() throws {
