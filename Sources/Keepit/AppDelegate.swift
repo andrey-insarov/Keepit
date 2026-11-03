@@ -105,8 +105,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if isFirstRun {
             if settings.launchAtLogin { setLaunchAtLogin(true) }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-                self?.offerPasswordOnFirstRun()
-                if !Paster.isTrusted() { self?.showAccessibilityAlert() }
+                guard let self else { return }
+                _ = self.offerRestoreOnFirstRun()
+                if !Vault.isEnabled { self.offerPasswordOnFirstRun() }   // a restore may have set the password already
+                if !Paster.isTrusted() { self.showAccessibilityAlert() }
             }
         } else if !Paster.isTrusted() {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
@@ -420,7 +422,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         a.addButton(withTitle: L("Change Password Now"))
         a.addButton(withTitle: L("No, Keep Password"))
         if a.runModal() == .alertFirstButtonReturn {
-            guard let pw = Vault.askPassword(title: L("New password"), message: L("Enter the new password twice."), confirm: true) else { return }
+            guard let pw = Vault.askPassword(title: L("New password"), message: L("Enter the new password twice. Backups made so far still open with the old password."), confirm: true) else { return }
             rekey(with: pw)
             pw.zero()
         }
@@ -432,6 +434,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                                          message: L("You'll be asked for it every time Keepit starts. A recovery phrase for it is shown next."),
                                          confirm: true) else { return false }
         defer { pw.zero() }
+        return enableProtection(with: pw)
+    }
+
+    /// Turn protection on with a password already in hand (a restored backup's). The caller wipes `pw`.
+    func enableProtection(with pw: SecureBuffer) -> Bool {
         do {
             Storage.key = try Vault.enable(password: pw)
         } catch {
@@ -492,7 +499,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func changePassword() {
         guard Vault.isEnabled, Storage.key != nil else { return }
         guard authenticateForChange(reasonKey: "change the Keepit password") else { return }
-        guard let pw = Vault.askPassword(title: L("New password"), message: L("Enter the new password twice."), confirm: true) else { return }
+        guard let pw = Vault.askPassword(title: L("New password"), message: L("Enter the new password twice. Backups made so far still open with the old password."), confirm: true) else { return }
         defer { pw.zero() }
         rekey(with: pw)
     }
@@ -1212,20 +1219,26 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
 extension AppDelegate {
     func setUpBackup() {
+        createBackupEngine()
+        Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in self?.backup.runIfDue() }
+        NSWorkspace.shared.notificationCenter.addObserver(forName: NSWorkspace.didWakeNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.backup.runIfDue()
+        }
+        backup.runIfDue()
+    }
+
+    /// New engine for the current data directory and settings (launch, and again after Reset…).
+    func createBackupEngine() {
         if settings.backupSourceID == nil {
             settings.backupSourceID = UUID().uuidString.lowercased()
             Storage.save(settings, to: Storage.settingsURL, encrypt: false, pretty: true)
         }
         backup = BackupEngine(stateURL: Storage.directory.appendingPathComponent("backup.json"), sourceID: settings.backupSourceID ?? "")
         backup.snapshotProvider = { [weak self] in self?.backupSnapshot() }
+        backup.onStateChange = { [weak self] _ in self?.preferencesWindow?.backupStateChanged() }
         history.onChange = { [weak self] in self?.backup.noteChange() }
         templates.onChange = { [weak self] in self?.backup.noteChange() }
         configureBackup()
-        Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in self?.backup.runIfDue() }
-        NSWorkspace.shared.notificationCenter.addObserver(forName: NSWorkspace.didWakeNotification, object: nil, queue: .main) { [weak self] _ in
-            self?.backup.runIfDue()
-        }
-        backup.runIfDue()
     }
 
     func configureBackup() {

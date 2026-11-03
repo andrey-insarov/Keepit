@@ -17,7 +17,9 @@ extension AppDelegate {
     static let urlScheme = "keepit"
 
     func application(_ application: NSApplication, open urls: [URL]) {
-        for url in urls { handle(url) }
+        for url in urls {
+            if url.isFileURL, url.pathExtension.lowercased() == Backup.fileExtension { restore(from: url) } else { handle(url) }
+        }
     }
 
     /// Commands that only show Keepit's own UI. Everything else changes the clipboard, the history,

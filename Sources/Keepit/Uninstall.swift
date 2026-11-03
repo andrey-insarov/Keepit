@@ -37,16 +37,20 @@ extension AppDelegate {
         Storage.clearKey()
         BiometricUnlock.remove()
         Vault.disable()
-        for url in [Storage.historyURL, Storage.templatesURL, Storage.settingsURL] { try? FileManager.default.removeItem(at: url) }
+        for url in [Storage.historyURL, Storage.templatesURL, Storage.settingsURL, Storage.directory.appendingPathComponent("backup.json")] {
+            try? FileManager.default.removeItem(at: url)
+        }
         apply(settings: Settings())
         history.reload()
         templates.resetToDefaults()
+        createBackupEngine()                           // new sourceID, empty registry, no folder
         viewer?.refresh()
         registerHotKeys()
-        // Same welcome as a fresh install: offer a password, then the Accessibility prompt if needed.
+        // Same welcome as a fresh install: offer a restore, then a password, then Accessibility if needed.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in
             guard let self else { return }
-            self.offerPasswordOnFirstRun()
+            _ = self.offerRestoreOnFirstRun()
+            if !Vault.isEnabled { self.offerPasswordOnFirstRun() }
             if !Paster.isTrusted() { self.showAccessibilityAlert() }
         }
     }
