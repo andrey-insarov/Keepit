@@ -46,7 +46,10 @@ extension AppDelegate {
         // identify, is asked every time and is never added to the list — a web page could be behind it.
         if !Self.readOnlyCommands.contains(command) {
             let sender = URLSender.current()
-            let trusted = sender.app?.bundleIdentifier.map { settings.trustedURLSenders.contains($0) } ?? false
+            // A browser or an unidentified sender is never trusted, even if its bundle id made the list
+            // before the app registered itself as an https:// handler.
+            let trusted = !sender.needsConfirmation
+                && (sender.app?.bundleIdentifier.map { settings.trustedURLSenders.contains($0) } ?? false)
             if !trusted {
                 switch confirmURLCommand(url, from: sender) {
                 case .deny:

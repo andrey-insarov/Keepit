@@ -7,11 +7,11 @@ import AppKit
 ///   generated, so anything that captures keyboard events sees nothing.
 /// - Keys are shuffled every time the panel opens (and on *Shuffle*), so mouse positions alone do
 ///   not reveal the password.
-/// - The panel asks macOS to leave it out of screen capture (`sharingType = .none`). On current
-///   macOS that keeps it out of screenshots and most recordings, but Apple has deprecated the
-///   value and does not guarantee it — treat it as an obstacle, not a wall. A capture tool that
-///   macOS lets see the panel, combined with mouse positions, defeats the shuffle; so does a
-///   person watching the screen.
+/// - The panel asks macOS to leave it out of screen capture (`sharingType = .none`). On some
+///   configurations that excludes it from screenshots and recordings; Apple has deprecated the
+///   value and says not to rely on it, so protection from screen capture is not guaranteed. A
+///   capture tool that sees the panel, combined with mouse positions, defeats the shuffle; so does
+///   a person watching the screen.
 final class OnScreenKeyboard: NSObject {
     /// Which field receives the characters (the focused one in the password dialog).
     var targetField: (() -> SecurePasswordField?)?

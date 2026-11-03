@@ -59,7 +59,7 @@ Keepit needs the Accessibility permission to paste for you; without it, chosen i
 clipboard,history,paste,copy,snippets,templates,manager,queue,text expander,productivity
 
 ## What's new (version 2.13.0)
-• On-screen keyboard for the password: shuffled keys, invisible to screenshots and screen recording, no key events for keyloggers.
+• On-screen keyboard for the password: shuffled keys, no keyboard events for anything to log.
 • Settings → Menu: choose how many recent items the history menu lists.
 • keepit:// automation is now opt-in (Settings → Advanced); commands from a web browser ask for confirmation.
 • Password dialog: OK only once both fields match.

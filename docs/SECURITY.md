@@ -87,10 +87,10 @@ Turn on *Require password at launch* and the history and templates files are enc
   straight into the locked buffer without generating a key event, so anything that captures
   keyboard events sees nothing; the keys are shuffled each time the panel opens (and on *Shuffle*),
   so mouse positions alone do not give the password away; and the panel asks macOS to leave it out
-  of screen capture (`NSWindow.sharingType = .none`). On current macOS that last part keeps it out
-  of screenshots and most screen recording — but Apple has deprecated that value and does not
-  guarantee it, so count on the first two and treat the third as an obstacle, not a wall. A capture
-  tool that macOS lets see the panel, together with mouse positions, defeats the shuffle; so does a
+  of screen capture (`NSWindow.sharingType = .none`). On some configurations that excludes the panel
+  from screenshots and screen recording; Apple has deprecated that value and says not to rely on it,
+  so protection from screenshots and screen recording is **not guaranteed** — count on the first two.
+  A capture tool that sees the panel, together with mouse positions, defeats the shuffle; so does a
   person looking at the screen.
 
 - **Wrong attempts**: after several wrong passwords Keepit backs off with increasing delays, and

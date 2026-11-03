@@ -315,7 +315,7 @@ The password dialogs show the current keyboard layout and warn about Caps Lock, 
 password is rarely a mystery. The keyboard button next to the field opens an **on-screen keyboard**
 for typing the password with the mouse: the clicks never pass through the system as key presses, its
 keys are shuffled every time it opens, and it asks macOS to keep it out of screenshots and screen
-recording (which current macOS honours, though Apple does not guarantee it) — for a Mac you do not
+recording (on some configurations it is excluded; this is not guaranteed) — for a Mac you do not
 fully trust, or one that is being screen-shared. At launch, and after a lock, Keepit asks for the password (or Touch ID);
 *Recovery Access…* takes the 24-word phrase instead — see [Recovery phrase](#recovery-phrase).
 
