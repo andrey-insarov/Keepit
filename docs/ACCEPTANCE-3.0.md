@@ -13,8 +13,9 @@ appstore …` for the sandboxed one).
   installed from the `.pkg`. Do not run both at once except where a case says so.
 - [ ] **P2. A clean macOS user** (System Settings → Users & Groups) for the baseline and the first-run
   cases. Everything else can run in your own account with a side instance:
-  `KEEPIT_DATA_DIR=/tmp/keepit-acc /Applications/Keepit.app/Contents/MacOS/Keepit` — its data,
-  vault and Touch ID keychain item are separate from the real installation's.
+  `KEEPIT_DATA_DIR=/tmp/keepit-acc /Applications/Keepit.app/Contents/MacOS/Keepit & echo $! > /tmp/keepit-acc.pid`
+  — its data, vault and Touch ID keychain item are separate from the real installation's. Keep the
+  PID file: the environment variable is not visible to `pgrep -f`, so `kill` by that PID.
 - [ ] **P3. Folders:** one in iCloud Drive (`~/Library/Mobile Documents/com~apple~CloudDocs/KeepitTest`),
   one on an external disk or USB stick, one on a NAS share (SMB). An empty one for "another Mac".
 - [ ] **P4. Seed data** in the instance under test: ~50 history items including an image and a file
@@ -30,8 +31,9 @@ appstore …` for the sandboxed one).
 - [ ] **A1. Sparkle.** On the clean user install 2.13.1 from the release page, let it find 3.0 when the
   tag exists (skip until then; do it before announcing), update in one click, data intact.
 - [ ] **A2. Export → Reset → Import.** *Settings → General → Backup → Export…* with a file password
-  → *Advanced → Reset…* (password, `DELETE`) → first-run dialogs → *Restore from Backup…* → that file
-  → *Replace*. Expected: counts in the preview match what you exported; history, templates,
+  → *Advanced → Reset…* (password and confirmation) → first-run dialogs → *Restore from Backup…* →
+  that file → *Replace* (a fresh installation holds only the example templates: no rollback copy, no
+  extra question). Expected: counts in the preview match what you exported; history, templates,
   template hot key back; preferences back only if *Also restore preferences* was on.
 - [ ] **A3. Format 1 file (P5) opens** in 3.0 with its password; the file from A2 (format 2) does **not**
   open in 2.13.1 — it says the backup was made with a newer version, nothing worse.
@@ -45,7 +47,7 @@ appstore …` for the sandboxed one).
 - [ ] **B3. Cancel the chooser** → checkbox goes back off, nothing saved.
 - [ ] **B4. Keep last** accepts 1…100, rejects 0 and 101 (field clamps), unit label *backups*.
 - [ ] **B5. Include this Mac's name** off by default; ? says the provider can see it.
-- [ ] **B6. Back Up Now** → within a few seconds a file `Keepit-<UTC date>T<time>Z-<8 hex>-<id>.keepit`
+- [ ] **B6. Back Up Now** → within a few seconds a file `Keepit-<UTC date>T<time>Z-<installation uuid>-<file uuid>.keepit`
   appears in the folder, no `.part` left behind, status *Last backup: <time> · <size>*. With B5 on,
   the Mac's name is in the file's header (run `head -c 400 <file> | strings` — the label is visible,
   nothing else of yours is).
@@ -56,23 +58,24 @@ appstore …` for the sandboxed one).
 
 - [ ] **C1. Quiet period.** Copy three things within a minute → exactly one new file ~5 min after the
   last copy, not three.
-- [ ] **C2. Nothing changed, no file.** *Back Up Now* twice in a row without a change → the second says
-  nothing changed (status unchanged, no new file).
+- [ ] **C2. Nothing changed, no file.** *Back Up Now* always writes (it is forced). The fingerprint is
+  for the automatic run: copy something, wait for the copy, then copy the *same* text again with
+  *Remove duplicates* on (the item only moves to the top) → no new file after the quiet period.
 - [ ] **C3. Rotation.** *Keep last* = 3, make 5 copies (change + Back Up Now) → exactly 3 of this
   instance's files remain, oldest gone. A file you put there yourself named `Keepit-foo.keepit`, and
   a copy from another instance (P2 side instance into the same folder), are **not** deleted.
 - [ ] **C4. Two instances, one folder.** Real app and the side instance both backing up into the iCloud
-  folder → two series with different `<8 hex>` installation ids, each rotating only its own.
+  folder → two series with different installation uuids, each rotating only its own.
 - [ ] **C5. Folder gone.** Eject the external disk (or rename the folder) → change something → *Back Up
   Now* → status *Last backup failed: Backup folder is not available*; put it back → next change or
   Back Up Now succeeds; status clears. Nothing crashed, no partial file.
-- [ ] **C6. New folder = new series.** *Choose…* another folder → the old files stay where they were, the
-  first copy in the new folder is made at once (forced), rotation in the new folder does not count
-  the old ones.
+- [ ] **C6. New folder = new series.** *Choose…* another folder → the old files stay where they were; the
+  next copy is forced (the engine checks once a minute, so within about a minute, not instantly) and
+  goes to the new folder; rotation there does not count the old ones.
 - [ ] **C7. Locked = nothing.** Lock (⌥L), change nothing, wait → no file; unlock → the pending copy, if
   any, is written.
-- [ ] **C8. Password change / new phrase** → a fresh copy is made right away; the old copies still open
-  with the **old** password (D4), the new one with the new.
+- [ ] **C8. Password change / new phrase** → a fresh copy within about a minute (forced, same timing as
+  C6); the old copies still open with the **old** password (D4), the new one with the new.
 - [ ] **C9. Same file twice is impossible:** after C3 compare SHA-256 of two consecutive copies — they
   differ (random nonce, different backupID).
 
@@ -94,8 +97,9 @@ instance with an empty data directory.
   Keepit password of the Mac this backup was made on* → wrong password twice: *Wrong password.*,
   third time: *Too many wrong attempts.* and the flow ends; again with the right one → preview →
   *Replace*. On a fresh installation without a password: after the restore, *Protect Keepit with the
-  same password?* → *Use This Password* → protection on, no second prompt, automatic backup can be
-  switched on into the same folder and continues the series.
+  same password?* → *Use This Password* → protection on, no second prompt. Automatic backup is still
+  off here (per-Mac setting): switch it on, choose the same folder → this Mac starts its **own**
+  series next to the old Mac's; both keep rotating only their own.
 - [ ] **D4. Another Mac, recovery phrase.** Same file, *Recovery Access…* in the password dialog → the
   24 words → opens. On a Mac **without** a password: Keepit asks to set one **before** anything is
   restored, then *Keep the recovery phrase?* → *Keep This Phrase* → afterwards the **old** phrase
@@ -128,8 +132,9 @@ the direct build; delete the container for the App Store one).
 - [ ] **E1. Order.** First launch → *Restore from a backup?* comes first, then the password offer, then
   Accessibility. *Start Fresh* → password offer.
 - [ ] **E2. Restore at first launch** → *Restore from Backup…* → a file from the iCloud folder → D3's
-  password path → *Replace* (empty store: no before-restore copy, no extra question) → then *Protect
-  Keepit with the same password?*
+  password path → *Replace* — the store holds only the example templates, so no before-restore copy
+  and no password or folder question → then *Protect Keepit with the same password?* Repeat after
+  editing one example template before the restore → now Replace does ask (there is something to lose).
 - [ ] **E3. Cold launch by file.** Keepit **not** running, double-click a `.keepit` → Keepit starts →
   (password gate if a vault exists) → the restore opens; on a first run it **replaces** the generic
   *Restore from a backup?* and comes before the password offer. **Replace** here must finish: the
@@ -155,13 +160,20 @@ the direct build; delete the container for the App Store one).
 Side instance; watch `/tmp/keepit-acc/`.
 
 - [ ] **G1. Kill between the writes.** Big history. Restore… → *Replace* → the instant *Saving a copy…*
-  closes, `kill -9 $(pgrep -f keepit-acc)` (prepare the command; a few tries may be needed) →
+  closes, `kill -9 $(cat /tmp/keepit-acc.pid)` (prepare the command; a few tries may be needed) →
   relaunch → data exactly as before the restore, `restore-journal/` gone, nothing in the log but
   *replayed an interrupted restore* if you caught the window.
-- [ ] **G2. Replay that cannot finish.** With Keepit quit: create `restore-journal/` by hand with a copy
-  of `history.json` and a file `commit`, then `chflags uchg history.json` → launch → an alert naming
-  `history.json`, Keepit **quits**, nothing written (compare mtimes) → `chflags nouchg history.json` →
-  launch → replay succeeds, Keepit runs, `restore-journal/` gone.
+- [ ] **G2. Replay that cannot finish.** With Keepit quit, in `/tmp/keepit-acc/`: build an armed journal
+  that holds **every** existing file (a journal without a copy of a file means "that file did not
+  exist" and the replay would delete it), then make the live history differ from its copy so the
+  replay has to write it, and make that write impossible:
+  ```
+  mkdir restore-journal && cp history.json templates.json settings.json restore-journal/ && echo 1 > restore-journal/commit
+  printf ' ' >> history.json && chflags uchg history.json
+  ```
+  → launch → an alert naming `history.json`, Keepit **quits**, `templates.json` and `settings.json`
+  unchanged (compare mtimes), `restore-journal/commit` still there → `chflags nouchg history.json` →
+  launch → replay succeeds (history back to the copy), Keepit runs, `restore-journal/` gone.
 - [ ] **G3. Unarmed journal.** Same but **without** `commit` → launch → no alert, journal removed, files
   untouched.
 
@@ -185,12 +197,17 @@ Side instance; watch `/tmp/keepit-acc/`.
 
 - [ ] **I1. Normal.** Backup folder on the SMB share: copies land, rotation works, read-back is fine.
 - [ ] **I2. Share disappears mid-write.** Start a big *Back Up Now*, pull the network → the app stays
-  responsive, status *failed* with a readable reason, no `.part` left once the share is back (or at
-  most one, which the next successful copy removes), ⌥L works during the hang.
+  responsive, status *failed* with a readable reason, ⌥L works during the hang. A `.Keepit-….part`
+  from the interrupted write may stay on the share: Keepit does not clean up a part file it did not
+  finish (it has a different id from any later copy) — note it, delete it by hand; it must never be
+  mistaken for a copy (Restore… does not list it as one).
 - [ ] **I3. Hung share during Replace.** Same during the *Saving a copy…* panel → the panel stays live,
-  ⌥L works, after the timeout the restore is cancelled, data untouched.
+  ⌥L works. Keepit has no timeout of its own: the wait ends when macOS gives up on the share (SMB, a
+  few minutes) — then the restore reports the error and is cancelled, data untouched. Note how long it
+  took.
 - [ ] **I4. Retry backoff.** After a failure, do nothing → the log shows retries at ~1, 5, 15, 60 min
-  (watch at least the first two); a change in between resets to the quiet period.
+  (watch at least the first two). A change in between does **not** shorten the wait — the next
+  attempt is still at the scheduled retry; *Back Up Now* is the way to retry at once.
 
 ## J. Protection toggles, Reset, Uninstall
 
