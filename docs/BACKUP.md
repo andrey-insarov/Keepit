@@ -137,20 +137,38 @@ General → Backup → Restore…*; double-click on a `.keepit` file. All lead t
      - **Existing data, vault off**: the rollback copy is a manual-mode export; the user is asked
        for a password for it (same dialog as *Export…*) and for a folder. Declining either cancels
        Replace. Turning protection on first is offered as the simpler route.
-   - *Merge* adds history items whose `contentHash` is not present. The backup's template tree is
-     added whole as a new top-level folder named "Imported <date>" (the same rule *Import…* has used
-     since 2.x), so the user sees exactly what came from the backup and can move or delete it; the
-     usual template limits apply and Merge refuses, changing nothing, if they would be exceeded.
-     Nothing is overwritten and nothing is matched by `id` — two Macs editing "the same" template
-     are two templates.
-6. **Apply** as one transaction on the local store; then reload, rebuild menus, refresh the Viewer.
+   - *Merge* adds history items whose `contentHash` is not present, keeping the current items
+     newest. Added items get fresh ids: the backup may be this Mac's own, and an item edited here
+     since would otherwise return under an id already in use — which the next backup's validator
+     rejects. The backup's template tree is added whole as a new top-level folder named
+     "Imported <date>" (the rule *Import…* has used since 2.x), deep-copied with fresh ids and
+     **without hot keys** (a copy never inherits a key, as with drag-copy), so the user sees exactly
+     what came from the backup and can move or delete it. Nothing is overwritten and nothing is
+     matched by `id` — two Macs editing "the same" template are two templates.
+   - The rollback copy is produced like a regular backup: sealed on `Storage.ioQueue` (Lock waits
+     for that), written, fsynced and read back on a background queue; the main thread waits in a
+     small progress panel, so a hung volume blocks neither the interface nor Lock. Replace proceeds
+     only after the read-back matched.
+6. **Plan, then apply** (`RestorePlan`). Before any store changes, the whole outcome is computed and
+   checked: the final settings first (when preferences are restored, the backup's — minus the local
+   keys below — clamped), the history trimmed by *those* settings (restoring 3 items together with
+   `historyMax = 3` keeps 3, whatever the limit was before), the template folder against the count
+   and depth ceilings. A plan that does not fit fails as a whole and nothing has happened; items the
+   final limits would drop are reported before the user confirms. Then the plan is applied as one
+   transaction — settings, history, templates — followed by hot keys, menus and the Viewer.
+   Every modal dialog on the way (preview, folder, passwords, the rollback wait) is followed by a
+   check that Lock did not run meanwhile; if it did, the stores were purged and reloaded and the
+   plan is stale: the restore is cancelled with a message, nothing applied.
 7. **Settings** come back selectively. Never restored: `allowURLCommands`, `trustedURLSenders`,
    `biometricUnlock`, `biometricPasswordChange`, the backup folder bookmark, anything with a local
    path. The user is told what was skipped.
 8. On a **fresh installation** restored with a password, offer to keep that password as this
    installation's vault password (so automatic backup into the same folder continues without
-   setup) or to set a new one. Restored with the recovery phrase: a new password is required, and
-   the phrase from the backup keeps working for the new vault only if the user chooses to keep it.
+   setup) or to set a new one. Opened with the **recovery phrase** on a Mac without a password: a
+   new password is required *before* the plan is applied — the vault is created first, so the
+   restored data never lands unencrypted; cancelling leaves the current data unchanged. The user
+   chooses whether the phrase from the backup keeps working for the new vault (it is wrapped for
+   the new key under a new salt) or a new phrase is generated and shown.
 
 ## Settings UI (General → Backup)
 
@@ -178,7 +196,10 @@ Automatic tests (temporary folders, fakes where macOS is involved):
 - [ ] Registry out of sync (file deleted by hand) → no error, no deletion of anything else.
 - [ ] Restore: password opens; recovery phrase opens (no local vault.json involved); wrong password → clean error; tampered header → authentication failure; `minReader` above ours → "needs newer Keepit"; `rounds` out of range → rejected before PBKDF2; oversized payload → rejected during decompression.
 - [ ] Restore Replace: empty store → no rollback copy, proceeds; data + vault → rollback copy written and verified first; data, no vault → export password and folder asked, declining cancels; rollback copy cannot be written → refused, data untouched.
-- [ ] Restore Merge: duplicate hashes skipped; templates arrive as one "Imported <date>" folder; over the template limit → refused, nothing changed.
+- [ ] Restore Merge: duplicate hashes skipped; added items and the "Imported <date>" folder carry fresh ids and no hot keys; merging this Mac's own backup leaves the next backup valid; over the template count or depth limit → refused, nothing changed (`RestorePlanTests`).
+- [ ] Restore plan: history trimmed by the restored settings, not the previous ones; items that do not fit are reported before confirmation; trust and backup setup never restored (`RestorePlanTests`).
+- [ ] Restore opened with the phrase, vault off: password asked and vault created before anything is applied; cancel → data unchanged; "Keep This Phrase" → the backup's phrase unlocks the new vault.
+- [ ] Lock during any restore dialog → restore cancelled, stores untouched; rollback copy written off the main thread (progress panel stays responsive).
 - [ ] Trust settings never restored.
 - [ ] Every fixture in `Tests/KeepitTests/Fixtures` (v1 and v2) opens as its sidecar says.
 

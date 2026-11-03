@@ -202,9 +202,12 @@ enum Vault {
     }
 
     /// Generate a fresh 24-word phrase that can recover `key`, store its wrapped form, return the words.
-    static func createRecovery(for key: SecureKey) throws -> [String] {
+    /// With `entropy` given (a phrase the user already holds — the one that opened a restored
+    /// backup), that phrase is wrapped for this vault instead, under a new salt.
+    static func createRecovery(for key: SecureKey, entropy given: [UInt8]? = nil) throws -> [String] {
         guard var meta = readMeta() else { throw CocoaError(.fileNoSuchFile) }
-        var entropy = try [UInt8](randomBytes(Mnemonic.entropyBytes))
+        if let g = given, g.count != Mnemonic.entropyBytes { throw CocoaError(.fileReadCorruptFile) }
+        var entropy = try given ?? [UInt8](randomBytes(Mnemonic.entropyBytes))
         defer { entropy.withUnsafeMutableBytes { _ = memset_s($0.baseAddress, $0.count, 0, $0.count) } }
         let salt = try randomBytes(16)
         let rkey = recoveryKey(entropy: entropy, salt: salt)

@@ -54,6 +54,7 @@ extension AppDelegate {
 
     func restore(from url: URL) {
         guard !isLocked else { NSSound.beep(); return }
+        let lockAtStart = lockCount
         // 1–2. Read the whole file and inspect it: limits and minReader before any key work.
         let accessing = url.startAccessingSecurityScopedResource()
         defer { if accessing { url.stopAccessingSecurityScopedResource() } }
@@ -65,6 +66,7 @@ extension AppDelegate {
 
         // 3. Unlock: the current key when the salt says it is ours, else the password, else the phrase.
         guard let unlocked = unlockBackup(data, inspection) else { return }
+        defer { unlocked.wipe() }
         let p = unlocked.payload
 
         // 4. Preview.
@@ -73,7 +75,7 @@ extension AppDelegate {
         if case .v2(let h, _) = inspection, let label = h.label, !label.isEmpty { origin += " · " + label }
         let a = NSAlert()
         a.messageText = L("Restore from Backup")
-        a.informativeText = LF("Created %@ with %@ — %d history item(s), %d template item(s).\n\nMerge adds what is not already there (templates go into a new folder). Replace discards the current history and templates first — a copy of them is saved before that.",
+        a.informativeText = LF("Created %@ with %@ — %d history item(s), %d template item(s).\n\nMerge adds what is not already there (templates go into a new folder, without their hot keys). Replace discards the current history and templates first — a copy of them is saved before that.",
                                df.string(from: p.created), origin, p.history.count, p.templates.subtreeCount - 1)
         let restorePrefs = NSButton(checkboxWithTitle: L("Also restore preferences (hot keys, limits, options)"), target: nil, action: nil)
         restorePrefs.isEnabled = p.settings != nil
@@ -83,29 +85,64 @@ extension AppDelegate {
         a.addButton(withTitle: L("Replace"))
         a.addButton(withTitle: L("Cancel"))
         NSApp.activate(ignoringOtherApps: true)
-        let choice = a.runModal()
+        let mode: RestorePlan.Mode
+        switch a.runModal() {
+        case .alertFirstButtonReturn: mode = .merge
+        case .alertSecondButtonReturn: mode = .replace
+        default: return
+        }
+        guard lockCount == lockAtStart else { Vault.error(L("Restore cancelled: Keepit was locked meanwhile.")); return }
 
-        // 5–6. Apply.
-        switch choice {
-        case .alertFirstButtonReturn:
-            history.merge(p.history)
-            let folder = DateFormatter(); folder.dateStyle = .medium
-            if !templates.mergeImported(p.templates, folderName: LF("Imported %@", folder.string(from: p.created))) {
-                Vault.error(LF("Limit reached: at most %d template items, %d levels deep.", Limits.templateMaxCount, Limits.templateMaxDepth))
-            }
-        case .alertSecondButtonReturn:
+        // 5. Plan: the whole outcome, checked against the final settings and every limit, before
+        //    anything changes. If the plan fails, nothing has happened.
+        let folder = DateFormatter(); folder.dateStyle = .medium
+        let plan: RestorePlan
+        do {
+            plan = try RestorePlan.make(mode: mode, payload: p, currentHistory: history.items, currentTemplates: templates.root,
+                                        currentSettings: settings, restorePreferences: restorePrefs.state == .on,
+                                        folderName: LF("Imported %@", folder.string(from: p.created)))
+        } catch { Vault.error(error.localizedDescription); return }
+        if plan.historyDropped > 0 {
+            let c = NSAlert()
+            c.messageText = L("Not everything fits")
+            c.informativeText = LF("%d of the backup's history items fit the current limits; %d would be left out. You can raise the limits in Settings → History first.",
+                                   plan.historyAdded, plan.historyDropped)
+            c.addButton(withTitle: L("Continue"))
+            c.addButton(withTitle: L("Cancel"))
+            guard c.runModal() == .alertFirstButtonReturn, lockCount == lockAtStart else { return }
+        }
+
+        // Replace first secures the current data; the copy is sealed and written off the main thread.
+        if mode == .replace {
             guard makeRollbackCopy() else { return }
-            history.replaceAll(p.history)
-            templates.replaceRoot(p.templates)
-        default:
-            return
+            guard lockCount == lockAtStart else { Vault.error(L("Restore cancelled: Keepit was locked meanwhile.")); return }
         }
-        if restorePrefs.state == .on, let s = p.settings {
-            apply(settings: settings.applyingRestorable(from: s))   // trust and backup setup stay this installation's
+
+        // A backup opened with its phrase on a Mac without a password: the data must not land
+        // unprotected (docs/BACKUP.md, Restore 8). Password and vault first; cancelling changes nothing.
+        if !Vault.isEnabled, unlocked.viaRecovery {
+            guard let pw = Vault.askPassword(title: L("Set Keepit password"),
+                                             message: L("This backup was opened with its recovery phrase. Choose a password for Keepit on this Mac; the restored data is protected with it."),
+                                             confirm: true) else { return }
+            defer { pw.zero() }
+            let k = NSAlert()
+            k.messageText = L("Keep the recovery phrase?")
+            k.informativeText = L("The phrase you just entered can keep working for this Mac, or Keepit can make a new one and show it to you.")
+            k.addButton(withTitle: L("Keep This Phrase"))
+            k.addButton(withTitle: L("Make a New Phrase"))
+            k.addButton(withTitle: L("Cancel"))
+            let keep: Bool
+            switch k.runModal() {
+            case .alertFirstButtonReturn: keep = true
+            case .alertSecondButtonReturn: keep = false
+            default: return
+            }
+            guard enableProtection(with: pw, recoveryEntropy: keep ? unlocked.recoveryEntropy : nil) else { return }
+            guard lockCount == lockAtStart else { Vault.error(L("Restore cancelled: Keepit was locked meanwhile.")); return }
         }
-        registerHotKeys()
-        viewer?.refresh()
-        backup?.noteChange()
+
+        // 6. Apply as one transaction: settings first (the history is trimmed by them), then the stores.
+        apply(plan)
 
         // 8. A fresh installation restored with a password: offer to keep it as the vault password.
         if !Vault.isEnabled, let pw = unlocked.password {
@@ -120,22 +157,46 @@ extension AppDelegate {
             case .alertSecondButtonReturn: _ = enableProtection()
             default: break
             }
-            pw.zero()
         }
         info(LF("Restore finished — history: %d item(s), templates: %d item(s).", history.items.count, templates.root.subtreeCount - 1))
     }
 
-    struct UnlockedBackup {
-        var payload: Backup.Payload
+    /// The transaction. Nothing here can fail: every check was made when the plan was built.
+    func apply(_ plan: RestorePlan) {
+        apply(settings: plan.settings)          // trust and backup setup stayed this installation's (RestorePlan)
+        history.replaceAll(plan.history)
+        switch plan.templates {
+        case .replace(let root): templates.replaceRoot(root)
+        case .addFolder(let folder):
+            if !templates.insertImported(folder) { Vault.error(RestorePlan.Failure.templateLimit.localizedDescription) }
+        }
+        registerHotKeys()
+        viewer?.refresh()
+        backup?.noteChange()
+    }
+
+    final class UnlockedBackup {
+        let payload: Backup.Payload
         /// The password that opened it, when one was typed (kept only to offer it as the vault password).
-        var password: SecureBuffer?
+        let password: SecureBuffer?
+        /// The phrase's entropy when the phrase opened it (kept only to offer keeping the phrase).
+        private(set) var recoveryEntropy: [UInt8]?
+        var viaRecovery: Bool { recoveryEntropy != nil }
+        init(payload: Backup.Payload, password: SecureBuffer? = nil, recoveryEntropy: [UInt8]? = nil) {
+            self.payload = payload; self.password = password; self.recoveryEntropy = recoveryEntropy
+        }
+        func wipe() {
+            password?.zero()
+            recoveryEntropy?.withUnsafeMutableBytes { _ = memset_s($0.baseAddress, $0.count, 0, $0.count) }
+            recoveryEntropy = nil
+        }
     }
 
     private func unlockBackup(_ data: Data, _ inspection: Container.Inspection) -> UnlockedBackup? {
         // Ours? Same vault salt and a key in memory → try it silently; the GCM tag decides.
         if case .v2(let h, _) = inspection, h.mode == .auto, let key = Storage.key, let mine = Vault.backupHeader(app: ""), mine.salt == h.salt,
            let p = try? Backup.decode(data, dataKey: key) {
-            return UnlockedBackup(payload: p, password: nil)
+            return UnlockedBackup(payload: p)
         }
         let hasRecovery: Bool = { if case .v2(let h, _) = inspection { return h.recovery != nil } else { return false } }()
         let message: String = {
@@ -148,8 +209,9 @@ extension AppDelegate {
             case .cancel:
                 return nil
             case .recovery:
-                guard let words = RecoveryDialogs.askPhrase(), let entropy = Mnemonic.decode(words) else { Vault.error(L("That is not a valid recovery phrase.")); continue }
-                do { return UnlockedBackup(payload: try Backup.decode(data, recoveryEntropy: entropy), password: nil) }
+                guard let words = RecoveryDialogs.askPhrase(), var entropy = Mnemonic.decode(words) else { Vault.error(L("That is not a valid recovery phrase.")); continue }
+                defer { entropy.withUnsafeMutableBytes { _ = memset_s($0.baseAddress, $0.count, 0, $0.count) } }
+                do { return UnlockedBackup(payload: try Backup.decode(data, recoveryEntropy: entropy), recoveryEntropy: entropy) }
                 catch Backup.Failure.wrongPassword { Vault.error(L("This phrase does not open the backup.")) }
                 catch { Vault.error(error.localizedDescription); return nil }
             case .password(let pw):
@@ -171,24 +233,25 @@ extension AppDelegate {
     // MARK: Rollback copy before Replace (docs/BACKUP.md)
 
     /// Secure the current data before it is replaced. Returns false when Replace must not proceed.
+    /// What needs the user (a password for a manual copy, a folder) is asked on the main thread;
+    /// sealing and writing — PBKDF2, compression, fsync, the read-back — run on a background queue
+    /// while a small progress panel keeps the run loop alive, so a slow or hung volume never blocks
+    /// the interface or Lock. Replace proceeds only after the copy was written and read back.
     func makeRollbackCopy() -> Bool {
         if history.items.isEmpty && templates.root.children.isEmpty { return true }      // nothing to lose
         history.flush(); templates.flush()
-        let name = BackupEngine.beforeRestorePrefix + BackupEngine.fileName(created: Date(), sourceID: settings.backupSourceID ?? "local", backupID: UUID().uuidString.lowercased()).dropFirst("Keepit-".count)
+        let name = String(BackupEngine.beforeRestorePrefix + BackupEngine.fileName(created: Date(), sourceID: settings.backupSourceID ?? "local",
+                                                                                   backupID: UUID().uuidString.lowercased()).dropFirst("Keepit-".count))
         let payload = Backup.Payload(history: history.items, templates: templates.root, settings: settings.forBackup)
-        let bytes: Data
-        do {
-            if Vault.isEnabled, let key = Storage.key, let header = Vault.backupHeader(app: "Keepit \(AppInfo.version)", sourceID: settings.backupSourceID) {
-                bytes = try Backup.encodeAutomatic(payload, dataKey: key, vault: header)
-            } else {
-                guard let pw = Vault.askPassword(title: L("Password for the copy of your current data"),
-                                                 message: L("Before replacing, Keepit saves what you have now as a .keepit file. Choose a password for that file; you will need it to go back."),
-                                                 confirm: true) else { return false }
-                defer { pw.zero() }
-                bytes = try Backup.encode(payload, password: pw)
-            }
-        } catch {
-            Vault.error(LF("Could not prepare the copy of the current data: %@", error.localizedDescription)); return false
+        // The sealing step, decided here, run there. A manual copy needs a password now.
+        let seal: () throws -> Data
+        if Vault.isEnabled, let key = Storage.key, let header = Vault.backupHeader(app: "Keepit \(AppInfo.version)", sourceID: settings.backupSourceID) {
+            seal = { try Backup.encodeAutomatic(payload, dataKey: key, vault: header) }
+        } else {
+            guard let pw = Vault.askPassword(title: L("Password for the copy of your current data"),
+                                             message: L("Before replacing, Keepit saves what you have now as a .keepit file. Choose a password for that file; you will need it to go back."),
+                                             confirm: true) else { return false }
+            seal = { defer { pw.zero() }; return try Backup.encode(payload, password: pw) }
         }
         // Where: the backup folder if there is one, otherwise a folder the user picks now
         // (a file chosen in an open panel grants no right to write next to it).
@@ -204,14 +267,42 @@ extension AppDelegate {
             guard panel.runModal() == .OK, let folder = panel.url else { return false }
             destination = PlainFolderDestination(folder)
         }
-        do {
-            _ = try destination.withFolder { folder in
-                _ = try BackupEngine.write(bytes, sha: BackupEngine.sha256(bytes), name: String(name), to: PlainFolderDestination(folder))
-            }
-            return true
-        } catch {
+        let result = Self.sealAndWriteOffMain(message: L("Saving a copy of your current data…"), seal: seal) { bytes in
+            _ = try BackupEngine.write(bytes, sha: BackupEngine.sha256(bytes), name: name, to: destination)
+        }
+        switch result {
+        case .success: return true
+        case .failure(let error):
             Vault.error(LF("Could not save the copy of the current data: %@", error.localizedDescription))
             return false
         }
+    }
+
+    /// The engine's two stages for a one-off copy: `seal` on `Storage.ioQueue` (it uses the key, and
+    /// Lock waits for that queue before zeroing it), `write` on a global queue (no key; a hung volume
+    /// blocks nobody). The main thread waits in a modal progress panel, so its run loop keeps serving
+    /// events — including the lock notification — meanwhile.
+    static func sealAndWriteOffMain(message: String, seal: @escaping () throws -> Data,
+                                    write: @escaping (Data) throws -> Void) -> Result<Void, Error> {
+        let panel = NSPanel(contentRect: NSRect(x: 0, y: 0, width: 360, height: 72), styleMask: [.titled], backing: .buffered, defer: false)
+        panel.title = "Keepit"
+        panel.isReleasedWhenClosed = false
+        let label = NSTextField(labelWithString: message)
+        label.frame = NSRect(x: 20, y: 40, width: 320, height: 20)
+        let bar = NSProgressIndicator(frame: NSRect(x: 20, y: 16, width: 320, height: 16))
+        bar.style = .bar; bar.isIndeterminate = true; bar.startAnimation(nil)
+        panel.contentView?.addSubview(label); panel.contentView?.addSubview(bar)
+        panel.center()
+        var result: Result<Void, Error> = .success(())
+        func finish(_ r: Result<Void, Error>) { DispatchQueue.main.async { result = r; NSApp.stopModal() } }
+        Storage.ioQueue.async {
+            switch Result(catching: seal) {
+            case .failure(let e): finish(.failure(e))
+            case .success(let bytes): DispatchQueue.global(qos: .userInitiated).async { finish(Result { try write(bytes) }) }
+            }
+        }
+        NSApp.runModal(for: panel)
+        panel.orderOut(nil)
+        return result
     }
 }

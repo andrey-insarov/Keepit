@@ -37,6 +37,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     /// True while the vault key is wiped and data is unloaded (password set, not yet entered).
     private(set) var isLocked = false
+    /// Bumped by every `lock()`. A flow that ran a modal dialog compares it before touching the
+    /// stores: a lock meanwhile purged them, and whatever the flow computed is stale.
+    private(set) var lockCount = 0
 
     /// No settings file yet → first launch (onboarding, login item).
     private let isFirstRun: Bool
@@ -195,6 +198,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc func lock() {
         guard Vault.isEnabled, !isLocked else { return }
         isLocked = true
+        lockCount += 1
         queue.stop()
         viewer?.close()
         preferencesWindow?.close()
@@ -438,7 +442,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     /// Turn protection on with a password already in hand (a restored backup's). The caller wipes `pw`.
-    func enableProtection(with pw: SecureBuffer) -> Bool {
+    /// `recoveryEntropy`: keep a phrase the user already holds (the one that opened a restored
+    /// backup) instead of showing a new one.
+    func enableProtection(with pw: SecureBuffer, recoveryEntropy: [UInt8]? = nil) -> Bool {
         do {
             Storage.key = try Vault.enable(password: pw)
         } catch {
@@ -448,9 +454,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         history.saveNow()
         templates.saveNow()
         syncBiometricKey()
-        if let key = Storage.key, let words = try? Vault.createRecovery(for: key) {
-            backup?.forceNext()
-            RecoveryDialogs.present(words: words)
+        if let key = Storage.key {
+            do {
+                let words = try Vault.createRecovery(for: key, entropy: recoveryEntropy)
+                backup?.forceNext()
+                if recoveryEntropy == nil { RecoveryDialogs.present(words: words) }
+                else { info(L("Protection is on. The recovery phrase from the backup also opens Keepit on this Mac.")) }
+            } catch {
+                Vault.error(LF("Could not set up the recovery phrase: %@", error.localizedDescription))
+            }
         }
         return true
     }
