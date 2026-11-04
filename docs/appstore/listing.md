@@ -43,7 +43,7 @@ PRIVATE BY DESIGN
 • Optional password: history and templates are stored AES-256 encrypted; the key is wiped from memory when Keepit locks — manually, when the screen locks, or when the Mac sleeps.
 • Touch ID unlock, and a 24-word recovery phrase in case you forget the password.
 • Automatic encrypted backup to a folder of your choice — iCloud Drive, Dropbox, an external disk. Complete copies, opened with your Keepit password or recovery phrase on any Mac; the provider only ever sees ciphertext. Restore offered on the first launch of a new Mac.
-• Export / Import: one password-encrypted backup file by hand, any time.
+• Back Up to File / Restore: one password-encrypted backup file by hand, any time.
 
 MADE FOR THE MAC
 • Settings the Mac way: a pane for every topic, every change applies at once.
@@ -58,6 +58,11 @@ Keepit needs the Accessibility permission to paste for you; without it, chosen i
 
 ## Keywords (100 chars, comma-separated)
 clipboard,history,paste,copy,snippets,templates,manager,queue,text expander,productivity
+
+## What's new (version 3.0.1)
+• Settings → Backup: Back Up to File… and Restore… are one pair, by hand, for any .keepit file; the old Export/Import wording is gone.
+• The (?) next to automatic backup now says when copies are made: about five minutes after the last change, at the latest once a day.
+• A file made by hand carries preferences only, never this Mac's trust settings.
 
 ## What's new (version 3.0.0)
 • Automatic encrypted backup: Settings → Backup, pick a folder (iCloud Drive, Dropbox, a disk) and Keepit keeps complete, encrypted copies there — a new one a few minutes after each change, the oldest beyond your limit removed. They open with your Keepit password or recovery phrase on any Mac.

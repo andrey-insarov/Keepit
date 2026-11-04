@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.1 — unreleased
+
+- **Settings → Backup**: the manual pair is *Back Up to File…* and *Restore…* under one heading, *By hand* — the same two operations whatever the destination; the 2.x *Export…* name (without its *Import…*) was confusing
+- The (?) next to *Back up automatically* states the schedule: about five minutes after the last change, not more often, at the latest once a day, nothing while locked
+- *Back Up to File…* writes preferences only (`forBackup`), not this Mac's trust settings or backup setup — the same subset the automatic copies carry
+
 ## 3.0.0 — 2026-11-04
 
 **Automatic encrypted backup** (docs/BACKUP.md, docs/FORMAT.md)

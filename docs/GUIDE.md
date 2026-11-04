@@ -295,7 +295,7 @@ that explains it.
 | **History** | How many text/file items and images to keep (1000 / 30) · forget items older than … · *Remove duplicates* (copying the same thing again moves it to the top) · *Ignore concealed clipboard data* · the ignored-apps list (bundle identifiers; password managers are always ignored) |
 | **Menu** | Search field · numbering · preview panel · tooltips · source-app icons · image thumbnails · items in menu (how many of the latest entries the menu lists, 60 by default; the rest stay searchable) · title length · thumbnail height |
 | **Security** | Password, Touch ID, locking, recovery phrase — [Part 6](#part-6-security) |
-| **Backup** | *Back up automatically to a folder*, the folder, how many copies to keep, the Mac's name in the files, the status line and *Back Up Now* · *Restore…* · *Export…* — [Backup](#backup) |
+| **Backup** | *Back up automatically to a folder*, the folder, how many copies to keep, the Mac's name in the files, the status line and *Back Up Now* · By hand: *Back Up to File…* / *Restore…* — [Backup](#backup) |
 | **Advanced** | Clipboard poll interval · Automation: *Allow keepit:// URL commands* (off by default — [Automation](#automation-the-keepit-url-scheme)) · Data: *Open Folder* · Reset and uninstall: *Reset…* (back to a fresh install, example templates return) · *Uninstall…* (reset, then remove the app, Launch at login, keychain entry and permissions) |
 
 ![Settings → History: limits and the ignored-apps list](site/img/guide/prefs-history.png)
@@ -369,7 +369,7 @@ protection from *Settings → Security*: each copy is sealed with a key derived 
 so it opens with your Keepit password — or your recovery phrase — on this Mac or any other, and
 nothing has to be set up for it. Without a password the checkbox is disabled and says so.
 
-**What happens then.** About five minutes after the last change (and at the latest once a day while
+**What happens then — the schedule.** About five minutes after the last change (and at the latest once a day while
 Keepit runs) Keepit writes a file named `Keepit-<date and time>-<installation>-<id>.keepit` into the
 folder, reads it back to check it, and only then deletes the oldest of its own copies beyond *Keep
 last* (10 by default, 1–100). Each copy is complete on its own — not an increment — so one file is
@@ -393,7 +393,7 @@ when and where the file was made and how many items it holds, then:
 - *Replace* discards the current history and templates and takes the backup's instead. Before it
   does, Keepit writes a copy of what you have now (`Keepit-before-restore-…`) into the backup
   folder, or into a folder you pick; if that copy cannot be written, Replace does not start. If
-  Keepit has no password yet, you are asked for one for that copy, as with *Export…*.
+  Keepit has no password yet, you are asked for one for that copy, as with *Back Up to File…*.
 
 *Also restore preferences* brings the hot keys, limits and options from the backup; the settings
 that express trust in a particular Mac — Touch ID, URL automation and its trusted apps, the backup
@@ -412,11 +412,11 @@ switch automatic backup on for the new Mac. Copies made so far open with the pas
 that were in force when each was written — after a password change, the old ones still need the old
 password.
 
-**Export…** is still there for a single file by hand: it writes one `.keepit` with a password you
-choose for that file (it does not need Keepit's password protection); *Restore…* opens it like any
-other backup — it has taken over what *Import…* did in 2.x. The same file moves data between the
-direct download and the App Store edition, and between Keepit 2.x and 3.x — a file written by 3.0
-needs 3.0 or newer to open; 3.0 reads everything 2.x wrote.
+**By hand.** *Back Up to File…* writes one `.keepit` wherever you choose, with a password you pick
+for that file (it does not need Keepit's password protection); *Restore…* opens it like any other
+backup. The pair replaces *Export…* / *Import…* of 2.x — same operations, named after what they
+do. The file moves data between the direct download and the App Store edition, and between Keepit
+2.x and 3.x — a file written by 3.0 needs 3.0 or newer to open; 3.0 reads everything 2.x wrote.
 
 **If something goes wrong.** A failed copy is reported in the status line and retried with growing
 pauses; the previous copies stay. If Keepit was quit or the Mac went down in the middle of a
