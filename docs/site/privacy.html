@@ -6,16 +6,20 @@
 <style>
 :root{--paper:#fbfbfd;--ink:#0f1222;--ink-2:#4b4f63;--ink-3:#8a8ea3;--blue:#2f4fd1;--blue-deep:#1f3aa6;--blue-tint:#eef2ff;--line:#e3e5ef;--key:#fff;--key-edge:#cfd2de;--win:#fff;--sel:#2f5cf0}
 @media(prefers-color-scheme:dark){:root{--paper:#0c0d14;--ink:#f2f3f8;--ink-2:#b7bacb;--ink-3:#7c8097;--blue:#7d9bff;--blue-deep:#a9bdff;--blue-tint:#151b35;--line:#23263a;--key:#1b1e2e;--key-edge:#3a3e56;--win:#1a1c28;--sel:#3d6bff}}
-*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:72px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:72px;-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;font:17px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif}
 a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 :focus-visible{outline:3px solid var(--sel);outline-offset:3px;border-radius:6px}
 .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
-header{position:sticky;top:0;z-index:20;backdrop-filter:saturate(180%) blur(18px);background:color-mix(in srgb,var(--paper) 78%,transparent);border-bottom:1px solid var(--line)}
+header{position:sticky;top:0;z-index:20;-webkit-backdrop-filter:saturate(180%) blur(18px);backdrop-filter:saturate(180%) blur(18px);background:color-mix(in srgb,var(--paper) 78%,transparent);border-bottom:1px solid var(--line)}
 header .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}
 .brand{display:flex;align-items:center;gap:12px;font-weight:650;color:var(--ink);font-size:20px}.brand img{width:44px;height:44px;border-radius:10px}
-nav{display:flex;gap:24px}nav a{color:var(--ink-2);font-size:15px}nav a:hover{color:var(--ink);text-decoration:none}
-@media(max-width:700px){nav a:not(.gh){display:none}}
+nav{display:flex;gap:24px;align-items:center}nav>a{color:var(--ink-2);font-size:15px}nav>a:hover{color:var(--ink);text-decoration:none}
+.mnav{display:none;position:relative}.mnav summary{list-style:none;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--ink)}
+.mnav summary::-webkit-details-marker{display:none}.mnav summary svg{width:22px;height:22px}.mnav[open] summary{background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.mnav .links{position:absolute;right:0;top:48px;min-width:210px;padding:6px;border-radius:14px;background:var(--win);border:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.18);display:grid}
+.mnav .links a{display:block;padding:11px 14px;border-radius:9px;font-size:16px;color:var(--ink)}.mnav .links a:hover{background:var(--blue-tint);text-decoration:none}
+@media(max-width:700px){nav{gap:10px}nav>a:not(.gh){display:none}.mnav{display:block;margin-right:-8px}}
 main.wrap{display:grid;grid-template-columns:230px minmax(0,1fr);gap:56px;padding-top:48px;padding-bottom:96px}
 main.wrap.narrow{grid-template-columns:minmax(0,1fr);max-width:820px}
 aside{position:sticky;top:76px;align-self:start;max-height:calc(100vh - 96px);overflow:auto;font-size:14px;line-height:1.45;padding-right:8px}
@@ -24,7 +28,7 @@ aside ol{list-style:none;margin:0;padding:0}aside li{margin:0}
 aside a{display:block;color:var(--ink-2);padding:4px 0 4px 12px;border-left:2px solid var(--line)}
 aside a:hover{color:var(--ink);text-decoration:none}aside a.on{color:var(--blue);border-left-color:var(--blue)}
 aside ol ol a{padding-left:24px;font-size:13px;color:var(--ink-3)}
-@media(max-width:900px){main.wrap{grid-template-columns:minmax(0,1fr);gap:0}aside{position:static;max-height:none;margin-bottom:32px;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--win)}aside ol ol{display:none}}
+@media(max-width:900px){main.wrap{grid-template-columns:minmax(0,1fr);gap:0;padding-top:32px;padding-bottom:64px}aside{position:static;max-height:none;margin-bottom:32px;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--win)}aside ol ol{display:none}}
 article{max-width:72ch;min-width:0}
 article h1{font-size:clamp(34px,5vw,52px);line-height:1.05;letter-spacing:-.03em;font-weight:750;margin:0 0 .5em}
 article h1+p{font-size:19px;color:var(--ink-2)}
@@ -33,6 +37,7 @@ article h3{font-size:20px;font-weight:650;margin:1.8em 0 .5em}
 article p,article li{color:var(--ink);}article li{margin:.25em 0}
 article hr{border:0;border-top:1px solid var(--line);margin:2.5em 0}
 code{font:.9em ui-monospace,"SF Mono",Menlo,monospace;background:color-mix(in srgb,var(--ink) 7%,transparent);padding:2px 6px;border-radius:6px;white-space:nowrap}
+@media(max-width:600px){code{white-space:normal;overflow-wrap:anywhere}}
 pre{background:var(--blue-tint);padding:14px 18px;border-radius:12px;overflow:auto;font-size:14px;line-height:1.6;max-width:100%}pre code{background:none;padding:0;white-space:pre-wrap;word-break:break-word}
 kbd.k{display:inline-block;min-width:1.7em;padding:0 .4em;text-align:center;font:600 .82em/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text",Helvetica,Arial,sans-serif;color:var(--ink);background:var(--key);border:1px solid var(--key-edge);border-bottom-width:2px;border-radius:6px;white-space:nowrap;vertical-align:baseline}
 .tbl{overflow-x:auto;margin:1.2em 0}table{border-collapse:collapse;width:100%;font-size:15.5px}th,td{text-align:left;padding:9px 12px 9px 0;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--ink-3);font-weight:600;font-size:14px}td code{display:inline-block;margin:1px 0}
@@ -44,7 +49,7 @@ figure.shot figcaption{font-size:14px;color:var(--ink-3);margin-top:8px}
 .fb{margin:1.4em 0 2em;padding:22px 24px;border:1px solid var(--line);border-radius:16px;background:var(--win);display:grid;gap:14px}
 .fb label{display:grid;gap:6px;font-size:14px;font-weight:600;color:var(--ink-2)}.fb .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:600px){.fb .row2{grid-template-columns:1fr}}
 .fb .hint{font-weight:400;color:var(--ink-3)}
-.fb input[type=text],.fb input[type=email],.fb select,.fb textarea{font:16px/1.4 inherit;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;box-sizing:border-box}
+.fb input[type=text],.fb input[type=email],.fb select,.fb textarea{font:16px/1.4 inherit;color:var(--ink);background:var(--win);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;box-sizing:border-box}
 .fb textarea{resize:vertical;min-height:140px}.fb input:focus,.fb select:focus,.fb textarea:focus{outline:2px solid var(--blue);outline-offset:1px;border-color:transparent}
 .fb input[type=file]{font-size:14px;color:var(--ink-2)}
 .fb-list{list-style:none;margin:-6px 0 0;padding:0;display:grid;gap:6px}.fb-list li{font-size:14px;color:var(--ink-2);display:flex;align-items:center;gap:10px}.fb-list button{font:inherit;font-size:13px;color:var(--blue);background:none;border:0;padding:0;cursor:pointer}.fb-list button:hover{text-decoration:underline}
@@ -57,7 +62,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
 </style></head>
 <body><header><div class="wrap">
   <a class="brand" href="/"><img src="img/icon.png" alt="">Keepit</a>
-  <nav><a href="/#features">Features</a><a href="/guide">Guide</a><a href="/security">Security</a><a href="/support">Support</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a></nav>
+  <nav><a href="/#features">Features</a><a href="/guide">Guide</a><a href="/security">Security</a><a href="/support">Support</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a><details class="mnav"><summary aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><div class="links"><a href="/#features">Features</a><a href="/#privacy">Privacy</a><a href="/#install">Install</a><a href="/guide">Guide</a><a href="/security">Security</a><a href="/support">Support</a></div></details></nav>
 </div></header>
 <main class="wrap narrow"><article><h1 id="privacy-policy-keepit-clipboard-manager">Privacy Policy — Keepit – Clipboard Manager</h1>
 <p><em>Version 1.4, effective 3 November 2026.</em></p>
@@ -110,6 +115,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
 <div id="lb" role="dialog" aria-label="Full-size screenshot"><img alt=""></div>
 <script>
 (function(){
+  var mn=document.querySelector('.mnav');if(mn){mn.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){mn.removeAttribute('open');});});document.addEventListener('click',function(e){if(mn.open&&!mn.contains(e.target))mn.removeAttribute('open');});}
   var lb=document.getElementById('lb'),im=lb.querySelector('img');
   document.querySelectorAll('a.zoom').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();im.src=a.getAttribute('href');im.alt=a.querySelector('img').alt;lb.classList.add('on');});});
   function close(){lb.classList.remove('on');im.src='';}
