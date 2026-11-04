@@ -107,4 +107,32 @@ final class LayoutTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(image.frame.height, 200, "the image view keeps the pane's height, not the picture's: \(image.frame)")
         XCTAssertLessThan(pane.fittingSize.height, 60, "the pane asks for no size of its own: \(pane.fittingSize)")
     }
+
+    /// The whole Viewer window with a small picture selected: toolbar at the top, split view filling the
+    /// rest. On 3.0.1 a 611×49 item folded the window — split view 88 pt tall at the bottom, toolbar
+    /// floating in the middle — with no constraint conflict logged: two views hugging at the same priority.
+    func testViewerWindowKeepsItsShapeWithASmallPicture() throws {
+        _ = NSApplication.shared
+        let storage = TempStorage()
+        defer { storage.restore() }
+        try FileManager.default.createDirectory(at: storage.dir, withIntermediateDirectories: true)
+        let app = AppDelegate()
+        let tiny = NSImage(size: NSSize(width: 611, height: 49), flipped: false) { r in NSColor.gray.setFill(); r.fill(); return true }
+        let png = try XCTUnwrap(NSBitmapImageRep(data: try XCTUnwrap(tiny.tiffRepresentation))?.representation(using: .png, properties: [:]))
+        let item = ClipItem(id: UUID(), date: Date(), formats: [ClipItem.Format.png: png], sourceApp: nil, contentHash: ClipItem.hash(of: png))
+        app.history.add(item)
+        let viewer = ViewerWindowController(app: app)
+        let window = try XCTUnwrap(viewer.window)
+        defer { window.close() }
+        window.setContentSize(NSSize(width: 900, height: 560))
+        viewer.reveal(historyId: item.id)
+        window.layoutIfNeeded()
+        let content = try XCTUnwrap(window.contentView)
+        let split = try XCTUnwrap(descendants(content).compactMap { $0 as? NSSplitView }.first)
+        let pane = try XCTUnwrap(descendants(content).compactMap { $0 as? ImageFormatView }.first, "the picture pane is shown")
+        XCTAssertGreaterThan(split.frame.height, 400, "the split view fills the window, not the picture: \(split.frame) in \(content.bounds)")
+        XCTAssertGreaterThan(split.frame.maxY, content.bounds.maxY - 80, "the split view reaches up to the toolbar: \(split.frame)")
+        XCTAssertGreaterThan(pane.frame.height, 400, "the picture pane is as tall as the split: \(pane.frame)")
+        XCTAssertGreaterThan(pane.frame.width, 400, "and as wide as the right side: \(pane.frame)")
+    }
 }
