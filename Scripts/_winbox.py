@@ -1,6 +1,13 @@
 from PIL import Image
 import numpy as np, glob, os, sys, json
 
+def flat(path):
+    """Open on white: a window shot from Shift-Cmd-4 + Space has a transparent background."""
+    im=Image.open(path)
+    if im.mode in ('RGBA','LA') or (im.mode=='P' and 'transparency' in im.info):
+        im=im.convert('RGBA'); bg=Image.new('RGBA', im.size, (255,255,255,255)); bg.alpha_composite(im); return bg.convert('RGB')
+    return im.convert('RGB')
+
 def lum(a): return (0.299*a[:,:,0]+0.587*a[:,:,1]+0.114*a[:,:,2])
 
 def edge_from(line, light=226, run=60):
@@ -17,7 +24,7 @@ def edge_from(line, light=226, run=60):
     return None
 
 def analyze(path):
-    im=Image.open(path).convert('RGB'); a=np.array(im).astype(float); L=lum(a); H,W=L.shape
+    im=flat(path); a=np.array(im).astype(float); L=lum(a); H,W=L.shape
     # border must be white for this to be a shadowed window shot
     border=np.concatenate([L[0,:],L[-1,:],L[:,0],L[:,-1]])
     if border.min()<240: return None

@@ -2,7 +2,7 @@
 Usage: normalize.py SRC DST  — margins at 2x: left/right 76, top 40, bottom 112."""
 from PIL import Image
 import numpy as np, sys
-import os; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from _winbox import analyze, lum
+import os; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from _winbox import analyze, lum, flat
 M=dict(L=76,T=40,R=76,B=112)
 def top_edge(L, x):
     col=L[:,x]; dark=np.where(col<=245)[0]
@@ -12,7 +12,7 @@ def top_edge(L, x):
 def normalize(src, dst):
     r=analyze(src); assert r, src
     x0,y0,x1,y1=r['win']
-    im=Image.open(src).convert('RGB'); L=lum(np.array(im).astype(float))
+    im=flat(src); L=lum(np.array(im).astype(float))
     tops=[t for t in (top_edge(L,x0+dx) for dx in (250,300,400,500,600)) if t is not None]
     if tops: y0=int(np.median(tops))
     W=x1-x0+1+M['L']+M['R']; H=y1-y0+1+M['T']+M['B']
