@@ -61,14 +61,14 @@ The history keeps the last 1 000 text and file items and the last 30 images by d
 | Opening the history | Spotlight window, `⌘Space` then `⌘4` | A menu at the text cursor, `⌥M` |
 | Pasting | Pick an item in Spotlight | Number keys in the menu; `⌃⌥1`–`⌃⌥0` without opening it; a paste queue for several items in a row |
 | Templates | — | Reusable snippets with date, input and choice placeholders |
-| Encryption | — | AES-256-GCM, unlocked with Touch ID |
+| Password and Touch ID | — | Optional: history encrypted with AES-256-GCM, unlocked with Touch ID |
 | Backup | — | Encrypted backup to a folder you choose |
 
 The two do not get in each other's way: Keepit records what you copy whether or not Spotlight's history is on.
 
 ## Clipboard history and privacy
 
-A clipboard history is a record of everything you copy, so where it is stored matters. Keepit keeps it in one folder on your Mac and nowhere else — no account, no cloud, no analytics. Turn on a password and the history is stored AES-256-GCM encrypted and unlocked with Touch ID. The [security page](/security) has the details.
+A clipboard history is a record of everything you copy, so where it is stored matters. Keepit keeps it in one folder on your Mac — no account, no Keepit server, no analytics. Backups are optional: switch them on and encrypted copies go to a folder you choose, which iCloud Drive or Dropbox may sync under your own account. Turn on a password and the history is stored AES-256-GCM encrypted and unlocked with Touch ID. The [security page](/security) has the details.
 
 ## Related
 
