@@ -255,6 +255,6 @@ there allows `'unsafe-inline'` for scripts and styles because the pages still ca
 third-party scripts except Turnstile, no framing, no plugins, no form posts elsewhere). Moving
 the inline code to files or hashes and dropping `'unsafe-inline'` is a later step. After
 changing the policy, load the landing page and the support form with the browser console open:
-a violation shows up there. The audit also saw `Access-Control-Allow-Origin: *` on responses;
-it is not set in `_headers`, so if it is still there, look for a transform rule in the dashboard
-and remove it — a static site needs no CORS header.
+a violation shows up there. Cloudflare Pages adds `Access-Control-Allow-Origin: *` to every
+static response on its own; `_headers` detaches it (`! Access-Control-Allow-Origin` under `/*`)
+because a static site with a same-origin form needs no CORS header.
