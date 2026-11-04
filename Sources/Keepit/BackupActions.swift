@@ -28,7 +28,7 @@ extension AppDelegate {
         panel.canCreateDirectories = true
         NSApp.activate(ignoringOtherApps: true)
         guard panel.runModal() == .OK, let url = panel.url else { return }
-        guard let pw = Vault.askPassword(title: L("Backup password"),
+        guard let pw = Vault.askPassword(title: L("Archive password"),
                                          message: L("This password locks the archive. You will need it to restore from the file; it is not stored anywhere."),
                                          confirm: true) else { return }
         defer { pw.zero() }
@@ -38,9 +38,9 @@ extension AppDelegate {
         do {
             let data = try Backup.encode(payload, password: pw)
             try data.write(to: url, options: .atomic)
-            info(LF("Backup saved: %d history item(s), %d template item(s).", history.items.count, templates.root.subtreeCount - 1))
+            info(LF("Archive saved: %d history item(s), %d template item(s).", history.items.count, templates.root.subtreeCount - 1))
         } catch {
-            Vault.error(LF("Could not export the backup: %@", error.localizedDescription))
+            Vault.error(LF("Could not save the archive: %@", error.localizedDescription))
         }
     }
 

@@ -511,3 +511,7 @@
 "Writes one .keepit archive wherever you choose, locked with a password you pick for it — no Keepit password needed, and Keepit does not keep track of the file afterwards. For handing data over or keeping a copy outside the backup folder; Restore… opens it on any Mac, in either edition." = "在你選擇的位置寫入一個 .keepit 封存檔，以你為其設定的密碼鎖定——不需要 Keepit 密碼，之後 Keepit 也不再追蹤該檔案。用於移交資料或在備份資料夾之外保留一份副本；「還原…」可在任何 Mac、任一版本中開啟它。";
 "Puts Keepit back to a fresh install: history, templates, settings, the password and the Touch ID key are deleted and the example templates return; the app, its permissions and Launch at login stay. Asks for your password or Touch ID. There is no undo — save an archive first if you may want the data back." = "將 Keepit 恢復為全新安裝狀態：歷史記錄、範本、設定、密碼和 Touch ID 金鑰會被刪除，範例範本會回復；App 本身、其權限和登入時開啟保持不變。需要密碼或 Touch ID。無法復原——如果之後可能需要這些資料，請先儲存封存檔。";
 "Reset, then remove the app itself, Launch at login, the keychain entry and the Accessibility permission. Asks for your password or Touch ID and for a typed confirmation. Save an archive first if you may want the data back." = "先重置，再移除 App 本身、登入時開啟、鑰匙圈項目和輔助使用權限。需要密碼或 Touch ID 以及輸入確認。如果之後可能需要這些資料，請先儲存封存檔。";
+"Archive password" = "封存檔密碼";
+"Archive saved: %d history item(s), %d template item(s)." = "封存檔已儲存：歷史記錄 %d 個，範本 %d 個。";
+"Could not save the archive: %@" = "無法儲存封存檔：%@";
+"Enter the password this archive was saved with." = "請輸入儲存此封存檔時使用的密碼。";

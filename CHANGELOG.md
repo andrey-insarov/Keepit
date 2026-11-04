@@ -6,7 +6,7 @@
 - The window's (?) opens the user guide at the section for the pane on screen, not at the top
 - *Delete* in the history menu (extended menu or ⌃⌥⌫ on an item) no longer closes the menu: it reopens at once, the same way and in the same place, with the search text kept — tidying several items in a row is one visit, not one per item
 - The (?) next to *Back up automatically* states the schedule: about five minutes after the last change, not more often, at the latest once a day, nothing while locked
-- *Save to Archive…* writes preferences only (`forBackup`), not this Mac's trust settings or backup setup — the same subset the automatic copies carry; suggested file name `Keepit-archive-<date>-manual.keepit` — next to the automatic `Keepit-<timestamp>-<ids>.keepit` the two are told apart at a glance
+- *Save to Archive…* writes preferences only (`forBackup`), not this Mac's trust settings or backup setup — the same subset the automatic copies carry; suggested file name `Keepit-archive-<date>-manual.keepit` — next to the automatic `Keepit-<timestamp>-<ids>.keepit` the two are told apart at a glance. The dialogs say *archive* too: *Archive password* when saving and when opening a manual-mode file ("Enter the password this archive was saved with."), *Archive saved: …*; the password of an automatic copy is still asked for as *Backup password*
 
 ## 3.0.0 — 2026-11-04
 
