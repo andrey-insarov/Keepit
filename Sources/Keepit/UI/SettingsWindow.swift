@@ -310,6 +310,10 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         backupFolderRow.orientation = .horizontal; backupFolderRow.spacing = 8
         backupStatus.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
         backupStatus.textColor = .secondaryLabelColor
+        backupStatus.lineBreakMode = .byWordWrapping
+        backupStatus.maximumNumberOfLines = 0
+        backupStatus.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        backupPath.maximumNumberOfLines = 1
         backupNow.target = self; backupNow.action = #selector(backUpNowTapped)
         backupRestore.target = self; backupRestore.action = #selector(restoreTapped)
         var generalRows: [[NSView]] = [
@@ -410,6 +414,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
 
         protect.target = self; protect.action = #selector(protectToggled)
         trustedReset.target = self; trustedReset.action = #selector(forgetTrustedSenders)
+        trustedReset.title = LF("Forget Trusted Apps (%d)", 999)       // measured with the widest title it can get; load() sets the real one
         changePw.target = self; changePw.action = #selector(changePasswordTapped)
         newPhrase.target = self; newPhrase.action = #selector(newPhraseTapped)
         let security = grid([
@@ -470,6 +475,14 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         for p in panes { (p.view as? NSGridView)?.layoutSubtreeIfNeeded() }
         let widest = ceil(panes.map { $0.view.fittingSize.width }.max() ?? 480)
         windowWidth = max(560, widest + 2 * 28)
+        // Rows whose text arrives later — the folder path, the status line — are measured empty and
+        // must live within the window afterwards: the path truncates in the middle, the status wraps
+        // (and the window grows to fit the lines, see backupStateChanged).
+        let labelColumn = (0..<backup.numberOfRows).compactMap { backup.cell(atColumnIndex: 0, rowIndex: $0).contentView?.fittingSize.width }.max() ?? 0
+        let available = windowWidth - 2 * 28 - ceil(labelColumn) - backup.columnSpacing
+        backupFolderRow.widthAnchor.constraint(lessThanOrEqualToConstant: available).isActive = true
+        backupStatus.preferredMaxLayoutWidth = available
+        backupStatus.widthAnchor.constraint(lessThanOrEqualToConstant: available).isActive = true
 
         container.translatesAutoresizingMaskIntoConstraints = false
         let guide = NSButton(title: "", target: self, action: #selector(openGuide))
@@ -555,9 +568,16 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         shownPane?.removeFromSuperview()
         let v = pane.view
         container.addSubview(v)
+        let leading = v.leadingAnchor.constraint(greaterThanOrEqualTo: container.leadingAnchor, constant: 28)
+        let trailing = v.trailingAnchor.constraint(lessThanOrEqualTo: container.trailingAnchor, constant: -28)
+        leading.priority = .init(999); trailing.priority = .init(999)   // never wider than the window; compressible text gives way
         NSLayoutConstraint.activate([
             v.topAnchor.constraint(equalTo: container.topAnchor, constant: 20),
             v.centerXAnchor.constraint(equalTo: container.centerXAnchor),
+            // The window's own size is a priority-500 constraint: pinning the bottom makes the
+            // window follow the content whenever a wrapped line changes its height later.
+            v.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -(16 + 21 + 14)),
+            leading, trailing,
         ])
         shownPane = v
         window.toolbar?.selectedItemIdentifier = pane.id
@@ -879,6 +899,10 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             backupStatus.stringValue = LF("Last backup: %@ · %@", df.string(from: d), fmt.string(fromByteCount: Int64(size)))
         } else {
             backupStatus.stringValue = L("No backup yet.")
+        }
+        // A longer status wraps to more lines: the window height follows (same as setStatus).
+        if let pane = panes.first(where: { $0.view === shownPane }), pane.id.rawValue == "backup" {
+            show(pane: pane, animate: window?.isVisible == true)
         }
     }
     @objc private func uninstallTapped() { app.uninstallRequested() }
