@@ -418,7 +418,7 @@ changed. There is no Keepit server: the folder is yours. What the provider behin
 encrypted file, its size and a small unencrypted header (when and by which Keepit it was written,
 how the key is derived, random identifiers — and your Mac's name only if you switch that on); the
 <a href="/security#backups">security page</a> lists it field by field.</p>
-<figure class="shot" style="max-width:636px"><a href="img/guide/prefs-backup.png?v=20cf46e6" class="zoom" title="Open full size"><img src="img/guide/prefs-backup.png?v=20cf46e6" alt="Settings → Backup: automatic backup, manual backup, restore" width="636" height="527" loading="lazy"></a><figcaption>Settings → Backup: automatic backup, manual backup, restore</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="img/guide/prefs-backup.png?v=74a89d0d" class="zoom" title="Open full size"><img src="img/guide/prefs-backup.png?v=74a89d0d" alt="Settings → Backup: automatic backup, manual backup, restore" width="636" height="527" loading="lazy"></a><figcaption>Settings → Backup: automatic backup, manual backup, restore</figcaption></figure>
 <p><strong>Switching it on.</strong> <em>Settings → Backup → Back up automatically to a folder</em>, then
 <em>Choose…</em> a folder (the chooser opens in iCloud Drive). Automatic backup needs the password
 protection from <em>Settings → Security</em>: each copy is sealed with a key derived from your vault's key,
@@ -439,6 +439,7 @@ can see that name; that is why it is optional.</p>
 after you unlock it: with the password of the Mac it was made on, or with the recovery phrase that
 Mac showed when its password was set (<em>Recovery Access…</em> in the password dialog). A preview shows
 when and where the file was made and how many items it holds, then:</p>
+<figure class="shot" style="max-width:636px"><a href="img/guide/restore-preview.png?v=9cc1b2ab" class="zoom" title="Open full size"><img src="img/guide/restore-preview.png?v=9cc1b2ab" alt="The restore preview: when and by which Keepit the file was written, what it holds, Merge or Replace" width="636" height="592" loading="lazy"></a><figcaption>The restore preview: when and by which Keepit the file was written, what it holds, Merge or Replace</figcaption></figure>
 <ul>
 <li><em>Merge</em> adds what is not already there — history items by content, and the backup's templates as
   one new folder named <em>Imported <date></em>, without their hot keys — so you can see exactly what came
@@ -468,8 +469,9 @@ phrase. <em>Save to Archive…</em> writes one <code>.keepit</code> <em>archive<
 password you pick for it: it does not need Keepit's password protection, and Keepit does not keep
 track of the file afterwards — for handing data over, or for a copy outside the backup folder.
 Its suggested name says what it is: <code>Keepit-archive-&lt;date&gt;-manual.keepit</code>, next to the automatic
-copies' <code>Keepit-&lt;date and time&gt;-&lt;installation&gt;-&lt;id&gt;.keepit</code>.
-<em>Restore…</em> opens either. The archive replaces <em>Export…</em> / <em>Import…</em> of 2.x; the file moves data
+copies' <code>Keepit-&lt;date and time&gt;-&lt;installation&gt;-&lt;id&gt;.keepit</code>.</p>
+<figure class="shot" style="max-width:636px"><a href="img/guide/save-to-archive.png?v=0ec6b595" class="zoom" title="Open full size"><img src="img/guide/save-to-archive.png?v=0ec6b595" alt="Save to Archive…: the file name says archive and manual" width="636" height="600" loading="lazy"></a><figcaption>Save to Archive…: the file name says archive and manual</figcaption></figure>
+<p><em>Restore…</em> opens either. The archive replaces <em>Export…</em> / <em>Import…</em> of 2.x; the file moves data
 between the direct download and the App Store edition, and between Keepit 2.x and 3.x — a file
 written by 3.0 needs 3.0 or newer to open; 3.0 reads everything 2.x wrote.</p>
 <p><strong>If something goes wrong.</strong> A failed copy is reported in the status line and retried with growing
@@ -544,7 +546,7 @@ entries (including the Touch ID key), the login item and the Accessibility entry
 password or Touch ID, a typed <code>DELETE</code> and a confirmation — export a backup first if you might want
 the data back. With Homebrew, run <code>brew uninstall --cask --force keepit</code> afterwards so Homebrew
 forgets the cask.</p>
-<figure class="shot" style="max-width:636px"><a href="img/guide/prefs-advanced.png?v=8dd10f4d" class="zoom" title="Open full size"><img src="img/guide/prefs-advanced.png?v=8dd10f4d" alt="Settings → Advanced" width="636" height="515" loading="lazy"></a><figcaption>Settings → Advanced</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="img/guide/prefs-advanced.png?v=7b874d4f" class="zoom" title="Open full size"><img src="img/guide/prefs-advanced.png?v=7b874d4f" alt="Settings → Advanced" width="636" height="515" loading="lazy"></a><figcaption>Settings → Advanced</figcaption></figure>
 <hr />
 <h2 id="reference">Reference</h2>
 <h3 id="troubleshooting">Troubleshooting</h3>

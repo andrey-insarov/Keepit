@@ -389,6 +389,8 @@ after you unlock it: with the password of the Mac it was made on, or with the re
 Mac showed when its password was set (*Recovery Access…* in the password dialog). A preview shows
 when and where the file was made and how many items it holds, then:
 
+![The restore preview: when and by which Keepit the file was written, what it holds, Merge or Replace](site/img/guide/restore-preview.png)
+
 - *Merge* adds what is not already there — history items by content, and the backup's templates as
   one new folder named *Imported <date>*, without their hot keys — so you can see exactly what came
   from the backup and move or delete it. Nothing of yours is overwritten.
@@ -421,6 +423,9 @@ password you pick for it: it does not need Keepit's password protection, and Kee
 track of the file afterwards — for handing data over, or for a copy outside the backup folder.
 Its suggested name says what it is: `Keepit-archive-<date>-manual.keepit`, next to the automatic
 copies' `Keepit-<date and time>-<installation>-<id>.keepit`.
+
+![Save to Archive…: the file name says archive and manual](site/img/guide/save-to-archive.png)
+
 *Restore…* opens either. The archive replaces *Export…* / *Import…* of 2.x; the file moves data
 between the direct download and the App Store edition, and between Keepit 2.x and 3.x — a file
 written by 3.0 needs 3.0 or newer to open; 3.0 reads everything 2.x wrote.
