@@ -98,5 +98,13 @@ final class LayoutTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(image.frame.width, 300, "the image view fills the pane, it is not squeezed by the picture's own size")
         XCTAssertLessThan(info.frame.minX, 20, "size line at the left: \(info.frame)")
         XCTAssertTrue(info.stringValue.hasPrefix("1397×868 px"), info.stringValue)
+        // A tiny picture (25×119, a Parallels console icon) must not shrink the pane to its own size
+        // either: on 3.0.1 it folded the whole Viewer — toolbar mid-window, both panes 150 pt tall.
+        let tiny = NSImage(size: NSSize(width: 25, height: 119), flipped: false) { r in NSColor.blue.setFill(); r.fill(); return true }
+        pane.load(data: try XCTUnwrap(NSBitmapImageRep(data: try XCTUnwrap(tiny.tiffRepresentation))?.representation(using: .png, properties: [:])))
+        host.layoutSubtreeIfNeeded()
+        XCTAssertEqual(pane.frame, host.bounds)
+        XCTAssertGreaterThanOrEqual(image.frame.height, 200, "the image view keeps the pane's height, not the picture's: \(image.frame)")
+        XCTAssertEqual(pane.fittingSize, .zero, "the pane asks for no size of its own")
     }
 }
