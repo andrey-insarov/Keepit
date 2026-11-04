@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- App icon: a lock badge in the lower-right corner — the history is under a password. Same clipboard, same colours; `Resources/Icon/icon.svg`, the iconset and `.icns`, the site icon and the social preview; `make_icns.py` renders with rsvg-convert when Playwright is absent
+
 ## 3.0.1 — 2026-11-04
 
 - **Settings → Backup** in three groups: *Automatic backup* (with the status line beside the heading), *Manual backup* — *Back Up Now* and *Save to Archive…* — and *Restore*. The 2.x *Export…* name, without its *Import…*, was confusing; an archive is a password-locked `.keepit` saved anywhere that Keepit does not track afterwards

@@ -46,4 +46,12 @@
     <rect x="412" y="212" width="200" height="112" rx="40" fill="url(#clip)"/>
     <rect x="452" y="188" width="120" height="64" rx="32" fill="none" stroke="url(#clip)" stroke-width="30"/>
   </g>
+  <!-- Lock badge: the history is under a password. White disc over the board's corner, the lock in the clip's colour -->
+  <g filter="url(#shadow)"><circle cx="772" cy="792" r="124" fill="#FFFFFF"/></g>
+  <circle cx="772" cy="792" r="124" fill="url(#board)"/>
+  <g transform="translate(772,796) scale(1.45) translate(-50,-62)">
+    <path d="M 30 48 V 34 a 20 20 0 0 1 40 0 V 48" fill="none" stroke="url(#clip)" stroke-width="11" stroke-linecap="round"/>
+    <rect x="14" y="46" width="72" height="54" rx="12" fill="url(#clip)"/>
+    <circle cx="50" cy="68" r="7" fill="#FFFFFF"/><rect x="46.5" y="68" width="7" height="16" rx="3.5" fill="#FFFFFF"/>
+  </g>
 </svg>
