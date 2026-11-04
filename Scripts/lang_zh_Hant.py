@@ -494,4 +494,11 @@ T = {
 'Makes a copy right away, without waiting for the quiet period — the same file as an automatic one, in the same folder and series.': '立即建立一份副本，無需等待靜默期——與自動備份相同的檔案，寫入同一資料夾和同一系列。',
 "Opens a backup — one of this Mac's, another Mac's, or an exported file — and lets you Merge it into the current data or Replace them (a copy of the current data is saved first). Double-clicking a .keepit file in the Finder does the same.": '開啟一份備份——本機的、另一台 Mac 的或匯出的檔案——並將其合併到目前資料或取代目前資料（取代前會先儲存目前資料的副本）。在 Finder 中按兩下 .keepit 檔案效果相同。',
 'Writes one .keepit file with history, templates and preferences, encrypted with a password you choose for that file — no Keepit password needed. Open it with Restore… on any Mac, in either edition.': '寫入一個包含歷史記錄、範本和偏好設定的 .keepit 檔案，以你為該檔案選擇的密碼加密，無需 Keepit 密碼。可在任何 Mac、任一版本中透過「還原…」開啟。',
+'Back Up to File…': '備份到檔案…',
+'By hand': '手動',
+'Back Up to File': '備份到檔案',
+'This password protects the backup file. You will need it to restore from the file; it is not stored anywhere.': '此密碼用於保護備份檔案。從該檔案還原時需要它；它不會儲存在任何地方。',
+'Keepit writes encrypted copies of the history and templates into the folder you choose — iCloud Drive, Dropbox, an external disk. A new copy about five minutes after the last change (not more often), at the latest once a day; nothing while Keepit is locked. Each copy opens with your Keepit password or recovery phrase, on this Mac or another. Needs password protection (Security). It is a backup, not a sync: two Macs write their own series of files.': 'Keepit 會將歷史記錄和範本的加密副本寫入你選擇的資料夾——iCloud Drive、Dropbox、外接磁碟。最後一次變更約五分鐘後產生新副本（不會更頻繁），至少每天一次；鎖定期間不寫入。每份副本可用你的 Keepit 密碼或復原助記詞開啟，在本機或另一台 Mac 上。需要密碼保護（安全性）。這是備份而非同步：兩台 Mac 各寫各的檔案系列。',
+'Writes one .keepit file wherever you choose, encrypted with a password you pick for that file — no Keepit password needed. Restore… opens it on any Mac, in either edition; it is the way to move data by hand.': '在你選擇的位置寫入一個 .keepit 檔案，以你為該檔案設定的密碼加密——不需要 Keepit 密碼。「還原…」可在任何 Mac、任一版本中開啟它；這是手動搬移資料的方式。',
+"Opens any backup — one of this Mac's automatic copies, another Mac's, or a file made with Back Up to File… — and lets you Merge it into the current data or Replace them (a copy of the current data is saved first). Double-clicking a .keepit file in the Finder does the same.": '開啟任意備份——本機的自動副本、另一台 Mac 的副本，或以「備份到檔案…」產生的檔案——並將其合併到目前資料或取代目前資料（取代前會先儲存目前資料的副本）。在 Finder 中按兩下 .keepit 檔案效果相同。',
 }
