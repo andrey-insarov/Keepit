@@ -44,7 +44,8 @@ enum Backup {
     static func suggestedFileName(date: Date = Date()) -> String {
         let f = DateFormatter()
         f.dateFormat = "yyyy-MM-dd"
-        return "Keepit-archive-\(f.string(from: date)).\(fileExtension)"
+        // "archive" and "manual" both say it: not one of the automatic series, made by hand, own password.
+        return "Keepit-archive-\(f.string(from: date))-manual.\(fileExtension)"
     }
 
     static func isBackup(_ data: Data) -> Bool { Container.isContainer(data) }

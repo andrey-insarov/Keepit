@@ -417,6 +417,8 @@ right away — same kind of file, same folder and series, opened with your Keepi
 phrase. *Save to Archive…* writes one `.keepit` *archive* wherever you choose, locked with a
 password you pick for it: it does not need Keepit's password protection, and Keepit does not keep
 track of the file afterwards — for handing data over, or for a copy outside the backup folder.
+Its suggested name says what it is: `Keepit-archive-<date>-manual.keepit`, next to the automatic
+copies' `Keepit-<date and time>-<installation>-<id>.keepit`.
 *Restore…* opens either. The archive replaces *Export…* / *Import…* of 2.x; the file moves data
 between the direct download and the App Store edition, and between Keepit 2.x and 3.x — a file
 written by 3.0 needs 3.0 or newer to open; 3.0 reads everything 2.x wrote.
