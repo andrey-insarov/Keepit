@@ -256,7 +256,7 @@ The historical map from CLCL's C sources to these files is in [docs/ORIGINS.md](
 
 ## Roadmap
 
-**3.0 — on `release/3.0`, tag pending**
+**3.0 — shipped**
 
 1. **Automatic encrypted backup to your own cloud folder** — iCloud Drive, Google Drive, Dropbox or
    any folder: complete `.keepit` files written a few minutes after each change, rotated, opened with

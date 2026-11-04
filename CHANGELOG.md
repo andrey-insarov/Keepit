@@ -1,6 +1,6 @@
 # Changelog
 
-## 3.0.0 — unreleased
+## 3.0.0 — 2026-11-04
 
 **Automatic encrypted backup** (docs/BACKUP.md, docs/FORMAT.md)
 
