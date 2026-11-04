@@ -15,21 +15,21 @@ extension Backup.Failure: LocalizedError {
     }
 }
 
-/// Settings → Backup → Back Up to File… (Restore… is in RestoreActions.swift).
+/// Settings → Backup → Save to Archive… (Restore… is in RestoreActions.swift).
 extension AppDelegate {
     static let backupType: UTType = UTType("com.it.keep.backup") ?? UTType(filenameExtension: Backup.fileExtension) ?? .data
 
     @objc func exportBackup() {
         guard !isLocked else { NSSound.beep(); return }
         let panel = NSSavePanel()
-        panel.title = L("Back Up to File")
+        panel.title = L("Save to Archive")
         panel.nameFieldStringValue = Backup.suggestedFileName()
         panel.allowedContentTypes = [Self.backupType]
         panel.canCreateDirectories = true
         NSApp.activate(ignoringOtherApps: true)
         guard panel.runModal() == .OK, let url = panel.url else { return }
         guard let pw = Vault.askPassword(title: L("Backup password"),
-                                         message: L("This password protects the backup file. You will need it to restore from the file; it is not stored anywhere."),
+                                         message: L("This password locks the archive. You will need it to restore from the file; it is not stored anywhere."),
                                          confirm: true) else { return }
         defer { pw.zero() }
         history.flush()

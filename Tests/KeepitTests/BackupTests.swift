@@ -69,7 +69,7 @@ final class BackupTests: XCTestCase {
     }
 
     func testSuggestedFileName() {
-        XCTAssertTrue(Backup.suggestedFileName().hasPrefix("Keepit-backup-"))
+        XCTAssertTrue(Backup.suggestedFileName().hasPrefix("Keepit-archive-"))
         XCTAssertTrue(Backup.suggestedFileName().hasSuffix(".keepit"))
     }
 }
