@@ -301,7 +301,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
     // MARK: Panes
 
     private func buildPanes() {
-        let exportBtn = NSButton(title: L("Export…"), target: self, action: #selector(exportTapped))
+        let exportBtn = NSButton(title: L("Back Up to File…"), target: self, action: #selector(exportTapped))
         backupPath.lineBreakMode = .byTruncatingMiddle
         backupPath.textColor = .secondaryLabelColor
         backupPath.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
@@ -333,17 +333,16 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         // other panes — a header per group, one checkbox or one row per line, help only behind (?).
         let backup = grid([
             header(L("Automatic backup")),
-            [NSView(), help(check(autoBackup), L("Keepit writes encrypted copies of the history and templates into the folder you choose — iCloud Drive, Dropbox, an external disk. Each copy opens with your Keepit password or recovery phrase, on this Mac or another. Needs password protection (Security). It is a backup, not a sync: two Macs write their own series of files."))],
+            [NSView(), help(check(autoBackup), L("Keepit writes encrypted copies of the history and templates into the folder you choose — iCloud Drive, Dropbox, an external disk. A new copy about five minutes after the last change (not more often), at the latest once a day; nothing while Keepit is locked. Each copy opens with your Keepit password or recovery phrase, on this Mac or another. Needs password protection (Security). It is a backup, not a sync: two Macs write their own series of files."))],
             row(L("Folder:"), backupFolderRow),
             row(L("Keep last:"), help(number(backupKeep, unit: L("backups"), min: 1, max: 100, step: 1),
                                      L("Older copies of this Mac's series are deleted after a new one has been written and verified. Files Keepit did not write here are never touched."))),
             [NSView(), help(check(backupLabelOn), L("Puts the Mac's name into the unencrypted header of each file so series are easy to tell apart. The storage provider can see it. Off by default."))],
             [NSView(), backupStatus],
             [NSView(), help(button(backupNow), L("Makes a copy right away, without waiting for the quiet period — the same file as an automatic one, in the same folder and series."))],
-            header(L("Restore")),
-            [NSView(), help(button(backupRestore), L("Opens a backup — one of this Mac's, another Mac's, or an exported file — and lets you Merge it into the current data or Replace them (a copy of the current data is saved first). Double-clicking a .keepit file in the Finder does the same."))],
-            header(L("Export")),
-            [NSView(), help(button(exportBtn), L("Writes one .keepit file with history, templates and preferences, encrypted with a password you choose for that file — no Keepit password needed. Open it with Restore… on any Mac, in either edition."))],
+            header(L("By hand")),
+            [NSView(), help(button(exportBtn), L("Writes one .keepit file wherever you choose, encrypted with a password you pick for that file — no Keepit password needed. Restore… opens it on any Mac, in either edition; it is the way to move data by hand."))],
+            [NSView(), help(button(backupRestore), L("Opens any backup — one of this Mac's automatic copies, another Mac's, or a file made with Back Up to File… — and lets you Merge it into the current data or Replace them (a copy of the current data is saved first). Double-clicking a .keepit file in the Finder does the same."))],
         ])
 
         let resetHK = NSButton(title: L("Reset to Defaults"), target: self, action: #selector(resetShortcuts))
