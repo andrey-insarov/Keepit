@@ -78,4 +78,25 @@ final class LayoutTests: XCTestCase {
                                         "needs \(button.intrinsicContentSize.width), has \(button.bounds.width)")
         }
     }
+
+    /// The Viewer's image pane: a picture larger than the pane is scaled into it, in place, with the
+    /// size line at the left — not a 2x corner of it pushed to the right (3.0.1, a 1397×868 screenshot).
+    func testViewerImagePaneFitsALargePicture() throws {
+        _ = NSApplication.shared
+        let host = NSView(frame: NSRect(x: 0, y: 0, width: 400, height: 300))
+        let pane = ImageFormatView(frame: .zero)
+        host.addSubview(pane)
+        host.pinToEdges(pane)
+        let big = NSImage(size: NSSize(width: 1397, height: 868), flipped: false) { r in NSColor.red.setFill(); r.fill(); return true }
+        let png = try XCTUnwrap(NSBitmapImageRep(data: try XCTUnwrap(big.tiffRepresentation))?.representation(using: .png, properties: [:]))
+        pane.load(data: png)
+        host.layoutSubtreeIfNeeded()
+        let image = try XCTUnwrap(descendants(pane).compactMap { $0 as? NSImageView }.first)
+        let info = try XCTUnwrap(descendants(pane).compactMap { $0 as? NSTextField }.first)
+        XCTAssertEqual(pane.frame, host.bounds)
+        XCTAssertLessThanOrEqual(image.frame.maxX, host.bounds.maxX, "image view \(image.frame) in \(host.bounds)")
+        XCTAssertGreaterThanOrEqual(image.frame.width, 300, "the image view fills the pane, it is not squeezed by the picture's own size")
+        XCTAssertLessThan(info.frame.minX, 20, "size line at the left: \(info.frame)")
+        XCTAssertTrue(info.stringValue.hasPrefix("1397×868 px"), info.stringValue)
+    }
 }

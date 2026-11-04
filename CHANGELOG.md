@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Viewer: an image item is shown scaled into the pane, centred, with its pixel size above — instead of a 2x-enlarged corner of it pushed to the right edge (3.0.1)
+
 ## 3.0.1 — 2026-11-04
 
 - **Settings → Backup** in three groups: *Automatic backup* (with the status line beside the heading), *Manual backup* — *Back Up Now* and *Save to Archive…* — and *Restore*. The 2.x *Export…* name, without its *Import…*, was confusing; an archive is a password-locked `.keepit` saved anywhere that Keepit does not track afterwards
