@@ -363,6 +363,8 @@ encrypted file, its size and a small unencrypted header (when and by which Keepi
 how the key is derived, random identifiers — and your Mac's name only if you switch that on); the
 [security page](/security#backups) lists it field by field.
 
+![Settings → Backup: automatic backup, manual backup, restore](site/img/guide/prefs-backup.png)
+
 **Switching it on.** *Settings → Backup → Back up automatically to a folder*, then
 *Choose…* a folder (the chooser opens in iCloud Drive). Automatic backup needs the password
 protection from *Settings → Security*: each copy is sealed with a key derived from your vault's key,
