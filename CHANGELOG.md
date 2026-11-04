@@ -2,9 +2,10 @@
 
 ## 3.0.1 — 2026-11-04
 
-- **Settings → Backup**: the manual pair is *Back Up to File…* and *Restore…* under one heading, *By hand* — the same two operations whatever the destination; the 2.x *Export…* name (without its *Import…*) was confusing
+- **Settings → Backup** in three groups: *Automatic backup* (with the status line beside the heading), *Manual backup* — *Back Up Now* and *Save to Archive…* — and *Restore*. The 2.x *Export…* name, without its *Import…*, was confusing; an archive is a password-locked `.keepit` saved anywhere that Keepit does not track afterwards
+- The window's (?) opens the user guide at the section for the pane on screen, not at the top
 - The (?) next to *Back up automatically* states the schedule: about five minutes after the last change, not more often, at the latest once a day, nothing while locked
-- *Back Up to File…* writes preferences only (`forBackup`), not this Mac's trust settings or backup setup — the same subset the automatic copies carry
+- *Save to Archive…* writes preferences only (`forBackup`), not this Mac's trust settings or backup setup — the same subset the automatic copies carry; suggested file name `Keepit-archive-<date>.keepit`
 
 ## 3.0.0 — 2026-11-04
 

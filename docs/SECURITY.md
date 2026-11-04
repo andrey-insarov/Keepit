@@ -150,7 +150,7 @@ compressed with LZFSE and sealed with AES-256-GCM. Two ways to make one, same fi
   with the key material in force when it was written: after a password change or a new phrase,
   earlier copies still need the earlier password or phrase, and a copy made before a phrase existed
   cannot be opened with one.
-- **Back Up to File…** (any time, no password protection needed): the file key comes from a password you
+- **Save to Archive…** (any time, no password protection needed): the file key comes from a password you
   choose for that file, PBKDF2-HMAC-SHA256 with 200 000 rounds and a random salt.
 
 **What a file looks like inside.** A magic string and a format version, then a small JSON header,
@@ -177,7 +177,7 @@ apps, the backup folder) are never taken from a backup.
 
 **Where the copies go** is up to you, and so is who else can reach that folder. The ciphertext is
 only as safe as the password behind it: the same advice as for the vault applies, and for
-*Back Up to File…* files, which carry their own password, a short one is the weak point. Deleting a copy
+*Save to Archive…* files, which carry their own password, a short one is the weak point. Deleting a copy
 from the folder removes it *there*; what cannot be taken back is anything the provider keeps as an
 earlier version or in its trash, or a copy that was downloaded elsewhere — treat a file that has
 left the folder as permanent, and a weak password on it as the real exposure. On the App Store

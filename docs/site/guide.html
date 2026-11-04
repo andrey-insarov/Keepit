@@ -365,7 +365,7 @@ that explains it.</p>
 </tr>
 <tr>
 <td><strong>Backup</strong></td>
-<td><em>Back up automatically to a folder</em>, the folder, how many copies to keep, the Mac's name in the files, the status line and <em>Back Up Now</em> · By hand: <em>Back Up to File…</em> / <em>Restore…</em> — <a href="#backup">Backup</a></td>
+<td><em>Back up automatically to a folder</em>, the folder, how many copies to keep, the Mac's name in the files, the status line · Manual backup: <em>Back Up Now</em>, <em>Save to Archive…</em> · Restore: <em>Restore…</em> — <a href="#backup">Backup</a></td>
 </tr>
 <tr>
 <td><strong>Advanced</strong></td>
@@ -445,7 +445,7 @@ when and where the file was made and how many items it holds, then:</p>
 <li><em>Replace</em> discards the current history and templates and takes the backup's instead. Before it
   does, Keepit writes a copy of what you have now (<code>Keepit-before-restore-…</code>) into the backup
   folder, or into a folder you pick; if that copy cannot be written, Replace does not start. If
-  Keepit has no password yet, you are asked for one for that copy, as with <em>Back Up to File…</em>.</li>
+  Keepit has no password yet, you are asked for one for that copy, as with <em>Save to Archive…</em>.</li>
 </ul>
 <p><em>Also restore preferences</em> brings the hot keys, limits and options from the backup; the settings
 that express trust in a particular Mac — Touch ID, URL automation and its trusted apps, the backup
@@ -461,11 +461,14 @@ first launch, pick the newest file in your folder, enter the old Mac's password,
 switch automatic backup on for the new Mac. Copies made so far open with the password and phrase
 that were in force when each was written — after a password change, the old ones still need the old
 password.</p>
-<p><strong>By hand.</strong> <em>Back Up to File…</em> writes one <code>.keepit</code> wherever you choose, with a password you pick
-for that file (it does not need Keepit's password protection); <em>Restore…</em> opens it like any other
-backup. The pair replaces <em>Export…</em> / <em>Import…</em> of 2.x — same operations, named after what they
-do. The file moves data between the direct download and the App Store edition, and between Keepit
-2.x and 3.x — a file written by 3.0 needs 3.0 or newer to open; 3.0 reads everything 2.x wrote.</p>
+<p><strong>Manual backup.</strong> Two buttons, two different things. <em>Back Up Now</em> makes an automatic-style copy
+right away — same kind of file, same folder and series, opened with your Keepit password or
+phrase. <em>Save to Archive…</em> writes one <code>.keepit</code> <em>archive</em> wherever you choose, locked with a
+password you pick for it: it does not need Keepit's password protection, and Keepit does not keep
+track of the file afterwards — for handing data over, or for a copy outside the backup folder.
+<em>Restore…</em> opens either. The archive replaces <em>Export…</em> / <em>Import…</em> of 2.x; the file moves data
+between the direct download and the App Store edition, and between Keepit 2.x and 3.x — a file
+written by 3.0 needs 3.0 or newer to open; 3.0 reads everything 2.x wrote.</p>
 <p><strong>If something goes wrong.</strong> A failed copy is reported in the status line and retried with growing
 pauses; the previous copies stay. If Keepit was quit or the Mac went down in the middle of a
 restore, the next launch quietly puts everything back as it was before the restore; in the rare

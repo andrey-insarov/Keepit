@@ -30,7 +30,7 @@ appstore …` for the sandboxed one).
 
 - [ ] **A1. Sparkle.** On the clean user install 2.13.1 from the release page, let it find 3.0 when the
   tag exists (skip until then; do it before announcing), update in one click, data intact.
-- [ ] **A2. Back Up to File → Reset → Restore.** *Settings → Backup → Back Up to File…* with a file password
+- [ ] **A2. Save to Archive → Reset → Restore.** *Settings → Backup → Save to Archive…* with a file password
   → *Advanced → Reset…* (password and confirmation) → first-run dialogs → *Restore from Backup…* →
   that file → *Replace* (a fresh installation holds only the example templates: no rollback copy, no
   extra question). Expected: counts in the preview match what you exported; history, templates,
