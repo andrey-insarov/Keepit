@@ -15,7 +15,7 @@ extension Backup.Failure: LocalizedError {
     }
 }
 
-/// Settings → General → Backup → Export… (Import… / Restore… are in RestoreActions.swift).
+/// Settings → Backup → Export… (Restore… is in RestoreActions.swift).
 extension AppDelegate {
     static let backupType: UTType = UTType("com.it.keep.backup") ?? UTType(filenameExtension: Backup.fileExtension) ?? .data
 

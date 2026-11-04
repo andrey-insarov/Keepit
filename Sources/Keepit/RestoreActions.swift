@@ -2,7 +2,7 @@ import AppKit
 import KeepitCore
 import UniformTypeIdentifiers
 
-/// Restore from a `.keepit` file — docs/BACKUP.md "Restore". One flow for Import…, Restore…, a
+/// Restore from a `.keepit` file — docs/BACKUP.md "Restore". One flow for Restore…, a
 /// double-clicked file and the first-launch offer: pick → unlock → verify → preview → Replace or
 /// Merge → apply. Nothing changes until step 6.
 extension AppDelegate {
@@ -17,9 +17,6 @@ extension AppDelegate {
         }
         chooseAndRestore(startingIn: start)
     }
-
-    /// Settings → Backup → Import…: any `.keepit` file.
-    @objc func importBackup() { chooseAndRestore(startingIn: nil) }
 
     func chooseAndRestore(startingIn dir: URL?) {
         guard !isLocked else { NSSound.beep(); return }
@@ -41,7 +38,7 @@ extension AppDelegate {
         a.alertStyle = .informational
         a.icon = NSImage(systemSymbolName: "arrow.counterclockwise.circle", accessibilityDescription: nil)
         a.messageText = L("Restore from a backup?")
-        a.informativeText = L("If you have a Keepit backup — an automatic one in iCloud Drive or another folder, or an exported .keepit file — you can bring your history and templates back now. You can also do this later from Settings → General → Backup.")
+        a.informativeText = L("If you have a Keepit backup — an automatic one in iCloud Drive or another folder, or an exported .keepit file — you can bring your history and templates back now. You can also do this later from Settings → Backup.")
         a.addButton(withTitle: L("Restore from Backup…"))
         a.addButton(withTitle: L("Start Fresh"))
         NSApp.activate(ignoringOtherApps: true)
@@ -177,7 +174,7 @@ extension AppDelegate {
         if !Vault.isEnabled, let pw = unlocked.password {
             let k = NSAlert()
             k.messageText = L("Protect Keepit with the same password?")
-            k.informativeText = L("Use the password you just entered as this Mac's Keepit password. Automatic backup can then be switched on for this Mac in Settings → General. You can set a different password instead.")
+            k.informativeText = L("Use the password you just entered as this Mac's Keepit password. Automatic backup can then be switched on for this Mac in Settings → Backup. You can set a different password instead.")
             k.addButton(withTitle: L("Use This Password"))
             k.addButton(withTitle: L("Set a Different Password…"))
             k.addButton(withTitle: L("Not Now"))
