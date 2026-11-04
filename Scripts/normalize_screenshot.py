@@ -17,9 +17,29 @@ def opaque_box(src):
     if a.min()==255: return None
     ys,xs=np.where(a==255)
     return (int(xs.min()),int(ys.min()),int(xs.max()),int(ys.max()))
+def white_edge(line, run=20):
+    """Scan from outside in: shadow, then the window's own light-grey border, then a white interior for `run` px."""
+    n=len(line); nonwhite=np.where(line<252)[0]
+    if len(nonwhite)==0: return None
+    s=int(nonwhite[0])
+    for i in range(s, min(n-run-1, s+400)):
+        if line[i]<235 and (line[i+1:i+1+run]>=245).all(): return i+1
+    return None
+def alert_box(im):
+    """A white alert on a white background (region shot): the border ring is the edge, not a long light run."""
+    L=lum(np.array(im).astype(float)); H,W=L.shape
+    def med(vals):
+        vals=[v for v in vals if v is not None]
+        return int(np.median(vals)) if len(vals)>=3 else None
+    rows=range(H*2//5, H*3//5, max(1,H//40)); cols=range(W*2//5, W*3//5, max(1,W//40))
+    l=med([white_edge(L[y,:]) for y in rows]); r=med([white_edge(L[y,::-1]) for y in rows])
+    t=med([white_edge(L[:,x]) for x in cols]); b=med([white_edge(L[::-1,x]) for x in cols])
+    if None in (l,r,t,b): return None
+    return (l, t, W-1-r, H-1-b)
 def normalize(src, dst):
     box=opaque_box(src)
     if box: x0,y0,x1,y1=box
+    elif (ab:=alert_box(flat(src))): x0,y0,x1,y1=ab; box=ab
     else:
         r=analyze(src); assert r, src
         x0,y0,x1,y1=r['win']
