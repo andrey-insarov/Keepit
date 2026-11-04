@@ -486,3 +486,11 @@
 "Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again." = "Keepit は中断された復元の取り消しを完了できませんでした：%@\n\n何も変更されません。上記のファイルの問題（権限、ロックフラグ、ディスク容量）を解決して、Keepit を再起動してください。";
 "Use the password you just entered as this Mac's Keepit password. Automatic backup can then be switched on for this Mac in Settings → General. You can set a different password instead." = "今入力したパスワードをこの Mac の Keepit パスワードとして使います。その後、設定 → 一般 でこの Mac の自動バックアップをオンにできます。別のパスワードを設定することもできます。";
 "The copy was not finished" = "コピーは完了しませんでした";
+"Automatic backup" = "自動バックアップ";
+"Restore" = "復元";
+"Export" = "書き出し";
+"If you have a Keepit backup — an automatic one in iCloud Drive or another folder, or an exported .keepit file — you can bring your history and templates back now. You can also do this later from Settings → Backup." = "Keepit のバックアップ（iCloud Drive や他のフォルダの自動バックアップ、または書き出した .keepit ファイル）があれば、履歴とテンプレートを今すぐ戻せます。後から 設定 → バックアップ でも行えます。";
+"Use the password you just entered as this Mac's Keepit password. Automatic backup can then be switched on for this Mac in Settings → Backup. You can set a different password instead." = "今入力したパスワードをこの Mac の Keepit パスワードとして使います。その後、設定 → バックアップ でこの Mac の自動バックアップをオンにできます。別のパスワードを設定することもできます。";
+"Makes a copy right away, without waiting for the quiet period — the same file as an automatic one, in the same folder and series." = "静止期間を待たずにすぐコピーを作成します。自動バックアップと同じファイルで、同じフォルダ・同じ系列に書き込まれます。";
+"Opens a backup — one of this Mac's, another Mac's, or an exported file — and lets you Merge it into the current data or Replace them (a copy of the current data is saved first). Double-clicking a .keepit file in the Finder does the same." = "バックアップ（この Mac、別の Mac、または書き出したファイル）を開き、現在のデータに統合するか置き換えます（置き換え前に現在のデータのコピーが保存されます）。Finder で .keepit ファイルをダブルクリックしても同じです。";
+"Writes one .keepit file with history, templates and preferences, encrypted with a password you choose for that file — no Keepit password needed. Open it with Restore… on any Mac, in either edition." = "履歴、テンプレート、環境設定を含む .keepit ファイルを 1 つ書き出します。そのファイル用に決めたパスワードで暗号化され、Keepit のパスワードは不要です。どの Mac でも、どちらのエディションでも「復元…」で開けます。";

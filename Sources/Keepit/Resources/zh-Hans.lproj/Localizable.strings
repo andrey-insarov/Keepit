@@ -486,3 +486,11 @@
 "Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again." = "Keepit 无法完成对中断恢复的撤销：%@\n\n不会更改任何内容。请修复上述文件（权限、锁定标志、磁盘空间）后重新启动 Keepit。";
 "Use the password you just entered as this Mac's Keepit password. Automatic backup can then be switched on for this Mac in Settings → General. You can set a different password instead." = "将刚输入的密码用作本机的 Keepit 密码。之后可在 设置 → 通用 中为本机开启自动备份。也可以设置其他密码。";
 "The copy was not finished" = "副本未完成";
+"Automatic backup" = "自动备份";
+"Restore" = "恢复";
+"Export" = "导出";
+"If you have a Keepit backup — an automatic one in iCloud Drive or another folder, or an exported .keepit file — you can bring your history and templates back now. You can also do this later from Settings → Backup." = "如果你有 Keepit 备份——iCloud Drive 或其他文件夹中的自动备份，或导出的 .keepit 文件——现在就可以找回历史和模板。也可稍后在 设置 → 备份 中进行。";
+"Use the password you just entered as this Mac's Keepit password. Automatic backup can then be switched on for this Mac in Settings → Backup. You can set a different password instead." = "将刚输入的密码用作本机的 Keepit 密码。之后可在 设置 → 备份 中为本机开启自动备份。也可以设置其他密码。";
+"Makes a copy right away, without waiting for the quiet period — the same file as an automatic one, in the same folder and series." = "立即创建一份副本，无需等待静默期——与自动备份相同的文件，写入同一文件夹和同一系列。";
+"Opens a backup — one of this Mac's, another Mac's, or an exported file — and lets you Merge it into the current data or Replace them (a copy of the current data is saved first). Double-clicking a .keepit file in the Finder does the same." = "打开一份备份——本机的、另一台 Mac 的或导出的文件——并将其合并到当前数据或替换当前数据（替换前先保存当前数据的副本）。在访达中双击 .keepit 文件效果相同。";
+"Writes one .keepit file with history, templates and preferences, encrypted with a password you choose for that file — no Keepit password needed. Open it with Restore… on any Mac, in either edition." = "写入一个包含历史、模板和偏好设置的 .keepit 文件，用你为该文件选择的密码加密，无需 Keepit 密码。可在任何 Mac、任一版本中通过“恢复…”打开。";

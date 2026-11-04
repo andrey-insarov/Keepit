@@ -486,3 +486,11 @@
 "Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again." = "Keepit이 중단된 복원의 되돌리기를 마치지 못했습니다: %@\n\n아무것도 변경되지 않습니다. 위에 표시된 파일 문제(권한, 잠금 플래그, 디스크 공간)를 해결하고 Keepit을 다시 실행하세요.";
 "Use the password you just entered as this Mac's Keepit password. Automatic backup can then be switched on for this Mac in Settings → General. You can set a different password instead." = "방금 입력한 암호를 이 Mac의 Keepit 암호로 사용합니다. 그런 다음 설정 → 일반에서 이 Mac의 자동 백업을 켤 수 있습니다. 다른 암호를 설정할 수도 있습니다.";
 "The copy was not finished" = "복사본이 완료되지 않았습니다";
+"Automatic backup" = "자동 백업";
+"Restore" = "복원";
+"Export" = "내보내기";
+"If you have a Keepit backup — an automatic one in iCloud Drive or another folder, or an exported .keepit file — you can bring your history and templates back now. You can also do this later from Settings → Backup." = "Keepit 백업(iCloud Drive나 다른 폴더의 자동 백업, 또는 내보낸 .keepit 파일)이 있다면 지금 기록과 템플릿을 되돌릴 수 있습니다. 나중에 설정 → 백업에서도 할 수 있습니다.";
+"Use the password you just entered as this Mac's Keepit password. Automatic backup can then be switched on for this Mac in Settings → Backup. You can set a different password instead." = "방금 입력한 암호를 이 Mac의 Keepit 암호로 사용합니다. 그런 다음 설정 → 백업에서 이 Mac의 자동 백업을 켤 수 있습니다. 다른 암호를 설정할 수도 있습니다.";
+"Makes a copy right away, without waiting for the quiet period — the same file as an automatic one, in the same folder and series." = "대기 시간을 기다리지 않고 즉시 복사본을 만듭니다. 자동 백업과 같은 파일이며 같은 폴더, 같은 시리즈에 기록됩니다.";
+"Opens a backup — one of this Mac's, another Mac's, or an exported file — and lets you Merge it into the current data or Replace them (a copy of the current data is saved first). Double-clicking a .keepit file in the Finder does the same." = "백업(이 Mac, 다른 Mac 또는 내보낸 파일)을 열어 현재 데이터에 병합하거나 대체합니다(대체 전에 현재 데이터의 복사본이 먼저 저장됩니다). Finder에서 .keepit 파일을 더블 클릭해도 같습니다.";
+"Writes one .keepit file with history, templates and preferences, encrypted with a password you choose for that file — no Keepit password needed. Open it with Restore… on any Mac, in either edition." = "기록, 템플릿, 환경설정이 담긴 .keepit 파일 하나를 기록합니다. 그 파일용으로 정한 암호로 암호화되며 Keepit 암호는 필요 없습니다. 어느 Mac, 어느 에디션에서든 ‘복원…’으로 열 수 있습니다.";
