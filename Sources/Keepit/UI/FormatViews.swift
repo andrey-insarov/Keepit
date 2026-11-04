@@ -104,15 +104,17 @@ final class ImageFormatView: NSView {
         imageView.imageFrameStyle = .none
         imageView.translatesAutoresizingMaskIntoConstraints = false
         // The image's own size must not drive the layout: the pane decides, the picture fits into it.
-        imageView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
-        imageView.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        imageView.setContentHuggingPriority(.defaultLow, for: .vertical)
+        // Priority 1, not the default 250: the stack view around the pane aligns its width at a priority
+        // the picture's 250 could beat, which parked the pane at the right edge, as wide as the picture.
+        for axis in [NSLayoutConstraint.Orientation.horizontal, .vertical] {
+            imageView.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(1), for: axis)
+            imageView.setContentHuggingPriority(NSLayoutConstraint.Priority(1), for: axis)
+        }
         info.translatesAutoresizingMaskIntoConstraints = false
         info.textColor = .secondaryLabelColor
         info.lineBreakMode = .byTruncatingTail
-        info.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        info.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        info.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(1), for: .horizontal)
+        info.setContentHuggingPriority(NSLayoutConstraint.Priority(1), for: .horizontal)
         addSubview(info)
         addSubview(imageView)
         NSLayoutConstraint.activate([

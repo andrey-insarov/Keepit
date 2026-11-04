@@ -117,7 +117,7 @@ final class LayoutTests: XCTestCase {
         defer { storage.restore() }
         try FileManager.default.createDirectory(at: storage.dir, withIntermediateDirectories: true)
         let app = AppDelegate()
-        let tiny = NSImage(size: NSSize(width: 611, height: 49), flipped: false) { r in NSColor.gray.setFill(); r.fill(); return true }
+        let tiny = NSImage(size: NSSize(width: 235, height: 199), flipped: false) { r in NSColor.gray.setFill(); r.fill(); return true }
         let png = try XCTUnwrap(NSBitmapImageRep(data: try XCTUnwrap(tiny.tiffRepresentation))?.representation(using: .png, properties: [:]))
         let item = ClipItem(id: UUID(), date: Date(), formats: [ClipItem.Format.png: png], sourceApp: nil, contentHash: ClipItem.hash(of: png))
         app.history.add(item)
