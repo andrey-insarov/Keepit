@@ -1,7 +1,7 @@
 # The `.keepit` file format
 
 A `.keepit` file is a password-protected archive of a Keepit installation's data: clipboard history,
-templates and (optionally) settings. It is what *Export…* writes, what *Import…* reads, and — from
+templates and (optionally) settings. It is what *Save to Archive…* (2.x: *Export…*) writes, what *Restore…* (2.x: *Import…*) reads, and — from
 Keepit 3.0 — what automatic backups produce.
 
 This document is the contract. The file format is **not** the storage format: how Keepit keeps the
@@ -101,7 +101,7 @@ fields are ignored (and still authenticated, being part of the bytes).
 
 **Key derivation.** Two modes, both AES-256-GCM with the key below:
 
-- `manual` (*Export…*): the user types a password for this file. `salt` is fresh and random,
+- `manual` (*Save to Archive…*, 2.x *Export…*): the user types a password for this file. `salt` is fresh and random,
   `rounds` is whatever the writer chose (3.0 writes 200 000). Key = PBKDF2 as in format 1.
   No `recovery` block. Does not depend on the vault being enabled.
 - `auto` (automatic backup): the file is opened with the **Keepit vault password** of the

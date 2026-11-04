@@ -32,6 +32,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     let queue = PasteQueue()
     private var menuSelectionMade = false
     private var popupActive = false
+    /// How the history menu was last opened, so Delete can put it straight back (NSMenu closes on
+    /// any choice; reopening the same way, at the same place, with the search kept, is the one
+    /// case where that is wrong — the user is tidying the list, not leaving it).
+    private enum HistoryMenuOrigin { case statusItem, popup(NSPoint) }
+    private var historyMenuOrigin: HistoryMenuOrigin?
+    private var lastClosedWasHistoryMenu = false
     /// Menus of ours currently tracking (history, template, action submenus); global hot keys pause meanwhile.
     private var openMenus = 0
 
@@ -761,10 +767,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             openViewer()
             return
         }
+        showStatusItemMenu()
+    }
+
+    /// The history menu under the menu-bar icon. `pasteTarget` is the caller's business: a click
+    /// sets it to the app in front, a reopen after Delete keeps the one from before.
+    private func showStatusItemMenu() {
         let menu = buildHistoryMenu(includeTemplates: true, includeApp: true)
         menu.delegate = self
         menuSelectionMade = false
         popupActive = false
+        historyMenuOrigin = .statusItem
         // Attach temporarily so NSStatusItem positions/highlights it, then detach in menuDidClose.
         if let b = statusItem.button, let w = b.window {
             let f = w.convertToScreen(b.convert(b.bounds, to: nil))
@@ -779,7 +792,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // MARK: - Popups on hot key
 
     func showHistoryPopup() {
-        popUp(buildHistoryMenu(includeTemplates: true, includeApp: false))
+        popUp(buildHistoryMenu(includeTemplates: true, includeApp: false), isHistory: true)
     }
 
     func showTemplatePopup() {
@@ -789,21 +802,37 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         popUp(menu)
     }
 
-    private func popUp(_ menu: NSMenu) {
+    private func popUp(_ menu: NSMenu, isHistory: Bool = false, at fixed: NSPoint? = nil) {
         if popupActive || isLocked { return }
-        pasteTarget = NSWorkspace.shared.frontmostApplication
+        if fixed == nil { pasteTarget = NSWorkspace.shared.frontmostApplication }   // a reopen keeps the original target
         menuSelectionMade = false
         popupActive = true
         menu.delegate = self
 
-        var point = NSEvent.mouseLocation
-        if settings.showAtCaret, let caret = Paster.caretScreenPoint() {
+        var point = fixed ?? NSEvent.mouseLocation
+        if fixed == nil, settings.showAtCaret, let caret = Paster.caretScreenPoint() {
             point = caret
         }
+        if isHistory { historyMenuOrigin = .popup(point) }
         // Menus need a key window to get keyboard navigation; activating us is the price.
         NSApp.activate(ignoringOtherApps: true)
         menuTopLeft = point
         menu.popUp(positioning: nil, at: point, in: nil)
+    }
+
+    /// After Delete in the history menu: the same menu again, the same way, with the search kept.
+    private func reopenHistoryMenu(query: String) {
+        guard !isLocked, let origin = historyMenuOrigin else { return }
+        switch origin {
+        case .statusItem:
+            showStatusItemMenu()
+        case .popup(let point):
+            popUp(buildHistoryMenu(includeTemplates: true, includeApp: false), isHistory: true, at: point)
+        }
+        if !query.isEmpty, let s = historySearchItem {
+            s.field.stringValue = query
+            s.onChange?(query)
+        }
     }
 
     /// Top-left corner of the menu on screen (for the preview panel); set just before it opens.
@@ -840,6 +869,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         ExtendedMenuWatch.shared.stop(menu)
         PreviewPanel.shared.hide()
         if statusItem.menu === menu { statusItem.menu = nil }
+        lastClosedWasHistoryMenu = menu.items.contains { $0.tag == MenuBuilder.historyTag }
         let wasPopup = popupActive
         popupActive = false
         // The chosen item's action fires right after this; check a moment later.
@@ -1058,8 +1088,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc private func historyDeleted(_ sender: NSMenuItem) {
         menuSelectionMade = true
         guard let id = sender.representedObject as? UUID else { return }
+        let query = historySearchItem?.field.stringValue ?? ""
+        let fromMenu = lastClosedWasHistoryMenu          // not the Viewer's context menu
+        lastClosedWasHistoryMenu = false
         history.remove(id: id)
         viewer?.refresh()
+        if fromMenu {
+            // The menu has just closed (NSMenu closes before the action runs); put it back once
+            // this event is over, so the user can keep tidying without reopening it by hand.
+            DispatchQueue.main.async { [weak self] in self?.reopenHistoryMenu(query: query) }
+        }
     }
 
     // MARK: - Right-click action menu

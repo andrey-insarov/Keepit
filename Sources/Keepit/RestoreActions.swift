@@ -235,12 +235,12 @@ extension AppDelegate {
             return UnlockedBackup(payload: p)
         }
         let hasRecovery: Bool = { if case .v2(let h, _) = inspection { return h.recovery != nil } else { return false } }()
-        let message: String = {
-            if case .v2(let h, _) = inspection, h.mode == .auto { return L("Enter the Keepit password of the Mac this backup was made on.") }
-            return L("Enter the password this backup was exported with.")
-        }()
+        let isArchive: Bool = { if case .v2(let h, _) = inspection, h.mode == .auto { return false } else { return true } }()
+        let title = isArchive ? L("Archive password") : L("Backup password")
+        let message = isArchive ? L("Enter the password this archive was saved with.")
+                                : L("Enter the Keepit password of the Mac this backup was made on.")
         for attempt in 1...3 {
-            switch Vault.prompt(title: L("Backup password"), message: message, confirm: false, cancelQuits: false,
+            switch Vault.prompt(title: title, message: message, confirm: false, cancelQuits: false,
                                 offerRecovery: hasRecovery, recoveryAvailable: hasRecovery) {
             case .cancel:
                 return nil

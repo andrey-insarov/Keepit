@@ -21,7 +21,7 @@ enum Backup {
     /// The format this build can read, compared with a file's `minReader`. Deliberately not
     /// `AppInfo.version` (the bundle's string — the test host's in XCTest) and kept equal to
     /// `VERSION` by a test, so a packaged build always reads its own exports.
-    static let readerVersion = "3.0.0"
+    static let readerVersion = "3.0.1"
     /// Format 1 derives the key with exactly this many PBKDF2 rounds (docs/FORMAT.md).
     static let v1Rounds: UInt32 = Container.v1Rounds
 
@@ -44,7 +44,8 @@ enum Backup {
     static func suggestedFileName(date: Date = Date()) -> String {
         let f = DateFormatter()
         f.dateFormat = "yyyy-MM-dd"
-        return "Keepit-backup-\(f.string(from: date)).\(fileExtension)"
+        // "archive" and "manual" both say it: not one of the automatic series, made by hand, own password.
+        return "Keepit-archive-\(f.string(from: date))-manual.\(fileExtension)"
     }
 
     static func isBackup(_ data: Data) -> Bool { Container.isContainer(data) }

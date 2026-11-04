@@ -101,6 +101,8 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         let title: String
         let symbol: String
         let view: NSView
+        /// The guide section that explains this pane: the window's (?) opens it, not the guide's top.
+        let guideAnchor: String
     }
     private var panes: [Pane] = []
     private let container = NSView()
@@ -164,8 +166,10 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         let l = NSTextField(labelWithString: text)
         l.font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
         l.alignment = .right
+        l.identifier = Self.headerID
         return [l, NSView()]
     }
+    private static let headerID = NSUserInterfaceItemIdentifier("group-header")
 
     private func status(_ field: NSTextField) -> [NSView] {
         field.textColor = .systemRed
@@ -220,7 +224,14 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         g.column(at: 1).xPlacement = .leading
         // Hug the content: an empty label column must not be handed half of the window.
         g.yPlacement = .center
-        for r in 0..<g.numberOfRows { g.cell(atColumnIndex: 1, rowIndex: r).xPlacement = .leading }
+        for r in 0..<g.numberOfRows {
+            g.cell(atColumnIndex: 1, rowIndex: r).xPlacement = .leading
+            // A group title that follows another group's rows gets a gap above it — the same
+            // one on every pane, so groups read as groups and not as one long list.
+            if r > 0, g.cell(atColumnIndex: 0, rowIndex: r).contentView?.identifier == Self.headerID {
+                g.row(at: r).topPadding = 12
+            }
+        }
         g.translatesAutoresizingMaskIntoConstraints = false
         return g
     }
@@ -301,15 +312,14 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
     // MARK: Panes
 
     private func buildPanes() {
-        let exportBtn = NSButton(title: L("Export…"), target: self, action: #selector(exportTapped))
+        let exportBtn = NSButton(title: L("Save to Archive…"), target: self, action: #selector(exportTapped))
         backupPath.lineBreakMode = .byTruncatingMiddle
         backupPath.textColor = .secondaryLabelColor
         backupPath.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         backupChoose.target = self; backupChoose.action = #selector(chooseBackupFolder)
-        let backupFolderRow = NSStackView(views: [backupPath, button(backupChoose)])
-        backupFolderRow.orientation = .horizontal; backupFolderRow.spacing = 8
         backupStatus.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
         backupStatus.textColor = .secondaryLabelColor
+        backupStatus.alignment = .right
         backupStatus.lineBreakMode = .byWordWrapping
         backupStatus.maximumNumberOfLines = 0
         backupStatus.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
@@ -329,22 +339,25 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         generalRows += updatesRows()
         let general = grid(generalRows)
 
-        // Backup: the automatic copies, then what to do with any .keepit file. Same grammar as the
-        // other panes — a header per group, one checkbox or one row per line, help only behind (?).
+        // Backup: three operations, three groups — what happens by itself, what you do by hand, and the
+        // way back. Same grammar as the other panes — a header per group, one checkbox or one row per
+        // line, help only behind (?); the status sits in the first header's row, on the right.
+        let backupHeader = header(L("Automatic backup"))
         let backup = grid([
-            header(L("Automatic backup")),
-            [NSView(), help(check(autoBackup), L("Keepit writes encrypted copies of the history and templates into the folder you choose — iCloud Drive, Dropbox, an external disk. Each copy opens with your Keepit password or recovery phrase, on this Mac or another. Needs password protection (Security). It is a backup, not a sync: two Macs write their own series of files."))],
-            row(L("Folder:"), backupFolderRow),
+            [backupHeader[0], backupStatus],
+            [NSView(), help(check(autoBackup), L("Keepit writes encrypted copies of the history and templates into the folder you choose — iCloud Drive, Dropbox, an external disk. A new copy about five minutes after the last change (not more often), at the latest once a day; nothing while Keepit is locked. Each copy opens with your Keepit password or recovery phrase, on this Mac or another. Needs password protection (Security). It is a backup, not a sync: two Macs write their own series of files."))],
+            [NSView(), help(check(backupLabelOn), L("Puts the Mac's name into the unencrypted header of each file so series are easy to tell apart. The storage provider can see it. Off by default."))],
+            row(L("Folder:"), backupPath),
+            [NSView(), button(backupChoose)],
             row(L("Keep last:"), help(number(backupKeep, unit: L("backups"), min: 1, max: 100, step: 1),
                                      L("Older copies of this Mac's series are deleted after a new one has been written and verified. Files Keepit did not write here are never touched."))),
-            [NSView(), help(check(backupLabelOn), L("Puts the Mac's name into the unencrypted header of each file so series are easy to tell apart. The storage provider can see it. Off by default."))],
-            [NSView(), backupStatus],
-            [NSView(), help(button(backupNow), L("Makes a copy right away, without waiting for the quiet period — the same file as an automatic one, in the same folder and series."))],
+            header(L("Manual backup")),
+            [NSView(), help(button(backupNow), L("Makes an automatic-style copy right away, without waiting for the quiet period — the same kind of file, in the same folder and series, opened with your Keepit password or recovery phrase."))],
+            [NSView(), help(button(exportBtn), L("Writes one .keepit archive wherever you choose, locked with a password you pick for it — no Keepit password needed, and Keepit does not keep track of the file afterwards. For handing data over or keeping a copy outside the backup folder; Restore… opens it on any Mac, in either edition."))],
             header(L("Restore")),
-            [NSView(), help(button(backupRestore), L("Opens a backup — one of this Mac's, another Mac's, or an exported file — and lets you Merge it into the current data or Replace them (a copy of the current data is saved first). Double-clicking a .keepit file in the Finder does the same."))],
-            header(L("Export")),
-            [NSView(), help(button(exportBtn), L("Writes one .keepit file with history, templates and preferences, encrypted with a password you choose for that file — no Keepit password needed. Open it with Restore… on any Mac, in either edition."))],
+            [NSView(), help(button(backupRestore), L("Opens any backup — one of this Mac's automatic copies, another Mac's, or an archive made with Save to Archive… — and lets you Merge it into the current data or Replace them (a copy of the current data is saved first). Double-clicking a .keepit file in the Finder does the same."))],
         ])
+        backup.cell(for: backupStatus)?.xPlacement = .trailing
 
         let resetHK = NSButton(title: L("Reset to Defaults"), target: self, action: #selector(resetShortcuts))
         let shortcuts = grid([
@@ -433,16 +446,17 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         resetAll.target = self; resetAll.action = #selector(resetTapped)
         // The App Store build is sandboxed: it cannot move itself to the Trash or reset the
         // Accessibility grant, and store apps are removed from Launchpad anyway — Reset only.
+        let resetHelp = L("Puts Keepit back to a fresh install: history, templates, settings, the password and the Touch ID key are deleted and the example templates return; the app, its permissions and Launch at login stay. Asks for your password or Touch ID. There is no undo — save an archive first if you may want the data back.")
         #if APPSTORE
-        let dangerRow = NSStackView(views: [button(resetAll)])
         let dangerTitle = L("Reset")
-        let dangerHelp = L("Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back.")
+        let dangerRows: [[NSView]] = [[NSView(), help(button(resetAll), resetHelp)]]
         #else
-        let dangerRow = NSStackView(views: [button(resetAll), button(uninstall)])
         let dangerTitle = L("Reset and uninstall")
-        let dangerHelp = L("Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back.")
+        let dangerRows: [[NSView]] = [
+            [NSView(), help(button(resetAll), resetHelp)],
+            [NSView(), help(button(uninstall), L("Reset, then remove the app itself, Launch at login, the keychain entry and the Accessibility permission. Asks for your password or Touch ID and for a typed confirmation. Save an archive first if you may want the data back."))],
+        ]
         #endif
-        dangerRow.orientation = .horizontal; dangerRow.spacing = 8
         let advanced = grid([
             header(L("Clipboard")),
             row(L("Poll interval:"), help(number(pollInterval, unit: L("seconds"), min: 0.1, max: 5, step: 0.1, decimals: 2),
@@ -453,18 +467,17 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             header(L("Data")),
             [NSView(), button(reveal)],
             header(dangerTitle),
-            [NSView(), help(dangerRow, dangerHelp)],
-        ])
+        ] + dangerRows)
 
         panes = [
-            Pane(id: .init("general"), title: L("General"), symbol: "gearshape", view: general),
-            Pane(id: .init("shortcuts"), title: L("Shortcuts"), symbol: "keyboard", view: shortcuts),
-            Pane(id: .init("queue"), title: L("Paste Queue"), symbol: "list.number", view: queue),
-            Pane(id: .init("history"), title: L("History"), symbol: "clock", view: history),
-            Pane(id: .init("menu"), title: L("Menu"), symbol: "filemenu.and.selection", view: menu),
-            Pane(id: .init("security"), title: L("Security"), symbol: "lock", view: security),
-            Pane(id: .init("backup"), title: L("Backup"), symbol: "externaldrive", view: backup),
-            Pane(id: .init("advanced"), title: L("Advanced"), symbol: "wrench.and.screwdriver", view: advanced),
+            Pane(id: .init("general"), title: L("General"), symbol: "gearshape", view: general, guideAnchor: "part-5-settings"),
+            Pane(id: .init("shortcuts"), title: L("Shortcuts"), symbol: "keyboard", view: shortcuts, guideAnchor: "part-5-settings"),
+            Pane(id: .init("queue"), title: L("Paste Queue"), symbol: "list.number", view: queue, guideAnchor: "the-paste-queue"),
+            Pane(id: .init("history"), title: L("History"), symbol: "clock", view: history, guideAnchor: "part-5-settings"),
+            Pane(id: .init("menu"), title: L("Menu"), symbol: "filemenu.and.selection", view: menu, guideAnchor: "the-history-menu"),
+            Pane(id: .init("security"), title: L("Security"), symbol: "lock", view: security, guideAnchor: "part-6-security"),
+            Pane(id: .init("backup"), title: L("Backup"), symbol: "externaldrive", view: backup, guideAnchor: "backup"),
+            Pane(id: .init("advanced"), title: L("Advanced"), symbol: "wrench.and.screwdriver", view: advanced, guideAnchor: "part-7-advanced"),
         ]
         // Measure once, in the current language:
         //  • every button, field and pop-up gets the same width — the widest button title decides;
@@ -480,15 +493,15 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         // (and the window grows to fit the lines, see backupStateChanged).
         let labelColumn = (0..<backup.numberOfRows).compactMap { backup.cell(atColumnIndex: 0, rowIndex: $0).contentView?.fittingSize.width }.max() ?? 0
         let available = windowWidth - 2 * 28 - ceil(labelColumn) - backup.columnSpacing
-        backupFolderRow.widthAnchor.constraint(lessThanOrEqualToConstant: available).isActive = true
+        backupPath.widthAnchor.constraint(lessThanOrEqualToConstant: available).isActive = true
         backupStatus.preferredMaxLayoutWidth = available
         backupStatus.widthAnchor.constraint(lessThanOrEqualToConstant: available).isActive = true
 
         container.translatesAutoresizingMaskIntoConstraints = false
         let guide = NSButton(title: "", target: self, action: #selector(openGuide))
         guide.bezelStyle = .helpButton
-        guide.toolTip = L("User guide (keep.it.com)")
         guide.translatesAutoresizingMaskIntoConstraints = false
+        guideButton = guide
         container.addSubview(guide)
         NSLayoutConstraint.activate([
             guide.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -16),
@@ -582,6 +595,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         shownPane = v
         window.toolbar?.selectedItemIdentifier = pane.id
         window.title = pane.title
+        guideButton?.toolTip = LF("User guide: %@ (keep.it.com)", pane.title)
         UserDefaults.standard.set(pane.id.rawValue, forKey: Self.lastPaneKey)
 
         let fit = v.fittingSize
@@ -992,5 +1006,11 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         apply { s in s.ignoreApps = ignoredApps }
     }
 
-    @objc private func openGuide() { NSWorkspace.shared.open(AppInfo.guideURL) }
+    private var guideButton: NSButton?
+
+    /// The guide, opened at the section that explains the pane on screen.
+    @objc private func openGuide() {
+        let anchor = panes.first { $0.view === shownPane }?.guideAnchor
+        NSWorkspace.shared.open(anchor.flatMap { URL(string: AppInfo.guideURL.absoluteString + "#" + $0) } ?? AppInfo.guideURL)
+    }
 }

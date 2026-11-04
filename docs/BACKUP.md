@@ -135,7 +135,7 @@ Backup → Restore…*; double-click on a `.keepit` file. All lead to the same f
        `NSOpenPanel` grants no right to write next to it, so Keepit asks for a folder explicitly).
        If the copy cannot be written, Replace does not start.
      - **Existing data, vault off**: the rollback copy is a manual-mode export; the user is asked
-       for a password for it (same dialog as *Export…*) and for a folder. Declining either cancels
+       for a password for it (same dialog as *Save to Archive…*) and for a folder. Declining either cancels
        Replace. Turning protection on first is offered as the simpler route.
    - *Merge* adds history items whose `contentHash` is not present, keeping the current items
      newest. Added items get fresh ids: the backup may be this Mac's own, and an item edited here
@@ -218,9 +218,10 @@ control per line, help only behind ?):
   Preconditions) · *Folder:* path + *Choose…* · *Keep last* [10] *backups* · ☐ *Include this Mac's
   name in the backup files* (off by default; help says it is visible to the storage provider) ·
   status line: *Last backup: today 10:12 · 1.2 MB* / *Last backup failed: …* · *Back Up Now*.
-- **Restore**: *Restore…* — any `.keepit`, this Mac's, another's or an exported one.
-- **Export**: *Export…* — manual mode, own password. The 2.x *Import…* button is gone: *Restore…*
-  is that flow.
+- **Manual backup**: *Back Up Now* (an automatic-style copy, at once) and *Save to Archive…*
+  (manual mode, own password, anywhere; Keepit does not track the file). **Restore**: *Restore…* —
+  any `.keepit`, this Mac's, another's or an archive. Three groups, three operations (3.0.1); the
+  2.x *Export…* / *Import…* pair is gone.
 
 ## Acceptance criteria
 
