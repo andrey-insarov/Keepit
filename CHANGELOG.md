@@ -4,6 +4,7 @@
 
 - **Settings → Backup** in three groups: *Automatic backup* (with the status line beside the heading), *Manual backup* — *Back Up Now* and *Save to Archive…* — and *Restore*. The 2.x *Export…* name, without its *Import…*, was confusing; an archive is a password-locked `.keepit` saved anywhere that Keepit does not track afterwards
 - The window's (?) opens the user guide at the section for the pane on screen, not at the top
+- *Delete* in the history menu (extended menu or ⌃⌥⌫ on an item) no longer closes the menu: it reopens at once, the same way and in the same place, with the search text kept — tidying several items in a row is one visit, not one per item
 - The (?) next to *Back up automatically* states the schedule: about five minutes after the last change, not more often, at the latest once a day, nothing while locked
 - *Save to Archive…* writes preferences only (`forBackup`), not this Mac's trust settings or backup setup — the same subset the automatic copies carry; suggested file name `Keepit-archive-<date>.keepit`
 

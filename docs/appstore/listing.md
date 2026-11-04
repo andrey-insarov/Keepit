@@ -63,6 +63,7 @@ clipboard,history,paste,copy,snippets,templates,manager,queue,text expander,prod
 • Settings → Backup in three groups: Automatic backup, Manual backup (Back Up Now, Save to Archive…) and Restore; the old Export/Import wording is gone.
 • The (?) next to automatic backup now says when copies are made: about five minutes after the last change, at the latest once a day.
 • A file made by hand carries preferences only, never this Mac's trust settings.
+• Delete in the history menu keeps the menu open, so several items can be removed in one go.
 
 ## What's new (version 3.0.0)
 • Automatic encrypted backup: Settings → Backup, pick a folder (iCloud Drive, Dropbox, a disk) and Keepit keeps complete, encrypted copies there — a new one a few minutes after each change, the oldest beyond your limit removed. They open with your Keepit password or recovery phrase on any Mac.
