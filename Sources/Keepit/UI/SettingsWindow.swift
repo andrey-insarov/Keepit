@@ -166,8 +166,10 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         let l = NSTextField(labelWithString: text)
         l.font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
         l.alignment = .right
+        l.identifier = Self.headerID
         return [l, NSView()]
     }
+    private static let headerID = NSUserInterfaceItemIdentifier("group-header")
 
     private func status(_ field: NSTextField) -> [NSView] {
         field.textColor = .systemRed
@@ -222,7 +224,14 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         g.column(at: 1).xPlacement = .leading
         // Hug the content: an empty label column must not be handed half of the window.
         g.yPlacement = .center
-        for r in 0..<g.numberOfRows { g.cell(atColumnIndex: 1, rowIndex: r).xPlacement = .leading }
+        for r in 0..<g.numberOfRows {
+            g.cell(atColumnIndex: 1, rowIndex: r).xPlacement = .leading
+            // A group title that follows another group's rows gets a gap above it — the same
+            // one on every pane, so groups read as groups and not as one long list.
+            if r > 0, g.cell(atColumnIndex: 0, rowIndex: r).contentView?.identifier == Self.headerID {
+                g.row(at: r).topPadding = 12
+            }
+        }
         g.translatesAutoresizingMaskIntoConstraints = false
         return g
     }
@@ -308,8 +317,6 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         backupPath.textColor = .secondaryLabelColor
         backupPath.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         backupChoose.target = self; backupChoose.action = #selector(chooseBackupFolder)
-        let backupFolderRow = NSStackView(views: [backupPath, button(backupChoose)])
-        backupFolderRow.orientation = .horizontal; backupFolderRow.spacing = 8
         backupStatus.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
         backupStatus.textColor = .secondaryLabelColor
         backupStatus.alignment = .right
@@ -340,7 +347,8 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             [backupHeader[0], backupStatus],
             [NSView(), help(check(autoBackup), L("Keepit writes encrypted copies of the history and templates into the folder you choose — iCloud Drive, Dropbox, an external disk. A new copy about five minutes after the last change (not more often), at the latest once a day; nothing while Keepit is locked. Each copy opens with your Keepit password or recovery phrase, on this Mac or another. Needs password protection (Security). It is a backup, not a sync: two Macs write their own series of files."))],
             [NSView(), help(check(backupLabelOn), L("Puts the Mac's name into the unencrypted header of each file so series are easy to tell apart. The storage provider can see it. Off by default."))],
-            row(L("Folder:"), backupFolderRow),
+            row(L("Folder:"), backupPath),
+            [NSView(), button(backupChoose)],
             row(L("Keep last:"), help(number(backupKeep, unit: L("backups"), min: 1, max: 100, step: 1),
                                      L("Older copies of this Mac's series are deleted after a new one has been written and verified. Files Keepit did not write here are never touched."))),
             header(L("Manual backup")),
@@ -438,16 +446,17 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         resetAll.target = self; resetAll.action = #selector(resetTapped)
         // The App Store build is sandboxed: it cannot move itself to the Trash or reset the
         // Accessibility grant, and store apps are removed from Launchpad anyway — Reset only.
+        let resetHelp = L("Puts Keepit back to a fresh install: history, templates, settings, the password and the Touch ID key are deleted and the example templates return; the app, its permissions and Launch at login stay. Asks for your password or Touch ID. There is no undo — save an archive first if you may want the data back.")
         #if APPSTORE
-        let dangerRow = NSStackView(views: [button(resetAll)])
         let dangerTitle = L("Reset")
-        let dangerHelp = L("Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back.")
+        let dangerRows: [[NSView]] = [[NSView(), help(button(resetAll), resetHelp)]]
         #else
-        let dangerRow = NSStackView(views: [button(resetAll), button(uninstall)])
         let dangerTitle = L("Reset and uninstall")
-        let dangerHelp = L("Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back.")
+        let dangerRows: [[NSView]] = [
+            [NSView(), help(button(resetAll), resetHelp)],
+            [NSView(), help(button(uninstall), L("Reset, then remove the app itself, Launch at login, the keychain entry and the Accessibility permission. Asks for your password or Touch ID and for a typed confirmation. Save an archive first if you may want the data back."))],
+        ]
         #endif
-        dangerRow.orientation = .horizontal; dangerRow.spacing = 8
         let advanced = grid([
             header(L("Clipboard")),
             row(L("Poll interval:"), help(number(pollInterval, unit: L("seconds"), min: 0.1, max: 5, step: 0.1, decimals: 2),
@@ -458,8 +467,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             header(L("Data")),
             [NSView(), button(reveal)],
             header(dangerTitle),
-            [NSView(), help(dangerRow, dangerHelp)],
-        ])
+        ] + dangerRows)
 
         panes = [
             Pane(id: .init("general"), title: L("General"), symbol: "gearshape", view: general, guideAnchor: "part-5-settings"),
@@ -485,7 +493,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         // (and the window grows to fit the lines, see backupStateChanged).
         let labelColumn = (0..<backup.numberOfRows).compactMap { backup.cell(atColumnIndex: 0, rowIndex: $0).contentView?.fittingSize.width }.max() ?? 0
         let available = windowWidth - 2 * 28 - ceil(labelColumn) - backup.columnSpacing
-        backupFolderRow.widthAnchor.constraint(lessThanOrEqualToConstant: available).isActive = true
+        backupPath.widthAnchor.constraint(lessThanOrEqualToConstant: available).isActive = true
         backupStatus.preferredMaxLayoutWidth = available
         backupStatus.widthAnchor.constraint(lessThanOrEqualToConstant: available).isActive = true
 
