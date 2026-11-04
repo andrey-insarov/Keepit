@@ -55,8 +55,8 @@ FOOTER = """<footer><div class="wrap">
 </div></footer>"""
 
 CSS = """
-:root{--paper:#fbfbfd;--ink:#0f1222;--ink-2:#4b4f63;--ink-3:#8a8ea3;--blue:#2f4fd1;--blue-deep:#1f3aa6;--blue-tint:#eef2ff;--line:#e3e5ef;--key:#fff;--key-edge:#cfd2de;--win:#fff;--sel:#2f5cf0}
-@media(prefers-color-scheme:dark){:root{--paper:#0c0d14;--ink:#f2f3f8;--ink-2:#b7bacb;--ink-3:#7c8097;--blue:#7d9bff;--blue-deep:#a9bdff;--blue-tint:#151b35;--line:#23263a;--key:#1b1e2e;--key-edge:#3a3e56;--win:#1a1c28;--sel:#3d6bff}}
+:root{--paper:#fbfbfd;--ink:#0f1222;--ink-2:#4b4f63;--ink-3:#696d84;--blue:#2f4fd1;--blue-deep:#1f3aa6;--blue-tint:#eef2ff;--line:#e3e5ef;--key:#fff;--key-edge:#cfd2de;--win:#fff;--sel:#2f5cf0}
+@media(prefers-color-scheme:dark){:root{--paper:#0c0d14;--ink:#f2f3f8;--ink-2:#b7bacb;--ink-3:#8e92a9;--blue:#7d9bff;--blue-deep:#a9bdff;--blue-tint:#151b35;--line:#23263a;--key:#1b1e2e;--key-edge:#3a3e56;--win:#1a1c28;--sel:#3d6bff}}
 *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:72px;-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;font:17px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif}
 a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}

@@ -9,13 +9,13 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Keepit">
 <meta property="og:title" content="Keepit – Free Clipboard Manager for Mac">
-<meta property="og:description" content="Clipboard history one hot key away. Templates, Touch ID, AES-256 encryption. Free and open source, nothing leaves your Mac.">
+<meta property="og:description" content="Clipboard history one hot key away. Templates, Touch ID, AES-256 encryption. Free and open source, no account, no Keepit cloud.">
 <meta property="og:image" content="https://keep.it.com/img/social-preview.png">
 <meta property="og:image:width" content="1280"><meta property="og:image:height" content="640">
 <meta property="og:url" content="https://keep.it.com/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Keepit – Free Clipboard Manager for Mac">
-<meta name="twitter:description" content="Clipboard history one hot key away. Templates, Touch ID, AES-256 encryption. Free and open source, nothing leaves your Mac.">
+<meta name="twitter:description" content="Clipboard history one hot key away. Templates, Touch ID, AES-256 encryption. Free and open source, no account, no Keepit cloud.">
 <meta name="twitter:image" content="https://keep.it.com/img/social-preview.png">
 <meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">
@@ -23,14 +23,14 @@
 <link rel="apple-touch-icon" href="img/icon.png">
 <style>
   :root {
-    --paper: #fbfbfd; --ink: #0f1222; --ink-2: #4b4f63; --ink-3: #8a8ea3;
+    --paper: #fbfbfd; --ink: #0f1222; --ink-2: #4b4f63; --ink-3: #696d84;
     --blue: #2f4fd1; --blue-deep: #1f3aa6; --blue-tint: #eef2ff; --line: #e3e5ef;
     --key: #ffffff; --key-edge: #cfd2de; --win: #ffffff; --win-bar: #ececf1; --sel: #2f5cf0;
     --navy: #0b1340; --navy-2: #121c5c;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --paper: #0c0d14; --ink: #f2f3f8; --ink-2: #b7bacb; --ink-3: #7c8097;
+      --paper: #0c0d14; --ink: #f2f3f8; --ink-2: #b7bacb; --ink-3: #8e92a9;
       --blue: #7d9bff; --blue-deep: #a9bdff; --blue-tint: #151b35; --line: #23263a;
       --key: #1b1e2e; --key-edge: #3a3e56; --win: #1a1c28; --win-bar: #262939; --sel: #3d6bff;
     }
@@ -204,7 +204,7 @@
 {"@type":"WebSite","@id":"https://keep.it.com/#site","url":"https://keep.it.com/","name":"Keepit","publisher":{"@id":"https://keep.it.com/#org"}},
 {"@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"Why does Keepit ask for the Accessibility permission?","acceptedAnswer":{"@type":"Answer","text":"To send ⌘V to the app you were working in after you pick an item, and to find the text cursor so the menu opens next to it. Keepit does not read or monitor other apps. Without the permission it still records history and copies the chosen item to the clipboard."}},
-{"@type":"Question","name":"Does anything leave my Mac?","acceptedAnswer":{"@type":"Answer","text":"No. The only network request is the daily update check against GitHub Releases, and you can switch it off in Settings → General; the App Store edition does not make even that one. There is no account, no telemetry, no crash reporting."}},
+{"@type":"Question","name":"Does anything leave my Mac?","acceptedAnswer":{"@type":"Answer","text":"Not unless you ask it to. Keepit has no server: the only network request is the daily update check against GitHub Releases, which you can switch off in Settings → General (the App Store edition does not make even that one). There is no account, no telemetry, no crash reporting. If you switch on automatic backup, encrypted copies go to a folder you choose — and if that folder is in iCloud Drive or Dropbox, that service syncs them under your account."}},
 {"@type":"Question","name":"What if I forget the password?","acceptedAnswer":{"@type":"Answer","text":"Use the 24-word recovery phrase shown when you turned protection on, or Touch ID on the same Mac. With neither, the data cannot be recovered — there is no master key, by design."}},
 {"@type":"Question","name":"Is Keepit really free? What's the catch?","acceptedAnswer":{"@type":"Answer","text":"Free and MIT-licensed, source on GitHub. Keepit was built by the founder of the it.com domain zone to show what can live at a .it.com address. No ads, no in-app purchases, no pro tier."}},
 {"@type":"Question","name":"How do I move my data to another Mac?","acceptedAnswer":{"@type":"Answer","text":"Switch on automatic backup to a folder such as iCloud Drive (Settings → General → Backup), or use Export for a one-off file. On the new Mac choose Restore from Backup at first launch, enter the old Mac's password, and pick Replace or Merge."}},
@@ -318,12 +318,12 @@ open "keepit://pause"</div>
 
   <section id="privacy" class="band"><div class="wrap">
     <h2>Private by design, not by promise</h2>
-    <p class="kicker">A clipboard manager sees passwords, addresses and half-written messages. Keepit is built so that none of it can go anywhere.</p>
+    <p class="kicker">A clipboard manager sees passwords, addresses and half-written messages. Keepit is built so that none of it goes anywhere you did not choose.</p>
     <div class="ledger">
-      <div><strong>0</strong><span>accounts, servers or sync. Nothing to log in to.</span></div>
+      <div><strong>0</strong><span>accounts, servers or sync of its own. Nothing to log in to.</span></div>
       <div><strong>0</strong><span>analytics, crash reports or trackers — not even anonymous ones.</span></div>
       <div><strong>1</strong><span>network request: the daily update check against GitHub. Optional; off in the App Store edition.</span></div>
-      <div><strong>1</strong><span>folder on your Mac with everything in it. Delete it and Keepit is gone.</span></div>
+      <div><strong>1</strong><span>folder on your Mac with everything in it — plus the backup folder, if you choose one. Delete them and Keepit is gone.</span></div>
     </div>
     <div class="facts"><ul>
       <li>Turn on a password and history and templates are stored with AES-256-GCM; the key is derived with PBKDF2 (200 000 rounds) and wiped from memory whenever Keepit locks.</li>
@@ -374,7 +374,7 @@ open "keepit://pause"</div>
   <section id="faq"><div class="wrap faq">
     <h2>Questions</h2>
     <details><summary>Why does Keepit ask for the Accessibility permission?</summary><p>For two things: to send ⌘V to the app you were working in after you pick an item, and to find the text cursor so the menu opens next to it. Keepit does not read or monitor other apps. Without the permission it still records history and copies the chosen item to the clipboard — you paste by hand.</p></details>
-    <details><summary>Does anything leave my Mac?</summary><p>No. The only network request is the daily update check against GitHub Releases — and you can switch it off in Settings → General, after which Keepit makes no request at all. The App Store edition does not make even that one. There is no account, no telemetry, no crash reporting.</p></details>
+    <details><summary>Does anything leave my Mac?</summary><p>Not unless you ask it to. Keepit has no server: the only network request is the daily update check against GitHub Releases — and you can switch it off in Settings → General, after which Keepit makes no request at all. The App Store edition does not make even that one. There is no account, no telemetry, no crash reporting. If you switch on automatic backup, encrypted copies are written to a folder you choose; if that folder lives in iCloud Drive or Dropbox, that service syncs them under your account — Keepit itself never talks to it.</p></details>
     <details><summary>What if I forget the password?</summary><p>Use the 24-word recovery phrase Keepit showed you when you turned protection on, or Touch ID on the same Mac. With neither, the data cannot be recovered — there is no master key, by design.</p></details>
     <details><summary>Is it really free? What's the catch?</summary><p>Free, MIT-licensed, source on <a href="https://github.com/andrey-insarov/Keepit">GitHub</a>. Keepit was built by the founder of the <a href="https://it.com">it.com</a> domain zone to show what can live at a .it.com address — the app is the advertisement. No ads, no in-app purchases, no pro tier, and therefore nothing to gain from your data.</p></details>
     <details><summary>Where does the design come from?</summary><p>Keepit started as a macOS take on the workflow of <a href="https://github.com/nakkag/CLCL">CLCL</a>, a classic Windows clipboard tool, and grew into an app of its own — written from scratch in Swift, with ideas drawn from many clipboard and snippet managers. It is not affiliated with the CLCL author.</p></details>

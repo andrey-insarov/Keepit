@@ -18,7 +18,7 @@ What to know before relying on it:
 - **It is a Spotlight panel**, so pasting means opening Spotlight, switching mode, picking an item, and returning to your document.
 - Copies from Apple's Passwords app are left out; other apps vary.
 
-For many people that is enough. If you need yesterday's item, formatting, pictures, or anything faster than four steps, read on.
+For many people that is enough. If you want formatting kept, items that outlive the window you set, templates, a menu at the text cursor instead of a Spotlight round-trip, or a Mac that cannot run macOS 26, read on.
 
 ## Earlier versions of macOS: one item only
 
