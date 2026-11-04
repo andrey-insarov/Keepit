@@ -98,6 +98,25 @@ final class LayoutTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(image.frame.width, 300, "the image view fills the pane, it is not squeezed by the picture's own size")
         XCTAssertLessThan(info.frame.minX, 20, "size line at the left: \(info.frame)")
         XCTAssertTrue(info.stringValue.hasPrefix("1397×868 px"), info.stringValue)
+        // Drawn scaled to fit and centred, not a corner at natural size: the view's own policy, and the
+        // picture it draws — red where the picture is, the background colour outside it.
+        XCTAssertEqual(image.imageScaling, .scaleProportionallyDown)
+        XCTAssertEqual(image.imageAlignment, .alignCenter)
+        let drawn = try XCTUnwrap(image.bitmapImageRepCacheDisplay(in: image.bounds))
+        image.cacheDisplay(in: image.bounds, to: drawn)
+        func red(_ x: CGFloat, _ y: CGFloat) -> Bool {
+            let sx = CGFloat(drawn.pixelsWide) / image.bounds.width, sy = CGFloat(drawn.pixelsHigh) / image.bounds.height
+            let c = drawn.colorAt(x: Int(x * sx), y: Int((image.bounds.height - y) * sy) - 1)?.usingColorSpace(.sRGB)
+            return (c?.redComponent ?? 0) > 0.8 && (c?.greenComponent ?? 1) < 0.2
+        }
+        let b = image.bounds
+        let fitted = b.width * 868 / 1397                       // the picture's height once its width fills the view
+        XCTAssertLessThan(fitted, b.height - 20, "the fixture letterboxes top and bottom: \(fitted) of \(b.height)")
+        XCTAssertTrue(red(b.midX, b.midY), "the middle of the view shows the picture")
+        XCTAssertTrue(red(2, b.midY), "the picture reaches the left edge: the full width is used")
+        XCTAssertTrue(red(b.maxX - 3, b.midY), "and the right edge")
+        XCTAssertFalse(red(b.midX, 2), "but not the bottom of the view")
+        XCTAssertFalse(red(b.midX, b.maxY - 3), "nor the top: centred, not a corner")
         // A tiny picture (25×119, a Parallels console icon) must not shrink the pane to its own size
         // either: on 3.0.1 it folded the whole Viewer — toolbar mid-window, both panes 150 pt tall.
         let tiny = NSImage(size: NSSize(width: 25, height: 119), flipped: false) { r in NSColor.blue.setFill(); r.fill(); return true }
@@ -117,6 +136,7 @@ final class LayoutTests: XCTestCase {
         defer { storage.restore() }
         try FileManager.default.createDirectory(at: storage.dir, withIntermediateDirectories: true)
         let app = AppDelegate()
+        app.loadStoresForTesting()
         let tiny = NSImage(size: NSSize(width: 235, height: 199), flipped: false) { r in NSColor.gray.setFill(); r.fill(); return true }
         let png = try XCTUnwrap(NSBitmapImageRep(data: try XCTUnwrap(tiny.tiffRepresentation))?.representation(using: .png, properties: [:]))
         let item = ClipItem(id: UUID(), date: Date(), formats: [ClipItem.Format.png: png], sourceApp: nil, contentHash: ClipItem.hash(of: png))
@@ -132,7 +152,15 @@ final class LayoutTests: XCTestCase {
         let pane = try XCTUnwrap(descendants(content).compactMap { $0 as? ImageFormatView }.first, "the picture pane is shown")
         XCTAssertGreaterThan(split.frame.height, 400, "the split view fills the window, not the picture: \(split.frame) in \(content.bounds)")
         XCTAssertGreaterThan(split.frame.maxY, content.bounds.maxY - 80, "the split view reaches up to the toolbar: \(split.frame)")
-        XCTAssertGreaterThan(pane.frame.height, 400, "the picture pane is as tall as the split: \(pane.frame)")
-        XCTAssertGreaterThan(pane.frame.width, 400, "and as wide as the right side: \(pane.frame)")
+        // The pane covers the split view's right side exactly — the same edges in window coordinates.
+        let right = try XCTUnwrap(split.arrangedSubviews.last)
+        let rightRect = content.convert(right.bounds, from: right)
+        let paneRect = content.convert(pane.bounds, from: pane)
+        XCTAssertEqual(paneRect.minX, rightRect.minX, accuracy: 1, "left edge at the divider: \(paneRect) vs \(rightRect)")
+        XCTAssertEqual(paneRect.maxX, rightRect.maxX, accuracy: 1, "right edge at the window's: \(paneRect) vs \(rightRect)")
+        XCTAssertEqual(paneRect.minY, rightRect.minY, accuracy: 1, "bottom: \(paneRect) vs \(rightRect)")
+        XCTAssertEqual(paneRect.maxY, rightRect.maxY, accuracy: 1, "top: \(paneRect) vs \(rightRect)")
+        XCTAssertGreaterThan(paneRect.width, 500, "the right side is most of a 900 pt window: \(paneRect)")
+        XCTAssertGreaterThan(paneRect.height, 400, "and reaches the toolbar: \(paneRect)")
     }
 }
