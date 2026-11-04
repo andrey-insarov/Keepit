@@ -1,0 +1,22 @@
+{
+  "format": 1,
+  "formatHashes": [],
+  "history": 0,
+  "hotKeys": {
+    "Sig": [
+      17,
+      2048
+    ]
+  },
+  "outcome": "ok",
+  "password": "correct horse battery staple",
+  "templateNodes": 7,
+  "templatePaths": [
+    "Work",
+    "Work/Replies",
+    "Work/Replies/Thanks",
+    "Work/-",
+    "Work/",
+    "Sig"
+  ]
+}

@@ -12,7 +12,7 @@
 **App Privacy**: Data Not Collected
 
 ## Promotional text (170 chars)
-Everything you copy, one hot key away. History, templates, a paste queue, Touch ID lock and encrypted storage — all on your Mac, nothing in the cloud.
+Everything you copy, one hot key away. History, templates, a paste queue, Touch ID lock and encrypted storage — all on your Mac, no Keepit cloud.
 
 ## Description (4000 chars max)
 
@@ -38,11 +38,12 @@ A VIEWER FOR EVERYTHING
 • Drag history items into templates. Save any format to a file.
 
 PRIVATE BY DESIGN
-• Everything stays on your Mac. No account, no cloud, no analytics, no network.
+• Everything stays on your Mac; backups, if you switch them on, go encrypted to a folder you choose. No account, no Keepit server, no analytics, no network.
 • Concealed clipboard data is not recorded; copies from known password managers are excluded; any app can be excluded.
 • Optional password: history and templates are stored AES-256 encrypted; the key is wiped from memory when Keepit locks — manually, when the screen locks, or when the Mac sleeps.
 • Touch ID unlock, and a 24-word recovery phrase in case you forget the password.
-• Export / Import: one password-encrypted backup file moves everything to another Mac.
+• Automatic encrypted backup to a folder of your choice — iCloud Drive, Dropbox, an external disk. Complete copies, opened with your Keepit password or recovery phrase on any Mac; the provider only ever sees ciphertext. Restore offered on the first launch of a new Mac.
+• Export / Import: one password-encrypted backup file by hand, any time.
 
 MADE FOR THE MAC
 • Settings the Mac way: a pane for every topic, every change applies at once.
@@ -57,6 +58,11 @@ Keepit needs the Accessibility permission to paste for you; without it, chosen i
 
 ## Keywords (100 chars, comma-separated)
 clipboard,history,paste,copy,snippets,templates,manager,queue,text expander,productivity
+
+## What's new (version 3.0.0)
+• Automatic encrypted backup: Settings → Backup, pick a folder (iCloud Drive, Dropbox, a disk) and Keepit keeps complete, encrypted copies there — a new one a few minutes after each change, the oldest beyond your limit removed. They open with your Keepit password or recovery phrase on any Mac.
+• Restore from Backup on first launch, from Settings, or by double-clicking a .keepit file: Merge into what you have, or Replace it (a copy of the current data is saved first).
+• New .keepit format: authenticated header, versioned, published specification. Files from Keepit 2.x still open.
 
 ## What's new (version 2.13.1)
 • keepit:// automation: a browser is always asked, each other app is asked once and can be trusted; a malformed URL no longer stops the app.
@@ -101,6 +107,6 @@ Paste queue: press Option+N, copy several things in a row (the menu bar icon sho
 
 Optional password protection (Settings → Security): history and templates are stored AES-256-GCM encrypted in the app's container; the key is derived from the password and kept only in memory. Touch ID can stand in for the password. A 24-word recovery phrase is offered when the password is set. There is no account and no network use: nothing leaves the Mac. Settings → Advanced → Reset… deletes all local data and returns the app to a fresh install (asks for the password first).
 
-Sandbox note: the only file access is user-selected (open/save panels for backup export/import and for adding files to templates).
+Sandbox note: the only file access is user-selected — open/save panels for backup export/import and for adding files to templates, and a security-scoped bookmark for the automatic-backup folder the user chooses in Settings (entitlement com.apple.security.files.bookmarks.app-scope). Keepit never enumerates iCloud Drive or any other location on its own.
 
 Contact: admin@keep.it.com

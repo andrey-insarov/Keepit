@@ -9,13 +9,23 @@ enum Storage {
         if let env = ProcessInfo.processInfo.environment["KEEPIT_DATA_DIR"], !env.isEmpty {
             dir = URL(fileURLWithPath: env, isDirectory: true)
         } else {
-            let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-            dir = base.appendingPathComponent("Keepit", isDirectory: true)
+            dir = defaultDirectory
         }
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         return dir
     }() {
         didSet { try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true) }
+    }
+
+    /// Where a normal installation keeps its data (Application Support, or the sandbox container).
+    static let defaultDirectory: URL = {
+        let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        return base.appendingPathComponent("Keepit", isDirectory: true)
+    }()
+
+    /// True when `directory` is the normal one — not a test, self-test or KEEPIT_DATA_DIR location.
+    static var isDefaultDirectory: Bool {
+        directory.standardizedFileURL.path == defaultDirectory.standardizedFileURL.path
     }
 
     static var settingsURL: URL  { directory.appendingPathComponent("settings.json") }
@@ -108,6 +118,31 @@ enum Storage {
     /// Like `save`, for data already encoded on the caller's thread (a snapshot of mutable state).
     static func saveEncoded(_ data: Data, to url: URL, encrypt: Bool = true, background: Bool = false) {
         write(to: url, encrypt: encrypt, background: background) { data }
+    }
+
+    enum Failure: Error, Equatable { case locked }
+
+    /// The throwing, synchronous write for a caller that must know the outcome (a restore commit).
+    /// Same rules as `save`: encrypted with the current key, refused while locked, through `ioQueue`.
+    static func writeNow(_ data: Data, to url: URL, encrypt: Bool = true) throws {
+        if encrypt, key == nil, Vault.isEnabled { throw Failure.locked }
+        let k: SecureKey? = encrypt ? key : nil
+        try ioQueue.sync {
+            var d = data
+            if let k { d = try Vault.encrypt(d, key: k) }
+            try d.write(to: url, options: .atomic)
+        }
+    }
+
+    /// Put bytes back exactly as they were read (already encrypted, or not): undo for `writeNow`.
+    static func writeRawNow(_ bytes: Data, to url: URL) throws {
+        try ioQueue.sync { try bytes.write(to: url, options: .atomic) }
+    }
+
+    static func removeNow(_ url: URL) throws {
+        try ioQueue.sync {
+            if FileManager.default.fileExists(atPath: url.path) { try FileManager.default.removeItem(at: url) }
+        }
     }
 
     private static func write(to url: URL, encrypt: Bool, background: Bool, _ produce: @escaping () throws -> Data) {

@@ -25,6 +25,14 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
 
     private let loginItem    = NSButton(checkboxWithTitle: L("Launch at login"), target: nil, action: nil)
     private let updateCheck  = NSButton(checkboxWithTitle: L("Check for updates automatically"), target: nil, action: nil)
+    private let autoBackup   = NSButton(checkboxWithTitle: L("Back up automatically to a folder"), target: nil, action: nil)
+    private let backupPath   = NSTextField(labelWithString: "")
+    private let backupChoose = NSButton(title: L("Choose…"), target: nil, action: nil)
+    private let backupKeep   = NSTextField()
+    private let backupLabelOn = NSButton(checkboxWithTitle: L("Include this Mac's name in the backup files"), target: nil, action: nil)
+    private let backupStatus = NSTextField(wrappingLabelWithString: "")
+    private let backupNow    = NSButton(title: L("Back Up Now"), target: nil, action: nil)
+    private let backupRestore = NSButton(title: L("Restore…"), target: nil, action: nil)
     private let urlCommands  = NSButton(checkboxWithTitle: L("Allow keepit:// URL commands"), target: nil, action: nil)
     private let trustedReset = NSButton(title: L("Forget Trusted Apps"), target: nil, action: nil)
     private let saveHistory  = NSButton(checkboxWithTitle: L("Save history on quit, restore on start"), target: nil, action: nil)
@@ -294,9 +302,20 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
 
     private func buildPanes() {
         let exportBtn = NSButton(title: L("Export…"), target: self, action: #selector(exportTapped))
-        let importBtn = NSButton(title: L("Import…"), target: self, action: #selector(importTapped))
-        let backupRow = NSStackView(views: [button(exportBtn), button(importBtn)])
-        backupRow.orientation = .horizontal; backupRow.spacing = 8
+        backupPath.lineBreakMode = .byTruncatingMiddle
+        backupPath.textColor = .secondaryLabelColor
+        backupPath.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        backupChoose.target = self; backupChoose.action = #selector(chooseBackupFolder)
+        let backupFolderRow = NSStackView(views: [backupPath, button(backupChoose)])
+        backupFolderRow.orientation = .horizontal; backupFolderRow.spacing = 8
+        backupStatus.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
+        backupStatus.textColor = .secondaryLabelColor
+        backupStatus.lineBreakMode = .byWordWrapping
+        backupStatus.maximumNumberOfLines = 0
+        backupStatus.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        backupPath.maximumNumberOfLines = 1
+        backupNow.target = self; backupNow.action = #selector(backUpNowTapped)
+        backupRestore.target = self; backupRestore.action = #selector(restoreTapped)
         var generalRows: [[NSView]] = [
             header(L("Startup")),
             [NSView(), check(loginItem)],
@@ -306,11 +325,26 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             row(L("Paste delay:"), help(number(pasteDelay, unit: L("seconds"), min: 0, max: 5, step: 0.02, decimals: 2),
                                          L("Time between bringing the app you were in back to the front and sending ⌘V. Raise it for apps that are slow to come forward."))),
             [NSView(), check(showAtCaret)],
-            header(L("Backup")),
-            [NSView(), help(backupRow, L("One password-encrypted .keepit file with history, templates and preferences — for moving to another Mac or between the App Store and direct editions."))],
         ]
         generalRows += updatesRows()
         let general = grid(generalRows)
+
+        // Backup: the automatic copies, then what to do with any .keepit file. Same grammar as the
+        // other panes — a header per group, one checkbox or one row per line, help only behind (?).
+        let backup = grid([
+            header(L("Automatic backup")),
+            [NSView(), help(check(autoBackup), L("Keepit writes encrypted copies of the history and templates into the folder you choose — iCloud Drive, Dropbox, an external disk. Each copy opens with your Keepit password or recovery phrase, on this Mac or another. Needs password protection (Security). It is a backup, not a sync: two Macs write their own series of files."))],
+            row(L("Folder:"), backupFolderRow),
+            row(L("Keep last:"), help(number(backupKeep, unit: L("backups"), min: 1, max: 100, step: 1),
+                                     L("Older copies of this Mac's series are deleted after a new one has been written and verified. Files Keepit did not write here are never touched."))),
+            [NSView(), help(check(backupLabelOn), L("Puts the Mac's name into the unencrypted header of each file so series are easy to tell apart. The storage provider can see it. Off by default."))],
+            [NSView(), backupStatus],
+            [NSView(), help(button(backupNow), L("Makes a copy right away, without waiting for the quiet period — the same file as an automatic one, in the same folder and series."))],
+            header(L("Restore")),
+            [NSView(), help(button(backupRestore), L("Opens a backup — one of this Mac's, another Mac's, or an exported file — and lets you Merge it into the current data or Replace them (a copy of the current data is saved first). Double-clicking a .keepit file in the Finder does the same."))],
+            header(L("Export")),
+            [NSView(), help(button(exportBtn), L("Writes one .keepit file with history, templates and preferences, encrypted with a password you choose for that file — no Keepit password needed. Open it with Restore… on any Mac, in either edition."))],
+        ])
 
         let resetHK = NSButton(title: L("Reset to Defaults"), target: self, action: #selector(resetShortcuts))
         let shortcuts = grid([
@@ -380,6 +414,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
 
         protect.target = self; protect.action = #selector(protectToggled)
         trustedReset.target = self; trustedReset.action = #selector(forgetTrustedSenders)
+        trustedReset.title = LF("Forget Trusted Apps (%d)", 999)       // measured with the widest title it can get; load() sets the real one
         changePw.target = self; changePw.action = #selector(changePasswordTapped)
         newPhrase.target = self; newPhrase.action = #selector(newPhraseTapped)
         let security = grid([
@@ -428,6 +463,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             Pane(id: .init("history"), title: L("History"), symbol: "clock", view: history),
             Pane(id: .init("menu"), title: L("Menu"), symbol: "filemenu.and.selection", view: menu),
             Pane(id: .init("security"), title: L("Security"), symbol: "lock", view: security),
+            Pane(id: .init("backup"), title: L("Backup"), symbol: "externaldrive", view: backup),
             Pane(id: .init("advanced"), title: L("Advanced"), symbol: "wrench.and.screwdriver", view: advanced),
         ]
         // Measure once, in the current language:
@@ -439,6 +475,14 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         for p in panes { (p.view as? NSGridView)?.layoutSubtreeIfNeeded() }
         let widest = ceil(panes.map { $0.view.fittingSize.width }.max() ?? 480)
         windowWidth = max(560, widest + 2 * 28)
+        // Rows whose text arrives later — the folder path, the status line — are measured empty and
+        // must live within the window afterwards: the path truncates in the middle, the status wraps
+        // (and the window grows to fit the lines, see backupStateChanged).
+        let labelColumn = (0..<backup.numberOfRows).compactMap { backup.cell(atColumnIndex: 0, rowIndex: $0).contentView?.fittingSize.width }.max() ?? 0
+        let available = windowWidth - 2 * 28 - ceil(labelColumn) - backup.columnSpacing
+        backupFolderRow.widthAnchor.constraint(lessThanOrEqualToConstant: available).isActive = true
+        backupStatus.preferredMaxLayoutWidth = available
+        backupStatus.widthAnchor.constraint(lessThanOrEqualToConstant: available).isActive = true
 
         container.translatesAutoresizingMaskIntoConstraints = false
         let guide = NSButton(title: "", target: self, action: #selector(openGuide))
@@ -524,9 +568,16 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         shownPane?.removeFromSuperview()
         let v = pane.view
         container.addSubview(v)
+        let leading = v.leadingAnchor.constraint(greaterThanOrEqualTo: container.leadingAnchor, constant: 28)
+        let trailing = v.trailingAnchor.constraint(lessThanOrEqualTo: container.trailingAnchor, constant: -28)
+        leading.priority = .init(999); trailing.priority = .init(999)   // never wider than the window; compressible text gives way
         NSLayoutConstraint.activate([
             v.topAnchor.constraint(equalTo: container.topAnchor, constant: 20),
             v.centerXAnchor.constraint(equalTo: container.centerXAnchor),
+            // The window's own size is a priority-500 constraint: pinning the bottom makes the
+            // window follow the content whenever a wrapped line changes its height later.
+            v.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -(16 + 21 + 14)),
+            leading, trailing,
         ])
         shownPane = v
         window.toolbar?.selectedItemIdentifier = pane.id
@@ -561,6 +612,12 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         let s = app.settings
         loginItem.state = s.launchAtLogin ? .on : .off
         updateCheck.state = s.checkForUpdates ? .on : .off
+        autoBackup.state = s.backupEnabled ? .on : .off
+        autoBackup.isEnabled = Vault.isEnabled
+        autoBackup.toolTip = Vault.isEnabled ? nil : L("Set a Keepit password (Security) to enable automatic backups.")
+        setNumber(backupKeep, Double(s.backupKeepCount))
+        backupLabelOn.state = s.backupLabel == nil ? .off : .on
+        backupStateChanged()
         urlCommands.state = s.allowURLCommands ? .on : .off
         trustedReset.isEnabled = !s.trustedURLSenders.isEmpty
         trustedReset.title = s.trustedURLSenders.isEmpty ? L("Forget Trusted Apps") : LF("Forget Trusted Apps (%d)", s.trustedURLSenders.count)
@@ -635,6 +692,9 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         apply { s in
             s.launchAtLogin = loginItem.state == .on
             s.checkForUpdates = updateCheck.state == .on
+            s.backupEnabled = autoBackup.state == .on && Vault.isEnabled
+            s.backupKeepCount = backupKeep.integerValue
+            s.backupLabel = backupLabelOn.state == .on ? (Host.current().localizedName ?? "Mac") : nil
             s.allowURLCommands = urlCommands.state == .on
             s.historySave = saveHistory.state == .on
             s.pasteAfterSelect = pasteAfter.state == .on
@@ -653,6 +713,8 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             s.biometricPasswordChange = touchIDChange.state == .on
             s.lockWithScreen = lockScreen.state == .on
         }
+        if autoBackup.state == .on, app.settings.backupBookmark == nil, Vault.isEnabled { chooseBackupFolder() }
+        backupStateChanged()
     }
 
     @objc private func numberEdited(_ sender: NSTextField) { commitNumbers(from: sender) }
@@ -787,7 +849,62 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
     @objc private func changePasswordTapped() { app.changePassword() }
     @objc private func newPhraseTapped() { app.regenerateRecoveryPhrase() }
     @objc private func exportTapped() { app.exportBackup() }
-    @objc private func importTapped() { app.importBackup() }
+    @objc private func restoreTapped() { app.restoreBackupTapped() }
+    @objc private func backUpNowTapped() {
+        backupNow.isEnabled = false
+        app.backup.backUpNow { [weak self] result in
+            self?.backupNow.isEnabled = true
+            if case .failure(let e) = result, (e as? BackupEngine.Failure) != .nothingToBackUp { Vault.error(e.localizedDescription) }
+            self?.backupStateChanged()
+        }
+    }
+
+    @objc private func chooseBackupFolder() {
+        let panel = NSOpenPanel()
+        panel.title = L("Backup Folder")
+        panel.message = L("Choose the folder Keepit writes its encrypted backups into.")
+        panel.canChooseDirectories = true; panel.canChooseFiles = false; panel.canCreateDirectories = true
+        panel.prompt = L("Choose")
+        let icloud = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Library/Mobile Documents/com~apple~CloudDocs", isDirectory: true)
+        if FileManager.default.fileExists(atPath: icloud.path) { panel.directoryURL = icloud }
+        NSApp.activate(ignoringOtherApps: true)
+        guard panel.runModal() == .OK, let url = panel.url else { return }
+        do {
+            let bm = try BookmarkDestination.makeBookmark(for: url)
+            apply { s in s.backupBookmark = bm; if Vault.isEnabled { s.backupEnabled = true } }
+            autoBackup.state = app.settings.backupEnabled ? .on : .off
+            backupStateChanged()
+        } catch {
+            Vault.error(LF("Could not keep access to that folder: %@", error.localizedDescription))
+        }
+    }
+
+    /// Status line and dependent controls, from the engine's state. Called by the engine too.
+    func backupStateChanged() {
+        let s = app.settings
+        let st = app.backup?.state
+        backupPath.stringValue = app.backup?.destination?.displayPath ?? L("No folder chosen")
+        let on = s.backupEnabled && s.backupBookmark != nil && Vault.isEnabled
+        backupNow.isEnabled = on
+        backupKeep.isEnabled = on; backupLabelOn.isEnabled = on; backupChoose.isEnabled = Vault.isEnabled
+        let df = DateFormatter(); df.dateStyle = .medium; df.timeStyle = .short
+        let fmt = ByteCountFormatter()
+        if !Vault.isEnabled {
+            backupStatus.stringValue = L("Set a Keepit password (Security) to enable automatic backups.")
+        } else if !on {
+            backupStatus.stringValue = L("Automatic backup is off.")
+        } else if let e = st?.lastError {
+            backupStatus.stringValue = LF("Last backup failed: %@", e)
+        } else if let d = st?.lastSuccess, let size = st?.lastSize {
+            backupStatus.stringValue = LF("Last backup: %@ · %@", df.string(from: d), fmt.string(fromByteCount: Int64(size)))
+        } else {
+            backupStatus.stringValue = L("No backup yet.")
+        }
+        // A longer status wraps to more lines: the window height follows (same as setStatus).
+        if let pane = panes.first(where: { $0.view === shownPane }), pane.id.rawValue == "backup" {
+            show(pane: pane, animate: window?.isVisible == true)
+        }
+    }
     @objc private func uninstallTapped() { app.uninstallRequested() }
     @objc private func resetTapped() { app.resetRequested() }
     @objc private func revealData() { NSWorkspace.shared.activateFileViewerSelecting([Storage.settingsURL]) }

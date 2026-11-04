@@ -160,6 +160,14 @@ struct Settings: Codable, Equatable {
     /// Bundle ids the user answered "Always Allow" for; browsers and unidentified senders never get in.
     var trustedURLSenders: [String] = []
 
+    // Automatic backup (docs/BACKUP.md). Off by default; needs a vault. The bookmark is app-scoped
+    // and meaningless on another Mac; sourceID is random per installation; label is off (nil) by default.
+    var backupEnabled = false
+    var backupBookmark: Data?
+    var backupKeepCount = 10
+    var backupLabel: String?
+    var backupSourceID: String?
+
     /// Lock Keepit (wipe key, unload data) when the screen locks or the Mac sleeps. Only matters with a password set.
     var lockWithScreen = true
     /// Unlock with Touch ID instead of typing the password (password stays as fallback).
@@ -210,6 +218,7 @@ struct Settings: Codable, Equatable {
         case checkForUpdates
         case allowURLCommands
         case trustedURLSenders
+        case backupEnabled, backupBookmark, backupKeepCount, backupLabel, backupSourceID
         case lockWithScreen
         case biometricUnlock
         case biometricPasswordChange
@@ -294,6 +303,11 @@ struct Settings: Codable, Equatable {
         checkForUpdates  = try c.decodeIfPresent(Bool.self,   forKey: .checkForUpdates)  ?? d.checkForUpdates
         allowURLCommands = try c.decodeIfPresent(Bool.self,   forKey: .allowURLCommands) ?? d.allowURLCommands
         trustedURLSenders = try c.decodeIfPresent([String].self, forKey: .trustedURLSenders) ?? d.trustedURLSenders
+        backupEnabled    = try c.decodeIfPresent(Bool.self,   forKey: .backupEnabled)    ?? d.backupEnabled
+        backupBookmark   = try c.decodeIfPresent(Data.self,   forKey: .backupBookmark)
+        backupKeepCount  = try c.decodeIfPresent(Int.self,    forKey: .backupKeepCount)  ?? d.backupKeepCount
+        backupLabel      = try c.decodeIfPresent(String.self, forKey: .backupLabel)
+        backupSourceID   = try c.decodeIfPresent(String.self, forKey: .backupSourceID)
         lockWithScreen   = try c.decodeIfPresent(Bool.self,   forKey: .lockWithScreen)   ?? d.lockWithScreen
         biometricUnlock  = try c.decodeIfPresent(Bool.self,   forKey: .biometricUnlock)  ?? d.biometricUnlock
         biometricPasswordChange = try c.decodeIfPresent(Bool.self, forKey: .biometricPasswordChange) ?? d.biometricPasswordChange
@@ -350,6 +364,11 @@ struct Settings: Codable, Equatable {
         try c.encode(checkForUpdates, forKey: .checkForUpdates)
         try c.encode(allowURLCommands, forKey: .allowURLCommands)
         try c.encode(trustedURLSenders, forKey: .trustedURLSenders)
+        try c.encode(backupEnabled, forKey: .backupEnabled)
+        try c.encodeIfPresent(backupBookmark, forKey: .backupBookmark)
+        try c.encode(backupKeepCount, forKey: .backupKeepCount)
+        try c.encodeIfPresent(backupLabel, forKey: .backupLabel)
+        try c.encodeIfPresent(backupSourceID, forKey: .backupSourceID)
         try c.encode(lockWithScreen, forKey: .lockWithScreen)
         try c.encode(biometricUnlock, forKey: .biometricUnlock)
         try c.encode(biometricPasswordChange, forKey: .biometricPasswordChange)
@@ -386,11 +405,13 @@ struct Settings: Codable, Equatable {
         pollInterval = Limits.clamp(pollInterval, 0.1, 5)
         pasteDelay = Limits.clamp(pasteDelay, 0, 5)
         queueTimeout = queueTimeout <= 0 ? 0 : Limits.clamp(queueTimeout, 10, 3600)
-        maxImageBytes = Limits.clamp(maxImageBytes, 64 * 1024, 100 * 1024 * 1024)
-        maxTextBytes = Limits.clamp(maxTextBytes, 1024, 50 * 1024 * 1024)
-        maxFileListEntries = Limits.clamp(maxFileListEntries, 1, 10_000)
+        maxImageBytes = Limits.clamp(maxImageBytes, 64 * 1024, Limits.imageBytesCeiling)
+        maxTextBytes = Limits.clamp(maxTextBytes, 1024, Limits.textBytesCeiling)
+        maxFileListEntries = Limits.clamp(maxFileListEntries, 1, Limits.fileListEntriesCeiling)
         maxHistoryBytes = Limits.clamp(maxHistoryBytes, 1024 * 1024, 4 * 1024 * 1024 * 1024)
         menuMaxItems = Limits.clamp(menuMaxItems, 1, Limits.menuMaxItemsCeiling)
+        backupKeepCount = Limits.clamp(backupKeepCount, 1, 100)
+        if let l = backupLabel { backupLabel = String(l.prefix(64)) }
         ignoreApps = Array(ignoreApps.prefix(Limits.ignoreAppsMaxLines)).map { String($0.prefix(Limits.bundleIdMaxChars)) }
     }
 

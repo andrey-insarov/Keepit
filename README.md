@@ -5,7 +5,7 @@
 <h1 align="center">Keepit – Clipboard Manager</h1>
 
 <p align="center">
-  Everything you copy, one hot key away. History, templates, Touch ID lock and encrypted storage — all on your Mac, nothing in the cloud.<br>
+  Everything you copy, one hot key away. History, templates, Touch ID lock and encrypted storage — all on your Mac, no Keepit cloud. Encrypted backups to a folder of yours are optional and off by default; the update check can be switched off.<br>
   <a href="https://keep.it.com"><b>keep.it.com</b></a> · <a href="docs/GUIDE.md">User guide</a> · <a href="docs/SECURITY.md">Security</a> · <a href="https://github.com/andrey-insarov/Keepit/releases/latest">Download for macOS</a> · Free &amp; open source (MIT)
 </p>
 
@@ -20,7 +20,7 @@
 [it.com](https://it.com) domain zone. Press `⌥M` in any app to paste anything you copied recently;
 `⌥T` for your templates. Images, files and rich text are kept too. Optional password protection
 stores everything AES-256 encrypted, unlocks with Touch ID, and comes with a 24-word recovery phrase.
-Clipboard data marked concealed by the copying app is not recorded, and known password managers are excluded. No account, no cloud, no analytics.
+Clipboard data marked concealed by the copying app is not recorded, and known password managers are excluded. No account, no Keepit cloud, no analytics.
 
 Keepit started as a macOS take on the workflow of [CLCL](https://github.com/nakkag/CLCL), Ohno
 Tomoaki's Windows clipboard tool, and has since been rewritten and extended into an app of its own,
@@ -54,7 +54,7 @@ Or the DMG:
 * **Templates** — folders, `-` separators, `&x` menu shortcuts, per-template hot keys, any format. Placeholders fill in at paste time: `{date…}`, `{time}`, `{clipboard}` with transforms, `{input:…}`, `{choice:a|b}`, `{cursor}`. An *Examples* folder on first launch.
 * **Viewer** — tree of Clipboard / History / Template, search with highlighted matches, in-place editing, hex dump, drag history into templates, save any format to a file.
 * **Private by design** — password-protected AES-256-GCM storage, Touch ID unlock, 24-word recovery phrase, an on-screen keyboard for the password (shuffled keys, no key events), lock on screen lock / sleep; concealed clipboard data is not recorded and known password managers are excluded by app (best effort — [how it works](https://keep.it.com/security#what-is-not-recorded)); per-app ignore list; no account; no network except the daily update check, which can be switched off (none in the App Store edition).
-* **Backup** — one password-encrypted `.keepit` file with history, templates and settings; Merge or Replace on import.
+* **Backup** — automatic encrypted copies into a folder you choose (iCloud Drive, Dropbox, a disk): complete `.keepit` files, rotated, opened with your Keepit password or recovery phrase on any Mac; restore offered on first launch, Merge or Replace. Plus one-off Export / Import by hand. Open, documented format ([docs/FORMAT.md](docs/FORMAT.md)).
 * **Settings the Mac way** — General / Shortcuts / Paste Queue / History / Menu / Security / Advanced; every change applies at once; hot-key recorders with conflict checks; per-app paste key (⌘⇧V, ⌃V…).
 * **Automation** — `keepit://` URL scheme: `paste/N`, `copy/N`, `template/Name`, `add?text=`, `add-template?text=&name=`, `history`, `templates`, `viewer`, `settings`, `pause`, `resume` — from Shortcuts (“Open URL”), Raycast, Alfred or `open`. Off by default; switch on in Settings → Advanced. Commands that change something are confirmed when they come from a web browser or an unknown sender.
 * **21 interface languages** — en, ru, uk, de, fr, es, it, pt-BR, nl, pl, cs, tr, lt, lv, et, ja, ko, zh-Hans, zh-Hant, ar, he.
@@ -256,30 +256,35 @@ The historical map from CLCL's C sources to these files is in [docs/ORIGINS.md](
 
 ## Roadmap
 
-**3.0**
+**3.0 — shipped**
 
-1. **Automatic encrypted backup to your own cloud folder** — iCloud Drive, Google Drive, Dropbox or any
-   folder: the existing `.keepit` format (AES-256-GCM, your file password) written on a schedule with
-   rotation; restore offered on first launch on another Mac; optional merge on start. No Keepit
-   server, the provider only ever sees ciphertext.
+1. **Automatic encrypted backup to your own cloud folder** — iCloud Drive, Google Drive, Dropbox or
+   any folder: complete `.keepit` files written a few minutes after each change, rotated, opened with
+   your Keepit password or recovery phrase on any Mac; restore offered on first launch, Merge or
+   Replace. No Keepit server, the provider only ever sees ciphertext. (No merge on start: a backup
+   is restored only when you ask — design notes in [docs/BACKUP.md](docs/BACKUP.md).)
 2. ~~Paste queue~~ — shipped in 2.10.
-3. **Import from other managers** — only open, documented formats; closed CloudKit-backed stores
-   (Paste, Pastebot, PastePal) are left alone. History: Maccy (SQLite), Alfred (`clipboard.alfdb`),
-   Flycut (plist), CLCL (`history.dat`). Snippets → templates, with placeholder conversion: Alfred
-   (`.alfredsnippets`), Raycast (JSON export), Clipy/ClipMenu (XML), TextExpander / aText / Espanso,
-   CLCL (`regist.dat`). *Viewer → Import…* detects what is installed and offers it in one click.
-4. **`KeepitCore` package** — the data model, vault (AES-256-GCM, recovery phrase), `.keepit` backup
-   format and placeholder engine split out of the app, so a separate iOS companion (templates
-   keyboard, history viewer, Share Sheet; reads the same encrypted backup from iCloud Drive) can be
-   built as its own project that stays compatible with Keepit.
-5. **Open `.keepit` format** — a published specification of the backup file plus a small reference
-   CLI (read, write, inspect) so other tools on any platform can import or export Keepit data; and
-   template export to Espanso (cross-platform, open source), so snippets travel to Windows and Linux
-   without a Keepit port.
+3. **`KeepitCore`** — the container format, key derivation and compression split into their own
+   target without AppKit, the first step towards a companion that reads the same encrypted backup.
+4. **Open `.keepit` format** — [docs/FORMAT.md](docs/FORMAT.md) is the specification; the
+   repository carries reference files produced by an independent Python implementation.
+
+**3.1**
+
+- **Import from other managers** — only open, documented formats; closed CloudKit-backed stores
+  (Paste, Pastebot, PastePal) are left alone. History: Maccy (SQLite), Alfred (`clipboard.alfdb`),
+  Flycut (plist), CLCL (`history.dat`). Snippets → templates, with placeholder conversion: Alfred
+  (`.alfredsnippets`), Raycast (JSON export), Clipy/ClipMenu (XML), TextExpander / aText / Espanso,
+  CLCL (`regist.dat`). *Viewer → Import…* detects what is installed and offers it in one click.
+- **Reference CLI** for the `.keepit` format (read, write, inspect) so other tools on any platform
+  can import or export Keepit data; template export to Espanso, so snippets travel to Windows and
+  Linux without a Keepit port.
+- Format filter & priority pages (which formats to keep / show first).
+- The rest of `KeepitCore` (data model, vault, placeholders) for an iOS companion — templates
+  keyboard, history viewer, Share Sheet — built as its own project against the same backup.
 
 **Later**
 
-- Format filter & priority pages (which formats to keep / show first).
 - Tools/plugin equivalents (shell scripts or AppleScript on an item, from the menu).
 
 ## License

@@ -1,0 +1,25 @@
+{
+  "dataKeyHex": "2489bb458bf275a5ce3b098e3b737a83a652ce48bb9f9b699b49031cbe1d8baf",
+  "format": 2,
+  "formatHashes": [
+    {
+      "public.utf8-plain-text": "a867e0be8b412314f3b46d37e9c401f16482abf9b94740f9e80aa88891a4ea01"
+    },
+    {
+      "public.html": "89d725f418d7e1a72e160f745b0a58d915e7288e348df4e37073b78fbcd6dfeb",
+      "public.rtf": "322f21fb8d315f7da497ac98da11dfeb736b5d90051459e96dc6f63c8a18f4bd",
+      "public.utf8-plain-text": "4ae7c3b6ac0beff671efa8cf57386151c06e58ca53a78d83f36107316cec125f"
+    }
+  ],
+  "history": 2,
+  "label": "Fixture Mac",
+  "mode": "auto",
+  "outcome": "ok",
+  "password": "vault password 42",
+  "recoveryEntropyHex": "3cfae79d9a77321b4c7ba64e6435cda545952a3d182a1f0c61a99f42d0b1ab9e",
+  "templateNodes": 2,
+  "texts": [
+    "v2 text",
+    "Hello, world"
+  ]
+}

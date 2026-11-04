@@ -1,0 +1,6 @@
+{
+  "format": 2,
+  "mode": "auto",
+  "outcome": "wrongPassword",
+  "password": "vault password 42"
+}

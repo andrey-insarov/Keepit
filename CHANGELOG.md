@@ -1,5 +1,28 @@
 # Changelog
 
+## 3.0.0 — 2026-11-04
+
+**Automatic encrypted backup** (docs/BACKUP.md, docs/FORMAT.md)
+
+- *Settings → Backup → Back up automatically to a folder*: Keepit writes a complete, encrypted `.keepit` copy of the history, templates and preferences into a folder you choose — iCloud Drive, Dropbox, an external disk, a NAS — about five minutes after the last change and at the latest once a day, reads it back and verifies it (including the reader's own model checks) before deleting the oldest of its own copies beyond *Keep last* (10 by default, 1–100). Needs password protection: the file key is derived from the vault's data key, so every copy opens with your Keepit password or recovery phrase on any Mac. Copies written by another Mac or files you put in the folder are never touched. *Back Up Now*; a status line with the last copy or the last error; retries with backoff; nothing while locked
+- *Include this Mac's name in the backup files* (off by default) puts the computer name into the unencrypted header so two series in one folder can be told apart; the storage provider can see it
+- **Settings → Backup** is a pane of its own (between Security and Advanced): the automatic backup group, *Restore…* and *Export…*; the 2.x *Import…* button is gone — *Restore…* is that flow
+- **Restore**: on first launch (*Restore from a backup?*), from *Settings → Backup → Restore…*, or by double-clicking a `.keepit` file — also one that arrives before Keepit has finished launching. Unlock with the password of the Mac that wrote the file or its recovery phrase; preview; *Merge* (history by content, the backup's templates as one new folder, with fresh ids and without their hot keys) or *Replace* (a verified copy of the current data is written first — into the backup folder or one you pick — and Replace does not start without it). *Also restore preferences* never brings trust settings (Touch ID, URL automation and its trusted apps, the backup folder). A backup larger than this Mac's limits is reported before you confirm. Restored with the phrase on a Mac without a password: a password is set first, and the phrase can be kept for this Mac. Restored with the password on a fresh Mac: offer to keep it
+- The restore is applied as one transaction: planned against the final settings and every limit before anything changes, written to disk through a journal that the next launch replays if the process was killed in between, and the live data swapped only when the files are on disk. The clipboard watcher is paused while it happens; a lock cancels it. If the undo of a failed write cannot complete, Keepit names the file and quits without saving rather than work on mixed data
+- **`.keepit` format 2** in the new `KeepitCore` target (no AppKit): header authenticated as GCM additional data, `auto` and `manual` modes, HKDF-derived file key, recovery block in the file, `minReader`, LZFSE with a streaming decompression limit, model validation on read. *Export…* writes format 2; *Restore…* reads 1 and 2. Reference fixtures from an independent Python implementation; format 1 pinned to 200 000 PBKDF2 rounds regardless of future vault defaults
+- Settings keeps `backupEnabled`, `backupBookmark` (app-scoped security bookmark), `backupKeepCount`, `backupLabel`, `backupSourceID`; `backup.json` holds the engine state and the registry of this installation's copies
+- Protection off turns automatic backup off with it; protection on reconfigures it
+- Guide (first launch, Settings, Backup), security page (what the header reveals, restore checks), privacy policy 1.4 (backups go to a folder you choose, under that service's account), App Store listing and sandbox note updated; the 2.x help is frozen at `/v2/`
+
+**Also**
+
+- Template limits: inserting or moving a folder counts its whole height, so no edit can produce a tree a backup reader would reject; a leaf may now sit on the last allowed level
+- Templates edited after *Reset…* (or after a restore that followed one) are saved again — the store stayed in its purged, read-only state
+- Touch ID keychain item is per data directory — a `KEEPIT_DATA_DIR` or self-test run can no longer remove the real installation's key
+- Import no longer applies trust settings (URL automation, trusted apps, Touch ID) from a backup
+- Password change dialog says that earlier backups still open with the old password
+- Site: pages are addressed without `.html` everywhere (canonical, sitemap, JSON-LD, links) to match what Cloudflare Pages serves; the clipboard-history and clear-clipboard how-tos cover Spotlight's clipboard history in macOS 26 Tahoe; the Help link in the app opens `keep.it.com/guide`
+
 ## 2.13.1 — 2026-11-03
 
 Follow-ups from the second review pass; the reviewer has no further findings.

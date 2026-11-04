@@ -8,6 +8,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private(set) var history: HistoryStore!
     private(set) var templates: TemplateStore!
     private(set) var monitor: ClipboardMonitor!
+    private(set) var backup: BackupEngine!
     let hotKeys = HotKeyManager()
     private lazy var menuBuilder = MenuBuilder(settings: settings)
 
@@ -36,20 +37,53 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     /// True while the vault key is wiped and data is unloaded (password set, not yet entered).
     private(set) var isLocked = false
+    /// Bumped by every `lock()`. A flow that ran a modal dialog compares it before touching the
+    /// stores: a lock meanwhile purged them, and whatever the flow computed is stale.
+    private(set) var lockCount = 0
+    /// Bumped by every `apply(settings:)`, for the same reason.
+    private(set) var settingsRevision = 0
+    /// Set once launch *and* the deferred welcome dialogs are over; file and URL opens before that are
+    /// queued (`pendingOpenURLs`) and run after, in order. A restore in progress queues them too.
+    private(set) var isReadyForOpens = false
+    var pendingOpenURLs: [URL] = []
+    /// One open at a time, the unlock dialog included; a restore from Settings sets the second.
+    var openInProgress = false
+    var restoreInProgress = false
 
     /// No settings file yet → first launch (onboarding, login item).
     private let isFirstRun: Bool
 
+    /// A restore journal that could not be replayed at launch. The files are a mix of before and
+    /// after; working on them would write that mix back and the journal would be the only intact
+    /// copy. So the app explains and quits before any store is created (the journal stays on disk;
+    /// the next launch tries again).
+    private var recoveryError: Error?
+
     override init() {
+        // A restore interrupted between its three file writes is put right before anything is read.
+        do { if try RestoreCommit.recoverIfNeeded() { Log.storage.notice("replayed an interrupted restore") } }
+        catch { recoveryError = error; Log.storage.error("restore journal could not be replayed: \(error.localizedDescription)") }
         let stored = Storage.load(Settings.self, from: Storage.settingsURL)
         isFirstRun = stored == nil
         settings = stored ?? Settings()
         super.init()
     }
 
+    /// An undo of a restore did not finish — at launch, or during a restore just now: the files
+    /// are a mix of before and after and the armed journal is their only intact copy. Working on
+    /// would save over that mix (and the next launch's replay would then discard whatever was
+    /// saved), so: explain, change nothing, leave. `exit`, not `terminate()`: the latter runs
+    /// `applicationWillTerminate`, which saves; and no `defer` on the way restarts the watcher.
+    func stopForUnfinishedUndo(_ error: Error) -> Never {
+        Log.storage.error("unfinished restore undo; quitting without saving: \(error.localizedDescription)")
+        Vault.error(LF("Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again.", error.localizedDescription))
+        exit(1)
+    }
+
     // MARK: - Lifecycle
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        if let e = recoveryError { stopForUnfinishedUndo(e) }
         NSApp.setActivationPolicy(.accessory)
         buildMainMenu()
 
@@ -66,6 +100,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         templates = TemplateStore()
         monitor = ClipboardMonitor(settings: settings)
+        setUpBackup()                                  // before completeRecovery(): rekey() tells the engine about the new key
         if needsPasswordReset { completeRecovery() }
 
         buildStatusItem()
@@ -100,15 +135,26 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             return
         }
 
+        // The welcome dialogs run from a Timer, not a GCD block: they open modal loops, and work
+        // other code hands to the main queue (a progress panel's completion, a bookmark refresh)
+        // would otherwise wait until this block returned.
         if isFirstRun {
             if settings.launchAtLogin { setLaunchAtLogin(true) }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-                self?.offerPasswordOnFirstRun()
-                if !Paster.isTrusted() { self?.showAccessibilityAlert() }
+            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] _ in
+                guard let self else { return }
+                if self.hasPendingBackupFile { self.openPendingBackupFileAtWelcome() }   // the double-clicked backup is the answer
+                else { _ = self.offerRestoreOnFirstRun() }
+                if !Vault.isEnabled { self.offerPasswordOnFirstRun() }   // a restore may have set the password already
+                if !Paster.isTrusted() { self.showAccessibilityAlert() }
+                self.isReadyForOpens = true
+                self.openPendingURLs()
             }
-        } else if !Paster.isTrusted() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-                self?.showAccessibilityAlert()
+        } else {
+            Timer.scheduledTimer(withTimeInterval: Paster.isTrusted() ? 0.1 : 1.0, repeats: false) { [weak self] _ in
+                guard let self else { return }
+                if !Paster.isTrusted() { self.showAccessibilityAlert() }
+                self.isReadyForOpens = true
+                self.openPendingURLs()
             }
         }
     }
@@ -191,6 +237,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc func lock() {
         guard Vault.isEnabled, !isLocked else { return }
         isLocked = true
+        lockCount += 1
         queue.stop()
         viewer?.close()
         preferencesWindow?.close()
@@ -214,6 +261,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if needsPasswordReset { completeRecovery() }
         if !(pausedUntil.map { $0 > Date() } ?? false) { monitor.start() }   // keep a running pause
         registerHotKeys()
+        backup.runIfDue()
         updateStatusIcon()
         return true
     }
@@ -376,6 +424,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         history.saveNow()
         templates.saveNow()
         syncBiometricKey()
+        backup?.forceNext()                           // the next copy must open with the new password
     }
 
     /// Confirm identity for sensitive changes: Touch ID (if allowed) or the current password.
@@ -403,6 +452,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         guard authenticateForChange(reasonKey: "generate a new recovery phrase") else { return }
         do {
             let words = try Vault.createRecovery(for: key)
+            backup?.forceNext()                       // a copy with the new phrase in its header
             RecoveryDialogs.present(words: words, title: L("Your new recovery phrase (the old one no longer works)"))
         } catch {
             Vault.error(LF("Could not create the recovery phrase: %@", error.localizedDescription))
@@ -415,7 +465,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         a.addButton(withTitle: L("Change Password Now"))
         a.addButton(withTitle: L("No, Keep Password"))
         if a.runModal() == .alertFirstButtonReturn {
-            guard let pw = Vault.askPassword(title: L("New password"), message: L("Enter the new password twice."), confirm: true) else { return }
+            guard let pw = Vault.askPassword(title: L("New password"), message: L("Enter the new password twice. Backups made so far still open with the old password."), confirm: true) else { return }
             rekey(with: pw)
             pw.zero()
         }
@@ -427,6 +477,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                                          message: L("You'll be asked for it every time Keepit starts. A recovery phrase for it is shown next."),
                                          confirm: true) else { return false }
         defer { pw.zero() }
+        return enableProtection(with: pw)
+    }
+
+    /// Turn protection on with a password already in hand (a restored backup's). The caller wipes `pw`.
+    /// `recoveryEntropy`: keep a phrase the user already holds (the one that opened a restored
+    /// backup) instead of showing a new one.
+    func enableProtection(with pw: SecureBuffer, recoveryEntropy: [UInt8]? = nil) -> Bool {
         do {
             Storage.key = try Vault.enable(password: pw)
         } catch {
@@ -436,8 +493,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         history.saveNow()
         templates.saveNow()
         syncBiometricKey()
-        if let key = Storage.key, let words = try? Vault.createRecovery(for: key) {
-            RecoveryDialogs.present(words: words)
+        configureBackup()                             // a folder kept in settings becomes a destination again
+        if let key = Storage.key {
+            do {
+                let words = try Vault.createRecovery(for: key, entropy: recoveryEntropy)
+                backup?.forceNext()
+                if recoveryEntropy == nil { RecoveryDialogs.present(words: words) }
+                else { info(L("Protection is on. The recovery phrase from the backup also opens Keepit on this Mac.")) }
+            } catch {
+                Vault.error(LF("Could not set up the recovery phrase: %@", error.localizedDescription))
+            }
         }
         return true
     }
@@ -480,13 +545,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         BiometricUnlock.remove()
         history.saveNow()
         templates.saveNow()
+        if settings.backupEnabled {                   // automatic backup needs the vault: off together, visibly
+            var s = settings; s.backupEnabled = false
+            apply(settings: s)                        // → configureBackup(): destination nil
+        }
         return true
     }
 
     func changePassword() {
         guard Vault.isEnabled, Storage.key != nil else { return }
         guard authenticateForChange(reasonKey: "change the Keepit password") else { return }
-        guard let pw = Vault.askPassword(title: L("New password"), message: L("Enter the new password twice."), confirm: true) else { return }
+        guard let pw = Vault.askPassword(title: L("New password"), message: L("Enter the new password twice. Backups made so far still open with the old password."), confirm: true) else { return }
         defer { pw.zero() }
         rekey(with: pw)
     }
@@ -496,8 +565,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func apply(settings new: Settings) {
         let old = settings
         settings = new
+        settingsRevision += 1
         Storage.save(new, to: Storage.settingsURL, encrypt: false, pretty: true)
         history.updateSettings(new)
+        if old.backupEnabled != new.backupEnabled || old.backupBookmark != new.backupBookmark
+            || old.backupKeepCount != new.backupKeepCount || old.backupLabel != new.backupLabel {
+            configureBackup()
+            if old.backupBookmark != new.backupBookmark { backup.resetRegistry(); backup?.forceNext() }   // a new folder starts a new series
+        }
         monitor.updateSettings(new)
         menuBuilder.settings = new
         menuBuilder.invalidateThumbnails()
@@ -1193,5 +1268,62 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if a.runModal() == .alertFirstButtonReturn {
             Paster.openAccessibilitySettings()
         }
+    }
+}
+
+
+// MARK: - Automatic backup (docs/BACKUP.md)
+
+extension AppDelegate {
+    func setUpBackup() {
+        createBackupEngine()
+        Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in self?.backup.runIfDue() }
+        NSWorkspace.shared.notificationCenter.addObserver(forName: NSWorkspace.didWakeNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.backup.runIfDue()
+        }
+        backup.runIfDue()
+    }
+
+    /// New engine for the current data directory and settings (launch, and again after Reset…).
+    func createBackupEngine() {
+        if settings.backupSourceID == nil {
+            settings.backupSourceID = UUID().uuidString.lowercased()
+            Storage.save(settings, to: Storage.settingsURL, encrypt: false, pretty: true)
+        }
+        backup = BackupEngine(stateURL: Storage.directory.appendingPathComponent("backup.json"), sourceID: settings.backupSourceID ?? "")
+        backup.snapshotProvider = { [weak self] in self?.backupSnapshot() }
+        backup.onStateChange = { [weak self] _ in self?.preferencesWindow?.backupStateChanged() }
+        history.onChange = { [weak self] in self?.backup.noteChange() }
+        templates.onChange = { [weak self] in self?.backup.noteChange() }
+        configureBackup()
+    }
+
+    func configureBackup() {
+        backup.keepCount = settings.backupKeepCount
+        backup.label = settings.backupLabel
+        backup.sourceID = settings.backupSourceID ?? ""
+        if settings.backupEnabled, Vault.isEnabled, let bm = settings.backupBookmark {
+            let dest = BookmarkDestination(bookmark: bm)
+            dest.onBookmarkRefreshed = { [weak self, weak dest] fresh in
+                DispatchQueue.main.async {                   // settings are main-thread state
+                    guard let self, let dest, self.backup.destination === dest else { return }   // still the current folder?
+                    var s = self.settings; s.backupBookmark = fresh
+                    self.settings = s                       // no apply(): nothing else changed, avoid a reconfigure loop
+                    Storage.save(s, to: Storage.settingsURL, encrypt: false, pretty: true)
+                }
+            }
+            backup.destination = dest
+        } else {
+            backup.destination = nil
+        }
+    }
+
+    /// One consistent state for a backup, or nil when there is nothing to back up with (locked, no vault).
+    func backupSnapshot() -> BackupEngine.Snapshot? {
+        guard !isLocked, Vault.isEnabled, let key = Storage.key,
+              let header = Vault.backupHeader(app: "Keepit \(AppInfo.version)"),
+              let tree = try? Storage.encoder.encode(templates.root) else { return nil }
+        return BackupEngine.Snapshot(history: history.items, templatesJSON: tree, settings: settings.forBackup,
+                                     header: header, dataKey: key, credentialsStamp: BackupEngine.credentialsStamp(header))
     }
 }

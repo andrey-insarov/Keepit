@@ -1,0 +1,17 @@
+{
+  "format": 1,
+  "formatHashes": [
+    {
+      "public.utf8-plain-text": "7117fff2d0fd294462b3c802b7cb8753579f23f3946b99cf55f38e873f013f10"
+    }
+  ],
+  "history": 1,
+  "historyMax": 55,
+  "outcome": "ok",
+  "password": "correct horse battery staple",
+  "settings": true,
+  "templateNodes": 2,
+  "texts": [
+    "known"
+  ]
+}

@@ -237,6 +237,17 @@ dashboard, not in the repo, and need to be set once per zone:
   requests per minute per IP is plenty for a support form.
 - **HSTS** can also be enforced at the zone level (SSL/TLS → Edge Certificates); `_headers`
   sends it as well so the Pages origin behaves the same on preview URLs.
+- **www → apex** (Rules → Redirect Rules, or a Bulk Redirect): when hostname equals
+  `www.keep.it.com`, 301 to `https://keep.it.com` with the path and query preserved (dynamic
+  expression `concat("https://keep.it.com", http.request.uri.path)`, "Preserve query string"
+  on). `_redirects` cannot do this: it only matches paths, not hosts. Until the rule exists,
+  www serves a full duplicate of the site; the canonical tags point at the apex, but the
+  redirect is what settles it.
+
+URLs on the site have no `.html`: Cloudflare Pages serves `guide.html` at `/guide` and answers
+`/guide.html` with a 308 to it, so canonical, `og:url`, JSON-LD, the sitemap and every internal
+link use the extensionless form (`build_guide.py` refuses to write a page that links to
+`something.html`). The files on disk keep their names.
 
 Response headers for the static site are in `docs/site/_headers`. The Content-Security-Policy
 there allows `'unsafe-inline'` for scripts and styles because the pages still carry inline
@@ -244,6 +255,6 @@ there allows `'unsafe-inline'` for scripts and styles because the pages still ca
 third-party scripts except Turnstile, no framing, no plugins, no form posts elsewhere). Moving
 the inline code to files or hashes and dropping `'unsafe-inline'` is a later step. After
 changing the policy, load the landing page and the support form with the browser console open:
-a violation shows up there. The audit also saw `Access-Control-Allow-Origin: *` on responses;
-it is not set in `_headers`, so if it is still there, look for a transform rule in the dashboard
-and remove it — a static site needs no CORS header.
+a violation shows up there. Cloudflare Pages adds `Access-Control-Allow-Origin: *` to every
+static response on its own; `_headers` detaches it (`! Access-Control-Allow-Origin` under `/*`)
+because a static site with a same-origin form needs no CORS header.

@@ -4,6 +4,8 @@ import Foundation
 final class TemplateStore {
     private(set) var root = TemplateNode(name: "Template")
     var onChange: (() -> Void)?
+    /// Bumped on every change to the tree (edits, reload, purge). See HistoryStore.revision.
+    private(set) var revision = 0
     private lazy var saver = DebouncedSaver(delay: 1.0) { [weak self] background in self?.saveNow(background: background) }
     /// See HistoryStore.isPurged.
     private(set) var isPurged = false
@@ -15,6 +17,7 @@ final class TemplateStore {
     /// (Re)load from disk — used at start and after unlocking.
     func reload() {
         isPurged = false
+        revision += 1
         if let loaded = Storage.load(TemplateNode.self, from: Storage.templatesURL) {
             root = loaded
             root.relink()
@@ -38,9 +41,24 @@ final class TemplateStore {
         ])
     }
 
+    /// True while the tree is still the fresh-install example set, untouched: nothing of the user's
+    /// in it. A first-run Replace has nothing to lose then and needs no rollback copy.
+    var isDefaultTree: Bool { Self.same(root, Self.defaultTree()) }
+
+    /// Name, every format byte for byte, source app, hot key, children — not a hash or the plain
+    /// text alone: an RTF added to an example keeps the same plain text and is the user's work.
+    private static func same(_ a: TemplateNode, _ b: TemplateNode) -> Bool {
+        guard a.name == b.name, a.isFolder == b.isFolder, a.hotKey == b.hotKey,
+              a.clip?.formats == b.clip?.formats, a.clip?.sourceApp == b.clip?.sourceApp,
+              a.children.count == b.children.count else { return false }
+        return zip(a.children, b.children).allSatisfy { same($0, $1) }
+    }
+
     /// Back to the fresh-install tree (Reset).
     func resetToDefaults() {
+        isPurged = false                       // Reset purges first; the store is live again from here
         root = Self.defaultTree()
+        revision += 1
         saveNow()
         onChange?()
     }
@@ -49,35 +67,35 @@ final class TemplateStore {
     func purge() {
         saver.flush()
         isPurged = true
+        revision += 1
         root = TemplateNode(name: "Template")
         onChange?()
     }
 
-    /// Would adding `node` under `parent` exceed the depth/count ceilings?
+    /// Would adding `node` (with everything below it) under `parent` exceed the depth or count
+    /// ceilings? The depth rule is the validator's: the deepest node of the result ≤ templateMaxDepth,
+    /// root being 0 — so a subtree counts with its full height, not just its top.
     func canInsert(_ node: TemplateNode, under parent: TemplateNode) -> Bool {
-        guard parent.depth + 1 < Limits.templateMaxDepth else { return false }
+        guard parent.depth + 1 + node.height <= Limits.templateMaxDepth else { return false }
         return root.subtreeCount + node.subtreeCount <= Limits.templateMaxCount
+    }
+
+    /// Same for moving a node that is already in the tree: the count does not change, the depth may.
+    func canMove(_ node: TemplateNode, under parent: TemplateNode) -> Bool {
+        guard !parent.isDescendant(of: node) else { return false }
+        return parent.depth + 1 + node.height <= Limits.templateMaxDepth
     }
 
     /// Backup import, "Replace".
     func replaceRoot(_ node: TemplateNode) {
+        isPurged = false
         root = node
         root.relink()
         changed()
     }
 
-    /// Backup import, "Merge": the imported tree goes into a new folder under the root.
-    /// Returns false (and changes nothing) if that would exceed the template limits.
-    func mergeImported(_ node: TemplateNode, folderName: String) -> Bool {
-        let folder = TemplateNode(name: folderName, children: node.children)
-        guard canInsert(folder, under: root) else { return false }
-        root.insert(folder)
-        root.relink()
-        changed()
-        return true
-    }
-
     func changed() {
+        revision += 1
         onChange?()
         saver.schedule()
     }

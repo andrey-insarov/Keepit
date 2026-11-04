@@ -5,6 +5,9 @@ final class HistoryStore {
     private(set) var items: [ClipItem] = []
     var settings: Settings
     var onChange: (() -> Void)?
+    /// Bumped on every change to `items` (edits, reload, purge). A plan computed from the store is
+    /// valid only while this is what it was when the plan was made.
+    private(set) var revision = 0
 
     private lazy var saver = DebouncedSaver(delay: 1.5) { [weak self] background in self?.saveNow(background: background) }
     /// True between `purge()` (lock) and the next `reload()`: memory is empty on purpose and must
@@ -19,6 +22,7 @@ final class HistoryStore {
     /// (Re)load from disk — used at start and after unlocking.
     func reload() {
         isPurged = false
+        revision += 1
         items = []
         if settings.historySave, let loaded = Storage.load([ClipItem].self, from: Storage.historyURL) {
             items = loaded
@@ -31,6 +35,7 @@ final class HistoryStore {
     func purge() {
         saver.flush()
         isPurged = true
+        revision += 1
         items = []
         onChange?()
     }
@@ -91,6 +96,7 @@ final class HistoryStore {
 
     /// Backup import, "Replace": the imported list becomes the history (trimmed to the limits).
     func replaceAll(_ newItems: [ClipItem]) {
+        isPurged = false
         items = newItems
         trim()
         changed()
@@ -137,8 +143,15 @@ final class HistoryStore {
 
     /// Two independent rings: text/file items and image items, each dropping its oldest first.
     private func trim() {
+        items = Self.trimmed(items, settings: settings)
+    }
+
+    /// The ring rules as a pure function: age, the text and image rings, then the byte budget.
+    /// Used by `trim()` and by `RestorePlan`, which must know the outcome before anything changes.
+    static func trimmed(_ input: [ClipItem], settings: Settings, now: Date = Date()) -> [ClipItem] {
+        var items = input
         if settings.historyMaxAge > 0 {
-            let cutoff = Date().addingTimeInterval(-settings.historyMaxAge)
+            let cutoff = now.addingTimeInterval(-settings.historyMaxAge)
             items.removeAll { $0.date < cutoff }
         }
         var textSeen = 0, imageSeen = 0
@@ -155,9 +168,11 @@ final class HistoryStore {
         while total > settings.maxHistoryBytes, items.count > 1 {
             total -= items.removeLast().byteSize
         }
+        return items
     }
 
     private func changed() {
+        revision += 1
         onChange?()
         if settings.historySave { saver.schedule() }
     }

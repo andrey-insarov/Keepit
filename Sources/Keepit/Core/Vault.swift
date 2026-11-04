@@ -2,6 +2,7 @@ import AppKit
 import CommonCrypto
 import CryptoKit
 import Foundation
+import KeepitCore
 import Security
 
 /// 32 key bytes in a buffer that is wiped with memset_s on `zero()` and on deinit. The buffer is
@@ -201,9 +202,12 @@ enum Vault {
     }
 
     /// Generate a fresh 24-word phrase that can recover `key`, store its wrapped form, return the words.
-    static func createRecovery(for key: SecureKey) throws -> [String] {
+    /// With `entropy` given (a phrase the user already holds — the one that opened a restored
+    /// backup), that phrase is wrapped for this vault instead, under a new salt.
+    static func createRecovery(for key: SecureKey, entropy given: [UInt8]? = nil) throws -> [String] {
         guard var meta = readMeta() else { throw CocoaError(.fileNoSuchFile) }
-        var entropy = try [UInt8](randomBytes(Mnemonic.entropyBytes))
+        if let g = given, g.count != Mnemonic.entropyBytes { throw CocoaError(.fileReadCorruptFile) }
+        var entropy = try given ?? [UInt8](randomBytes(Mnemonic.entropyBytes))
         defer { entropy.withUnsafeMutableBytes { _ = memset_s($0.baseAddress, $0.count, 0, $0.count) } }
         let salt = try randomBytes(16)
         let rkey = recoveryKey(entropy: entropy, salt: salt)
@@ -252,6 +256,15 @@ enum Vault {
     /// Snapshot of the current recovery block (take it before `enable` replaces the meta file).
     static var currentRecovery: Recovery? { readMeta()?.recovery }
 
+    /// The header an automatic backup carries: this vault's KDF parameters and recovery block, so
+    /// the same password — or phrase — opens the file on any Mac. nil when protection is off.
+    static func backupHeader(app: String, label: String? = nil, sourceID: String? = nil, backupID: String? = nil) -> Container.Header? {
+        guard let m = readMeta() else { return nil }
+        let rec = m.recovery.map { Container.Recovery(salt: $0.salt, wrappedKey: $0.wrappedKey, wrappedEntropy: $0.wrappedEntropy) }
+        return Container.Header(mode: .auto, kdf: m.kdfName, rounds: m.kdfRounds, salt: m.salt, recovery: rec,
+                                app: app, minReader: Backup.minReader, label: label, sourceID: sourceID, backupID: backupID)
+    }
+
     /// Returns the key if the password matches, nil otherwise.
     static func unlock(password: SecureBuffer) -> SecureKey? {
         guard let meta = readMeta(), let key = deriveKey(password: password, meta: meta) else { return nil }
@@ -291,7 +304,8 @@ enum Vault {
     }
 
     /// Same prompt, optionally with a third "Recovery Access…" button.
-    static func prompt(title: String, message: String, confirm: Bool = false, cancelQuits: Bool = false, offerRecovery: Bool) -> PromptResult {
+    /// `recoveryAvailable` overrides the local vault's state — a backup file carries its own recovery block.
+    static func prompt(title: String, message: String, confirm: Bool = false, cancelQuits: Bool = false, offerRecovery: Bool, recoveryAvailable: Bool? = nil) -> PromptResult {
         while true {
             let a = NSAlert()
             a.messageText = title
@@ -340,7 +354,7 @@ enum Vault {
             a.accessoryView = box
             let ok = a.addButton(withTitle: L("OK"))
             a.addButton(withTitle: cancelQuits ? L("Quit") : L("Cancel"))
-            if offerRecovery && hasRecovery { a.addButton(withTitle: L("Recovery Access…")) }
+            if offerRecovery && (recoveryAvailable ?? hasRecovery) { a.addButton(withTitle: L("Recovery Access…")) }
             a.window.initialFirstResponder = f1
 
             // OK (and ↩) only once there is a password — and, when confirming, once both fields

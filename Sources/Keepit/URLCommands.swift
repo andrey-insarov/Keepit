@@ -16,8 +16,46 @@ import AppKit
 extension AppDelegate {
     static let urlScheme = "keepit"
 
+    /// A double-clicked file or a keepit:// URL can arrive before `applicationDidFinishLaunching`
+    /// (Apple documents that order), or during the welcome dialogs, or while a restore is running.
+    /// In all those cases the URLs wait in `pendingOpenURLs`; `openPendingURLs()` runs them, in
+    /// order, once the app is ready and no restore is in progress — never a restore inside another.
     func application(_ application: NSApplication, open urls: [URL]) {
-        for url in urls { handle(url) }
+        pendingOpenURLs += urls
+        openPendingURLs()
+    }
+
+    private func open(_ url: URL) {
+        openInProgress = true                         // covers the unlock dialog too: nothing re-enters meanwhile
+        defer { openInProgress = false }
+        if url.isFileURL, url.pathExtension.lowercased() == Backup.fileExtension {
+            if isLocked, !unlock() { return }         // a backup opened while locked: ask for the password first
+            restore(from: url)
+        } else {
+            handle(url)
+        }
+    }
+
+    /// The welcome step on a first run: the `.keepit` the user double-clicked is restored now, in
+    /// place of the generic "Restore from a backup?" offer and before the password offer — while
+    /// everything else that arrived stays queued until the welcome dialogs are over.
+    func openPendingBackupFileAtWelcome() {
+        guard let i = pendingOpenURLs.firstIndex(where: { $0.isFileURL && $0.pathExtension.lowercased() == Backup.fileExtension }) else { return }
+        open(pendingOpenURLs.remove(at: i))
+    }
+
+    /// Runs what is queued when nothing stands in the way; a no-op otherwise (called again when
+    /// the welcome dialogs finish and when a restore ends). A `.keepit` among the pending URLs at
+    /// first run is the restore the user asked for, so the generic offer is skipped in its favour.
+    func openPendingURLs() {
+        guard isReadyForOpens, !openInProgress, !restoreInProgress else { return }
+        while !pendingOpenURLs.isEmpty, !openInProgress, !restoreInProgress {
+            open(pendingOpenURLs.removeFirst())
+        }
+    }
+
+    var hasPendingBackupFile: Bool {
+        pendingOpenURLs.contains { $0.isFileURL && $0.pathExtension.lowercased() == Backup.fileExtension }
     }
 
     /// Commands that only show Keepit's own UI. Everything else changes the clipboard, the history,

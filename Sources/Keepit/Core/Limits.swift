@@ -11,6 +11,11 @@ enum Limits {
     static let templateHotKeysMax = 50
     static let menuMaxItemsCeiling = 200
     static let historyMaxCeiling = 10_000
+    // Ceilings of the per-item size settings (Settings.clamp uses them; the backup validator accepts
+    // anything up to them, since any installation may have been configured that high).
+    static let textBytesCeiling = 50 * 1024 * 1024
+    static let imageBytesCeiling = 100 * 1024 * 1024
+    static let fileListEntriesCeiling = 10_000
     static let dataFileMaxBytes = 512 * 1024 * 1024
     static let imageMaxPixels = 40_000_000           // 40 MP: a 10 MB PNG can still be a 20 000×20 000 bomb
     static let queueMaxItems = 500                    // paste queue entries per session

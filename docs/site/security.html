@@ -1,11 +1,11 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Keepit Security – Encrypted Clipboard Manager for Mac</title><link rel="icon" href="img/icon.png"><link rel="apple-touch-icon" href="img/icon.png">
 <meta name="description" content="What Keepit stores and where, how the clipboard history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download.">
-<link rel="canonical" href="https://keep.it.com/security.html"><meta property="og:type" content="article"><meta property="og:site_name" content="Keepit"><meta property="og:title" content="Keepit Security – Encrypted Clipboard Manager for Mac"><meta property="og:description" content="What Keepit stores and where, how the clipboard history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download."><meta property="og:image" content="https://keep.it.com/img/social-preview.png"><meta property="og:url" content="https://keep.it.com/security.html"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Keepit Security – Encrypted Clipboard Manager for Mac"><meta name="twitter:description" content="What Keepit stores and where, how the clipboard history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download."><meta name="twitter:image" content="https://keep.it.com/img/social-preview.png"><meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "@id": "https://keep.it.com/security.html", "url": "https://keep.it.com/security.html", "name": "Keepit security", "headline": "Keepit security", "description": "What Keepit stores and where, how the clipboard history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download.", "inLanguage": "en", "isPartOf": {"@id": "https://keep.it.com/#site"}, "about": {"@id": "https://keep.it.com/#app"}, "author": {"@id": "https://keep.it.com/#org"}, "publisher": {"@id": "https://keep.it.com/#org"}, "image": "https://keep.it.com/img/social-preview.png", "dateModified": "2026-11-03"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Keepit", "item": "https://keep.it.com/"}, {"@type": "ListItem", "position": 2, "name": "Security", "item": "https://keep.it.com/security.html"}]}]}</script>
+<link rel="canonical" href="https://keep.it.com/security"><meta property="og:type" content="article"><meta property="og:site_name" content="Keepit"><meta property="og:title" content="Keepit Security – Encrypted Clipboard Manager for Mac"><meta property="og:description" content="What Keepit stores and where, how the clipboard history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download."><meta property="og:image" content="https://keep.it.com/img/social-preview.png"><meta property="og:url" content="https://keep.it.com/security"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Keepit Security – Encrypted Clipboard Manager for Mac"><meta name="twitter:description" content="What Keepit stores and where, how the clipboard history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download."><meta name="twitter:image" content="https://keep.it.com/img/social-preview.png"><meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "@id": "https://keep.it.com/security", "url": "https://keep.it.com/security", "name": "Keepit security", "headline": "Keepit security", "description": "What Keepit stores and where, how the clipboard history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download.", "inLanguage": "en", "isPartOf": {"@id": "https://keep.it.com/#site"}, "about": {"@id": "https://keep.it.com/#app"}, "author": {"@id": "https://keep.it.com/#org"}, "publisher": {"@id": "https://keep.it.com/#org"}, "image": "https://keep.it.com/img/social-preview.png", "dateModified": "2026-11-04"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Keepit", "item": "https://keep.it.com/"}, {"@type": "ListItem", "position": 2, "name": "Security", "item": "https://keep.it.com/security"}]}]}</script>
 <style>
-:root{--paper:#fbfbfd;--ink:#0f1222;--ink-2:#4b4f63;--ink-3:#8a8ea3;--blue:#2f4fd1;--blue-deep:#1f3aa6;--blue-tint:#eef2ff;--line:#e3e5ef;--key:#fff;--key-edge:#cfd2de;--win:#fff;--sel:#2f5cf0}
-@media(prefers-color-scheme:dark){:root{--paper:#0c0d14;--ink:#f2f3f8;--ink-2:#b7bacb;--ink-3:#7c8097;--blue:#7d9bff;--blue-deep:#a9bdff;--blue-tint:#151b35;--line:#23263a;--key:#1b1e2e;--key-edge:#3a3e56;--win:#1a1c28;--sel:#3d6bff}}
+:root{--paper:#fbfbfd;--ink:#0f1222;--ink-2:#4b4f63;--ink-3:#696d84;--blue:#2f4fd1;--blue-deep:#1f3aa6;--blue-tint:#eef2ff;--line:#e3e5ef;--key:#fff;--key-edge:#cfd2de;--win:#fff;--sel:#2f5cf0}
+@media(prefers-color-scheme:dark){:root{--paper:#0c0d14;--ink:#f2f3f8;--ink-2:#b7bacb;--ink-3:#8e92a9;--blue:#7d9bff;--blue-deep:#a9bdff;--blue-tint:#151b35;--line:#23263a;--key:#1b1e2e;--key-edge:#3a3e56;--win:#1a1c28;--sel:#3d6bff}}
 *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:72px;-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;font:17px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif}
 a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
@@ -61,8 +61,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
 #lb.on{display:flex}#lb img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
 </style></head>
 <body><header><div class="wrap">
-  <a class="brand" href="index.html"><img src="img/icon.png" alt="">Keepit</a>
-  <nav><a href="index.html#features">Features</a><a href="guide.html">Guide</a><a href="security.html">Security</a><a href="support.html">Support</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a><details class="mnav"><summary aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><div class="links"><a href="index.html#features">Features</a><a href="index.html#privacy">Privacy</a><a href="index.html#install">Install</a><a href="guide.html">Guide</a><a href="security.html">Security</a><a href="support.html">Support</a></div></details></nav>
+  <a class="brand" href="/"><img src="img/icon.png" alt="">Keepit</a>
+  <nav><a href="/#features">Features</a><a href="/guide">Guide</a><a href="/security">Security</a><a href="/support">Support</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a><details class="mnav"><summary aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><div class="links"><a href="/#features">Features</a><a href="/#privacy">Privacy</a><a href="/#install">Install</a><a href="/guide">Guide</a><a href="/security">Security</a><a href="/support">Support</a></div></details></nav>
 </div></header>
 <main class="wrap"><aside aria-label="Contents"><p class="ttl">On this page</p><ol><li><a href="#in-one-paragraph">In one paragraph</a></li><li><a href="#what-is-stored-and-where">What is stored, and where</a></li><li><a href="#what-is-not-recorded">What is not recorded</a></li><li><a href="#encryption">Encryption</a></li><li><a href="#touch-id">Touch ID</a></li><li><a href="#recovery-phrase">Recovery phrase</a></li><li><a href="#backups">Backups</a></li><li><a href="#permissions-keepit-asks-for">Permissions Keepit asks for</a></li><li><a href="#automation-keepit-urls">Automation (keepit:// URLs)</a></li><li><a href="#system-log">System log</a></li><li><a href="#network">Network</a></li><li><a href="#code-signing-and-verifying-a-download">Code signing and verifying a download</a></li><li><a href="#uninstalling-and-data-removal">Uninstalling and data removal</a></li><li><a href="#input-limits">Input limits</a></li><li><a href="#limitations-worth-knowing">Limitations worth knowing</a></li><li><a href="#reporting-a-vulnerability">Reporting a vulnerability</a></li></ol></aside><article><h1 id="keepit-security">Keepit security</h1>
 <p>A clipboard manager sees everything you copy, so it has to be clear about what it keeps, where, and
@@ -70,9 +70,17 @@ who can get at it. This page is the complete picture for Keepit. The code is ope
 (<a href="https://github.com/andrey-insarov/Keepit">github.com/andrey-insarov/Keepit</a>), so every claim here
 can be checked against it.</p>
 <h2 id="in-one-paragraph">In one paragraph</h2>
-<p>Keepit stores your clipboard history and templates in one folder on your Mac and nowhere else. There
-is no account, no cloud, no analytics, and the app makes exactly one kind of network request — the
-daily update check against GitHub — which you can switch off. Clipboard data that the copying app marks as concealed is not
+<p>Keepit stores your clipboard history and templates in one folder on your Mac and nowhere else — plus,
+if you switch it on, encrypted copies in a folder <em>you</em> choose (iCloud Drive, Dropbox, a disk); the
+provider behind that folder sees the ciphertext, the file size and a short unencrypted header
+(listed below), nothing of the content. There is no account, no Keepit cloud, no analytics, and the
+app makes exactly one kind of network request — the daily update check against GitHub — which you
+can switch off. The backup folder is an option, off until you turn it on; the update check is on in
+the direct-download edition and can be turned off; the password is an option too. None of them is
+required for the design to hold — with no backup folder Keepit itself never writes outside the Mac,
+and the rest of this page stays true — but they are not equivalent: without a password the history
+and templates are plain files in your own Library folder, readable by anything that runs as you,
+and there is nothing to lock. Turning an option on adds exactly what it says and no more. Clipboard data that the copying app marks as concealed is not
 recorded, and copies from known password managers are excluded by app — a best-effort heuristic,
 explained below. If you set a password, everything on disk is AES-256-GCM encrypted with a key derived from that password; the key
 exists only in memory, is wiped when Keepit locks, and can optionally be released by Touch ID from
@@ -204,11 +212,56 @@ entropy (HKDF) wraps the data key, and the entropy is in turn wrapped by the dat
 password, Touch ID on the same Mac, or the phrase, the data is unrecoverable by design — there is no
 server-side reset and Keepit's authors cannot help.</p>
 <h2 id="backups">Backups</h2>
-<p><em>Settings → General → Backup → Export…</em> produces one <code>.keepit</code> file: a magic header, a format version, a random 16-byte
-salt, and the LZFSE-compressed JSON of history, templates and preferences sealed with AES-256-GCM
-under a PBKDF2 key from a password you choose for the file. The file is safe to keep on a cloud
-drive; its password is independent of the app password. <em>Import…</em> verifies the
-authentication tag before using anything.</p>
+<p>A backup is one <code>.keepit</code> file holding the history, the templates and (optionally) the preferences,
+compressed with LZFSE and sealed with AES-256-GCM. Two ways to make one, same file format:</p>
+<ul>
+<li><strong>Automatic</strong> (<em>Settings → Backup</em>, needs password protection): Keepit writes a new
+  complete copy into the folder you chose about five minutes after the last change (at the latest
+  once a day), reads it back and checks it before deleting the oldest of <em>its own</em> copies beyond
+  <em>Keep last</em>. The file key is derived from your vault's data key with HKDF-SHA256 under a fixed
+  label — a separate key on purpose: it opens backups, not the vault, so even someone who extracted
+  it from a running process could not use it on the data folder. Deriving it requires the data key,
+  which is what the Keepit password or the recovery phrase unlocks — on any Mac. Each copy is sealed
+  with the key material in force when it was written: after a password change or a new phrase,
+  earlier copies still need the earlier password or phrase, and a copy made before a phrase existed
+  cannot be opened with one.</li>
+<li><strong>Export…</strong> (any time, no password protection needed): the file key comes from a password you
+  choose for that file, PBKDF2-HMAC-SHA256 with 200 000 rounds and a random salt.</li>
+</ul>
+<p><strong>What a file looks like inside.</strong> A magic string and a format version, then a small JSON header,
+then the ciphertext. The header is authenticated as GCM additional data — it cannot be altered
+without the file failing to open — but it is <em>not</em> encrypted, because the reader needs it to know how
+to derive the key. Field by field: <code>mode</code> (<code>auto</code> or <code>manual</code>), <code>kdf</code> and <code>rounds</code>, <code>salt</code>, <code>created</code>,
+<code>app</code> (the Keepit version), <code>minReader</code>, <code>sourceID</code> (a random installation identifier, not tied to
+hardware), <code>backupID</code> (random, per file), <code>recovery</code> (the vault's recovery block: the data key
+wrapped under the phrase-derived key, plus the phrase's entropy wrapped under the data key — both
+useless without the phrase or the key), and <code>label</code> — your Mac's name, present only if you switched
+it on. That, and the file's size, is what a storage provider or anyone who finds the file can learn:
+that it is a Keepit backup, when it was made, from which installation, and roughly how much data it
+holds. Not what is in it, not the password. The complete specification is in
+<a href="https://github.com/andrey-insarov/Keepit/blob/main/docs/FORMAT.md"><code>docs/FORMAT.md</code></a> in the
+repository, with reference files produced by an independent implementation; backups written by
+Keepit 2.x (format 1) still open.</p>
+<p><strong>Restore</strong> verifies the GCM tag before anything else, decompresses with a hard size limit, and
+then checks every item against the same limits the app applies when recording — a backup is
+untrusted input even when it is your own. <em>Replace</em> first writes a verified copy of the current
+data; the swap itself is written to disk as one transaction with a journal, so a crash in the
+middle is put right at the next launch. Trust settings (Touch ID, URL automation and its trusted
+apps, the backup folder) are never taken from a backup.</p>
+<p><strong>Where the copies go</strong> is up to you, and so is who else can reach that folder. The ciphertext is
+only as safe as the password behind it: the same advice as for the vault applies, and for
+<em>Export…</em> files, which carry their own password, a short one is the weak point. Deleting a copy
+from the folder removes it <em>there</em>; what cannot be taken back is anything the provider keeps as an
+earlier version or in its trash, or a copy that was downloaded elsewhere — treat a file that has
+left the folder as permanent, and a weak password on it as the real exposure. On the App Store
+edition, access to the folder is a security-scoped bookmark granted when you choose it; Keepit never
+scans iCloud Drive or anything else on its own.</p>
+<p><strong>Network volumes.</strong> Keepit writes each copy to a temporary name, flushes it, reads it back and
+compares a hash before renaming it into place, and it never deletes an old copy before a new one
+has passed that check. How atomic and durable those steps are on a NAS depends on the file system
+and the protocol (SMB, NFS) and on the server's own caching — Keepit cannot see through them. A
+local folder or a folder synced by iCloud Drive or Dropbox is the recommended target; on a NAS,
+verify once that a copy opens with <em>Restore…</em> from another machine before relying on it.</p>
 <h2 id="permissions-keepit-asks-for">Permissions Keepit asks for</h2>
 <div class="tbl"><table>
 <thead>
@@ -361,6 +414,10 @@ exhaust memory or disk:</p>
 <li>Encryption protects the files at rest. Someone with your macOS password and Keepit unlocked sees
   what you see.</li>
 <li>Items you paste leave Keepit's control the moment they land in another app.</li>
+<li>A backup in a cloud folder is as safe as that folder's account and the password behind the
+  file. The provider cannot read it, but can delete it, keep old versions of it, or — if the account
+  is compromised — hand the ciphertext to someone who then has unlimited time to guess the
+  password.</li>
 <li>Which app wrote the clipboard is a guess (see <em>What is not recorded</em>). The reliable signal is the
   concealed mark, and only the copying app can set it.</li>
 <li>macOS itself may keep traces Keepit does not control: the system log of pasteboard reads (above),
@@ -372,7 +429,7 @@ repository) or write to admin@keep.it.com rather than opening a public issue. Yo
 few days, and a fix is released as soon as it is ready; credit is given if you want it.</p></article></main>
 <footer><div class="wrap">
   <span>© 2026 UK Intis Telecom LTD · Keepit is MIT-licensed</span>
-  <span><a href="privacy.html">Privacy policy</a> · <a href="security.html">Security</a> · <a href="support.html">Support</a> · <a href="https://github.com/andrey-insarov/Keepit/blob/main/CHANGELOG.md">Changelog</a> · <a href="https://it.com">it.com</a></span>
+  <span><a href="/privacy">Privacy policy</a> · <a href="/security">Security</a> · <a href="/support">Support</a> · <a href="https://github.com/andrey-insarov/Keepit/blob/main/CHANGELOG.md">Changelog</a> · <a href="https://it.com">it.com</a></span>
 </div></footer>
 <div id="lb" role="dialog" aria-label="Full-size screenshot"><img alt=""></div>
 <script>

@@ -32,10 +32,31 @@ final class LimitsTests: XCTestCase {
             let f = TemplateNode(name: "f\(i)")
             if store.canInsert(f, under: parent) { parent.insert(f); parent = f } else { break }
         }
-        XCTAssertEqual(parent.depth, Limits.templateMaxDepth - 1)
+        XCTAssertEqual(parent.depth, Limits.templateMaxDepth)          // the validator's rule: deepest node ≤ max
+        XCTAssertNoThrow(try Backup.validate(Backup.Payload(history: [], templates: store.root, settings: nil)))
         let long = TemplateNode(name: String(repeating: "n", count: 1000), text: "t")
         store.root.insert(long)
         XCTAssertEqual(long.name.count, Limits.templateNameMaxChars)
+    }
+
+    // Inserting or moving a subtree counts its whole height, so no edit the Viewer admits can
+    // produce a tree the backup reader rejects (the auditor's 13 + folder of height 3 case).
+    func testSubtreeInsertAndMoveCountTheirFullHeight() throws {
+        let store = TemplateStore()
+        var parent = store.root
+        for i in 0..<13 { let f = TemplateNode(name: "L\(i)"); parent.insert(f); parent = f }      // parent at depth 13
+        let tall = TemplateNode(name: "Moved", children: [TemplateNode(name: "N", children: [TemplateNode(name: "D", children: [TemplateNode(name: "Leaf", text: "x")])])])
+        XCTAssertEqual(tall.height, 3)
+        store.root.insert(tall)
+        XCTAssertFalse(store.canMove(tall, under: parent))             // 13 + 1 + 3 = 17 > 16
+        XCTAssertFalse(store.canInsert(tall.duplicate(), under: parent))
+        let shorter = TemplateNode(name: "Ok", children: [TemplateNode(name: "N", children: [TemplateNode(name: "Leaf", text: "x")])])
+        XCTAssertTrue(store.canInsert(shorter, under: parent))         // 13 + 1 + 2 = 16
+        parent.insert(shorter)
+        XCTAssertNoThrow(try Backup.validate(Backup.Payload(history: [], templates: store.root, settings: nil)))
+        var l0 = parent; while l0.depth > 1 { l0 = l0.parent! }                // the default tree has its own first child
+        XCTAssertFalse(store.canMove(l0, under: parent))                        // L0 into its own descendant: never
+        XCTAssertTrue(store.canMove(parent, under: tall.children[0]))          // 2 + 1 + height(parent) = 6: fine
     }
 
     func testMenuCap() {

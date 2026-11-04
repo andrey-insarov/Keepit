@@ -1072,7 +1072,7 @@ final class ViewerWindowController: NSWindowController,
             if let t = src.templateNode {
                 if let oldParent = t.parent, oldParent === folder,
                    let old = folder.children.firstIndex(where: { $0 === t }), old < at { at -= 1 }
-                guard folder.depth + 1 + (t.isFolder ? 1 : 0) < Limits.templateMaxDepth else { limitBeep(); return false }
+                guard templates.canMove(t, under: folder) else { limitBeep(); return false }   // full height of what is moved
                 t.removeFromParent()
                 folder.insert(t, at: at)
             } else if let id = src.historyId, let c = history.item(id: id) {

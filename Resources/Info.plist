@@ -35,6 +35,20 @@
     <string>__DATE__</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
+    <!-- Double-clicking a .keepit file opens the Restore flow. -->
+    <key>CFBundleDocumentTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleTypeName</key>
+            <string>Keepit backup</string>
+            <key>CFBundleTypeRole</key>
+            <string>Viewer</string>
+            <key>LSHandlerRank</key>
+            <string>Owner</string>
+            <key>LSItemContentTypes</key>
+            <array><string>com.it.keep.backup</string></array>
+        </dict>
+    </array>
     <key>UTExportedTypeDeclarations</key>
     <array>
         <dict>

@@ -18,9 +18,16 @@ let package = Package(
         .package(url: "https://github.com/sparkle-project/Sparkle", from: "2.6.0"),
     ],
     targets: [
+        // Format layer, no AppKit: the .keepit container (docs/FORMAT.md), KDFs, sealed blobs, LZFSE.
+        // Consumers: the app today; a CLI and other platforms later. Apple frameworks only for now
+        // (CryptoKit, CommonCrypto, Compression); swapping them for swift-crypto is a later step.
+        .target(
+            name: "KeepitCore",
+            path: "Sources/KeepitCore"
+        ),
         .executableTarget(
             name: "Keepit",
-            dependencies: appStore ? [] : [.product(name: "Sparkle", package: "Sparkle")],
+            dependencies: ["KeepitCore"] + (appStore ? [] : [.product(name: "Sparkle", package: "Sparkle")]),
             path: "Sources/Keepit",
             // Resources/ holds the icon and one <lang>.lproj/Localizable.strings per interface language
             // (21 of them; the list itself lives in Resources/Info.plist, CFBundleLocalizations).
@@ -35,8 +42,10 @@ let package = Package(
         ),
         .testTarget(
             name: "KeepitTests",
-            dependencies: ["Keepit"],
-            path: "Tests/KeepitTests"
+            dependencies: ["Keepit", "KeepitCore"],
+            path: "Tests/KeepitTests",
+            // Reference .keepit files (docs/FORMAT.md); FixtureTests opens them by path, not as a bundle resource.
+            exclude: ["Fixtures"]
         ),
     ]
 )

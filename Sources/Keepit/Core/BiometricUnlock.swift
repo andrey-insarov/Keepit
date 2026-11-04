@@ -1,3 +1,4 @@
+import CryptoKit
 import Foundation
 import LocalAuthentication
 import Security
@@ -7,7 +8,14 @@ import Security
 /// The password remains the fallback; this only adds a second way to obtain the same key.
 enum BiometricUnlock {
     private static let service = "com.it.keep.vault"
-    private static let account = "data-key"
+    /// The keychain item belongs to a data directory: a normal installation keeps the historical
+    /// name, while a test, self-test or KEEPIT_DATA_DIR run gets its own item — so Reset in one of
+    /// those cannot remove the real installation's Touch ID key.
+    private static var account: String {
+        if Storage.isDefaultDirectory { return "data-key" }
+        let digest = SHA256.hash(data: Data(Storage.directory.standardizedFileURL.path.utf8))
+        return "data-key@" + digest.prefix(8).map { String(format: "%02x", $0) }.joined()
+    }
 
     enum Failure: Error, LocalizedError {
         case notAvailable
