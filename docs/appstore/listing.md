@@ -60,7 +60,7 @@ Keepit needs the Accessibility permission to paste for you; without it, chosen i
 clipboard,history,paste,copy,snippets,templates,manager,queue,text expander,productivity
 
 ## What's new (version 3.0.0)
-• Automatic encrypted backup: Settings → General → Backup, pick a folder (iCloud Drive, Dropbox, a disk) and Keepit keeps complete, encrypted copies there — a new one a few minutes after each change, the oldest beyond your limit removed. They open with your Keepit password or recovery phrase on any Mac.
+• Automatic encrypted backup: Settings → Backup, pick a folder (iCloud Drive, Dropbox, a disk) and Keepit keeps complete, encrypted copies there — a new one a few minutes after each change, the oldest beyond your limit removed. They open with your Keepit password or recovery phrase on any Mac.
 • Restore from Backup on first launch, from Settings, or by double-clicking a .keepit file: Merge into what you have, or Replace it (a copy of the current data is saved first).
 • New .keepit format: authenticated header, versioned, published specification. Files from Keepit 2.x still open.
 

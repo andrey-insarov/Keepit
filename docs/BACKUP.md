@@ -113,7 +113,7 @@ page says so and recommends a local or iCloud/Dropbox folder; a NAS is "verify y
 ## Restore
 
 Entry points: first launch and after *Reset…* (*Restore from Backup… / Start Fresh*); *Settings →
-General → Backup → Restore…*; double-click on a `.keepit` file. All lead to the same flow:
+Backup → Restore…*; double-click on a `.keepit` file. All lead to the same flow:
 
 1. **Pick**: the user chooses a file (or a folder, from which Keepit lists files it can parse). The
    sandbox grants access only through this choice; Keepit does not scan iCloud Drive on its own.
@@ -209,15 +209,18 @@ General → Backup → Restore…*; double-click on a `.keepit` file. All lead t
    chooses whether the phrase from the backup keeps working for the new vault (it is wrapped for
    the new key under a new salt) or a new phrase is generated and shown.
 
-## Settings UI (General → Backup)
+## Settings UI (the Backup pane)
 
-- ☐ **Back up automatically to a folder** — disabled without a password (see Preconditions).
-- Folder path + *Choose…*
-- **Keep last** [10] **backups**
-- ☐ **Include device label** [MacBook Pro] — off by default; help says it is visible to the storage provider.
-- Status line: *Last backup: today 10:12 · 1.2 MB* / *Last backup failed: folder not available*
-- *Back Up Now* · *Restore…*
-- Export… / Import… stay as they are (manual mode, own password).
+Its own pane between Security and Advanced, built like the others (a header per group, one
+control per line, help only behind ?):
+
+- **Automatic backup**: ☐ *Back up automatically to a folder* — disabled without a password (see
+  Preconditions) · *Folder:* path + *Choose…* · *Keep last* [10] *backups* · ☐ *Include this Mac's
+  name in the backup files* (off by default; help says it is visible to the storage provider) ·
+  status line: *Last backup: today 10:12 · 1.2 MB* / *Last backup failed: …* · *Back Up Now*.
+- **Restore**: *Restore…* — any `.keepit`, this Mac's, another's or an exported one.
+- **Export**: *Export…* — manual mode, own password. The 2.x *Import…* button is gone: *Restore…*
+  is that flow.
 
 ## Acceptance criteria
 

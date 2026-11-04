@@ -54,7 +54,7 @@ icon appears in the menu bar, and Keepit asks three things.
 in iCloud Drive or another folder, or an exported `.keepit` file — *Restore from Backup…* brings
 your history and templates back before anything else happens; you unlock the file with the
 password of the Mac it came from, or its recovery phrase. *Start Fresh* skips this; the same
-restore is available later from *Settings → General → Backup → Restore…*, and double-clicking a
+restore is available later from *Settings → Backup → Restore…*, and double-clicking a
 `.keepit` file in the Finder opens it too. [Backup](#backup) has the details.
 
 **2. A password (optional).** Keepit can store the history and templates encrypted and unlock with
@@ -289,12 +289,13 @@ that explains it.
 
 | Pane | What is there |
 |-----|---------------|
-| **General** | Launch at login · save history on quit, restore on start · paste after choosing (off = only copy) · paste delay — raise it for apps that are slow to come to the front · open the menu at the text cursor · Backup: *Back up automatically to a folder*, the folder, how many copies to keep, *Back Up Now*, *Restore…*, *Export…* / *Import…* — [Backup](#backup) · Updates: *Check for updates automatically* (direct-download edition; off = no network request at all) — [Updates](#updates) |
+| **General** | Launch at login · save history on quit, restore on start · paste after choosing (off = only copy) · paste delay — raise it for apps that are slow to come to the front · open the menu at the text cursor · Updates: *Check for updates automatically* (direct-download edition; off = no network request at all) — [Updates](#updates) |
 | **Shortcuts** | Every global shortcut in one place — see below |
 | **Paste Queue** | The three queue keys, the idle time after which the queue switches off, and what to put between items for *Paste all remaining* — [The paste queue](#the-paste-queue) |
 | **History** | How many text/file items and images to keep (1000 / 30) · forget items older than … · *Remove duplicates* (copying the same thing again moves it to the top) · *Ignore concealed clipboard data* · the ignored-apps list (bundle identifiers; password managers are always ignored) |
 | **Menu** | Search field · numbering · preview panel · tooltips · source-app icons · image thumbnails · items in menu (how many of the latest entries the menu lists, 60 by default; the rest stay searchable) · title length · thumbnail height |
 | **Security** | Password, Touch ID, locking, recovery phrase — [Part 6](#part-6-security) |
+| **Backup** | *Back up automatically to a folder*, the folder, how many copies to keep, the Mac's name in the files, the status line and *Back Up Now* · *Restore…* · *Export…* — [Backup](#backup) |
 | **Advanced** | Clipboard poll interval · Automation: *Allow keepit:// URL commands* (off by default — [Automation](#automation-the-keepit-url-scheme)) · Data: *Open Folder* · Reset and uninstall: *Reset…* (back to a fresh install, example templates return) · *Uninstall…* (reset, then remove the app, Launch at login, keychain entry and permissions) |
 
 ![Settings → History: limits and the ignored-apps list](site/img/guide/prefs-history.png)
@@ -362,7 +363,7 @@ encrypted file, its size and a small unencrypted header (when and by which Keepi
 how the key is derived, random identifiers — and your Mac's name only if you switch that on); the
 [security page](/security#backups) lists it field by field.
 
-**Switching it on.** *Settings → General → Backup → Back up automatically to a folder*, then
+**Switching it on.** *Settings → Backup → Back up automatically to a folder*, then
 *Choose…* a folder (the chooser opens in iCloud Drive). Automatic backup needs the password
 protection from *Settings → Security*: each copy is sealed with a key derived from your vault's key,
 so it opens with your Keepit password — or your recovery phrase — on this Mac or any other, and
@@ -411,9 +412,9 @@ switch automatic backup on for the new Mac. Copies made so far open with the pas
 that were in force when each was written — after a password change, the old ones still need the old
 password.
 
-**Export… and Import…** are still there for a single file by hand: *Export…* writes one `.keepit`
-with a password you choose for that file (it does not need Keepit's password protection), and
-*Import…* is the same restore flow for any `.keepit` file. The same file moves data between the
+**Export…** is still there for a single file by hand: it writes one `.keepit` with a password you
+choose for that file (it does not need Keepit's password protection); *Restore…* opens it like any
+other backup — it has taken over what *Import…* did in 2.x. The same file moves data between the
 direct download and the App Store edition, and between Keepit 2.x and 3.x — a file written by 3.0
 needs 3.0 or newer to open; 3.0 reads everything 2.x wrote.
 

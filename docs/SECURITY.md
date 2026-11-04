@@ -140,7 +140,7 @@ server-side reset and Keepit's authors cannot help.
 A backup is one `.keepit` file holding the history, the templates and (optionally) the preferences,
 compressed with LZFSE and sealed with AES-256-GCM. Two ways to make one, same file format:
 
-- **Automatic** (*Settings → General → Backup*, needs password protection): Keepit writes a new
+- **Automatic** (*Settings → Backup*, needs password protection): Keepit writes a new
   complete copy into the folder you chose about five minutes after the last change (at the latest
   once a day), reads it back and checks it before deleting the oldest of *its own* copies beyond
   *Keep last*. The file key is derived from your vault's data key with HKDF-SHA256 under a fixed

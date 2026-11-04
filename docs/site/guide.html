@@ -93,7 +93,7 @@ icon appears in the menu bar, and Keepit asks three things.</p>
 in iCloud Drive or another folder, or an exported <code>.keepit</code> file — <em>Restore from Backup…</em> brings
 your history and templates back before anything else happens; you unlock the file with the
 password of the Mac it came from, or its recovery phrase. <em>Start Fresh</em> skips this; the same
-restore is available later from <em>Settings → General → Backup → Restore…</em>, and double-clicking a
+restore is available later from <em>Settings → Backup → Restore…</em>, and double-clicking a
 <code>.keepit</code> file in the Finder opens it too. <a href="#backup">Backup</a> has the details.</p>
 <p><strong>2. A password (optional).</strong> Keepit can store the history and templates encrypted and unlock with
 Touch ID. You can decide now or later in <em>Settings → Security</em>; <a href="#part-6-security">Part 6</a>
@@ -341,7 +341,7 @@ that explains it.</p>
 <tbody>
 <tr>
 <td><strong>General</strong></td>
-<td>Launch at login · save history on quit, restore on start · paste after choosing (off = only copy) · paste delay — raise it for apps that are slow to come to the front · open the menu at the text cursor · Backup: <em>Back up automatically to a folder</em>, the folder, how many copies to keep, <em>Back Up Now</em>, <em>Restore…</em>, <em>Export…</em> / <em>Import…</em> — <a href="#backup">Backup</a> · Updates: <em>Check for updates automatically</em> (direct-download edition; off = no network request at all) — <a href="#updates">Updates</a></td>
+<td>Launch at login · save history on quit, restore on start · paste after choosing (off = only copy) · paste delay — raise it for apps that are slow to come to the front · open the menu at the text cursor · Updates: <em>Check for updates automatically</em> (direct-download edition; off = no network request at all) — <a href="#updates">Updates</a></td>
 </tr>
 <tr>
 <td><strong>Shortcuts</strong></td>
@@ -362,6 +362,10 @@ that explains it.</p>
 <tr>
 <td><strong>Security</strong></td>
 <td>Password, Touch ID, locking, recovery phrase — <a href="#part-6-security">Part 6</a></td>
+</tr>
+<tr>
+<td><strong>Backup</strong></td>
+<td><em>Back up automatically to a folder</em>, the folder, how many copies to keep, the Mac's name in the files, the status line and <em>Back Up Now</em> · <em>Restore…</em> · <em>Export…</em> — <a href="#backup">Backup</a></td>
 </tr>
 <tr>
 <td><strong>Advanced</strong></td>
@@ -414,7 +418,7 @@ changed. There is no Keepit server: the folder is yours. What the provider behin
 encrypted file, its size and a small unencrypted header (when and by which Keepit it was written,
 how the key is derived, random identifiers — and your Mac's name only if you switch that on); the
 <a href="/security#backups">security page</a> lists it field by field.</p>
-<p><strong>Switching it on.</strong> <em>Settings → General → Backup → Back up automatically to a folder</em>, then
+<p><strong>Switching it on.</strong> <em>Settings → Backup → Back up automatically to a folder</em>, then
 <em>Choose…</em> a folder (the chooser opens in iCloud Drive). Automatic backup needs the password
 protection from <em>Settings → Security</em>: each copy is sealed with a key derived from your vault's key,
 so it opens with your Keepit password — or your recovery phrase — on this Mac or any other, and
@@ -457,9 +461,9 @@ first launch, pick the newest file in your folder, enter the old Mac's password,
 switch automatic backup on for the new Mac. Copies made so far open with the password and phrase
 that were in force when each was written — after a password change, the old ones still need the old
 password.</p>
-<p><strong>Export… and Import…</strong> are still there for a single file by hand: <em>Export…</em> writes one <code>.keepit</code>
-with a password you choose for that file (it does not need Keepit's password protection), and
-<em>Import…</em> is the same restore flow for any <code>.keepit</code> file. The same file moves data between the
+<p><strong>Export…</strong> is still there for a single file by hand: it writes one <code>.keepit</code> with a password you
+choose for that file (it does not need Keepit's password protection); <em>Restore…</em> opens it like any
+other backup — it has taken over what <em>Import…</em> did in 2.x. The same file moves data between the
 direct download and the App Store edition, and between Keepit 2.x and 3.x — a file written by 3.0
 needs 3.0 or newer to open; 3.0 reads everything 2.x wrote.</p>
 <p><strong>If something goes wrong.</strong> A failed copy is reported in the status line and retried with growing

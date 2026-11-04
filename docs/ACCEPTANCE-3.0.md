@@ -30,7 +30,7 @@ appstore …` for the sandboxed one).
 
 - [ ] **A1. Sparkle.** On the clean user install 2.13.1 from the release page, let it find 3.0 when the
   tag exists (skip until then; do it before announcing), update in one click, data intact.
-- [ ] **A2. Export → Reset → Import.** *Settings → General → Backup → Export…* with a file password
+- [ ] **A2. Export → Reset → Restore.** *Settings → Backup → Export…* with a file password
   → *Advanced → Reset…* (password and confirmation) → first-run dialogs → *Restore from Backup…* →
   that file → *Replace* (a fresh installation holds only the example templates: no rollback copy, no
   extra question). Expected: counts in the preview match what you exported; history, templates,
@@ -84,7 +84,7 @@ appstore …` for the sandboxed one).
 
 ## D. Restore
 
-Use *Settings → General → Backup → Restore…* unless stated. "Another Mac" = the clean user or the side
+Use *Settings → Backup → Restore…* unless stated. "Another Mac" = the clean user or the side
 instance with an empty data directory.
 
 - [ ] **D1. Own copy, same Mac, Merge.** Delete two history items and one template, Restore… the latest
@@ -234,9 +234,10 @@ Side instance; watch `/tmp/keepit-acc/`.
   `/sitemap.xml`.
 - [ ] **K2.** security.html *Backups*, privacy.html *Backups you choose to make* (version 1.4), landing
   card *Backed up to your own cloud* and the FAQ answer — read once as a user, not as the author.
-- [ ] **K3.** New screenshots to take for the guide: General pane with the Backup group (on, a folder
-  chosen, a status line), the restore preview, the first-run *Restore from a backup?* dialog. White
-  background, window shadow, RGB PNG into `docs/site/img/guide/`.
+- [ ] **K3.** New screenshots to take for the guide: the Backup pane (on, a folder chosen, a status
+  line) as `prefs-backup.png`, the General pane again (the Backup group is gone from it), the restore
+  preview, the first-run *Restore from a backup?* dialog. White background, window shadow, RGB PNG
+  into `docs/site/img/guide/`.
 
 ## Sign-off
 
