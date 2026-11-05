@@ -45,7 +45,7 @@ PAGES = [
 ]
 
 HEADER = """<header><div class="wrap">
-  <a class="brand" href="/"><img src="img/icon.png" alt="">Keepit</a>
+  <a class="brand" href="/"><img src="img/icon.png?v=a1519b94" alt="">Keepit</a>
   <nav><a href="/#features">Features</a><a href="/guide">Guide</a><a href="/security">Security</a><a href="/support">Support</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a><details class="mnav"><summary aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><div class="links"><a href="/#features">Features</a><a href="/#privacy">Privacy</a><a href="/#install">Install</a><a href="/guide">Guide</a><a href="/security">Security</a><a href="/support">Support</a></div></details></nav>
 </div></header>"""
 
@@ -176,7 +176,7 @@ def json_ld(out_name: str, title: str, description: str, kind: str, crumb: str, 
     page = {"@type": kind, "@id": url, "url": url, "name": headline, "headline": headline, "description": description,
             "inLanguage": "en", "isPartOf": {"@id": SITE + "#site"}, "about": {"@id": SITE + "#app"},
             "author": {"@id": SITE + "#org"}, "publisher": {"@id": SITE + "#org"},
-            "image": SITE + "img/social-preview.png", "dateModified": DATE}
+            "image": SITE + "img/social-preview.png?v=7ab894f4", "dateModified": DATE}
     import json
     return '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@graph": [page, crumbs]}, ensure_ascii=False) + '</script>'
 
@@ -213,13 +213,13 @@ def render(src_name: str, out_name: str, title: str, description: str, with_toc:
     main_cls = "wrap" if toc else "wrap narrow"
     page = (f'<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">'
             f'<meta name="viewport" content="width=device-width, initial-scale=1">\n'
-            f'<title>{title}</title><link rel="icon" href="img/icon.png"><link rel="apple-touch-icon" href="img/icon.png">\n'
+            f'<title>{title}</title><link rel="icon" href="img/icon.png?v=a1519b94"><link rel="apple-touch-icon" href="img/icon.png?v=a1519b94">\n'
             f'<meta name="description" content="{description}">\n'
             f'<link rel="canonical" href="{page_url(out_name)}">'
             f'<meta property="og:type" content="article"><meta property="og:site_name" content="Keepit">'
             f'<meta property="og:title" content="{title}"><meta property="og:description" content="{description}">'
-            f'<meta property="og:image" content="{SITE}img/social-preview.png"><meta property="og:url" content="{page_url(out_name)}">'
-            f'<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{title}"><meta name="twitter:description" content="{description}"><meta name="twitter:image" content="{SITE}img/social-preview.png">'
+            f'<meta property="og:image" content="{SITE}img/social-preview.png?v=7ab894f4"><meta property="og:url" content="{page_url(out_name)}">'
+            f'<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{title}"><meta name="twitter:description" content="{description}"><meta name="twitter:image" content="{SITE}img/social-preview.png?v=7ab894f4">'
             f'<meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">\n'
             f'{json_ld(out_name, title, description, kind, crumb, headline)}\n'
             f'<style>{CSS}</style></head>\n<body>{HEADER}\n<main class="{main_cls}">{aside}<article>{body}</article></main>\n{FOOTER}\n'

@@ -28,7 +28,7 @@ You can remap the shortcut per app in *System Settings → Keyboard → Keyboard
 
 Every key can be changed in *Settings → Shortcuts*, and if you want plain text to be the default, set a per-app paste key in *Settings → Menu* for the apps that need it.
 
-Keepit is open source and keeps everything on your Mac; the [security page](/security) explains what is stored and how.
+Keepit is open source and keeps everything on your Mac (backups to a folder of yours are optional and encrypted); the [security page](/security) explains what is stored and how.
 
 ## Related
 
