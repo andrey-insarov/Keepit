@@ -214,10 +214,11 @@ Backup → Restore…*; double-click on a `.keepit` file. All lead to the same f
 Its own pane between Security and Advanced, built like the others (a header per group, one
 control per line, help only behind ?):
 
-- **Automatic backup**: ☐ *Back up automatically to a folder* — disabled without a password (see
-  Preconditions) · *Folder:* path + *Choose…* · *Keep last* [10] *backups* · ☐ *Include this Mac's
-  name in the backup files* (off by default; help says it is visible to the storage provider) ·
-  status line: *Last backup: today 10:12 · 1.2 MB* / *Last backup failed: …* · *Back Up Now*.
+- **Automatic backup** (the status line sits in the heading's row, on the right: *Last backup:
+  today 10:12 · 1.2 MB* / *Last backup failed: …*): ☐ *Back up automatically to a folder* — disabled
+  without a password (see Preconditions) · ☐ *Include this Mac's name in the backup files* (off by
+  default; help says it is visible to the storage provider) · *Folder:* path + *Choose…* ·
+  *Keep last* [10] *backups*.
 - **Manual backup**: *Back Up Now* (an automatic-style copy, at once) and *Save to Archive…*
   (manual mode, own password, anywhere; Keepit does not track the file). **Restore**: *Restore…* —
   any `.keepit`, this Mac's, another's or an archive. Three groups, three operations (3.0.1); the
