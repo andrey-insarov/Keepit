@@ -59,6 +59,9 @@ Keepit needs the Accessibility permission to paste for you; without it, chosen i
 ## Keywords (100 chars, comma-separated)
 clipboard,history,paste,copy,snippets,templates,manager,queue,text expander,productivity
 
+## What's new (version 3.0.3)
+• Delete in the history menu keeps your search: the menu comes back filtered, as it was.
+
 ## What's new (version 3.0.2)
 • The Viewer shows an image item scaled into its pane, centred, with the pixel size above; small images no longer fold the window.
 • A lock badge on the app icon — the history is under a password.

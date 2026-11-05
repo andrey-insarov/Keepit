@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.3 — 2026-11-05
+
+- History menu: after *Delete* the menu came back with the full list — the search text was put into the field after the menu had already been shown (`popUp` returns only when the menu closes), so it applied to the next opening instead. The reopened menu is now built with the search applied (auditor's P2 on 3.0.2; `HistoryMenuTests`)
+- Guide and BACKUP.md: the backup status line sits beside the *Automatic backup* heading, and *Back Up Now* is listed once, under *Manual backup* (auditor's P3)
+- Site: the demo history in the menu screenshots no longer shows a real shipment number; social preview rebuilt with the lock-badge icon
+
 ## 3.0.2 — 2026-11-05
 
 - Viewer: an image item is shown scaled into the pane, centred, with its pixel size above — instead of a 2x-enlarged corner of it pushed to the right edge (3.0.1)
