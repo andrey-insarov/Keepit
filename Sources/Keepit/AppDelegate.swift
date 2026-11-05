@@ -75,6 +75,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         super.init()
     }
 
+    /// Tests only: the two stores without the rest of the launch (no password gate, monitor, timers,
+    /// hot keys or dialogs). The app itself creates them in `applicationDidFinishLaunching`, after the vault.
+    func loadStoresForTesting() {
+        history = HistoryStore(settings: settings)
+        templates = TemplateStore()
+    }
+
     /// An undo of a restore did not finish — at launch, or during a restore just now: the files
     /// are a mix of before and after and the armed journal is their only intact copy. Working on
     /// would save over that mix (and the next launch's replay would then discard whatever was

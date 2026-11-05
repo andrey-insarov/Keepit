@@ -90,34 +90,41 @@ final class TextFormatView: NSView, NSTextViewDelegate {
 
 // MARK: - Image
 
+/// The image scaled down to fit the pane (never up), centred; the pixel size and byte count above it.
+/// No scroll view: the picture is a preview, and a document view sized in points showed a 2x-blown-up
+/// corner of the image instead of the image.
 final class ImageFormatView: NSView {
-    private let scroll = NSScrollView()
     private let imageView = NSImageView()
     private let info = NSTextField(labelWithString: "")
 
     override init(frame: NSRect) {
         super.init(frame: frame)
-        imageView.imageScaling = .scaleNone
-        imageView.imageAlignment = .alignTopLeft
-        scroll.documentView = imageView
-        scroll.hasVerticalScroller = true
-        scroll.hasHorizontalScroller = true
-        scroll.borderType = .noBorder
-        scroll.backgroundColor = .windowBackgroundColor
-        scroll.drawsBackground = true
-        scroll.translatesAutoresizingMaskIntoConstraints = false
+        imageView.imageScaling = .scaleProportionallyDown
+        imageView.imageAlignment = .alignCenter
+        imageView.imageFrameStyle = .none
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        // The image's own size must not drive the layout: the pane decides, the picture fits into it.
+        // Priority 1, not the default 250: the stack view around the pane aligns its width at a priority
+        // the picture's 250 could beat, which parked the pane at the right edge, as wide as the picture.
+        for axis in [NSLayoutConstraint.Orientation.horizontal, .vertical] {
+            imageView.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(1), for: axis)
+            imageView.setContentHuggingPriority(NSLayoutConstraint.Priority(1), for: axis)
+        }
         info.translatesAutoresizingMaskIntoConstraints = false
         info.textColor = .secondaryLabelColor
+        info.lineBreakMode = .byTruncatingTail
+        info.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(1), for: .horizontal)
+        info.setContentHuggingPriority(NSLayoutConstraint.Priority(1), for: .horizontal)
         addSubview(info)
-        addSubview(scroll)
+        addSubview(imageView)
         NSLayoutConstraint.activate([
             info.topAnchor.constraint(equalTo: topAnchor, constant: 6),
             info.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             info.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            scroll.topAnchor.constraint(equalTo: info.bottomAnchor, constant: 6),
-            scroll.leadingAnchor.constraint(equalTo: leadingAnchor),
-            scroll.trailingAnchor.constraint(equalTo: trailingAnchor),
-            scroll.bottomAnchor.constraint(equalTo: bottomAnchor),
+            imageView.topAnchor.constraint(equalTo: info.bottomAnchor, constant: 6),
+            imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            imageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
         ])
     }
     required init?(coder: NSCoder) { fatalError() }
@@ -132,7 +139,6 @@ final class ImageFormatView: NSView {
         if let rep = img.representations.first { px = "\(rep.pixelsWide)×\(rep.pixelsHigh) px, " }
         info.stringValue = px + ByteCountFormatter.string(fromByteCount: Int64(data.count), countStyle: .file)
         imageView.image = img
-        imageView.frame = NSRect(origin: .zero, size: img.size)
     }
 }
 

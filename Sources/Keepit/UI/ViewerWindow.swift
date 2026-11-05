@@ -193,6 +193,11 @@ final class ViewerWindowController: NSWindowController,
         bar.orientation = .horizontal
         bar.spacing = 6
         bar.translatesAutoresizingMaskIntoConstraints = false
+        // The toolbar keeps its one-row height and the split view takes everything else. Without this both
+        // hug their content at the same priority, and once the right pane has a content size (a picture)
+        // the solver can satisfy either: on 3.0.1 it shrank the split to the picture and stretched the
+        // toolbar over the rest of the window, buttons centred in the blank.
+        bar.setHuggingPriority(.defaultHigh, for: .vertical)
 
         // Tree
         let col = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("name"))
@@ -248,6 +253,8 @@ final class ViewerWindowController: NSWindowController,
         split.addArrangedSubview(leftScroll)
         split.addArrangedSubview(rightPane)
         split.translatesAutoresizingMaskIntoConstraints = false
+        split.setContentHuggingPriority(NSLayoutConstraint.Priority(1), for: .vertical)
+        split.setContentHuggingPriority(NSLayoutConstraint.Priority(1), for: .horizontal)
         leftScroll.widthAnchor.constraint(greaterThanOrEqualToConstant: 200).isActive = true
         rightPane.widthAnchor.constraint(greaterThanOrEqualToConstant: 300).isActive = true
         split.autosaveName = "KeepitViewerSplit"
