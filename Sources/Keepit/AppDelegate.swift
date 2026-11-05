@@ -779,8 +779,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     /// The history menu under the menu-bar icon. `pasteTarget` is the caller's business: a click
     /// sets it to the app in front, a reopen after Delete keeps the one from before.
-    private func showStatusItemMenu() {
-        let menu = buildHistoryMenu(includeTemplates: true, includeApp: true)
+    private func showStatusItemMenu(query: String = "") {
+        let menu = buildHistoryMenu(includeTemplates: true, includeApp: true, query: query)
         menu.delegate = self
         menuSelectionMade = false
         popupActive = false
@@ -828,17 +828,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     /// After Delete in the history menu: the same menu again, the same way, with the search kept.
+    /// The query goes into the build, not after the show: `popUp(…)` and `performClick` run the
+    /// menu's tracking loop and return only when it has closed, so anything set after them is seen
+    /// on the next opening, not this one (3.0.2 showed the full list).
     private func reopenHistoryMenu(query: String) {
         guard !isLocked, let origin = historyMenuOrigin else { return }
         switch origin {
         case .statusItem:
-            showStatusItemMenu()
+            showStatusItemMenu(query: query)
         case .popup(let point):
-            popUp(buildHistoryMenu(includeTemplates: true, includeApp: false), isHistory: true, at: point)
-        }
-        if !query.isEmpty, let s = historySearchItem {
-            s.field.stringValue = query
-            s.onChange?(query)
+            popUp(buildHistoryMenu(includeTemplates: true, includeApp: false, query: query), isHistory: true, at: point)
         }
     }
 
@@ -892,7 +891,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     // MARK: - Menu construction
 
-    func buildHistoryMenu(includeTemplates: Bool, includeApp: Bool) -> NSMenu {
+    /// `query` pre-fills the search field and filters the rows before the menu is shown (a reopen
+    /// after Delete); it does nothing when the search field is off.
+    func buildHistoryMenu(includeTemplates: Bool, includeApp: Bool, query: String = "") -> NSMenu {
         let menu = NSMenu(title: L("History"))
         menu.autoenablesItems = false
 
@@ -940,6 +941,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if includeApp {
             menu.addItem(.separator())
             for mi in appMenuItems() { menu.addItem(mi) }
+        }
+        if searching, !query.isEmpty, let s = historySearchItem {
+            s.field.stringValue = query
+            refilterHistoryMenu(menu, query: query)
         }
         return menu
     }
