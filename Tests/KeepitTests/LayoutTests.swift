@@ -102,7 +102,7 @@ final class LayoutTests: XCTestCase {
         // picture it draws — red where the picture is, the background colour outside it.
         XCTAssertEqual(image.imageScaling, .scaleProportionallyDown)
         XCTAssertEqual(image.imageAlignment, .alignCenter)
-        let drawn = try XCTUnwrap(image.bitmapImageRepCacheDisplay(in: image.bounds))
+        let drawn = try XCTUnwrap(image.bitmapImageRepForCachingDisplay(in: image.bounds))
         image.cacheDisplay(in: image.bounds, to: drawn)
         func red(_ x: CGFloat, _ y: CGFloat) -> Bool {
             let sx = CGFloat(drawn.pixelsWide) / image.bounds.width, sy = CGFloat(drawn.pixelsHigh) / image.bounds.height
