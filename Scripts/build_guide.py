@@ -191,6 +191,11 @@ def modified(src_name: str) -> str:
 
 
 TURNSTILE_SITE_KEY = "0x4AAAAAAFxKO-1Iq_maRhEF"   # public Turnstile site key for keep.it.com
+EUROMETRICS_WEBSITE_ID = "0ab7fe20-0c05-4061-b037-c033dc46c1e1"   # keep.it.com in EuroMetrics (Settings → Websites → Tracking Code); public
+# Cookieless page-view counting (EuroMetrics, EU-hosted). Counts only on keep.it.com, honours Do Not Track,
+# drops query strings. Allowed in the CSP in docs/site/_headers; disclosed in docs/PRIVACY.md section 6.
+ANALYTICS = ('<script defer src="https://app.eurometrics.eu/script.js" data-website-id="' + EUROMETRICS_WEBSITE_ID +
+             '" data-domains="keep.it.com" data-do-not-track="true" data-exclude-search="true"></script>')
 
 
 def render(src_name: str, out_name: str, title: str, description: str, with_toc: bool, kind: str, crumb: str) -> None:
@@ -222,7 +227,7 @@ def render(src_name: str, out_name: str, title: str, description: str, with_toc:
             f'<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{title}"><meta name="twitter:description" content="{description}"><meta name="twitter:image" content="{SITE}img/social-preview.png?v=57583ec3">'
             f'<meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">\n'
             f'{json_ld(out_name, title, description, kind, crumb, headline)}\n'
-            f'<style>{CSS}</style></head>\n<body>{HEADER}\n<main class="{main_cls}">{aside}<article>{body}</article></main>\n{FOOTER}\n'
+            f'{ANALYTICS}\n<style>{CSS}</style></head>\n<body>{HEADER}\n<main class="{main_cls}">{aside}<article>{body}</article></main>\n{FOOTER}\n'
             f'<div id="lb" role="dialog" aria-label="Full-size screenshot"><img alt=""></div>\n'
             f'<script>{JS}</script>\n</body></html>')
     stray = re.findall(r'href="(?:\.\./|/)?[a-z0-9-]+\.html[^"]*"', page)

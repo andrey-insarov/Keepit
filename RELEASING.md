@@ -246,6 +246,15 @@ dashboard, not in the repo, and need to be set once per zone:
   www serves a full duplicate of the site; the canonical tags point at the apex, but the
   redirect is what settles it.
 
+Page views are counted with EuroMetrics (app.eurometrics.eu, cookieless, EU-hosted): one
+`<script defer>` in every page's `<head>` — the generator's `ANALYTICS` constant for rendered
+pages, pasted by hand into `index.html`, `404.html` and `docs/site/v2/*.html`. The website id
+(`EUROMETRICS_WEBSITE_ID`) is public. `data-domains="keep.it.com"` keeps preview deployments
+out of the numbers, `data-do-not-track` skips visitors who send DNT. Both hosts are allowed in
+the CSP (`script-src`, `connect-src`), and the privacy policy's section 6 discloses it — change
+one, change all three. Cloudflare's own Web Analytics beacon stays off (it was auto-injected,
+blocked by the CSP and contradicted the policy; Workers & Pages → keepit → Metrics).
+
 URLs on the site have no `.html`: Cloudflare Pages serves `guide.html` at `/guide` and answers
 `/guide.html` with a 308 to it, so canonical, `og:url`, JSON-LD, the sitemap and every internal
 link use the extensionless form (`build_guide.py` refuses to write a page that links to
