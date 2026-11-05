@@ -1,8 +1,9 @@
 # Import from other clipboard and snippet managers (3.1)
 
-Status: design, revision 3 after the auditor's two stage-0 reviews of 5 Nov 2026. Nothing is
+Status: design, revision 4 after the auditor's three stage-0 reviews of 5 Nov 2026. Nothing is
 built yet. Earlier revisions are in the PR history; the first review's nine findings are marked
-**(A-n)**, the second review's four clarifications **(B-n)**, in the section they concern.
+**(A-n)**, the second review's four clarifications **(B-n)**, the third review's YAML point
+**(C-1)**, in the section they concern.
 
 ## Evidence labels
 
@@ -112,7 +113,7 @@ forbids. So:
 | whole job | copied snapshot ≤ 2 GB and ≤ 10 000 files in total; decoded payload ≤ 1 GB; history items ≤ `historyMaxCeiling` × 2 read before the plan trims; templates read ≤ `templateMaxCount`; nested-snippet inlines ≤ 20 000 per job. Checked while reading, before the next file or row is taken |
 | `.alfredsnippets` (zip) | entries ≤ 10 000, uncompressed total ≤ 64 MB, each entry ≤ `textBytesCeiling`; entry names with `..`, absolute paths, or symlinks are rejected (the archive is refused, not skipped) |
 | XML (Clipy) | Foundation `XMLParser` with `shouldResolveExternalEntities = false`, DTD/entity declarations rejected; depth ≤ 16 |
-| YAML (Espanso) | **Yams** (auditor's choice confirmed): a named release pinned by revision in `Package.resolved` at stage 2, under the same `check_resolved.sh` drift check as Sparkle. The wrapper decodes into the espanso DTOs only, rejects unknown custom tags, file ≤ 8 MB, depth of the decoded tree ≤ 16. **Aliases**: the count of `*alias` tokens does not bound the expanded graph (10 levels × 8 references ≈ 8¹⁰ visits), and Yams' `Parser` has no depth/budget hook, so v1 **refuses a file that contains anchors or aliases** before parsing — the wrapper scans the libyaml event stream (Yams exposes it through `Parser`) or, failing that, a pre-tokenizer; the auditor's 8¹⁰ document is the test and must be refused within the file-size budget. Espanso match files in practice use neither. Revisited only if a real fixture needs them |
+| YAML (Espanso) | **Yams** (auditor's choice confirmed): a named release pinned by revision in `Package.resolved` at stage 2, under the same `check_resolved.sh` drift check as Sparkle; the API statements below are re-checked against **that** revision, not `main`. The wrapper decodes into the espanso DTOs only and rejects unknown custom tags. **Preflight before any tree is built (C-1)**: Yams' public surface is `compose`/`decode`, which build the node tree with recursive loaders — `Parser.parse()` and `Event` are not public and `CYaml` is an implementation-only import — so the preflight cannot be "Yams' event stream". It is a separate bounded pass over the libyaml **event** API (our own thin C-interop target over the libyaml that Yams vendors, or the system/Homebrew libyaml, decided at stage 2), run before Yams sees the bytes: it rejects anchors and aliases (the alias count does not bound the expanded graph: 10 levels × 8 references ≈ 8¹⁰ visits), tags outside the core schema, nesting depth > 16, and more than 50 000 events / 100 000 nodes-equivalent; file ≤ 8 MB. It is a parser-level check, not a character search in the text. **Gate**: a small prototype with the auditor's 8¹⁰ document and a 10 000-deep document must be refused within the budgets before the YAML reader is accepted at stage 2; without a working preflight the Espanso reader is **not** shipped. Espanso match files in practice use neither anchors nor deep nesting |
 | JSON (Raycast) | `JSONDecoder`, array only, ≤ 10 000 snippets |
 | plist (Flycut) | `PropertyListSerialization` with `.immutable`, root dictionary only |
 | per item | text ≤ `Limits.textBytesCeiling`; images ≤ `imageBytesCeiling` and ≤ `imageMaxPixels` (decoded through the same bomb check as the monitor); file lists ≤ `fileListEntriesCeiling` and **never opened or stat'ed** — paths are stored as strings |
@@ -140,7 +141,10 @@ Two engine changes make that hold at paste time, each with a test and a CHANGELO
    `.unescapeOnly(text)` (escapes but no tokens: paste the clip with **all its formats** and the
    plain-text format replaced by the unescaped text — for an imported favourite that equals the
    source bytes), `.expand(text, prompts)` (tokens present: the expanded plain text, as today).
-   `pasteTemplate` switches on the route and nothing else. Behaviour change for existing templates:
+   `pasteTemplate` switches on the route and nothing else. Implementation note from the auditor's
+   third review: `ClipItem.setText` drops RTF/HTML, so the `.unescapeOnly` branch must build the
+   pasted item from the original formats with only the plain-text entry replaced — the tests for
+   rich favourites catch a `setText` shortcut. Behaviour change for existing templates:
    `{{` pastes as `{` from 3.1, which the cheat sheet row "`{{` `}}` — literal braces" has promised;
    CHANGELOG says so.
 2. **Tests on the route, not only on `expand` (B-2).** `Snippets.expand` already handles
