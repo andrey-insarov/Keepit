@@ -7,7 +7,7 @@ import XCTest
 /// the menu before the show — the auditor's P2 on 3.0.2: the search text was applied afterwards
 /// and the reopened menu listed everything.
 final class HistoryMenuTests: XCTestCase {
-    private func app(with texts: [String]) throws -> (AppDelegate, TempStorage) {
+    private func makeApp(with texts: [String]) throws -> (AppDelegate, TempStorage) {
         _ = NSApplication.shared
         let storage = TempStorage()
         try FileManager.default.createDirectory(at: storage.dir, withIntermediateDirectories: true)
@@ -20,7 +20,7 @@ final class HistoryMenuTests: XCTestCase {
     private func rows(_ menu: NSMenu) -> [NSMenuItem] { menu.items.filter { $0.tag == MenuBuilder.historyTag } }
 
     func testMenuBuiltWithAQueryIsAlreadyFiltered() throws {
-        let (app, storage) = try app(with: ["apple pie", "banana", "apple juice"])
+        let (app, storage) = try makeApp(with: ["apple pie", "banana", "apple juice"])
         defer { storage.restore() }
         let menu = app.buildHistoryMenu(includeTemplates: true, includeApp: true, query: "apple")
         let search = try XCTUnwrap(menu.items.first as? MenuSearchItem)
@@ -35,7 +35,7 @@ final class HistoryMenuTests: XCTestCase {
     }
 
     func testMenuBuiltWithoutAQueryListsEverything() throws {
-        let (app, storage) = try app(with: ["apple pie", "banana", "apple juice"])
+        let (app, storage) = try makeApp(with: ["apple pie", "banana", "apple juice"])
         defer { storage.restore() }
         let menu = app.buildHistoryMenu(includeTemplates: false, includeApp: false)
         XCTAssertEqual(rows(menu).count, 3)
@@ -43,7 +43,7 @@ final class HistoryMenuTests: XCTestCase {
     }
 
     func testQueryWithNoMatchShowsTheNoMatchesRow() throws {
-        let (app, storage) = try app(with: ["apple pie", "banana"])
+        let (app, storage) = try makeApp(with: ["apple pie", "banana"])
         defer { storage.restore() }
         let menu = app.buildHistoryMenu(includeTemplates: false, includeApp: false, query: "zzz")
         let shown = rows(menu)
