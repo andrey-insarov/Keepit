@@ -61,7 +61,7 @@ The history keeps the last 1 000 text and file items and the last 30 images by d
 | Opening the history | Spotlight window, `⌘Space` then `⌘4` | A menu at the text cursor, `⌥M` |
 | Pasting | Pick an item in Spotlight | Number keys in the menu; `⌃⌥1`–`⌃⌥0` without opening it; a paste queue for several items in a row |
 | Templates | — | Reusable snippets with date, input and choice placeholders |
-| Password and Touch ID | — | Optional: history encrypted with AES-256-GCM, unlocked with Touch ID |
+| App-level password protection | — | Optional: an encrypted vault (AES-256-GCM) with an in-app lock and Touch ID unlock |
 | Backup | — | Encrypted backup to a folder you choose |
 
 The two do not get in each other's way: Keepit records what you copy whether or not Spotlight's history is on.
