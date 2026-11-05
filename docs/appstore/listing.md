@@ -59,6 +59,10 @@ Keepit needs the Accessibility permission to paste for you; without it, chosen i
 ## Keywords (100 chars, comma-separated)
 clipboard,history,paste,copy,snippets,templates,manager,queue,text expander,productivity
 
+## What's new (version 3.0.2)
+• The Viewer shows an image item scaled into its pane, centred, with the pixel size above; small images no longer fold the window.
+• A lock badge on the app icon — the history is under a password.
+
 ## What's new (version 3.0.1)
 • Settings → Backup in three groups: Automatic backup, Manual backup (Back Up Now, Save to Archive…) and Restore; the old Export/Import wording is gone.
 • The (?) next to automatic backup now says when copies are made: about five minutes after the last change, at the latest once a day.
