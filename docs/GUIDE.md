@@ -427,6 +427,8 @@ copies' `Keepit-<date and time>-<installation>-<id>.keepit`.
 
 ![Save to Archive…: the file name says archive and manual](site/img/guide/save-to-archive.png)
 
+![The archive's own password, with a strength meter: it is not stored anywhere](site/img/guide/archive-password.png)
+
 *Restore…* opens either. The archive replaces *Export…* / *Import…* of 2.x; the file moves data
 between the direct download and the App Store edition, and between Keepit 2.x and 3.x — a file
 written by 3.0 needs 3.0 or newer to open; 3.0 reads everything 2.x wrote.
