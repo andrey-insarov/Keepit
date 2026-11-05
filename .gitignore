@@ -18,3 +18,4 @@ SHA256SUMS
 *.provisionprofile
 sparkle_private_key*
 __pycache__/
+*.dmg
