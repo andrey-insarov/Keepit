@@ -3,8 +3,8 @@
 #   brew install --cask andrey-insarov/keepit/keepit
 # version/sha256 are rewritten by CI on every release (make cask).
 cask "keepit" do
-  version "3.0.2"
-  sha256 "1c4dc3aa9dc82f023920a1058e9641b1717444c1c0801fd23c9822e3854a250a"
+  version "3.0.3"
+  sha256 "eebc2593464a016ff25adf30b0c149d8ff94e79746ee40f588a0c58fc6a39b3f"
 
   url "https://github.com/andrey-insarov/Keepit/releases/download/v#{version}/Keepit-#{version}.dmg"
   name "Keepit – Clipboard Manager"
