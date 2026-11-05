@@ -264,7 +264,8 @@ the empty line.
 ![The Viewer with a template selected](site/img/guide/viewer.png)
 
 - Select an item to see it on the right. Text is editable in place — changes apply when you leave
-  the editor; images are shown; file lists open the file on double-click. *Show as Hex Dump* in the
+  the editor; an image is shown scaled to fit the pane, its pixel size and file size above it; file
+  lists open the file on double-click. *Show as Hex Dump* in the
   context menu shows the raw bytes.
 - The toolbar: *Send to Clipboard*, *Paste* (into the app you came from), *Add to Template*, *New
   Item*, *New Folder*, *Delete*, *Insert ▾* (placeholders), and **?** — this guide.
