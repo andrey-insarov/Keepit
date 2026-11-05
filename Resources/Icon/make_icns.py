@@ -3,7 +3,6 @@
 Needs Playwright with Chromium (used by the CI/dev container); on a Mac you can instead run
 `iconutil -c icns AppIcon.iconset` after rendering the PNGs with any tool."""
 import struct, pathlib, asyncio, sys
-from playwright.async_api import async_playwright
 
 HERE = pathlib.Path(__file__).parent
 SIZES = [16, 32, 64, 128, 256, 512, 1024]
@@ -16,6 +15,7 @@ TYPES = {128: b"ic07", 256: b"ic08", 512: b"ic09", 1024: b"ic10",
 ARGB_TYPES = {16: b"ic04", 32: b"ic05"}
 
 async def render():
+    from playwright.async_api import async_playwright
     svg = (HERE / "icon.svg").read_text()
     pngs = {}
     async with async_playwright() as p:
@@ -72,8 +72,20 @@ def write_icns(pngs, out):
     body = b"".join(entries)
     out.write_bytes(b"icns" + struct.pack(">I", 8 + len(body)) + body)
 
+def render_rsvg():
+    """Without Playwright: librsvg's rsvg-convert renders the same SVG (filters included)."""
+    import subprocess
+    svg = HERE / "icon.svg"
+    return {s: subprocess.run(["rsvg-convert", "-w", str(s), "-h", str(s), str(svg)], check=True, capture_output=True).stdout for s in SIZES}
+
 def main():
-    pngs = asyncio.run(render())
+    import shutil
+    try:
+        import playwright  # noqa: F401
+        pngs = asyncio.run(render())
+    except ImportError:
+        if not shutil.which("rsvg-convert"): sys.exit("need Playwright or rsvg-convert")
+        pngs = render_rsvg()
     iconset = HERE / "AppIcon.iconset"
     iconset.mkdir(exist_ok=True)
     for s in [16, 32, 128, 256, 512]:

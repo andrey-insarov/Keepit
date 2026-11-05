@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Viewer: an image item is shown scaled into the pane, centred, with its pixel size above — instead of a 2x-enlarged corner of it pushed to the right edge (3.0.1)
+- App icon: a lock badge in the lower-right corner — the history is under a password. Same clipboard, same colours; `Resources/Icon/icon.svg`, the iconset and `.icns`, the site icon and the social preview; `make_icns.py` renders with rsvg-convert when Playwright is absent
 
 ## 3.0.1 — 2026-11-04
 
