@@ -57,12 +57,16 @@ password of the Mac it came from, or its recovery phrase. *Start Fresh* skips th
 restore is available later from *Settings → Backup → Restore…*, and double-clicking a
 `.keepit` file in the Finder opens it too. [Backup](#backup) has the details.
 
+![The first question on a new Mac: restore from a backup, or start fresh](site/img/guide/restore-first-run.png)
+
 **2. A password (optional).** Keepit can store the history and templates encrypted and unlock with
 Touch ID. You can decide now or later in *Settings → Security*; [Part 6](#part-6-security)
 explains how it works. *Not Now* keeps everything unencrypted on disk. If you restored a backup
 with its password a moment ago, Keepit offers to keep that password for this Mac.
 
 ![The password offer on first launch](site/img/guide/password-offer.png)
+
+![Choosing Not Now: a plain statement of what that means, and where to change it](site/img/guide/no-password-notice.png)
 
 **3. The Accessibility permission.** To paste for you, Keepit sends ⌘V to the app you were working
 in; macOS allows that only for apps listed under *System Settings → Privacy & Security →
@@ -426,6 +430,8 @@ Its suggested name says what it is: `Keepit-archive-<date>-manual.keepit`, next 
 copies' `Keepit-<date and time>-<installation>-<id>.keepit`.
 
 ![Save to Archive…: the file name says archive and manual](site/img/guide/save-to-archive.png)
+
+![The archive's own password, with a strength meter: it is not stored anywhere](site/img/guide/archive-password.png)
 
 *Restore…* opens either. The archive replaces *Export…* / *Import…* of 2.x; the file moves data
 between the direct download and the App Store edition, and between Keepit 2.x and 3.x — a file

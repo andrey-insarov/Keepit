@@ -38,11 +38,17 @@ def alert_box(im):
     return (l, t, W-1-r, H-1-b)
 def normalize(src, dst):
     box=opaque_box(src)
-    if box: x0,y0,x1,y1=box
-    elif (ab:=alert_box(flat(src))): x0,y0,x1,y1=ab; box=ab
-    else:
-        r=analyze(src); assert r, src
-        x0,y0,x1,y1=r['win']
+    if not box:
+        # Two detectors for flat shots: the window one (long light runs) and the white-alert one (border
+        # ring). A sheet on a grey window satisfies both; the larger box is the whole window.
+        r=analyze(src); ab=alert_box(flat(src))
+        area=lambda b:(b[2]-b[0])*(b[3]-b[1])
+        cands=[b for b in ([r['win']] if r else [])+([ab] if ab else [])]
+        assert cands, src
+        best=max(cands,key=area)
+        if ab and best==ab: box=ab
+        x0,y0,x1,y1=best
+    else: x0,y0,x1,y1=box
     im=flat(src); L=lum(np.array(im).astype(float))
     if not box:
         tops=[t for t in (top_edge(L,x0+dx) for dx in (250,300,400,500,600)) if t is not None]
