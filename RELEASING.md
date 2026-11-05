@@ -1,7 +1,9 @@
 # Releasing Keepit
 
-1. Bump the version: edit `VERSION` (e.g. `2.2.0`), commit. When the release was prepared on a
-   branch, merge its PR first — the tag has to point at a commit that already carries the new `VERSION`.
+1. Bump the version: edit `VERSION` (e.g. `2.2.0`) **and `Backup.readerVersion` in
+   `Sources/Keepit/Core/Backup.swift`** — `CoreTests.testReaderVersionMatchesVERSIONFile` fails the
+   build if the two differ — then commit. When the release was prepared on a branch, merge its PR
+   first — the tag has to point at a commit that already carries the new `VERSION`.
 2. Tag and push, **checking the version right before tagging**:
    ```
    git checkout main && git pull
