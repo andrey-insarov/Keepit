@@ -176,7 +176,7 @@ def json_ld(out_name: str, title: str, description: str, kind: str, crumb: str, 
     page = {"@type": kind, "@id": url, "url": url, "name": headline, "headline": headline, "description": description,
             "inLanguage": "en", "isPartOf": {"@id": SITE + "#site"}, "about": {"@id": SITE + "#app"},
             "author": {"@id": SITE + "#org"}, "publisher": {"@id": SITE + "#org"},
-            "image": SITE + "img/social-preview.png?v=7ab894f4", "dateModified": DATE}
+            "image": SITE + "img/social-preview.png?v=57583ec3", "dateModified": DATE}
     import json
     return '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@graph": [page, crumbs]}, ensure_ascii=False) + '</script>'
 
@@ -218,8 +218,8 @@ def render(src_name: str, out_name: str, title: str, description: str, with_toc:
             f'<link rel="canonical" href="{page_url(out_name)}">'
             f'<meta property="og:type" content="article"><meta property="og:site_name" content="Keepit">'
             f'<meta property="og:title" content="{title}"><meta property="og:description" content="{description}">'
-            f'<meta property="og:image" content="{SITE}img/social-preview.png?v=7ab894f4"><meta property="og:url" content="{page_url(out_name)}">'
-            f'<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{title}"><meta name="twitter:description" content="{description}"><meta name="twitter:image" content="{SITE}img/social-preview.png?v=7ab894f4">'
+            f'<meta property="og:image" content="{SITE}img/social-preview.png?v=57583ec3"><meta property="og:url" content="{page_url(out_name)}">'
+            f'<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{title}"><meta name="twitter:description" content="{description}"><meta name="twitter:image" content="{SITE}img/social-preview.png?v=57583ec3">'
             f'<meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">\n'
             f'{json_ld(out_name, title, description, kind, crumb, headline)}\n'
             f'<style>{CSS}</style></head>\n<body>{HEADER}\n<main class="{main_cls}">{aside}<article>{body}</article></main>\n{FOOTER}\n'
