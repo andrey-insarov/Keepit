@@ -300,7 +300,7 @@ that explains it.
 | **History** | How many text/file items and images to keep (1000 / 30) · forget items older than … · *Remove duplicates* (copying the same thing again moves it to the top) · *Ignore concealed clipboard data* · the ignored-apps list (bundle identifiers; password managers are always ignored) |
 | **Menu** | Search field · numbering · preview panel · tooltips · source-app icons · image thumbnails · items in menu (how many of the latest entries the menu lists, 60 by default; the rest stay searchable) · title length · thumbnail height |
 | **Security** | Password, Touch ID, locking, recovery phrase — [Part 6](#part-6-security) |
-| **Backup** | *Back up automatically to a folder*, the folder, how many copies to keep, the Mac's name in the files, the status line · Manual backup: *Back Up Now*, *Save to Archive…* · Restore: *Restore…* — [Backup](#backup) |
+| **Backup** | Automatic backup (status line beside the heading): *Back up automatically to a folder*, the Mac's name in the files, the folder, how many copies to keep · Manual backup: *Back Up Now*, *Save to Archive…* · Restore: *Restore…* — [Backup](#backup) |
 | **Advanced** | Clipboard poll interval · Automation: *Allow keepit:// URL commands* (off by default — [Automation](#automation-the-keepit-url-scheme)) · Data: *Open Folder* · Reset and uninstall: *Reset…* (back to a fresh install, example templates return) · *Uninstall…* (reset, then remove the app, Launch at login, keychain entry and permissions) |
 
 ![Settings → History: limits and the ignored-apps list](site/img/guide/prefs-history.png)
@@ -381,9 +381,9 @@ Keepit runs) Keepit writes a file named `Keepit-<date and time>-<installation>-<
 folder, reads it back to check it, and only then deletes the oldest of its own copies beyond *Keep
 last* (10 by default, 1–100). Each copy is complete on its own — not an increment — so one file is
 all you ever need. Copies made by another Mac, or files you put there yourself, are never touched:
-two Macs sharing a folder write two independent series. A status line under the checkbox shows the
-last copy's time and size, or why the last attempt failed; *Back Up Now* makes a copy right away.
-Nothing happens while Keepit is locked.
+two Macs sharing a folder write two independent series. The status line beside the *Automatic
+backup* heading shows the last copy's time and size, or why the last attempt failed. Nothing
+happens while Keepit is locked; *Back Up Now* (under *Manual backup*) does not wait for the quiet period.
 
 **Include this Mac's name** (off by default) puts the computer's name into the unencrypted header
 of each file, so two series in one folder are easy to tell apart in the Finder. The storage provider

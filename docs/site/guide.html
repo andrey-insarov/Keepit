@@ -368,7 +368,7 @@ that explains it.</p>
 </tr>
 <tr>
 <td><strong>Backup</strong></td>
-<td><em>Back up automatically to a folder</em>, the folder, how many copies to keep, the Mac's name in the files, the status line · Manual backup: <em>Back Up Now</em>, <em>Save to Archive…</em> · Restore: <em>Restore…</em> — <a href="#backup">Backup</a></td>
+<td>Automatic backup (status line beside the heading): <em>Back up automatically to a folder</em>, the Mac's name in the files, the folder, how many copies to keep · Manual backup: <em>Back Up Now</em>, <em>Save to Archive…</em> · Restore: <em>Restore…</em> — <a href="#backup">Backup</a></td>
 </tr>
 <tr>
 <td><strong>Advanced</strong></td>
@@ -432,9 +432,9 @@ Keepit runs) Keepit writes a file named <code>Keepit-&lt;date and time&gt;-&lt;i
 folder, reads it back to check it, and only then deletes the oldest of its own copies beyond <em>Keep
 last</em> (10 by default, 1–100). Each copy is complete on its own — not an increment — so one file is
 all you ever need. Copies made by another Mac, or files you put there yourself, are never touched:
-two Macs sharing a folder write two independent series. A status line under the checkbox shows the
-last copy's time and size, or why the last attempt failed; <em>Back Up Now</em> makes a copy right away.
-Nothing happens while Keepit is locked.</p>
+two Macs sharing a folder write two independent series. The status line beside the <em>Automatic
+backup</em> heading shows the last copy's time and size, or why the last attempt failed. Nothing
+happens while Keepit is locked; <em>Back Up Now</em> (under <em>Manual backup</em>) does not wait for the quiet period.</p>
 <p><strong>Include this Mac's name</strong> (off by default) puts the computer's name into the unencrypted header
 of each file, so two series in one folder are easy to tell apart in the Finder. The storage provider
 can see that name; that is why it is optional.</p>
