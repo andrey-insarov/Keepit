@@ -1,12 +1,12 @@
 # Privacy Policy — Keepit – Clipboard Manager
 
-*Version 1.5, effective 5 November 2026.*
+*Version 1.6, effective 6 November 2026.*
 
-**In short: Keepit does not collect, transmit, sell or share any personal data. Everything the app stores stays on your Mac, under your control — and if you choose to back it up to a folder of yours, the copies are encrypted and go only where you point them (section 2).**
+**In short: the app never sends us anything. Your clipboard history and templates stay on your Mac, under your control — and if you choose to back them up to a folder of yours, the copies are encrypted and go only where you point them (section 2). The only personal data we process at all is what you send us through the support form, and this website's visit statistics (section 6).**
 
 ## 1. Who we are
 
-Keepit – Clipboard Manager ("Keepit", "the app") is published by **UK Intis Telecom LTD**, a company registered in England and Wales under company number **11767499**, registered office **20 Hammersmith Broadway, London, England, W6 7AF** ("we", "us"). We are the data controller for the purposes of the UK GDPR and the EU GDPR to the extent any personal data is processed in connection with Keepit — which, as explained below, we do not do.
+Keepit – Clipboard Manager ("Keepit", "the app") is published by **UK Intis Telecom LTD**, a company registered in England and Wales under company number **11767499**, registered office **20 Hammersmith Broadway, London, England, W6 7AF** ("we", "us"). We are the data controller under the UK GDPR and the EU GDPR for the personal data we do process: support requests you send us and this website's visit statistics (section 6). The app's own data — your clipboard history and templates — never reaches us (sections 2 and 3).
 
 Privacy contact: **admin@keep.it.com**
 
@@ -41,26 +41,29 @@ Keepit does not record clipboard content marked as concealed or transient by the
 
 - **Updates (direct-download edition only).** The edition downloaded from keep.it.com / GitHub checks for new versions by downloading a small file (`appcast.xml`) from GitHub Releases, by default once a day and whenever you choose *Check for Updates…*. You can turn the check off (Settings → General → Updates); Keepit then makes no network request at all. The request carries no personal data, but, like any HTTPS request, exposes your IP address and user agent to GitHub, Inc., whose [privacy statement](https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement) applies. Downloads of the app itself come from GitHub as well.
 - **Mac App Store edition.** Contains no update checker at all. Installation and updates are handled by Apple; Apple's [privacy policy](https://www.apple.com/legal/privacy/) governs that process. We receive only Apple's aggregated, anonymised download statistics.
-- **This website (keep.it.com).** Static pages served through Cloudflare, Inc. Cloudflare may process connection metadata (IP address, request headers) to deliver and protect the site; see Cloudflare's [privacy policy](https://www.cloudflare.com/privacypolicy/). To know which pages are read, the site counts page views with EuroMetrics, an analytics service based in Portugal whose data stays in the EU ([privacy policy](https://eurometrics.eu/privacy)). For each page view it receives the page address (without query strings), the referring site, browser and operating system family, screen size, language and the country derived from your IP address. It sets no cookies, stores nothing on your device and, by its documentation, does not track individual users; visitors whose browser sends Do Not Track are not counted at all. We see only aggregate figures. Legal basis: our legitimate interest in knowing how the site is used (Art. 6(1)(f) GDPR).
+- **This website (keep.it.com).** Static pages served through Cloudflare, Inc. Cloudflare may process connection metadata (IP address, request headers) to deliver and protect the site; see Cloudflare's [privacy policy](https://www.cloudflare.com/privacypolicy/). To know which pages are read, the site counts page views with EuroMetrics, an analytics service based in Portugal whose data stays in the EU ([privacy policy](https://eurometrics.eu/privacy)). For each page view it receives the page address and title (query strings removed; a `#fragment` is kept), the referring site (query strings removed), browser and operating system family, screen size, language and the country derived from your IP address. We run its script in its no-storage mode: it sets no cookies, reads and writes nothing in your browser's storage, and creates no browser fingerprint; by its documentation it assigns no identifier to visitors and does not track them across sites. Visitors whose browser sends Do Not Track are not counted at all. We see only aggregate figures. Purpose: to know which pages are read and to improve the site. Legal basis: our legitimate interest in that (Art. 6(1)(f) GDPR).
 - **The support form (keep.it.com/support).** If you write to us through the form, the name, e-mail address, message and screenshots you enter are e-mailed to us and used only to answer you; they are not stored on the website. The form is protected against bots by Cloudflare Turnstile, which may process connection metadata under Cloudflare's policy, and the e-mail is delivered through Resend, Inc. ([privacy policy](https://resend.com/legal/privacy-policy)). We keep the correspondence as long as needed to resolve your request. Legal basis: our legitimate interest in answering support requests (Art. 6(1)(f) GDPR).
 
 No other third parties are involved. We do not sell, rent or share personal data.
 
 ## 7. Legal basis
 
-Because Keepit processes your clipboard content only on your device and we never receive it, we do not process your personal data in the sense of the UK GDPR / EU GDPR in the course of providing the app. Where incidental connection metadata reaches GitHub, Apple, Cloudflare or EuroMetrics as described in section 6, those providers act under their own policies; our interest is the legitimate interest of distributing and updating the software (Art. 6(1)(f) GDPR).
+- **The app.** Keepit processes your clipboard content only on your device and we never receive it, so in providing the app we process no personal data of yours in the sense of the UK GDPR / EU GDPR.
+- **Update check and downloads.** The connection metadata that reaches GitHub (and, for the App Store edition, Apple) is processed by them under their own policies; our basis for offering the check is our legitimate interest in distributing and updating the software (Art. 6(1)(f) GDPR).
+- **This website.** Cloudflare processes connection metadata to deliver and protect the site; the page-view statistics described in section 6 rest on our legitimate interest in knowing which pages are read and improving the site (Art. 6(1)(f) GDPR).
+- **Support.** Answering a request you send us rests on our legitimate interest in supporting the people who use Keepit (Art. 6(1)(f) GDPR); we use the details only for that request.
 
 ## 8. Your rights
 
-Under the UK GDPR / EU GDPR you have rights of access, rectification, erasure, restriction, portability and objection, and the right to complain to a supervisory authority (in the UK, the Information Commissioner's Office, ico.org.uk). Since we hold no personal data about Keepit users, there is in practice nothing for us to access, correct or erase — the data is on your Mac and you control it directly. If you contact us by email, we keep that correspondence only as long as needed to answer you.
+Under the UK GDPR / EU GDPR you have rights of access, rectification, erasure, restriction, portability and objection, and the right to complain to a supervisory authority (in the UK, the Information Commissioner's Office, ico.org.uk). For everything the app stores there is nothing we could access, correct or erase — the data is on your Mac and you control it directly. The website's statistics are aggregate and not linked to you, so we cannot single out your visits. What we do hold is support correspondence: write to admin@keep.it.com and we will show, correct or delete it; we keep it only as long as needed to answer you.
 
 ## 9. Children
 
-Keepit is a general-purpose utility, not directed at children under 13 (16 in some jurisdictions), and we do not knowingly collect data from children — or from anyone.
+Keepit is a general-purpose utility, not directed at children under 13 (16 in some jurisdictions), and we do not knowingly collect data from children.
 
 ## 10. International transfers
 
-We do not transfer your data anywhere, because we do not receive it. GitHub, Apple and Cloudflare may process connection metadata in the United States and elsewhere under their own safeguards; EuroMetrics keeps the website's page-view data in the EU.
+The app's data never leaves your Mac through us, so there is nothing of it to transfer. GitHub, Apple and Cloudflare may process connection metadata in the United States and elsewhere under their own safeguards. Support e-mails sent through the form are delivered by Resend, Inc., a US company, under its standard contractual safeguards. EuroMetrics states that it keeps the website's page-view data in the EU.
 
 ## 11. Changes to this policy
 

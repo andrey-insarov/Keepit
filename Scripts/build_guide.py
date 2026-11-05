@@ -193,9 +193,10 @@ def modified(src_name: str) -> str:
 TURNSTILE_SITE_KEY = "0x4AAAAAAFxKO-1Iq_maRhEF"   # public Turnstile site key for keep.it.com
 EUROMETRICS_WEBSITE_ID = "0ab7fe20-0c05-4061-b037-c033dc46c1e1"   # keep.it.com in EuroMetrics (Settings → Websites → Tracking Code); public
 # Cookieless page-view counting (EuroMetrics, EU-hosted). Counts only on keep.it.com, honours Do Not Track,
-# drops query strings. Allowed in the CSP in docs/site/_headers; disclosed in docs/PRIVACY.md section 6.
+# drops query strings; data-no-storage keeps it from touching localStorage/sessionStorage/cookies (EuroMetrics,
+# attribute available since 5 Nov 2026). Allowed in the CSP in docs/site/_headers; disclosed in docs/PRIVACY.md section 6.
 ANALYTICS = ('<script defer src="https://app.eurometrics.eu/script.js" data-website-id="' + EUROMETRICS_WEBSITE_ID +
-             '" data-domains="keep.it.com" data-do-not-track="true" data-exclude-search="true"></script>')
+             '" data-domains="keep.it.com" data-do-not-track="true" data-exclude-search="true" data-no-storage="true"></script>')
 
 
 def render(src_name: str, out_name: str, title: str, description: str, with_toc: bool, kind: str, crumb: str) -> None:

@@ -252,7 +252,9 @@ pages, pasted by hand into `index.html`, `404.html` and `docs/site/v2/*.html` �
 `docs/site/v2/privacy.html`, which is the frozen 1.3 policy ("do not run analytics on the site")
 and must not load the script; its banner points to the current policy. The website id
 (`EUROMETRICS_WEBSITE_ID`) is public. `data-domains="keep.it.com"` keeps preview deployments
-out of the numbers, `data-do-not-track` skips visitors who send DNT. Both hosts are allowed in
+out of the numbers, `data-do-not-track` skips visitors who send DNT, `data-no-storage` keeps the script out of
+localStorage/sessionStorage/cookies and fingerprinting (EuroMetrics attribute, 5 Nov 2026) — the
+policy's "stores nothing on your device" depends on it. Both hosts are allowed in
 the CSP (`script-src`, `connect-src`), and the privacy policy's section 6 discloses it — change
 one, change all three. Cloudflare's own Web Analytics beacon stays off (it was auto-injected,
 blocked by the CSP and contradicted the policy; Workers & Pages → keepit → Metrics).
