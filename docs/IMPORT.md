@@ -1,8 +1,8 @@
 # Import from other clipboard and snippet managers (3.1)
 
-Status: design, revision 2 after the auditor's stage-0 review of 5 Nov 2026. Nothing is built
-yet. Revision 1 is in the PR history; the review's nine findings and the clarifications are each
-answered in the section they concern, marked **(A-n)**.
+Status: design, revision 3 after the auditor's two stage-0 reviews of 5 Nov 2026. Nothing is
+built yet. Earlier revisions are in the PR history; the first review's nine findings are marked
+**(A-n)**, the second review's four clarifications **(B-n)**, in the section they concern.
 
 ## Evidence labels
 
@@ -44,6 +44,15 @@ What is taken:
   pinned flag on history items; `AppDelegate.historyPinned` creates a `TemplateNode`). The copy
   keeps the item's formats and gets no hot key. When the Templates category is unchecked, favourites
   go to history only and the preview says "pinned status not transferred". **(A-6)**
+  **The copy is literal (B-1).** A favourite was static text in the source, so its template copy
+  must paste exactly those bytes: the history item keeps the source bytes untouched; the template
+  copy gets the same formats, with its plain-text format run through the same escaping as snippet
+  literals (`{`→`{{`, `}`→`}}`), and the rich formats (RTF, HTML, PNG, file list) copied as they
+  are. The paste path then has nothing to execute (see "Paste route" below) and pastes the clip
+  with all its formats — no clipboard lookup, no `{input:}` prompt, no `{cursor}` caret move. This
+  is an import rule only; the user's own *Pin* keeps today's behaviour. Tests: favourites whose
+  text is `{clipboard}`, `{input:x}`, `{cursor}` and a JSON object — history bytes equal the source,
+  the template paste equals the source text, RTF/HTML survive.
 
 ## Sources
 
@@ -51,18 +60,18 @@ What is taken:
 
 | Program | What | Where (macOS) | Format | Evidence |
 |---|---|---|---|---|
-| **Maccy** 2.x | history | `~/Library/Containers/org.p0deje.Maccy/Data/Library/Application Support/Maccy/Storage.sqlite` + `-wal` + `-shm`; sandboxed app; path built as `URL.applicationSupportDirectory.appending("Maccy/Storage.sqlite")` | SwiftData store. Logical model: `HistoryItem(application: String?, firstCopiedAt, lastCopiedAt: Date, numberOfCopies: Int, pin: String?, title: String, contents: [HistoryItemContent])`, `HistoryItemContent(type: String, value: Data?, item)`. `type` is the raw pasteboard type string (`public.utf8-plain-text`, `public.png`, `public.tiff`, `public.rtf`, `public.html`, `public.file-url`, plus Maccy-internal types that are skipped); `value` the raw pasteboard bytes. | `[source: github.com/p0deje/Maccy Models/HistoryItem.swift, HistoryItemContent.swift, Storage.swift @ master 5 Nov 2026]`. Physical table/column names (`ZHISTORYITEM.ZTITLE …`), date epoch, file-URL encoding: `[fixture: pending]` — the SwiftData model is not proof of the SQL layout of every 2.x build |
-| **Alfred** 4/5 (Powerpack) | history | `~/Library/Application Support/Alfred/Databases/clipboard.alfdb` (+ `-wal`, `-shm`); Preferences → Advanced → *Reveal in Finder* | SQLite `clipboard(item, ts decimal, app, apppath, dataType integer, dataHash)`; `dataType` 0 text, 1 image, 2 file; image bytes in a sibling directory addressed by `dataHash` | `[observed: rmoff.net/2020/05/18/…, github.com/mxbaylee/alfred-clip.py]` — Alfred is closed; **`[fixture: pending]` decides**: epoch of `ts`, image file layout, what `item` holds for files |
-| **Alfred** | snippets | `.alfredsnippets` export (Features → Snippets → collection → Export) | zip: `info.plist` (collection name, keyword prefix/suffix) + one `<uid>.json` per snippet `{"alfredsnippet":{"snippet","uid","name","keyword"}}` | `[observed]` from third-party collections; `[fixture: pending]` |
+| **Maccy** 2.x | history | `~/Library/Containers/org.p0deje.Maccy/Data/Library/Application Support/Maccy/Storage.sqlite` + `-wal` + `-shm`; sandboxed app; path built as `URL.applicationSupportDirectory.appending("Maccy/Storage.sqlite")` | SwiftData store. Logical model: `HistoryItem(application: String?, firstCopiedAt, lastCopiedAt: Date, numberOfCopies: Int, pin: String?, title: String, contents: [HistoryItemContent])`, `HistoryItemContent(type: String, value: Data?, item)`. `type` is the raw pasteboard type string (`public.utf8-plain-text`, `public.png`, `public.tiff`, `public.rtf`, `public.html`, `public.file-url`, plus Maccy-internal types that are skipped); `value` the raw pasteboard bytes. | `[source: https://github.com/p0deje/Maccy/blob/f0b571e/Maccy/Models/HistoryItem.swift, …/HistoryItemContent.swift, …/Storage.swift]`. Physical table/column names (`ZHISTORYITEM.ZTITLE …`), date epoch, file-URL encoding: `[fixture: pending]` — the SwiftData model is not proof of the SQL layout of every 2.x build |
+| **Alfred** 4/5 (Powerpack) | history | `~/Library/Application Support/Alfred/Databases/clipboard.alfdb` (+ `-wal`, `-shm`); Preferences → Advanced → *Reveal in Finder* | SQLite `clipboard(item, ts decimal, app, apppath, dataType integer, dataHash)`; `dataType` 0 text, 1 image, 2 file; image bytes in a sibling directory addressed by `dataHash` | `[observed: https://rmoff.net/2020/05/18/searching-alfreds-clipboard-history-programatically/, https://github.com/mxbaylee/alfred-clip.py]` — Alfred is closed; **`[fixture: pending]` decides**: epoch of `ts`, image file layout, what `item` holds for files |
+| **Alfred** | snippets | `.alfredsnippets` export (Features → Snippets → collection → Export) | zip: `info.plist` (collection name, keyword prefix/suffix) + one `<uid>.json` per snippet `{"alfredsnippet":{"snippet","uid","name","keyword"}}` | `[observed: https://github.com/alfredapp/snippets — the structure of the published collections]`; `[fixture: pending]` |
 | **Raycast** | snippets | *Snippets → ⌘K → Export Snippets* → JSON | array of `{"name","text","keyword"?}` | `[doc: manual.raycast.com/snippets#importing-snippets, 5 Nov 2026]` describes the import JSON; the export of the installed version: `[fixture: pending]` |
-| **Flycut** | history | `~/Library/Preferences/com.generalarcade.flycut.plist`; App Store build: `~/Library/Containers/com.generalarcade.flycut/Data/Library/Preferences/…` | `NSUserDefaults` key `store` → `jcList` and `favoritesList`, arrays of `{Contents, Type, AppLocalizedName, AppBundleURL, Timestamp, Position}`; `Timestamp` = `timeIntervalSince1970` as integer; text only | `[source: github.com/TermiT/Flycut FlycutOperator.m @ 8a24014 — loadEngineFrom:key:into:, saveStore:toKey:onDict:]`; `Type` values: `[fixture: pending]` |
+| **Flycut** | history | `~/Library/Preferences/com.generalarcade.flycut.plist`; App Store build: `~/Library/Containers/com.generalarcade.flycut/Data/Library/Preferences/…` | `NSUserDefaults` key `store` → `jcList` and `favoritesList`, arrays of `{Contents, Type, AppLocalizedName, AppBundleURL, Timestamp, Position}`; `Timestamp` = `timeIntervalSince1970` as integer; text only | `[source: https://github.com/TermiT/Flycut/blob/8a24014/FlycutOperator.m — loadEngineFrom:key:into:, saveStore:toKey:onDict:]`; `Type` values: `[fixture: pending]` |
 | **Espanso** | snippets | `~/Library/Application Support/espanso/match/` | YAML match files: `matches: [{trigger \| triggers, replace, label?, vars?: [{name, type, params}], form?, form_fields?}]`; `{{name}}` references; `$\|$` cursor. **Which files count**: every `*.yml`/`*.yaml` under `match/` except names starting with `_` (espanso does not auto-load those); `imports:` entries are followed only when they resolve inside `match/`, others are listed in the preview as "not followed"; `include`/`exclude` and app-specific `config/` are ignored — the import takes the match *definitions*, each template tagged with its file as a sub-folder, not the active per-app library. **(A: clarification 3)** | `[doc: espanso.org/docs/matches/basics, …/organizing-matches, …/extensions, 5 Nov 2026]`; `[fixture: pending]` |
 
 ### Wave 2 — after wave 1 is accepted
 
 | Program | What | Format | Evidence |
 |---|---|---|---|
-| **Clipy / ClipMenu** | snippets | XML `<folders><folder><title/><snippets><snippet><title/><content/></snippet>…</snippets></folder>…</folders>`, one folder level, no placeholders | `[source: github.com/Clipy/Clipy CPYSnippetsEditorWindowController.swift @ d90477d]`; `[fixture: pending]` |
+| **Clipy / ClipMenu** | snippets | XML `<folders><folder><title/><snippets><snippet><title/><content/></snippet>…</snippets></folder>…</folders>`, one folder level, no placeholders | `[source: https://github.com/Clipy/Clipy/blob/d90477d/Clipy/Sources/Snippets/CPYSnippetsEditorWindowController.swift]`; `[fixture: pending]` |
 | **TextExpander** | snippets | export file; `%clipboard`, `%\|`, strftime `%Y %m %d %H %M`, `%fill:name%`, `%filltext:name=…:default=…%`, `%fillpopup:name=…:default=a:b%`, `%snippet:abbr%`, `%key:…%` | `[fixture: pending]` for the file; placeholders `[doc: pending]` |
 | **aText** | snippets | export file; TextExpander-style `%…%` | `[fixture: pending]` |
 | **CLCL** (Windows) | history + templates | `history.dat`, `regist.dat`, binary; parser from the C source | `[source: pending — nakkag/CLCL]`, `[fixture: pending]` from Andrey's Windows copy |
@@ -73,12 +82,20 @@ What is taken:
 
 A copy of `db` + `-wal` + `-shm` taken while the owner is running can be three files from three
 moments; opening that copy read-only does not make it consistent, and opening the *live* database
-as a second reader creates or rewrites `-shm` in the owner's folder, which the privacy contract
+as a second reader can create or rewrite `-shm` in the owner's folder, which the privacy contract
 forbids. So:
 
-1. **The source program must be quit.** `detect()` checks `NSWorkspace.shared.runningApplications`
-   for the bundle id; while it runs, the row says *Quit Maccy, then import* and the button is
-   disabled. No backup API, no live read.
+1. **The source program must be quit — checked at the moment it matters (B-3).** `detect()`
+   checks `NSWorkspace.shared.runningApplications` for the bundle id to label the row (*Quit Maccy,
+   then import*); that label is advisory. The binding check is **immediately before the copy
+   starts**, again for *From a file/folder* (every importer whose known path contains the chosen
+   folder contributes its bundle id), and **during the copy**: the set's sizes and modification
+   dates are recorded before, compared after each file and once more at the end, and a launch of
+   the owner is watched (`NSWorkspace.didLaunchApplicationNotification`) for the whole snapshot.
+   Any change or launch → the temp copy is discarded, nothing is read, the sheet says *Maccy was
+   started while Keepit was reading its history — quit it and try again*. For a folder whose owner
+   Keepit does not know, no "offline" claim is made: the sheet says *make sure the app that owns
+   this folder is closed* and the same size/date check applies. No backup API, no live read.
 2. The **complete set** (`.sqlite` and, when present, `-wal`, `-shm`; for Alfred also the image
    directory) is copied to a private temp directory (0700, files 0600) and only the copy is opened,
    `?mode=ro`, never `immutable=1`. SQLite recovers the copied WAL into the copy; nothing is written
@@ -91,15 +108,16 @@ forbids. So:
 
 | Input | Rules |
 |---|---|
-| any file | size ≤ `Limits.dataFileMaxBytes` (512 MB) before it is opened; rows/entries read ≤ 100 000; time budget with a Cancel button on the progress sheet; whole import cancellable |
+| any file | size ≤ `Limits.dataFileMaxBytes` (512 MB) before it is opened; rows/entries read ≤ 100 000; time budget with a Cancel button on the progress sheet; whole import cancellable between files and between rows (a single synchronous parser call is bounded by its file-size limit, not by Cancel) |
+| whole job | copied snapshot ≤ 2 GB and ≤ 10 000 files in total; decoded payload ≤ 1 GB; history items ≤ `historyMaxCeiling` × 2 read before the plan trims; templates read ≤ `templateMaxCount`; nested-snippet inlines ≤ 20 000 per job. Checked while reading, before the next file or row is taken |
 | `.alfredsnippets` (zip) | entries ≤ 10 000, uncompressed total ≤ 64 MB, each entry ≤ `textBytesCeiling`; entry names with `..`, absolute paths, or symlinks are rejected (the archive is refused, not skipped) |
 | XML (Clipy) | Foundation `XMLParser` with `shouldResolveExternalEntities = false`, DTD/entity declarations rejected; depth ≤ 16 |
-| YAML (Espanso) | parsed with **Yams**, pinned by SHA in `Package.resolved` like Sparkle, safe schema only (no tags/constructors), anchors/aliases ≤ 100, depth ≤ 16, file ≤ 8 MB. *Decision for the auditor*: Yams as a second dependency vs. a subset parser written here; the subset parser is more code to audit, Yams is more surface — recommended Yams |
+| YAML (Espanso) | **Yams** (auditor's choice confirmed): a named release pinned by revision in `Package.resolved` at stage 2, under the same `check_resolved.sh` drift check as Sparkle. The wrapper decodes into the espanso DTOs only, rejects unknown custom tags, file ≤ 8 MB, depth of the decoded tree ≤ 16. **Aliases**: the count of `*alias` tokens does not bound the expanded graph (10 levels × 8 references ≈ 8¹⁰ visits), and Yams' `Parser` has no depth/budget hook, so v1 **refuses a file that contains anchors or aliases** before parsing — the wrapper scans the libyaml event stream (Yams exposes it through `Parser`) or, failing that, a pre-tokenizer; the auditor's 8¹⁰ document is the test and must be refused within the file-size budget. Espanso match files in practice use neither. Revisited only if a real fixture needs them |
 | JSON (Raycast) | `JSONDecoder`, array only, ≤ 10 000 snippets |
 | plist (Flycut) | `PropertyListSerialization` with `.immutable`, root dictionary only |
 | per item | text ≤ `Limits.textBytesCeiling`; images ≤ `imageBytesCeiling` and ≤ `imageMaxPixels` (decoded through the same bomb check as the monitor); file lists ≤ `fileListEntriesCeiling` and **never opened or stat'ed** — paths are stored as strings |
-| nested snippets | one level, never recursive (Alfred does not resolve nested `{snippet:}` either `[doc: alfredapp.com/help/workflows/advanced/placeholders/#snippets]`, Raycast's referenced snippet cannot reference further); the target is looked up by resolved keyword (collection prefix + keyword + suffix for Alfred), among the snippets of the same import only; missing or ambiguous target → literal + attention **(A: clarification 4)** |
-| Espanso `shell`, `script`, `echo`, `random`, `match` vars | never executed; `echo` with a literal `echo` param is inlined, the rest literal + attention |
+| nested snippets | one level, never recursive (Alfred does not resolve nested `{snippet:}` either `[doc: https://www.alfredapp.com/help/workflows/advanced/placeholders/#snippets]`, Raycast's referenced snippet cannot reference further); the target is looked up by resolved keyword (collection prefix + keyword + suffix for Alfred), among the snippets of the same import only; missing or ambiguous target → literal + attention **(A: clarification 4)** |
+| Espanso `shell`, `script`, `random` vars | never executed, never evaluated: literal + attention. `echo` with a literal `echo` param is inlined; `match` is the one-level nested snippet of the row above |
 | temp copies | private dir 0700 / files 0600, removed when the import finishes, is cancelled or fails; leftovers from a crash are removed at launch (`import-tmp-*` under the app's cache dir); no clip content in logs; no claim of physical erasure |
 
 ## Placeholder conversion
@@ -114,19 +132,31 @@ Keepit's (`{query}`), and plain braces in code or JSON.
 
 Two engine changes make that hold at paste time, each with a test and a CHANGELOG line:
 
-1. **The paste gate.** `Snippets.containsPlaceholders` is `{` + letter today, so `{{"x":1}}` is
-   pasted with doubled braces. It becomes `Snippets.needsExpansion(_:)` = contains `{{`, `}}` or a
-   `{letter…}` token. Note the behaviour change for existing templates: `{{` in a template pastes
-   as `{` from 3.1, which is what the guide has promised since the cheat sheet row "`{{` `}}` —
-   literal braces"; CHANGELOG says so.
-2. **Round-trip test, not converter test.** The table-driven tests assert on
-   `Snippets.expand(converted, context: fixed).text`, with a fixed clock, clipboard and answers,
-   not on the converter's output: for every source string the pasted text must equal the original
-   with exactly the converted tokens replaced. The auditor's five counterexamples go into that
-   table as the first rows.
+1. **The paste route.** Today `pasteTemplate` decides with `Snippets.containsPlaceholders` (`{` +
+   letter): a template with only `{{`/`}}` skips expansion and pastes doubled braces, and a template
+   that is expanded is pasted as a new plain-text `ClipItem`, dropping RTF/HTML. The decision moves
+   into one pure function, `Snippets.pasteRoute(for clip:) -> Route`, with three outcomes:
+   `.verbatim` (no `{`-syntax at all: the clip pastes with every format, as today),
+   `.unescapeOnly(text)` (escapes but no tokens: paste the clip with **all its formats** and the
+   plain-text format replaced by the unescaped text — for an imported favourite that equals the
+   source bytes), `.expand(text, prompts)` (tokens present: the expanded plain text, as today).
+   `pasteTemplate` switches on the route and nothing else. Behaviour change for existing templates:
+   `{{` pastes as `{` from 3.1, which the cheat sheet row "`{{` `}}` — literal braces" has promised;
+   CHANGELOG says so.
+2. **Tests on the route, not only on `expand` (B-2).** `Snippets.expand` already handles
+   `{{"x":1}}` correctly — the bug is the gate — so a test that calls `expand` directly is green on
+   3.0.3. The table therefore asserts, per row: the route chosen (`.verbatim` / `.unescapeOnly` /
+   `.expand`), the pasted plain text from a fixed context (clock, clipboard provider, answers), and
+   for rich rows that the pasted `ClipItem` still carries its RTF/HTML. The escape-only and the
+   rich-text rows fail on the 3.0.3 gate by construction. The two Snippets counterexamples from the
+   auditor's stage-0 tests (escaped JSON, `{random:a,b}`) are the first rows; the three RestorePlan
+   counterexamples (full ring, empty folder, repeated collection) go to `RestorePlanTests`.
 
 "Needs attention" is a count and a list in the preview and the result — it does not change what
-the engine does with the text.
+the engine does with the text. Two invariants are tests, not prose: an imported template or
+favourite never opens a file reference it contains, and no provider (`shell`, `script`, `echo` of
+another kind) is ever run — the readers are given a payload full of such entries and the test
+asserts no process was spawned and no file was touched.
 
 ### What is converted (exact subset) **(A-3)**
 
@@ -142,12 +172,12 @@ common cases *are* identical rather than approximated:
 
 | Meaning | Alfred `[doc]` | Raycast `[doc]` | Espanso `[doc]` | Keepit |
 |---|---|---|---|---|
-| clipboard | `{clipboard}`, `{clipboard:0}` | `{clipboard}` | var `type: clipboard` | `{clipboard}` |
+| clipboard | `{clipboard}`, `{clipboard:0}` | `{clipboard}` | var `type: clipboard` | `{clipboard}` — Keepit reads history item 1, not `NSPasteboard`; while recording is paused or the last copy was ignored the two differ. Converted (the user's intent is the same), noted in the guide chapter, not claimed identical |
 | older clipboard item N | `{clipboard:N}` | `{clipboard offset=N}` | — | `{clipboard:N+1}` |
 | cursor | `{cursor}` | `{cursor}` | `$\|$` | `{cursor}` |
 | date, named style | `{date}`=medium, `{date:short\|medium\|long\|full}`; same for `time`, `datetime` | `{date}` `{time}` `{datetime}` = system default | var `type: date` without `format` | `{date:medium}` etc.; Raycast's default style: literal + attention until the manual states it |
 | date, Unicode pattern | `{date:EEEE}` | `{date format="yyyy-MM-dd"}` (no `locale`) | — (strftime) | `{date:EEEE}` / `{date:yyyy-MM-dd}` |
-| date, strftime pattern | — | — | `params.format: "%Y-%m-%d"` | converted token by token for `%Y %m %d %H %M %S %A %B %a %b %e %j %p %y`; any other `%x` → whole token literal + attention |
+| date, strftime pattern | — | — | `params.format: "%Y-%m-%d"` | converted token by token for `%Y %m %d %H %M %S %A %B %a %b %j %p %y` only; `%e` (space-padded day, no ICU equivalent) and any other `%x` → whole token literal + attention **(B-4)**. Literal text between conversions is quoted for ICU (`Today %Y` → `'Today 'yyyy`, a `'` in the literal doubled), with round-trip tests for 1, 9, 10 and 31 of a month. A `date` var with `locale` or `tz` params → whole var literal + attention |
 | shift | `{date +7D}` units `Y M D h` (`m`=minute, `s`=second) | `{date offset="+2y +5M"}` (`m`=minute) | `params.offset` (seconds) | `{date+7d}` with `Y→y M→m D→d h→h`; several shifts kept in order; `m`/`s` of the source → literal + attention; Espanso seconds → literal + attention (an instant offset ≠ a calendar day across DST) |
 | weekday | — | `{day}` | — | `{weekday}` |
 | ask for text | — | `{argument name="x" default="y"}` | `[[x]]` / form field `type: text` | `{input:x=y}` — only when `x` and `y` contain none of `{ } \| = :` and `x` is non-empty; else literal + attention |
@@ -203,6 +233,11 @@ The import pane's two checkboxes build the payload: *History* off → `history: 
 go nowhere; *Templates* off → `templates: nil`, favourites not copied. Nothing new at all →
 "Nothing to import" and no commit.
 
+The plan is recomputed in the commit stage (the stores may have changed while the preview was
+open); when the recomputed `historyDropped` is higher, or `historyAdded`/`templatesAdded` lower,
+than the confirmed numbers, the commit stops and the preview is shown again with the new numbers —
+never a silent change of what was confirmed.
+
 **Preview** shows those numbers as they will be stored, and when `historyDropped > 0` it says
 *N items will not fit the history limits (Settings → History)* and the button reads *Import
 anyway*. **Repeated import**: history is idempotent by content hash; templates are **not**
@@ -231,7 +266,8 @@ Before the user clicks anything the pane only checks **file presence and access*
 
 Counts, dates and everything else are read only after *Import…* is clicked, on the preview step,
 in the background with the progress sheet. The guide and the privacy policy word it as: *Keepit
-reads another app's data only when you click Import, and only the file you point it at.*
+reads another app's data only when you click Import, and only the file or folder you point it at —
+for a database, the folder with its companion files.*
 
 ## Settings → Import (pane)
 
@@ -249,9 +285,10 @@ separate 3.1 roadmap item.
 ## Stages and the audit
 
 0. This document (rev. 2) → auditor.
-1. **Engine changes first**, as their own PR: `needsExpansion`, date styles, shifts on
-   time/datetime, several shifts per token; CHANGELOG lines; the round-trip test table seeded with
-   the auditor's counterexamples. Nothing import-specific in this PR.
+1. **Engine changes first**, as their own PR: `Snippets.pasteRoute`, date styles, shifts on
+   time/datetime, several shifts per token; CHANGELOG lines; the route + round-trip test table
+   seeded with the auditor's two Snippets counterexamples, an escape-only row and a rich-text row
+   that fail on the 3.0.3 gate. Nothing import-specific in this PR.
 2. `KeepitCore/Import`: models, `Importer` protocol, safe readers (zip, XML, YAML, SQLite copy),
    one reader per verified fixture — Maccy, Alfred history, Alfred snippets, Raycast, Flycut,
    Espanso; placeholder converter as a pure function with the table tests.
