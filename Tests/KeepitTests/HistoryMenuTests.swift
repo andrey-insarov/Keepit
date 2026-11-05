@@ -31,7 +31,7 @@ final class HistoryMenuTests: XCTestCase {
         XCTAssertFalse(menu.items.contains { $0.title.contains("banana") })
         // Everything below the rows is still there — the reopen is the same menu, only filtered.
         XCTAssertTrue(menu.items.contains { $0.title == L("Template") })
-        XCTAssertTrue(menu.items.contains { $0.title == L("Lock Keepit") })
+        XCTAssertTrue(menu.items.contains { $0.title == L("Clear History") })
     }
 
     func testMenuBuiltWithoutAQueryListsEverything() throws {
