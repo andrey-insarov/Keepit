@@ -248,7 +248,9 @@ dashboard, not in the repo, and need to be set once per zone:
 
 Page views are counted with EuroMetrics (app.eurometrics.eu, cookieless, EU-hosted): one
 `<script defer>` in every page's `<head>` — the generator's `ANALYTICS` constant for rendered
-pages, pasted by hand into `index.html`, `404.html` and `docs/site/v2/*.html`. The website id
+pages, pasted by hand into `index.html`, `404.html` and `docs/site/v2/*.html` — except
+`docs/site/v2/privacy.html`, which is the frozen 1.3 policy ("do not run analytics on the site")
+and must not load the script; its banner points to the current policy. The website id
 (`EUROMETRICS_WEBSITE_ID`) is public. `data-domains="keep.it.com"` keeps preview deployments
 out of the numbers, `data-do-not-track` skips visitors who send DNT. Both hosts are allowed in
 the CSP (`script-src`, `connect-src`), and the privacy policy's section 6 discloses it — change
