@@ -46,12 +46,17 @@ enum Snippets {
             let next = s.index(after: i)
             if c == "{" {
                 if next < s.endIndex, s[next] == "{" { lit.append("{"); i = s.index(after: next); continue }
-                if let close = s[next...].firstIndex(of: "}") {
-                    let body = String(s[next..<close])
-                    if body.first?.isLetter == true, !body.contains("{") {
+                // A token is `{`, a letter, any run without braces, `}`. The scan for the closing brace
+                // stops at the first brace of either kind, so an opener that is not a token costs at most
+                // the distance to the next brace — not the rest of the text, as a search for `}` alone
+                // would, which made `{a{a{a…` quadratic (auditor's P2 on 3.0.4).
+                if next < s.endIndex, s[next].isLetter {
+                    var j = s.index(after: next)
+                    while j < s.endIndex, s[j] != "}", s[j] != "{" { j = s.index(after: j) }
+                    if j < s.endIndex, s[j] == "}" {
                         if !lit.isEmpty { out.append(.literal(lit)); lit = "" }
-                        out.append(.token(body))
-                        i = s.index(after: close)
+                        out.append(.token(String(s[next..<j])))
+                        i = s.index(after: j)
                         continue
                     }
                 }
