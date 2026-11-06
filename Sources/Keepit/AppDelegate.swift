@@ -312,8 +312,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// screen is not locked — a Mac that sleeps without asking for a password — the user is back at
     /// the desktop and no `screenIsUnlocked` will ever come: this wake ends the absence.
     func macWoke() {
-        if let locked = screenLockedProbe() { screenIsLocked = locked }
-        if !screenIsLocked, screenLockedProbe() != nil {
+        // One reading, one meaning: only an explicit "not locked" ends the absence. nil keeps the
+        // stored state and the absence (the auditor's probe that answered nil, then true, must not
+        // be read as "back" because the stored flag was still false).
+        let state = screenLockedProbe()
+        if let state { screenIsLocked = state }
+        if state == false {
             macCameBack()
             return
         }

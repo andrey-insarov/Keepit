@@ -88,6 +88,18 @@ final class ScreenLockIntegrationTests: XCTestCase {
         XCTAssertFalse(a.isLocked)
     }
 
+    func testAProbeThatNeverSaysUnlockedDoesNotEndTheAbsence() throws {
+        let a = try app(delay: 300)
+        a.macWentAway()
+        let since = a.screenLockPolicy.awaySince
+        var calls = 0
+        a.screenLockedProbe = { calls += 1; return calls == 1 ? nil : true }   // unknown, then locked — never false
+        a.macWoke()
+        XCTAssertEqual(a.screenLockPolicy.awaySince, since)
+        XCTAssertTrue(a.screenLockTimer?.isValid == true)
+        XCTAssertEqual(calls, 1, "one reading per wake")
+    }
+
     func testSleepBehindALockedScreenKeepsWaitingOnWake() throws {
         for probe in [{ true }, { nil }] as [() -> Bool?] {
             let a = try app(delay: 300)
