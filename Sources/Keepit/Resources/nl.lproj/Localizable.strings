@@ -521,3 +521,5 @@
 "After 15 minutes" = "Na 15 minuten";
 "After 1 hour" = "Na 1 uur";
 "With a delay, a short absence changes nothing: Keepit stays unlocked and keeps recording. Once the Mac has been locked or asleep for that long, the key is wiped from memory and history and templates are unloaded; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked." = "Met een vertraging verandert een korte afwezigheid niets: Keepit blijft ontgrendeld en blijft opnemen. Zodra de Mac zo lang vergrendeld of in de sluimerstand is geweest, wordt de sleutel uit het geheugen gewist en worden geschiedenis en sjablonen ontladen; ontgrendel daarna met Touch ID of het wachtwoord. Met Touch ID aan vraagt Keepit om een vingerafdruk zodra de Mac is ontgrendeld.";
+"The edit was not saved: the item would be larger than allowed." = "De bewerking is niet opgeslagen: het item zou groter worden dan toegestaan.";
+"Limit reached: at most %d template hot keys." = "Limiet bereikt: maximaal %d sjabloonsneltoetsen.";

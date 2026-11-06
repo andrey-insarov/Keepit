@@ -191,8 +191,28 @@ enum Backup {
     /// installation may have been configured up to the ceiling, and what it recorded must restore.
     /// The user's own (narrower) settings govern recording, never reading a backup — and nothing
     /// inside the backup is trusted to set a limit.
-    /// One item on its own — the Viewer's file import and keepit:// use the same rules as a payload.
+    /// One item on its own. This is the one boundary for content: a backup, the Viewer's file import,
+    /// keepit://, the stores' own files on disk and every store mutator apply the same rules — a
+    /// model the stores hold has passed here. Known formats must be what they claim: text is UTF-8
+    /// (`plainText` relies on it), RTF starts with `{\rtf`, HTML is UTF-8 or BOM-led UTF-16, an
+    /// image is a PNG by its bytes with a header-declared pixel count under the ceiling, a file list
+    /// is absolute paths. An unknown UTI is bounded opaque data and is kept as such.
     static func validate(item: ClipItem) throws { try validate(item, where: "item") }
+
+    /// A template subtree about to be inserted (name, depth, count, hot keys, every clip, unique ids
+    /// within it). Whether it fits the tree it goes into is `TemplateStore.canInsert`.
+    static func validate(subtree node: TemplateNode) throws {
+        var count = 0, hotKeys = 0
+        var ids = Set<UUID>()
+        try validate(node, depth: 1, count: &count, hotKeys: &hotKeys, ids: &ids)
+    }
+
+    /// A whole tree as loaded from disk — the same rules as a payload's templates.
+    static func validate(tree root: TemplateNode) throws {
+        var count = 0, hotKeys = 0
+        var ids = Set<UUID>()
+        try validate(root, depth: 0, count: &count, hotKeys: &hotKeys, ids: &ids)
+    }
 
     private static func validate(_ item: ClipItem, where place: String) throws {
         guard !item.formats.isEmpty else { throw Failure.invalidContent("\(place): item without formats") }
@@ -201,13 +221,27 @@ enum Backup {
             switch uti {
             case ClipItem.Format.text:
                 guard data.count <= Limits.textBytesCeiling else { throw Failure.invalidContent("\(place): text too large") }
-            case ClipItem.Format.rtf, ClipItem.Format.html:
+                guard isUTF8(data) else { throw Failure.invalidContent("\(place): text is not UTF-8") }
+            case ClipItem.Format.rtf:
                 guard data.count <= Limits.textBytesCeiling * 4 else { throw Failure.invalidContent("\(place): rich text too large") }
+                guard data.starts(with: Array("{\\rtf".utf8)) else { throw Failure.invalidContent("\(place): not RTF") }
+            case ClipItem.Format.html:
+                guard data.count <= Limits.textBytesCeiling * 4 else { throw Failure.invalidContent("\(place): rich text too large") }
+                guard isUTF8(data) || data.starts(with: [0xFF, 0xFE]) || data.starts(with: [0xFE, 0xFF]) else {
+                    throw Failure.invalidContent("\(place): HTML is not UTF-8 or UTF-16")
+                }
             case ClipItem.Format.png:
-                guard data.count <= Limits.imageBytesCeiling, ClipItem.pixelCountOK(data) else { throw Failure.invalidContent("\(place): image too large") }
+                guard data.count <= Limits.imageBytesCeiling, ClipItem.isPNG(data), ClipItem.pixelCountOK(data) else {
+                    throw Failure.invalidContent("\(place): not a PNG, or too large")
+                }
             case ClipItem.Format.files:
                 guard data.count <= Limits.textBytesCeiling, let paths = try? JSONDecoder().decode([String].self, from: data),
                       paths.count <= Limits.fileListEntriesCeiling else { throw Failure.invalidContent("\(place): bad file list") }
+                for path in paths {
+                    guard path.hasPrefix("/"), path.utf8.count <= Limits.filePathMaxBytes, !path.utf8.contains(0) else {
+                        throw Failure.invalidContent("\(place): a file path is not an absolute path")
+                    }
+                }
             default:
                 guard data.count <= Limits.imageBytesCeiling else { throw Failure.invalidContent("\(place): format too large") }
             }
@@ -230,6 +264,19 @@ enum Backup {
             guard hotKeys <= Limits.templateHotKeysMax else { throw Failure.invalidContent("too many template hot keys") }
         }
         for child in node.children { try validate(child, depth: depth + 1, count: &count, hotKeys: &hotKeys, ids: &ids) }
+    }
+
+    /// Valid UTF-8, without building a String for a large item (an invalid sequence fails fast).
+    static func isUTF8(_ data: Data) -> Bool {
+        var utf8 = UTF8()
+        var it = data.makeIterator()
+        while true {
+            switch utf8.decode(&it) {
+            case .scalarValue: continue
+            case .emptyInput: return true
+            case .error: return false
+            }
+        }
     }
 
     private static func map(_ e: Container.Failure) -> Failure {

@@ -147,8 +147,13 @@ one format; text ≤ 50 MiB, RTF/HTML ≤ 200 MiB, PNG ≤ 100 MiB and ≤ 40 me
 list ≤ 10 000 entries — these are the *ceilings* of the corresponding settings, so whatever any
 installation could record will restore; a user's narrower settings govern recording only, and no
 limit is ever taken from the backup itself; `sourceApp` ≤ 255 characters; `contentHash` matches the rule above; ids are unique;
-templates ≤ 5 000 nodes, ≤ 16 deep, names ≤ 200 characters, ≤ 50 hot keys. A violation is
-`invalidContent`, naming the rule. Settings are clamped on apply, not rejected.
+templates ≤ 5 000 nodes, ≤ 16 deep, names ≤ 200 characters, ≤ 50 hot keys. Known formats must be what
+they claim (3.0.4): `public.utf8-plain-text` is valid UTF-8, `public.rtf` starts with `{\rtf`,
+`public.html` is UTF-8 or begins with a UTF-16 byte-order mark, `public.png` carries the PNG
+signature, every entry of a file list is an absolute path without NUL and ≤ 4 096 bytes; any other
+UTI is opaque bytes under the size limit. A violation is `invalidContent`, naming the rule. Settings
+are clamped on apply, not rejected. The app applies the same rules to its own `history.json` and
+`templates.json` when they load, and to every item a store takes from anywhere else.
 
 **Compatibility rules.** A reader ignores fields it does not know. A writer must not change the
 meaning or type of an existing field; new fields are optional with a defined default. Breaking

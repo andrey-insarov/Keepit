@@ -43,8 +43,7 @@ enum SelfTest {
 
                 // 2. Templates
                 let node = TemplateNode(name: "&Selftest", text: "hello")
-                app.templates.root.insert(node)
-                app.templates.changed()
+                check(app.templates.insert(node, under: app.templates.root), "template inserted")
                 check(app.templates.root.find(id: node.id) != nil, "template inserted and found")
                 let (title, key) = MenuBuilder.parseAmpersand(node.displayName)
                 check(title == "Selftest" && key == "s", "ampersand shortcut parsed")

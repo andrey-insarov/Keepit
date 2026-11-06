@@ -521,4 +521,6 @@ T = {
 'After 15 minutes': '15분 후',
 'After 1 hour': '1시간 후',
 'With a delay, a short absence changes nothing: Keepit stays unlocked and keeps recording. Once the Mac has been locked or asleep for that long, the key is wiped from memory and history and templates are unloaded; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked.': '지연을 설정하면 잠깐 자리를 비워도 달라지는 것이 없습니다. Keepit은 잠금 해제 상태로 계속 기록합니다. Mac이 그 시간 동안 잠기거나 잠자기 상태였다면 키가 메모리에서 지워지고 기록과 템플릿이 내려갑니다. 이후 Touch ID나 암호로 잠금을 해제하세요. Touch ID가 켜져 있으면 Mac 잠금 해제 직후 Keepit이 지문을 요청합니다.',
+'The edit was not saved: the item would be larger than allowed.': '편집이 저장되지 않았습니다. 항목이 허용 크기를 초과합니다.',
+'Limit reached: at most %d template hot keys.': '한도에 도달했습니다. 템플릿 단축키는 최대 %d개입니다.',
 }

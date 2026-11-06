@@ -1177,9 +1177,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             Paster.paste(item, into: target, monitor: monitor, settings: settings, sendKey: settings.pasteAfterSelect, plainText: true)
         case .addToTemplates:
             let node = TemplateNode(name: "", clip: item)
-            guard templates.canInsert(node, under: templates.root) else { NSSound.beep(); return }
-            templates.root.insert(node)
-            templates.changed()
+            guard templates.insert(node, under: templates.root) else { NSSound.beep(); return }
             viewer?.refresh()
         case .delete:
             history.remove(id: item.id)
@@ -1213,12 +1211,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         guard let id = sender.representedObject as? UUID,
               let item = history.items.first(where: { $0.id == id }) else { return }
         let node = TemplateNode(name: "", clip: item)
-        guard templates.canInsert(node, under: templates.root) else {
+        guard templates.insert(node, under: templates.root) else {
             Vault.error(LF("Limit reached: at most %d template items, %d levels deep.", Limits.templateMaxCount, Limits.templateMaxDepth))
             return
         }
-        templates.root.insert(node)
-        templates.changed()
         viewer?.refresh()
     }
 
@@ -1393,8 +1389,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             NSSound.beep()
             return
         }
-        templates.root.insert(TemplateNode(name: "", text: s))
-        templates.changed()
+        // The pasteboard is read directly here, not through the monitor's size checks: the store's
+        // validator is the limit (text ceiling, tree ceilings).
+        guard templates.insert(TemplateNode(name: "", text: s), under: templates.root) else {
+            Vault.error(LF("Limit reached: at most %d template items, %d levels deep.", Limits.templateMaxCount, Limits.templateMaxDepth))
+            return
+        }
         viewer?.refresh()
     }
 

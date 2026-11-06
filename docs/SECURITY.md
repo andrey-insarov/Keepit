@@ -300,6 +300,16 @@ exhaust memory or disk:
 | Backup files | 512 MB | fixed |
 | Password | 256 characters; a prompt answer (`{input:}`) 10 000 | fixed |
 
+The same validator stands between every source and the stores — the clipboard, a backup, a file
+chosen in the Viewer, a `keepit://` command, an edit in the Viewer, and Keepit's own data files when
+they are loaded. Besides the sizes above it checks that a format is what it claims: plain text is
+UTF-8, RTF starts with `{\rtf`, HTML is UTF-8 or UTF-16 with a byte-order mark, an image is a PNG
+by its bytes, a file list holds absolute paths; a format Keepit does not know is kept as bounded
+opaque bytes. A rich format that fails is left out of its item and the text kept; an item whose
+primary content fails is refused. A data file that fails on load is repaired by the same rules
+(and a copy of it, as it was, is kept next to it), so a damaged `history.json` or `templates.json`
+does not take the rest of the data with it.
+
 ## Limitations worth knowing
 
 - The clipboard itself is readable by any app on your Mac; Keepit cannot change that. It can only

@@ -1,3 +1,4 @@
+import AppKit
 import XCTest
 @testable import Keepit
 
@@ -6,10 +7,15 @@ final class HistoryRingsTests: XCTestCase {
     override func setUp() { tmp = TempStorage() }
     override func tearDown() { tmp.restore() }
 
+    /// A real 1×1 PNG whose pixel carries `tag`: the store validates every item it takes, so a
+    /// PNG signature with a few bytes behind it is no longer an image.
     private func image(_ tag: UInt8) -> ClipItem {
+        let rep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: 1, pixelsHigh: 1, bitsPerSample: 8, samplesPerPixel: 4,
+                                   hasAlpha: true, isPlanar: false, colorSpaceName: .deviceRGB, bytesPerRow: 0, bitsPerPixel: 0)!
+        rep.bitmapData![0] = tag
         var c = ClipItem.text("")
         c.removeFormat(ClipItem.Format.text)
-        c.setData(Data([0x89, 0x50, 0x4E, 0x47, tag]), for: ClipItem.Format.png)
+        c.setData(rep.representation(using: .png, properties: [:])!, for: ClipItem.Format.png)
         return c
     }
 

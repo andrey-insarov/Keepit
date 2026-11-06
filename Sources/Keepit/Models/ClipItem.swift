@@ -112,6 +112,18 @@ struct ClipItem: Codable, Identifiable, Equatable {
         return String(data: d, encoding: .utf8)
     }
 
+    /// The item as the validator accepts it, or nil. An item whose only fault is a rich format (RTF,
+    /// HTML) that is not what it claims comes back without that format; one whose primary content
+    /// fails — or whose hash does not match it — is nil. Used when the stores' own files are loaded.
+    func validated() -> ClipItem? {
+        if (try? Backup.validate(item: self)) != nil { return self }
+        var stripped = self
+        stripped.formats[Format.rtf] = nil
+        stripped.formats[Format.html] = nil
+        guard stripped.formats != formats, (try? Backup.validate(item: stripped)) != nil else { return nil }
+        return stripped
+    }
+
     /// Same item reduced to its plain-text format only (same id, so history bookkeeping still matches).
     func plainTextOnly() -> ClipItem? {
         guard let d = formats[Format.text] else { return nil }
@@ -223,8 +235,11 @@ struct ClipItem: Codable, Identifiable, Equatable {
                 let text = Data(s.utf8)
                 guard text.count <= settings.maxTextBytes else { return nil }
                 formats[Format.text] = text
-                if let rtf = pb.data(forType: .rtf), rtf.count <= settings.maxTextBytes * 4 { formats[Format.rtf] = rtf }
-                if let html = pb.data(forType: .html), html.count <= settings.maxTextBytes * 4 { formats[Format.html] = html }
+                // A rich format that is not what it claims (see Backup.validate) is left out; the text stays.
+                if let rtf = pb.data(forType: .rtf), rtf.count <= settings.maxTextBytes * 4,
+                   rtf.starts(with: Array("{\\rtf".utf8)) { formats[Format.rtf] = rtf }
+                if let html = pb.data(forType: .html), html.count <= settings.maxTextBytes * 4,
+                   Backup.isUTF8(html) || html.starts(with: [0xFF, 0xFE]) || html.starts(with: [0xFE, 0xFF]) { formats[Format.html] = html }
             }
 
             if let png = Self.pngData(from: pb, maxBytes: settings.maxImageBytes), png.count <= settings.maxImageBytes {

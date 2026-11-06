@@ -154,9 +154,7 @@ extension AppDelegate {
             let clip = ClipItem.text(text)
             guard (try? Backup.validate(item: clip)) != nil else { NSSound.beep(); return }
             let node = TemplateNode(name: String((q["name"] ?? "").prefix(Limits.templateNameMaxChars)), clip: clip)
-            guard templates.canInsert(node, under: templates.root) else { NSSound.beep(); return }
-            templates.root.insert(node)
-            templates.changed()
+            guard templates.insert(node, under: templates.root) else { NSSound.beep(); return }
             registerHotKeys()
             viewer?.refresh()
         case "history":      showHistoryPopup()
