@@ -263,6 +263,21 @@ or Homebrew); security fixes reach you only when you look.
 No clipboard content, no usage data and no identifiers are ever sent anywhere. There is no crash
 reporter and no analytics library in the binary.
 
+**If you want certainty rather than a promise.** The App Store edition carries no network
+entitlement at all — neither `com.apple.security.network.client` nor `.server` — and under the
+App Sandbox the system refuses every connection to an app without one, whatever the app would try.
+Check it yourself:
+
+```
+codesign -d --entitlements - /Applications/Keepit.app
+```
+
+— no `network` key in the output. For the direct download, which needs the network for its update
+check, you can have the same certainty from the outside: switch update checks off and deny Keepit
+outgoing connections in an outbound firewall — [LuLu](https://objective-see.org/products/lulu.html)
+(free, open source), Little Snitch or another; macOS's own firewall covers incoming connections
+only. You will see Keepit never ask.
+
 ## Code signing and verifying a download
 
 Every release is built on GitHub Actions from a tagged commit, signed with the Developer ID of UK
