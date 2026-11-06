@@ -39,6 +39,9 @@ jobs:
       - name: Unit tests
         run: swift test
 
+      - name: Support function tests (pure parts, no network)
+        run: node --test functions/api/feedback.test.mjs
+
       - name: Package app + DMG (ad-hoc)
         run: make dist VERSION=$(cat VERSION)
 

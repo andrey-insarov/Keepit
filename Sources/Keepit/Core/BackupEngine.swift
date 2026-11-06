@@ -142,7 +142,7 @@ final class BackupEngine {
     init(stateURL: URL, sourceID: String) {
         self.stateURL = stateURL
         self.sourceID = sourceID
-        state = (try? JSONDecoder.iso.decode(BackupState.self, from: Data(contentsOf: stateURL))) ?? BackupState()
+        state = (try? JSONDecoder.iso.decode(BackupState.self, from: BoundedFileReader.read(stateURL, max: 1 << 20))) ?? BackupState()
     }
 
     // MARK: Triggers
@@ -317,7 +317,7 @@ final class BackupEngine {
                 let fh = try FileHandle(forWritingTo: part)
                 if fsync(fh.fileDescriptor) != 0 { throw Failure.writeFailed("fsync") }
                 try fh.close()
-                let back = try Data(contentsOf: part)
+                let back = try BoundedFileReader.read(part, max: Limits.dataFileMaxBytes)
                 guard sha256(back) == sha else { throw Failure.verifyFailed }
                 guard rename(part.path, final.path) == 0 else { throw Failure.writeFailed("rename: \(String(cString: strerror(errno)))") }   // atomic, overwrites
             } catch {

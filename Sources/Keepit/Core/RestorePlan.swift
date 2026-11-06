@@ -176,7 +176,7 @@ enum RestoreCommit {
 
     static func readPrevious(_ url: URL) throws -> Previous {
         guard FileManager.default.fileExists(atPath: url.path) else { return .absent }
-        return .bytes(try Data(contentsOf: url))
+        return .bytes(try BoundedFileReader.read(url, max: Limits.dataFileMaxBytes))
     }
 
     /// Copy the previous bytes of every existing file into the journal, then arm it with the marker.
@@ -209,10 +209,10 @@ enum RestoreCommit {
             let copy = journalDirectory.appendingPathComponent(name)
             do {
                 if fm.fileExists(atPath: copy.path) {
-                    let bytes = try Data(contentsOf: copy)
+                    let bytes = try BoundedFileReader.read(copy, max: Limits.dataFileMaxBytes)
                     // Already as it should be (the write never happened, or a previous replay got
                     // this far): leave it — a file that cannot be rewritten need not be.
-                    if (try? Data(contentsOf: liveURL(name))) != bytes { try Storage.writeRawNow(bytes, to: liveURL(name)) }
+                    if (try? BoundedFileReader.read(liveURL(name), max: Limits.dataFileMaxBytes)) != bytes { try Storage.writeRawNow(bytes, to: liveURL(name)) }
                 } else {
                     try Storage.removeNow(liveURL(name))
                 }

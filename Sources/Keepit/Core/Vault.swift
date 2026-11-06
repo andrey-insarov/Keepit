@@ -164,7 +164,7 @@ enum Vault {
     // MARK: Enable / verify / disable
 
     private static func readMeta() -> Meta? {
-        guard let data = try? Data(contentsOf: metaURL) else { return nil }
+        guard let data = try? BoundedFileReader.read(metaURL, max: 64 * 1024) else { return nil }   // a few hundred bytes of JSON
         return try? JSONDecoder().decode(Meta.self, from: data)
     }
 

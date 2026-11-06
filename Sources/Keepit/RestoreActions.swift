@@ -58,9 +58,14 @@ extension AppDelegate {
         // 1–2. Read the whole file and inspect it: limits and minReader before any key work.
         let accessing = url.startAccessingSecurityScopedResource()
         defer { if accessing { url.stopAccessingSecurityScopedResource() } }
-        guard let size = (try? FileManager.default.attributesOfItem(atPath: url.path)[.size] as? NSNumber)?.intValue,
-              size <= Limits.dataFileMaxBytes else { Vault.error(Backup.Failure.tooLarge.localizedDescription); return }
-        guard let data = try? Data(contentsOf: url) else { Vault.error(Backup.Failure.notABackup.localizedDescription); return }
+        let data: Data
+        do {
+            data = try BoundedFileReader.read(url, max: Limits.dataFileMaxBytes)
+        } catch BoundedFileReader.Failure.tooLarge {
+            Vault.error(Backup.Failure.tooLarge.localizedDescription); return
+        } catch {
+            Vault.error(Backup.Failure.notABackup.localizedDescription); return
+        }
         let inspection: Container.Inspection
         do { inspection = try Backup.inspect(data) } catch { Vault.error(error.localizedDescription); return }
 
