@@ -527,3 +527,4 @@
 "Underline" = "مسطر";
 "Wavy underline" = "تسطير متموج";
 "Remove decorations" = "إزالة الزخارف";
+"Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, K strikethrough, D underline, Y wavy underline, X remove decorations, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu. With VoiceOver on, ⌃⌥ is its own modifier — pick another combination here, ⌃⌘ say." = "مفاتيح التعديل التي تعمل مع حرف على أحدث عنصر (الحافظة): V نص عادي، U أحرف كبيرة، L أحرف صغيرة، T حالة العنوان، S حالة الجملة، W إزالة الفراغات الطرفية، J سطر واحد، K يتوسطه خط، D مسطر، Y تسطير متموج، X إزالة الزخارف، A إضافة إلى القوالب، ⌫ حذف. تظهر المفاتيح نفسها في القائمة الموسعة للعنصر. مع تشغيل VoiceOver يكون ⌃⌥ مفتاح التعديل الخاص به — اختر هنا تركيبة أخرى، مثل ⌃⌘.";

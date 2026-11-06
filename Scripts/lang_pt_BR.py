@@ -527,4 +527,5 @@ T = {
 'Underline': 'Sublinhado',
 'Wavy underline': 'Sublinhado ondulado',
 'Remove decorations': 'Remover decorações',
+"Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, K strikethrough, D underline, Y wavy underline, X remove decorations, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu. With VoiceOver on, ⌃⌥ is its own modifier — pick another combination here, ⌃⌘ say.": 'Modificadores que, com uma letra, agem sobre o item mais recente (a área de transferência): V texto sem formatação, U MAIÚSCULAS, L minúsculas, T Iniciais Maiúsculas, S Frase, W aparar espaços, J uma linha, K tachado, D sublinhado, Y sublinhado ondulado, X remover decorações, A adicionar aos modelos, ⌫ excluir. As mesmas teclas aparecem no menu estendido do item. Com o VoiceOver ativado, ⌃⌥ é o modificador dele — escolha aqui outra combinação, por exemplo ⌃⌘.',
 }

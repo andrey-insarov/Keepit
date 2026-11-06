@@ -37,16 +37,38 @@ enum TextTransform: String, CaseIterable, Codable {
         }
     }
 
-    /// Every character of every line gets the mark (spaces too, so the line is continuous); control
-    /// characters — line breaks, tabs — stay as they are. Marks already there are removed first, so
-    /// decorating twice, or switching from one decoration to another, does not stack them.
-    private static func decorate(_ s: String, with mark: Unicode.Scalar) -> String {
+    /// One mark after every *grapheme* (a letter with its accents, an emoji with its modifiers, ZWJ
+    /// and variation selectors, a flag's two regional indicators — the cluster stays what it was,
+    /// the mark comes after it; auditor's P2 on PR #26); spaces too, so the line is continuous;
+    /// a grapheme of control or format characters alone — line breaks, tabs, NEL, bidi controls —
+    /// gets none. Marks of the family already there are removed first, so decorating twice, or
+    /// switching from one decoration to another, does not stack them. `maxBytes`: the output is
+    /// counted as it is built and nil comes back as soon as it would pass the ceiling — a 50 MiB
+    /// item is refused after a few bytes, not after 150 MiB (his P3).
+    private static func decorate(_ s: String, with mark: Unicode.Scalar, maxBytes: Int) -> String? {
+        let base = undecorate(s)
+        guard base.utf8.count <= maxBytes else { return nil }
         var out = String.UnicodeScalarView()
-        for scalar in undecorate(s).unicodeScalars {
-            out.append(scalar)
-            if scalar.value >= 0x20, scalar != "\u{2028}", scalar != "\u{2029}", scalar.value != 0x7F { out.append(mark) }
+        var bytes = 0
+        let markBytes = String(mark).utf8.count
+        for character in base {
+            for scalar in character.unicodeScalars { out.append(scalar) }
+            bytes += character.utf8.count
+            if character.unicodeScalars.contains(where: { !Self.isControlOrFormat($0) }) {
+                out.append(mark)
+                bytes += markBytes
+            }
+            if bytes > maxBytes { return nil }
         }
         return String(out)
+    }
+
+    /// Cc, Cf, Zl, Zp: nothing visible to draw a line through or under.
+    private static func isControlOrFormat(_ scalar: Unicode.Scalar) -> Bool {
+        switch scalar.properties.generalCategory {
+        case .control, .format, .lineSeparator, .paragraphSeparator: return true
+        default: return false
+        }
     }
 
     static func undecorate(_ s: String) -> String {
@@ -54,7 +76,11 @@ enum TextTransform: String, CaseIterable, Codable {
         return String(String.UnicodeScalarView(s.unicodeScalars.filter { !decorationMarks.contains($0) }))
     }
 
-    func apply(_ s: String) -> String {
+    func apply(_ s: String) -> String { apply(s, maxBytes: Int.max) ?? s }
+
+    /// nil when the result would pass `maxBytes` (only a decoration can grow the text; the others
+    /// never need the bound).
+    func apply(_ s: String, maxBytes: Int) -> String? {
         switch self {
         case .upper:    return s.uppercased()
         case .lower:    return s.lowercased()
@@ -78,7 +104,7 @@ enum TextTransform: String, CaseIterable, Codable {
         case .stripFormatting:
             return s
         case .strikethrough, .underline, .wavy:
-            return Self.decorate(s, with: mark!)
+            return Self.decorate(s, with: mark!, maxBytes: maxBytes)
         case .undecorate:
             return Self.undecorate(s)
         }
@@ -88,10 +114,8 @@ enum TextTransform: String, CaseIterable, Codable {
 extension ClipItem {
     /// A text-only copy of the item with the transformation applied (new id and hash: it is new content).
     func transformed(_ t: TextTransform) -> ClipItem? {
-        guard let text = plainText else { return nil }
-        let out = t.apply(text)
+        guard let text = plainText, let out = t.apply(text, maxBytes: Limits.textBytesCeiling) else { return nil }
         let data = Data(out.utf8)
-        guard data.count <= Limits.textBytesCeiling else { return nil }     // a decoration triples the bytes
         return ClipItem(id: UUID(), date: Date(), formats: [Format.text: data], sourceApp: sourceApp,
                         contentHash: ClipItem.hash(of: data))
     }

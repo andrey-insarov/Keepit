@@ -370,7 +370,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             header(L("Paste without the menu")),
             row(L("Paste previous item:"), help(recorder(previousHK), L("Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off."))),
             row(L("Paste item by number:"), help(recorder(numbersHK, modifiersOnly: true), L("Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off."))),
-            row(L("Actions on the latest item:"), help(recorder(latestHK, modifiersOnly: true, suffix: L("letter")), L("Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu."))),
+            row(L("Actions on the latest item:"), help(recorder(latestHK, modifiersOnly: true, suffix: L("letter")), L("Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, K strikethrough, D underline, Y wavy underline, X remove decorations, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu. With VoiceOver on, ⌃⌥ is its own modifier — pick another combination here, ⌃⌘ say."))),
             header(L("Other")),
             row(L("Viewer:"), recorder(viewerHK)),
             row(L("Settings:"), recorder(prefsHK)),

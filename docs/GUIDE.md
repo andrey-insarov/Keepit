@@ -138,7 +138,11 @@ character (a̶ ̶l̶i̶n̶e̶ ̶t̶h̶r̶o̶u̶g̶h̶, a̲ ̲l̲i̲n̲e̲ ̲u̲n
 messenger, a web form or a terminal, where real formatting would be lost. The price: such text is
 three times the size, a search for the plain word will not find it, screen readers stumble over it,
 and some fonts draw the line unevenly. *Remove decorations* (`⌃⌥X`) takes the marks off again —
-also from text decorated elsewhere.
+also from text decorated elsewhere. Both ways the marks are removed by code point, wherever they
+came from: a phonetic transcription that uses the same marks as letters (U+0330 is also the IPA
+sign for creaky voice) loses them, and the three decorations remove them first as well. With
+VoiceOver on, `⌃⌥` is VoiceOver's own modifier: give *Actions on the latest item* another one in
+Settings → Shortcuts.
 
 Transformations apply to text; for an image or a file list the key beeps. All of these can be
 changed or switched off in *Settings → Shortcuts*.

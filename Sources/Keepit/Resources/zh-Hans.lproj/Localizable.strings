@@ -527,3 +527,4 @@
 "Underline" = "下划线";
 "Wavy underline" = "波浪下划线";
 "Remove decorations" = "移除装饰";
+"Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, K strikethrough, D underline, Y wavy underline, X remove decorations, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu. With VoiceOver on, ⌃⌥ is its own modifier — pick another combination here, ⌃⌘ say." = "与字母键一起作用于最新项目（剪贴板）的修饰键：V 纯文本，U 大写，L 小写，T 首字母大写，S 句首大写，W 去除首尾空白，J 合并为一行，K 删除线，D 下划线，Y 波浪下划线，X 移除装饰，A 添加到模板，⌫ 删除。同样的按键也显示在项目的扩展菜单中。开启 VoiceOver 时，⌃⌥ 是它自己的修饰键——请在此选择其他组合，例如 ⌃⌘。";

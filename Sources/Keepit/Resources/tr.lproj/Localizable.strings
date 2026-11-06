@@ -527,3 +527,4 @@
 "Underline" = "Altı çizili";
 "Wavy underline" = "Dalgalı alt çizgi";
 "Remove decorations" = "Süslemeleri kaldır";
+"Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, K strikethrough, D underline, Y wavy underline, X remove decorations, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu. With VoiceOver on, ⌃⌥ is its own modifier — pick another combination here, ⌃⌘ say." = "Bir harfle birlikte en son öğeye (panoya) etki eden değiştirici tuşlar: V düz metin, U BÜYÜK HARF, L küçük harf, T Başlık Biçimi, S Cümle biçimi, W boşlukları kırp, J tek satır, K üstü çizili, D altı çizili, Y dalgalı alt çizgi, X süslemeleri kaldır, A şablonlara ekle, ⌫ sil. Aynı tuşlar öğenin genişletilmiş menüsünde de gösterilir. VoiceOver açıkken ⌃⌥ onun kendi değiştiricisidir — burada başka bir birleşim seçin, örneğin ⌃⌘.";

@@ -158,6 +158,19 @@ final class TextTransformTests: XCTestCase {
         XCTAssertEqual(TextTransform.undecorate.apply("a\u{335}b\u{333}c\u{330}"), "abc")
         XCTAssertEqual(TextTransform.undecorate.apply("plain"), "plain")
         XCTAssertEqual(TextTransform.upper.apply(once), "H\u{336}I\u{336}", "other transforms leave marks alone")
+        // Auditor's P2: a grapheme is the unit — an emoji sequence stays one, a decomposed accent gets one mark,
+        // the same as its precomposed spelling; a control-only grapheme gets none.
+        for s in ["👨‍👩‍👧‍👦", "🇺🇸", "1️⃣", "👩🏽‍💻", "🏳️‍🌈", "e\u{301}"] {
+            let out = TextTransform.strikethrough.apply(s)
+            XCTAssertEqual(out.count, 1, s)
+            XCTAssertEqual(out.unicodeScalars.filter { $0 == "\u{336}" }.count, 1, s)
+            XCTAssertEqual(out.unicodeScalars.last, "\u{336}", "the mark comes after the whole cluster: \(s)")
+        }
+        XCTAssertEqual(TextTransform.underline.apply("e\u{301}"), TextTransform.underline.apply("\u{e9}"))
+        for s in ["\u{85}", "\u{2067}", "\u{2069}", "\u{202e}", "\n", "\t"] {
+            XCTAssertEqual(TextTransform.wavy.apply(s), s, "nothing to decorate in a control: \(s.unicodeScalars.map { String($0.value, radix: 16) })")
+        }
+        XCTAssertEqual(TextTransform.wavy.apply("a\u{85}b"), "a\u{330}\u{85}b\u{330}")
         XCTAssertEqual(TextTransform.allCases.count, 11)
         XCTAssertEqual(HotKey.LatestAction.allCases.map(\.keyChar).joined(), "vultswjkdyxa\u{8}")
         XCTAssertEqual(Set(HotKey.LatestAction.allCases.map(\.keyCode)).count, HotKey.LatestAction.allCases.count, "one key per action")
@@ -167,6 +180,10 @@ final class TextTransformTests: XCTestCase {
         let big = ClipItem.text(String(repeating: "x", count: Limits.textBytesCeiling / 2))   // ×3 would pass the ceiling
         XCTAssertNil(big.transformed(.strikethrough))
         XCTAssertNotNil(big.transformed(.upper))
+        // Bounded builder: the refusal comes from the running byte count, not from a finished 150 MiB string.
+        XCTAssertNil(TextTransform.underline.apply("abcd", maxBytes: 7))
+        XCTAssertEqual(TextTransform.underline.apply("abcd", maxBytes: 12), "a\u{332}b\u{332}c\u{332}d\u{332}")
+        XCTAssertEqual(TextTransform.upper.apply("abcd", maxBytes: 1), "ABCD", "only a decoration can grow the text")
     }
 
     func testTransformedItemIsNewTextOnlyContent() {

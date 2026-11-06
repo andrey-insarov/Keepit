@@ -527,4 +527,5 @@ T = {
 'Underline': 'Pasvītrots',
 'Wavy underline': 'Viļņots pasvītrojums',
 'Remove decorations': 'Noņemt rotājumus',
+"Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, K strikethrough, D underline, Y wavy underline, X remove decorations, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu. With VoiceOver on, ⌃⌥ is its own modifier — pick another combination here, ⌃⌘ say.": 'Modifikatori, kas kopā ar burtu darbojas uz jaunāko vienumu (starpliktuvi): V vienkāršs teksts, U LIELIE BURTI, L mazie burti, T Katrs Vārds Ar Lielo, S Teikuma sākums ar lielo, W apgriezt atstarpes, J viena rinda, K pārsvītrots, D pasvītrots, Y viļņots pasvītrojums, X noņemt rotājumus, A pievienot veidnēm, ⌫ dzēst. Tie paši taustiņi redzami vienuma paplašinātajā izvēlnē. Ar ieslēgtu VoiceOver ⌃⌥ ir tā paša modifikators — šeit izvēlieties citu kombināciju, piemēram ⌃⌘.',
 }
