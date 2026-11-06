@@ -20,6 +20,12 @@ enum Limits {
     static let imageMaxPixels = 40_000_000           // 40 MP: a 10 MB PNG can still be a 20 000×20 000 bomb
     static let queueMaxItems = 500                    // paste queue entries per session
     static let promptInputMaxChars = 10_000           // one {input:} answer
+    static let snippetPromptsMax = 20                 // {input:}/{choice:} questions one template may ask
+    static let snippetChoicesMax = 50                 // options in one {choice:}
+    static let snippetShiftMaxDigits = 4              // {date+NNNNd}: at most 9 999 of a unit
+    static let snippetDateFormatMaxChars = 200        // a {date:…} pattern longer than this is kept as text
+    static let snippetOutputMaxBytes = textBytesCeiling   // an expansion never grows past one text item
+    static let snippetCursorMoveMax = 2_000           // ← key presses after a paste to reach {cursor}
     static let ignoreAppsMaxLines = 500
     static let bundleIdMaxChars = 255
     static let unlockBackoffSeconds: [Double] = [1, 2, 4]   // after the 1st, 2nd, 3rd wrong password

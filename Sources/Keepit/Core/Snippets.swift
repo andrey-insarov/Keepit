@@ -20,8 +20,11 @@ enum Snippets {
 
     struct Expansion {
         let text: String
-        /// Characters after the `{cursor}` marker, i.e. how many ← presses move the caret there. nil = no marker.
+        /// Characters after the `{cursor}` marker, i.e. how many ← presses move the caret there. nil = no marker,
+        /// or the marker sits more than `Limits.snippetCursorMoveMax` characters from the end.
         let charsAfterCursor: Int?
+        /// The output reached `Limits.snippetOutputMaxBytes` and the remaining pieces were left out.
+        let truncated: Bool
     }
 
     /// Cheap check used on every template paste.
@@ -62,6 +65,7 @@ enum Snippets {
     }
 
     /// `input:` and `choice:` tokens, in order of first appearance (same name = one prompt).
+    /// At most `Limits.snippetPromptsMax` questions; later ones expand to their default without asking.
     static func prompts(in s: String) -> [Prompt] {
         var seen: [String] = []
         var out: [Prompt] = []
@@ -69,6 +73,7 @@ enum Snippets {
             guard let p = prompt(from: t), !seen.contains(p.name) else { continue }
             seen.append(p.name)
             out.append(p)
+            if out.count == Limits.snippetPromptsMax { break }
         }
         return out
     }
@@ -83,7 +88,7 @@ enum Snippets {
         if head.hasPrefix("choice:") {
             let spec = String(head.dropFirst(7))
             let (name, list) = splitDefault(spec)
-            let choices = (list ?? name).split(separator: "|").map { String($0) }
+            let choices = Array((list ?? name).split(separator: "|").prefix(Limits.snippetChoicesMax).map { String($0) })
             return Prompt(name: list == nil ? L("Choice") : name, defaultValue: choices.first ?? "", choices: choices)
         }
         return nil
@@ -114,28 +119,42 @@ enum Snippets {
         var locale = Locale.current
     }
 
+    /// Expansion never traps on any input: a token the engine does not understand, or understands but
+    /// cannot evaluate (a malformed shift, an overlong pattern), is written back as its own text.
     static func expand(_ s: String, context: Context) -> Expansion {
         var out = ""
+        var bytes = 0
         var cursorAt: Int?
+        var truncated = false
+        func append(_ v: String) -> Bool {
+            let n = v.utf8.count
+            if bytes + n > Limits.snippetOutputMaxBytes { truncated = true; return false }
+            out += v; bytes += n
+            return true
+        }
         for p in pieces(s) {
             switch p {
-            case .literal(let l): out += l
+            case .literal(let l):
+                if !append(l) { break }
             case .token(let t):
                 if t == "cursor" { if cursorAt == nil { cursorAt = out.count }; continue }
                 let (head, filters) = splitFilters(t)
                 var v = value(for: head, context: context) ?? "{\(t)}"
                 for f in filters { v = applyFilter(f, v) }
-                out += v
+                if !append(v) { break }
             }
+            if truncated { break }
         }
-        return Expansion(text: out, charsAfterCursor: cursorAt.map { out.count - $0 })
+        var back = cursorAt.map { out.count - $0 }
+        if let b = back, b > Limits.snippetCursorMoveMax { back = nil }
+        return Expansion(text: out, charsAfterCursor: back, truncated: truncated)
     }
 
     private static func value(for head: String, context c: Context) -> String? {
         let (name, arg) = head.firstIndex(of: ":").map { (String(head[..<$0]), String(head[head.index(after: $0)...])) } ?? (head, nil)
         switch name.lowercased() {
         case "clipboard":
-            let n = arg.flatMap(Int.init) ?? 1
+            let n = arg.flatMap { a -> Int? in a.count <= 6 && a.allSatisfy({ $0.isASCII && $0.isNumber }) ? Int(a) : nil } ?? 1
             return c.clipboard(max(1, n)) ?? ""
         case "input":
             return c.answers[splitDefault(arg ?? "").0] ?? splitDefault(arg ?? "").1 ?? ""
@@ -148,8 +167,13 @@ enum Snippets {
         case "host":     return c.hostName
         case "uuid":     return UUID().uuidString
         case "random":
-            let r = (arg ?? "0-9").split(separator: "-").compactMap { Int($0) }
-            let lo = r.first ?? 0, hi = r.count > 1 ? r[1] : 9
+            // "lo-hi", both 0…999 999 999; anything else is the default 0-9. Digits only, so no sign tricks.
+            let parts = (arg ?? "0-9").split(separator: "-", omittingEmptySubsequences: false)
+            let nums = parts.map { p -> Int? in
+                guard !p.isEmpty, p.count <= 9, p.allSatisfy({ $0.isASCII && $0.isNumber }) else { return nil }
+                return Int(p)
+            }
+            guard nums.count == 2, let lo = nums[0], let hi = nums[1] else { return String(Int.random(in: 0...9)) }
             return String(Int.random(in: min(lo, hi)...max(lo, hi)))
         case "iso":
             let f = ISO8601DateFormatter(); return f.string(from: c.now)
@@ -171,10 +195,14 @@ enum Snippets {
     }
 
     /// "+7d", "-1m", "+2w", "+1y", "" → shifted date; anything else → nil.
+    /// Grammar: one sign, 1…`Limits.snippetShiftMaxDigits` ASCII digits, one unit — nothing else. `Int(_:)`
+    /// alone accepted "-9223372036854775808" and the negation trapped (auditor, 5 Nov 2026).
     static func shifted(_ date: Date, by spec: String, calendar: Calendar) -> Date? {
         if spec.isEmpty { return date }
-        guard let sign = spec.first, sign == "+" || sign == "-", let unit = spec.last,
-              let n = Int(spec.dropFirst().dropLast()) else { return nil }
+        guard spec.count >= 3, let sign = spec.first, sign == "+" || sign == "-", let unit = spec.last else { return nil }
+        let digits = spec.dropFirst().dropLast()
+        guard !digits.isEmpty, digits.count <= Limits.snippetShiftMaxDigits,
+              digits.allSatisfy({ $0.isASCII && $0.isNumber }), let n = Int(digits) else { return nil }
         let amount = sign == "-" ? -n : n
         let comp: Calendar.Component
         switch unit {
@@ -188,10 +216,12 @@ enum Snippets {
         return calendar.date(byAdding: comp, value: amount, to: date)
     }
 
-    private static func formatted(_ d: Date, format: String?, style: (DateFormatter.Style, DateFormatter.Style)?, _ c: Context) -> String {
+    /// nil when the pattern is longer than `Limits.snippetDateFormatMaxChars` — the token then stays as text.
+    private static func formatted(_ d: Date, format: String?, style: (DateFormatter.Style, DateFormatter.Style)?, _ c: Context) -> String? {
         let f = DateFormatter()
         f.locale = c.locale
         if let fmt = format, !fmt.isEmpty {
+            if fmt.count > Limits.snippetDateFormatMaxChars { return nil }
             f.dateFormat = fmt
         } else if let s = style {
             f.dateStyle = s.0; f.timeStyle = s.1
