@@ -12,7 +12,8 @@ final class HistoryRingsTests: XCTestCase {
     private func image(_ tag: UInt8) -> ClipItem {
         let rep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: 1, pixelsHigh: 1, bitsPerSample: 8, samplesPerPixel: 4,
                                    hasAlpha: true, isPlanar: false, colorSpaceName: .deviceRGB, bytesPerRow: 0, bitsPerPixel: 0)!
-        rep.bitmapData![0] = tag
+        let px = rep.bitmapData!                    // one opaque pixel; alpha 0 would premultiply every tag to the same PNG
+        px[0] = tag; px[1] = 0; px[2] = 0; px[3] = 255
         var c = ClipItem.text("")
         c.removeFormat(ClipItem.Format.text)
         c.setData(rep.representation(using: .png, properties: [:])!, for: ClipItem.Format.png)
