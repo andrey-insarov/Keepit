@@ -27,6 +27,10 @@ enum Limits {
     static let snippetOutputMaxBytes = textBytesCeiling   // an expansion never grows past one text item
     static let snippetCursorMoveMax = 2_000           // ← key presses after a paste to reach {cursor}
     static let ignoreAppsMaxLines = 500
+    static let urlCommandMaxChars = 32 * 1024         // a keepit:// URL longer than this is not a command
+    static let urlCommandTextMaxBytes = 64 * 1024     // add / add-template text (UTF-8)
+    static let urlCommandArgumentMaxChars = 1_024     // the path part: item number or template path
+    static let pendingOpenURLsMax = 32                // URLs and files queued before the app is ready
     static let bundleIdMaxChars = 255
     static let unlockBackoffSeconds: [Double] = [1, 2, 4]   // after the 1st, 2nd, 3rd wrong password
     static let unlockLockoutSeconds: Double = 30            // after the 3rd, before the dialog may reappear

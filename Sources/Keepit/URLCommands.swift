@@ -21,7 +21,13 @@ extension AppDelegate {
     /// In all those cases the URLs wait in `pendingOpenURLs`; `openPendingURLs()` runs them, in
     /// order, once the app is ready and no restore is in progress — never a restore inside another.
     func application(_ application: NSApplication, open urls: [URL]) {
-        pendingOpenURLs += urls
+        // The queue is bounded: what does not fit is dropped with a beep, never silently kept.
+        let room = max(0, Limits.pendingOpenURLsMax - pendingOpenURLs.count)
+        if urls.count > room {
+            Log.system.notice("open: \(urls.count - room) URL(s) dropped — \(Limits.pendingOpenURLsMax) may wait")
+            NSSound.beep()
+        }
+        pendingOpenURLs += urls.prefix(room)
         openPendingURLs()
     }
 
@@ -128,12 +134,15 @@ extension AppDelegate {
         case "add":
             guard let text = q["text"], !text.isEmpty else { return }
             let item = ClipItem.text(text)
+            guard (try? Backup.validate(item: item)) != nil else { NSSound.beep(); return }
             history.add(item)
             monitor.performIgnoringChange { item.write(to: NSPasteboard.general) }
             viewer?.refresh()
         case "add-template":
             guard let text = q["text"], !text.isEmpty else { return }
-            let node = TemplateNode(name: q["name"] ?? "", clip: .text(text))
+            let clip = ClipItem.text(text)
+            guard (try? Backup.validate(item: clip)) != nil else { NSSound.beep(); return }
+            let node = TemplateNode(name: String((q["name"] ?? "").prefix(Limits.templateNameMaxChars)), clip: clip)
             guard templates.canInsert(node, under: templates.root) else { NSSound.beep(); return }
             templates.root.insert(node)
             templates.changed()
@@ -164,23 +173,42 @@ extension AppDelegate {
 }
 
 /// A `keepit://` URL taken apart: host = command, path = argument, query = parameters.
-/// Kept free of AppKit so the parser can be tested; `parse` returns nil for anything it will not run.
+/// Kept free of AppKit so the parser can be tested; `parse` returns nil for anything it will not run:
+/// a command outside the list, a parameter the command does not take, a repeated parameter, or any
+/// part over its size limit. Sizes are checked here, before any dialog or model object exists — the
+/// sender's trust (checked later) is not a substitute for a bound.
 struct URLCommand: Equatable {
     let command: String
     let argument: String
     let params: [String: String]
 
+    /// Every command Keepit runs and the query parameters each one accepts.
+    static let allowed: [String: Set<String>] = [
+        "paste": [], "copy": [], "template": ["copy"], "add": ["text"], "add-template": ["text", "name"],
+        "history": [], "templates": [], "viewer": [], "settings": [], "pause": [], "resume": [],
+    ]
+
     static func parse(_ url: URL) -> URLCommand? {
-        guard let comps = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return nil }
+        guard url.absoluteString.count <= Limits.urlCommandMaxChars,
+              let comps = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return nil }
+        let command = url.host?.lowercased() ?? ""
+        guard let accepted = allowed[command] else { return nil }
         var params: [String: String] = [:]
         for item in comps.queryItems ?? [] {
             // A repeated name is ambiguous (keepit://add?text=a&text=b): refuse rather than guess.
-            guard params[item.name] == nil else { return nil }
-            params[item.name] = item.value ?? ""
+            guard accepted.contains(item.name), params[item.name] == nil else { return nil }
+            let value = item.value ?? ""
+            switch item.name {
+            case "text": guard value.utf8.count <= Limits.urlCommandTextMaxBytes else { return nil }
+            case "name": guard value.count <= Limits.templateNameMaxChars else { return nil }
+            case "copy": guard value.count <= 8 else { return nil }
+            default: return nil
+            }
+            params[item.name] = value
         }
-        return URLCommand(command: url.host?.lowercased() ?? "",
-                          argument: url.path.split(separator: "/").map(String.init).joined(separator: "/"),
-                          params: params)
+        let argument = url.path.split(separator: "/").map(String.init).joined(separator: "/")
+        guard argument.count <= Limits.urlCommandArgumentMaxChars else { return nil }
+        return URLCommand(command: command, argument: argument, params: params)
     }
 }
 
