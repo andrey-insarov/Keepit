@@ -284,7 +284,8 @@ final class ModalLifecycleTests: XCTestCase {
         let payload = Backup.Payload(history: [.text("RESTORED")], templates: TemplateNode(name: "Template", children: [TemplateNode(name: "r", text: "RESTORED")]), settings: a.settings)
         let plan = try RestorePlan.make(mode: .replace, payload: payload, currentHistory: a.history.items, currentTemplates: a.templates.root,
                                         currentSettings: a.settings, restorePreferences: true, folderName: "unused")
-        a.history.onChange = { [unowned a] in if !a.isLocked { a.lock() } }     // apply(settings:) → updateSettings → here: the lock lands inside commit
+        var seen = 0
+        a.history.onChange = { [unowned a] in seen += 1; if seen == 2, !a.isLocked { a.lock() } }   // 1 = replaceAll, 2 = apply(settings:) → updateSettings: the lock lands inside commit
         a.restoreInProgress = true
         XCTAssertThrowsError(try a.commit(plan)) {
             guard case RestoreCommit.Failure.lockedAfterWrite? = $0 as? RestoreCommit.Failure else { return XCTFail("\($0)") }

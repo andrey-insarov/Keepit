@@ -212,13 +212,16 @@ extension AppDelegate {
         let historyJSON = plan.settings.historySave ? try Storage.encoder.encode(plan.history) : nil
         let settingsJSON = try Storage.prettyEncoder.encode(plan.settings)
         try RestoreCommit.writeFiles(templatesJSON: templatesJSON, historyJSON: historyJSON, settingsJSON: settingsJSON)
-        apply(settings: plan.settings)          // trust and backup setup stayed this installation's (RestorePlan)
-        // Nothing above runs a modal loop any more (the hot-key warning is deferred), but a lock can
-        // still land here from a timer or the lock key. The files hold the restored data; a locked
-        // Keepit keeps its stores purged and loads the files on unlock — the models are not published.
-        guard !isLocked, lockCount == generation else { throw RestoreCommit.Failure.lockedAfterWrite }
+        // Models before settings: apply(settings:) trims and schedules a save of whatever the stores
+        // hold, and a lock in between (purge flushes that save) would write the *old* items over the
+        // files just restored. With the restored models in place first, any flush writes them.
         history.replaceAll(plan.history)
         templates.replaceRoot(plan.templates)
+        apply(settings: plan.settings)          // trust and backup setup stayed this installation's (RestorePlan)
+        // Nothing above runs a modal loop any more (the hot-key warning is deferred), but a lock can
+        // still land in a callback. Then the stores are purged again, the files hold the restored
+        // data and load on unlock; the rest (hot keys, Viewer, backup) is the unlock's business.
+        guard !isLocked, lockCount == generation else { throw RestoreCommit.Failure.lockedAfterWrite }
         registerHotKeys()
         viewer?.refresh()
         backup?.noteChange()
