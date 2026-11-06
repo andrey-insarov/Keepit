@@ -212,16 +212,18 @@ extension AppDelegate {
         let historyJSON = plan.settings.historySave ? try Storage.encoder.encode(plan.history) : nil
         let settingsJSON = try Storage.prettyEncoder.encode(plan.settings)
         try RestoreCommit.writeFiles(templatesJSON: templatesJSON, historyJSON: historyJSON, settingsJSON: settingsJSON)
-        // Models before settings: apply(settings:) trims and schedules a save of whatever the stores
-        // hold, and a lock in between (purge flushes that save) would write the *old* items over the
-        // files just restored. With the restored models in place first, any flush writes them.
-        history.replaceAll(plan.history)
-        templates.replaceRoot(plan.templates)
+        // Both models and the settings they are trimmed under in one step, with no observer called and
+        // no save scheduled in between: nothing — a lock in a callback included — can run while one
+        // store is filled and the other is not, and the items are trimmed under the *restored*
+        // limits, not the ones being replaced. apply(settings:) then runs the usual observers; a lock
+        // landing there purges both stores again, the files hold the restored data and load on
+        // unlock, and the rest (hot keys, Viewer, backup) is the unlock's business.
+        history.publish(plan.history, settings: plan.settings)
+        templates.publish(plan.templates)
         apply(settings: plan.settings)          // trust and backup setup stayed this installation's (RestorePlan)
-        // Nothing above runs a modal loop any more (the hot-key warning is deferred), but a lock can
-        // still land in a callback. Then the stores are purged again, the files hold the restored
-        // data and load on unlock; the rest (hot keys, Viewer, backup) is the unlock's business.
         guard !isLocked, lockCount == generation else { throw RestoreCommit.Failure.lockedAfterWrite }
+        history.notePublished()
+        templates.changed()
         registerHotKeys()
         viewer?.refresh()
         backup?.noteChange()

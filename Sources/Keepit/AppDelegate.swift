@@ -74,6 +74,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     var screenLockedProbe: () -> Bool? = { ScreenState.isLocked() }
     /// Whether our session is on the console (`kCGSessionOnConsoleKey`); nil = unknown. Tests replace it.
     var sessionActiveProbe: () -> Bool? = { ScreenState.isSessionActive() }
+    /// Tests only: receives the hot keys that could not be registered instead of the alert.
+    var hotKeyFailureForTesting: (([String]) -> Void)?
     /// Tests only: the sender of a keepit:// URL (no Apple Event in a test) and the answer to its
     /// confirmation dialog, which may lock Keepit the way a user could while the dialog is open.
     var urlCommandSenderForTesting: URLSender?
@@ -836,6 +838,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 failed.append("\(hk.displayString) (\(t.displayName))")
             }
         }
+        if let test = hotKeyFailureForTesting { if !failed.isEmpty { test(failed) }; return }
         if !failed.isEmpty, !SelfTest.isActive {
             // Report hot keys that could not be registered — after the caller is done, never inside
             // it: registerHotKeys runs from apply(settings:) in the middle of a restore commit, and a

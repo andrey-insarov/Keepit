@@ -126,6 +126,15 @@ final class TemplateStore {
         return parent.depth + 1 + node.height <= Limits.templateMaxDepth
     }
 
+    /// Restore commit: the tree in place with no observer called and no save scheduled (see
+    /// HistoryStore.publish); the caller calls `changed()` once everything is in place.
+    func publish(_ node: TemplateNode) {
+        isPurged = false
+        root = Self.validated(node)
+        root.relink()
+        revision += 1
+    }
+
     /// Backup import, "Replace". The payload has passed Backup.validate; the store checks on its own account.
     func replaceRoot(_ node: TemplateNode) {
         isPurged = false

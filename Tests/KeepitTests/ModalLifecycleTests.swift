@@ -37,6 +37,7 @@ final class ModalLifecycleTests: XCTestCase {
         a.templates.replaceRoot(TemplateNode(name: "Root", children: [TemplateNode(name: "Private", text: "PRIVATE {input:X}")]))
         a.templates.flush()
         a.urlCommandSenderForTesting = URLSender(app: nil, isBrowser: false)   // never trusted: always asked
+        a.hotKeyFailureForTesting = { _ in }                                    // a commit registers hot keys; no alert in a test
         return a
     }
 
@@ -284,8 +285,7 @@ final class ModalLifecycleTests: XCTestCase {
         let payload = Backup.Payload(history: [.text("RESTORED")], templates: TemplateNode(name: "Template", children: [TemplateNode(name: "r", text: "RESTORED")]), settings: a.settings)
         let plan = try RestorePlan.make(mode: .replace, payload: payload, currentHistory: a.history.items, currentTemplates: a.templates.root,
                                         currentSettings: a.settings, restorePreferences: true, folderName: "unused")
-        var seen = 0
-        a.history.onChange = { [unowned a] in seen += 1; if seen == 2, !a.isLocked { a.lock() } }   // 1 = replaceAll, 2 = apply(settings:) → updateSettings: the lock lands inside commit
+        a.history.onChange = { [unowned a] in if !a.isLocked { a.lock() } }   // the first store change inside commit — publication itself makes none; apply(settings:) does
         a.restoreInProgress = true
         XCTAssertThrowsError(try a.commit(plan)) {
             guard case RestoreCommit.Failure.lockedAfterWrite? = $0 as? RestoreCommit.Failure else { return XCTFail("\($0)") }
@@ -300,5 +300,41 @@ final class ModalLifecycleTests: XCTestCase {
         a.history.reload()
         XCTAssertEqual(a.history.items.map(\.plainText), ["RESTORED"], "the files hold the restored data")
         XCTAssertEqual(a.templates.root.children.first?.name, "r")
+    }
+
+    /// A commit publishes the plan under the *restored* settings: a current history limit of 1 does
+    /// not trim a three-item plan whose settings say 3 (auditor's P2 on d779e27).
+    func testCommitPublishesUnderTheRestoredLimits() throws {
+        let a = try makeApp()
+        var small = a.settings; small.historyMax = 1
+        a.apply(settings: small)
+        a.history.add(.text("before"))
+        a.history.flush(); a.templates.flush()
+        var restored = a.settings; restored.historyMax = 3
+        let items = (1...3).map { ClipItem.text("restored\($0)") }
+        let payload = Backup.Payload(history: items, templates: TemplateNode(name: "Template"), settings: restored)
+        let plan = try RestorePlan.make(mode: .replace, payload: payload, currentHistory: a.history.items, currentTemplates: a.templates.root,
+                                        currentSettings: a.settings, restorePreferences: true, folderName: "unused")
+        XCTAssertEqual(plan.history.count, 3)
+        a.restoreInProgress = true
+        try a.commit(plan)
+        XCTAssertEqual(a.history.items.map(\.plainText), ["restored1", "restored2", "restored3"])
+        XCTAssertEqual(a.settings.historyMax, 3)
+        a.history.flush()
+        XCTAssertEqual(try XCTUnwrap(Storage.load([ClipItem].self, from: Storage.historyURL)).count, 3, "and the file holds all three")
+    }
+
+    /// No lock can land between the two stores being filled: there is no callback in between.
+    func testCommitFillsBothStoresBeforeAnyObserverRuns() throws {
+        let a = try makeApp()
+        var snapshots: [(history: Int, templates: Int, purged: Bool)] = []
+        a.history.onChange = { [unowned a] in snapshots.append((a.history.items.count, a.templates.root.children.count, a.templates.isPurged)) }
+        let payload = Backup.Payload(history: [.text("x")], templates: TemplateNode(name: "Template", children: [TemplateNode(name: "t", text: "t")]), settings: a.settings)
+        let plan = try RestorePlan.make(mode: .replace, payload: payload, currentHistory: a.history.items, currentTemplates: a.templates.root,
+                                        currentSettings: a.settings, restorePreferences: true, folderName: "unused")
+        a.restoreInProgress = true
+        try a.commit(plan)
+        XCTAssertFalse(snapshots.isEmpty)
+        for s in snapshots { XCTAssertEqual(s.history, 1); XCTAssertEqual(s.templates, 1); XCTAssertFalse(s.purged) }
     }
 }
