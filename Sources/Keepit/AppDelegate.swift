@@ -74,6 +74,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     var screenLockedProbe: () -> Bool? = { ScreenState.isLocked() }
     /// Whether our session is on the console (`kCGSessionOnConsoleKey`); nil = unknown. Tests replace it.
     var sessionActiveProbe: () -> Bool? = { ScreenState.isSessionActive() }
+    /// Tests only: receives the hot keys that could not be registered instead of the alert.
+    var hotKeyFailureForTesting: (([String]) -> Void)?
     /// Tests only: the sender of a keepit:// URL (no Apple Event in a test) and the answer to its
     /// confirmation dialog, which may lock Keepit the way a user could while the dialog is open.
     var urlCommandSenderForTesting: URLSender?
@@ -389,6 +391,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         cancelAutoUnlock()
         isLocked = true
         lockCount += 1
+        AbortableModal.abortIfRunning()      // a template prompt or a keepit:// confirmation does not outlive the lock
         queue.stop()
         viewer?.close()
         preferencesWindow?.close()
@@ -793,7 +796,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 }
             }
         }
-        if let hk = settings.lockHotKey, !hotKeys.register(hk, handler: { [weak self] in self?.lock() }) {
+        if let hk = settings.lockHotKey, !hotKeys.register(hk, immediate: true, handler: { [weak self] in self?.lock() }) {
             failed.append(hk.displayString)
         }
         if let hk = settings.viewerHotKey, !hotKeys.register(hk, handler: { [weak self] in self?.openViewer() }) {
@@ -835,12 +838,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 failed.append("\(hk.displayString) (\(t.displayName))")
             }
         }
+        if let test = hotKeyFailureForTesting { if !failed.isEmpty { test(failed) }; return }
         if !failed.isEmpty, !SelfTest.isActive {
-            // Report hot keys that could not be registered
-            let a = NSAlert()
-            a.messageText = L("Hot key unavailable")
-            a.informativeText = LF("Could not register: %@. Another app or macOS is using it. Change it in Settings → Shortcuts.", failed.joined(separator: ", "))
-            a.runModal()
+            // Report hot keys that could not be registered — after the caller is done, never inside
+            // it: registerHotKeys runs from apply(settings:) in the middle of a restore commit, and a
+            // modal loop there let a lock happen between the files and the models (auditor's P2 on PR #28).
+            DispatchQueue.main.async {
+                let a = NSAlert()
+                a.messageText = L("Hot key unavailable")
+                a.informativeText = LF("Could not register: %@. Another app or macOS is using it. Change it in Settings → Shortcuts.", failed.joined(separator: ", "))
+                a.runModal()
+            }
         }
     }
 
@@ -1401,7 +1409,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         a.addButton(withTitle: L("Clear"))
         a.addButton(withTitle: L("Cancel"))
         NSApp.activate(ignoringOtherApps: true)
-        if a.runModal() == .alertFirstButtonReturn { history.clear() }
+        if AbortableModal.run(a) == .alertFirstButtonReturn, !isLocked { history.clear() }
     }
 
     @objc private func addClipboardToTemplates() {

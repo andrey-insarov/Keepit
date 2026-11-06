@@ -37,6 +37,7 @@ final class ModalLifecycleTests: XCTestCase {
         a.templates.replaceRoot(TemplateNode(name: "Root", children: [TemplateNode(name: "Private", text: "PRIVATE {input:X}")]))
         a.templates.flush()
         a.urlCommandSenderForTesting = URLSender(app: nil, isBrowser: false)   // never trusted: always asked
+        a.hotKeyFailureForTesting = { _ in }                                    // a commit registers hot keys; no alert in a test
         return a
     }
 
@@ -137,5 +138,203 @@ final class ModalLifecycleTests: XCTestCase {
         a.confirmURLCommandForTesting = { _ in .deny }
         a.handle(try XCTUnwrap(URL(string: "keepit://pause")))
         XCTAssertNil(a.pausedUntil)
+    }
+
+    // MARK: a lock closes the dialog (3.0.5)
+
+    /// A real NSAlert in an abortable session; a timer locks Keepit while it is up — the way a hot
+    /// key or the screen-lock delay would. The dialog returns `.abort`; nothing waits for the user.
+    func testLockAbortsAnAbortableDialog() throws {
+        let a = try makeApp()
+        let alert = NSAlert()
+        alert.messageText = "abortable"
+        alert.addButton(withTitle: "OK")
+        RunLoop.main.add(Timer(timeInterval: 0.3, repeats: false) { _ in a.lock() }, forMode: .common)
+        let r = AbortableModal.run(alert)
+        XCTAssertEqual(r, .abort)
+        XCTAssertTrue(a.isLocked)
+        XCTAssertFalse(AbortableModal.isRunning)
+    }
+
+    /// A dialog that is not abortable (a recovery phrase, a password prompt, the restore panel)
+    /// stays: the lock changes the app's state, not the session.
+    func testLockLeavesAnOrdinaryDialogAlone() throws {
+        let a = try makeApp()
+        let alert = NSAlert()
+        alert.messageText = "ordinary"
+        alert.addButton(withTitle: "OK")
+        RunLoop.main.add(Timer(timeInterval: 0.3, repeats: false) { _ in
+            a.lock()
+            XCTAssertNotNil(NSApp.modalWindow, "still up after the lock")
+            NSApp.stopModal(withCode: .OK)
+        }, forMode: .common)
+        XCTAssertEqual(alert.runModal(), .OK)
+        XCTAssertTrue(a.isLocked)
+    }
+
+    func testLockWithoutADialogAbortsNothing() throws {
+        let a = try makeApp()
+        a.lock()                                     // no modal session: abortModal is not called
+        XCTAssertTrue(a.isLocked)
+        XCTAssertFalse(AbortableModal.isRunning)
+    }
+
+    // MARK: ownership (auditor's second round on PR #28)
+
+    private func alert(_ title: String) -> NSAlert {
+        let a = NSAlert(); a.messageText = title; a.addButton(withTitle: "OK"); return a
+    }
+    private func after(_ seconds: TimeInterval, _ body: @escaping () -> Void) -> Timer {
+        let t = Timer(timeInterval: seconds, repeats: false) { _ in body() }
+        RunLoop.main.add(t, forMode: .common)
+        return t
+    }
+
+    /// An ordinary dialog opened over a wrapped one is the session now: the lock leaves it, and
+    /// the wrapped parent underneath, alone.
+    func testOrdinaryChildOverAWrappedParentIsNotAborted() throws {
+        let a = try makeApp()
+        let outer = alert("wrapped parent")
+        var child: NSApplication.ModalResponse?
+        let endOuter = after(1.0) { NSApp.stopModal(withCode: .OK) }
+        let openChild = after(0.05) {
+            let inner = self.alert("ordinary child")
+            let lockTimer = self.after(0.05) { a.lock() }
+            let endChild = self.after(0.3) { NSApp.stopModal(withCode: .OK) }
+            child = inner.runModal()
+            lockTimer.invalidate(); endChild.invalidate(); inner.window.orderOut(nil)
+            NSApp.stopModal(withCode: .OK)
+        }
+        let outerResult = AbortableModal.run(outer)
+        openChild.invalidate(); endOuter.invalidate(); outer.window.orderOut(nil)
+        XCTAssertTrue(a.isLocked)
+        XCTAssertEqual(child, .OK, "the ordinary child completes on its own")
+        XCTAssertEqual(outerResult, .OK)
+        XCTAssertEqual(AbortableModal.depth, 0)
+    }
+
+    /// Two wrapped dialogs: the lock ends the inner one, and the outer one as soon as control is back in its loop.
+    func testLockUnwindsNestedWrappedDialogs() throws {
+        let a = try makeApp()
+        let outer = alert("outer wrapped")
+        var child: NSApplication.ModalResponse?
+        let endOuter = after(1.0) { NSApp.stopModal(withCode: .OK) }
+        let openChild = after(0.05) {
+            let inner = self.alert("inner wrapped")
+            let lockTimer = self.after(0.05) { a.lock() }
+            let endChild = self.after(0.3) { NSApp.stopModal(withCode: .OK) }
+            child = AbortableModal.run(inner)
+            lockTimer.invalidate(); endChild.invalidate(); inner.window.orderOut(nil)
+        }
+        let outerResult = AbortableModal.run(outer)
+        openChild.invalidate(); endOuter.invalidate(); outer.window.orderOut(nil)
+        XCTAssertEqual(child, .abort)
+        XCTAssertEqual(outerResult, .abort)
+        XCTAssertEqual(AbortableModal.depth, 0)
+    }
+
+    /// The restore progress panel under a wrapped parent keeps its own completion: a lock does not stop it.
+    func testRestoreWaitUnderAWrappedParentKeepsItsCompletion() throws {
+        let a = try makeApp()
+        let outer = alert("parent of the restore wait")
+        var result: Result<Void, Error>?
+        let endOuter = after(1.5) { NSApp.stopModal(withCode: .OK) }
+        let openChild = after(0.05) {
+            let lockTimer = self.after(0.05) { a.lock() }
+            result = AppDelegate.sealAndWriteOffMain(message: "wait", seal: { Thread.sleep(forTimeInterval: 0.2); return Data("x".utf8) }, write: { _ in })
+            lockTimer.invalidate()
+            NSApp.stopModal(withCode: .OK)
+        }
+        _ = AbortableModal.run(outer)
+        openChild.invalidate(); endOuter.invalidate(); outer.window.orderOut(nil)
+        guard case .success? = result else { return XCTFail("the wait was ended by the lock: \(String(describing: result))") }
+    }
+
+    /// The lock key's handler is delivered inside a modal loop (RunLoop.perform in the modal mode), where
+    /// a main-queue block — the route of every other hot key — would wait for the dialog to close.
+    func testLockDeliveredInsideAModalOpenedFromAMainQueueBlock() throws {
+        let a = try makeApp()
+        let done = expectation(description: "modal returned")
+        var response: NSApplication.ModalResponse?
+        var lockedInside = false
+        DispatchQueue.main.async {
+            let dialog = self.alert("opened from a main-queue block")
+            let arm = self.after(0.05) {
+                RunLoop.main.perform(inModes: [.modalPanel, .default, .common]) {
+                    lockedInside = NSApp.modalWindow === dialog.window
+                    a.lock()
+                }
+            }
+            let fallback = self.after(1.0) { NSApp.stopModal(withCode: .OK) }
+            response = AbortableModal.run(dialog)
+            arm.invalidate(); fallback.invalidate(); dialog.window.orderOut(nil)
+            done.fulfill()
+        }
+        wait(for: [done], timeout: 3)
+        XCTAssertTrue(lockedInside)
+        XCTAssertEqual(response, .abort)
+    }
+
+    /// A lock between the files and the models of a restore: the stores stay purged, the files hold
+    /// the restored data, and the next unlock loads them (auditor's P2 on PR #28 — before, the
+    /// models were published into a locked app).
+    func testLockDuringCommitDoesNotPublishModels() throws {
+        let a = try makeApp()
+        a.history.add(.text("before"))
+        a.history.flush(); a.templates.flush()
+        let payload = Backup.Payload(history: [.text("RESTORED")], templates: TemplateNode(name: "Template", children: [TemplateNode(name: "r", text: "RESTORED")]), settings: a.settings)
+        let plan = try RestorePlan.make(mode: .replace, payload: payload, currentHistory: a.history.items, currentTemplates: a.templates.root,
+                                        currentSettings: a.settings, restorePreferences: true, folderName: "unused")
+        a.history.onChange = { [unowned a] in if !a.isLocked { a.lock() } }   // the first store change inside commit — publication itself makes none; apply(settings:) does
+        a.restoreInProgress = true
+        XCTAssertThrowsError(try a.commit(plan)) {
+            guard case RestoreCommit.Failure.lockedAfterWrite? = $0 as? RestoreCommit.Failure else { return XCTFail("\($0)") }
+        }
+        XCTAssertTrue(a.isLocked)
+        XCTAssertTrue(a.history.isPurged)
+        XCTAssertTrue(a.templates.isPurged)
+        XCTAssertTrue(a.history.items.isEmpty)
+        XCTAssertTrue(a.templates.root.children.isEmpty)
+        a.history.onChange = nil
+        unlockQuietly(a)
+        a.history.reload()
+        XCTAssertEqual(a.history.items.map(\.plainText), ["RESTORED"], "the files hold the restored data")
+        XCTAssertEqual(a.templates.root.children.first?.name, "r")
+    }
+
+    /// A commit publishes the plan under the *restored* settings: a current history limit of 1 does
+    /// not trim a three-item plan whose settings say 3 (auditor's P2 on d779e27).
+    func testCommitPublishesUnderTheRestoredLimits() throws {
+        let a = try makeApp()
+        var small = a.settings; small.historyMax = 1
+        a.apply(settings: small)
+        a.history.add(.text("before"))
+        a.history.flush(); a.templates.flush()
+        var restored = a.settings; restored.historyMax = 3
+        let items = (1...3).map { ClipItem.text("restored\($0)") }
+        let payload = Backup.Payload(history: items, templates: TemplateNode(name: "Template"), settings: restored)
+        let plan = try RestorePlan.make(mode: .replace, payload: payload, currentHistory: a.history.items, currentTemplates: a.templates.root,
+                                        currentSettings: a.settings, restorePreferences: true, folderName: "unused")
+        XCTAssertEqual(plan.history.count, 3)
+        a.restoreInProgress = true
+        try a.commit(plan)
+        XCTAssertEqual(a.history.items.map(\.plainText), ["restored1", "restored2", "restored3"])
+        XCTAssertEqual(a.settings.historyMax, 3)
+        a.history.flush()
+        XCTAssertEqual(try XCTUnwrap(Storage.load([ClipItem].self, from: Storage.historyURL)).count, 3, "and the file holds all three")
+    }
+
+    /// No lock can land between the two stores being filled: there is no callback in between.
+    func testCommitFillsBothStoresBeforeAnyObserverRuns() throws {
+        let a = try makeApp()
+        var snapshots: [(history: Int, templates: Int, purged: Bool)] = []
+        a.history.onChange = { [unowned a] in snapshots.append((a.history.items.count, a.templates.root.children.count, a.templates.isPurged)) }
+        let payload = Backup.Payload(history: [.text("x")], templates: TemplateNode(name: "Template", children: [TemplateNode(name: "t", text: "t")]), settings: a.settings)
+        let plan = try RestorePlan.make(mode: .replace, payload: payload, currentHistory: a.history.items, currentTemplates: a.templates.root,
+                                        currentSettings: a.settings, restorePreferences: true, folderName: "unused")
+        a.restoreInProgress = true
+        try a.commit(plan)
+        XCTAssertFalse(snapshots.isEmpty)
+        for s in snapshots { XCTAssertEqual(s.history, 1); XCTAssertEqual(s.templates, 1); XCTAssertFalse(s.purged) }
     }
 }

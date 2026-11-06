@@ -123,6 +123,9 @@ extension ClipItem {
 enum RestoreCommit {
     enum Failure: LocalizedError {
         case locked
+        /// The files were written and then Keepit was locked before the models were published:
+        /// the stores stay purged and load the files on unlock. Not a failure of the restore.
+        case lockedAfterWrite
         /// An existing file could not be read before the first write; nothing was written.
         case cannotReadPrevious(String, Error)
         /// The journal could not be written; nothing was written.
@@ -139,6 +142,7 @@ enum RestoreCommit {
         var errorDescription: String? {
             switch self {
             case .locked: return L("Restore cancelled: Keepit was locked meanwhile.")
+            case .lockedAfterWrite: return L("Keepit was locked during the restore. The restored data is on disk and is loaded when you unlock.")
             case .cannotReadPrevious(let name, let e): return LF("Could not read the current %@ before replacing it: %@", name, e.localizedDescription)
             case .cannotJournal(let e): return LF("Could not prepare the undo copy of the current data: %@", e.localizedDescription)
             case .journalArmed: return L("An earlier restore could not be undone completely. Quit and launch Keepit again so it can finish putting the data back.")

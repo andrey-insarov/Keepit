@@ -130,6 +130,21 @@ final class HistoryStore {
         changed()
     }
 
+    /// Restore commit: the items and the settings they are trimmed under, in one step — no observer
+    /// is called and no save is scheduled, so nothing can run between the two stores being filled
+    /// (a lock there purged one and left the other), and the plan's items are trimmed under the
+    /// *restored* limits, not the ones being replaced (auditor's two P2 on PR #28). The caller calls
+    /// `notePublished()` once everything is in place.
+    func publish(_ newItems: [ClipItem], settings s: Settings) {
+        isPurged = false
+        settings = s
+        items = Self.trimmed(Self.uniqueIDs(newItems.compactMap { $0.validated() }), settings: s)
+        revision += 1
+    }
+
+    /// After `publish`: observers and the debounced save, as any change would have had.
+    func notePublished() { changed() }
+
     /// Backup import, "Replace": the imported list becomes the history (trimmed to the limits).
     func replaceAll(_ newItems: [ClipItem]) {
         isPurged = false

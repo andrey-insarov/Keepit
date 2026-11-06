@@ -43,7 +43,7 @@ enum SnippetPromptDialog {
         alert.window.initialFirstResponder = controls.first
 
         NSApp.activate(ignoringOtherApps: true)
-        guard alert.runModal() == .alertFirstButtonReturn else { return nil }
+        guard AbortableModal.run(alert) == .alertFirstButtonReturn else { return nil }
         var answers: [String: String] = [:]
         for (p, c) in zip(prompts, controls) {
             if let pop = c as? NSPopUpButton { answers[p.name] = pop.titleOfSelectedItem ?? p.defaultValue }

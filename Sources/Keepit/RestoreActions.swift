@@ -163,7 +163,10 @@ extension AppDelegate {
                 guard lockCount == lockAtStart else { Vault.error(RestoreCommit.Failure.locked.localizedDescription); return }
                 if dataStamp != stamp { continue }                     // the copy is of an older state: once more
             }
-            do { try commit(plan) } catch {
+            do { try commit(plan) } catch RestoreCommit.Failure.lockedAfterWrite {
+                info(L("Keepit was locked during the restore. The restored data is on disk and is loaded when you unlock."))
+                return
+            } catch {
                 // Undo done (writeFailed, cannotJournal, …): the files are as they were, work goes on.
                 // Undo not done (the journal is still armed): the files are a mix and nothing may be
                 // saved over them — not by the watcher the `defer` would restart, not by anything.
@@ -203,14 +206,24 @@ extension AppDelegate {
     /// The transaction: the three files first, as one; the live stores only when they are on disk.
     /// A failed write leaves the files as they were and throws — nothing in memory has moved.
     func commit(_ plan: RestorePlan) throws {
+        let generation = lockCount
         history.flush(); templates.flush()          // pending debounced saves land first; the journal copies what they wrote
         let templatesJSON = try Storage.encoder.encode(plan.templates)
         let historyJSON = plan.settings.historySave ? try Storage.encoder.encode(plan.history) : nil
         let settingsJSON = try Storage.prettyEncoder.encode(plan.settings)
         try RestoreCommit.writeFiles(templatesJSON: templatesJSON, historyJSON: historyJSON, settingsJSON: settingsJSON)
+        // Both models and the settings they are trimmed under in one step, with no observer called and
+        // no save scheduled in between: nothing — a lock in a callback included — can run while one
+        // store is filled and the other is not, and the items are trimmed under the *restored*
+        // limits, not the ones being replaced. apply(settings:) then runs the usual observers; a lock
+        // landing there purges both stores again, the files hold the restored data and load on
+        // unlock, and the rest (hot keys, Viewer, backup) is the unlock's business.
+        history.publish(plan.history, settings: plan.settings)
+        templates.publish(plan.templates)
         apply(settings: plan.settings)          // trust and backup setup stayed this installation's (RestorePlan)
-        history.replaceAll(plan.history)
-        templates.replaceRoot(plan.templates)
+        guard !isLocked, lockCount == generation else { throw RestoreCommit.Failure.lockedAfterWrite }
+        history.notePublished()
+        templates.changed()
         registerHotKeys()
         viewer?.refresh()
         backup?.noteChange()
