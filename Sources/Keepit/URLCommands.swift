@@ -48,8 +48,10 @@ extension AppDelegate {
     /// the welcome dialogs finish and when a restore ends). A `.keepit` among the pending URLs at
     /// first run is the restore the user asked for, so the generic offer is skipped in its favour.
     func openPendingURLs() {
-        guard isReadyForOpens, !openInProgress, !restoreInProgress else { return }
-        while !pendingOpenURLs.isEmpty, !openInProgress, !restoreInProgress {
+        // An unlock prompt on screen is a barrier too: `open` would call `unlock()`, get the busy
+        // answer, read it as a cancel and drop the URL. The queue waits; `unlock()` calls back here.
+        guard isReadyForOpens, !openInProgress, !restoreInProgress, !unlockInProgress else { return }
+        while !pendingOpenURLs.isEmpty, !openInProgress, !restoreInProgress, !unlockInProgress {
             open(pendingOpenURLs.removeFirst())
         }
     }

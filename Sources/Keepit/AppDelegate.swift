@@ -64,8 +64,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     var autoUnlockForTesting: (() -> Void)?
     /// Tests only: stand in for a successful manual unlock without the dialog.
     func setLockedForTesting(_ v: Bool) { isLocked = v }
+    /// Tests only: an unlock prompt "on screen", and the app past its welcome dialogs.
+    func setUnlockInProgressForTesting(_ v: Bool) { unlockInProgress = v }
+    func setReadyForOpensForTesting(_ v: Bool) { isReadyForOpens = v }
     /// `unlock()` is modal and re-entrant from several places (menu, keepit://, the automatic prompt): one at a time.
-    private var unlockInProgress = false
+    private(set) var unlockInProgress = false
+    /// What macOS says about the screen right now (`CGSessionCopyCurrentDictionary`); nil = unknown.
+    /// Tests replace it. Used where a notification alone does not say whether the desktop is usable.
+    var screenLockedProbe: () -> Bool? = { ScreenState.isLocked() }
     /// One open at a time, the unlock dialog included; a restore from Settings sets the second.
     var openInProgress = false
     var restoreInProgress = false
@@ -259,9 +265,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         // Another user's session ended; ours is in front again — but the screen may still be locked.
         wnc.addObserver(forName: NSWorkspace.sessionDidBecomeActiveNotification, object: nil, queue: .main) { [weak self] _ in
-            guard let self, !self.screenIsLocked else { return }
+            guard let self else { return }
+            if let locked = self.screenLockedProbe() { self.screenIsLocked = locked }
+            guard !self.screenIsLocked else { return }
             self.macCameBack()
         }
+        // Seed the state once: launched behind a locked screen or in an inactive session, the
+        // first notification may already have gone by (Apple documents this for sessionDidResignActive).
+        if let locked = screenLockedProbe() { screenIsLocked = locked }
         // Waking is not being back: the login window usually follows. Only the deadline is checked —
         // the absence and its timer stay, because a timer does not run while the Mac sleeps.
         wnc.addObserver(forName: NSWorkspace.didWakeNotification, object: nil, queue: .main) { [weak self] _ in
@@ -296,8 +307,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         screenLockTimer = t
     }
 
-    /// Woke from sleep: lock if the absence already lasted the delay, otherwise keep waiting.
+    /// Woke from sleep. If macOS says the screen is locked (or cannot say), the absence goes on:
+    /// lock if it already lasted the delay, otherwise keep waiting for `screenIsUnlocked`. If the
+    /// screen is not locked — a Mac that sleeps without asking for a password — the user is back at
+    /// the desktop and no `screenIsUnlocked` will ever come: this wake ends the absence.
     func macWoke() {
+        if let locked = screenLockedProbe() { screenIsLocked = locked }
+        if !screenIsLocked, screenLockedProbe() != nil {
+            macCameBack()
+            return
+        }
         if screenLockPolicy.timerFired(at: Date()) {
             if !isLocked { lock() }
         } else if screenLockPolicy.deadline != nil {
@@ -357,9 +376,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @discardableResult
     @objc func unlock() -> Bool {
         guard isLocked else { return true }
-        guard !unlockInProgress else { return false }      // a prompt is already on screen
+        guard !unlockInProgress else { return false }      // a prompt is already on screen; the queue waits (openPendingURLs)
         unlockInProgress = true
-        defer { unlockInProgress = false }
+        defer {
+            unlockInProgress = false
+            DispatchQueue.main.async { [weak self] in self?.openPendingURLs() }   // whatever arrived during the prompt
+        }
         cancelAutoUnlock()
         guard unlockVault(quitOnFailure: false) else { return false }
         isLocked = false

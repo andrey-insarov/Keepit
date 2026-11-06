@@ -77,6 +77,43 @@ final class ScreenLockIntegrationTests: XCTestCase {
         XCTAssertEqual(a.screenLockPolicy.awaySince, since)
     }
 
+    func testSleepWithoutAScreenLockEndsOnWake() throws {
+        let a = try app(delay: 300)
+        a.screenLockedProbe = { false }                  // no password after sleep: wake = desktop
+        a.macWentAway()                                  // willSleep
+        XCTAssertNotNil(a.screenLockPolicy.awaySince)
+        a.macWoke()                                      // didWake, no screenIsUnlocked will follow
+        XCTAssertNil(a.screenLockPolicy.awaySince)
+        XCTAssertNil(a.screenLockTimer)
+        XCTAssertFalse(a.isLocked)
+    }
+
+    func testSleepBehindALockedScreenKeepsWaitingOnWake() throws {
+        for probe in [{ true }, { nil }] as [() -> Bool?] {
+            let a = try app(delay: 300)
+            a.screenLockedProbe = probe
+            a.macWentAway()
+            let since = a.screenLockPolicy.awaySince
+            a.macWoke()
+            XCTAssertEqual(a.screenLockPolicy.awaySince, since)
+            XCTAssertTrue(a.screenLockTimer?.isValid == true)
+        }
+    }
+
+    func testAnOpenDuringTheUnlockPromptWaitsInTheQueue() throws {
+        let a = try app(delay: 0)
+        a.setReadyForOpensForTesting(true)
+        a.macWentAway()                                  // locked
+        a.setUnlockInProgressForTesting(true)            // the password prompt is up
+        let url = URL(string: "keepit://viewer")!      // URL commands are off: handling it is a beep, no dialog
+        a.application(NSApp, open: [url])
+        XCTAssertEqual(a.pendingOpenURLs, [url], "not dequeued while a prompt is on screen")
+        a.setUnlockInProgressForTesting(false)
+        a.setLockedForTesting(false)
+        a.openPendingURLs()                              // what unlock() does when the prompt is gone
+        XCTAssertTrue(a.pendingOpenURLs.isEmpty)
+    }
+
     // MARK: the automatic prompt
 
     func testOnePromptAfterComingBackWhenLockedWithTouchID() throws {
