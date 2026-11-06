@@ -183,7 +183,14 @@ final class TextTransformTests: XCTestCase {
         // Bounded builder: the refusal comes from the running byte count, not from a finished 150 MiB string.
         XCTAssertNil(TextTransform.underline.apply("abcd", maxBytes: 7))
         XCTAssertEqual(TextTransform.underline.apply("abcd", maxBytes: 12), "a\u{332}b\u{332}c\u{332}d\u{332}")
-        XCTAssertEqual(TextTransform.upper.apply("abcd", maxBytes: 1), "ABCD", "only a decoration can grow the text")
+        XCTAssertNil(TextTransform.upper.apply("abcd", maxBytes: 1), "every transform is measured against the bound")
+        // Unicode case mapping grows text: İ (2 bytes) → i̇ (3), ΐ (2) → Ϊ́ (6). An item at the ceiling must not come back larger.
+        XCTAssertEqual(TextTransform.lower.apply("İ").utf8.count, 3)
+        XCTAssertEqual(TextTransform.upper.apply("ΐ").utf8.count, 6)
+        let atCeiling = ClipItem.text(String(repeating: "İ", count: Limits.textBytesCeiling / 2))
+        XCTAssertEqual(atCeiling.byteSize, Limits.textBytesCeiling)
+        XCTAssertNil(atCeiling.transformed(.lower))
+        XCTAssertNotNil(atCeiling.transformed(.trim))
     }
 
     func testTransformedItemIsNewTextOnlyContent() {

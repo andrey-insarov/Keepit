@@ -78,9 +78,15 @@ enum TextTransform: String, CaseIterable, Codable {
 
     func apply(_ s: String) -> String { apply(s, maxBytes: Int.max) ?? s }
 
-    /// nil when the result would pass `maxBytes` (only a decoration can grow the text; the others
-    /// never need the bound).
+    /// nil when the result would pass `maxBytes`. A decoration is bounded as it is built; every
+    /// other transform is measured once it exists — Unicode case mapping grows text too (İ → i̇,
+    /// ΐ → Ϊ́: 2 bytes → 3 and 6; auditor's P2 on PR #26), so none of them is exempt.
     func apply(_ s: String, maxBytes: Int) -> String? {
+        guard let out = applyUnbounded(s, maxBytes: maxBytes), out.utf8.count <= maxBytes else { return nil }
+        return out
+    }
+
+    private func applyUnbounded(_ s: String, maxBytes: Int) -> String? {
         switch self {
         case .upper:    return s.uppercased()
         case .lower:    return s.lowercased()
