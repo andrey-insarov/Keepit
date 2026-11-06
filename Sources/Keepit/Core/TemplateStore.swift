@@ -134,6 +134,15 @@ final class TemplateStore {
         changed()
     }
 
+    /// Tests only: a tree the validator would refuse, as if it had got past the boundary — for the
+    /// checks downstream (the backup engine runs the reader's own validation on what it sealed).
+    func setRootForTesting(_ node: TemplateNode) {
+        isPurged = false
+        root = node
+        root.relink()
+        changed()
+    }
+
     /// The one way into the tree for a new node (with everything below it): the subtree must validate
     /// on its own and fit under `parent`. False = nothing changed. The caller refreshes the UI.
     @discardableResult
