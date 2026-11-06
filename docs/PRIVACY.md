@@ -1,6 +1,6 @@
 # Privacy Policy — Keepit – Clipboard Manager
 
-*Version 1.6, effective 6 November 2026.*
+*Version 1.7, effective 7 November 2026.*
 
 **In short: the app never sends us anything. Your clipboard history and templates stay on your Mac, under your control — and if you choose to back them up to a folder of yours, the copies are encrypted and go only where you point them (section 2). The only personal data we process at all is what you send us through the support form, and this website's visit statistics (section 6).**
 
@@ -29,7 +29,7 @@ All of it is stored **only on your computer**, in `~/Library/Application Support
 
 ## 4. Security of locally stored data
 
-If you enable password protection, history and templates are stored encrypted with AES-256-GCM using a key derived from your password (PBKDF2-HMAC-SHA256, 200 000 rounds, random salt). The password is never stored. The key is wiped from memory when Keepit locks (manually, when the screen locks, or when the Mac sleeps).
+If you enable password protection, history and templates are stored encrypted with AES-256-GCM using a key derived from your password (PBKDF2-HMAC-SHA256, 200 000 rounds, random salt). The password is never stored. The key is wiped from memory when Keepit locks: when you lock it yourself, when it quits, and — only if you choose a delay in Settings → Security (off by default) — once the Mac has been locked or asleep for that long.
 
 Optional Touch ID unlock keeps a copy of that key in the macOS keychain, protected by the Secure Enclave and bound to your current fingerprints. The optional 24-word recovery phrase is generated and displayed on your Mac once; Keepit does not store it and we never see it. **If you lose both the password and the recovery phrase, the encrypted data cannot be recovered by anyone, including us.**
 

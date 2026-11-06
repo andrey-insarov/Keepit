@@ -171,7 +171,9 @@ struct Settings: Codable, Equatable {
     /// Seconds the Mac has to stay locked or asleep before Keepit locks itself (wipes the key, unloads the
     /// data). 0 = at once; nil = never (the default — a clipboard manager that has to be unlocked twenty
     /// times a day stops being used; `Lock Keepit` is still there for the moments that matter). Only
-    /// matters with a password set. Replaces `lockWithScreen` (3.0.4); the old key is not read.
+    /// matters with a password set. Replaces `lockWithScreen` (3.0.4): a settings file that still has the
+    /// old key keeps what it chose — `true` → 0 (at once), `false` → nil — so an update never weakens a
+    /// protection silently; only new installations start at Never.
     var lockAfterScreenLock: TimeInterval? = nil
     /// Unlock with Touch ID instead of typing the password (password stays as fallback).
     var biometricUnlock = false
@@ -222,7 +224,7 @@ struct Settings: Codable, Equatable {
         case allowURLCommands
         case trustedURLSenders
         case backupEnabled, backupBookmark, backupKeepCount, backupLabel, backupSourceID
-        case lockAfterScreenLockSeconds
+        case lockAfterScreenLockSeconds, lockWithScreen
         case biometricUnlock
         case biometricPasswordChange
         case maxTextBytes
@@ -313,6 +315,8 @@ struct Settings: Codable, Equatable {
         backupSourceID   = try c.decodeIfPresent(String.self, forKey: .backupSourceID)
         if let v = try c.decodeIfPresent(Double.self, forKey: .lockAfterScreenLockSeconds) {
             lockAfterScreenLock = v < 0 ? nil : Limits.clamp(v, 0, 7 * 86400)
+        } else if let old = try c.decodeIfPresent(Bool.self, forKey: .lockWithScreen) {
+            lockAfterScreenLock = old ? 0 : nil
         } else {
             lockAfterScreenLock = d.lockAfterScreenLock
         }

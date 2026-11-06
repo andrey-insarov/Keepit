@@ -53,8 +53,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private(set) var isReadyForOpens = false
     var pendingOpenURLs: [URL] = []
     /// Locking after the Mac has been locked or asleep for a while (Settings → Security).
-    private var screenLockPolicy = ScreenLockPolicy(delay: nil)
-    private var screenLockTimer: Timer?
+    private(set) var screenLockPolicy = ScreenLockPolicy(delay: nil)
+    private(set) var screenLockTimer: Timer?
+    /// What macOS last told us about the screen; `sessionDidBecomeActive` alone does not mean the screen is usable.
+    private(set) var screenIsLocked = false
+    /// The one automatic Touch ID prompt that may be waiting after the Mac came back; cancelled by any
+    /// new absence, lock, settings change or a second "back" event.
+    private(set) var autoUnlockJob: DispatchWorkItem?
+    /// Tests replace the modal unlock with a counter; nil in the app.
+    var autoUnlockForTesting: (() -> Void)?
+    /// Tests only: stand in for a successful manual unlock without the dialog.
+    func setLockedForTesting(_ v: Bool) { isLocked = v }
+    /// `unlock()` is modal and re-entrant from several places (menu, keepit://, the automatic prompt): one at a time.
+    private var unlockInProgress = false
     /// One open at a time, the unlock dialog included; a restore from Settings sets the second.
     var openInProgress = false
     var restoreInProgress = false
@@ -83,6 +94,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func loadStoresForTesting() {
         history = HistoryStore(settings: settings)
         templates = TemplateStore()
+        if monitor == nil { monitor = ClipboardMonitor(settings: settings) }   // idle: never started
     }
 
     /// An undo of a restore did not finish — at launch, or during a restore just now: the files
@@ -233,58 +245,100 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private func observeScreenLock() {
         let dnc = DistributedNotificationCenter.default()
         let wnc = NSWorkspace.shared.notificationCenter
-        for name in [Notification.Name("com.apple.screenIsLocked")] {
-            dnc.addObserver(forName: name, object: nil, queue: .main) { [weak self] _ in self?.macWentAway() }
-        }
-        for name in [NSWorkspace.willSleepNotification, NSWorkspace.sessionDidResignActiveNotification] {
-            wnc.addObserver(forName: name, object: nil, queue: .main) { [weak self] _ in self?.macWentAway() }
+        dnc.addObserver(forName: Notification.Name("com.apple.screenIsLocked"), object: nil, queue: .main) { [weak self] _ in
+            self?.screenLocked(true)
         }
         dnc.addObserver(forName: Notification.Name("com.apple.screenIsUnlocked"), object: nil, queue: .main) { [weak self] _ in
-            self?.macCameBack(screenUsable: true)
+            self?.screenLocked(false)
         }
+        wnc.addObserver(forName: NSWorkspace.willSleepNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.macWentAway()
+        }
+        wnc.addObserver(forName: NSWorkspace.sessionDidResignActiveNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.macWentAway()
+        }
+        // Another user's session ended; ours is in front again — but the screen may still be locked.
         wnc.addObserver(forName: NSWorkspace.sessionDidBecomeActiveNotification, object: nil, queue: .main) { [weak self] _ in
-            self?.macCameBack(screenUsable: true)
+            guard let self, !self.screenIsLocked else { return }
+            self.macCameBack()
         }
-        // Waking is not yet being back at the Mac — the login window usually follows — so no unlock
-        // prompt here, only the deadline check (a timer does not run while the Mac sleeps).
+        // Waking is not being back: the login window usually follows. Only the deadline is checked —
+        // the absence and its timer stay, because a timer does not run while the Mac sleeps.
         wnc.addObserver(forName: NSWorkspace.didWakeNotification, object: nil, queue: .main) { [weak self] _ in
-            self?.macCameBack(screenUsable: false)
+            self?.macWoke()
         }
+    }
+
+    /// The screen-lock notifications: the one "away" / "back" pair macOS reports explicitly.
+    func screenLocked(_ locked: Bool) {
+        screenIsLocked = locked
+        if locked { macWentAway() } else { macCameBack() }
     }
 
     /// Screen locked, Mac going to sleep, or another user's session in front.
-    private func macWentAway() {
+    func macWentAway() {
+        cancelAutoUnlock()
         guard Vault.isEnabled, !isLocked else { return }
         screenLockPolicy.delay = settings.lockAfterScreenLock
         if screenLockPolicy.wentAway(at: Date()) { lock(); return }
-        screenLockTimer?.invalidate()
-        if let deadline = screenLockPolicy.deadline {
-            let t = Timer(fire: deadline, interval: 0, repeats: false) { [weak self] _ in
-                guard let self, self.screenLockPolicy.timerFired(at: Date()) else { return }
-                self.lock()
-            }
-            t.tolerance = 30
-            RunLoop.main.add(t, forMode: .common)
-            screenLockTimer = t
+        armScreenLockTimer()
+    }
+
+    private func armScreenLockTimer() {
+        screenLockTimer?.invalidate(); screenLockTimer = nil
+        guard let deadline = screenLockPolicy.deadline else { return }
+        let t = Timer(fire: deadline, interval: 0, repeats: false) { [weak self] _ in
+            guard let self, self.screenLockPolicy.timerFired(at: Date()), !self.isLocked else { return }
+            self.lock()
+        }
+        t.tolerance = 30
+        RunLoop.main.add(t, forMode: .common)
+        screenLockTimer = t
+    }
+
+    /// Woke from sleep: lock if the absence already lasted the delay, otherwise keep waiting.
+    func macWoke() {
+        if screenLockPolicy.timerFired(at: Date()) {
+            if !isLocked { lock() }
+        } else if screenLockPolicy.deadline != nil {
+            armScreenLockTimer()
         }
     }
 
-    /// Screen unlocked, session active again (`screenUsable`), or merely woken from sleep.
-    private func macCameBack(screenUsable: Bool) {
+    /// The user is back: screen unlocked, or our session active again with the screen unlocked.
+    func macCameBack() {
         screenLockTimer?.invalidate(); screenLockTimer = nil
         if screenLockPolicy.cameBack(at: Date()), Vault.isEnabled, !isLocked { lock() }
-        // Ask for Touch ID right away: the hand is on the keyboard, and finding Keepit locked at the
-        // first ⌥M later is the annoyance the delay exists to avoid.
-        guard screenUsable, isLocked, settings.biometricUnlock, Vault.isEnabled, !openInProgress, !restoreInProgress else { return }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
-            guard let self, self.isLocked, !self.openInProgress, !self.restoreInProgress else { return }
-            _ = self.unlock()
+        scheduleAutoUnlock()
+    }
+
+    /// One automatic Touch ID prompt, 0.8 s after the Mac came back, tied to this lock generation: the
+    /// hand is on the keyboard now, and finding Keepit locked at the first ⌥M is the annoyance the delay
+    /// exists to avoid. Re-checked when it fires; dropped by any new absence, lock or settings change.
+    private func scheduleAutoUnlock() {
+        cancelAutoUnlock()
+        guard isLocked, settings.biometricUnlock, Vault.isEnabled, !unlockInProgress, !openInProgress, !restoreInProgress else { return }
+        let generation = lockCount
+        let job = DispatchWorkItem { [weak self] in
+            guard let self, self.autoUnlockJob != nil else { return }
+            self.autoUnlockJob = nil
+            guard self.isLocked, self.lockCount == generation, !self.screenIsLocked, self.settings.biometricUnlock,
+                  Vault.isEnabled, !self.unlockInProgress, !self.openInProgress, !self.restoreInProgress else { return }
+            if let test = self.autoUnlockForTesting { test() } else { _ = self.unlock() }
         }
+        autoUnlockJob = job
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8, execute: job)
+    }
+
+    private func cancelAutoUnlock() {
+        autoUnlockJob?.cancel()
+        autoUnlockJob = nil
     }
 
     /// Wipe the key, unload history/templates from memory, stop watching the clipboard, drop hot keys.
     @objc func lock() {
         guard Vault.isEnabled, !isLocked else { return }
+        cancelAutoUnlock()
         isLocked = true
         lockCount += 1
         queue.stop()
@@ -303,6 +357,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @discardableResult
     @objc func unlock() -> Bool {
         guard isLocked else { return true }
+        guard !unlockInProgress else { return false }      // a prompt is already on screen
+        unlockInProgress = true
+        defer { unlockInProgress = false }
+        cancelAutoUnlock()
         guard unlockVault(quitOnFailure: false) else { return false }
         isLocked = false
         history.reload()
@@ -624,6 +682,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         monitor.updateSettings(new)
         menuBuilder.settings = new
+        if !new.biometricUnlock || new.lockAfterScreenLock != old.lockAfterScreenLock { cancelAutoUnlock() }
+        if new.lockAfterScreenLock == nil { screenLockTimer?.invalidate(); screenLockTimer = nil; screenLockPolicy = ScreenLockPolicy(delay: nil) }
         menuBuilder.invalidateThumbnails()
         if old.checkForUpdates != new.checkForUpdates {
             updater.isEnabled = new.checkForUpdates
