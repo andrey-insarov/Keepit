@@ -329,7 +329,8 @@ and `⌥L` is there for the moments that matter. *Immediately* locks with the sc
 *15 minutes* or *1 hour* leave a short absence alone — Keepit stays unlocked and keeps recording — and
 lock only when the Mac has been away for the whole time. The same applies when Keepit starts while
 the Mac is already locked or another user's session is in front (a relaunch after an update, say):
-the absence counts from the start. With Touch ID on, Keepit asks for a touch
+the absence counts from the start, as far as macOS reports that state to Keepit (it normally does;
+when it cannot, the next lock or sleep starts the count). With Touch ID on, Keepit asks for a touch
 the moment the Mac is unlocked, so it is ready before the first `⌥M`.
 
 ![Setting the password with the on-screen keyboard. A photograph of the screen, not a screenshot: on the author's Mac a screenshot of this scene shows the dialog alone](site/img/guide/set-password-keyboard.jpg)

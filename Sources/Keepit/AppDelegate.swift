@@ -107,6 +107,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         history = HistoryStore(settings: settings)
         templates = TemplateStore()
         if monitor == nil { monitor = ClipboardMonitor(settings: settings) }   // idle: never started
+        sessionActiveProbe = { nil }                 // a test says so when the session matters; a CI session must not decide
     }
 
     /// An undo of a restore did not finish — at launch, or during a restore just now: the files
@@ -336,7 +337,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         // be read as "back" because the stored flag was still false).
         let state = screenLockedProbe()
         if let state { screenIsLocked = state }
-        if state == false {
+        // An unlocked screen is the user's only if the session is ours: a Mac waking into another
+        // user's session (fast user switching) is not "back", and sessionDidBecomeActive will say
+        // when it is (auditor's P2 on PR #25: the wake ended an absence the seed had started).
+        if state == false, sessionActiveProbe() != false {
             macCameBack()
             return
         }
@@ -348,7 +352,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     /// The user is back: screen unlocked, or our session active again with the screen unlocked.
+    /// Not while our session is known to be off the console — nothing the user could see is back.
     func macCameBack() {
+        guard sessionActiveProbe() != false else { return }
         screenLockTimer?.invalidate(); screenLockTimer = nil
         if screenLockPolicy.cameBack(at: Date()), Vault.isEnabled, !isLocked { lock() }
         scheduleAutoUnlock()
