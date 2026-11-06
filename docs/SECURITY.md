@@ -87,7 +87,10 @@ Turn on *Require password at launch* and the history and templates files are enc
   *Limitations* below.
 - **Locking**: *Lock Keepit* (`⌥L`), quitting, and — if you set a delay in *Settings → Security*
   (off by default) — the Mac having been locked or asleep for that long wipe Keepit's own key buffer
-  and drop the live history and template models. After that Keepit holds nothing it could decrypt
+  and drop the live history and template models (an absence that was already under way when Keepit
+  started counts from the start, where macOS reports the screen and session state — it normally
+  does; otherwise the next lock or sleep starts the count. A Mac waking into another user's
+  session is not "back".) After that Keepit holds nothing it could decrypt
   until you unlock again (the copies Swift and CryptoKit may have made are covered under
   *Limitations*). With the default *Never*, locking the Mac does **not** lock Keepit: the key and
   the decrypted data stay in the process for as long as you are away, protected by the Mac's own
@@ -299,6 +302,16 @@ exhaust memory or disk:
 | Paste queue | 500 items per session | fixed |
 | Backup files | 512 MB | fixed |
 | Password | 256 characters; a prompt answer (`{input:}`) 10 000 | fixed |
+
+The same validator stands between every source and the stores — the clipboard, a backup, a file
+chosen in the Viewer, a `keepit://` command, an edit in the Viewer, and Keepit's own data files when
+they are loaded. Besides the sizes above it checks that a format is what it claims: plain text is
+UTF-8, RTF starts with `{\rtf`, HTML is UTF-8 or UTF-16 with a byte-order mark, an image is a PNG
+by its bytes, a file list holds absolute paths; a format Keepit does not know is kept as bounded
+opaque bytes. A rich format that fails is left out of its item and the text kept; an item whose
+primary content fails is refused. A data file that fails on load is repaired by the same rules
+(and a copy of it, as it was, is kept next to it), so a damaged `history.json` or `templates.json`
+does not take the rest of the data with it.
 
 ## Limitations worth knowing
 

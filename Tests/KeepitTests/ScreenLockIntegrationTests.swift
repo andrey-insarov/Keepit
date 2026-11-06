@@ -214,4 +214,88 @@ final class ScreenLockIntegrationTests: XCTestCase {
             XCTAssertEqual(attempts, 0)
         }
     }
+
+    // MARK: the state at start (the auditor's "startup gap" on 3.0.4)
+
+    /// Launched behind a locked screen (a relaunch after an update, say): the notification that
+    /// would have started the absence has gone by. The seed starts it, and the policy applies.
+    func testSeedBehindLockedScreenLocksAtOnceWithImmediately() throws {
+        let a = try app(delay: 0)
+        a.screenLockedProbe = { true }
+        a.sessionActiveProbe = { true }
+        a.seedScreenState()
+        XCTAssertTrue(a.isLocked)
+        XCTAssertTrue(a.screenIsLocked)
+    }
+
+    func testSeedBehindLockedScreenArmsTheDelay() throws {
+        let a = try app(delay: 300)
+        a.screenLockedProbe = { true }
+        a.seedScreenState()
+        XCTAssertFalse(a.isLocked)
+        XCTAssertNotNil(a.screenLockPolicy.deadline, "the absence began at start")
+        a.screenLocked(false)                                    // the user comes back before the delay
+        XCTAssertFalse(a.isLocked)
+        XCTAssertNil(a.screenLockPolicy.deadline)
+    }
+
+    func testSeedInAnotherUsersSessionStartsTheAbsence() throws {
+        let a = try app(delay: 300)
+        a.screenLockedProbe = { nil }                            // the key is not there in an inactive session
+        a.sessionActiveProbe = { false }
+        a.seedScreenState()
+        XCTAssertNotNil(a.screenLockPolicy.deadline)
+        XCTAssertFalse(a.screenIsLocked, "nil leaves the stored flag alone")
+    }
+
+    func testSeedAtTheDesktopChangesNothing() throws {
+        for (locked, active) in [(false, true), (nil, nil), (false, nil), (nil, true)] as [(Bool?, Bool?)] {
+            let a = try app(delay: 0)
+            a.screenLockedProbe = { locked }
+            a.sessionActiveProbe = { active }
+            a.seedScreenState()
+            XCTAssertFalse(a.isLocked, "\(String(describing: locked)) / \(String(describing: active))")
+            XCTAssertNil(a.screenLockPolicy.deadline)
+        }
+    }
+
+    func testSeedWithNeverStaysUnlockedBehindALockedScreen() throws {
+        let a = try app(delay: nil)
+        a.screenLockedProbe = { true }
+        a.seedScreenState()
+        XCTAssertFalse(a.isLocked)
+        XCTAssertNil(a.screenLockPolicy.deadline)
+        XCTAssertTrue(a.screenIsLocked, "known, so the automatic Touch ID prompt waits for the unlock")
+    }
+
+    /// Auditor's P2 on PR #25: the seed had started an absence (screen not locked, session not on the
+    /// console) and a wake ended it, because "screen not locked" alone used to mean "back".
+    func testWakeCannotEndAnAbsenceWhileTheSessionIsInactive() throws {
+        let a = try app(delay: 300)
+        a.screenLockedProbe = { false }
+        a.sessionActiveProbe = { false }
+        a.seedScreenState()
+        XCTAssertNotNil(a.screenLockPolicy.deadline)
+        a.macWoke()
+        XCTAssertNotNil(a.screenLockPolicy.deadline, "still away: our session is not in front")
+        a.sessionActiveProbe = { true }
+        a.macWoke()
+        XCTAssertNil(a.screenLockPolicy.deadline, "back once the session is ours again")
+    }
+
+    func testInactiveSessionWakeSchedulesNoBiometricPrompt() throws {
+        let a = try app(delay: 0, biometric: true)
+        a.screenLockedProbe = { false }
+        a.sessionActiveProbe = { false }
+        var attempts = 0
+        a.autoUnlockForTesting = { attempts += 1 }
+        a.seedScreenState()
+        XCTAssertTrue(a.isLocked)
+        a.macWoke()
+        letJobsRun()
+        XCTAssertEqual(attempts, 0, "no Touch ID prompt into another user's session")
+        a.screenLocked(false)                                    // a stray "unlocked" while still inactive changes nothing either
+        letJobsRun()
+        XCTAssertEqual(attempts, 0)
+    }
 }

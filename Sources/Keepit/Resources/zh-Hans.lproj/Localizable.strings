@@ -521,3 +521,5 @@
 "After 15 minutes" = "15 分钟后";
 "After 1 hour" = "1 小时后";
 "With a delay, a short absence changes nothing: Keepit stays unlocked and keeps recording. Once the Mac has been locked or asleep for that long, the key is wiped from memory and history and templates are unloaded; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked." = "设置延迟后，短暂离开不会有任何变化：Keepit 保持解锁并继续记录。当 Mac 锁定或睡眠达到该时长后，密钥会从内存中抹除，历史和模板会被卸载；之后用触控 ID 或密码解锁。开启触控 ID 后，Mac 一解锁 Keepit 就会请求指纹。";
+"The edit was not saved: the item would be larger than allowed." = "编辑未保存：该项目将超出允许的大小。";
+"Limit reached: at most %d template hot keys." = "已达上限：模板热键最多 %d 个。";

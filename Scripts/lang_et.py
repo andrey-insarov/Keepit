@@ -521,4 +521,6 @@ T = {
 'After 15 minutes': '15 minuti pärast',
 'After 1 hour': '1 tunni pärast',
 'With a delay, a short absence changes nothing: Keepit stays unlocked and keeps recording. Once the Mac has been locked or asleep for that long, the key is wiped from memory and history and templates are unloaded; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked.': 'Viivitusega ei muuda lühike eemalolek midagi: Keepit jääb lukust lahti ja salvestab edasi. Kui Mac on nii kaua lukus või unerežiimis olnud, kustutatakse võti mälust ning ajalugu ja mallid laaditakse maha; seejärel ava Touch ID või parooliga. Kui Touch ID on sees, küsib Keepit sõrmejälge kohe pärast Maci lukust avamist.',
+'The edit was not saved: the item would be larger than allowed.': 'Muudatust ei salvestatud: üksus ületaks lubatud suuruse.',
+'Limit reached: at most %d template hot keys.': 'Piirang saavutatud: kuni %d malli kiirklahvi.',
 }

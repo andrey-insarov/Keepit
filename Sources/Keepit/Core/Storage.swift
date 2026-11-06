@@ -97,10 +97,16 @@ enum Storage {
             let kind = String(describing: Swift.type(of: error))     // the type only: the description can quote the file
             Log.storage.error("failed to decode \(url.lastPathComponent): \(kind) — a copy was kept next to it")
             // Keep a copy so the user doesn't lose data to a parsing bug.
-            let bak = url.appendingPathExtension("corrupt-\(Int(Date().timeIntervalSince1970))")
-            try? FileManager.default.copyItem(at: url, to: bak)
+            keepCopy(of: url)
             return nil
         }
+    }
+
+    /// `name.corrupt-<unix time>` next to the file: what was on disk before a load changed its mind
+    /// about part of it. Best effort; the encrypted bytes are copied as they are.
+    static func keepCopy(of url: URL) {
+        let bak = url.appendingPathExtension("corrupt-\(Int(Date().timeIntervalSince1970))")
+        try? FileManager.default.copyItem(at: url, to: bak)
     }
 
     /// Write `value` to `url` (encrypted when a key is set). `value` is captured as it is now;

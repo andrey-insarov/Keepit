@@ -308,6 +308,12 @@ final class ViewerWindowController: NSWindowController,
         statusBar.stringValue = LF("Limit reached: at most %d template items, %d levels deep.", Limits.templateMaxCount, Limits.templateMaxDepth)
     }
 
+    /// An edit the store refused: too large for an item, or a format that is not what it claims.
+    private func editBeep() {
+        NSSound.beep()
+        statusBar.stringValue = L("The edit was not saved: the item would be larger than allowed.")
+    }
+
     @objc private func nameFieldChanged() {
         guard let t = selectedNode?.itemNode?.templateNode else { return }
         let new = String(nameField.stringValue.prefix(Limits.templateNameMaxChars))
@@ -441,10 +447,8 @@ final class ViewerWindowController: NSWindowController,
     private func setClip(_ c: ClipItem, for n: VNode) {
         guard let item = n.itemNode else { return }
         switch item.kind {
-        case .history: history.replace(c)
-        case .template(let t):
-            t.clip = c
-            templates.changed()
+        case .history: if !history.replace(c) { editBeep() }
+        case .template(let t): if !templates.update(t, clip: c) { editBeep() }
         default: break
         }
     }
@@ -596,9 +600,7 @@ final class ViewerWindowController: NSWindowController,
         let copy = ClipItem(id: UUID(), date: Date(), formats: c.formats, sourceApp: c.sourceApp, contentHash: c.contentHash)
         let (folder, idx) = templateInsertionPoint()
         let t = TemplateNode(name: "", clip: copy)
-        guard templates.canInsert(t, under: folder) else { limitBeep(); return }
-        folder.insert(t, at: idx)
-        templates.changed()
+        guard templates.insert(t, under: folder, at: idx) else { limitBeep(); return }
         refresh()
         select(key: "t:\(t.id.uuidString)")
     }
@@ -617,15 +619,13 @@ final class ViewerWindowController: NSWindowController,
         if sel?.isInHistory == true {
             let idx = sel?.itemNode?.historyId.flatMap { id in history.items.firstIndex { $0.id == id } } ?? 0
             let c = ClipItem.text("")
-            history.insert(c, at: idx)
+            guard history.insert(c, at: idx) else { NSSound.beep(); return }
             refresh()
             select(key: "h:\(c.id.uuidString)")
         } else {
             let (folder, idx) = templateInsertionPoint()
             let t = TemplateNode(name: "", clip: .text(""))
-            guard templates.canInsert(t, under: folder) else { limitBeep(); return }
-            folder.insert(t, at: idx)
-            templates.changed()
+            guard templates.insert(t, under: folder, at: idx) else { limitBeep(); return }
             refresh()
             select(key: "t:\(t.id.uuidString)")
             window?.makeFirstResponder(nameField)
@@ -638,9 +638,7 @@ final class ViewerWindowController: NSWindowController,
         textFormat.commit()
         let (folder, idx) = templateInsertionPoint()
         let t = TemplateNode(name: L("New Folder"))
-        guard templates.canInsert(t, under: folder) else { limitBeep(); return }
-        folder.insert(t, at: idx)
-        templates.changed()
+        guard templates.insert(t, under: folder, at: idx) else { limitBeep(); return }
         refresh()
         select(key: "t:\(t.id.uuidString)")
         window?.makeFirstResponder(nameField)
@@ -668,9 +666,7 @@ final class ViewerWindowController: NSWindowController,
         guard !app.isLocked, app.lockCount == generation, !templates.isPurged, window?.isVisible == true else { return }
         let (folder, idx) = templateInsertionPoint()
         let t = TemplateNode(name: String(name.prefix(Limits.templateNameMaxChars)), clip: clip)
-        guard templates.canInsert(t, under: folder) else { limitBeep(); return }
-        folder.insert(t, at: idx)
-        templates.changed()
+        guard templates.insert(t, under: folder, at: idx) else { limitBeep(); return }
         refresh()
         select(key: "t:\(t.id.uuidString)")
     }
@@ -734,6 +730,11 @@ final class ViewerWindowController: NSWindowController,
         a.addButton(withTitle: L("Cancel"))
         let r = a.runModal()
         if r == .alertFirstButtonReturn {
+            if rec.hotKey != nil, t.hotKey == nil, templates.hotKeyCount >= Limits.templateHotKeysMax {
+                NSSound.beep()
+                statusBar.stringValue = LF("Limit reached: at most %d template hot keys.", Limits.templateHotKeysMax)
+                return
+            }
             t.hotKey = rec.hotKey
         } else if r == .alertSecondButtonReturn {
             t.hotKey = nil
@@ -1070,7 +1071,7 @@ final class ViewerWindowController: NSWindowController,
                 history.insert(it, at: at)
             } else if let t = src.templateNode, let c = t.clip {
                 let copy = ClipItem(id: UUID(), date: Date(), formats: c.formats, sourceApp: c.sourceApp, contentHash: c.contentHash)
-                history.insert(copy, at: at)
+                guard history.insert(copy, at: at) else { NSSound.beep(); return false }
             } else { return false }
 
         case .templateRoot, .template:
@@ -1082,13 +1083,12 @@ final class ViewerWindowController: NSWindowController,
                 guard templates.canMove(t, under: folder) else { limitBeep(); return false }   // full height of what is moved
                 t.removeFromParent()
                 folder.insert(t, at: at)
+                templates.changed()
             } else if let id = src.historyId, let c = history.item(id: id) {
                 let copy = ClipItem(id: UUID(), date: Date(), formats: c.formats, sourceApp: c.sourceApp, contentHash: c.contentHash)
                 let t = TemplateNode(name: "", clip: copy)
-                guard templates.canInsert(t, under: folder) else { limitBeep(); return false }
-                folder.insert(t, at: at)
+                guard templates.insert(t, under: folder, at: at) else { limitBeep(); return false }
             } else { return false }
-            templates.changed()
 
         default:
             return false

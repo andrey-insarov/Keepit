@@ -25,10 +25,36 @@ final class HistoryStore {
         revision += 1
         items = []
         if settings.historySave, let loaded = Storage.load([ClipItem].self, from: Storage.historyURL) {
-            items = loaded
+            items = Self.validated(loaded)
             trim()
         }
         onChange?()
+    }
+
+    /// The file on disk is decoded, not trusted: every item passes the same validator as a backup's
+    /// (content, hash, unique id). A rich format that fails is dropped from its item; an item whose
+    /// primary content fails, or a second item with an id already seen, is left out — and the file is
+    /// copied aside first, so nothing is lost to a rule that turns out to be too strict.
+    /// First holder of an id wins.
+    static func uniqueIDs(_ items: [ClipItem]) -> [ClipItem] {
+        var ids = Set<UUID>()
+        return items.filter { ids.insert($0.id).inserted }
+    }
+
+    static func validated(_ loaded: [ClipItem]) -> [ClipItem] {
+        var ids = Set<UUID>()
+        var out: [ClipItem] = []
+        var dropped = 0, repaired = 0
+        for item in loaded {
+            guard let ok = item.validated(), ids.insert(ok.id).inserted else { dropped += 1; continue }
+            if ok.formats.count != item.formats.count { repaired += 1 }
+            out.append(ok)
+        }
+        if dropped > 0 || repaired > 0 {
+            Log.storage.error("history.json: \(dropped) items dropped, \(repaired) stripped of a rich format — a copy was kept next to it")
+            Storage.keepCopy(of: Storage.historyURL)
+        }
+        return out
     }
 
     /// Drop everything from memory without touching the disk (lock).
@@ -41,6 +67,8 @@ final class HistoryStore {
     }
 
     func add(_ item: ClipItem) {
+        guard (try? Backup.validate(item: item)) != nil else { Log.storage.error("history: refused an item that fails validation"); return }
+        items.removeAll { $0.id == item.id }                 // one holder per id: the newer takes the place
         if settings.overlapCheck {
             items.removeAll { $0.contentHash == item.contentHash }
         }
@@ -61,18 +89,26 @@ final class HistoryStore {
         items.first { $0.id == id }
     }
 
-    /// Viewer edit: replace an item (same id) in place.
-    func replace(_ item: ClipItem) {
-        guard let idx = items.firstIndex(where: { $0.id == item.id }) else { return }
+    /// Viewer edit: replace an item (same id) in place. False = the edit fails validation (too large,
+    /// not what its format claims) and nothing changed.
+    @discardableResult
+    func replace(_ item: ClipItem) -> Bool {
+        guard let idx = items.firstIndex(where: { $0.id == item.id }) else { return false }
+        guard (try? Backup.validate(item: item)) != nil else { return false }
         items[idx] = item
         changed()
+        return true
     }
 
     /// Insert without dedupe/trim semantics of `add` (used by Viewer "New Item" / drag into history).
-    func insert(_ item: ClipItem, at index: Int) {
+    /// False = the item fails validation and nothing changed.
+    @discardableResult
+    func insert(_ item: ClipItem, at index: Int) -> Bool {
+        guard (try? Backup.validate(item: item)) != nil, !items.contains(where: { $0.id == item.id }) else { return false }
         items.insert(item, at: min(max(0, index), items.count))
         trim()
         changed()
+        return true
     }
 
     /// Viewer Up/Down.
@@ -97,7 +133,7 @@ final class HistoryStore {
     /// Backup import, "Replace": the imported list becomes the history (trimmed to the limits).
     func replaceAll(_ newItems: [ClipItem]) {
         isPurged = false
-        items = newItems
+        items = Self.uniqueIDs(newItems.compactMap { $0.validated() })   // a payload has passed Backup.validate; the store checks on its own account
         trim()
         changed()
     }
@@ -107,9 +143,11 @@ final class HistoryStore {
     @discardableResult
     func merge(_ newItems: [ClipItem]) -> Int {
         var seen = Set(items.map(\.contentHash))
+        var ids = Set(items.map(\.id))
         var added = 0
-        for it in newItems where !seen.contains(it.contentHash) {
+        for it in newItems.compactMap({ $0.validated() }) where !seen.contains(it.contentHash) && !ids.contains(it.id) {
             seen.insert(it.contentHash)
+            ids.insert(it.id)
             items.append(it)
             added += 1
         }

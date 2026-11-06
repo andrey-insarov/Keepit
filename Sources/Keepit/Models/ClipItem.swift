@@ -112,6 +112,31 @@ struct ClipItem: Codable, Identifiable, Equatable {
         return String(data: d, encoding: .utf8)
     }
 
+    /// The item as the validator accepts it, or nil. An item whose only fault is a rich format (RTF,
+    /// HTML) that is not what it claims comes back without that format; one whose primary content
+    /// fails — or whose hash does not match it — is nil. Used when the stores' own files are loaded.
+    func validated() -> ClipItem? {
+        let stripped = droppingInvalidRichFormats()
+        return (try? Backup.validate(item: stripped)) != nil ? stripped : nil
+    }
+
+    /// The item without a secondary rich format (RTF, HTML) whose *content* fails its check — only
+    /// that format; a valid RTF next to a bad HTML stays. Secondary means beside a text, image or
+    /// file-list primary: an item of rich formats alone has its hash over one of them, and nothing
+    /// is dropped from it. A format past its size ceiling is not a content fault and stays, so the
+    /// validator refuses the item as before. The primary and the hash are never touched: this never
+    /// changes what an item *is*, only what it carries alongside.
+    func droppingInvalidRichFormats() -> ClipItem {
+        guard formats[Format.files] != nil || formats[Format.text] != nil || formats[Format.png] != nil else { return self }
+        var out = self
+        for uti in [Format.rtf, Format.html] {
+            guard let d = formats[uti], (try? Backup.validateSize(format: uti, data: d)) != nil,
+                  (try? Backup.validateContent(format: uti, data: d)) == nil else { continue }
+            out.formats[uti] = nil
+        }
+        return out
+    }
+
     /// Same item reduced to its plain-text format only (same id, so history bookkeeping still matches).
     func plainTextOnly() -> ClipItem? {
         guard let d = formats[Format.text] else { return nil }
@@ -223,8 +248,11 @@ struct ClipItem: Codable, Identifiable, Equatable {
                 let text = Data(s.utf8)
                 guard text.count <= settings.maxTextBytes else { return nil }
                 formats[Format.text] = text
-                if let rtf = pb.data(forType: .rtf), rtf.count <= settings.maxTextBytes * 4 { formats[Format.rtf] = rtf }
-                if let html = pb.data(forType: .html), html.count <= settings.maxTextBytes * 4 { formats[Format.html] = html }
+                // A rich format that is not what it claims (Backup.validate(format:)) is left out; the text stays.
+                if let rtf = pb.data(forType: .rtf), rtf.count <= settings.maxTextBytes * 4,
+                   (try? Backup.validate(format: Format.rtf, data: rtf)) != nil { formats[Format.rtf] = rtf }
+                if let html = pb.data(forType: .html), html.count <= settings.maxTextBytes * 4,
+                   (try? Backup.validate(format: Format.html, data: html)) != nil { formats[Format.html] = html }
             }
 
             if let png = Self.pngData(from: pb, maxBytes: settings.maxImageBytes), png.count <= settings.maxImageBytes {

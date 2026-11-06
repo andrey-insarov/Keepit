@@ -65,7 +65,7 @@ final class BackupEngineTests: XCTestCase {
     func testEngineDoesNotReportSuccessForAPayloadTheReaderRejects() throws {
         var deep = TemplateNode(name: "leaf", text: "x")
         for i in 0...Limits.templateMaxDepth { deep = TemplateNode(name: "d\(i)", children: [deep]) }   // one level too many
-        templates.replaceRoot(TemplateNode(name: "Template", children: [deep]))
+        templates.setRootForTesting(TemplateNode(name: "Template", children: [deep]))   // past the store's boundary, which would repair it
         let r = run(force: true)
         guard case .failure(let e) = r, case Backup.Failure.invalidContent? = e as? Backup.Failure else { return XCTFail("\(r)") }
         XCTAssertEqual(ownFiles(), [])

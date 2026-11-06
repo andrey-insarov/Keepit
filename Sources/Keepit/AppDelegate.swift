@@ -72,6 +72,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// What macOS says about the screen right now (`CGSessionCopyCurrentDictionary`); nil = unknown.
     /// Tests replace it. Used where a notification alone does not say whether the desktop is usable.
     var screenLockedProbe: () -> Bool? = { ScreenState.isLocked() }
+    /// Whether our session is on the console (`kCGSessionOnConsoleKey`); nil = unknown. Tests replace it.
+    var sessionActiveProbe: () -> Bool? = { ScreenState.isSessionActive() }
     /// Tests only: the sender of a keepit:// URL (no Apple Event in a test) and the answer to its
     /// confirmation dialog, which may lock Keepit the way a user could while the dialog is open.
     var urlCommandSenderForTesting: URLSender?
@@ -105,6 +107,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         history = HistoryStore(settings: settings)
         templates = TemplateStore()
         if monitor == nil { monitor = ClipboardMonitor(settings: settings) }   // idle: never started
+        sessionActiveProbe = { nil }                 // a test says so when the session matters; a CI session must not decide
     }
 
     /// An undo of a restore did not finish — at launch, or during a restore just now: the files
@@ -165,6 +168,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         hotKeys.isSuppressed = { [weak self] in (self?.openMenus ?? 0) > 0 }
         registerHotKeys()
         Storage.save(settings, to: Storage.settingsURL, encrypt: false, pretty: true)
+        // Last, with everything in place that a lock stops: where the user is right now. Launched
+        // behind a locked screen or in another user's session (a relaunch after an update, a login
+        // item on a second account), the absence starts here and the policy applies to it as to any
+        // other — nothing above this line restarts what a lock stopped.
         observeScreenLock()
         updater.isEnabled = settings.checkForUpdates   // starts Sparkle's scheduled checks, if allowed
 
@@ -274,14 +281,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             guard !self.screenIsLocked else { return }
             self.macCameBack()
         }
-        // Seed the state once: launched behind a locked screen or in an inactive session, the
-        // first notification may already have gone by (Apple documents this for sessionDidResignActive).
-        if let locked = screenLockedProbe() { screenIsLocked = locked }
+        seedScreenState()
         // Waking is not being back: the login window usually follows. Only the deadline is checked —
         // the absence and its timer stay, because a timer does not run while the Mac sleeps.
         wnc.addObserver(forName: NSWorkspace.didWakeNotification, object: nil, queue: .main) { [weak self] _ in
             self?.macWoke()
         }
+    }
+
+    /// The state once, at start: launched behind a locked screen or in an inactive session, the
+    /// notification that would have started the absence has already gone by (Apple documents this
+    /// for sessionDidResignActive), so the absence starts now — the policy then locks at once or
+    /// after its delay, exactly as for an absence that began with a notification. An unknown answer
+    /// (nil) changes nothing: the notifications take over from here.
+    func seedScreenState() {
+        let locked = screenLockedProbe()
+        if let locked { screenIsLocked = locked }
+        if locked == true || sessionActiveProbe() == false { macWentAway() }
     }
 
     /// The screen-lock notifications: the one "away" / "back" pair macOS reports explicitly.
@@ -321,7 +337,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         // be read as "back" because the stored flag was still false).
         let state = screenLockedProbe()
         if let state { screenIsLocked = state }
-        if state == false {
+        // An unlocked screen is the user's only if the session is ours: a Mac waking into another
+        // user's session (fast user switching) is not "back", and sessionDidBecomeActive will say
+        // when it is (auditor's P2 on PR #25: the wake ended an absence the seed had started).
+        if state == false, sessionActiveProbe() != false {
             macCameBack()
             return
         }
@@ -333,7 +352,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     /// The user is back: screen unlocked, or our session active again with the screen unlocked.
+    /// Not while our session is known to be off the console — nothing the user could see is back.
     func macCameBack() {
+        guard sessionActiveProbe() != false else { return }
         screenLockTimer?.invalidate(); screenLockTimer = nil
         if screenLockPolicy.cameBack(at: Date()), Vault.isEnabled, !isLocked { lock() }
         scheduleAutoUnlock()
@@ -1177,9 +1198,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             Paster.paste(item, into: target, monitor: monitor, settings: settings, sendKey: settings.pasteAfterSelect, plainText: true)
         case .addToTemplates:
             let node = TemplateNode(name: "", clip: item)
-            guard templates.canInsert(node, under: templates.root) else { NSSound.beep(); return }
-            templates.root.insert(node)
-            templates.changed()
+            guard templates.insert(node, under: templates.root) else { NSSound.beep(); return }
             viewer?.refresh()
         case .delete:
             history.remove(id: item.id)
@@ -1213,12 +1232,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         guard let id = sender.representedObject as? UUID,
               let item = history.items.first(where: { $0.id == id }) else { return }
         let node = TemplateNode(name: "", clip: item)
-        guard templates.canInsert(node, under: templates.root) else {
+        guard templates.insert(node, under: templates.root) else {
             Vault.error(LF("Limit reached: at most %d template items, %d levels deep.", Limits.templateMaxCount, Limits.templateMaxDepth))
             return
         }
-        templates.root.insert(node)
-        templates.changed()
         viewer?.refresh()
     }
 
@@ -1393,8 +1410,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             NSSound.beep()
             return
         }
-        templates.root.insert(TemplateNode(name: "", text: s))
-        templates.changed()
+        // The pasteboard is read directly here, not through the monitor's size checks: the store's
+        // validator is the limit (text ceiling, tree ceilings).
+        guard templates.insert(TemplateNode(name: "", text: s), under: templates.root) else {
+            Vault.error(LF("Limit reached: at most %d template items, %d levels deep.", Limits.templateMaxCount, Limits.templateMaxDepth))
+            return
+        }
         viewer?.refresh()
     }
 
