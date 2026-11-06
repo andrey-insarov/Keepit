@@ -72,6 +72,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// What macOS says about the screen right now (`CGSessionCopyCurrentDictionary`); nil = unknown.
     /// Tests replace it. Used where a notification alone does not say whether the desktop is usable.
     var screenLockedProbe: () -> Bool? = { ScreenState.isLocked() }
+    /// Whether our session is on the console (`kCGSessionOnConsoleKey`); nil = unknown. Tests replace it.
+    var sessionActiveProbe: () -> Bool? = { ScreenState.isSessionActive() }
     /// Tests only: the sender of a keepit:// URL (no Apple Event in a test) and the answer to its
     /// confirmation dialog, which may lock Keepit the way a user could while the dialog is open.
     var urlCommandSenderForTesting: URLSender?
@@ -165,6 +167,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         hotKeys.isSuppressed = { [weak self] in (self?.openMenus ?? 0) > 0 }
         registerHotKeys()
         Storage.save(settings, to: Storage.settingsURL, encrypt: false, pretty: true)
+        // Last, with everything in place that a lock stops: where the user is right now. Launched
+        // behind a locked screen or in another user's session (a relaunch after an update, a login
+        // item on a second account), the absence starts here and the policy applies to it as to any
+        // other — nothing above this line restarts what a lock stopped.
         observeScreenLock()
         updater.isEnabled = settings.checkForUpdates   // starts Sparkle's scheduled checks, if allowed
 
@@ -274,14 +280,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             guard !self.screenIsLocked else { return }
             self.macCameBack()
         }
-        // Seed the state once: launched behind a locked screen or in an inactive session, the
-        // first notification may already have gone by (Apple documents this for sessionDidResignActive).
-        if let locked = screenLockedProbe() { screenIsLocked = locked }
+        seedScreenState()
         // Waking is not being back: the login window usually follows. Only the deadline is checked —
         // the absence and its timer stay, because a timer does not run while the Mac sleeps.
         wnc.addObserver(forName: NSWorkspace.didWakeNotification, object: nil, queue: .main) { [weak self] _ in
             self?.macWoke()
         }
+    }
+
+    /// The state once, at start: launched behind a locked screen or in an inactive session, the
+    /// notification that would have started the absence has already gone by (Apple documents this
+    /// for sessionDidResignActive), so the absence starts now — the policy then locks at once or
+    /// after its delay, exactly as for an absence that began with a notification. An unknown answer
+    /// (nil) changes nothing: the notifications take over from here.
+    func seedScreenState() {
+        let locked = screenLockedProbe()
+        if let locked { screenIsLocked = locked }
+        if locked == true || sessionActiveProbe() == false { macWentAway() }
     }
 
     /// The screen-lock notifications: the one "away" / "back" pair macOS reports explicitly.

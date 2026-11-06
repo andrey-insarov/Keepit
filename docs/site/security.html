@@ -167,7 +167,8 @@ else: use the pause or the ignore list for such apps, and delete the item from t
   <em>Limitations</em> below.</li>
 <li><strong>Locking</strong>: <em>Lock Keepit</em> (<kbd class="k">⌥L</kbd>), quitting, and — if you set a delay in <em>Settings → Security</em>
   (off by default) — the Mac having been locked or asleep for that long wipe Keepit's own key buffer
-  and drop the live history and template models. After that Keepit holds nothing it could decrypt
+  and drop the live history and template models (an absence that was already under way when Keepit
+  started counts from the start). After that Keepit holds nothing it could decrypt
   until you unlock again (the copies Swift and CryptoKit may have made are covered under
   <em>Limitations</em>). With the default <em>Never</em>, locking the Mac does <strong>not</strong> lock Keepit: the key and
   the decrypted data stay in the process for as long as you are away, protected by the Mac's own

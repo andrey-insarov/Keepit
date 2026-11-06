@@ -87,7 +87,8 @@ Turn on *Require password at launch* and the history and templates files are enc
   *Limitations* below.
 - **Locking**: *Lock Keepit* (`⌥L`), quitting, and — if you set a delay in *Settings → Security*
   (off by default) — the Mac having been locked or asleep for that long wipe Keepit's own key buffer
-  and drop the live history and template models. After that Keepit holds nothing it could decrypt
+  and drop the live history and template models (an absence that was already under way when Keepit
+  started counts from the start). After that Keepit holds nothing it could decrypt
   until you unlock again (the copies Swift and CryptoKit may have made are covered under
   *Limitations*). With the default *Never*, locking the Mac does **not** lock Keepit: the key and
   the decrypted data stay in the process for as long as you are away, protected by the Mac's own
