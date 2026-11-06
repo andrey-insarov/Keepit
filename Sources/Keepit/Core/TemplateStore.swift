@@ -31,9 +31,10 @@ final class TemplateStore {
     /// The file on disk is decoded, not trusted: the tree passes the same validator as a backup's
     /// templates. A tree that fails is repaired, not thrown away — a name is cut to the limit, a
     /// second node with an id already seen gets a new one, a node whose clip fails (after dropping a
-    /// rich format that is not what it claims) is removed with its subtree, as is anything beyond
-    /// the depth or count ceiling; hot keys past the ceiling are cleared. The file is copied aside
-    /// first. If the repair still does not validate, the fresh-install tree is used.
+    /// rich format that is not what it claims) loses the clip but keeps its place and its children
+    /// (it becomes a folder; a childless one is removed), anything beyond the depth or count
+    /// ceiling is pruned, hot keys past the ceiling are cleared. The file is copied aside first.
+    /// If the repair still does not validate, the fresh-install tree is used.
     static func validated(_ loaded: TemplateNode) -> TemplateNode {
         if (try? Backup.validate(tree: loaded)) != nil { return loaded }
         Log.storage.error("templates.json does not validate — repairing; a copy was kept next to it")
@@ -50,11 +51,10 @@ final class TemplateStore {
 
     private static func repair(_ node: TemplateNode, depth: Int, count: inout Int, hotKeys: inout Int, ids: inout Set<UUID>) -> TemplateNode? {
         guard depth <= Limits.templateMaxDepth, count < Limits.templateMaxCount else { return nil }
-        var clip: ClipItem?
-        if let c = node.clip {
-            guard let ok = c.validated() else { return nil }
-            clip = ok
-        }
+        let clip = node.clip?.validated()
+        // A clip that cannot be kept takes nothing else with it: the node stays as a folder for the
+        // children below it (auditor's P2 on PR #25: a bad root clip emptied the whole tree).
+        if node.clip != nil, clip == nil, node.children.isEmpty { return nil }
         count += 1
         let id = ids.insert(node.id).inserted ? node.id : UUID()
         let out = TemplateNode(id: id, name: String(node.name.prefix(Limits.templateNameMaxChars)), clip: clip)
@@ -148,7 +148,7 @@ final class TemplateStore {
     @discardableResult
     func insert(_ node: TemplateNode, under parent: TemplateNode, at index: Int? = nil) -> Bool {
         guard (try? Backup.validate(subtree: node)) != nil, canInsert(node, under: parent),
-              !contains(anyIDOf: node) else { return false }
+              !contains(anyIDOf: node), hotKeyCount + Self.hotKeys(in: node) <= Limits.templateHotKeysMax else { return false }
         parent.insert(node, at: index)
         changed()
         return true
@@ -164,7 +164,10 @@ final class TemplateStore {
     }
 
     /// Items with a hot key, tree-wide.
-    var hotKeyCount: Int { allItems().reduce(0) { $0 + ($1.hotKey != nil ? 1 : 0) } }
+    var hotKeyCount: Int { Self.hotKeys(in: root) }
+    private static func hotKeys(in node: TemplateNode) -> Int {
+        (node.hotKey != nil ? 1 : 0) + node.children.reduce(0) { $0 + hotKeys(in: $1) }
+    }
 
     private func contains(anyIDOf node: TemplateNode) -> Bool {
         var ids = Set<UUID>()

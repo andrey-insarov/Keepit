@@ -35,6 +35,12 @@ final class HistoryStore {
     /// (content, hash, unique id). A rich format that fails is dropped from its item; an item whose
     /// primary content fails, or a second item with an id already seen, is left out — and the file is
     /// copied aside first, so nothing is lost to a rule that turns out to be too strict.
+    /// First holder of an id wins.
+    static func uniqueIDs(_ items: [ClipItem]) -> [ClipItem] {
+        var ids = Set<UUID>()
+        return items.filter { ids.insert($0.id).inserted }
+    }
+
     static func validated(_ loaded: [ClipItem]) -> [ClipItem] {
         var ids = Set<UUID>()
         var out: [ClipItem] = []
@@ -62,6 +68,7 @@ final class HistoryStore {
 
     func add(_ item: ClipItem) {
         guard (try? Backup.validate(item: item)) != nil else { Log.storage.error("history: refused an item that fails validation"); return }
+        items.removeAll { $0.id == item.id }                 // one holder per id: the newer takes the place
         if settings.overlapCheck {
             items.removeAll { $0.contentHash == item.contentHash }
         }
@@ -126,7 +133,7 @@ final class HistoryStore {
     /// Backup import, "Replace": the imported list becomes the history (trimmed to the limits).
     func replaceAll(_ newItems: [ClipItem]) {
         isPurged = false
-        items = newItems.compactMap { $0.validated() }      // a payload has passed Backup.validate; the store checks on its own account
+        items = Self.uniqueIDs(newItems.compactMap { $0.validated() })   // a payload has passed Backup.validate; the store checks on its own account
         trim()
         changed()
     }

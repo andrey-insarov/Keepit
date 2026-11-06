@@ -163,11 +163,30 @@ enum Backup {
     /// Payload JSON → model, checked as the reader will check it. The engine runs this on what it
     /// just sealed, so a file that would not open is never reported as a successful backup.
     static func payload(fromJSON json: Data) throws -> Payload {
-        let payload: Payload
+        var payload: Payload
         do { payload = try Storage.decoder.decode(Payload.self, from: json) } catch { throw Failure.corrupt }
         guard payload.version == payloadVersion else { throw Failure.unsupportedPayloadVersion(payload.version) }
+        payload = normalised(payload)
         try validate(payload)
         return payload
+    }
+
+    /// What a reader may do for an archive before judging it: an item's *secondary* rich format
+    /// (RTF, HTML) that is not what it claims is dropped, the item otherwise untouched. Keepit before
+    /// 3.0.4 recorded those bytes unchecked — an HTML in Latin-1 from one app must not keep the
+    /// text, images, paths and templates of a whole backup from restoring (auditor's P2 on PR #25).
+    /// Nothing else is softened: a primary format, a hash, an id or a limit still fails validation.
+    static func normalised(_ p: Payload) -> Payload {
+        var out = p
+        out.history = p.history.map { $0.droppingInvalidRichFormats() }
+        out.templates = p.templates.clone()
+        normaliseClips(out.templates)
+        return out
+    }
+
+    private static func normaliseClips(_ node: TemplateNode) {
+        if let c = node.clip { node.clip = c.droppingInvalidRichFormats() }
+        node.children.forEach(normaliseClips)
     }
 
     // MARK: Validation
@@ -216,40 +235,43 @@ enum Backup {
 
     private static func validate(_ item: ClipItem, where place: String) throws {
         guard !item.formats.isEmpty else { throw Failure.invalidContent("\(place): item without formats") }
-        for (uti, data) in item.formats {
-            guard !uti.isEmpty, uti.count <= 255 else { throw Failure.invalidContent("\(place): bad format name") }
-            switch uti {
-            case ClipItem.Format.text:
-                guard data.count <= Limits.textBytesCeiling else { throw Failure.invalidContent("\(place): text too large") }
-                guard isUTF8(data) else { throw Failure.invalidContent("\(place): text is not UTF-8") }
-            case ClipItem.Format.rtf:
-                guard data.count <= Limits.textBytesCeiling * 4 else { throw Failure.invalidContent("\(place): rich text too large") }
-                guard data.starts(with: Array("{\\rtf".utf8)) else { throw Failure.invalidContent("\(place): not RTF") }
-            case ClipItem.Format.html:
-                guard data.count <= Limits.textBytesCeiling * 4 else { throw Failure.invalidContent("\(place): rich text too large") }
-                guard isUTF8(data) || data.starts(with: [0xFF, 0xFE]) || data.starts(with: [0xFE, 0xFF]) else {
-                    throw Failure.invalidContent("\(place): HTML is not UTF-8 or UTF-16")
-                }
-            case ClipItem.Format.png:
-                guard data.count <= Limits.imageBytesCeiling, ClipItem.isPNG(data), ClipItem.pixelCountOK(data) else {
-                    throw Failure.invalidContent("\(place): not a PNG, or too large")
-                }
-            case ClipItem.Format.files:
-                guard data.count <= Limits.textBytesCeiling, let paths = try? JSONDecoder().decode([String].self, from: data),
-                      paths.count <= Limits.fileListEntriesCeiling else { throw Failure.invalidContent("\(place): bad file list") }
-                for path in paths {
-                    guard path.hasPrefix("/"), path.utf8.count <= Limits.filePathMaxBytes, !path.utf8.contains(0) else {
-                        throw Failure.invalidContent("\(place): a file path is not an absolute path")
-                    }
-                }
-            default:
-                guard data.count <= Limits.imageBytesCeiling else { throw Failure.invalidContent("\(place): format too large") }
-            }
-        }
+        for (uti, data) in item.formats { try validate(format: uti, data: data, where: place) }
         if let app = item.sourceApp, app.count > Limits.bundleIdMaxChars { throw Failure.invalidContent("\(place): bad source app") }
         let primary = item.formats[ClipItem.Format.files] ?? item.formats[ClipItem.Format.text] ?? item.formats[ClipItem.Format.png]
             ?? item.formats.sorted { $0.key < $1.key }.first!.value
         guard item.contentHash == ClipItem.hash(of: primary) else { throw Failure.invalidContent("\(place): contentHash does not match") }
+    }
+
+    /// One format on its own: its size, and for a known UTI that the bytes are what it claims.
+    static func validate(format uti: String, data: Data, where place: String = "item") throws {
+        guard !uti.isEmpty, uti.count <= 255 else { throw Failure.invalidContent("\(place): bad format name") }
+        switch uti {
+        case ClipItem.Format.text:
+            guard data.count <= Limits.textBytesCeiling else { throw Failure.invalidContent("\(place): text too large") }
+            guard isUTF8(data) else { throw Failure.invalidContent("\(place): text is not UTF-8") }
+        case ClipItem.Format.rtf:
+            guard data.count <= Limits.textBytesCeiling * 4 else { throw Failure.invalidContent("\(place): rich text too large") }
+            guard data.starts(with: Array("{\\rtf".utf8)) else { throw Failure.invalidContent("\(place): not RTF") }
+        case ClipItem.Format.html:
+            guard data.count <= Limits.textBytesCeiling * 4 else { throw Failure.invalidContent("\(place): rich text too large") }
+            guard isUTF8(data) || data.starts(with: [0xFF, 0xFE]) || data.starts(with: [0xFE, 0xFF]) else {
+                throw Failure.invalidContent("\(place): HTML is not UTF-8 or UTF-16")
+            }
+        case ClipItem.Format.png:
+            guard data.count <= Limits.imageBytesCeiling, ClipItem.isPNG(data), ClipItem.pixelCountOK(data) else {
+                throw Failure.invalidContent("\(place): not a PNG, or too large")
+            }
+        case ClipItem.Format.files:
+            guard data.count <= Limits.textBytesCeiling, let paths = try? JSONDecoder().decode([String].self, from: data),
+                  paths.count <= Limits.fileListEntriesCeiling else { throw Failure.invalidContent("\(place): bad file list") }
+            for path in paths {
+                guard path.hasPrefix("/"), path.utf8.count <= Limits.filePathMaxBytes, !path.utf8.contains(0) else {
+                    throw Failure.invalidContent("\(place): a file path is not an absolute path")
+                }
+            }
+        default:
+            guard data.count <= Limits.imageBytesCeiling else { throw Failure.invalidContent("\(place): format too large") }
+        }
     }
 
     private static func validate(_ node: TemplateNode, depth: Int, count: inout Int, hotKeys: inout Int, ids: inout Set<UUID>) throws {
