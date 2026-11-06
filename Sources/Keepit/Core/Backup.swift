@@ -191,6 +191,9 @@ enum Backup {
     /// installation may have been configured up to the ceiling, and what it recorded must restore.
     /// The user's own (narrower) settings govern recording, never reading a backup — and nothing
     /// inside the backup is trusted to set a limit.
+    /// One item on its own — the Viewer's file import and keepit:// use the same rules as a payload.
+    static func validate(item: ClipItem) throws { try validate(item, where: "item") }
+
     private static func validate(_ item: ClipItem, where place: String) throws {
         guard !item.formats.isEmpty else { throw Failure.invalidContent("\(place): item without formats") }
         for (uti, data) in item.formats {

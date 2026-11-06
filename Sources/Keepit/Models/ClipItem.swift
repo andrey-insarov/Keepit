@@ -261,6 +261,11 @@ struct ClipItem: Codable, Identifiable, Equatable {
         return nil
     }
 
+    /// The 8-byte PNG signature — a file is PNG by its bytes, not by its extension or a pasteboard type.
+    static func isPNG(_ data: Data) -> Bool {
+        data.count >= 8 && Array(data.prefix(8)) == [0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]
+    }
+
     /// Width × height from the header, without decoding the pixels. Unreadable headers fail closed.
     static func pixelCountOK(_ data: Data, maxPixels: Int = Limits.imageMaxPixels) -> Bool {
         guard let src = CGImageSourceCreateWithData(data as CFData, nil),

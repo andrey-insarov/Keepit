@@ -652,22 +652,18 @@ final class ViewerWindowController: NSWindowController,
         panel.allowsMultipleSelection = false
         panel.canChooseDirectories = false
         panel.message = L("Create a template item from a file")
-        guard panel.runModal() == .OK, let url = panel.url, let data = try? Data(contentsOf: url) else { return }
-        var clip: ClipItem
-        if let type = UTType(filenameExtension: url.pathExtension), type.conforms(to: .image),
-           let rep = NSBitmapImageRep(data: data), let png = rep.representation(using: .png, properties: [:]) {
-            clip = ClipItem.text("")
-            clip.formats = [ClipItem.Format.png: png]
-            clip.setData(png, for: ClipItem.Format.png)
-        } else if let s = String(data: data, encoding: .utf8) {
-            clip = ClipItem.text(s)
-        } else {
-            clip = ClipItem.text("")
-            clip.setFilePaths([url.path])
-            clip.removeFormat(ClipItem.Format.text)
+        guard panel.runModal() == .OK, let url = panel.url else { return }
+        // Reading and decoding happen off the main thread, within the limits (FileImport); the
+        // result is validated like a backup item before it may enter the tree.
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            let (clip, _) = FileImport.clip(from: url)
+            DispatchQueue.main.async { self?.insertImported(clip, named: url.lastPathComponent) }
         }
+    }
+
+    private func insertImported(_ clip: ClipItem, named name: String) {
         let (folder, idx) = templateInsertionPoint()
-        let t = TemplateNode(name: url.lastPathComponent, clip: clip)
+        let t = TemplateNode(name: String(name.prefix(Limits.templateNameMaxChars)), clip: clip)
         guard templates.canInsert(t, under: folder) else { limitBeep(); return }
         folder.insert(t, at: idx)
         templates.changed()
