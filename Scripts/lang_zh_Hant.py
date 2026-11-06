@@ -528,4 +528,5 @@ T = {
 'Wavy underline': '波浪底線',
 'Remove decorations': '移除裝飾',
 "Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, K strikethrough, D underline, Y wavy underline, X remove decorations, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu. With VoiceOver on, ⌃⌥ is its own modifier — pick another combination here, ⌃⌘ say.": '與字母鍵一起作用於最新項目（剪貼板）的修飾鍵：V 純文字，U 大寫，L 小寫，T 字首大寫，S 句首大寫，W 去除首尾空白，J 合併為一行，K 刪除線，D 底線，Y 波浪底線，X 移除裝飾，A 加入範本，⌫ 刪除。相同的按鍵也會顯示在項目的延伸選單中。開啟 VoiceOver 時，⌃⌥ 是它自己的修飾鍵——請在此選擇其他組合，例如 ⌃⌘。',
+'Keepit was locked during the restore. The restored data is on disk and is loaded when you unlock.': '回復過程中 Keepit 已鎖定。回復的資料已儲存在磁碟上，解鎖時會載入。',
 }

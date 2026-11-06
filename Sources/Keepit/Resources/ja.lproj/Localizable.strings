@@ -528,3 +528,4 @@
 "Wavy underline" = "波線";
 "Remove decorations" = "装飾を取り除く";
 "Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, K strikethrough, D underline, Y wavy underline, X remove decorations, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu. With VoiceOver on, ⌃⌥ is its own modifier — pick another combination here, ⌃⌘ say." = "最新の項目（クリップボード）に文字キーと組み合わせて作用する修飾キー：V プレーンテキスト、U 大文字、L 小文字、T 単語の先頭を大文字、S 文頭を大文字、W 前後の空白を削除、J 1 行に、K 取り消し線、D 下線、Y 波線、X 装飾を取り除く、A テンプレートに追加、⌫ 削除。同じキーは項目の拡張メニューにも表示されます。VoiceOver がオンのときは ⌃⌥ が VoiceOver 自身の修飾キーなので、ここで別の組み合わせ（例：⌃⌘）を選んでください。";
+"Keepit was locked during the restore. The restored data is on disk and is loaded when you unlock." = "復元中に Keepit がロックされました。復元したデータはディスクにあり、ロック解除時に読み込まれます。";

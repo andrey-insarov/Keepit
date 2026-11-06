@@ -163,7 +163,10 @@ extension AppDelegate {
                 guard lockCount == lockAtStart else { Vault.error(RestoreCommit.Failure.locked.localizedDescription); return }
                 if dataStamp != stamp { continue }                     // the copy is of an older state: once more
             }
-            do { try commit(plan) } catch {
+            do { try commit(plan) } catch RestoreCommit.Failure.lockedAfterWrite {
+                info(L("Keepit was locked during the restore. The restored data is on disk and is loaded when you unlock."))
+                return
+            } catch {
                 // Undo done (writeFailed, cannotJournal, …): the files are as they were, work goes on.
                 // Undo not done (the journal is still armed): the files are a mix and nothing may be
                 // saved over them — not by the watcher the `defer` would restart, not by anything.
@@ -203,12 +206,17 @@ extension AppDelegate {
     /// The transaction: the three files first, as one; the live stores only when they are on disk.
     /// A failed write leaves the files as they were and throws — nothing in memory has moved.
     func commit(_ plan: RestorePlan) throws {
+        let generation = lockCount
         history.flush(); templates.flush()          // pending debounced saves land first; the journal copies what they wrote
         let templatesJSON = try Storage.encoder.encode(plan.templates)
         let historyJSON = plan.settings.historySave ? try Storage.encoder.encode(plan.history) : nil
         let settingsJSON = try Storage.prettyEncoder.encode(plan.settings)
         try RestoreCommit.writeFiles(templatesJSON: templatesJSON, historyJSON: historyJSON, settingsJSON: settingsJSON)
         apply(settings: plan.settings)          // trust and backup setup stayed this installation's (RestorePlan)
+        // Nothing above runs a modal loop any more (the hot-key warning is deferred), but a lock can
+        // still land here from a timer or the lock key. The files hold the restored data; a locked
+        // Keepit keeps its stores purged and loads the files on unlock — the models are not published.
+        guard !isLocked, lockCount == generation else { throw RestoreCommit.Failure.lockedAfterWrite }
         history.replaceAll(plan.history)
         templates.replaceRoot(plan.templates)
         registerHotKeys()

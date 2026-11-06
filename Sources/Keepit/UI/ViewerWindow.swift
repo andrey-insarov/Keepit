@@ -791,7 +791,7 @@ final class ViewerWindowController: NSWindowController,
         a.informativeText = LF("%d item(s) will be removed.", history.items.count)
         a.addButton(withTitle: L("Clear"))
         a.addButton(withTitle: L("Cancel"))
-        if a.runModal() == .alertFirstButtonReturn {
+        if AbortableModal.run(a) == .alertFirstButtonReturn, !app.isLocked {
             history.clear()
             refresh()
         }

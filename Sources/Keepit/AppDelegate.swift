@@ -794,7 +794,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 }
             }
         }
-        if let hk = settings.lockHotKey, !hotKeys.register(hk, handler: { [weak self] in self?.lock() }) {
+        if let hk = settings.lockHotKey, !hotKeys.register(hk, immediate: true, handler: { [weak self] in self?.lock() }) {
             failed.append(hk.displayString)
         }
         if let hk = settings.viewerHotKey, !hotKeys.register(hk, handler: { [weak self] in self?.openViewer() }) {
@@ -837,11 +837,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             }
         }
         if !failed.isEmpty, !SelfTest.isActive {
-            // Report hot keys that could not be registered
-            let a = NSAlert()
-            a.messageText = L("Hot key unavailable")
-            a.informativeText = LF("Could not register: %@. Another app or macOS is using it. Change it in Settings → Shortcuts.", failed.joined(separator: ", "))
-            a.runModal()
+            // Report hot keys that could not be registered — after the caller is done, never inside
+            // it: registerHotKeys runs from apply(settings:) in the middle of a restore commit, and a
+            // modal loop there let a lock happen between the files and the models (auditor's P2 on PR #28).
+            DispatchQueue.main.async {
+                let a = NSAlert()
+                a.messageText = L("Hot key unavailable")
+                a.informativeText = LF("Could not register: %@. Another app or macOS is using it. Change it in Settings → Shortcuts.", failed.joined(separator: ", "))
+                a.runModal()
+            }
         }
     }
 

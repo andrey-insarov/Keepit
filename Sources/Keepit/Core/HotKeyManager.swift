@@ -6,7 +6,7 @@ import Foundation
 final class HotKeyManager {
     /// Return true to swallow hot keys for the moment (a menu of ours is tracking).
     var isSuppressed: () -> Bool = { false }
-    private var handlers: [UInt32: () -> Void] = [:]
+    private var handlers: [UInt32: (run: () -> Void, immediate: Bool)] = [:]
     private var refs: [UInt32: EventHotKeyRef] = [:]
     private var eventHandler: EventHandlerRef?
     private var nextId: UInt32 = 1
@@ -33,7 +33,13 @@ final class HotKeyManager {
                 // While one of our menus is open the same combination is also a menu key equivalent,
                 // which AppKit fires itself — don't run the action twice.
                 if manager.isSuppressed() { return noErr }
-                DispatchQueue.main.async { h() }
+                if h.immediate {
+                    // Runs inside a modal loop too (modalPanel is a common mode): a main-queue block
+                    // would wait for the block that opened the dialog to return (auditor's P2 on PR #28).
+                    RunLoop.main.perform(inModes: [.modalPanel, .default, .common], block: h.run)
+                } else {
+                    DispatchQueue.main.async(execute: h.run)
+                }
                 return noErr
             }
             return OSStatus(eventNotHandledErr)
@@ -46,8 +52,10 @@ final class HotKeyManager {
     }
 
     /// Returns false if the combination is taken by another app or the system.
+    /// - Parameter immediate: deliver even while a modal dialog is up (the lock key); other handlers
+    ///   wait for the main queue, so they never open a dialog over another.
     @discardableResult
-    func register(_ hotKey: HotKey, handler: @escaping () -> Void) -> Bool {
+    func register(_ hotKey: HotKey, immediate: Bool = false, handler: @escaping () -> Void) -> Bool {
         let id = nextId
         nextId += 1
         var ref: EventHotKeyRef?
@@ -59,7 +67,7 @@ final class HotKeyManager {
             return false
         }
         refs[id] = r
-        handlers[id] = handler
+        handlers[id] = (handler, immediate)
         return true
     }
 
