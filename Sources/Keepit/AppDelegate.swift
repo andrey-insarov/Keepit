@@ -1347,9 +1347,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// Paste a template; text templates with `{placeholders}` are expanded first (asking for `{input:…}` values).
     func pasteTemplate(_ clip: ClipItem, named name: String, into target: NSRunningApplication?) {
         guard !isLocked else { NSSound.beep(); return }
-        guard clip.kind == .text, let text = clip.plainText, Snippets.containsPlaceholders(text) else {
+        let text: String, prompts: [Snippets.Prompt]
+        switch Snippets.pasteRoute(for: clip) {
+        case .verbatim:
             Paster.paste(clip, into: target, monitor: monitor, settings: settings, sendKey: settings.pasteAfterSelect)
             return
+        case .unescapeOnly(let unescaped):
+            // Only the plain text changes; RTF/HTML and every other format go with it (not setText, which drops them).
+            var out = clip
+            out.setData(Data(unescaped.utf8), for: ClipItem.Format.text)
+            Paster.paste(out, into: target, monitor: monitor, settings: settings, sendKey: settings.pasteAfterSelect)
+            return
+        case .expand(let t, let p):
+            text = t; prompts = p
         }
         // The template's text is in hand before the {input:}/{choice:} dialog opens, and the dialog
         // runs a modal loop in which Keepit can be locked (hot key, screen-lock delay, lock →
@@ -1361,7 +1371,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             guard let items = self?.history.items, n >= 1, n <= items.count else { return nil }
             return items[n - 1].plainText
         }
-        let prompts = Snippets.prompts(in: text)
         var extra: TimeInterval = 0
         if !prompts.isEmpty {
             guard let answers = SnippetPromptDialog.ask(prompts, templateName: MenuBuilder.parseAmpersand(name).title) else { return }

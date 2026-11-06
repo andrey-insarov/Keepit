@@ -2,7 +2,8 @@ import Foundation
 
 /// Placeholders in template text — a light text expander.
 ///
-///     {date} {time} {datetime} {date:yyyy-MM-dd} {date+7d} {date-1m:EEEE}
+///     {date} {time} {datetime} {date:yyyy-MM-dd} {date+7d} {date-1m:EEEE} {date+1y-2d}
+///     {date:long} {time:short} {datetime:medium} {time+1h} {datetime-1d:full}
 ///     {iso} {unix} {weekday} {month} {year}
 ///     {clipboard} {clipboard:2} {clipboard|upper} {clipboard:2|trim|oneline}
 ///     {input:Name} {input:Name=Default} {choice:Label=A|B|C}
@@ -30,6 +31,28 @@ enum Snippets {
     /// Cheap check used on every template paste.
     static func containsPlaceholders(_ s: String) -> Bool {
         s.contains("{") && s.range(of: #"\{[a-z]"#, options: .regularExpression) != nil
+    }
+
+    /// How a template pastes. One decision, made in one place (IMPORT.md, engine change 1):
+    /// - `.verbatim` — no `{…}` token and no `{{`/`}}` escape: the clip pastes with every format, untouched.
+    /// - `.unescapeOnly(text)` — escapes but no token: the clip pastes with all its formats and only the
+    ///   plain text replaced by the unescaped text (`{{` → `{`, `}}` → `}`), so an imported favourite
+    ///   that was escaped on the way in pastes as its source bytes.
+    /// - `.expand(text, prompts)` — tokens present: the expanded plain text, after the prompts, as before.
+    enum Route: Equatable {
+        case verbatim
+        case unescapeOnly(String)
+        case expand(String, [Prompt])
+    }
+
+    static func pasteRoute(for clip: ClipItem) -> Route {
+        guard clip.kind == .text, let text = clip.plainText, text.contains("{") || text.contains("}") else { return .verbatim }
+        let parts = pieces(text)
+        if parts.contains(where: { if case .token = $0 { return true } else { return false } }) {
+            return .expand(text, prompts(in: text))
+        }
+        let literal = parts.map { if case .literal(let l) = $0 { return l } else { return "" } }.joined()
+        return literal == text ? .verbatim : .unescapeOnly(literal)
     }
 
     // MARK: Parsing
@@ -183,42 +206,70 @@ enum Snippets {
         case "iso":
             let f = ISO8601DateFormatter(); return f.string(from: c.now)
         case "unix":     return String(Int(c.now.timeIntervalSince1970))
-        case "time":     return formatted(c.now, format: arg, style: (.none, .short), c)
-        case "datetime": return formatted(c.now, format: arg, style: (.short, .short), c)
         case "weekday":  return formatted(c.now, format: arg ?? "EEEE", style: nil, c)
         case "month":    return formatted(c.now, format: arg ?? "LLLL", style: nil, c)
         case "year":     return formatted(c.now, format: arg ?? "yyyy", style: nil, c)
         default: break
         }
-        // {date}, {date:fmt}, {date+7d}, {date-1m:fmt}
-        if name.lowercased().hasPrefix("date") {
-            let shiftSpec = String(name.dropFirst(4))
+        // {date}, {date:fmt}, {date:long}, {date+7d}, {date-1m:fmt}, {date+1y-2d}; the same for time and
+        // datetime. "datetime" is checked first: it starts with "date".
+        let lower = name.lowercased()
+        for (prefix, base) in [("datetime", (DateFormatter.Style.short, DateFormatter.Style.short)),
+                               ("time", (.none, .short)), ("date", (.short, .none))] where lower.hasPrefix(prefix) {
+            let shiftSpec = String(name.dropFirst(prefix.count))
             guard let date = shifted(c.now, by: shiftSpec, calendar: Calendar.current) else { return nil }
-            return formatted(date, format: arg, style: (.short, .none), c)
+            if let named = namedStyle(arg) {
+                let style = (base.0 == .none ? .none : named, base.1 == .none ? .none : named)
+                return formatted(date, format: nil, style: style, c)
+            }
+            return formatted(date, format: arg, style: base, c)
         }
         return nil
     }
 
-    /// "+7d", "-1m", "+2w", "+1y", "" → shifted date; anything else → nil.
-    /// Grammar: one sign, 1…`Limits.snippetShiftMaxDigits` ASCII digits, one unit — nothing else. `Int(_:)`
-    /// alone accepted "-9223372036854775808" and the negation trapped (auditor, 5 Nov 2026).
+    /// `{date:short|medium|long|full}` — a DateFormatter style by name instead of a pattern.
+    private static func namedStyle(_ arg: String?) -> DateFormatter.Style? {
+        switch arg?.lowercased() {
+        case "short":  return .short
+        case "medium": return .medium
+        case "long":   return .long
+        case "full":   return .full
+        default:       return nil
+        }
+    }
+
+    /// "+7d", "-1m", "+2w", "+1y", "+1y-2d", "" → shifted date; anything else → nil.
+    /// Grammar: up to `Limits.snippetShiftsMax` shifts, each one sign, 1…`Limits.snippetShiftMaxDigits`
+    /// ASCII digits, one unit — nothing else; applied in order. `Int(_:)` alone accepted
+    /// "-9223372036854775808" and the negation trapped (auditor, 5 Nov 2026).
     static func shifted(_ date: Date, by spec: String, calendar: Calendar) -> Date? {
         if spec.isEmpty { return date }
-        guard spec.count >= 3, let sign = spec.first, sign == "+" || sign == "-", let unit = spec.last else { return nil }
-        let digits = spec.dropFirst().dropLast()
-        guard !digits.isEmpty, digits.count <= Limits.snippetShiftMaxDigits,
-              digits.allSatisfy({ $0.isASCII && $0.isNumber }), let n = Int(digits) else { return nil }
-        let amount = sign == "-" ? -n : n
-        let comp: Calendar.Component
-        switch unit {
-        case "d": comp = .day
-        case "w": comp = .weekOfYear
-        case "m": comp = .month
-        case "y": comp = .year
-        case "h": comp = .hour
-        default: return nil
+        var out = date
+        var shifts = 0
+        var i = spec.startIndex
+        while i < spec.endIndex {
+            let sign = spec[i]
+            guard sign == "+" || sign == "-" else { return nil }
+            var j = spec.index(after: i)
+            let digitsStart = j
+            while j < spec.endIndex, spec[j].isASCII, spec[j].isNumber { j = spec.index(after: j) }
+            let digits = spec[digitsStart..<j]
+            guard !digits.isEmpty, digits.count <= Limits.snippetShiftMaxDigits, let n = Int(digits), j < spec.endIndex else { return nil }
+            let comp: Calendar.Component
+            switch spec[j] {
+            case "d": comp = .day
+            case "w": comp = .weekOfYear
+            case "m": comp = .month
+            case "y": comp = .year
+            case "h": comp = .hour
+            default: return nil
+            }
+            shifts += 1
+            guard shifts <= Limits.snippetShiftsMax, let next = calendar.date(byAdding: comp, value: sign == "-" ? -n : n, to: out) else { return nil }
+            out = next
+            i = spec.index(after: j)
         }
-        return calendar.date(byAdding: comp, value: amount, to: date)
+        return out
     }
 
     /// nil when the pattern is longer than `Limits.snippetDateFormatMaxChars` — the token then stays as text.

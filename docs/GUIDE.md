@@ -240,13 +240,14 @@ The most useful ones:
 |-------------|--------|
 | `{date}` `{time}` `{datetime}` | Today's date / current time, system format |
 | `{date:yyyy-MM-dd}` | Any format (`yyyy MM dd EEEE HH mm …`) |
-| `{date+7d}` `{date-1m:MMMM}` | Shifted date: `d` days, `w` weeks, `m` months, `y` years, `h` hours |
+| `{date:long}` `{time:short}` `{datetime:medium}` | A named style: `short` `medium` `long` `full` |
+| `{date+7d}` `{date-1m:MMMM}` `{time+1h}` `{date+1y-2d}` | Shifted: `d` days, `w` weeks, `m` months, `y` years, `h` hours — on `date`, `time`, `datetime`, several in a row |
 | `{clipboard}` `{clipboard:2}` | The clipboard, or history item N |
 | `{clipboard\|upper}` `{clipboard\|trim\|oneline}` | Filters `upper` `lower` `title` `trim` `oneline` `url`, chainable |
 | `{cursor}` | Where the text cursor ends up after pasting |
 | `{user}` `{username}` `{host}` | Full name, account name, computer name |
 | `{uuid}` `{random:1-100}` | A new UUID; a random number |
-| `{{` `}}` | Literal braces |
+| `{{` `}}` | Literal braces — a template of `{{"x":1}}` pastes `{"x":1}` |
 
 The full list is in the [placeholder cheat sheet](#placeholder-cheat-sheet).
 
@@ -581,7 +582,8 @@ Still stuck? [GitHub Issues](https://github.com/andrey-insarov/Keepit/issues) ·
 |-------------|--------|
 | `{date}` `{time}` `{datetime}` | Date / time / both, system format |
 | `{date:yyyy-MM-dd}` `{time:HH:mm}` | Custom format (Unicode date patterns) |
-| `{date+7d}` `{date-1m:MMMM}` | Shifted date: `d` `w` `m` `y` `h` |
+| `{date:long}` `{time:short}` `{datetime:full}` | Named style: `short` `medium` `long` `full` |
+| `{date+7d}` `{date-1m:MMMM}` `{time+1h}` `{datetime-1d:long}` `{date+1y-2d}` | Shifted (`d` `w` `m` `y` `h`; up to four shifts in a row) |
 | `{weekday}` `{month}` `{year}` | Day name, month name, year |
 | `{iso}` `{unix}` | ISO 8601 timestamp, Unix time |
 | `{clipboard}` `{clipboard:2}` | The clipboard (item 1) or item N |
