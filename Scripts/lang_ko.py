@@ -523,4 +523,9 @@ T = {
 'With a delay, a short absence changes nothing: Keepit stays unlocked and keeps recording. Once the Mac has been locked or asleep for that long, the key is wiped from memory and history and templates are unloaded; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked.': '지연을 설정하면 잠깐 자리를 비워도 달라지는 것이 없습니다. Keepit은 잠금 해제 상태로 계속 기록합니다. Mac이 그 시간 동안 잠기거나 잠자기 상태였다면 키가 메모리에서 지워지고 기록과 템플릿이 내려갑니다. 이후 Touch ID나 암호로 잠금을 해제하세요. Touch ID가 켜져 있으면 Mac 잠금 해제 직후 Keepit이 지문을 요청합니다.',
 'The edit was not saved: the item would be larger than allowed.': '편집이 저장되지 않았습니다. 항목이 허용 크기를 초과합니다.',
 'Limit reached: at most %d template hot keys.': '한도에 도달했습니다. 템플릿 단축키는 최대 %d개입니다.',
+'Strikethrough': '취소선',
+'Underline': '밑줄',
+'Wavy underline': '물결 밑줄',
+'Remove decorations': '장식 제거',
+"Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, K strikethrough, D underline, Y wavy underline, X remove decorations, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu. With VoiceOver on, ⌃⌥ is its own modifier — pick another combination here, ⌃⌘ say.": '최신 항목(클립보드)에 글자 키와 함께 작용하는 보조 키: V 일반 텍스트, U 대문자, L 소문자, T 단어 첫 글자 대문자, S 문장 첫 글자 대문자, W 공백 제거, J 한 줄로, K 취소선, D 밑줄, Y 물결 밑줄, X 장식 제거, A 템플릿에 추가, ⌫ 삭제. 같은 키가 항목의 확장 메뉴에도 표시됩니다. VoiceOver가 켜져 있으면 ⌃⌥는 VoiceOver의 보조 키이므로 여기서 다른 조합(예: ⌃⌘)을 선택하세요.',
 }

@@ -523,4 +523,9 @@ T = {
 'With a delay, a short absence changes nothing: Keepit stays unlocked and keeps recording. Once the Mac has been locked or asleep for that long, the key is wiped from memory and history and templates are unloaded; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked.': 'Gecikmeyle kısa bir ayrılık hiçbir şeyi değiştirmez: Keepit kilidi açık kalır ve kaydetmeye devam eder. Mac bu süre boyunca kilitli veya uykuda kaldığında anahtar bellekten silinir, geçmiş ve şablonlar boşaltılır; sonra Touch ID veya parolayla kilidi açın. Touch ID açıkken Keepit, Mac’in kilidi açılır açılmaz parmak izi ister.',
 'The edit was not saved: the item would be larger than allowed.': 'Düzenleme kaydedilmedi: öğe izin verilenden büyük olurdu.',
 'Limit reached: at most %d template hot keys.': 'Sınıra ulaşıldı: en fazla %d şablon kısayol tuşu.',
+'Strikethrough': 'Üstü çizili',
+'Underline': 'Altı çizili',
+'Wavy underline': 'Dalgalı alt çizgi',
+'Remove decorations': 'Süslemeleri kaldır',
+"Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, K strikethrough, D underline, Y wavy underline, X remove decorations, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu. With VoiceOver on, ⌃⌥ is its own modifier — pick another combination here, ⌃⌘ say.": 'Bir harfle birlikte en son öğeye (panoya) etki eden değiştirici tuşlar: V düz metin, U BÜYÜK HARF, L küçük harf, T Başlık Biçimi, S Cümle biçimi, W boşlukları kırp, J tek satır, K üstü çizili, D altı çizili, Y dalgalı alt çizgi, X süslemeleri kaldır, A şablonlara ekle, ⌫ sil. Aynı tuşlar öğenin genişletilmiş menüsünde de gösterilir. VoiceOver açıkken ⌃⌥ onun kendi değiştiricisidir — burada başka bir birleşim seçin, örneğin ⌃⌘.',
 }

@@ -523,3 +523,8 @@
 "With a delay, a short absence changes nothing: Keepit stays unlocked and keeps recording. Once the Mac has been locked or asleep for that long, the key is wiped from memory and history and templates are unloaded; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked." = "遅延を設定すると、短い離席では何も変わりません。Keepitはロック解除のまま記録を続けます。Macがその時間だけロックまたはスリープしていると、キーがメモリから消去され、履歴とテンプレートが解放されます。その後はTouch IDかパスワードでロック解除してください。Touch IDが有効なら、Macのロック解除直後にKeepitが指紋を求めます。";
 "The edit was not saved: the item would be larger than allowed." = "編集は保存されませんでした：項目が許容サイズを超えます。";
 "Limit reached: at most %d template hot keys." = "上限に達しました：テンプレートのホットキーは最大 %d 個です。";
+"Strikethrough" = "取り消し線";
+"Underline" = "下線";
+"Wavy underline" = "波線";
+"Remove decorations" = "装飾を取り除く";
+"Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, K strikethrough, D underline, Y wavy underline, X remove decorations, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu. With VoiceOver on, ⌃⌥ is its own modifier — pick another combination here, ⌃⌘ say." = "最新の項目（クリップボード）に文字キーと組み合わせて作用する修飾キー：V プレーンテキスト、U 大文字、L 小文字、T 単語の先頭を大文字、S 文頭を大文字、W 前後の空白を削除、J 1 行に、K 取り消し線、D 下線、Y 波線、X 装飾を取り除く、A テンプレートに追加、⌫ 削除。同じキーは項目の拡張メニューにも表示されます。VoiceOver がオンのときは ⌃⌥ が VoiceOver 自身の修飾キーなので、ここで別の組み合わせ（例：⌃⌘）を選んでください。";
