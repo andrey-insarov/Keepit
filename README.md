@@ -163,7 +163,7 @@ unrecoverable — by design.
   from memory, stops watching the clipboard and unregisters hot keys. The icon turns into a lock;
   click it → *Unlock Keepit…* to enter the password and resume. Pending edits are saved (encrypted)
   before the key is wiped.
-* *Lock when the Mac is locked or asleep* (Settings → Security; *Never* for new installations, or
+* *Auto-lock Keepit* (Settings → Security; *Never* for new installations, or
   immediately, 5 minutes, 15 minutes, 1 hour) does the same automatically once the Mac has been
   locked, switched to another user or asleep for that long; with Touch ID on, Keepit asks for a touch
   as soon as the Mac is unlocked. A settings file from 3.0.3 keeps what it had: lock-with-screen on

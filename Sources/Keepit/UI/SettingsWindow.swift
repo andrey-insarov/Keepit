@@ -439,7 +439,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             [NSView(), button(changePw)],
             [NSView(), help(check(touchID), L("Unlock with a fingerprint instead of typing the password. The password always remains as fallback."))],
             [NSView(), help(check(touchIDChange), L("Let Touch ID stand in for the current password when changing it. Off = always type the current password first."))],
-            row(L("Lock when the Mac is locked or asleep:"), help(popup(lockAfter, Self.lockDelays.map { $0.1 }), L("With a delay, a short absence changes nothing: Keepit stays unlocked and keeps recording. Once the Mac has been locked or asleep for that long, the key is wiped from memory and history and templates are unloaded; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked."))),
+            row(L("Auto-lock Keepit:"), help(popup(lockAfter, Self.lockDelays.map { $0.1 }), L("Lock Keepit on its own once the Mac has been locked or asleep for this long. Never: locking the Mac leaves Keepit unlocked. Immediately: Keepit locks with the Mac. With a delay, a short absence changes nothing — Keepit stays unlocked and keeps recording — and a longer one wipes the key from memory and unloads history and templates; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked."))),
             header(L("Recovery phrase")),
             [NSView(), help(button(newPhrase), L("Issues a new 24-word phrase and invalidates the old one. Use it if the printed sheet was lost or seen by someone; you will then be offered to change the password too."))],
         ])
