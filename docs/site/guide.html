@@ -169,6 +169,14 @@ one-line texts have no preview — the menu line already shows them whole.</p>
 <td>Paste the clipboard joined into one line</td>
 </tr>
 <tr>
+<td><kbd class="k">⌃⌥K</kbd> <kbd class="k">⌃⌥D</kbd> <kbd class="k">⌃⌥Y</kbd></td>
+<td>Paste the clipboard struck through / underlined / with a wavy underline — as plain text that keeps its look anywhere, chats included (see below)</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥X</kbd></td>
+<td>Paste the clipboard with those decorations removed</td>
+</tr>
+<tr>
 <td><kbd class="k">⌃⌥A</kbd></td>
 <td>Add the clipboard to Templates</td>
 </tr>
@@ -178,6 +186,12 @@ one-line texts have no preview — the menu line already shows them whole.</p>
 </tr>
 </tbody>
 </table></div>
+<p>The three decorations are not formatting: Keepit adds a Unicode <em>combining mark</em> after every
+character (a̶ ̶l̶i̶n̶e̶ ̶t̶h̶r̶o̶u̶g̶h̶, a̲ ̲l̲i̲n̲e̲ ̲u̲n̲d̲e̲r̲, a̰ ̰w̰a̰v̰y̰ ̰o̰n̰ḛ), so the text looks the same in a
+messenger, a web form or a terminal, where real formatting would be lost. The price: such text is
+three times the size, a search for the plain word will not find it, screen readers stumble over it,
+and some fonts draw the line unevenly. <em>Remove decorations</em> (<kbd class="k">⌃⌥X</kbd>) takes the marks off again —
+also from text decorated elsewhere.</p>
 <p>Transformations apply to text; for an image or a file list the key beeps. All of these can be
 changed or switched off in <em>Settings → Shortcuts</em>.</p>
 <h3 id="the-paste-queue">The paste queue</h3>
@@ -628,6 +642,10 @@ Keepit 3.0 or newer</em> means the file was written by a newer version than the 
 <tr>
 <td><kbd class="k">⌃⌥W</kbd> <kbd class="k">⌃⌥J</kbd></td>
 <td>Trimmed / single line</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥K</kbd> <kbd class="k">⌃⌥D</kbd> <kbd class="k">⌃⌥Y</kbd> <kbd class="k">⌃⌥X</kbd></td>
+<td>Strikethrough / underline / wavy underline / remove decorations</td>
 </tr>
 <tr>
 <td><kbd class="k">⌃⌥A</kbd></td>

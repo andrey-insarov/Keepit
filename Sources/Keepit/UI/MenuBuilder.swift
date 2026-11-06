@@ -92,6 +92,7 @@ final class MenuBuilder {
         m.addItem(group)
         for la in HotKey.LatestAction.allCases {
             guard let t = la.transform else { continue }
+            if la == .strikethrough { m.addItem(.separator()) }          // case and whitespace above, decorations below
             add("   " + t.title, a.transform, key: la, object: TransformChoice(id: item.id, transform: t), enabled: isText)
         }
         m.addItem(.separator())

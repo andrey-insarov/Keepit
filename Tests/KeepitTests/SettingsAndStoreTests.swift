@@ -144,6 +144,31 @@ final class TextTransformTests: XCTestCase {
         XCTAssertEqual(TextTransform.singleLine.apply("one\n  two\r\n\nthree"), "one two three")
     }
 
+    /// 3.0.5: decorations as combining marks after every character (spaces included, so the line
+    /// runs through), none after line breaks or tabs; re-decorating replaces rather than stacks;
+    /// Remove decorations strips every mark the family uses, including ones other tools write.
+    func testDecorations() {
+        XCTAssertEqual(TextTransform.strikethrough.apply("ab c"), "a\u{336}b\u{336} \u{336}c\u{336}")
+        XCTAssertEqual(TextTransform.underline.apply("é\n\tz"), "é\u{332}\n\tz\u{332}")
+        XCTAssertEqual(TextTransform.wavy.apply("🚀"), "🚀\u{330}")
+        let once = TextTransform.strikethrough.apply("hi")
+        XCTAssertEqual(TextTransform.strikethrough.apply(once), once, "no stacking")
+        XCTAssertEqual(TextTransform.underline.apply(once), "h\u{332}i\u{332}", "switching replaces")
+        XCTAssertEqual(TextTransform.undecorate.apply(once), "hi")
+        XCTAssertEqual(TextTransform.undecorate.apply("a\u{335}b\u{333}c\u{330}"), "abc")
+        XCTAssertEqual(TextTransform.undecorate.apply("plain"), "plain")
+        XCTAssertEqual(TextTransform.upper.apply(once), "H\u{336}I\u{336}", "other transforms leave marks alone")
+        XCTAssertEqual(TextTransform.allCases.count, 11)
+        XCTAssertEqual(HotKey.LatestAction.allCases.map(\.keyChar).joined(), "vultswjkdyxa\u{8}")
+        XCTAssertEqual(Set(HotKey.LatestAction.allCases.map(\.keyCode)).count, HotKey.LatestAction.allCases.count, "one key per action")
+    }
+
+    func testDecoratedItemOverTheCeilingIsRefused() {
+        let big = ClipItem.text(String(repeating: "x", count: Limits.textBytesCeiling / 2))   // ×3 would pass the ceiling
+        XCTAssertNil(big.transformed(.strikethrough))
+        XCTAssertNotNil(big.transformed(.upper))
+    }
+
     func testTransformedItemIsNewTextOnlyContent() {
         let item = ClipItem(id: UUID(), date: Date(), formats: [ClipItem.Format.text: Data("abc".utf8), ClipItem.Format.rtf: Data("x".utf8)],
                             sourceApp: nil, contentHash: "h")

@@ -128,8 +128,17 @@ Global hot keys act on the history as it is right now — item 1 is the clipboar
 | `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | Paste the clipboard as UPPERCASE / lowercase / Title Case / Sentence case |
 | `⌃⌥W` | Paste the clipboard trimmed of leading and trailing whitespace |
 | `⌃⌥J` | Paste the clipboard joined into one line |
+| `⌃⌥K` `⌃⌥D` `⌃⌥Y` | Paste the clipboard struck through / underlined / with a wavy underline — as plain text that keeps its look anywhere, chats included (see below) |
+| `⌃⌥X` | Paste the clipboard with those decorations removed |
 | `⌃⌥A` | Add the clipboard to Templates |
 | `⌃⌥⌫` | Delete the newest item from the history |
+
+The three decorations are not formatting: Keepit adds a Unicode *combining mark* after every
+character (a̶ ̶l̶i̶n̶e̶ ̶t̶h̶r̶o̶u̶g̶h̶, a̲ ̲l̲i̲n̲e̲ ̲u̲n̲d̲e̲r̲, a̰ ̰w̰a̰v̰y̰ ̰o̰n̰ḛ), so the text looks the same in a
+messenger, a web form or a terminal, where real formatting would be lost. The price: such text is
+three times the size, a search for the plain word will not find it, screen readers stumble over it,
+and some fonts draw the line unevenly. *Remove decorations* (`⌃⌥X`) takes the marks off again —
+also from text decorated elsewhere.
 
 Transformations apply to text; for an image or a file list the key beeps. All of these can be
 changed or switched off in *Settings → Shortcuts*.
@@ -554,6 +563,7 @@ Still stuck? [GitHub Issues](https://github.com/andrey-insarov/Keepit/issues) ·
 | `⌃⌥V` | Paste the clipboard as plain text |
 | `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | UPPERCASE / lowercase / Title Case / Sentence case |
 | `⌃⌥W` `⌃⌥J` | Trimmed / single line |
+| `⌃⌥K` `⌃⌥D` `⌃⌥Y` `⌃⌥X` | Strikethrough / underline / wavy underline / remove decorations |
 | `⌃⌥A` | Add the clipboard to Templates |
 | `⌃⌥⌫` | Delete the newest item |
 | `⌥N` · `⌥V` · `⌥⇧N` | Paste queue: start / stop · paste next · paste all remaining |

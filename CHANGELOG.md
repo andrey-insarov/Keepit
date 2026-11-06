@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.5 — unreleased
+
+- *Paste as* ▸ **Strikethrough**, **Underline**, **Wavy underline** and **Remove decorations** (`⌃⌥K` `⌃⌥D` `⌃⌥Y` `⌃⌥X` on the clipboard). Not formatting but Unicode combining marks after every character — plain text that keeps its look in a chat, a web form or a terminal, where RTF would be lost. Decorating decorated text replaces the marks rather than stacking them; *Remove decorations* strips the marks of this family, also from text decorated elsewhere. A decoration triples the bytes; a result past the text ceiling is refused.
+
 ## 3.0.4 — 2026-11-06
 
 Security hardening after an independent review of everything Keepit reads from outside, plus one change to how it locks.

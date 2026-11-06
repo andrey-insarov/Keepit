@@ -15,11 +15,12 @@ struct HotKey: Codable, Equatable {
     static func optionShift(_ key: Int) -> HotKey { HotKey(keyCode: UInt32(key), modifiers: UInt32(optionKey | shiftKey)) }
     /// Letters of the "actions on the latest item" hot keys (<mods> + letter), shared by the menu and the registry.
     enum LatestAction: CaseIterable {
-        case plain, upper, lower, title, sentence, trim, singleLine, addToTemplates, delete
+        case plain, upper, lower, title, sentence, trim, singleLine, strikethrough, underline, wavy, undecorate, addToTemplates, delete
         var keyChar: String {
             switch self {
             case .plain: return "v"; case .upper: return "u"; case .lower: return "l"; case .title: return "t"
             case .sentence: return "s"; case .trim: return "w"; case .singleLine: return "j"
+            case .strikethrough: return "k"; case .underline: return "d"; case .wavy: return "y"; case .undecorate: return "x"
             case .addToTemplates: return "a"; case .delete: return "\u{8}"
             }
         }
@@ -27,13 +28,18 @@ struct HotKey: Codable, Equatable {
             switch self {
             case .plain: return UInt32(kVK_ANSI_V); case .upper: return UInt32(kVK_ANSI_U); case .lower: return UInt32(kVK_ANSI_L)
             case .title: return UInt32(kVK_ANSI_T); case .sentence: return UInt32(kVK_ANSI_S); case .trim: return UInt32(kVK_ANSI_W)
-            case .singleLine: return UInt32(kVK_ANSI_J); case .addToTemplates: return UInt32(kVK_ANSI_A); case .delete: return UInt32(kVK_Delete)
+            case .singleLine: return UInt32(kVK_ANSI_J)
+            case .strikethrough: return UInt32(kVK_ANSI_K); case .underline: return UInt32(kVK_ANSI_D)
+            case .wavy: return UInt32(kVK_ANSI_Y); case .undecorate: return UInt32(kVK_ANSI_X)
+            case .addToTemplates: return UInt32(kVK_ANSI_A); case .delete: return UInt32(kVK_Delete)
             }
         }
         var transform: TextTransform? {
             switch self {
             case .upper: return .upper; case .lower: return .lower; case .title: return .title
             case .sentence: return .sentence; case .trim: return .trim; case .singleLine: return .singleLine
+            case .strikethrough: return .strikethrough; case .underline: return .underline
+            case .wavy: return .wavy; case .undecorate: return .undecorate
             default: return nil
             }
         }
@@ -121,7 +127,7 @@ struct Settings: Codable, Equatable {
     var templateHotKey = HotKey.optionT
     var previousHotKey: HotKey? = HotKey.optionShiftV   // paste history item #2 directly, no menu
     var numberPasteModifiers: UInt32? = HotKey.controlOption   // <mods>+1…9,0 paste item N; nil = off
-    var latestActionModifiers: UInt32? = HotKey.controlOption  // <mods>+V/U/L/T/S/W/J/A/⌫ act on item #1; nil = off
+    var latestActionModifiers: UInt32? = HotKey.controlOption  // <mods>+V/U/L/T/S/W/J/K/D/Y/X/A/⌫ act on item #1; nil = off
     var lockHotKey: HotKey? = HotKey.option(kVK_ANSI_L)         // global "Lock Keepit"
     var pauseHotKey: HotKey? = HotKey.option(kVK_ANSI_P)        // global "Pause recording for 10 minutes"
     var viewerHotKey: HotKey? = HotKey.option(kVK_ANSI_E)       // global "Viewer…" (was ⌥V before 2.10; ⌥V now pastes from the queue)

@@ -523,4 +523,8 @@ T = {
 'With a delay, a short absence changes nothing: Keepit stays unlocked and keeps recording. Once the Mac has been locked or asleep for that long, the key is wiped from memory and history and templates are unloaded; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked.': 'Z opóźnieniem krótka nieobecność nic nie zmienia: Keepit pozostaje odblokowany i nadal nagrywa. Gdy Mac pozostanie zablokowany lub uśpiony przez ten czas, klucz jest usuwany z pamięci, a historia i szablony są wyładowywane; potem odblokuj przez Touch ID lub hasłem. Przy włączonym Touch ID Keepit prosi o odcisk palca zaraz po odblokowaniu Maca.',
 'The edit was not saved: the item would be larger than allowed.': 'Zmiana nie została zapisana: element przekroczyłby dozwolony rozmiar.',
 'Limit reached: at most %d template hot keys.': 'Osiągnięto limit: najwyżej %d skrótów szablonów.',
+'Strikethrough': 'Przekreślony',
+'Underline': 'Podkreślony',
+'Wavy underline': 'Falowane podkreślenie',
+'Remove decorations': 'Usuń ozdobniki',
 }

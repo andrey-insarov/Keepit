@@ -592,3 +592,8 @@
 
 "The edit was not saved: the item would be larger than allowed." = "The edit was not saved: the item would be larger than allowed.";
 "Limit reached: at most %d template hot keys." = "Limit reached: at most %d template hot keys.";
+
+"Strikethrough" = "Strikethrough";
+"Underline" = "Underline";
+"Wavy underline" = "Wavy underline";
+"Remove decorations" = "Remove decorations";
