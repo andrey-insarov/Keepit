@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.0.4 — 2026-11-06
+
+Security hardening after an independent review of everything Keepit reads from outside, plus one change to how it locks.
+
+- **Lock when the Mac is locked or asleep** is now a delay, not a switch: *Never*, *Immediately*, *After 5 minutes*, *After 15 minutes*, *After 1 hour* (Settings → Security). A short absence no longer locks Keepit; a longer one does. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked. New installations start at *Never*; a settings file from 3.0.3 keeps its choice (lock-with-screen on → *Immediately*, off → *Never*). Privacy policy 1.7 and the Security page describe what *Never* means.
+- Templates: a malformed date shift such as `{date--9223372036854775808d}` crashed the app when pasted; shifts are now one sign, up to four digits and a unit, and anything else stays as text. `{random:}` and `{clipboard:}` arguments are bounded; a template may ask at most 20 questions with 50 choices each; an expansion never grows past one text item.
+- Every file Keepit reads from outside — a backup, a file chosen in the Viewer, its own data files — goes through one bounded reader: regular files only, at most the limit, counted as read. The Viewer's *file import* checks an image's size from its header before decoding it and validates the result like a backup item before it enters the tree; larger or undecodable files become file references with nothing read. An import that finishes after Keepit was locked is discarded.
+- keepit:// commands are parsed against a list of eleven commands with the parameters each one takes and size limits, before any dialog; at most 32 URLs wait while the app is starting or an unlock prompt is on screen (they are no longer dropped during an unlock).
+- Support form on keep.it.com: an attachment is accepted as an image only after a bounded check of its structure down to the pixel data (PNG, JPEG, GIF, WebP, HEIC); the message type is checked as a real key, not an inherited one.
+
 ## 3.0.3 — 2026-11-05
 
 - History menu: after *Delete* the menu came back with the full list — the search text was put into the field after the menu had already been shown (`popUp` returns only when the menu closes), so it applied to the next opening instead. The reopened menu is now built with the search applied (auditor's P2 on 3.0.2; `HistoryMenuTests`)

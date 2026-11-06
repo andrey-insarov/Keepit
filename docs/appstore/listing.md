@@ -59,6 +59,10 @@ Keepit needs the Accessibility permission to paste for you; without it, chosen i
 ## Keywords (100 chars, comma-separated)
 clipboard,history,paste,copy,snippets,templates,manager,queue,text expander,productivity
 
+## What's new (version 3.0.4)
+• Lock when the Mac is locked or asleep: never, immediately, or after 5 / 15 / 60 minutes — a short break no longer locks Keepit; with Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked.
+• Hardening of everything Keepit reads from outside: templates, imported files, keepit:// commands.
+
 ## What's new (version 3.0.3)
 • Delete in the history menu keeps your search: the menu comes back filtered, as it was.
 
