@@ -321,8 +321,14 @@ starts. *Viewer* ⌥E, *Settings* ⌥S, *Clear History* ⌥C, *Pause recording* 
 
 *Settings → Security → Require password at launch* encrypts the history and templates with
 AES-256-GCM. The key is derived from your password (PBKDF2, 200 000 rounds) and lives only in
-memory; it is wiped when Keepit locks — *Lock Keepit* (`⌥L`), on quit, and optionally
-when the screen locks or the Mac sleeps.
+memory; it is wiped when Keepit locks — *Lock Keepit* (`⌥L`), on quit, and optionally after
+the Mac has been locked or asleep for a while. *Lock when the Mac is locked or asleep* is **Never**
+for a new installation (an update from 3.0.3 keeps its old choice — *Immediately* if the lock-with-screen
+box was on): a clipboard manager that asks for its password after every coffee break stops being used,
+and `⌥L` is there for the moments that matter. *Immediately* locks with the screen; *After 5 minutes*,
+*15 minutes* or *1 hour* leave a short absence alone — Keepit stays unlocked and keeps recording — and
+lock only when the Mac has been away for the whole time. With Touch ID on, Keepit asks for a touch
+the moment the Mac is unlocked, so it is ready before the first `⌥M`.
 
 ![Setting the password with the on-screen keyboard. A photograph of the screen, not a screenshot: on the author's Mac a screenshot of this scene shows the dialog alone](site/img/guide/set-password-keyboard.jpg)
 

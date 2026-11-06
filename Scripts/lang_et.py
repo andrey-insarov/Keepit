@@ -515,4 +515,10 @@ T = {
 'Archive saved: %d history item(s), %d template item(s).': 'Arhiiv salvestatud: %d ajaloo üksust, %d malliüksust.',
 'Could not save the archive: %@': 'Arhiivi ei õnnestunud salvestada: %@',
 'Enter the password this archive was saved with.': 'Sisestage parool, millega see arhiiv salvestati.',
+'Lock when the Mac is locked or asleep:': 'Lukusta, kui Mac on lukus või unerežiimis:',
+'Immediately': 'Kohe',
+'After 5 minutes': '5 minuti pärast',
+'After 15 minutes': '15 minuti pärast',
+'After 1 hour': '1 tunni pärast',
+'With a delay, a short absence changes nothing: Keepit stays unlocked and keeps recording. Once the Mac has been locked or asleep for that long, the key is wiped from memory and history and templates are unloaded; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked.': 'Viivitusega ei muuda lühike eemalolek midagi: Keepit jääb lukust lahti ja salvestab edasi. Kui Mac on nii kaua lukus või unerežiimis olnud, kustutatakse võti mälust ning ajalugu ja mallid laaditakse maha; seejärel ava Touch ID või parooliga. Kui Touch ID on sees, küsib Keepit sõrmejälge kohe pärast Maci lukust avamist.',
 }

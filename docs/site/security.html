@@ -2,7 +2,7 @@
 <title>Keepit Security – Encrypted Clipboard Manager for Mac</title><link rel="icon" href="img/icon.png?v=a1519b94"><link rel="apple-touch-icon" href="img/icon.png?v=a1519b94">
 <meta name="description" content="What Keepit stores and where, how the clipboard history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download.">
 <link rel="canonical" href="https://keep.it.com/security"><meta property="og:type" content="article"><meta property="og:site_name" content="Keepit"><meta property="og:title" content="Keepit Security – Encrypted Clipboard Manager for Mac"><meta property="og:description" content="What Keepit stores and where, how the clipboard history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download."><meta property="og:image" content="https://keep.it.com/img/social-preview.png?v=57583ec3"><meta property="og:url" content="https://keep.it.com/security"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Keepit Security – Encrypted Clipboard Manager for Mac"><meta name="twitter:description" content="What Keepit stores and where, how the clipboard history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download."><meta name="twitter:image" content="https://keep.it.com/img/social-preview.png?v=57583ec3"><meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "@id": "https://keep.it.com/security", "url": "https://keep.it.com/security", "name": "Keepit security", "headline": "Keepit security", "description": "What Keepit stores and where, how the clipboard history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download.", "inLanguage": "en", "isPartOf": {"@id": "https://keep.it.com/#site"}, "about": {"@id": "https://keep.it.com/#app"}, "author": {"@id": "https://keep.it.com/#org"}, "publisher": {"@id": "https://keep.it.com/#org"}, "image": "https://keep.it.com/img/social-preview.png?v=57583ec3", "dateModified": "2026-11-04"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Keepit", "item": "https://keep.it.com/"}, {"@type": "ListItem", "position": 2, "name": "Security", "item": "https://keep.it.com/security"}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "@id": "https://keep.it.com/security", "url": "https://keep.it.com/security", "name": "Keepit security", "headline": "Keepit security", "description": "What Keepit stores and where, how the clipboard history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download.", "inLanguage": "en", "isPartOf": {"@id": "https://keep.it.com/#site"}, "about": {"@id": "https://keep.it.com/#app"}, "author": {"@id": "https://keep.it.com/#org"}, "publisher": {"@id": "https://keep.it.com/#org"}, "image": "https://keep.it.com/img/social-preview.png?v=57583ec3", "dateModified": "2026-11-06"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Keepit", "item": "https://keep.it.com/"}, {"@type": "ListItem", "position": 2, "name": "Security", "item": "https://keep.it.com/security"}]}]}</script>
 <script defer src="https://app.eurometrics.eu/script.js?v=7cfd3b4c27be" data-website-id="0ab7fe20-0c05-4061-b037-c033dc46c1e1" data-domains="keep.it.com" data-do-not-track="true" data-exclude-search="true" data-no-storage="true"></script>
 <style>
 :root{--paper:#fbfbfd;--ink:#0f1222;--ink-2:#4b4f63;--ink-3:#696d84;--blue:#2f4fd1;--blue-deep:#1f3aa6;--blue-tint:#eef2ff;--line:#e3e5ef;--key:#fff;--key-edge:#cfd2de;--win:#fff;--sel:#2f5cf0}
@@ -165,9 +165,13 @@ else: use the pause or the ignore list for such apps, and delete the item from t
   and discarded. This covers Keepit's own key buffer. The decrypted history while Keepit is unlocked,
   and the copies Swift and CryptoKit make internally, are ordinary process memory — see
   <em>Limitations</em> below.</li>
-<li><strong>Locking</strong>: <em>Lock Keepit</em> (<kbd class="k">⌥L</kbd>), quitting, and — on by default — the screen locking
-  or the Mac sleeping wipe the key and unload the decrypted history and templates. After that nothing
-  readable is in memory until you unlock again.</li>
+<li><strong>Locking</strong>: <em>Lock Keepit</em> (<kbd class="k">⌥L</kbd>), quitting, and — if you set a delay in <em>Settings → Security</em>
+  (off by default) — the Mac having been locked or asleep for that long wipe Keepit's own key buffer
+  and drop the live history and template models. After that Keepit holds nothing it could decrypt
+  until you unlock again (the copies Swift and CryptoKit may have made are covered under
+  <em>Limitations</em>). With the default <em>Never</em>, locking the Mac does <strong>not</strong> lock Keepit: the key and
+  the decrypted data stay in the process for as long as you are away, protected by the Mac's own
+  lock and nothing else.</li>
 <li><strong>Password strength</strong>: the password dialog shows an entropy estimate and explains it; Keepit does
   not enforce a minimum, because the recovery phrase and Touch ID are the usual way in.</li>
 <li>
@@ -410,8 +414,9 @@ exhaust memory or disk:</p>
 <ul>
 <li>The clipboard itself is readable by any app on your Mac; Keepit cannot change that. It can only
   make sure what it <em>stores</em> is protected.</li>
-<li>While Keepit is unlocked, the decrypted history is in its memory like in any running app. Locking
-  on sleep and screen lock (on by default) keeps that window short.</li>
+<li>While Keepit is unlocked, the decrypted history is in its memory like in any running app. A lock
+  delay in <em>Settings → Security</em> (off by default; 5 minutes to 1 hour, or immediately) keeps that
+  window short on a Mac others can reach.</li>
 <li>Encryption protects the files at rest. Someone with your macOS password and Keepit unlocked sees
   what you see.</li>
 <li>Items you paste leave Keepit's control the moment they land in another app.</li>
