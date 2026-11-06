@@ -283,8 +283,12 @@ cursor, so there is nothing to memorise.</p>
 <td>Any format (<code>yyyy MM dd EEEE HH mm …</code>)</td>
 </tr>
 <tr>
-<td><code>{date+7d}</code> <code>{date-1m:MMMM}</code></td>
-<td>Shifted date: <code>d</code> days, <code>w</code> weeks, <code>m</code> months, <code>y</code> years, <code>h</code> hours</td>
+<td><code>{date:long}</code> <code>{time:short}</code> <code>{datetime:medium}</code></td>
+<td>A named style: <code>short</code> <code>medium</code> <code>long</code> <code>full</code></td>
+</tr>
+<tr>
+<td><code>{date+7d}</code> <code>{date-1m:MMMM}</code> <code>{time+1h}</code> <code>{date+1y-2d}</code></td>
+<td>Shifted: <code>d</code> days, <code>w</code> weeks, <code>m</code> months, <code>y</code> years, <code>h</code> hours — on <code>date</code>, <code>time</code>, <code>datetime</code>, several in a row</td>
 </tr>
 <tr>
 <td><code>{clipboard}</code> <code>{clipboard:2}</code></td>
@@ -308,10 +312,12 @@ cursor, so there is nothing to memorise.</p>
 </tr>
 <tr>
 <td><code>{{</code> <code>}}</code></td>
-<td>Literal braces</td>
+<td>Literal braces — a template of <code>{{"x":1}}</code> pastes <code>{"x":1}</code></td>
 </tr>
 </tbody>
 </table></div>
+<p>Placeholder names are lowercase: <code>{date}</code> is a placeholder, <code>{Date}</code> and <code>{DATE}</code> are text and paste
+as they are. Style names and filters (<code>{date:LONG}</code>, <code>{clipboard|UPPER}</code>) may be written either way.</p>
 <p>The full list is in the <a href="#placeholder-cheat-sheet">placeholder cheat sheet</a>.</p>
 <h3 id="templates-that-ask-questions">Templates that ask questions</h3>
 <p><code>{input:Name}</code> and <code>{choice:Label=A|B|C}</code> turn a template into a small form: when you paste it,
@@ -695,8 +701,12 @@ Keepit 3.0 or newer</em> means the file was written by a newer version than the 
 <td>Custom format (Unicode date patterns)</td>
 </tr>
 <tr>
-<td><code>{date+7d}</code> <code>{date-1m:MMMM}</code></td>
-<td>Shifted date: <code>d</code> <code>w</code> <code>m</code> <code>y</code> <code>h</code></td>
+<td><code>{date:long}</code> <code>{time:short}</code> <code>{datetime:full}</code></td>
+<td>Named style: <code>short</code> <code>medium</code> <code>long</code> <code>full</code></td>
+</tr>
+<tr>
+<td><code>{date+7d}</code> <code>{date-1m:MMMM}</code> <code>{time+1h}</code> <code>{datetime-1d:long}</code> <code>{date+1y-2d}</code></td>
+<td>Shifted (<code>d</code> <code>w</code> <code>m</code> <code>y</code> <code>h</code>; up to four shifts in a row)</td>
 </tr>
 <tr>
 <td><code>{weekday}</code> <code>{month}</code> <code>{year}</code></td>

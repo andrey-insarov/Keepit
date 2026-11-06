@@ -24,6 +24,7 @@ enum Limits {
     static let snippetPromptsMax = 20                 // {input:}/{choice:} questions one template may ask
     static let snippetChoicesMax = 50                 // options in one {choice:}
     static let snippetShiftMaxDigits = 4              // {date+NNNNd}: at most 9 999 of a unit
+    static let snippetShiftsMax = 4                   // {date+1y-2d+3h}: shifts in one token
     static let snippetDateFormatMaxChars = 200        // a {date:…} pattern longer than this is kept as text
     static let snippetOutputMaxBytes = textBytesCeiling   // an expansion never grows past one text item
     static let snippetCursorMoveMax = 2_000           // ← key presses after a paste to reach {cursor}
