@@ -282,7 +282,7 @@ extension AppDelegate {
         a.addButton(withTitle: L("Cancel"))
         if !sender.needsConfirmation { a.addButton(withTitle: L("Always Allow")) }
         NSApp.activate(ignoringOtherApps: true)
-        switch a.runModal() {
+        switch AbortableModal.run(a) {
         case .alertFirstButtonReturn: return .allowOnce
         case .alertThirdButtonReturn: return .allowAlways
         default: return .deny

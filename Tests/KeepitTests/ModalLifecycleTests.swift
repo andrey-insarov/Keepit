@@ -138,4 +138,43 @@ final class ModalLifecycleTests: XCTestCase {
         a.handle(try XCTUnwrap(URL(string: "keepit://pause")))
         XCTAssertNil(a.pausedUntil)
     }
+
+    // MARK: a lock closes the dialog (3.0.5)
+
+    /// A real NSAlert in an abortable session; a timer locks Keepit while it is up — the way a hot
+    /// key or the screen-lock delay would. The dialog returns `.abort`; nothing waits for the user.
+    func testLockAbortsAnAbortableDialog() throws {
+        let a = try makeApp()
+        let alert = NSAlert()
+        alert.messageText = "abortable"
+        alert.addButton(withTitle: "OK")
+        RunLoop.main.add(Timer(timeInterval: 0.3, repeats: false) { _ in a.lock() }, forMode: .common)
+        let r = AbortableModal.run(alert)
+        XCTAssertEqual(r, .abort)
+        XCTAssertTrue(a.isLocked)
+        XCTAssertFalse(AbortableModal.isRunning)
+    }
+
+    /// A dialog that is not abortable (a recovery phrase, a password prompt, the restore panel)
+    /// stays: the lock changes the app's state, not the session.
+    func testLockLeavesAnOrdinaryDialogAlone() throws {
+        let a = try makeApp()
+        let alert = NSAlert()
+        alert.messageText = "ordinary"
+        alert.addButton(withTitle: "OK")
+        RunLoop.main.add(Timer(timeInterval: 0.3, repeats: false) { _ in
+            a.lock()
+            XCTAssertNotNil(NSApp.modalWindow, "still up after the lock")
+            NSApp.stopModal(withCode: .OK)
+        }, forMode: .common)
+        XCTAssertEqual(alert.runModal(), .OK)
+        XCTAssertTrue(a.isLocked)
+    }
+
+    func testLockWithoutADialogAbortsNothing() throws {
+        let a = try makeApp()
+        a.lock()                                     // no modal session: abortModal is not called
+        XCTAssertTrue(a.isLocked)
+        XCTAssertFalse(AbortableModal.isRunning)
+    }
 }

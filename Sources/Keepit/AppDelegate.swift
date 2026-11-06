@@ -389,6 +389,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         cancelAutoUnlock()
         isLocked = true
         lockCount += 1
+        AbortableModal.abortIfRunning()      // a template prompt or a keepit:// confirmation does not outlive the lock
         queue.stop()
         viewer?.close()
         preferencesWindow?.close()
@@ -1401,7 +1402,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         a.addButton(withTitle: L("Clear"))
         a.addButton(withTitle: L("Cancel"))
         NSApp.activate(ignoringOtherApps: true)
-        if a.runModal() == .alertFirstButtonReturn { history.clear() }
+        if AbortableModal.run(a) == .alertFirstButtonReturn, !isLocked { history.clear() }
     }
 
     @objc private func addClipboardToTemplates() {
