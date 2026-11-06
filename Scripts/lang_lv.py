@@ -515,4 +515,10 @@ T = {
 'Archive saved: %d history item(s), %d template item(s).': 'Arhīvs saglabāts: vēsture — %d, veidnes — %d.',
 'Could not save the archive: %@': 'Neizdevās saglabāt arhīvu: %@',
 'Enter the password this archive was saved with.': 'Ievadiet paroli, ar kuru tika saglabāts šis arhīvs.',
+'Lock when the Mac is locked or asleep:': 'Bloķēt, kad Mac ir bloķēts vai miega režīmā:',
+'Immediately': 'Nekavējoties',
+'After 5 minutes': 'Pēc 5 minūtēm',
+'After 15 minutes': 'Pēc 15 minūtēm',
+'After 1 hour': 'Pēc 1 stundas',
+'With a delay, a short absence changes nothing: Keepit stays unlocked and keeps recording. Once the Mac has been locked or asleep for that long, the key is wiped from memory and history and templates are unloaded; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked.': 'Ar aizkavi īsa prombūtne neko nemaina: Keepit paliek atbloķēts un turpina ierakstīt. Kad Mac tik ilgi ir bijis bloķēts vai miega režīmā, atslēga tiek dzēsta no atmiņas, vēsture un veidnes tiek izlādētas; pēc tam atbloķējiet ar Touch ID vai paroli. Ar ieslēgtu Touch ID Keepit prasa pirksta nospiedumu uzreiz pēc Mac atbloķēšanas.',
 }

@@ -85,9 +85,9 @@ Turn on *Require password at launch* and the history and templates files are enc
   and discarded. This covers Keepit's own key buffer. The decrypted history while Keepit is unlocked,
   and the copies Swift and CryptoKit make internally, are ordinary process memory — see
   *Limitations* below.
-- **Locking**: *Lock Keepit* (`⌥L`), quitting, and — on by default — the screen locking
-  or the Mac sleeping wipe the key and unload the decrypted history and templates. After that nothing
-  readable is in memory until you unlock again.
+- **Locking**: *Lock Keepit* (`⌥L`), quitting, and — if you set a delay in *Settings → Security*
+  (off by default) — the Mac having been locked or asleep for that long wipe the key and unload the
+  decrypted history and templates. After that nothing readable is in memory until you unlock again.
 - **Password strength**: the password dialog shows an entropy estimate and explains it; Keepit does
   not enforce a minimum, because the recovery phrase and Touch ID are the usual way in.
 - **On-screen keyboard**: the keyboard button next to the password field opens a small panel for
@@ -300,8 +300,9 @@ exhaust memory or disk:
 
 - The clipboard itself is readable by any app on your Mac; Keepit cannot change that. It can only
   make sure what it *stores* is protected.
-- While Keepit is unlocked, the decrypted history is in its memory like in any running app. Locking
-  on sleep and screen lock (on by default) keeps that window short.
+- While Keepit is unlocked, the decrypted history is in its memory like in any running app. A lock
+  delay in *Settings → Security* (off by default; 5 minutes to 1 hour, or immediately) keeps that
+  window short on a Mac others can reach.
 - Encryption protects the files at rest. Someone with your macOS password and Keepit unlocked sees
   what you see.
 - Items you paste leave Keepit's control the moment they land in another app.

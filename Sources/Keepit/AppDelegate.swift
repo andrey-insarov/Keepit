@@ -52,6 +52,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// queued (`pendingOpenURLs`) and run after, in order. A restore in progress queues them too.
     private(set) var isReadyForOpens = false
     var pendingOpenURLs: [URL] = []
+    /// Locking after the Mac has been locked or asleep for a while (Settings → Security).
+    private var screenLockPolicy = ScreenLockPolicy(delay: nil)
+    private var screenLockTimer: Timer?
     /// One open at a time, the unlock dialog included; a restore from Settings sets the second.
     var openInProgress = false
     var restoreInProgress = false
@@ -229,21 +232,54 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     private func observeScreenLock() {
         let dnc = DistributedNotificationCenter.default()
-        dnc.addObserver(forName: Notification.Name("com.apple.screenIsLocked"), object: nil, queue: .main) { [weak self] _ in
-            self?.autoLock()
-        }
         let wnc = NSWorkspace.shared.notificationCenter
-        wnc.addObserver(forName: NSWorkspace.willSleepNotification, object: nil, queue: .main) { [weak self] _ in
-            self?.autoLock()
+        for name in [Notification.Name("com.apple.screenIsLocked")] {
+            dnc.addObserver(forName: name, object: nil, queue: .main) { [weak self] _ in self?.macWentAway() }
         }
-        wnc.addObserver(forName: NSWorkspace.sessionDidResignActiveNotification, object: nil, queue: .main) { [weak self] _ in
-            self?.autoLock()
+        for name in [NSWorkspace.willSleepNotification, NSWorkspace.sessionDidResignActiveNotification] {
+            wnc.addObserver(forName: name, object: nil, queue: .main) { [weak self] _ in self?.macWentAway() }
+        }
+        dnc.addObserver(forName: Notification.Name("com.apple.screenIsUnlocked"), object: nil, queue: .main) { [weak self] _ in
+            self?.macCameBack(screenUsable: true)
+        }
+        wnc.addObserver(forName: NSWorkspace.sessionDidBecomeActiveNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.macCameBack(screenUsable: true)
+        }
+        // Waking is not yet being back at the Mac — the login window usually follows — so no unlock
+        // prompt here, only the deadline check (a timer does not run while the Mac sleeps).
+        wnc.addObserver(forName: NSWorkspace.didWakeNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.macCameBack(screenUsable: false)
         }
     }
 
-    private func autoLock() {
-        guard settings.lockWithScreen, Vault.isEnabled, !isLocked else { return }
-        lock()
+    /// Screen locked, Mac going to sleep, or another user's session in front.
+    private func macWentAway() {
+        guard Vault.isEnabled, !isLocked else { return }
+        screenLockPolicy.delay = settings.lockAfterScreenLock
+        if screenLockPolicy.wentAway(at: Date()) { lock(); return }
+        screenLockTimer?.invalidate()
+        if let deadline = screenLockPolicy.deadline {
+            let t = Timer(fire: deadline, interval: 0, repeats: false) { [weak self] _ in
+                guard let self, self.screenLockPolicy.timerFired(at: Date()) else { return }
+                self.lock()
+            }
+            t.tolerance = 30
+            RunLoop.main.add(t, forMode: .common)
+            screenLockTimer = t
+        }
+    }
+
+    /// Screen unlocked, session active again (`screenUsable`), or merely woken from sleep.
+    private func macCameBack(screenUsable: Bool) {
+        screenLockTimer?.invalidate(); screenLockTimer = nil
+        if screenLockPolicy.cameBack(at: Date()), Vault.isEnabled, !isLocked { lock() }
+        // Ask for Touch ID right away: the hand is on the keyboard, and finding Keepit locked at the
+        // first ⌥M later is the annoyance the delay exists to avoid.
+        guard screenUsable, isLocked, settings.biometricUnlock, Vault.isEnabled, !openInProgress, !restoreInProgress else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
+            guard let self, self.isLocked, !self.openInProgress, !self.restoreInProgress else { return }
+            _ = self.unlock()
+        }
     }
 
     /// Wipe the key, unload history/templates from memory, stop watching the clipboard, drop hot keys.

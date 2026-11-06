@@ -515,3 +515,9 @@
 "Archive saved: %d history item(s), %d template item(s)." = "הארכיון נשמר: %d פריטי היסטוריה, %d פריטי תבנית.";
 "Could not save the archive: %@" = "לא ניתן לשמור את הארכיון: %@";
 "Enter the password this archive was saved with." = "הזינו את הסיסמה שבה נשמר ארכיון זה.";
+"Lock when the Mac is locked or asleep:" = "נעילה כאשר ה‑Mac נעול או במצב שינה:";
+"Immediately" = "מיד";
+"After 5 minutes" = "אחרי 5 דקות";
+"After 15 minutes" = "אחרי 15 דקות";
+"After 1 hour" = "אחרי שעה";
+"With a delay, a short absence changes nothing: Keepit stays unlocked and keeps recording. Once the Mac has been locked or asleep for that long, the key is wiped from memory and history and templates are unloaded; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked." = "עם השהיה, היעדרות קצרה לא משנה דבר: Keepit נשאר פתוח וממשיך להקליט. כאשר ה‑Mac היה נעול או במצב שינה למשך זמן זה, המפתח נמחק מהזיכרון וההיסטוריה והתבניות נפרקות; לאחר מכן יש לפתוח עם Touch ID או סיסמה. כש‑Touch ID פעיל, Keepit מבקש טביעת אצבע מיד עם פתיחת ה‑Mac.";

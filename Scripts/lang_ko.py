@@ -515,4 +515,10 @@ T = {
 'Archive saved: %d history item(s), %d template item(s).': '아카이브 저장됨: 기록 %d개, 템플릿 %d개.',
 'Could not save the archive: %@': '아카이브를 저장할 수 없습니다: %@',
 'Enter the password this archive was saved with.': '이 아카이브를 저장할 때 사용한 암호를 입력하세요.',
+'Lock when the Mac is locked or asleep:': 'Mac이 잠기거나 잠자기 상태일 때 잠금:',
+'Immediately': '즉시',
+'After 5 minutes': '5분 후',
+'After 15 minutes': '15분 후',
+'After 1 hour': '1시간 후',
+'With a delay, a short absence changes nothing: Keepit stays unlocked and keeps recording. Once the Mac has been locked or asleep for that long, the key is wiped from memory and history and templates are unloaded; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked.': '지연을 설정하면 잠깐 자리를 비워도 달라지는 것이 없습니다. Keepit은 잠금 해제 상태로 계속 기록합니다. Mac이 그 시간 동안 잠기거나 잠자기 상태였다면 키가 메모리에서 지워지고 기록과 템플릿이 내려갑니다. 이후 Touch ID나 암호로 잠금을 해제하세요. Touch ID가 켜져 있으면 Mac 잠금 해제 직후 Keepit이 지문을 요청합니다.',
 }

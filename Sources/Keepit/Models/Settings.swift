@@ -168,8 +168,11 @@ struct Settings: Codable, Equatable {
     var backupLabel: String?
     var backupSourceID: String?
 
-    /// Lock Keepit (wipe key, unload data) when the screen locks or the Mac sleeps. Only matters with a password set.
-    var lockWithScreen = true
+    /// Seconds the Mac has to stay locked or asleep before Keepit locks itself (wipes the key, unloads the
+    /// data). 0 = at once; nil = never (the default — a clipboard manager that has to be unlocked twenty
+    /// times a day stops being used; `Lock Keepit` is still there for the moments that matter). Only
+    /// matters with a password set. Replaces `lockWithScreen` (3.0.4); the old key is not read.
+    var lockAfterScreenLock: TimeInterval? = nil
     /// Unlock with Touch ID instead of typing the password (password stays as fallback).
     var biometricUnlock = false
     /// Let Touch ID stand in for the current password when changing it (off = always type the old password).
@@ -219,7 +222,7 @@ struct Settings: Codable, Equatable {
         case allowURLCommands
         case trustedURLSenders
         case backupEnabled, backupBookmark, backupKeepCount, backupLabel, backupSourceID
-        case lockWithScreen
+        case lockAfterScreenLockSeconds
         case biometricUnlock
         case biometricPasswordChange
         case maxTextBytes
@@ -308,7 +311,11 @@ struct Settings: Codable, Equatable {
         backupKeepCount  = try c.decodeIfPresent(Int.self,    forKey: .backupKeepCount)  ?? d.backupKeepCount
         backupLabel      = try c.decodeIfPresent(String.self, forKey: .backupLabel)
         backupSourceID   = try c.decodeIfPresent(String.self, forKey: .backupSourceID)
-        lockWithScreen   = try c.decodeIfPresent(Bool.self,   forKey: .lockWithScreen)   ?? d.lockWithScreen
+        if let v = try c.decodeIfPresent(Double.self, forKey: .lockAfterScreenLockSeconds) {
+            lockAfterScreenLock = v < 0 ? nil : Limits.clamp(v, 0, 7 * 86400)
+        } else {
+            lockAfterScreenLock = d.lockAfterScreenLock
+        }
         biometricUnlock  = try c.decodeIfPresent(Bool.self,   forKey: .biometricUnlock)  ?? d.biometricUnlock
         biometricPasswordChange = try c.decodeIfPresent(Bool.self, forKey: .biometricPasswordChange) ?? d.biometricPasswordChange
         maxTextBytes     = try c.decodeIfPresent(Int.self,    forKey: .maxTextBytes)     ?? d.maxTextBytes
@@ -369,7 +376,7 @@ struct Settings: Codable, Equatable {
         try c.encode(backupKeepCount, forKey: .backupKeepCount)
         try c.encodeIfPresent(backupLabel, forKey: .backupLabel)
         try c.encodeIfPresent(backupSourceID, forKey: .backupSourceID)
-        try c.encode(lockWithScreen, forKey: .lockWithScreen)
+        try c.encode(lockAfterScreenLock ?? -1, forKey: .lockAfterScreenLockSeconds)
         try c.encode(biometricUnlock, forKey: .biometricUnlock)
         try c.encode(biometricPasswordChange, forKey: .biometricPasswordChange)
         try c.encode(maxTextBytes, forKey: .maxTextBytes)

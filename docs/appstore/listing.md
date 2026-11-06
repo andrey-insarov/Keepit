@@ -40,7 +40,7 @@ A VIEWER FOR EVERYTHING
 PRIVATE BY DESIGN
 • Everything stays on your Mac; backups, if you switch them on, go encrypted to a folder you choose. No account, no Keepit server, no analytics, no network.
 • Concealed clipboard data is not recorded; copies from known password managers are excluded; any app can be excluded.
-• Optional password: history and templates are stored AES-256 encrypted; the key is wiped from memory when Keepit locks — manually, when the screen locks, or when the Mac sleeps.
+• Optional password: history and templates are stored AES-256 encrypted; the key is wiped from memory when Keepit locks — manually, or after the Mac has been locked or asleep for a time you choose.
 • Touch ID unlock, and a 24-word recovery phrase in case you forget the password.
 • Automatic encrypted backup to a folder of your choice — iCloud Drive, Dropbox, an external disk. Complete copies, opened with your Keepit password or recovery phrase on any Mac; the provider only ever sees ciphertext. Restore offered on the first launch of a new Mac.
 • Save to Archive / Restore: one password-locked archive by hand, any time.

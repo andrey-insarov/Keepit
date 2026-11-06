@@ -53,7 +53,7 @@ Or the DMG:
 * **Paste queue** — `⌥N` starts it, every ⌘C adds to a counter in the menu bar, `⌥V` pastes the items back one by one in the same order, `⌥⇧N` pastes all remaining joined with a separator.
 * **Templates** — folders, `-` separators, `&x` menu shortcuts, per-template hot keys, any format. Placeholders fill in at paste time: `{date…}`, `{time}`, `{clipboard}` with transforms, `{input:…}`, `{choice:a|b}`, `{cursor}`. An *Examples* folder on first launch.
 * **Viewer** — tree of Clipboard / History / Template, search with highlighted matches, in-place editing, hex dump, drag history into templates, save any format to a file.
-* **Private by design** — password-protected AES-256-GCM storage, Touch ID unlock, 24-word recovery phrase, an on-screen keyboard for the password (shuffled keys, no key events), lock on screen lock / sleep; concealed clipboard data is not recorded and known password managers are excluded by app (best effort — [how it works](https://keep.it.com/security#what-is-not-recorded)); per-app ignore list; no account; no network except the daily update check, which can be switched off (none in the App Store edition).
+* **Private by design** — password-protected AES-256-GCM storage, Touch ID unlock, 24-word recovery phrase, an on-screen keyboard for the password (shuffled keys, no key events), optional lock after the Mac has been locked or asleep for a while; concealed clipboard data is not recorded and known password managers are excluded by app (best effort — [how it works](https://keep.it.com/security#what-is-not-recorded)); per-app ignore list; no account; no network except the daily update check, which can be switched off (none in the App Store edition).
 * **Backup** — automatic encrypted copies into a folder you choose (iCloud Drive, Dropbox, a disk): complete `.keepit` files, rotated, opened with your Keepit password or recovery phrase on any Mac; restore offered on first launch, Merge or Replace. Plus *Save to Archive…* / *Restore…* by hand. Open, documented format ([docs/FORMAT.md](docs/FORMAT.md)).
 * **Settings the Mac way** — General / Shortcuts / Paste Queue / History / Menu / Security / Advanced; every change applies at once; hot-key recorders with conflict checks; per-app paste key (⌘⇧V, ⌃V…).
 * **Automation** — `keepit://` URL scheme: `paste/N`, `copy/N`, `template/Name`, `add?text=`, `add-template?text=&name=`, `history`, `templates`, `viewer`, `settings`, `pause`, `resume` — from Shortcuts (“Open URL”), Raycast, Alfred or `open`. Off by default; switch on in Settings → Advanced. Commands that change something are confirmed when they come from a web browser or an unknown sender.
@@ -163,8 +163,10 @@ unrecoverable — by design.
   from memory, stops watching the clipboard and unregisters hot keys. The icon turns into a lock;
   click it → *Unlock Keepit…* to enter the password and resume. Pending edits are saved (encrypted)
   before the key is wiped.
-* *Lock Keepit when the screen locks or the Mac sleeps* (Settings, on by default) does the same
-  automatically on screen lock, fast user switch and sleep.
+* *Lock when the Mac is locked or asleep* (Settings → Security; *Never* by default, or immediately,
+  5 minutes, 15 minutes, 1 hour) does the same automatically once the Mac has been locked, switched
+  to another user or asleep for that long; with Touch ID on, Keepit asks for a touch as soon as the
+  Mac is unlocked.
 * While locked, nothing is decrypted and the hot keys do nothing. What is on the system
   clipboard itself is of course still readable by every app — that is outside Keepit's control.
 

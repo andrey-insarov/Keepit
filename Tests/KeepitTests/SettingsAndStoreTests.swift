@@ -13,7 +13,11 @@ final class SettingsAndStoreTests: XCTestCase {
         let s = try JSONDecoder().decode(Settings.self, from: json)
         XCTAssertEqual(s.historyMax, 7)
         XCTAssertEqual(s.historyHotKey, Settings().historyHotKey)
-        XCTAssertEqual(s.lockWithScreen, true)
+        XCTAssertNil(s.lockAfterScreenLock, "never, also for settings files from before 3.0.4 (the old lockWithScreen key is not read)")
+        XCTAssertNil(try JSONDecoder().decode(Settings.self, from: Data(#"{"lockWithScreen": true}"#.utf8)).lockAfterScreenLock)
+        XCTAssertEqual(try JSONDecoder().decode(Settings.self, from: Data(#"{"lockAfterScreenLockSeconds": 900}"#.utf8)).lockAfterScreenLock, 900)
+        XCTAssertEqual(try JSONDecoder().decode(Settings.self, from: Data(#"{"lockAfterScreenLockSeconds": 0}"#.utf8)).lockAfterScreenLock, 0)
+        XCTAssertNil(try JSONDecoder().decode(Settings.self, from: Data(#"{"lockAfterScreenLockSeconds": -1}"#.utf8)).lockAfterScreenLock)
         XCTAssertEqual(s.checkForUpdates, true, "settings files from before 2.12 keep checking for updates")
         XCTAssertEqual(s.allowURLCommands, false, "URL commands are opt-in, also for existing settings files")
     }

@@ -515,4 +515,10 @@ T = {
 'Archive saved: %d history item(s), %d template item(s).': 'Archief bewaard: %d geschiedenisitem(s), %d sjabloonitem(s).',
 'Could not save the archive: %@': 'Kan het archief niet bewaren: %@',
 'Enter the password this archive was saved with.': 'Voer het wachtwoord in waarmee dit archief is bewaard.',
+'Lock when the Mac is locked or asleep:': 'Vergrendelen wanneer de Mac vergrendeld is of slaapt:',
+'Immediately': 'Onmiddellijk',
+'After 5 minutes': 'Na 5 minuten',
+'After 15 minutes': 'Na 15 minuten',
+'After 1 hour': 'Na 1 uur',
+'With a delay, a short absence changes nothing: Keepit stays unlocked and keeps recording. Once the Mac has been locked or asleep for that long, the key is wiped from memory and history and templates are unloaded; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked.': 'Met een vertraging verandert een korte afwezigheid niets: Keepit blijft ontgrendeld en blijft opnemen. Zodra de Mac zo lang vergrendeld of in de sluimerstand is geweest, wordt de sleutel uit het geheugen gewist en worden geschiedenis en sjablonen ontladen; ontgrendel daarna met Touch ID of het wachtwoord. Met Touch ID aan vraagt Keepit om een vingerafdruk zodra de Mac is ontgrendeld.',
 }

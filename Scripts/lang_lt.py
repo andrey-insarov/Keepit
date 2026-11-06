@@ -515,4 +515,10 @@ T = {
 'Archive saved: %d history item(s), %d template item(s).': 'Archyvas įrašytas: istorija — %d, šablonai — %d.',
 'Could not save the archive: %@': 'Nepavyko įrašyti archyvo: %@',
 'Enter the password this archive was saved with.': 'Įveskite slaptažodį, su kuriuo buvo įrašytas šis archyvas.',
+'Lock when the Mac is locked or asleep:': 'Užrakinti, kai „Mac“ užrakintas arba miega:',
+'Immediately': 'Iš karto',
+'After 5 minutes': 'Po 5 minučių',
+'After 15 minutes': 'Po 15 minučių',
+'After 1 hour': 'Po 1 valandos',
+'With a delay, a short absence changes nothing: Keepit stays unlocked and keeps recording. Once the Mac has been locked or asleep for that long, the key is wiped from memory and history and templates are unloaded; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked.': 'Su delsa trumpas nebuvimas nieko nekeičia: „Keepit“ lieka atrakintas ir toliau įrašo. Kai „Mac“ tiek laiko būna užrakintas ar miega, raktas ištrinamas iš atminties, istorija ir šablonai iškeliami; tada atrakinkite „Touch ID“ arba slaptažodžiu. Įjungus „Touch ID“, „Keepit“ paprašo piršto atspaudo iškart atrakinus „Mac“.',
 }

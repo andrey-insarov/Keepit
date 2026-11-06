@@ -165,9 +165,9 @@ else: use the pause or the ignore list for such apps, and delete the item from t
   and discarded. This covers Keepit's own key buffer. The decrypted history while Keepit is unlocked,
   and the copies Swift and CryptoKit make internally, are ordinary process memory — see
   <em>Limitations</em> below.</li>
-<li><strong>Locking</strong>: <em>Lock Keepit</em> (<kbd class="k">⌥L</kbd>), quitting, and — on by default — the screen locking
-  or the Mac sleeping wipe the key and unload the decrypted history and templates. After that nothing
-  readable is in memory until you unlock again.</li>
+<li><strong>Locking</strong>: <em>Lock Keepit</em> (<kbd class="k">⌥L</kbd>), quitting, and — if you set a delay in <em>Settings → Security</em>
+  (off by default) — the Mac having been locked or asleep for that long wipe the key and unload the
+  decrypted history and templates. After that nothing readable is in memory until you unlock again.</li>
 <li><strong>Password strength</strong>: the password dialog shows an entropy estimate and explains it; Keepit does
   not enforce a minimum, because the recovery phrase and Touch ID are the usual way in.</li>
 <li>
@@ -410,8 +410,9 @@ exhaust memory or disk:</p>
 <ul>
 <li>The clipboard itself is readable by any app on your Mac; Keepit cannot change that. It can only
   make sure what it <em>stores</em> is protected.</li>
-<li>While Keepit is unlocked, the decrypted history is in its memory like in any running app. Locking
-  on sleep and screen lock (on by default) keeps that window short.</li>
+<li>While Keepit is unlocked, the decrypted history is in its memory like in any running app. A lock
+  delay in <em>Settings → Security</em> (off by default; 5 minutes to 1 hour, or immediately) keeps that
+  window short on a Mac others can reach.</li>
 <li>Encryption protects the files at rest. Someone with your macOS password and Keepit unlocked sees
   what you see.</li>
 <li>Items you paste leave Keepit's control the moment they land in another app.</li>

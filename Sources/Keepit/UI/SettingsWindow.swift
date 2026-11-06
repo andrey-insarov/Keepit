@@ -87,7 +87,10 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
     private let changePw     = NSButton(title: L("Change…"), target: nil, action: nil)
     private let touchID      = NSButton(checkboxWithTitle: L("Unlock with Touch ID"), target: nil, action: nil)
     private let touchIDChange = NSButton(checkboxWithTitle: L("Allow changing the password with Touch ID"), target: nil, action: nil)
-    private let lockScreen   = NSButton(checkboxWithTitle: L("Lock when the screen locks or the Mac sleeps"), target: nil, action: nil)
+    private let lockAfter    = NSPopUpButton(frame: .zero, pullsDown: false)
+    private static let lockDelays: [(TimeInterval?, String)] = [
+        (nil, L("Never")), (0, L("Immediately")), (5 * 60, L("After 5 minutes")), (15 * 60, L("After 15 minutes")), (3600, L("After 1 hour")),
+    ]
     private let newPhrase    = NSButton(title: L("Create New…"), target: nil, action: nil)
 
     private let pollInterval = NSTextField()
@@ -436,7 +439,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             [NSView(), button(changePw)],
             [NSView(), help(check(touchID), L("Unlock with a fingerprint instead of typing the password. The password always remains as fallback."))],
             [NSView(), help(check(touchIDChange), L("Let Touch ID stand in for the current password when changing it. Off = always type the current password first."))],
-            [NSView(), help(check(lockScreen), L("Wipes the key from memory and unloads history and templates when the screen locks or the Mac sleeps; unlock with Touch ID or the password afterwards."))],
+            row(L("Lock when the Mac is locked or asleep:"), help(popup(lockAfter, Self.lockDelays.map { $0.1 }), L("With a delay, a short absence changes nothing: Keepit stays unlocked and keeps recording. Once the Mac has been locked or asleep for that long, the key is wiped from memory and history and templates are unloaded; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked."))),
             header(L("Recovery phrase")),
             [NSView(), help(button(newPhrase), L("Issues a new 24-word phrase and invalidates the old one. Use it if the printed sheet was lost or seen by someone; you will then be offered to change the password too."))],
         ])
@@ -680,8 +683,8 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         if !BiometricUnlock.hasSensor { touchID.title = L("Unlock with Touch ID (no Touch ID on this Mac)") }
         touchIDChange.state = s.biometricPasswordChange ? .on : .off
         touchIDChange.isEnabled = touchID.isEnabled
-        lockScreen.state = s.lockWithScreen ? .on : .off
-        lockScreen.isEnabled = Vault.isEnabled
+        lockAfter.selectItem(at: Self.lockDelays.firstIndex { $0.0 == s.lockAfterScreenLock } ?? 0)
+        lockAfter.isEnabled = Vault.isEnabled
         newPhrase.isEnabled = Vault.isEnabled
 
         setNumber(pollInterval, s.pollInterval)
@@ -725,7 +728,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             s.showThumbnails = showThumbs.state == .on
             s.biometricUnlock = touchID.state == .on && Vault.isEnabled
             s.biometricPasswordChange = touchIDChange.state == .on
-            s.lockWithScreen = lockScreen.state == .on
+            s.lockAfterScreenLock = Self.lockDelays[max(0, lockAfter.indexOfSelectedItem)].0
         }
         if autoBackup.state == .on, app.settings.backupBookmark == nil, Vault.isEnabled { chooseBackupFolder() }
         backupStateChanged()
