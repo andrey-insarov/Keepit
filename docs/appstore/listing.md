@@ -38,7 +38,7 @@ A VIEWER FOR EVERYTHING
 • Drag history items into templates. Save any format to a file.
 
 PRIVATE BY DESIGN
-• Everything stays on your Mac; backups, if you switch them on, go encrypted to a folder you choose. No account, no Keepit server, no analytics, no network.
+• Everything stays on your Mac; backups, if you switch them on, go encrypted to a folder you choose. No account, no Keepit server, no analytics, no network — the app does not even hold the network entitlement.
 • Concealed clipboard data is not recorded; copies from known password managers are excluded; any app can be excluded.
 • Optional password: history and templates are stored AES-256 encrypted; the key is wiped from memory when Keepit locks — manually, or after the Mac has been locked or asleep for a time you choose.
 • Touch ID unlock, and a 24-word recovery phrase in case you forget the password.
