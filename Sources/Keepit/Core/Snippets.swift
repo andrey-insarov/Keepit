@@ -60,37 +60,45 @@ enum Snippets {
     /// Split into literal text and `{…}` tokens. `{{`/`}}` are literal braces.
     private enum Piece { case literal(String), token(String) }
 
+    /// The lexer walks Unicode scalars, not graphemes: a brace followed by a combining mark is one
+    /// Character, and compared as one it is not a brace — `{{`+U+0301 then lost its escape
+    /// (auditor's P3 on PR #30). A token name starts with an ASCII lowercase letter — the one case
+    /// rule for recognition, prompts and evaluation: `{INPUT:Name}` is text, as it was before the
+    /// route existed, never a prompt that silently takes its default (his P2).
     private static func pieces(_ s: String) -> [Piece] {
         var out: [Piece] = []
-        var lit = ""
-        var i = s.startIndex
-        while i < s.endIndex {
-            let c = s[i]
-            let next = s.index(after: i)
+        var lit = String.UnicodeScalarView()
+        func flush() { if !lit.isEmpty { out.append(.literal(String(lit))); lit = String.UnicodeScalarView() } }
+        let u = s.unicodeScalars
+        var i = u.startIndex
+        while i < u.endIndex {
+            let c = u[i]
+            let next = u.index(after: i)
             if c == "{" {
-                if next < s.endIndex, s[next] == "{" { lit.append("{"); i = s.index(after: next); continue }
-                // A token is `{`, a letter, any run without braces, `}`. The scan for the closing brace
-                // stops at the first brace of either kind, so an opener that is not a token costs at most
-                // the distance to the next brace — not the rest of the text, as a search for `}` alone
-                // would, which made `{a{a{a…` quadratic (auditor's P2 on 3.0.4).
-                if next < s.endIndex, s[next].isLetter {
-                    var j = s.index(after: next)
-                    while j < s.endIndex, s[j] != "}", s[j] != "{" { j = s.index(after: j) }
-                    if j < s.endIndex, s[j] == "}" {
-                        if !lit.isEmpty { out.append(.literal(lit)); lit = "" }
-                        out.append(.token(String(s[next..<j])))
-                        i = s.index(after: j)
+                if next < u.endIndex, u[next] == "{" { lit.append("{"); i = u.index(after: next); continue }
+                // A token is `{`, a lowercase ASCII letter, any run without braces, `}`. The scan for the
+                // closing brace stops at the first brace of either kind, so an opener that is not a token
+                // costs at most the distance to the next brace — parsing stays linear (3.0.4's P2).
+                if next < u.endIndex, isTokenStart(u[next]) {
+                    var j = u.index(after: next)
+                    while j < u.endIndex, u[j] != "}", u[j] != "{" { j = u.index(after: j) }
+                    if j < u.endIndex, u[j] == "}" {
+                        flush()
+                        out.append(.token(String(u[next..<j])))
+                        i = u.index(after: j)
                         continue
                     }
                 }
                 lit.append("{"); i = next; continue
             }
-            if c == "}", next < s.endIndex, s[next] == "}" { lit.append("}"); i = s.index(after: next); continue }
+            if c == "}", next < u.endIndex, u[next] == "}" { lit.append("}"); i = u.index(after: next); continue }
             lit.append(c); i = next
         }
-        if !lit.isEmpty { out.append(.literal(lit)) }
+        flush()
         return out
     }
+
+    private static func isTokenStart(_ c: Unicode.Scalar) -> Bool { c.value >= 0x61 && c.value <= 0x7A }   // a…z
 
     /// `input:` and `choice:` tokens, in order of first appearance (same name = one prompt).
     /// At most `Limits.snippetPromptsMax` questions; later ones expand to their default without asking.
@@ -178,9 +186,11 @@ enum Snippets {
         return Expansion(text: out, charsAfterCursor: back, truncated: truncated)
     }
 
+    /// Names are matched exactly, in lowercase, the same way `prompt(from:)` and the lexer see them:
+    /// `{iNPUT:x}` is an unknown token and pastes as its own text, never a prompt that answers itself.
     private static func value(for head: String, context c: Context) -> String? {
         let (name, arg) = head.firstIndex(of: ":").map { (String(head[..<$0]), String(head[head.index(after: $0)...])) } ?? (head, nil)
-        switch name.lowercased() {
+        switch name {
         case "clipboard":
             let n = arg.flatMap { a -> Int? in a.count <= 6 && a.allSatisfy({ $0.isASCII && $0.isNumber }) ? Int(a) : nil } ?? 1
             return c.clipboard(max(1, n)) ?? ""
@@ -213,9 +223,8 @@ enum Snippets {
         }
         // {date}, {date:fmt}, {date:long}, {date+7d}, {date-1m:fmt}, {date+1y-2d}; the same for time and
         // datetime. "datetime" is checked first: it starts with "date".
-        let lower = name.lowercased()
         for (prefix, base) in [("datetime", (DateFormatter.Style.short, DateFormatter.Style.short)),
-                               ("time", (.none, .short)), ("date", (.short, .none))] where lower.hasPrefix(prefix) {
+                               ("time", (.none, .short)), ("date", (.short, .none))] where name.hasPrefix(prefix) {
             let shiftSpec = String(name.dropFirst(prefix.count))
             guard let date = shifted(c.now, by: shiftSpec, calendar: Calendar.current) else { return nil }
             if let named = namedStyle(arg) {

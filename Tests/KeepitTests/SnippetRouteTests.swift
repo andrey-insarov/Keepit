@@ -57,6 +57,14 @@ final class SnippetRouteTests: XCTestCase {
             Row(text: "{{x}} {clipboard}", route: .expand("{{x}} {clipboard}", []), pasted: "{x} CLIP", keepsRich: false),
             Row(text: "{input:Name}!", route: .expand("{input:Name}!", [Snippets.Prompt(name: "Name", defaultValue: "", choices: [])]), pasted: "A!", keepsRich: false),
             Row(text: "}}{{", route: .unescapeOnly("}{"), pasted: "}{", keepsRich: true),
+            // PR #30 auditor's P2: an uppercase-start placeholder is text, as it was before the route
+            // existed — never a prompt that silently answers itself with its default.
+            Row(text: "{INPUT:Name}", route: .verbatim, pasted: "{INPUT:Name}", keepsRich: true),
+            Row(text: "{Input:Name=Default}", route: .verbatim, pasted: "{Input:Name=Default}", keepsRich: true),
+            Row(text: "{CHOICE:Pick=A|B}", route: .verbatim, pasted: "{CHOICE:Pick=A|B}", keepsRich: true),
+            // Lowercase start but an unknown name: a token, pasted as its own text, no prompt.
+            Row(text: "{iNPUT:Name=Default}", route: .expand("{iNPUT:Name=Default}", []), pasted: "{iNPUT:Name=Default}", keepsRich: false),
+            Row(text: "{cHOICE:Pick=A|B}", route: .expand("{cHOICE:Pick=A|B}", []), pasted: "{cHOICE:Pick=A|B}", keepsRich: false),
         ]
         for row in rows {
             let clip = rich(row.text)
@@ -72,6 +80,30 @@ final class SnippetRouteTests: XCTestCase {
                 XCTAssertEqual(pasted.first?.id, clip.id)
             }
         }
+    }
+
+    /// PR #30 auditor's P3: a brace followed by a combining mark is one grapheme; compared as a
+    /// Character it was not a brace, so `{{`+U+0301 lost its escape and an import that doubled
+    /// braces per code point did not round-trip. The lexer walks scalars now.
+    func testEscapesBesideCombiningMarks() {
+        for mark in ["\u{301}", "\u{332}", "\u{FE0F}", "\u{200D}"] {
+            let source = "a{" + mark + "b}" + mark + "{clipboard}"
+            let escaped = source.unicodeScalars.map { $0 == "{" ? "{{" : $0 == "}" ? "}}" : String($0) }.joined()
+            let route = Snippets.pasteRoute(for: rich(escaped))
+            XCTAssertEqual(route, .unescapeOnly(source), "U+\(mark.unicodeScalars.first!.value)")
+            if case .unescapeOnly(let text) = route {
+                XCTAssertEqual(Array(text.unicodeScalars), Array(source.unicodeScalars))
+            }
+            // Through `expand` as well: an escaped brace before a mark stays a brace, a token after it is seen.
+            let out = Snippets.expand("{{" + mark + "{clipboard}", context: ctxWithClip).text
+            XCTAssertEqual(Array(out.unicodeScalars), Array(("{" + mark + "CLIP").unicodeScalars))
+        }
+    }
+
+    private var ctxWithClip: Snippets.Context {
+        var c = Snippets.Context()
+        c.clipboard = { _ in "CLIP" }
+        return c
     }
 
     func testNonTextClipsAreVerbatim() {

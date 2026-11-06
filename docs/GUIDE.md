@@ -249,6 +249,9 @@ The most useful ones:
 | `{uuid}` `{random:1-100}` | A new UUID; a random number |
 | `{{` `}}` | Literal braces — a template of `{{"x":1}}` pastes `{"x":1}` |
 
+Placeholder names are lowercase: `{date}` is a placeholder, `{Date}` and `{DATE}` are text and paste
+as they are. Style names and filters (`{date:LONG}`, `{clipboard|UPPER}`) may be written either way.
+
 The full list is in the [placeholder cheat sheet](#placeholder-cheat-sheet).
 
 ### Templates that ask questions
