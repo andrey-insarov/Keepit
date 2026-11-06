@@ -20,19 +20,49 @@ export const LIMITS = {
   types: ["image/png", "image/jpeg", "image/gif", "image/webp", "image/heic"],
 };
 
-/** What the file actually is, from its first bytes — the client's MIME type is just a claim. */
+/** Largest edge a screenshot may claim in its header — a 1 MB file cannot be a 30 000-pixel image. */
+export const IMAGE_MAX_EDGE = 16384;
+
+/**
+ * What the file actually is, from its structure — the client's MIME type is just a claim, and so is a
+ * signature alone: `89 50 4E 47 00 00 00 00` is not a PNG. Each format is checked to the point where
+ * its first header (dimensions) can be read and bounded. Returns the MIME type or null.
+ */
 export function sniffImage(buf) {
   const b = new Uint8Array(buf);
   const ascii = (from, len) => String.fromCharCode(...b.subarray(from, from + len));
-  if (b.length >= 8 && b[0] === 0x89 && ascii(1, 3) === "PNG") return "image/png";
-  if (b.length >= 3 && b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff) return "image/jpeg";
-  if (b.length >= 6 && (ascii(0, 6) === "GIF87a" || ascii(0, 6) === "GIF89a")) return "image/gif";
-  if (b.length >= 12 && ascii(0, 4) === "RIFF" && ascii(8, 4) === "WEBP") return "image/webp";
-  if (b.length >= 12 && ascii(4, 4) === "ftyp" && ["heic", "heix", "hevc", "hevx", "mif1", "msf1"].includes(ascii(8, 4))) return "image/heic";
+  const be32 = (i) => ((b[i] << 24) >>> 0) + (b[i + 1] << 16) + (b[i + 2] << 8) + b[i + 3];
+  const le16 = (i) => b[i] + (b[i + 1] << 8);
+  const edgeOK = (w, h) => w > 0 && h > 0 && w <= IMAGE_MAX_EDGE && h <= IMAGE_MAX_EDGE;
+
+  // PNG: 8-byte signature, then the IHDR chunk (length 13, type "IHDR", width, height, bit depth, colour type).
+  if (b.length >= 33 && ascii(0, 8) === "\x89PNG\r\n\x1a\n" && be32(8) === 13 && ascii(12, 4) === "IHDR") {
+    const w = be32(16), h = be32(20), depth = b[24], colour = b[25];
+    if (edgeOK(w, h) && [1, 2, 4, 8, 16].includes(depth) && [0, 2, 3, 4, 6].includes(colour)) return "image/png";
+    return null;
+  }
+  // JPEG: SOI, then a marker segment; the first marker must be a valid one (APPn, DQT, SOF, …).
+  if (b.length >= 4 && b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff && b[3] >= 0xc0 && b[3] !== 0xff) return "image/jpeg";
+  // GIF: header, then the logical screen descriptor (width, height little-endian).
+  if (b.length >= 10 && (ascii(0, 6) === "GIF87a" || ascii(0, 6) === "GIF89a")) {
+    return edgeOK(le16(6), le16(8)) ? "image/gif" : null;
+  }
+  // WebP: RIFF container whose size field matches the file, then a VP8/VP8L/VP8X chunk.
+  if (b.length >= 16 && ascii(0, 4) === "RIFF" && ascii(8, 4) === "WEBP") {
+    const riffSize = b[4] + (b[5] << 8) + (b[6] << 16) + ((b[7] << 24) >>> 0);
+    if (riffSize + 8 !== b.length) return null;
+    return ["VP8 ", "VP8L", "VP8X"].includes(ascii(12, 4)) ? "image/webp" : null;
+  }
+  // HEIC: ISO BMFF "ftyp" box with a HEIF brand; the box length must fit the file.
+  if (b.length >= 16 && ascii(4, 4) === "ftyp") {
+    const boxLen = be32(0);
+    if (boxLen < 16 || boxLen > b.length || boxLen % 4 !== 0) return null;
+    return ["heic", "heix", "hevc", "hevx", "mif1", "msf1"].includes(ascii(8, 4)) ? "image/heic" : null;
+  }
   return null;
 }
 
-export const TYPES = { app: "App issue", translation: "Translation issue", other: "Other" };
+export const TYPES = Object.freeze(Object.assign(Object.create(null), { app: "App issue", translation: "Translation issue", other: "Other" }));
 
 const json = (status, body) =>
   new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json; charset=utf-8" } });
@@ -49,7 +79,7 @@ export function validate(form) {
 
   if (!name || name.length > LIMITS.nameMax) return { ok: false, error: "Please enter your name." };
   if (!EMAIL.test(email) || email.length > LIMITS.emailMax) return { ok: false, error: "Please enter a valid e-mail address." };
-  if (!(type in TYPES)) return { ok: false, error: "Please choose what the message is about." };
+  if (!Object.hasOwn(TYPES, type)) return { ok: false, error: "Please choose what the message is about." };   // not `in`: "constructor" is in every object
   if (message.length < LIMITS.messageMin) return { ok: false, error: `Please describe it in at least ${LIMITS.messageMin} characters.` };
   if (message.length > LIMITS.messageMax) return { ok: false, error: `The message is too long (${LIMITS.messageMax} characters at most).` };
   if (files.length > LIMITS.files) return { ok: false, error: `At most ${LIMITS.files} screenshots.` };
