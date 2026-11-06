@@ -27,7 +27,7 @@ enum Limits {
     static let snippetOutputMaxBytes = textBytesCeiling   // an expansion never grows past one text item
     static let snippetCursorMoveMax = 2_000           // ← key presses after a paste to reach {cursor}
     static let ignoreAppsMaxLines = 500
-    static let urlCommandMaxChars = 32 * 1024         // a keepit:// URL longer than this is not a command
+    static let urlCommandMaxChars = 128 * 1024        // a keepit:// URL longer than this is not a command (text ≤ 64 KiB + overhead)
     static let urlCommandTextMaxBytes = 64 * 1024     // add / add-template text (UTF-8)
     static let urlCommandArgumentMaxChars = 1_024     // the path part: item number or template path
     static let pendingOpenURLsMax = 32                // URLs and files queued before the app is ready
