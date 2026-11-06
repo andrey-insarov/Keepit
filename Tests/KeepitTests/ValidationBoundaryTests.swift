@@ -213,6 +213,31 @@ final class ValidationBoundaryTests: XCTestCase {
         XCTAssertThrowsError(try Backup.payload(fromJSON: try Storage.encoder.encode(Backup.Payload(history: [wrongHash], templates: TemplateNode(name: "Template"), settings: nil))))
     }
 
+    /// Auditor's third round: the format the hash was computed over is never dropped — so a bad
+    /// RTF beside an opaque format cannot be "repaired" into an opaque item, and a hash wrong for
+    /// the original primary cannot start matching another format; a format past its size ceiling
+    /// is a limit failure, not a content fault, and stays for the validator to refuse.
+    func testNormalisationNeverTouchesThePrimaryOrASizeFailure() throws {
+        let bad = Data("not RTF".utf8)
+        let rtfPrimary = item([ClipItem.Format.rtf: bad, "zz.audit": bad])
+        XCTAssertEqual(rtfPrimary.droppingInvalidRichFormats().formats, rtfPrimary.formats)
+        XCTAssertThrowsError(try Backup.payload(fromJSON: try Storage.encoder.encode(Backup.Payload(history: [rtfPrimary], templates: TemplateNode(name: "Template"), settings: nil))))
+        let opaque = Data("different opaque content".utf8)
+        let wrongHash = ClipItem(id: UUID(), date: Date(), formats: [ClipItem.Format.rtf: bad, "zz.audit": opaque], sourceApp: nil, contentHash: ClipItem.hash(of: opaque))
+        XCTAssertThrowsError(try Backup.payload(fromJSON: try Storage.encoder.encode(Backup.Payload(history: [wrongHash], templates: TemplateNode(name: "Template"), settings: nil))))
+        let richOnly = item([ClipItem.Format.html: Data([0xFF]), ClipItem.Format.rtf: Data("{\\rtf1 ok}".utf8)])
+        XCTAssertEqual(richOnly.droppingInvalidRichFormats().formats, richOnly.formats, "no text/image/file primary: nothing is secondary")
+        XCTAssertNil(richOnly.validated())
+
+        var tooLarge = Data(repeating: 65, count: Limits.textBytesCeiling * 4 + 1)
+        tooLarge.replaceSubrange(0..<7, with: Data("{\\rtf1 ".utf8))
+        let oversize = item([ClipItem.Format.text: Data("hello".utf8), ClipItem.Format.rtf: tooLarge])
+        XCTAssertNotNil(oversize.droppingInvalidRichFormats().formats[ClipItem.Format.rtf], "a size failure is not repaired")
+        let p = Backup.Payload(history: [oversize], templates: TemplateNode(name: "Template"), settings: nil)
+        XCTAssertThrowsError(try Backup.validate(Backup.normalised(p)))
+        XCTAssertNil(oversize.validated())
+    }
+
     func testOnlyTheFailingRichFormatIsDropped() {
         let text = Data("hello".utf8)
         let both = item([ClipItem.Format.text: text, ClipItem.Format.rtf: Data("{\\rtf1 ok}".utf8), ClipItem.Format.html: Data([0x3C, 0xFF])])

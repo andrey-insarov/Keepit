@@ -120,13 +120,19 @@ struct ClipItem: Codable, Identifiable, Equatable {
         return (try? Backup.validate(item: stripped)) != nil ? stripped : nil
     }
 
-    /// The item without any secondary rich format (RTF, HTML) that fails its own check — only
-    /// that format; a valid RTF next to a bad HTML stays. The primary content and the hash are
-    /// untouched, so this never changes what an item *is*, only what it carries alongside.
+    /// The item without a secondary rich format (RTF, HTML) whose *content* fails its check — only
+    /// that format; a valid RTF next to a bad HTML stays. Secondary means beside a text, image or
+    /// file-list primary: an item of rich formats alone has its hash over one of them, and nothing
+    /// is dropped from it. A format past its size ceiling is not a content fault and stays, so the
+    /// validator refuses the item as before. The primary and the hash are never touched: this never
+    /// changes what an item *is*, only what it carries alongside.
     func droppingInvalidRichFormats() -> ClipItem {
+        guard formats[Format.files] != nil || formats[Format.text] != nil || formats[Format.png] != nil else { return self }
         var out = self
         for uti in [Format.rtf, Format.html] {
-            if let d = formats[uti], (try? Backup.validate(format: uti, data: d)) == nil { out.formats[uti] = nil }
+            guard let d = formats[uti], (try? Backup.validateSize(format: uti, data: d)) != nil,
+                  (try? Backup.validateContent(format: uti, data: d)) == nil else { continue }
+            out.formats[uti] = nil
         }
         return out
     }
