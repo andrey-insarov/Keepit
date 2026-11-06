@@ -72,11 +72,14 @@ export function sniffImage(buf) {
     return sawIHDR && idatBytes > 0 && sawIEND && i === n ? "image/png" : null;
   }
 
-  // JPEG (ITU T.81): SOI; marker segments whose lengths fit; a frame header (SOF0/1/2) with sane
-  // dimensions before the first scan (SOS); scan data present; EOI as the last two bytes.
+  // JPEG (ITU T.81 B.2.2 / B.2.3): SOI; marker segments whose lengths fit; a frame header (SOF0/1/2)
+  // whose length matches its component count, with sane dimensions and legal component fields;
+  // then a scan header whose length matches its component count, whose selectors name declared
+  // components without repeats and whose spectral/approximation fields fit the process; scan data
+  // present; EOI as the last two bytes. Lossless, hierarchical and arithmetic processes are not accepted.
   if (n >= 4 && b[0] === 0xff && b[1] === 0xd8) {
     if (!(b[n - 2] === 0xff && b[n - 1] === 0xd9)) return null;
-    let i = 2, units = 0, sawSOF = false;
+    let i = 2, units = 0, frame = null;
     while (i + 4 <= n - 2 && units++ < MAX_UNITS) {
       if (b[i] !== 0xff) return null;
       const marker = b[i + 1];
@@ -85,15 +88,39 @@ export function sniffImage(buf) {
       if (marker === 0xd8 || marker === 0xd9) return null;           // SOI again / early EOI
       const len = be16(i + 2);
       if (len < 2 || i + 2 + len > n - 2) return null;
+      const p = i + 4;                                                // first payload byte
       if (marker === 0xc0 || marker === 0xc1 || marker === 0xc2) {
-        if (len < 8 || !edgeOK(be16(i + 7), be16(i + 5))) return null;   // height, then width
-        sawSOF = true;
+        if (frame) return null;                                       // one frame
+        if (len < 8) return null;
+        const precision = b[p], h = be16(p + 1), w = be16(p + 3), nf = b[p + 5];
+        if (!(precision === 8 || (marker !== 0xc0 && precision === 12))) return null;   // T.81: baseline 8-bit; extended/progressive 8 or 12
+        if (!edgeOK(w, h) || nf < 1 || nf > 4 || len !== 8 + 3 * nf) return null;
+        const ids = new Set();
+        for (let c = 0; c < nf; c++) {
+          const id = b[p + 6 + 3 * c], hv = b[p + 7 + 3 * c], tq = b[p + 8 + 3 * c];
+          const hs = hv >> 4, vs = hv & 15;
+          if (ids.has(id) || hs < 1 || hs > 4 || vs < 1 || vs > 4 || tq > 3) return null;
+          ids.add(id);
+        }
+        frame = { marker, ids };
       } else if (marker >= 0xc3 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc) {
         return null;                                                  // lossless / hierarchical / arithmetic: not supported
       } else if (marker === 0xda) {
-        // Scan: entropy-coded data follows the header up to the next non-RST marker; some must exist.
+        if (!frame) return null;                                      // scan before any frame header
+        const ns = b[p];
+        if (ns < 1 || ns > 4 || len !== 6 + 2 * ns) return null;
+        const seen = new Set();
+        for (let c = 0; c < ns; c++) {
+          const id = b[p + 1 + 2 * c], tdta = b[p + 2 + 2 * c];
+          if (!frame.ids.has(id) || seen.has(id) || (tdta >> 4) > 3 || (tdta & 15) > 3) return null;
+          seen.add(id);
+        }
+        const ss = b[p + 1 + 2 * ns], se = b[p + 2 + 2 * ns], ah = b[p + 3 + 2 * ns] >> 4, al = b[p + 3 + 2 * ns] & 15;
+        if (frame.marker === 0xc2) {                                  // progressive: spectral selection / successive approximation
+          if (ss > 63 || se > 63 || se < ss || (ss === 0 && se !== 0) || ah > 13 || al > 13) return null;
+        } else if (ss !== 0 || se !== 63 || ah !== 0 || al !== 0) return null;   // baseline / extended: full spectrum, no approximation
         const scanStart = i + 2 + len;
-        return sawSOF && scanStart < n - 2 ? "image/jpeg" : null;
+        return scanStart < n - 2 ? "image/jpeg" : null;               // entropy-coded data must exist
       }
       i += 2 + len;
     }
@@ -174,8 +201,8 @@ export function sniffImage(buf) {
         sawFtyp = true;
       } else if (type === "meta") {
         // FullBox: 4 bytes version/flags, then child boxes; the handler box names the content type.
-        let j = i + 12, inner = 0;
-        while (j + 8 <= i + size && inner++ < MAX_UNITS) {
+        let j = i + 12;
+        while (j + 8 <= i + size && units++ < MAX_UNITS) {                 // one budget for the whole file
           const cs = be32(j), ct = ascii(j + 4, 4);
           if (cs < 8 || j + cs > i + size) return null;
           if (ct === "hdlr" && cs >= 24 && ascii(j + 16, 4) === "pict") sawPict = true;
