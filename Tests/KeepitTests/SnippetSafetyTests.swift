@@ -81,4 +81,34 @@ final class SnippetSafetyTests: XCTestCase {
         XCTAssertEqual(Snippets.expand("{{\"x\":1}}", context: ctx).text, "{\"x\":1}")
         XCTAssertEqual(Snippets.expand("{query}{nope:1}{", context: ctx).text, "{query}{nope:1}{")
     }
+
+    /// Auditor's P2 on 3.0.4: `{a{a{a…` (64 000 bytes, with and without one `}` at the end) passed every
+    /// size limit and then kept the main thread for longer than six seconds, because each opener that
+    /// turned out not to be a token searched the rest of the text for `}`. The scan now stops at the
+    /// first brace of either kind, so the whole parse is linear in the text.
+    func testUnclosedOpenersParseInLinearTime() {
+        let open = String(repeating: "{a", count: 32_000)
+        for text in [open, open + "}"] {
+            let started = Date()
+            let prompts = Snippets.prompts(in: text)
+            let exp = Snippets.expand(text, context: ctx)
+            XCTAssertLessThan(Date().timeIntervalSince(started), 1.0, "\(text.utf8.count) bytes")
+            XCTAssertTrue(prompts.isEmpty)
+            XCTAssertEqual(exp.text, text, "malformed openers stay as they are")
+        }
+        // A literal brace storm with real tokens among it must still find the tokens.
+        let mixed = String(repeating: "{{", count: 20_000) + "{clipboard}" + String(repeating: "{", count: 20_000) + "{input:X}"
+        XCTAssertEqual(Snippets.prompts(in: mixed).map(\.name), ["X"])
+        let out = Snippets.expand(mixed, context: ctx).text
+        XCTAssertTrue(out.hasPrefix(String(repeating: "{", count: 20_000) + "CLIP"))
+    }
+
+    func testTokenGrammarIsUnchanged() {
+        // One case per rule: letter first, no brace inside, `{{`/`}}` literal, empty body literal.
+        XCTAssertEqual(Snippets.expand("{ab{clipboard}", context: ctx).text, "{abCLIP")
+        XCTAssertEqual(Snippets.expand("{1x}{}{ clipboard}", context: ctx).text, "{1x}{}{ clipboard}")
+        XCTAssertEqual(Snippets.expand("{{clipboard}}", context: ctx).text, "{clipboard}")
+        XCTAssertEqual(Snippets.expand("{clipboard", context: ctx).text, "{clipboard")
+        XCTAssertEqual(Snippets.expand("}{clipboard}}", context: ctx).text, "}CLIP}")
+    }
 }

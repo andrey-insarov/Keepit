@@ -2,8 +2,13 @@ import AppKit
 
 /// Asks for the `{input:…}` / `{choice:…}` values of a template before it is pasted.
 enum SnippetPromptDialog {
+    /// Tests only: answers the dialog without showing it (and may do anything a user could do while
+    /// it is open, such as lock Keepit). nil in the app.
+    static var askForTesting: (([Snippets.Prompt], String) -> [String: String]?)?
+
     /// nil = cancelled.
     static func ask(_ prompts: [Snippets.Prompt], templateName: String) -> [String: String]? {
+        if let test = askForTesting { return test(prompts, templateName) }
         let alert = NSAlert()
         alert.messageText = templateName.isEmpty ? L("Fill in the template") : templateName
         alert.informativeText = L("Values for the placeholders in this template:")

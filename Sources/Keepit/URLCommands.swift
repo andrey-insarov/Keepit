@@ -84,20 +84,29 @@ extension AppDelegate {
             return
         }
         let command = parsed.command, arg = parsed.argument, q = parsed.params
-        let target = NSWorkspace.shared.frontmostApplication
+        let target = urlCommandSenderForTesting == nil ? NSWorkspace.shared.frontmostApplication : nil
+        // The confirmation below is modal; Keepit can be locked (and unlocked again) while it is on
+        // screen. The command was admitted in this lock generation and runs only in it.
+        let generation = lockCount
 
         // Who asked? macOS delivers the URL as an Apple Event that carries the sender's PID. For a
         // command that changes state, the sender must be on the user's list of trusted apps
         // (Settings → Advanced); anything else gets a dialog. A web browser, or a sender we cannot
         // identify, is asked every time and is never added to the list — a web page could be behind it.
         if !Self.readOnlyCommands.contains(command) {
-            let sender = URLSender.current()
+            let sender = urlCommandSenderForTesting ?? URLSender.current()
             // A browser or an unidentified sender is never trusted, even if its bundle id made the list
             // before the app registered itself as an https:// handler.
             let trusted = !sender.needsConfirmation
                 && (sender.app?.bundleIdentifier.map { settings.trustedURLSenders.contains($0) } ?? false)
             if !trusted {
-                switch confirmURLCommand(url, from: sender) {
+                let answer = confirmURLCommand(url, from: sender)
+                guard !isLocked, lockCount == generation, settings.allowURLCommands else {
+                    Log.system.notice("keepit:// \(command) from \(sender.description) dropped: Keepit was locked while the dialog was open")
+                    NSSound.beep()
+                    return
+                }
+                switch answer {
                 case .deny:
                     Log.system.notice("keepit:// \(command) from \(sender.description) declined")
                     return
@@ -263,6 +272,7 @@ extension AppDelegate {
     /// Modal dialog for a state-changing URL command from a sender that is not yet trusted.
     /// *Always Allow* is offered only to an identified, non-browser app.
     func confirmURLCommand(_ url: URL, from sender: URLSender) -> URLConfirmation {
+        if let test = confirmURLCommandForTesting { return test(self) }
         let a = NSAlert()
         a.messageText = LF("“%@” wants Keepit to run a command", sender.displayName)
         a.informativeText = sender.needsConfirmation
