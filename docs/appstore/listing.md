@@ -59,6 +59,12 @@ Keepit needs the Accessibility permission to paste for you; without it, chosen i
 ## Keywords (100 chars, comma-separated)
 clipboard,history,paste,copy,snippets,templates,manager,queue,text expander,productivity
 
+## What's new (version 3.0.5)
+• Paste as Strikethrough, Underline or Wavy underline — plain text that keeps its look in chats, forms and terminals; Remove decorations strips them.
+• Locking Keepit now closes an open template question, keepit:// confirmation or Clear History prompt.
+• Templates: {{ and }} paste as braces also in a template without placeholders; named date styles ({date:long}); shifts on time and datetime.
+• Settings → Security: the lock-delay row is labelled Auto-lock Keepit.
+
 ## What's new (version 3.0.4)
 • Lock when the Mac is locked or asleep: never, immediately, or after 5 / 15 / 60 minutes — a short break no longer locks Keepit; with Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked.
 • Hardening of everything Keepit reads from outside: templates, imported files, keepit:// commands.
