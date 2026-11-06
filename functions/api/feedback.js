@@ -30,34 +30,61 @@ export const IMAGE_MAX_EDGE = 16384;
  */
 export function sniffImage(buf) {
   const b = new Uint8Array(buf);
+  const n = b.length;
   const ascii = (from, len) => String.fromCharCode(...b.subarray(from, from + len));
   const be32 = (i) => ((b[i] << 24) >>> 0) + (b[i + 1] << 16) + (b[i + 2] << 8) + b[i + 3];
+  const be16 = (i) => (b[i] << 8) + b[i + 1];
   const le16 = (i) => b[i] + (b[i + 1] << 8);
+  const le32 = (i) => b[i] + (b[i + 1] << 8) + (b[i + 2] << 16) + ((b[i + 3] << 24) >>> 0);
   const edgeOK = (w, h) => w > 0 && h > 0 && w <= IMAGE_MAX_EDGE && h <= IMAGE_MAX_EDGE;
 
-  // PNG: 8-byte signature, then the IHDR chunk (length 13, type "IHDR", width, height, bit depth, colour type).
-  if (b.length >= 33 && ascii(0, 8) === "\x89PNG\r\n\x1a\n" && be32(8) === 13 && ascii(12, 4) === "IHDR") {
+  // PNG: signature, IHDR first (sane dimensions, legal depth/colour), and the file must end with IEND.
+  if (n >= 45 && ascii(0, 8) === "\x89PNG\r\n\x1a\n" && be32(8) === 13 && ascii(12, 4) === "IHDR") {
     const w = be32(16), h = be32(20), depth = b[24], colour = b[25];
-    if (edgeOK(w, h) && [1, 2, 4, 8, 16].includes(depth) && [0, 2, 3, 4, 6].includes(colour)) return "image/png";
+    const endsWithIEND = be32(n - 12) === 0 && ascii(n - 8, 4) === "IEND" && be32(n - 4) === 0xae426082;
+    if (edgeOK(w, h) && [1, 2, 4, 8, 16].includes(depth) && [0, 2, 3, 4, 6].includes(colour) && endsWithIEND) return "image/png";
     return null;
   }
-  // JPEG: SOI, then a marker segment; the first marker must be a valid one (APPn, DQT, SOF, …).
-  if (b.length >= 4 && b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff && b[3] >= 0xc0 && b[3] !== 0xff) return "image/jpeg";
-  // GIF: header, then the logical screen descriptor (width, height little-endian).
-  if (b.length >= 10 && (ascii(0, 6) === "GIF87a" || ascii(0, 6) === "GIF89a")) {
-    return edgeOK(le16(6), le16(8)) ? "image/gif" : null;
+  // JPEG: SOI, then marker segments whose lengths fit the file, up to a SOF with sane dimensions; EOI at the end.
+  if (n >= 4 && b[0] === 0xff && b[1] === 0xd8) {
+    if (!(b[n - 2] === 0xff && b[n - 1] === 0xd9)) return null;
+    let i = 2;
+    for (let seg = 0; seg < 64 && i + 4 <= n; seg++) {
+      if (b[i] !== 0xff) return null;
+      const marker = b[i + 1];
+      if (marker === 0xff) { i++; continue; }                       // fill byte
+      if (marker === 0xd8 || marker === 0x01 || (marker >= 0xd0 && marker <= 0xd7)) { i += 2; continue; }  // no length
+      const len = be16(i + 2);
+      if (len < 2 || i + 2 + len > n) return null;
+      const isSOF = marker >= 0xc0 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc;
+      if (isSOF) {
+        if (len < 8) return null;
+        return edgeOK(be16(i + 7), be16(i + 5)) ? "image/jpeg" : null;   // height, then width
+      }
+      if (marker === 0xda) return null;                             // scan before any frame header
+      i += 2 + len;
+    }
+    return null;
   }
-  // WebP: RIFF container whose size field matches the file, then a VP8/VP8L/VP8X chunk.
-  if (b.length >= 16 && ascii(0, 4) === "RIFF" && ascii(8, 4) === "WEBP") {
-    const riffSize = b[4] + (b[5] << 8) + (b[6] << 16) + ((b[7] << 24) >>> 0);
-    if (riffSize + 8 !== b.length) return null;
-    return ["VP8 ", "VP8L", "VP8X"].includes(ascii(12, 4)) ? "image/webp" : null;
+  // GIF: header, logical screen descriptor with sane size, and the trailer byte at the end.
+  if (n >= 14 && (ascii(0, 6) === "GIF87a" || ascii(0, 6) === "GIF89a")) {
+    return edgeOK(le16(6), le16(8)) && b[n - 1] === 0x3b ? "image/gif" : null;
   }
-  // HEIC: ISO BMFF "ftyp" box with a HEIF brand; the box length must fit the file.
-  if (b.length >= 16 && ascii(4, 4) === "ftyp") {
-    const boxLen = be32(0);
-    if (boxLen < 16 || boxLen > b.length || boxLen % 4 !== 0) return null;
-    return ["heic", "heix", "hevc", "hevx", "mif1", "msf1"].includes(ascii(8, 4)) ? "image/heic" : null;
+  // WebP: RIFF size matching the file, then a VP8/VP8L/VP8X chunk whose own size fits the file.
+  if (n >= 20 && ascii(0, 4) === "RIFF" && ascii(8, 4) === "WEBP") {
+    if (le32(4) + 8 !== n) return null;
+    const chunk = ascii(12, 4), size = le32(16);
+    if (!["VP8 ", "VP8L", "VP8X"].includes(chunk) || 20 + size > n) return null;
+    return "image/webp";
+  }
+  // HEIC: ISO BMFF — an "ftyp" box with a HEIF brand that fits the file, followed by a "meta" box that fits too.
+  if (n >= 24 && ascii(4, 4) === "ftyp") {
+    const ftypLen = be32(0);
+    if (ftypLen < 16 || ftypLen % 4 !== 0 || ftypLen + 8 > n) return null;
+    if (!["heic", "heix", "hevc", "hevx", "mif1", "msf1"].includes(ascii(8, 4))) return null;
+    const metaLen = be32(ftypLen);
+    if (ascii(ftypLen + 4, 4) !== "meta" || metaLen < 12 || ftypLen + metaLen > n) return null;
+    return "image/heic";
   }
   return null;
 }

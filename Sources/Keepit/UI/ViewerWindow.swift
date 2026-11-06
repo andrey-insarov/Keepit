@@ -654,14 +654,18 @@ final class ViewerWindowController: NSWindowController,
         panel.message = L("Create a template item from a file")
         guard panel.runModal() == .OK, let url = panel.url else { return }
         // Reading and decoding happen off the main thread, within the limits (FileImport); the
-        // result is validated like a backup item before it may enter the tree.
+        // result is validated like a backup item before it may enter the tree — and only into the
+        // same unlocked generation it was started in: a lock meanwhile purged the store, and the
+        // completion must not refill it (auditor, 6 Nov 2026).
+        let generation = app.lockCount
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             let (clip, _) = FileImport.clip(from: url)
-            DispatchQueue.main.async { self?.insertImported(clip, named: url.lastPathComponent) }
+            DispatchQueue.main.async { self?.insertImported(clip, named: url.lastPathComponent, startedIn: generation) }
         }
     }
 
-    private func insertImported(_ clip: ClipItem, named name: String) {
+    private func insertImported(_ clip: ClipItem, named name: String, startedIn generation: Int) {
+        guard !app.isLocked, app.lockCount == generation, !templates.isPurged, window?.isVisible == true else { return }
         let (folder, idx) = templateInsertionPoint()
         let t = TemplateNode(name: String(name.prefix(Limits.templateNameMaxChars)), clip: clip)
         guard templates.canInsert(t, under: folder) else { limitBeep(); return }
