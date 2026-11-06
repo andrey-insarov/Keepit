@@ -5,6 +5,9 @@ import Carbon.HIToolbox
 /// Puts an item on the pasteboard and pastes it into the previously active app.
 /// Uses CGEvent to synthesize the paste key stroke, which requires the Accessibility permission.
 enum Paster {
+    /// Tests only: receives every item `paste` would put on the pasteboard, and nothing touches the
+    /// pasteboard or the keyboard. nil in the app.
+    static var pasteSinkForTesting: ((ClipItem) -> Void)?
 
     // MARK: Accessibility
 
@@ -38,6 +41,7 @@ enum Paster {
                       sendKey: Bool,
                       plainText: Bool = false,
                       extraDelay: TimeInterval = 0) {
+        if let sink = pasteSinkForTesting { sink(item); return }
         let payload = plainText ? (item.plainTextOnly() ?? item) : item
         monitor.performIgnoringChange {
             payload.write(to: NSPasteboard.general)

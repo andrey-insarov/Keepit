@@ -72,6 +72,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// What macOS says about the screen right now (`CGSessionCopyCurrentDictionary`); nil = unknown.
     /// Tests replace it. Used where a notification alone does not say whether the desktop is usable.
     var screenLockedProbe: () -> Bool? = { ScreenState.isLocked() }
+    /// Tests only: the sender of a keepit:// URL (no Apple Event in a test) and the answer to its
+    /// confirmation dialog, which may lock Keepit the way a user could while the dialog is open.
+    var urlCommandSenderForTesting: URLSender?
+    var confirmURLCommandForTesting: ((AppDelegate) -> URLConfirmation)?
     /// One open at a time, the unlock dialog included; a restore from Settings sets the second.
     var openInProgress = false
     var restoreInProgress = false
@@ -1317,10 +1321,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     /// Paste a template; text templates with `{placeholders}` are expanded first (asking for `{input:…}` values).
     func pasteTemplate(_ clip: ClipItem, named name: String, into target: NSRunningApplication?) {
+        guard !isLocked else { NSSound.beep(); return }
         guard clip.kind == .text, let text = clip.plainText, Snippets.containsPlaceholders(text) else {
             Paster.paste(clip, into: target, monitor: monitor, settings: settings, sendKey: settings.pasteAfterSelect)
             return
         }
+        // The template's text is in hand before the {input:}/{choice:} dialog opens, and the dialog
+        // runs a modal loop in which Keepit can be locked (hot key, screen-lock delay, lock →
+        // unlock). The text belongs to the lock generation it was read in: after the dialog, a
+        // different generation — or a lock — means it must not reach the clipboard.
+        let generation = lockCount
         var ctx = Snippets.Context()
         ctx.clipboard = { [weak self] n in
             guard let items = self?.history.items, n >= 1, n <= items.count else { return nil }
@@ -1330,6 +1340,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         var extra: TimeInterval = 0
         if !prompts.isEmpty {
             guard let answers = SnippetPromptDialog.ask(prompts, templateName: MenuBuilder.parseAmpersand(name).title) else { return }
+            guard !isLocked, lockCount == generation, !templates.isPurged else { return }
             ctx.answers = answers
             extra = 0.35      // the modal dialog took the focus; the target app needs a moment to get it back
         }
