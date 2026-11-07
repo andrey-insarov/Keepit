@@ -120,17 +120,17 @@ final class Sec10RoundThreeTests: XCTestCase {
         XCTAssertEqual(started.wait(timeout: .now() + 3), .success)
 
         var result: Storage.LoadResult<[ClipItem]>?
-        let readStarted = expectation(description: "read called")
-        let readDone = expectation(description: "read returned")
+        let readStarted = DispatchSemaphore(value: 0)
+        let readReturned = DispatchSemaphore(value: 0)
         DispatchQueue.global().async {
-            readStarted.fulfill()
+            readStarted.signal()
             result = Storage.read([ClipItem].self, from: url)      // blocks behind the write
-            readDone.fulfill()
+            readReturned.signal()
         }
-        wait(for: [readStarted], timeout: 5)
-        XCTAssertEqual(XCTWaiter.wait(for: [readDone], timeout: 0.5), .timedOut, "the read is waiting for the write")
+        XCTAssertEqual(readStarted.wait(timeout: .now() + 5), .success)
+        XCTAssertEqual(readReturned.wait(timeout: .now() + 0.5), .timedOut, "the read is waiting for the write")
         resume.signal()
-        wait(for: [readDone], timeout: 5)
+        XCTAssertEqual(readReturned.wait(timeout: .now() + 5), .success)
         Storage.waitUntilSaved()
 
         XCTAssertEqual(result?.value?.map(\.plainText), ["in-flight write"])

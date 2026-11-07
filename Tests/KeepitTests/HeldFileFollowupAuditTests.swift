@@ -98,17 +98,17 @@ final class HeldFileFollowupAuditTests: XCTestCase {
 
         Storage.save([ClipItem.text("queued write")], to: url, background: true)
         var result: Storage.LoadResult<[ClipItem]>?
-        let readStarted = expectation(description: "read called")
-        let readDone = expectation(description: "read returned")
+        let readStarted = DispatchSemaphore(value: 0)
+        let readReturned = DispatchSemaphore(value: 0)
         DispatchQueue.global().async {
-            readStarted.fulfill()
+            readStarted.signal()
             result = Storage.read([ClipItem].self, from: url)   // waits behind the gate and the save
-            readDone.fulfill()
+            readReturned.signal()
         }
-        wait(for: [readStarted], timeout: 5)
-        XCTAssertEqual(XCTWaiter.wait(for: [readDone], timeout: 0.5), .timedOut, "the read is waiting behind the gate")
+        XCTAssertEqual(readStarted.wait(timeout: .now() + 5), .success)
+        XCTAssertEqual(readReturned.wait(timeout: .now() + 0.5), .timedOut, "the read is waiting behind the gate")
         releaseQueue.signal()
-        wait(for: [readDone], timeout: 5)
+        XCTAssertEqual(readReturned.wait(timeout: .now() + 5), .success)
         Storage.waitUntilSaved()
 
         XCTAssertEqual(result?.value?.map(\.plainText), ["queued write"])
