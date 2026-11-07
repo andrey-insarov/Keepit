@@ -106,6 +106,17 @@ enum Storage {
     /// itself, so swapping the file for plaintext was accepted without a key). settings.json is
     /// read with `encrypted: false`.
     static func read<T: Decodable>(_ type: T.Type, from url: URL, encrypted: Bool = true) -> LoadResult<T> {
+        // On `ioQueue`, like every write: a read and a write of the same file never overlap, so a
+        // hold set by a failed read is set before the next write runs, and a write in flight has
+        // finished before the read sees the file (3.0.6 audit, round 3). Never call from the queue.
+        ioQueue.sync {
+            let result: LoadResult<T> = readUnheld(type, from: url, encrypted: encrypted)
+            if result.failure != nil { hold(url) } else { release(url) }
+            return result
+        }
+    }
+
+    private static func readUnheld<T: Decodable>(_ type: T.Type, from url: URL, encrypted: Bool) -> LoadResult<T> {
         var data: Data
         do {
             data = try BoundedFileReader.read(url, max: Limits.dataFileMaxBytes)
@@ -161,12 +172,90 @@ enum Storage {
         try? FileManager.default.copyItem(at: url, to: bak)
     }
 
-    /// Rename an unreadable file to `name.corrupt-<unix time>` so a store can start fresh beside it —
-    /// the user's explicit choice after `read` failed; nothing does this on its own. A rename, not a
-    /// copy and a delete: the bytes are never without a name. Through `ioQueue`, after any write.
-    static func setAside(_ url: URL) throws {
-        let bak = url.appendingPathExtension("corrupt-\(Int(Date().timeIntervalSince1970))")
-        try ioQueue.sync { try FileManager.default.moveItem(at: url, to: bak) }
+    // MARK: Held files
+
+    /// Files that exist but could not be read (`read` returned `.failed`), or that the app holds on
+    /// purpose (history.json while settings.json is unreadable). Nothing writes or removes a held
+    /// file: `save` / `saveEncoded` skip it, `writeNow` / `removeNow` throw `Failure.held` — so a
+    /// path that forgets its store's `loadFailure` still cannot replace the only copy (3.0.6 audit of
+    /// SEC10: a reload that skipped the read, a restore Merge, a password change). A hold ends when
+    /// a later `read` succeeds or finds no file, when `setAside` moves the file away, or on Reset.
+    private static let heldLock = NSLock()
+    private static var heldPaths: Set<String> = []
+    private static var pinnedPaths: Set<String> = []      // held on purpose; a successful read does not release these
+
+    private static func heldKey(_ url: URL) -> String { url.standardizedFileURL.path }
+
+    static func hold(_ url: URL) { heldLock.lock(); heldPaths.insert(heldKey(url)); heldLock.unlock() }
+    static func release(_ url: URL) { heldLock.lock(); heldPaths.remove(heldKey(url)); heldLock.unlock() }
+    static func releaseAll() { heldLock.lock(); heldPaths.removeAll(); pinnedPaths.removeAll(); heldLock.unlock() }
+    /// Hold a readable file on purpose — history.json while the settings that say whether to keep
+    /// it are unknown. Only `unpin`, `setAside` or Reset end it.
+    static func pin(_ url: URL) { heldLock.lock(); pinnedPaths.insert(heldKey(url)); heldLock.unlock() }
+    static func unpin(_ url: URL) { heldLock.lock(); pinnedPaths.remove(heldKey(url)); heldLock.unlock() }
+    static func isHeld(_ url: URL) -> Bool {
+        heldLock.lock(); defer { heldLock.unlock() }
+        let k = heldKey(url)
+        return heldPaths.contains(k) || pinnedPaths.contains(k)
+    }
+
+    /// Rename unreadable files to `name.corrupt-<unix time>[-n]` so the stores can start fresh beside
+    /// them — the user's explicit choice; nothing does this on its own. All or nothing within the
+    /// process: if one rename fails, the ones already done are moved back and the error is thrown,
+    /// so no store is reset while another is not. The renames are not journalled: if the process
+    /// stops between two of them, the first file is already under its `.corrupt-…` name and the
+    /// second is reported again at the next launch — nothing is lost, but that store starts over on
+    /// its own. A rename, never a copy and a delete: the bytes always have a name. A name that exists
+    /// already (two in one second) gets a counter. Through `ioQueue`, after any pending write.
+    /// Returns where each file went; the files are released.
+    @discardableResult
+    static func setAside(_ urls: [URL]) throws -> [URL] {
+        let fm = FileManager.default
+        let stamp = Int(Date().timeIntervalSince1970)
+        let moved: [URL] = try ioQueue.sync {
+            var done: [(from: URL, to: URL)] = []
+            do {
+                for url in urls where fm.fileExists(atPath: url.path) {
+                    var bak = url.appendingPathExtension("corrupt-\(stamp)")
+                    var n = 1
+                    while fm.fileExists(atPath: bak.path) {
+                        n += 1
+                        bak = url.appendingPathExtension("corrupt-\(stamp)-\(n)")
+                    }
+                    try fm.moveItem(at: url, to: bak)
+                    done.append((url, bak))
+                }
+            } catch {
+                for d in done.reversed() {
+                    do { try fm.moveItem(at: d.to, to: d.from) }
+                    catch let undo { Log.storage.error("could not move \(d.to.lastPathComponent) back: \(undo.localizedDescription)") }
+                }
+                throw error
+            }
+            return done.map(\.to)
+        }
+        urls.forEach { release($0); unpin($0) }
+        return moved
+    }
+
+    /// Undo `setAside` for the files it returned: each goes back under its original name (the
+    /// `.corrupt-…` extension stripped) and is held again, so the state is exactly what it was
+    /// before — a restore commit that fails after the rename uses it (3.0.6 audit, round 4: a
+    /// settings.json left aside looked like a first run at the next launch). A file whose original
+    /// name is taken again meanwhile, or that cannot be moved, is left where it is and logged.
+    static func putBack(_ moved: [URL]) {
+        let fm = FileManager.default
+        ioQueue.sync {
+            for aside in moved {
+                let original = aside.deletingPathExtension()
+                guard !fm.fileExists(atPath: original.path) else {
+                    Log.storage.error("could not put \(aside.lastPathComponent) back: \(original.lastPathComponent) exists again")
+                    continue
+                }
+                do { try fm.moveItem(at: aside, to: original); hold(original) }
+                catch { Log.storage.error("could not put \(aside.lastPathComponent) back: \(error.localizedDescription)") }
+            }
+        }
     }
 
     /// Write `value` to `url` (encrypted when a key is set). `value` is captured as it is now;
@@ -189,14 +278,19 @@ enum Storage {
         write(to: url, encrypt: encrypt, background: background) { data }
     }
 
-    enum Failure: Error, Equatable { case locked }
+    enum Failure: Error, Equatable {
+        case locked
+        case held(String)           // the file could not be read and is kept as it is (see `hold`)
+    }
 
     /// The throwing, synchronous write for a caller that must know the outcome (a restore commit).
     /// Same rules as `save`: encrypted with the current key, refused while locked, through `ioQueue`.
     static func writeNow(_ data: Data, to url: URL, encrypt: Bool = true) throws {
+        if isHeld(url) { throw Failure.held(url.lastPathComponent) }
         if encrypt, key == nil, Vault.isEnabled { throw Failure.locked }
         let k: SecureKey? = encrypt ? key : nil
         try ioQueue.sync {
+            if isHeld(url) { throw Failure.held(url.lastPathComponent) }   // again, in order with the reads
             var d = data
             if let k { d = try Vault.encrypt(d, key: k) }
             try d.write(to: url, options: .atomic)
@@ -205,16 +299,26 @@ enum Storage {
 
     /// Put bytes back exactly as they were read (already encrypted, or not): undo for `writeNow`.
     static func writeRawNow(_ bytes: Data, to url: URL) throws {
-        try ioQueue.sync { try bytes.write(to: url, options: .atomic) }
+        if isHeld(url) { throw Failure.held(url.lastPathComponent) }
+        try ioQueue.sync {
+            if isHeld(url) { throw Failure.held(url.lastPathComponent) }
+            try bytes.write(to: url, options: .atomic)
+        }
     }
 
     static func removeNow(_ url: URL) throws {
+        if isHeld(url) { throw Failure.held(url.lastPathComponent) }
         try ioQueue.sync {
+            if isHeld(url) { throw Failure.held(url.lastPathComponent) }
             if FileManager.default.fileExists(atPath: url.path) { try FileManager.default.removeItem(at: url) }
         }
     }
 
     private static func write(to url: URL, encrypt: Bool, background: Bool, _ produce: @escaping () throws -> Data) {
+        if isHeld(url) {
+            Log.storage.notice("not saving \(url.lastPathComponent): it could not be read and is kept as it is")
+            return
+        }
         // With a password set and no key in memory (locked), writing would replace an encrypted
         // file with plaintext — refuse rather than leak or clobber.
         if encrypt, key == nil, Vault.isEnabled {
@@ -225,9 +329,16 @@ enum Storage {
         // after draining the queue, so this reference stays usable for the whole write.
         let k: SecureKey? = encrypt ? key : nil
         let work = {
+            // Checked again here, when the write actually runs: a read that failed after this save
+            // was queued has held the file meanwhile (3.0.6 audit, round 2).
+            if isHeld(url) {
+                Log.storage.notice("not saving \(url.lastPathComponent): it could not be read and is kept as it is")
+                return
+            }
             do {
                 var data = try produce()
                 if let k { data = try Vault.encrypt(data, key: k) }
+                if isHeld(url) { return }                      // held while encoding (a read on another queue)
                 try data.write(to: url, options: .atomic)
             } catch {
                 Log.storage.error("failed to save \(url.lastPathComponent): \(error.localizedDescription)")

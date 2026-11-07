@@ -541,4 +541,8 @@ T = {
 'not in the expected format': 'לא בתבנית הצפויה',
 'larger than Keepit can read': 'גדול ממה ש‑Keepit יכול לקרוא',
 'could not be read (error %d)': 'לא ניתן היה לקרוא (שגיאה %d)',
+'Keepit could not read some of its data, so this is not available now. Restore a backup (Replace) or start fresh first — Keepit asks at the next launch or unlock.': 'Keepit לא הצליח לקרוא חלק מהנתונים שלו, ולכן הפעולה אינה זמינה כעת. שחזרו קודם גיבוי (החלף) או התחילו מחדש — Keepit ישאל בהפעלה או בביטול הנעילה הבאים.',
+'Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file.': 'Keepit לא הצליח לקרוא את הנתונים הנוכחיים, ולכן לא ניתן למזג אליהם גיבוי. בחרו „החלף”: הקובץ שלא ניתן לקרוא נשמר ליד הקובץ המשוחזר כקובץ \u200e.corrupt-…\u200e.',
+'Replace data Keepit cannot read?': 'להחליף נתונים ש‑Keepit לא מצליח לקרוא?',
+'These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them.': 'שמות הקבצים האלה ישונו ל‑\u200e.corrupt-…\u200e והם יישמרו ליד הקבצים המשוחזרים; Keepit לא פותח ולא משנה אותם.',
 }

@@ -541,3 +541,7 @@
 "not in the expected format" = "не в очікуваному форматі";
 "larger than Keepit can read" = "більший, ніж Keepit може прочитати";
 "could not be read (error %d)" = "не вдалося прочитати (помилка %d)";
+"Keepit could not read some of its data, so this is not available now. Restore a backup (Replace) or start fresh first — Keepit asks at the next launch or unlock." = "Keepit не зміг прочитати частину своїх даних, тому зараз це недоступно. Спершу відновіть резервну копію (Замінити) або почніть заново — Keepit запитає під час наступного запуску чи розблокування.";
+"Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file." = "Keepit не зміг прочитати поточні дані, тому об’єднати з ними резервну копію не можна. Виберіть «Замінити»: нечитабельний файл залишиться поруч із відновленим як файл .corrupt-….";
+"Replace data Keepit cannot read?" = "Замінити дані, які Keepit не може прочитати?";
+"These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them." = "Ці файли буде перейменовано на .corrupt-… і залишено поруч із відновленими; Keepit не відкриває і не змінює їх.";

@@ -30,16 +30,19 @@ final class HistoryStore {
         revision += 1
         items = []
         loadFailure = nil
-        if settings.historySave {
-            switch Storage.read([ClipItem].self, from: Storage.historyURL) {
-            case .loaded(let loaded):
+        // Read even when "save history" is off: with it off, the next save deletes the file, and a
+        // file that cannot be read must be known about first (3.0.6 audit: turning the setting off
+        // after a failure, then lock / unlock / lock, used to skip the read and delete the original).
+        switch Storage.read([ClipItem].self, from: Storage.historyURL) {
+        case .loaded(let loaded):
+            if settings.historySave {
                 items = Self.validated(loaded)
                 trim()
-            case .missing:
-                break
-            case .failed(let f):
-                loadFailure = f
             }
+        case .missing:
+            break
+        case .failed(let f):
+            loadFailure = f
         }
         onChange?()
     }
@@ -47,8 +50,8 @@ final class HistoryStore {
     /// The user's answer to `loadFailure`: the unreadable file is renamed `.corrupt-<time>` next
     /// to the new one, and the store starts empty. Throws (and changes nothing) if the rename fails.
     func startFresh() throws {
-        guard loadFailure != nil else { return }
-        try Storage.setAside(Storage.historyURL)
+        guard loadFailure != nil, !isPurged else { return }     // never while locked: the store is purged then
+        try Storage.setAside([Storage.historyURL])
         reload()
     }
 
@@ -264,7 +267,7 @@ final class HistoryStore {
         if settings.historySave {
             Storage.save(items, to: Storage.historyURL, background: background)
         } else {
-            try? FileManager.default.removeItem(at: Storage.historyURL)
+            try? Storage.removeNow(Storage.historyURL)      // refused for a held file
         }
     }
 

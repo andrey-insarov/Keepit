@@ -541,4 +541,8 @@ T = {
 'not in the expected format': 'není v očekávaném formátu',
 'larger than Keepit can read': 'větší, než Keepit dokáže přečíst',
 'could not be read (error %d)': 'nepodařilo se přečíst (chyba %d)',
+'Keepit could not read some of its data, so this is not available now. Restore a backup (Replace) or start fresh first — Keepit asks at the next launch or unlock.': 'Keepit nemohl přečíst část svých dat, proto to teď není k dispozici. Nejprve obnovte zálohu (Nahradit) nebo začněte znovu — Keepit se zeptá při příštím spuštění nebo odemknutí.',
+'Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file.': 'Keepit nemohl přečíst aktuální data, takže do nich nelze sloučit zálohu. Zvolte Nahradit: nečitelný soubor zůstane vedle obnoveného jako soubor .corrupt-….',
+'Replace data Keepit cannot read?': 'Nahradit data, která Keepit nedokáže přečíst?',
+'These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them.': 'Tyto soubory se přejmenují na .corrupt-… a zůstanou vedle obnovených; Keepit je neotevírá ani nemění.',
 }

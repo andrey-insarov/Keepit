@@ -96,10 +96,30 @@ extension AppDelegate {
         case .alertSecondButtonReturn: mode = .replace
         default: return
         }
+        // Data Keepit could not read: Merge would write what is in memory (nothing of the unreadable
+        // file) plus the backup over it. Replace sets the unreadable files aside first and says so.
+        // (3.0.6 audit of SEC10: Merge replaced readable-by-hand originals with the backup's data.)
+        let unreadable = unreadableDataFiles.map(\.url)
+        if !unreadable.isEmpty {
+            if mode == .merge {
+                Vault.error(L("Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file."))
+                return
+            }
+            let c = NSAlert()
+            c.messageText = L("Replace data Keepit cannot read?")
+            c.informativeText = unreadable.map(\.lastPathComponent).joined(separator: "\n") + "\n\n"
+                + L("These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them.")
+            c.addButton(withTitle: L("Replace"))
+            c.addButton(withTitle: L("Cancel"))
+            guard AbortableModal.run(c) == .alertFirstButtonReturn else { return }
+        }
         let restorePreferences = restorePrefs.state == .on
         let folderName = { () -> String in let f = DateFormatter(); f.dateStyle = .medium; return LF("Imported %@", f.string(from: p.created)) }()
+        // With settings.json unreadable, Keepit runs on stand-in settings (Settings.whileUnreadable);
+        // the restore builds on the defaults instead, and only the commit makes them live.
+        let currentSettings = settingsLoadFailure != nil ? Settings() : settings
         let makePlan = { try RestorePlan.make(mode: mode, payload: p, currentHistory: self.history.items, currentTemplates: self.templates.root,
-                                              currentSettings: self.settings, restorePreferences: restorePreferences, folderName: folderName) }
+                                              currentSettings: currentSettings, restorePreferences: restorePreferences, folderName: folderName) }
 
         // 5. Everything that needs the user is asked now, before anything is captured or changed:
         //    the limits check, what a rollback copy needs, a password when the phrase opened the file.
@@ -141,7 +161,7 @@ extension AppDelegate {
             case .alertSecondButtonReturn: keep = false
             default: return
             }
-            guard enableProtection(with: pw, recoveryEntropy: keep ? unlocked.recoveryEntropy : nil) else { return }
+            guard enableProtection(with: pw, recoveryEntropy: keep ? unlocked.recoveryEntropy : nil, duringRestore: !unreadable.isEmpty) else { return }
         }
 
         // 6. Commit stage: no more questions. The clipboard watcher is paused so the stores stand
@@ -211,7 +231,33 @@ extension AppDelegate {
         let templatesJSON = try Storage.encoder.encode(plan.templates)
         let historyJSON = plan.settings.historySave ? try Storage.encoder.encode(plan.history) : nil
         let settingsJSON = try Storage.prettyEncoder.encode(plan.settings)
-        try RestoreCommit.writeFiles(templatesJSON: templatesJSON, historyJSON: historyJSON, settingsJSON: settingsJSON)
+        // Files Keepit could not read go beside the new ones here, with nothing between the rename
+        // and the write (Replace asked about them; Merge was refused). Until this line nothing on
+        // disk has changed, whatever was cancelled before (3.0.6 audit, round 2). Should the write
+        // fail after the rename, the files go back under their names and everything is as it was
+        // before the commit — in this process and at the next launch (rounds 3 and 4).
+        let unreadable = unreadableDataFiles.map(\.url)
+        var movedAside: [URL] = []
+        if !unreadable.isEmpty {
+            // Only a Replace may set them aside; a Merge was built on empty stores and would pass the
+            // backup off as the merged whole. The UI refuses Merge earlier; this holds for every caller.
+            guard plan.mode == .replace else {
+                let first = unreadable[0]
+                throw RestoreCommit.Failure.cannotReadPrevious(first.lastPathComponent, Storage.Failure.held(first.lastPathComponent))
+            }
+            movedAside = try Storage.setAside(unreadable)
+            if unreadable.contains(Storage.settingsURL) { Storage.unpin(Storage.historyURL) }
+        }
+        do {
+            try RestoreCommit.writeFiles(templatesJSON: templatesJSON, historyJSON: historyJSON, settingsJSON: settingsJSON)
+        } catch {
+            if !movedAside.isEmpty {
+                Storage.putBack(movedAside)                                           // the stores' loadFailure never moved
+                if unreadable.contains(Storage.settingsURL) { Storage.pin(Storage.historyURL) }   // safe mode goes on
+            }
+            throw error
+        }
+        settingsLoadFailure = nil
         // Both models and the settings they are trimmed under in one step, with no observer called and
         // no save scheduled in between: nothing — a lock in a callback included — can run while one
         // store is filled and the other is not, and the items are trimmed under the *restored*

@@ -541,4 +541,8 @@ T = {
 'not in the expected format': 'nav gaidītajā formātā',
 'larger than Keepit can read': 'lielāks, nekā Keepit var nolasīt',
 'could not be read (error %d)': 'neizdevās nolasīt (kļūda %d)',
+'Keepit could not read some of its data, so this is not available now. Restore a backup (Replace) or start fresh first — Keepit asks at the next launch or unlock.': 'Keepit nevarēja nolasīt daļu savu datu, tāpēc tas pašlaik nav pieejams. Vispirms atjaunojiet rezerves kopiju (Aizstāt) vai sāciet no jauna — Keepit jautās nākamajā palaišanas vai atbloķēšanas reizē.',
+'Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file.': 'Keepit nevarēja nolasīt pašreizējos datus, tāpēc rezerves kopiju ar tiem apvienot nevar. Izvēlieties Aizstāt: nenolasāmais fails paliks blakus atjaunotajam kā .corrupt-… fails.',
+'Replace data Keepit cannot read?': 'Aizstāt datus, kurus Keepit nevar nolasīt?',
+'These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them.': 'Šie faili tiks pārdēvēti par .corrupt-… un paliks blakus atjaunotajiem; Keepit tos neatver un nemaina.',
 }

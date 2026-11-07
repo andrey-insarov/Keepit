@@ -97,6 +97,26 @@ struct PasteKey: Codable, Equatable {
 
 /// Persisted user options.
 struct Settings: Codable, Equatable {
+    /// What Keepit runs on while settings.json exists but cannot be read (the file is kept as it
+    /// is): nothing the old file may have switched off is switched on. history.json is read, so
+    /// what is on disk is in memory and goes into any rollback copy, but it is pinned — neither
+    /// written nor deleted — until the settings are known (3.0.6 audit, round 3: with saving off
+    /// here, the file was not loaded and Start Fresh wrote the session's items over it). The
+    /// limits are the ceilings, so the old file's items are not trimmed to the defaults meanwhile.
+    /// With a password set Keepit locks as soon as the Mac does; keepit:// and automatic backup
+    /// stay off, as in the defaults.
+    static var whileUnreadable: Settings {
+        var s = Settings()
+        s.historySave = true
+        s.historyMax = Limits.historyMaxCeiling
+        s.historyImageMax = Limits.historyMaxCeiling
+        s.historyMaxAge = 0
+        s.maxHistoryBytes = 4 * 1024 * 1024 * 1024
+        s.lockAfterScreenLock = 0
+        s.backupEnabled = false
+        return s
+    }
+
     // [history]
     var historyMax = 1000          // text & file items kept (~10–30 MB; images have their own, smaller ring)
     var historyImageMax = 30       // image items kept (separate ring)
