@@ -58,7 +58,7 @@ final class HeldFileFollowupAuditTests: XCTestCase {
         try badSettings.write(to: Storage.settingsURL)
         let app = app()
         XCTAssertEqual(app.settingsLoadFailure, .malformed)
-        XCTAssertFalse(app.settings.historySave)
+        XCTAssertEqual(app.settings.lockAfterScreenLock, 0)
         app.history.add(.text("in memory while settings were unreadable"))
 
         // Everything the restore does before its commit: the plan, on the defaults rather than the stand-in.

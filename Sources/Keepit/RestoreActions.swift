@@ -234,7 +234,8 @@ extension AppDelegate {
         // Files Keepit could not read go beside the new ones here, with nothing between the rename
         // and the write (Replace asked about them; Merge was refused). Until this line nothing on
         // disk has changed, whatever was cancelled before (3.0.6 audit, round 2). Should the write
-        // fail after the rename, the result is Start Fresh's: the stores start over and say so.
+        // fail after the rename, the stores whose file went aside start over; an unreadable
+        // settings.json stays in safe mode — the defaults are never applied by a failure (round 3).
         let unreadable = unreadableDataFiles.map(\.url)
         if !unreadable.isEmpty {
             // Only a Replace may set them aside; a Merge was built on empty stores and would pass the
@@ -249,7 +250,10 @@ extension AppDelegate {
         do {
             try RestoreCommit.writeFiles(templatesJSON: templatesJSON, historyJSON: historyJSON, settingsJSON: settingsJSON)
         } catch {
-            if !unreadable.isEmpty { startOverAfterSetAside(unreadable) }
+            if !unreadable.isEmpty {
+                startOverAfterSetAside(unreadable.filter { $0 != Storage.settingsURL })
+                if unreadable.contains(Storage.settingsURL) { Storage.pin(Storage.historyURL) }   // safe mode goes on
+            }
             throw error
         }
         settingsLoadFailure = nil

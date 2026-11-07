@@ -245,7 +245,7 @@ final class LoadResultAuditTests: XCTestCase {
         let app = AppDelegate()
         app.loadStoresForTesting()
         XCTAssertEqual(app.settingsLoadFailure, .malformed)
-        XCTAssertFalse(app.settings.historySave)
+        XCTAssertTrue(app.settings.historySave)
         XCTAssertEqual(app.settings.lockAfterScreenLock, 0)
         XCTAssertFalse(app.settings.allowURLCommands)
         XCTAssertFalse(app.settings.backupEnabled)

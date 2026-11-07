@@ -88,8 +88,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private let isFirstRun: Bool
     /// settings.json exists but could not be read. The file is kept as it is (a held file: nothing
     /// saves over it), and the app runs on `Settings.whileUnreadable` until the user starts fresh
-    /// or restores: history in memory only, with history.json pinned so "save history: off" cannot
-    /// delete it; lock immediately when a password is set; no keepit://, no automatic backup.
+    /// or restores: history.json is read but pinned — neither written nor deleted; lock immediately
+    /// when a password is set; no keepit://, no automatic backup.
     /// (3.0.6 audit: a truncated settings.json was replaced by the defaults — history saving back
     /// on, auto-lock off, backups and keepit:// trust reset — without a word.)
     var settingsLoadFailure: Storage.LoadFailure?          // set by init and cleared by startOverAfterSetAside and the restore commit (RestoreActions.swift)

@@ -164,7 +164,9 @@ final class HeldFileTests: XCTestCase {
 
     func testSettingsWhileUnreadableSwitchNothingOn() {
         let s = Settings.whileUnreadable
-        XCTAssertFalse(s.historySave)
+        XCTAssertTrue(s.historySave, "read, so the file's items are in memory; the pin keeps it unwritten")
+        XCTAssertEqual(s.historyMax, Limits.historyMaxCeiling, "and not trimmed to the defaults meanwhile")
+        XCTAssertEqual(s.historyMaxAge, 0)
         XCTAssertEqual(s.lockAfterScreenLock, 0)
         XCTAssertFalse(s.backupEnabled)
         XCTAssertFalse(s.allowURLCommands)
@@ -176,9 +178,13 @@ final class HeldFileTests: XCTestCase {
         Storage.pin(Storage.historyURL)                      // what the app does while settings.json is unreadable
         let h = HistoryStore(settings: .whileUnreadable)
         XCTAssertNil(h.loadFailure)
+        XCTAssertEqual(h.items.map(\.plainText), ["kept"], "loaded")
         XCTAssertTrue(Storage.isHeld(Storage.historyURL), "a successful read does not end a pin")
-        h.add(.text("new")); h.saveNow()                     // saving off: used to delete the file
-        XCTAssertEqual(try bytes(Storage.historyURL), before)
+        h.add(.text("new")); h.saveNow()
+        XCTAssertEqual(try bytes(Storage.historyURL), before, "not written")
+        var off = Settings.whileUnreadable; off.historySave = false
+        h.updateSettings(off); h.saveNow()
+        XCTAssertEqual(try bytes(Storage.historyURL), before, "not deleted")
         Storage.unpin(Storage.historyURL)
         XCTAssertFalse(Storage.isHeld(Storage.historyURL))
     }

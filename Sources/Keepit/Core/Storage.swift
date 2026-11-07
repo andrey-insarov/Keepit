@@ -106,9 +106,14 @@ enum Storage {
     /// itself, so swapping the file for plaintext was accepted without a key). settings.json is
     /// read with `encrypted: false`.
     static func read<T: Decodable>(_ type: T.Type, from url: URL, encrypted: Bool = true) -> LoadResult<T> {
-        let result: LoadResult<T> = readUnheld(type, from: url, encrypted: encrypted)
-        if result.failure != nil { hold(url) } else { release(url) }
-        return result
+        // On `ioQueue`, like every write: a read and a write of the same file never overlap, so a
+        // hold set by a failed read is set before the next write runs, and a write in flight has
+        // finished before the read sees the file (3.0.6 audit, round 3). Never call from the queue.
+        ioQueue.sync {
+            let result: LoadResult<T> = readUnheld(type, from: url, encrypted: encrypted)
+            if result.failure != nil { hold(url) } else { release(url) }
+            return result
+        }
     }
 
     private static func readUnheld<T: Decodable>(_ type: T.Type, from url: URL, encrypted: Bool) -> LoadResult<T> {
@@ -195,10 +200,13 @@ enum Storage {
     }
 
     /// Rename unreadable files to `name.corrupt-<unix time>[-n]` so the stores can start fresh beside
-    /// them — the user's explicit choice; nothing does this on its own. All or nothing: if one rename
-    /// fails, the ones already done are moved back and the error is thrown, so no store is reset while
-    /// another is not. A rename, never a copy and a delete: the bytes always have a name. A name that
-    /// exists already (two in one second) gets a counter. Through `ioQueue`, after any pending write.
+    /// them — the user's explicit choice; nothing does this on its own. All or nothing within the
+    /// process: if one rename fails, the ones already done are moved back and the error is thrown,
+    /// so no store is reset while another is not. The renames are not journalled: if the process
+    /// stops between two of them, the first file is already under its `.corrupt-…` name and the
+    /// second is reported again at the next launch — nothing is lost, but that store starts over on
+    /// its own. A rename, never a copy and a delete: the bytes always have a name. A name that exists
+    /// already (two in one second) gets a counter. Through `ioQueue`, after any pending write.
     /// Returns where each file went; the files are released.
     @discardableResult
     static func setAside(_ urls: [URL]) throws -> [URL] {
@@ -310,6 +318,7 @@ enum Storage {
             do {
                 var data = try produce()
                 if let k { data = try Vault.encrypt(data, key: k) }
+                if isHeld(url) { return }                      // held while encoding (a read on another queue)
                 try data.write(to: url, options: .atomic)
             } catch {
                 Log.storage.error("failed to save \(url.lastPathComponent): \(error.localizedDescription)")
