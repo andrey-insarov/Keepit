@@ -92,7 +92,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// delete it; lock immediately when a password is set; no keepit://, no automatic backup.
     /// (3.0.6 audit: a truncated settings.json was replaced by the defaults — history saving back
     /// on, auto-lock off, backups and keepit:// trust reset — without a word.)
-    private(set) var settingsLoadFailure: Storage.LoadFailure?
+    var settingsLoadFailure: Storage.LoadFailure?          // set by init and cleared by startOverAfterSetAside and the restore commit (RestoreActions.swift)
 
     /// A restore journal that could not be replayed at launch. The files are a mix of before and
     /// after; working on them would write that mix back and the journal would be the only intact
