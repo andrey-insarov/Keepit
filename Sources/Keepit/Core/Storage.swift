@@ -74,32 +74,84 @@ enum Storage {
 
     static func clearKey() { key = nil }
 
-    static func load<T: Decodable>(_ type: T.Type, from url: URL) -> T? {
+    /// Why a file that exists could not be used. Every case means the same thing to a store: the
+    /// file is not to be written over — what is on disk may be recoverable (with the right key,
+    /// from the right metadata, by hand), and a store that cannot read it has nothing to replace
+    /// it with. Only `missing` (no file at all) is a fresh start.
+    enum LoadFailure: Error, Equatable {
+        case locked                 // encrypted, and there is no key in memory
+        case notEncrypted           // protection is on, but the file is plain JSON (a swapped file)
+        case wrongKeyOrDamaged      // the GCM tag did not verify: another key, or altered bytes
+        case malformed              // decrypted (or plain) bytes that are not the expected JSON
+        case tooLarge
+        case io(Int32)              // errno from open/read, or the path is not a regular file
+    }
+
+    /// The outcome of reading a data file: three answers, not one `nil` for all of them. A store
+    /// creates defaults only for `missing`; on `failed` it keeps the file as it is and refuses to
+    /// save over it (auditor's SEC10 on 3.0.5: a damaged tag or a wrong key used to look like an
+    /// empty install, and the empty install was written back over the only copy).
+    enum LoadResult<T> {
+        case missing
+        case loaded(T)
+        case failed(LoadFailure)
+
+        var value: T? { if case .loaded(let v) = self { return v } else { return nil } }
+        var failure: LoadFailure? { if case .failed(let f) = self { return f } else { return nil } }
+    }
+
+    /// Read and decode `url`. With `encrypted` (the default — history and templates) the file must
+    /// be sealed whenever a key is set or protection is on: plain JSON in the place of a sealed
+    /// file is `notEncrypted`, not data (auditor's SEC06 — the format was taken from the file
+    /// itself, so swapping the file for plaintext was accepted without a key). settings.json is
+    /// read with `encrypted: false`.
+    static func read<T: Decodable>(_ type: T.Type, from url: URL, encrypted: Bool = true) -> LoadResult<T> {
         var data: Data
         do {
             data = try BoundedFileReader.read(url, max: Limits.dataFileMaxBytes)
         } catch BoundedFileReader.Failure.cannotOpen(ENOENT) {
-            return nil
+            return .missing
+        } catch BoundedFileReader.Failure.tooLarge {
+            Log.storage.error("refusing to load \(url.lastPathComponent): larger than the limit")
+            return .failed(.tooLarge)
+        } catch BoundedFileReader.Failure.cannotOpen(let code) {
+            Log.storage.error("refusing to load \(url.lastPathComponent): open failed, errno \(code)")
+            return .failed(.io(code))
+        } catch BoundedFileReader.Failure.readFailed(let code) {
+            Log.storage.error("refusing to load \(url.lastPathComponent): read failed, errno \(code)")
+            return .failed(.io(code))
         } catch {
             Log.storage.error("refusing to load \(url.lastPathComponent): \(String(describing: error))")
-            return nil
+            return .failed(.io(0))
         }
         if Vault.isEncrypted(data) {
-            guard let k = key, let plain = try? Vault.decrypt(data, key: k) else {
-                Log.storage.notice("\(url.lastPathComponent) is encrypted and no valid key is available")
-                return nil
+            guard let k = key else {
+                Log.storage.notice("\(url.lastPathComponent) is encrypted and no key is available")
+                return .failed(.locked)
             }
-            data = plain
+            do {
+                data = try Vault.decrypt(data, key: k)
+            } catch {
+                Log.storage.error("\(url.lastPathComponent) did not decrypt with the current key — leaving it as it is")
+                return .failed(.wrongKeyOrDamaged)
+            }
+        } else if encrypted, key != nil || Vault.isEnabled {
+            Log.storage.error("\(url.lastPathComponent) is not encrypted while protection is on — refusing it")
+            return .failed(.notEncrypted)
         }
         do {
-            return try decoder.decode(T.self, from: data)
+            return .loaded(try decoder.decode(T.self, from: data))
         } catch {
             let kind = String(describing: Swift.type(of: error))     // the type only: the description can quote the file
-            Log.storage.error("failed to decode \(url.lastPathComponent): \(kind) — a copy was kept next to it")
-            // Keep a copy so the user doesn't lose data to a parsing bug.
-            keepCopy(of: url)
-            return nil
+            Log.storage.error("failed to decode \(url.lastPathComponent): \(kind) — leaving it as it is")
+            return .failed(.malformed)
         }
+    }
+
+    /// `read` for a caller that only wants the value (settings at launch, tests): nil for missing
+    /// and for every failure alike. Not for the stores — they must tell the two apart.
+    static func load<T: Decodable>(_ type: T.Type, from url: URL, encrypted: Bool = true) -> T? {
+        read(type, from: url, encrypted: encrypted).value
     }
 
     /// `name.corrupt-<unix time>` next to the file: what was on disk before a load changed its mind
@@ -107,6 +159,14 @@ enum Storage {
     static func keepCopy(of url: URL) {
         let bak = url.appendingPathExtension("corrupt-\(Int(Date().timeIntervalSince1970))")
         try? FileManager.default.copyItem(at: url, to: bak)
+    }
+
+    /// Rename an unreadable file to `name.corrupt-<unix time>` so a store can start fresh beside it —
+    /// the user's explicit choice after `read` failed; nothing does this on its own. A rename, not a
+    /// copy and a delete: the bytes are never without a name. Through `ioQueue`, after any write.
+    static func setAside(_ url: URL) throws {
+        let bak = url.appendingPathExtension("corrupt-\(Int(Date().timeIntervalSince1970))")
+        try ioQueue.sync { try FileManager.default.moveItem(at: url, to: bak) }
     }
 
     /// Write `value` to `url` (encrypted when a key is set). `value` is captured as it is now;

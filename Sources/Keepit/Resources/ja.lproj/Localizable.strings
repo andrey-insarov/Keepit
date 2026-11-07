@@ -531,3 +531,13 @@
 "Keepit was locked during the restore. The restored data is on disk and is loaded when you unlock." = "復元中に Keepit がロックされました。復元したデータはディスクにあり、ロック解除時に読み込まれます。";
 "Auto-lock Keepit:" = "Keepit の自動ロック：";
 "Lock Keepit on its own once the Mac has been locked or asleep for this long. Never: locking the Mac leaves Keepit unlocked. Immediately: Keepit locks with the Mac. With a delay, a short absence changes nothing — Keepit stays unlocked and keeps recording — and a longer one wipes the key from memory and unloads history and templates; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked." = "Mac がこの時間ロックまたはスリープしていたら、Keepit を自動でロックします。「しない」：Mac をロックしても Keepit はロックされません。「すぐに」：Mac と同時にロックします。遅延ありの場合、短い離席では何も変わらず（Keepit はロック解除のまま記録を続けます）、長い離席でキーがメモリから消去され、履歴とテンプレートがアンロードされます。その後は Touch ID またはパスワードでロック解除します。Touch ID が有効なら、Mac のロック解除直後にタッチを求めます。";
+"Keepit cannot read its data" = "Keepit はデータを読み込めません";
+"Nothing on disk has been changed, and Keepit will not save history or templates until this is resolved. Restore a backup (Settings → Backup), or start fresh: the unreadable file is kept next to the new one as a .corrupt-… file." = "ディスク上のデータは変更されておらず、この問題が解決するまで Keepit は履歴とテンプレートを保存しません。バックアップを復元する（設定 → バックアップ）か、最初からやり直してください。読み込めないファイルは新しいファイルの隣に .corrupt-… ファイルとして残ります。";
+"Continue Without Saving" = "保存せずに続ける";
+"Could not set the unreadable file aside: %@" = "読み込めないファイルを退避できませんでした: %@";
+"encrypted, and no key is available" = "暗号化されていますが、キーがありません";
+"not encrypted, although password protection is on" = "パスワード保護が有効なのに暗号化されていません";
+"encrypted with a different key, or damaged" = "別のキーで暗号化されているか、破損しています";
+"not in the expected format" = "想定された形式ではありません";
+"larger than Keepit can read" = "Keepit が読み込める上限より大きいです";
+"could not be read (error %d)" = "読み込めませんでした（エラー %d）";

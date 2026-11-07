@@ -531,3 +531,13 @@
 "Keepit was locked during the restore. The restored data is on disk and is loaded when you unlock." = "回復過程中 Keepit 已鎖定。回復的資料已儲存在磁碟上，解鎖時會載入。";
 "Auto-lock Keepit:" = "自動鎖定 Keepit：";
 "Lock Keepit on its own once the Mac has been locked or asleep for this long. Never: locking the Mac leaves Keepit unlocked. Immediately: Keepit locks with the Mac. With a delay, a short absence changes nothing — Keepit stays unlocked and keeps recording — and a longer one wipes the key from memory and unloads history and templates; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked." = "當 Mac 鎖定或睡眠達到此時長後，自動鎖定 Keepit。「永不」：鎖定 Mac 不會鎖定 Keepit。「立即」：Keepit 隨 Mac 一起鎖定。設定延遲後，短暫離開不會有任何變化——Keepit 保持解鎖並繼續記錄——較長時間離開則會從記憶體清除金鑰並卸載歷史與範本；之後以觸控 ID 或密碼解鎖。開啟觸控 ID 後，Mac 一解鎖 Keepit 就會要求觸控。";
+"Keepit cannot read its data" = "Keepit 無法讀取其資料";
+"Nothing on disk has been changed, and Keepit will not save history or templates until this is resolved. Restore a backup (Settings → Backup), or start fresh: the unreadable file is kept next to the new one as a .corrupt-… file." = "磁碟上的內容未被更改，在問題解決之前 Keepit 不會儲存歷史記錄或範本。請還原備份（設定 → 備份），或重新開始：無法讀取的檔案會以 .corrupt-… 檔案的形式保留在新檔案旁邊。";
+"Continue Without Saving" = "不儲存並繼續";
+"Could not set the unreadable file aside: %@" = "無法將無法讀取的檔案移到一旁：%@";
+"encrypted, and no key is available" = "已加密，但沒有可用的金鑰";
+"not encrypted, although password protection is on" = "未加密，儘管密碼保護已開啟";
+"encrypted with a different key, or damaged" = "使用了不同的金鑰加密，或已損毀";
+"not in the expected format" = "不是預期的格式";
+"larger than Keepit can read" = "超出 Keepit 可讀取的大小";
+"could not be read (error %d)" = "無法讀取（錯誤 %d）";

@@ -9,23 +9,42 @@ final class TemplateStore {
     private lazy var saver = DebouncedSaver(delay: 1.0) { [weak self] background in self?.saveNow(background: background) }
     /// See HistoryStore.isPurged.
     private(set) var isPurged = false
+    /// See HistoryStore.loadFailure.
+    private(set) var loadFailure: Storage.LoadFailure?
 
     init() {
         reload()
     }
 
-    /// (Re)load from disk — used at start and after unlocking.
+    /// (Re)load from disk — used at start and after unlocking. No file → the example tree, saved.
+    /// A file that cannot be read → an empty tree in memory, `loadFailure` set, and nothing is
+    /// written to templates.json until the user restores a backup or starts fresh (`startFresh`).
     func reload() {
         isPurged = false
         revision += 1
-        if let loaded = Storage.load(TemplateNode.self, from: Storage.templatesURL) {
+        switch Storage.read(TemplateNode.self, from: Storage.templatesURL) {
+        case .loaded(let loaded):
+            loadFailure = nil
             root = Self.validated(loaded)
             root.relink()
-        } else {
+        case .missing:
+            loadFailure = nil
             root = Self.defaultTree()
             saveNow()
+        case .failed(let f):
+            loadFailure = f
+            root = TemplateNode(name: "Template")
         }
         onChange?()
+    }
+
+    /// The user's answer to `loadFailure`: the unreadable file is renamed `.corrupt-<time>` next
+    /// to the new one, and the store starts as a fresh install would. Throws (and changes nothing)
+    /// if the rename fails.
+    func startFresh() throws {
+        guard loadFailure != nil else { return }
+        try Storage.setAside(Storage.templatesURL)
+        reload()
     }
 
     /// The file on disk is decoded, not trusted: the tree passes the same validator as a backup's
@@ -97,6 +116,7 @@ final class TemplateStore {
     /// Back to the fresh-install tree (Reset).
     func resetToDefaults() {
         isPurged = false                       // Reset purges first; the store is live again from here
+        loadFailure = nil                      // Reset removed the file; there is nothing left to protect
         root = Self.defaultTree()
         revision += 1
         saveNow()
@@ -130,6 +150,7 @@ final class TemplateStore {
     /// HistoryStore.publish); the caller calls `changed()` once everything is in place.
     func publish(_ node: TemplateNode) {
         isPurged = false
+        loadFailure = nil                      // the restore commit has written a readable file
         root = Self.validated(node)
         root.relink()
         revision += 1
@@ -138,6 +159,7 @@ final class TemplateStore {
     /// Backup import, "Replace". The payload has passed Backup.validate; the store checks on its own account.
     func replaceRoot(_ node: TemplateNode) {
         isPurged = false
+        loadFailure = nil                      // the user chose to replace what is on disk
         root = Self.validated(node)
         root.relink()
         changed()
@@ -197,6 +219,10 @@ final class TemplateStore {
     /// serialise a structure that is changing under it. Templates are small; this is cheap.
     func saveNow(background: Bool = false) {
         if isPurged { return }
+        if loadFailure != nil {
+            Log.storage.notice("not saving templates.json: the file on disk could not be read and is being kept as it is")
+            return
+        }
         do {
             let snapshot = try Storage.encoder.encode(root)
             Storage.saveEncoded(snapshot, to: Storage.templatesURL, background: background)

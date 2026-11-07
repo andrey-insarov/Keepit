@@ -531,3 +531,13 @@
 "Keepit was locked during the restore. The restored data is on disk and is loaded when you unlock." = "Keepit è stato bloccato durante il ripristino. I dati ripristinati sono sul disco e verranno caricati allo sblocco.";
 "Auto-lock Keepit:" = "Blocco automatico di Keepit:";
 "Lock Keepit on its own once the Mac has been locked or asleep for this long. Never: locking the Mac leaves Keepit unlocked. Immediately: Keepit locks with the Mac. With a delay, a short absence changes nothing — Keepit stays unlocked and keeps recording — and a longer one wipes the key from memory and unloads history and templates; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked." = "Blocca Keepit da solo quando il Mac è rimasto bloccato o in stop per questo tempo. Mai: bloccare il Mac lascia Keepit sbloccato. Subito: Keepit si blocca insieme al Mac. Con un ritardo, un'assenza breve non cambia nulla — Keepit resta sbloccato e continua a registrare — e una lunga cancella la chiave dalla memoria e scarica cronologia e modelli; poi sblocca con Touch ID o la password. Con Touch ID attivo, Keepit chiede un tocco appena il Mac viene sbloccato.";
+"Keepit cannot read its data" = "Keepit non riesce a leggere i suoi dati";
+"Nothing on disk has been changed, and Keepit will not save history or templates until this is resolved. Restore a backup (Settings → Backup), or start fresh: the unreadable file is kept next to the new one as a .corrupt-… file." = "Nulla è stato modificato sul disco e Keepit non salverà cronologia e modelli finché il problema non sarà risolto. Ripristina un backup (Impostazioni → Backup) oppure ricomincia da capo: il file illeggibile resta accanto a quello nuovo come file .corrupt-….";
+"Continue Without Saving" = "Continua senza salvare";
+"Could not set the unreadable file aside: %@" = "Impossibile mettere da parte il file illeggibile: %@";
+"encrypted, and no key is available" = "cifrato, e nessuna chiave è disponibile";
+"not encrypted, although password protection is on" = "non cifrato, sebbene la protezione con password sia attiva";
+"encrypted with a different key, or damaged" = "cifrato con un’altra chiave, oppure danneggiato";
+"not in the expected format" = "non nel formato previsto";
+"larger than Keepit can read" = "più grande di quanto Keepit possa leggere";
+"could not be read (error %d)" = "impossibile leggerlo (errore %d)";

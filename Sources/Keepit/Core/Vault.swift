@@ -75,6 +75,7 @@ enum Vault {
         case randomBytes(OSStatus)        // SecRandomCopyBytes refused
         case keyDerivation(Int32)         // CCKeyDerivationPBKDF status
         case unsupportedKDF(String)
+        case notSealed                    // decrypt() given bytes that encrypt() did not make
     }
 
     struct Recovery: Codable {
@@ -155,8 +156,11 @@ enum Vault {
         data.count > magic.count && data.prefix(magic.count) == magic
     }
 
+    /// Open a blob `encrypt` made. Bytes without the marker are refused, never passed through: a
+    /// `check` or recovery block replaced by its plaintext would otherwise "verify" for any key
+    /// (auditor's SEC06 on 3.0.5). Whether a *file* may be plain is decided by `Storage.read`.
     static func decrypt(_ data: Data, key: SecureKey) throws -> Data {
-        guard isEncrypted(data) else { return data }
+        guard isEncrypted(data) else { throw Failure.notSealed }
         let box = try AES.GCM.SealedBox(combined: data.dropFirst(magic.count))
         return try key.withKey { try AES.GCM.open(box, using: $0) }
     }

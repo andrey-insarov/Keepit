@@ -531,3 +531,13 @@
 "Keepit was locked during the restore. The restored data is on disk and is loaded when you unlock." = "Keepit byl během obnovy zamčen. Obnovená data jsou na disku a načtou se při odemknutí.";
 "Auto-lock Keepit:" = "Automatický zámek Keepit:";
 "Lock Keepit on its own once the Mac has been locked or asleep for this long. Never: locking the Mac leaves Keepit unlocked. Immediately: Keepit locks with the Mac. With a delay, a short absence changes nothing — Keepit stays unlocked and keeps recording — and a longer one wipes the key from memory and unloads history and templates; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked." = "Zamknout Keepit samostatně, jakmile je Mac takto dlouho zamčený nebo ve spánku. Nikdy: zamčení Macu nechá Keepit odemčený. Ihned: Keepit se zamkne spolu s Macem. Se zpožděním krátká nepřítomnost nic nemění — Keepit zůstane odemčený a dál nahrává — a delší vymaže klíč z paměti a uvolní historii a šablony; poté odemkněte Touch ID nebo heslem. Se zapnutým Touch ID si Keepit řekne o dotyk, jakmile je Mac odemčený.";
+"Keepit cannot read its data" = "Keepit nemůže přečíst svá data";
+"Nothing on disk has been changed, and Keepit will not save history or templates until this is resolved. Restore a backup (Settings → Backup), or start fresh: the unreadable file is kept next to the new one as a .corrupt-… file." = "Na disku se nic nezměnilo a Keepit nebude ukládat historii ani šablony, dokud se to nevyřeší. Obnovte zálohu (Nastavení → Záloha) nebo začněte znovu: nečitelný soubor zůstane vedle nového jako soubor .corrupt-….";
+"Continue Without Saving" = "Pokračovat bez ukládání";
+"Could not set the unreadable file aside: %@" = "Nečitelný soubor se nepodařilo odložit stranou: %@";
+"encrypted, and no key is available" = "zašifrovaný a není k dispozici žádný klíč";
+"not encrypted, although password protection is on" = "nezašifrovaný, přestože je ochrana heslem zapnutá";
+"encrypted with a different key, or damaged" = "zašifrovaný jiným klíčem nebo poškozený";
+"not in the expected format" = "není v očekávaném formátu";
+"larger than Keepit can read" = "větší, než Keepit dokáže přečíst";
+"could not be read (error %d)" = "nepodařilo se přečíst (chyba %d)";

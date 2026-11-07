@@ -97,9 +97,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         // A restore interrupted between its three file writes is put right before anything is read.
         do { if try RestoreCommit.recoverIfNeeded() { Log.storage.notice("replayed an interrupted restore") } }
         catch { recoveryError = error; Log.storage.error("restore journal could not be replayed: \(error.localizedDescription)") }
-        let stored = Storage.load(Settings.self, from: Storage.settingsURL)
-        isFirstRun = stored == nil
-        settings = stored ?? Settings()
+        let stored = Storage.read(Settings.self, from: Storage.settingsURL, encrypted: false)
+        if case .missing = stored { isFirstRun = true } else { isFirstRun = false }   // an unreadable file is not a first run
+        settings = stored.value ?? Settings()
         super.init()
     }
 
@@ -142,6 +142,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             if self.history.expire() > 0 { self.viewer?.refresh() }
         }
         templates = TemplateStore()
+        reportUnreadableFiles()
         monitor = ClipboardMonitor(settings: settings)
         setUpBackup()                                  // before completeRecovery(): rekey() tells the engine about the new key
         if needsPasswordReset { completeRecovery() }
@@ -419,12 +420,53 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         isLocked = false
         history.reload()
         templates.reload()
+        reportUnreadableFiles()
         if needsPasswordReset { completeRecovery() }
         if !(pausedUntil.map { $0 > Date() } ?? false) { monitor.start() }   // keep a running pause
         registerHotKeys()
         backup.runIfDue()
         updateStatusIcon()
         return true
+    }
+
+    /// A data file that exists but could not be read (`HistoryStore.loadFailure`,
+    /// `TemplateStore.loadFailure`) is reported once, here, after the stores have loaded — at launch
+    /// and after an unlock. Nothing on disk has been touched and nothing will be: the store refuses
+    /// to save until a restore replaces the file or the user chooses to start fresh, which renames
+    /// the file `.corrupt-<time>` beside the new one. In a test the stores are loaded without this.
+    func reportUnreadableFiles() {
+        var lines: [String] = []
+        if let f = history.loadFailure { lines.append("history.json — " + Self.describe(f)) }
+        if let f = templates.loadFailure { lines.append("templates.json — " + Self.describe(f)) }
+        guard !lines.isEmpty else { return }
+        let a = NSAlert()
+        a.alertStyle = .critical
+        a.messageText = L("Keepit cannot read its data")
+        a.informativeText = lines.joined(separator: "\n") + "\n\n"
+            + L("Nothing on disk has been changed, and Keepit will not save history or templates until this is resolved. Restore a backup (Settings → Backup), or start fresh: the unreadable file is kept next to the new one as a .corrupt-… file.")
+        a.addButton(withTitle: L("Continue Without Saving"))
+        a.addButton(withTitle: L("Start Fresh"))
+        a.buttons[1].hasDestructiveAction = true
+        NSApp.activate(ignoringOtherApps: true)
+        guard a.runModal() == .alertSecondButtonReturn else { return }
+        do {
+            try history.startFresh()
+            try templates.startFresh()
+        } catch {
+            Vault.error(LF("Could not set the unreadable file aside: %@", error.localizedDescription))
+        }
+        viewer?.refresh()
+    }
+
+    private static func describe(_ f: Storage.LoadFailure) -> String {
+        switch f {
+        case .locked:             return L("encrypted, and no key is available")
+        case .notEncrypted:       return L("not encrypted, although password protection is on")
+        case .wrongKeyOrDamaged:  return L("encrypted with a different key, or damaged")
+        case .malformed:          return L("not in the expected format")
+        case .tooLarge:           return L("larger than Keepit can read")
+        case .io(let code):       return LF("could not be read (error %d)", code)
+        }
     }
 
     private func updateStatusIcon() {
@@ -1541,7 +1583,10 @@ extension AppDelegate {
 
     /// One consistent state for a backup, or nil when there is nothing to back up with (locked, no vault).
     func backupSnapshot() -> BackupEngine.Snapshot? {
+        // A store whose file could not be read holds nothing of the user's: a backup of it would
+        // be an empty one, and rotation would push a good earlier copy out for it.
         guard !isLocked, Vault.isEnabled, let key = Storage.key,
+              history.loadFailure == nil, templates.loadFailure == nil,
               let header = Vault.backupHeader(app: "Keepit \(AppInfo.version)"),
               let tree = try? Storage.encoder.encode(templates.root) else { return nil }
         return BackupEngine.Snapshot(history: history.items, templatesJSON: tree, settings: settings.forBackup,

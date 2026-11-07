@@ -13,6 +13,11 @@ final class HistoryStore {
     /// True between `purge()` (lock) and the next `reload()`: memory is empty on purpose and must
     /// never be written over the file on disk — quitting or updating while locked used to do that.
     private(set) var isPurged = false
+    /// Set when history.json exists but could not be read (no key, another key, damaged, not the
+    /// expected JSON, too large, I/O error). The file is then left exactly as it is: nothing is
+    /// saved over it, and nothing deletes it, until a restore replaces it or the user starts fresh.
+    /// Before 3.0.6 every one of those looked like "no history" and the empty list was written back.
+    private(set) var loadFailure: Storage.LoadFailure?
 
     init(settings: Settings) {
         self.settings = settings
@@ -24,11 +29,27 @@ final class HistoryStore {
         isPurged = false
         revision += 1
         items = []
-        if settings.historySave, let loaded = Storage.load([ClipItem].self, from: Storage.historyURL) {
-            items = Self.validated(loaded)
-            trim()
+        loadFailure = nil
+        if settings.historySave {
+            switch Storage.read([ClipItem].self, from: Storage.historyURL) {
+            case .loaded(let loaded):
+                items = Self.validated(loaded)
+                trim()
+            case .missing:
+                break
+            case .failed(let f):
+                loadFailure = f
+            }
         }
         onChange?()
+    }
+
+    /// The user's answer to `loadFailure`: the unreadable file is renamed `.corrupt-<time>` next
+    /// to the new one, and the store starts empty. Throws (and changes nothing) if the rename fails.
+    func startFresh() throws {
+        guard loadFailure != nil else { return }
+        try Storage.setAside(Storage.historyURL)
+        reload()
     }
 
     /// The file on disk is decoded, not trusted: every item passes the same validator as a backup's
@@ -137,6 +158,7 @@ final class HistoryStore {
     /// `notePublished()` once everything is in place.
     func publish(_ newItems: [ClipItem], settings s: Settings) {
         isPurged = false
+        loadFailure = nil                      // the restore commit has written a readable file
         settings = s
         items = Self.trimmed(Self.uniqueIDs(newItems.compactMap { $0.validated() }), settings: s)
         revision += 1
@@ -148,6 +170,7 @@ final class HistoryStore {
     /// Backup import, "Replace": the imported list becomes the history (trimmed to the limits).
     func replaceAll(_ newItems: [ClipItem]) {
         isPurged = false
+        loadFailure = nil                      // the user chose to replace what is on disk
         items = Self.uniqueIDs(newItems.compactMap { $0.validated() })   // a payload has passed Backup.validate; the store checks on its own account
         trim()
         changed()
@@ -234,6 +257,10 @@ final class HistoryStore {
     /// off the main thread; the default waits for it.
     func saveNow(background: Bool = false) {
         if isPurged { return }
+        if loadFailure != nil {                // neither written over nor deleted: see loadFailure
+            Log.storage.notice("not saving history.json: the file on disk could not be read and is being kept as it is")
+            return
+        }
         if settings.historySave {
             Storage.save(items, to: Storage.historyURL, background: background)
         } else {

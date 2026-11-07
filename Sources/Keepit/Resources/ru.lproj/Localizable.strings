@@ -531,3 +531,13 @@
 "Keepit was locked during the restore. The restored data is on disk and is loaded when you unlock." = "Keepit был заблокирован во время восстановления. Восстановленные данные на диске и загрузятся при разблокировке.";
 "Auto-lock Keepit:" = "Автоблокировка Keepit:";
 "Lock Keepit on its own once the Mac has been locked or asleep for this long. Never: locking the Mac leaves Keepit unlocked. Immediately: Keepit locks with the Mac. With a delay, a short absence changes nothing — Keepit stays unlocked and keeps recording — and a longer one wipes the key from memory and unloads history and templates; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked." = "Блокировать Keepit самостоятельно, когда Mac заблокирован или спит дольше этого времени. «Никогда»: блокировка Mac не трогает Keepit. «Сразу»: Keepit блокируется вместе с Mac. С задержкой короткое отсутствие ничего не меняет — Keepit остаётся разблокированным и продолжает записывать, — а долгое стирает ключ из памяти и выгружает историю и шаблоны; затем разблокируйте через Touch ID или пароль. С включённым Touch ID Keepit запрашивает касание, как только Mac разблокирован.";
+"Keepit cannot read its data" = "Keepit не может прочитать свои данные";
+"Nothing on disk has been changed, and Keepit will not save history or templates until this is resolved. Restore a backup (Settings → Backup), or start fresh: the unreadable file is kept next to the new one as a .corrupt-… file." = "На диске ничего не изменено, и Keepit не будет сохранять историю и шаблоны, пока это не решено. Восстановите резервную копию (Настройки → Резервная копия) или начните заново: нечитаемый файл останется рядом с новым как файл .corrupt-….";
+"Continue Without Saving" = "Продолжить без сохранения";
+"Could not set the unreadable file aside: %@" = "Не удалось отложить нечитаемый файл: %@";
+"encrypted, and no key is available" = "зашифрован, а ключа нет";
+"not encrypted, although password protection is on" = "не зашифрован, хотя защита паролем включена";
+"encrypted with a different key, or damaged" = "зашифрован другим ключом или повреждён";
+"not in the expected format" = "не в ожидаемом формате";
+"larger than Keepit can read" = "больше, чем Keepit может прочитать";
+"could not be read (error %d)" = "не удалось прочитать (ошибка %d)";

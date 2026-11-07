@@ -531,3 +531,13 @@
 "Keepit was locked during the restore. The restored data is on disk and is loaded when you unlock." = "تم قفل Keepit أثناء الاستعادة. البيانات المستعادة موجودة على القرص وستُحمَّل عند فتح القفل.";
 "Auto-lock Keepit:" = "القفل التلقائي لـ Keepit:";
 "Lock Keepit on its own once the Mac has been locked or asleep for this long. Never: locking the Mac leaves Keepit unlocked. Immediately: Keepit locks with the Mac. With a delay, a short absence changes nothing — Keepit stays unlocked and keeps recording — and a longer one wipes the key from memory and unloads history and templates; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked." = "قفل Keepit تلقائيًا بعد أن يبقى الـ Mac مقفلًا أو نائمًا لهذه المدة. أبدًا: قفل الـ Mac يترك Keepit مفتوحًا. فورًا: يُقفل Keepit مع الـ Mac. مع التأخير، لا يغيّر الغياب القصير شيئًا — يبقى Keepit مفتوحًا ويواصل التسجيل — بينما يمسح الغياب الأطول المفتاح من الذاكرة ويُفرغ السجل والقوالب؛ افتحه بعدها بـ Touch ID أو كلمة السر. مع تفعيل Touch ID يطلب Keepit لمسة فور فتح الـ Mac.";
+"Keepit cannot read its data" = "يتعذّر على Keepit قراءة بياناته";
+"Nothing on disk has been changed, and Keepit will not save history or templates until this is resolved. Restore a backup (Settings → Backup), or start fresh: the unreadable file is kept next to the new one as a .corrupt-… file." = "لم يتغيّر أي شيء على القرص، ولن يحفظ Keepit السجل أو القوالب حتى يُحل هذا الأمر. استعد نسخة احتياطية (الإعدادات ← النسخ الاحتياطي) أو ابدأ من جديد: يُحتفظ بالملف غير القابل للقراءة بجوار الملف الجديد كملف ‎.corrupt-…‎.";
+"Continue Without Saving" = "المتابعة دون حفظ";
+"Could not set the unreadable file aside: %@" = "تعذّر تنحية الملف غير القابل للقراءة: %@";
+"encrypted, and no key is available" = "مشفّر، ولا يتوفّر مفتاح";
+"not encrypted, although password protection is on" = "غير مشفّر، رغم أن الحماية بكلمة المرور مفعّلة";
+"encrypted with a different key, or damaged" = "مشفّر بمفتاح مختلف، أو تالف";
+"not in the expected format" = "ليس بالتنسيق المتوقّع";
+"larger than Keepit can read" = "أكبر مما يستطيع Keepit قراءته";
+"could not be read (error %d)" = "تعذّرت قراءته (الخطأ %d)";

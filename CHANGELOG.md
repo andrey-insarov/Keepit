@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- A data file that exists but cannot be read is left exactly as it is. Until now `history.json` and `templates.json` were loaded with one answer for "no file" and for every failure — a key that does not open the file, a damaged GCM tag, bytes that are not the expected JSON, a file over the size limit, a read error — and in every one of those cases the store started empty and wrote that emptiness back over the file at the next save (the example templates at once, the empty history at the next flush). A single damaged byte, or an interrupted password change, cost the file. Now a file that fails to load is neither written over nor deleted: Keepit says which file and why, keeps working without saving history or templates, and offers *Start Fresh*, which renames the file `.corrupt-<time>` beside the new one; a restore from backup also lifts the refusal. No automatic backup is taken from a store in that state. (3.0.5 security review, SEC10; `LoadResultTests`.)
+- With password protection on, a `history.json` or `templates.json` that is plain JSON is refused, not loaded: the file's own first bytes used to decide whether it was checked at all, so a file swapped for plaintext passed without a key. Inside the vault, a recovery block or the password verifier replaced by its plaintext no longer verifies for any password (SEC06).
+
 ## 3.0.5 — 2026-11-07
 
 Text decorations, a lock that closes open dialogs, a stricter template engine, and the validation boundary from the 3.0.4 review (merged after that release shipped).

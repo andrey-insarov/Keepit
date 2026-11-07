@@ -531,3 +531,13 @@
 "Keepit was locked during the restore. The restored data is on disk and is loaded when you unlock." = "Keepit a été verrouillé pendant la restauration. Les données restaurées sont sur le disque et seront chargées au déverrouillage.";
 "Auto-lock Keepit:" = "Verrouillage auto de Keepit :";
 "Lock Keepit on its own once the Mac has been locked or asleep for this long. Never: locking the Mac leaves Keepit unlocked. Immediately: Keepit locks with the Mac. With a delay, a short absence changes nothing — Keepit stays unlocked and keeps recording — and a longer one wipes the key from memory and unloads history and templates; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked." = "Verrouiller Keepit de lui-même une fois le Mac verrouillé ou en veille depuis cette durée. Jamais : verrouiller le Mac laisse Keepit déverrouillé. Immédiatement : Keepit se verrouille avec le Mac. Avec un délai, une courte absence ne change rien — Keepit reste déverrouillé et continue d'enregistrer — et une plus longue efface la clé de la mémoire et décharge l'historique et les modèles ; déverrouillez ensuite avec Touch ID ou le mot de passe. Avec Touch ID, Keepit demande une empreinte dès que le Mac est déverrouillé.";
+"Keepit cannot read its data" = "Keepit ne peut pas lire ses données";
+"Nothing on disk has been changed, and Keepit will not save history or templates until this is resolved. Restore a backup (Settings → Backup), or start fresh: the unreadable file is kept next to the new one as a .corrupt-… file." = "Rien n’a été modifié sur le disque, et Keepit n’enregistrera ni l’historique ni les modèles tant que ce problème n’est pas résolu. Restaurez une sauvegarde (Réglages → Sauvegarde) ou repartez de zéro : le fichier illisible est conservé à côté du nouveau sous la forme d’un fichier .corrupt-….";
+"Continue Without Saving" = "Continuer sans enregistrer";
+"Could not set the unreadable file aside: %@" = "Impossible de mettre de côté le fichier illisible : %@";
+"encrypted, and no key is available" = "chiffré, et aucune clé n’est disponible";
+"not encrypted, although password protection is on" = "non chiffré, alors que la protection par mot de passe est activée";
+"encrypted with a different key, or damaged" = "chiffré avec une autre clé, ou endommagé";
+"not in the expected format" = "pas au format attendu";
+"larger than Keepit can read" = "plus volumineux que ce que Keepit peut lire";
+"could not be read (error %d)" = "n’a pas pu être lu (erreur %d)";

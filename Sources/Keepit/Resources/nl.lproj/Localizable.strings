@@ -531,3 +531,13 @@
 "Keepit was locked during the restore. The restored data is on disk and is loaded when you unlock." = "Keepit is tijdens het herstellen vergrendeld. De herstelde gegevens staan op de schijf en worden bij het ontgrendelen geladen.";
 "Auto-lock Keepit:" = "Keepit automatisch vergrendelen:";
 "Lock Keepit on its own once the Mac has been locked or asleep for this long. Never: locking the Mac leaves Keepit unlocked. Immediately: Keepit locks with the Mac. With a delay, a short absence changes nothing — Keepit stays unlocked and keeps recording — and a longer one wipes the key from memory and unloads history and templates; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked." = "Keepit vanzelf vergrendelen zodra de Mac zo lang vergrendeld of in sluimerstand is geweest. Nooit: de Mac vergrendelen laat Keepit ontgrendeld. Direct: Keepit vergrendelt met de Mac. Met een vertraging verandert een korte afwezigheid niets — Keepit blijft ontgrendeld en blijft opnemen — en een langere wist de sleutel uit het geheugen en ontlaadt geschiedenis en sjablonen; ontgrendel daarna met Touch ID of het wachtwoord. Met Touch ID vraagt Keepit om een aanraking zodra de Mac ontgrendeld is.";
+"Keepit cannot read its data" = "Keepit kan zijn gegevens niet lezen";
+"Nothing on disk has been changed, and Keepit will not save history or templates until this is resolved. Restore a backup (Settings → Backup), or start fresh: the unreadable file is kept next to the new one as a .corrupt-… file." = "Er is niets op de schijf gewijzigd en Keepit slaat geen geschiedenis of sjablonen op totdat dit is opgelost. Herstel een reservekopie (Instellingen → Reservekopie) of begin opnieuw: het onleesbare bestand blijft naast het nieuwe bewaard als .corrupt-…-bestand.";
+"Continue Without Saving" = "Doorgaan zonder opslaan";
+"Could not set the unreadable file aside: %@" = "Kon het onleesbare bestand niet opzijzetten: %@";
+"encrypted, and no key is available" = "versleuteld, en er is geen sleutel beschikbaar";
+"not encrypted, although password protection is on" = "niet versleuteld, hoewel wachtwoordbeveiliging aanstaat";
+"encrypted with a different key, or damaged" = "versleuteld met een andere sleutel, of beschadigd";
+"not in the expected format" = "niet in de verwachte indeling";
+"larger than Keepit can read" = "groter dan Keepit kan lezen";
+"could not be read (error %d)" = "kon niet worden gelezen (fout %d)";
