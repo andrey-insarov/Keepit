@@ -115,8 +115,11 @@ extension AppDelegate {
         }
         let restorePreferences = restorePrefs.state == .on
         let folderName = { () -> String in let f = DateFormatter(); f.dateStyle = .medium; return LF("Imported %@", f.string(from: p.created)) }()
+        // With settings.json unreadable, Keepit runs on stand-in settings (Settings.whileUnreadable);
+        // the restore builds on the defaults instead, and only the commit makes them live.
+        let currentSettings = settingsLoadFailure != nil ? Settings() : settings
         let makePlan = { try RestorePlan.make(mode: mode, payload: p, currentHistory: self.history.items, currentTemplates: self.templates.root,
-                                              currentSettings: self.settings, restorePreferences: restorePreferences, folderName: folderName) }
+                                              currentSettings: currentSettings, restorePreferences: restorePreferences, folderName: folderName) }
 
         // 5. Everything that needs the user is asked now, before anything is captured or changed:
         //    the limits check, what a rollback copy needs, a password when the phrase opened the file.
@@ -138,19 +141,6 @@ extension AppDelegate {
             rollback = r
         }
         defer { rollback?.password?.zero() }
-        // The unreadable files go aside now, after the questions about the backup itself and before
-        // anything that writes (a vault for a phrase-opened backup, the rollback copy, the commit):
-        // from here the stores are a fresh start that the commit replaces — nothing of theirs needs
-        // a rollback copy. If the flow stops after this point, the result is that of Start Fresh.
-        if !unreadable.isEmpty {
-            guard lockCount == lockAtStart else { Vault.error(RestoreCommit.Failure.locked.localizedDescription); return }
-            do { try Storage.setAside(unreadable) } catch {
-                Vault.error(LF("Could not set the unreadable file aside: %@", error.localizedDescription)); return
-            }
-            clearSettingsFailureForRestore()
-            history.reload()
-            templates.reload()
-        }
         // A backup opened with its phrase on a Mac without a password: the data must not land
         // unprotected (docs/BACKUP.md, Restore 8). Password and vault first; cancelling changes nothing.
         if !Vault.isEnabled, unlocked.viaRecovery {
@@ -171,7 +161,7 @@ extension AppDelegate {
             case .alertSecondButtonReturn: keep = false
             default: return
             }
-            guard enableProtection(with: pw, recoveryEntropy: keep ? unlocked.recoveryEntropy : nil) else { return }
+            guard enableProtection(with: pw, recoveryEntropy: keep ? unlocked.recoveryEntropy : nil, duringRestore: !unreadable.isEmpty) else { return }
         }
 
         // 6. Commit stage: no more questions. The clipboard watcher is paused so the stores stand
@@ -241,7 +231,22 @@ extension AppDelegate {
         let templatesJSON = try Storage.encoder.encode(plan.templates)
         let historyJSON = plan.settings.historySave ? try Storage.encoder.encode(plan.history) : nil
         let settingsJSON = try Storage.prettyEncoder.encode(plan.settings)
-        try RestoreCommit.writeFiles(templatesJSON: templatesJSON, historyJSON: historyJSON, settingsJSON: settingsJSON)
+        // Files Keepit could not read go beside the new ones here, with nothing between the rename
+        // and the write (Replace asked about them; Merge was refused). Until this line nothing on
+        // disk has changed, whatever was cancelled before (3.0.6 audit, round 2). Should the write
+        // fail after the rename, the result is Start Fresh's: the stores start over and say so.
+        let unreadable = unreadableDataFiles.map(\.url)
+        if !unreadable.isEmpty {
+            try Storage.setAside(unreadable)
+            if unreadable.contains(Storage.settingsURL) { Storage.unpin(Storage.historyURL) }
+        }
+        do {
+            try RestoreCommit.writeFiles(templatesJSON: templatesJSON, historyJSON: historyJSON, settingsJSON: settingsJSON)
+        } catch {
+            if !unreadable.isEmpty { startOverAfterSetAside(unreadable) }
+            throw error
+        }
+        settingsLoadFailure = nil
         // Both models and the settings they are trimmed under in one step, with no observer called and
         // no save scheduled in between: nothing — a lock in a callback included — can run while one
         // store is filled and the other is not, and the items are trimmed under the *restored*

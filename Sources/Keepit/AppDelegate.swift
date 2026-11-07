@@ -492,23 +492,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         startFresh()
     }
 
-    /// A restore (Replace) has set an unreadable settings.json aside: the defaults stand in until
-    /// the commit writes the plan's settings.
-    func clearSettingsFailureForRestore() {
-        guard settingsLoadFailure != nil else { return }
-        settingsLoadFailure = nil
-        Storage.unpin(Storage.historyURL)
-        apply(settings: Settings())
-    }
-
     /// Lifted by Reset, which removes every data file.
     func clearLoadFailuresForReset() {
         settingsLoadFailure = nil
         Storage.releaseAll()
     }
 
-    /// Set every unreadable file aside, then start the affected stores (and settings) over. If any
-    /// rename fails, none has happened and nothing is reset.
+    /// Set every unreadable file aside, then start over — only what was unreadable. A healthy store
+    /// keeps what it holds (3.0.6 audit, round 2: reloading both dropped history copied since the
+    /// last save, or all of it with saving off). If any rename fails, none has happened and nothing
+    /// is reset.
     func startFresh() {
         let unreadable = unreadableDataFiles
         guard !unreadable.isEmpty, !isLocked else { return }
@@ -518,13 +511,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             Vault.error(LF("Could not set the unreadable file aside: %@", error.localizedDescription))
             return
         }
-        if settingsLoadFailure != nil {
+        startOverAfterSetAside(unreadable.map(\.url))
+    }
+
+    /// The second half of Start Fresh, once the files are beside the new ones: the stores whose file
+    /// was unreadable load the fresh start; an unreadable settings.json gives way to the defaults,
+    /// and the history kept in memory meanwhile is saved under them.
+    func startOverAfterSetAside(_ urls: [URL]) {
+        if urls.contains(Storage.historyURL) { history.reload() }
+        if urls.contains(Storage.templatesURL) { templates.reload() }
+        if urls.contains(Storage.settingsURL) {
             settingsLoadFailure = nil
             Storage.unpin(Storage.historyURL)
-            apply(settings: Settings())
+            apply(settings: Settings())                  // historySave on again: the items in memory are saved
         }
-        history.reload()
-        templates.reload()
         viewer?.refresh()
         backup?.noteChange()
     }
@@ -760,10 +760,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// Turn protection on with a password already in hand (a restored backup's). The caller wipes `pw`.
     /// `recoveryEntropy`: keep a phrase the user already holds (the one that opened a restored
     /// backup) instead of showing a new one.
-    func enableProtection(with pw: SecureBuffer, recoveryEntropy: [UInt8]? = nil) -> Bool {
+    /// `duringRestore`: a Replace that is about to set the unreadable files aside and write the
+    /// restored ones may turn protection on first; nothing else may while data is unreadable.
+    func enableProtection(with pw: SecureBuffer, recoveryEntropy: [UInt8]? = nil, duringRestore: Bool = false) -> Bool {
         // Re-saving encrypted is the whole point; a held file would stay plain and be refused
         // afterwards (SEC06), or be left under no key at all. Until SEC01's transaction, not at all.
-        if refuseWhileUnreadable() { return false }
+        if !duringRestore, refuseWhileUnreadable() { return false }
         do {
             Storage.key = try Vault.enable(password: pw)
         } catch {

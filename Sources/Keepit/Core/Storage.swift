@@ -218,7 +218,10 @@ enum Storage {
                     done.append((url, bak))
                 }
             } catch {
-                for d in done.reversed() { try? fm.moveItem(at: d.to, to: d.from) }
+                for d in done.reversed() {
+                    do { try fm.moveItem(at: d.to, to: d.from) }
+                    catch let undo { Log.storage.error("could not move \(d.to.lastPathComponent) back: \(undo.localizedDescription)") }
+                }
                 throw error
             }
             return done.map(\.to)
@@ -259,6 +262,7 @@ enum Storage {
         if encrypt, key == nil, Vault.isEnabled { throw Failure.locked }
         let k: SecureKey? = encrypt ? key : nil
         try ioQueue.sync {
+            if isHeld(url) { throw Failure.held(url.lastPathComponent) }   // again, in order with the reads
             var d = data
             if let k { d = try Vault.encrypt(d, key: k) }
             try d.write(to: url, options: .atomic)
@@ -268,12 +272,16 @@ enum Storage {
     /// Put bytes back exactly as they were read (already encrypted, or not): undo for `writeNow`.
     static func writeRawNow(_ bytes: Data, to url: URL) throws {
         if isHeld(url) { throw Failure.held(url.lastPathComponent) }
-        try ioQueue.sync { try bytes.write(to: url, options: .atomic) }
+        try ioQueue.sync {
+            if isHeld(url) { throw Failure.held(url.lastPathComponent) }
+            try bytes.write(to: url, options: .atomic)
+        }
     }
 
     static func removeNow(_ url: URL) throws {
         if isHeld(url) { throw Failure.held(url.lastPathComponent) }
         try ioQueue.sync {
+            if isHeld(url) { throw Failure.held(url.lastPathComponent) }
             if FileManager.default.fileExists(atPath: url.path) { try FileManager.default.removeItem(at: url) }
         }
     }
@@ -293,6 +301,12 @@ enum Storage {
         // after draining the queue, so this reference stays usable for the whole write.
         let k: SecureKey? = encrypt ? key : nil
         let work = {
+            // Checked again here, when the write actually runs: a read that failed after this save
+            // was queued has held the file meanwhile (3.0.6 audit, round 2).
+            if isHeld(url) {
+                Log.storage.notice("not saving \(url.lastPathComponent): it could not be read and is kept as it is")
+                return
+            }
             do {
                 var data = try produce()
                 if let k { data = try Vault.encrypt(data, key: k) }
