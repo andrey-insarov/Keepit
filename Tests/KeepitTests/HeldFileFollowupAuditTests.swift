@@ -86,8 +86,10 @@ final class HeldFileFollowupAuditTests: XCTestCase {
         XCTAssertFalse(RestoreCommit.hasArmedJournal)
     }
 
-    /// P2: a save already queued when the read fails does not run.
-    func testQueuedSaveRespectsAHoldSetAfterEnqueue() throws {
+    /// P2 (round 2), restated after round 3 put reads on `ioQueue`: a save already queued when a
+    /// read arrives runs first, and the read sees what it wrote — the two never interleave, so a
+    /// hold from a failed read can never be set between a write's check and its write.
+    func testAReadQueuedBehindASaveSeesTheSave() throws {
         let url = Storage.historyURL
         let original = Data("{".utf8)
         try original.write(to: url)
@@ -95,14 +97,19 @@ final class HeldFileFollowupAuditTests: XCTestCase {
         Storage.ioQueue.async { releaseQueue.wait() }
 
         Storage.save([ClipItem.text("queued write")], to: url, background: true)
-        let failure = Storage.read([ClipItem].self, from: url).failure
-        let held = Storage.isHeld(url)
+        var result: Storage.LoadResult<[ClipItem]>?
+        let readDone = expectation(description: "read")
+        DispatchQueue.global().async {
+            result = Storage.read([ClipItem].self, from: url)   // waits behind the gate and the save
+            readDone.fulfill()
+        }
+        Thread.sleep(forTimeInterval: 0.2)
+        XCTAssertNil(result, "still waiting")
         releaseQueue.signal()
+        wait(for: [readDone], timeout: 5)
         Storage.waitUntilSaved()
 
-        XCTAssertEqual(failure, .malformed)
-        XCTAssertTrue(held)
-        XCTAssertTrue(Storage.isHeld(url))
-        XCTAssertEqual(try Data(contentsOf: url), original)
+        XCTAssertEqual(result?.value?.map(\.plainText), ["queued write"])
+        XCTAssertFalse(Storage.isHeld(url))
     }
 }
