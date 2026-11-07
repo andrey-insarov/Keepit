@@ -7,9 +7,9 @@ from playwright.async_api import async_playwright
 HERE = pathlib.Path(__file__).parent
 SHOTS = [
     # (file, headline, subline, layout: "right" = text left + image right, "top" = text above image)
-    ("menu", "Everything you copied,\none hot key away", "Press ⌥C in any app. Pick with the mouse or type 1–9, A–Z — it's pasted where you were typing.", "right"),
+    ("menu", "Everything you copied,\none hot key away", "Press ⌥M in any app, pick an item — it's pasted where you were typing. Hold ⇧ to paste it as plain text, UPPERCASE or struck through.", "right"),
     ("viewer", "Browse, edit, organize", "History and templates in one tree — edit text in place, inspect every clipboard format, drag items into templates.", "top"),
-    ("preferences", "Private by design", "Password-protected, AES-256 encrypted, unlocked with Touch ID. Locks when the screen does. Password managers are never recorded.", "right"),
+    ("preferences", "Private by design", "Password-protected, AES-256 encrypted, unlocked with Touch ID. Locks itself when you step away. Password managers are never recorded.", "right"),
 ]
 
 CSS = """
@@ -20,7 +20,7 @@ body { width: 2560px; height: 1600px; overflow: hidden; font-family: -apple-syst
 .badge img { width: 88px; height: 88px; border-radius: 20px; box-shadow: 0 12px 30px rgba(0,0,0,.25); }
 h1 { font-size: 104px; line-height: 1.04; font-weight: 700; letter-spacing: -1.5px; white-space: pre-line; }
 p  { font-size: 40px; line-height: 1.35; font-weight: 400; opacity: .92; margin-top: 36px; }
-.shot { position: absolute; border-radius: 24px; box-shadow: 0 50px 120px rgba(0,0,0,.45), 0 0 0 2px rgba(255,255,255,.12); }
+.shot { position: absolute; border-radius: 24px; filter: drop-shadow(0 50px 60px rgba(0,0,0,.45)); }
 .right .text { position: absolute; left: 96px; top: 300px; width: 1000px; }
 .right .shot { right: 96px; top: 50%; transform: translateY(-50%); max-width: 1280px; max-height: 1380px; }
 .top .text { position: absolute; left: 96px; top: 200px; width: 2368px; }
