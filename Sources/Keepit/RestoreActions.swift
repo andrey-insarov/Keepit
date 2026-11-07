@@ -237,6 +237,12 @@ extension AppDelegate {
         // fail after the rename, the result is Start Fresh's: the stores start over and say so.
         let unreadable = unreadableDataFiles.map(\.url)
         if !unreadable.isEmpty {
+            // Only a Replace may set them aside; a Merge was built on empty stores and would pass the
+            // backup off as the merged whole. The UI refuses Merge earlier; this holds for every caller.
+            guard plan.mode == .replace else {
+                let first = unreadable[0]
+                throw RestoreCommit.Failure.cannotReadPrevious(first.lastPathComponent, Storage.Failure.held(first.lastPathComponent))
+            }
             try Storage.setAside(unreadable)
             if unreadable.contains(Storage.settingsURL) { Storage.unpin(Storage.historyURL) }
         }
