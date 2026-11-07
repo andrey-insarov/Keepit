@@ -541,4 +541,8 @@ T = {
 'not in the expected format': 'beklenen biçimde değil',
 'larger than Keepit can read': 'Keepit’in okuyabileceğinden daha büyük',
 'could not be read (error %d)': 'okunamadı (hata %d)',
+'Keepit could not read some of its data, so this is not available now. Restore a backup (Replace) or start fresh first — Keepit asks at the next launch or unlock.': 'Keepit verilerinin bir kısmını okuyamadı, bu nedenle bu şu anda kullanılamıyor. Önce bir yedeği geri yükleyin (Değiştir) ya da sıfırdan başlayın — Keepit bir sonraki açılışta veya kilit açmada soracak.',
+'Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file.': 'Keepit mevcut verilerini okuyamadı, bu yüzden bir yedek bunlarla birleştirilemez. Değiştir’i seçin: okunamayan dosya, geri yüklenenin yanında .corrupt-… dosyası olarak saklanır.',
+'Replace data Keepit cannot read?': 'Keepit’in okuyamadığı veriler değiştirilsin mi?',
+'These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them.': 'Bu dosyaların adı .corrupt-… olarak değiştirilir ve geri yüklenenlerin yanında saklanır; Keepit bunları açmaz veya değiştirmez.',
 }

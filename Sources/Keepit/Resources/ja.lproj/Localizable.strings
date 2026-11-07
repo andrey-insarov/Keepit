@@ -541,3 +541,7 @@
 "not in the expected format" = "想定された形式ではありません";
 "larger than Keepit can read" = "Keepit が読み込める上限より大きいです";
 "could not be read (error %d)" = "読み込めませんでした（エラー %d）";
+"Keepit could not read some of its data, so this is not available now. Restore a backup (Replace) or start fresh first — Keepit asks at the next launch or unlock." = "Keepit は一部のデータを読み込めなかったため、現在この操作は使用できません。先にバックアップを復元（置き換え）するか、最初からやり直してください。次回の起動時またはロック解除時に Keepit が確認します。";
+"Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file." = "Keepit は現在のデータを読み込めなかったため、バックアップを結合できません。「置き換え」を選んでください。読み込めないファイルは復元したファイルの隣に .corrupt-… ファイルとして残ります。";
+"Replace data Keepit cannot read?" = "Keepit が読み込めないデータを置き換えますか？";
+"These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them." = "これらのファイルは .corrupt-… に名前が変更され、復元したファイルの隣に保管されます。Keepit はこれらを開いたり変更したりしません。";

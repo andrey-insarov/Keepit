@@ -86,6 +86,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     /// No settings file yet → first launch (onboarding, login item).
     private let isFirstRun: Bool
+    /// settings.json exists but could not be read. The file is kept as it is (a held file: nothing
+    /// saves over it), and the app runs on `Settings.whileUnreadable` until the user starts fresh
+    /// or restores: history in memory only, with history.json pinned so "save history: off" cannot
+    /// delete it; lock immediately when a password is set; no keepit://, no automatic backup.
+    /// (3.0.6 audit: a truncated settings.json was replaced by the defaults — history saving back
+    /// on, auto-lock off, backups and keepit:// trust reset — without a word.)
+    private(set) var settingsLoadFailure: Storage.LoadFailure?
 
     /// A restore journal that could not be replayed at launch. The files are a mix of before and
     /// after; working on them would write that mix back and the journal would be the only intact
@@ -99,7 +106,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         catch { recoveryError = error; Log.storage.error("restore journal could not be replayed: \(error.localizedDescription)") }
         let stored = Storage.read(Settings.self, from: Storage.settingsURL, encrypted: false)
         if case .missing = stored { isFirstRun = true } else { isFirstRun = false }   // an unreadable file is not a first run
-        settings = stored.value ?? Settings()
+        if let f = stored.failure {
+            settingsLoadFailure = f
+            settings = Settings.whileUnreadable
+            Storage.pin(Storage.historyURL)
+        } else {
+            settings = stored.value ?? Settings()
+        }
         super.init()
     }
 
@@ -142,7 +155,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             if self.history.expire() > 0 { self.viewer?.refresh() }
         }
         templates = TemplateStore()
-        reportUnreadableFiles()
+        DispatchQueue.main.async { [weak self] in self?.reportUnreadableFiles() }   // after launch has set everything up
         monitor = ClipboardMonitor(settings: settings)
         setUpBackup()                                  // before completeRecovery(): rekey() tells the engine about the new key
         if needsPasswordReset { completeRecovery() }
@@ -420,7 +433,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         isLocked = false
         history.reload()
         templates.reload()
-        reportUnreadableFiles()
+        // After unlock() has finished, not inside it: a lock while the question is up then has
+        // nothing of unlock() left to undo (3.0.6 audit: the rest of unlock() restarted the
+        // watcher and hot keys after a lock that came during the alert).
+        DispatchQueue.main.async { [weak self] in self?.reportUnreadableFiles() }
         if needsPasswordReset { completeRecovery() }
         if !(pausedUntil.map { $0 > Date() } ?? false) { monitor.start() }   // keep a running pause
         registerHotKeys()
@@ -429,33 +445,88 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         return true
     }
 
-    /// A data file that exists but could not be read (`HistoryStore.loadFailure`,
-    /// `TemplateStore.loadFailure`) is reported once, here, after the stores have loaded — at launch
-    /// and after an unlock. Nothing on disk has been touched and nothing will be: the store refuses
-    /// to save until a restore replaces the file or the user chooses to start fresh, which renames
-    /// the file `.corrupt-<time>` beside the new one. In a test the stores are loaded without this.
+    /// Tests only: called instead of the alert `refuseWhileUnreadable` shows.
+    var refusalForTesting: (() -> Void)?
+
+    /// The data files that exist but could not be read, with the reason.
+    var unreadableDataFiles: [(url: URL, failure: Storage.LoadFailure)] {
+        var out: [(url: URL, failure: Storage.LoadFailure)] = []
+        if let f = history?.loadFailure { out.append((Storage.historyURL, f)) }
+        if let f = templates?.loadFailure { out.append((Storage.templatesURL, f)) }
+        if let f = settingsLoadFailure { out.append((Storage.settingsURL, f)) }
+        return out
+    }
+
+    var hasUnreadableData: Bool { !unreadableDataFiles.isEmpty }
+
+    /// One refusal for everything that would build on data Keepit could not read: a backup, an
+    /// archive, a Merge, a password change. Returns false (after saying so) when there is such data.
+    func refuseWhileUnreadable() -> Bool {
+        guard hasUnreadableData else { return false }
+        if let test = refusalForTesting { test(); return true }
+        Vault.error(L("Keepit could not read some of its data, so this is not available now. Restore a backup (Replace) or start fresh first — Keepit asks at the next launch or unlock."))
+        return true
+    }
+
+    /// A data file that exists but could not be read is reported here, after launch and after an
+    /// unlock (both call it asynchronously, once the rest of the flow is done). Nothing on disk has
+    /// been touched: the file is held (`Storage.hold`) and its store refuses to save. *Start Fresh*
+    /// renames every unreadable file `.corrupt-<time>` beside the new one — all or none — and only
+    /// then do the stores start over. The alert is abortable: a lock closes it, and an answer that
+    /// arrives after a lock (or after a lock and an unlock) does nothing.
     func reportUnreadableFiles() {
-        var lines: [String] = []
-        if let f = history.loadFailure { lines.append("history.json — " + Self.describe(f)) }
-        if let f = templates.loadFailure { lines.append("templates.json — " + Self.describe(f)) }
-        guard !lines.isEmpty else { return }
+        let unreadable = unreadableDataFiles
+        guard !unreadable.isEmpty, !isLocked else { return }
+        let generation = lockCount
         let a = NSAlert()
         a.alertStyle = .critical
         a.messageText = L("Keepit cannot read its data")
-        a.informativeText = lines.joined(separator: "\n") + "\n\n"
+        a.informativeText = unreadable.map { $0.url.lastPathComponent + " — " + Self.describe($0.failure) }.joined(separator: "\n") + "\n\n"
             + L("Nothing on disk has been changed, and Keepit will not save history or templates until this is resolved. Restore a backup (Settings → Backup), or start fresh: the unreadable file is kept next to the new one as a .corrupt-… file.")
         a.addButton(withTitle: L("Continue Without Saving"))
         a.addButton(withTitle: L("Start Fresh"))
         a.buttons[1].hasDestructiveAction = true
         NSApp.activate(ignoringOtherApps: true)
-        guard a.runModal() == .alertSecondButtonReturn else { return }
+        guard AbortableModal.run(a) == .alertSecondButtonReturn else { return }
+        guard !isLocked, lockCount == generation else { return }
+        startFresh()
+    }
+
+    /// A restore (Replace) has set an unreadable settings.json aside: the defaults stand in until
+    /// the commit writes the plan's settings.
+    func clearSettingsFailureForRestore() {
+        guard settingsLoadFailure != nil else { return }
+        settingsLoadFailure = nil
+        Storage.unpin(Storage.historyURL)
+        apply(settings: Settings())
+    }
+
+    /// Lifted by Reset, which removes every data file.
+    func clearLoadFailuresForReset() {
+        settingsLoadFailure = nil
+        Storage.releaseAll()
+    }
+
+    /// Set every unreadable file aside, then start the affected stores (and settings) over. If any
+    /// rename fails, none has happened and nothing is reset.
+    func startFresh() {
+        let unreadable = unreadableDataFiles
+        guard !unreadable.isEmpty, !isLocked else { return }
         do {
-            try history.startFresh()
-            try templates.startFresh()
+            try Storage.setAside(unreadable.map(\.url))
         } catch {
             Vault.error(LF("Could not set the unreadable file aside: %@", error.localizedDescription))
+            return
         }
+        if settingsLoadFailure != nil {
+            settingsLoadFailure = nil
+            Storage.unpin(Storage.historyURL)
+            apply(settings: Settings())
+        }
+        history.reload()
+        templates.reload()
         viewer?.refresh()
+        backup?.noteChange()
     }
 
     private static func describe(_ f: Storage.LoadFailure) -> String {
@@ -615,6 +686,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// Replace the data key with one derived from `pw`, re-encrypt everything, keep recovery + Touch ID in sync.
     private func rekey(with pw: SecureBuffer) {
         guard let oldKey = Storage.key else { return }
+        if refuseWhileUnreadable() { return }               // every caller checks too; this is the one that must hold
         let oldRecovery = Vault.currentRecovery
         do {
             let newKey = try Vault.enable(password: pw)
@@ -652,6 +724,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// Settings → Security → Recovery phrase → Create New…: invalidates the old sheet.
     func regenerateRecoveryPhrase() {
         guard Vault.isEnabled, let key = Storage.key else { return }
+        if refuseWhileUnreadable() { return }               // the follow-up offers a password change
         guard authenticateForChange(reasonKey: "generate a new recovery phrase") else { return }
         do {
             let words = try Vault.createRecovery(for: key)
@@ -676,6 +749,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     /// Turn protection on: set a password, re-save data encrypted.
     func enableProtection() -> Bool {
+        if refuseWhileUnreadable() { return false }
         guard let pw = Vault.askPassword(title: L("Set Keepit password"),
                                          message: L("You'll be asked for it every time Keepit starts. A recovery phrase for it is shown next."),
                                          confirm: true) else { return false }
@@ -687,6 +761,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// `recoveryEntropy`: keep a phrase the user already holds (the one that opened a restored
     /// backup) instead of showing a new one.
     func enableProtection(with pw: SecureBuffer, recoveryEntropy: [UInt8]? = nil) -> Bool {
+        // Re-saving encrypted is the whole point; a held file would stay plain and be refused
+        // afterwards (SEC06), or be left under no key at all. Until SEC01's transaction, not at all.
+        if refuseWhileUnreadable() { return false }
         do {
             Storage.key = try Vault.enable(password: pw)
         } catch {
@@ -734,6 +811,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     /// Turn protection off after verifying the password; data is re-saved as plain JSON.
     func disableProtection() -> Bool {
+        if refuseWhileUnreadable() { return false }
         guard let pw = Vault.askPassword(title: L("Disable password protection"),
                                          message: L("Enter the current password. History and templates will be stored unencrypted.")) else { return false }
         let check = Vault.unlock(password: pw)
@@ -757,6 +835,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     func changePassword() {
         guard Vault.isEnabled, Storage.key != nil else { return }
+        // 3.0.6 audit: a file that decrypted but did not decode stayed under the old key while
+        // vault.json moved to the new one — and the old password no longer opens the vault.
+        if refuseWhileUnreadable() { return }
         guard authenticateForChange(reasonKey: "change the Keepit password") else { return }
         guard let pw = Vault.askPassword(title: L("New password"), message: L("Enter the new password twice. Backups made so far still open with the old password."), confirm: true) else { return }
         defer { pw.zero() }
@@ -1586,7 +1667,7 @@ extension AppDelegate {
         // A store whose file could not be read holds nothing of the user's: a backup of it would
         // be an empty one, and rotation would push a good earlier copy out for it.
         guard !isLocked, Vault.isEnabled, let key = Storage.key,
-              history.loadFailure == nil, templates.loadFailure == nil,
+              !hasUnreadableData,
               let header = Vault.backupHeader(app: "Keepit \(AppInfo.version)"),
               let tree = try? Storage.encoder.encode(templates.root) else { return nil }
         return BackupEngine.Snapshot(history: history.items, templatesJSON: tree, settings: settings.forBackup,

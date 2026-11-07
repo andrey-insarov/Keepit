@@ -541,4 +541,8 @@ T = {
 'not in the expected format': 'ne tokio formato, kokio tikėtasi',
 'larger than Keepit can read': 'didesnis, nei „Keepit“ gali perskaityti',
 'could not be read (error %d)': 'nepavyko perskaityti (klaida %d)',
+'Keepit could not read some of its data, so this is not available now. Restore a backup (Replace) or start fresh first — Keepit asks at the next launch or unlock.': '„Keepit“ nepavyko perskaityti dalies savo duomenų, todėl to dabar padaryti negalima. Pirmiausia atkurkite atsarginę kopiją (Pakeisti) arba pradėkite iš naujo – „Keepit“ paklaus kito paleidimo ar atrakinimo metu.',
+'Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file.': '„Keepit“ nepavyko perskaityti dabartinių duomenų, todėl atsarginės kopijos su jais sujungti negalima. Pasirinkite Pakeisti: neperskaitomas failas liks šalia atkurtojo kaip .corrupt-… failas.',
+'Replace data Keepit cannot read?': 'Pakeisti duomenis, kurių „Keepit“ negali perskaityti?',
+'These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them.': 'Šie failai bus pervadinti į .corrupt-… ir paliekami šalia atkurtųjų; „Keepit“ jų neatidaro ir nekeičia.',
 }

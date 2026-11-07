@@ -541,3 +541,7 @@
 "not in the expected format" = "不是预期的格式";
 "larger than Keepit can read" = "超出 Keepit 可读取的大小";
 "could not be read (error %d)" = "无法读取（错误 %d）";
+"Keepit could not read some of its data, so this is not available now. Restore a backup (Replace) or start fresh first — Keepit asks at the next launch or unlock." = "Keepit 无法读取部分数据，因此目前无法使用此功能。请先恢复备份（替换）或重新开始——Keepit 会在下次启动或解锁时询问。";
+"Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file." = "Keepit 无法读取当前数据，因此无法将备份合并到其中。请选择“替换”：无法读取的文件会以 .corrupt-… 文件的形式保留在恢复的文件旁边。";
+"Replace data Keepit cannot read?" = "要替换 Keepit 无法读取的数据吗？";
+"These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them." = "这些文件会被重命名为 .corrupt-… 并保留在恢复的文件旁边；Keepit 不会打开或更改它们。";

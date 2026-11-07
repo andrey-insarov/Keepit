@@ -541,3 +541,7 @@
 "not in the expected format" = "nie w oczekiwanym formacie";
 "larger than Keepit can read" = "większy, niż Keepit może odczytać";
 "could not be read (error %d)" = "nie udało się odczytać (błąd %d)";
+"Keepit could not read some of its data, so this is not available now. Restore a backup (Replace) or start fresh first — Keepit asks at the next launch or unlock." = "Keepit nie mógł odczytać części swoich danych, więc ta funkcja jest teraz niedostępna. Najpierw przywróć kopię zapasową (Zastąp) albo zacznij od nowa — Keepit zapyta przy następnym uruchomieniu lub odblokowaniu.";
+"Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file." = "Keepit nie mógł odczytać bieżących danych, więc nie można scalić z nimi kopii zapasowej. Wybierz Zastąp: nieczytelny plik pozostanie obok przywróconego jako plik .corrupt-….";
+"Replace data Keepit cannot read?" = "Zastąpić dane, których Keepit nie może odczytać?";
+"These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them." = "Te pliki otrzymają nazwę .corrupt-… i pozostaną obok przywróconych; Keepit ich nie otwiera ani nie zmienia.";

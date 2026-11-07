@@ -186,6 +186,7 @@ final class LoadResultTests: XCTestCase {
         try damage(Storage.templatesURL)
         let t2 = TemplateStore()
         XCTAssertNotNil(t2.loadFailure)
+        try Storage.setAside([Storage.templatesURL])         // Replace sets the unreadable file aside before its commit
         t2.publish(TemplateNode(name: "Template", children: [TemplateNode(name: "restored", text: "r")]))   // after RestoreCommit wrote the file
         XCTAssertNil(t2.loadFailure)
         t2.saveNow()

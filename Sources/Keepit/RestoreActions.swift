@@ -96,6 +96,23 @@ extension AppDelegate {
         case .alertSecondButtonReturn: mode = .replace
         default: return
         }
+        // Data Keepit could not read: Merge would write what is in memory (nothing of the unreadable
+        // file) plus the backup over it. Replace sets the unreadable files aside first and says so.
+        // (3.0.6 audit of SEC10: Merge replaced readable-by-hand originals with the backup's data.)
+        let unreadable = unreadableDataFiles.map(\.url)
+        if !unreadable.isEmpty {
+            if mode == .merge {
+                Vault.error(L("Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file."))
+                return
+            }
+            let c = NSAlert()
+            c.messageText = L("Replace data Keepit cannot read?")
+            c.informativeText = unreadable.map(\.lastPathComponent).joined(separator: "\n") + "\n\n"
+                + L("These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them.")
+            c.addButton(withTitle: L("Replace"))
+            c.addButton(withTitle: L("Cancel"))
+            guard AbortableModal.run(c) == .alertFirstButtonReturn else { return }
+        }
         let restorePreferences = restorePrefs.state == .on
         let folderName = { () -> String in let f = DateFormatter(); f.dateStyle = .medium; return LF("Imported %@", f.string(from: p.created)) }()
         let makePlan = { try RestorePlan.make(mode: mode, payload: p, currentHistory: self.history.items, currentTemplates: self.templates.root,
@@ -121,6 +138,19 @@ extension AppDelegate {
             rollback = r
         }
         defer { rollback?.password?.zero() }
+        // The unreadable files go aside now, after the questions about the backup itself and before
+        // anything that writes (a vault for a phrase-opened backup, the rollback copy, the commit):
+        // from here the stores are a fresh start that the commit replaces — nothing of theirs needs
+        // a rollback copy. If the flow stops after this point, the result is that of Start Fresh.
+        if !unreadable.isEmpty {
+            guard lockCount == lockAtStart else { Vault.error(RestoreCommit.Failure.locked.localizedDescription); return }
+            do { try Storage.setAside(unreadable) } catch {
+                Vault.error(LF("Could not set the unreadable file aside: %@", error.localizedDescription)); return
+            }
+            clearSettingsFailureForRestore()
+            history.reload()
+            templates.reload()
+        }
         // A backup opened with its phrase on a Mac without a password: the data must not land
         // unprotected (docs/BACKUP.md, Restore 8). Password and vault first; cancelling changes nothing.
         if !Vault.isEnabled, unlocked.viaRecovery {

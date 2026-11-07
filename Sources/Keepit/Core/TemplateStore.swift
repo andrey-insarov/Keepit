@@ -42,8 +42,8 @@ final class TemplateStore {
     /// to the new one, and the store starts as a fresh install would. Throws (and changes nothing)
     /// if the rename fails.
     func startFresh() throws {
-        guard loadFailure != nil else { return }
-        try Storage.setAside(Storage.templatesURL)
+        guard loadFailure != nil, !isPurged else { return }     // never while locked: the store is purged then
+        try Storage.setAside([Storage.templatesURL])
         reload()
     }
 

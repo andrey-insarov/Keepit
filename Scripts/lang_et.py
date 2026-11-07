@@ -541,4 +541,8 @@ T = {
 'not in the expected format': 'pole oodatud vormingus',
 'larger than Keepit can read': 'suurem, kui Keepit lugeda suudab',
 'could not be read (error %d)': 'ei õnnestunud lugeda (viga %d)',
+'Keepit could not read some of its data, so this is not available now. Restore a backup (Replace) or start fresh first — Keepit asks at the next launch or unlock.': 'Keepit ei saanud osa oma andmetest lugeda, seega pole see praegu saadaval. Taastage esmalt varukoopia (Asenda) või alustage otsast — Keepit küsib järgmisel käivitamisel või avamisel.',
+'Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file.': 'Keepit ei saanud praeguseid andmeid lugeda, seega ei saa varukoopiat nendega ühendada. Valige Asenda: loetamatu fail jääb taastatu kõrvale .corrupt-… failina.',
+'Replace data Keepit cannot read?': 'Kas asendada andmed, mida Keepit lugeda ei saa?',
+'These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them.': 'Need failid nimetatakse ümber .corrupt-… ja jäetakse taastatute kõrvale; Keepit neid ei ava ega muuda.',
 }

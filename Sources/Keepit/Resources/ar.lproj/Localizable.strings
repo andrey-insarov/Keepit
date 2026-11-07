@@ -541,3 +541,7 @@
 "not in the expected format" = "ليس بالتنسيق المتوقّع";
 "larger than Keepit can read" = "أكبر مما يستطيع Keepit قراءته";
 "could not be read (error %d)" = "تعذّرت قراءته (الخطأ %d)";
+"Keepit could not read some of its data, so this is not available now. Restore a backup (Replace) or start fresh first — Keepit asks at the next launch or unlock." = "تعذّر على Keepit قراءة جزء من بياناته، لذا هذا غير متاح الآن. استعد نسخة احتياطية أولاً (استبدال) أو ابدأ من جديد — سيسألك Keepit عند التشغيل أو إلغاء القفل التالي.";
+"Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file." = "تعذّر على Keepit قراءة بياناته الحالية، لذا لا يمكن دمج نسخة احتياطية معها. اختر «استبدال»: يُحتفظ بالملف غير القابل للقراءة بجوار الملف المستعاد كملف ‎.corrupt-…‎.";
+"Replace data Keepit cannot read?" = "هل تريد استبدال البيانات التي يتعذّر على Keepit قراءتها؟";
+"These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them." = "تُعاد تسمية هذه الملفات إلى ‎.corrupt-…‎ ويُحتفظ بها بجوار الملفات المستعادة؛ لا يفتحها Keepit ولا يغيّرها.";

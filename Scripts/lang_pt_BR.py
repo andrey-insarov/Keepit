@@ -541,4 +541,8 @@ T = {
 'not in the expected format': 'não está no formato esperado',
 'larger than Keepit can read': 'maior do que o Keepit consegue ler',
 'could not be read (error %d)': 'não foi possível ler (erro %d)',
+'Keepit could not read some of its data, so this is not available now. Restore a backup (Replace) or start fresh first — Keepit asks at the next launch or unlock.': 'O Keepit não conseguiu ler parte dos seus dados, por isso isto não está disponível agora. Restaure um backup primeiro (Substituir) ou comece do zero — o Keepit perguntará na próxima abertura ou desbloqueio.',
+'Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file.': 'O Keepit não conseguiu ler os dados atuais, então não é possível mesclar um backup a eles. Escolha Substituir: o arquivo ilegível é mantido ao lado do restaurado como um arquivo .corrupt-….',
+'Replace data Keepit cannot read?': 'Substituir os dados que o Keepit não consegue ler?',
+'These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them.': 'Estes arquivos são renomeados para .corrupt-… e mantidos ao lado dos restaurados; o Keepit não os abre nem os altera.',
 }
