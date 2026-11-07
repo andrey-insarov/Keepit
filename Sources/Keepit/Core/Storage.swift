@@ -238,6 +238,26 @@ enum Storage {
         return moved
     }
 
+    /// Undo `setAside` for the files it returned: each goes back under its original name (the
+    /// `.corrupt-…` extension stripped) and is held again, so the state is exactly what it was
+    /// before — a restore commit that fails after the rename uses it (3.0.6 audit, round 4: a
+    /// settings.json left aside looked like a first run at the next launch). A file whose original
+    /// name is taken again meanwhile, or that cannot be moved, is left where it is and logged.
+    static func putBack(_ moved: [URL]) {
+        let fm = FileManager.default
+        ioQueue.sync {
+            for aside in moved {
+                let original = aside.deletingPathExtension()
+                guard !fm.fileExists(atPath: original.path) else {
+                    Log.storage.error("could not put \(aside.lastPathComponent) back: \(original.lastPathComponent) exists again")
+                    continue
+                }
+                do { try fm.moveItem(at: aside, to: original); hold(original) }
+                catch { Log.storage.error("could not put \(aside.lastPathComponent) back: \(error.localizedDescription)") }
+            }
+        }
+    }
+
     /// Write `value` to `url` (encrypted when a key is set). `value` is captured as it is now;
     /// a later change to the store does not affect a save already queued.
     /// - `background: false` (default) returns once the file is on disk — lock, quit, password

@@ -89,7 +89,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// settings.json exists but could not be read. The file is kept as it is (a held file: nothing
     /// saves over it), and the app runs on `Settings.whileUnreadable` until the user starts fresh
     /// or restores: history.json is read but pinned — neither written nor deleted; lock immediately
-    /// when a password is set; no keepit://, no automatic backup.
+    /// when a password is set; no keepit://, no automatic backup. Safe mode restricts what Keepit
+    /// *persists* on its own, not what the user does with their data: pasting, Add to Templates,
+    /// the Viewer's Save to File and changing a setting (in memory only, until Start Fresh writes
+    /// the running settings) all work. The user's own edits in Settings — switching keepit:// back
+    /// on, say — are theirs to make.
     /// (3.0.6 audit: a truncated settings.json was replaced by the defaults — history saving back
     /// on, auto-lock off, backups and keepit:// trust reset — without a word.)
     var settingsLoadFailure: Storage.LoadFailure?          // set by init and cleared by startOverAfterSetAside and the restore commit (RestoreActions.swift)
@@ -523,7 +527,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if urls.contains(Storage.settingsURL) {
             settingsLoadFailure = nil
             Storage.unpin(Storage.historyURL)
-            apply(settings: Settings())                  // historySave on again: the items in memory are saved
+            // The settings Keepit has been running on — Settings.whileUnreadable plus whatever the
+            // user changed meanwhile — become the file, not the defaults: the defaults' limits would
+            // trim a history the old file allowed (3.0.6 audit, round 4). The user lowers them in
+            // Settings when they like; until then the ceilings stay.
+            apply(settings: settings)
         }
         viewer?.refresh()
         backup?.noteChange()

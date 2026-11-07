@@ -234,9 +234,10 @@ extension AppDelegate {
         // Files Keepit could not read go beside the new ones here, with nothing between the rename
         // and the write (Replace asked about them; Merge was refused). Until this line nothing on
         // disk has changed, whatever was cancelled before (3.0.6 audit, round 2). Should the write
-        // fail after the rename, the stores whose file went aside start over; an unreadable
-        // settings.json stays in safe mode — the defaults are never applied by a failure (round 3).
+        // fail after the rename, the files go back under their names and everything is as it was
+        // before the commit — in this process and at the next launch (rounds 3 and 4).
         let unreadable = unreadableDataFiles.map(\.url)
+        var movedAside: [URL] = []
         if !unreadable.isEmpty {
             // Only a Replace may set them aside; a Merge was built on empty stores and would pass the
             // backup off as the merged whole. The UI refuses Merge earlier; this holds for every caller.
@@ -244,14 +245,14 @@ extension AppDelegate {
                 let first = unreadable[0]
                 throw RestoreCommit.Failure.cannotReadPrevious(first.lastPathComponent, Storage.Failure.held(first.lastPathComponent))
             }
-            try Storage.setAside(unreadable)
+            movedAside = try Storage.setAside(unreadable)
             if unreadable.contains(Storage.settingsURL) { Storage.unpin(Storage.historyURL) }
         }
         do {
             try RestoreCommit.writeFiles(templatesJSON: templatesJSON, historyJSON: historyJSON, settingsJSON: settingsJSON)
         } catch {
-            if !unreadable.isEmpty {
-                startOverAfterSetAside(unreadable.filter { $0 != Storage.settingsURL })
+            if !movedAside.isEmpty {
+                Storage.putBack(movedAside)                                           // the stores' loadFailure never moved
                 if unreadable.contains(Storage.settingsURL) { Storage.pin(Storage.historyURL) }   // safe mode goes on
             }
             throw error

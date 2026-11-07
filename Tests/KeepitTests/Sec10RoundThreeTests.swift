@@ -64,7 +64,8 @@ final class Sec10RoundThreeTests: XCTestCase {
         XCTAssertFalse(FileManager.default.fileExists(atPath: RestoreCommit.journalDirectory.path))
     }
 
-    /// P2: a Replace whose write fails leaves safe mode as it was — no defaults applied.
+    /// P2: a Replace whose write fails leaves everything as it was — no defaults applied, and the
+    /// unreadable file back under its name (round 4: left aside, it looked like a first run).
     func testFailedReplaceKeepsSafeMode() throws {
         let junk = Data("{".utf8)
         try junk.write(to: Storage.settingsURL)
@@ -89,8 +90,9 @@ final class Sec10RoundThreeTests: XCTestCase {
         XCTAssertEqual(app.settings.lockAfterScreenLock, 0)
         XCTAssertTrue(Storage.isHeld(Storage.historyURL), "history.json pinned again")
         XCTAssertEqual(try Data(contentsOf: Storage.historyURL), historyBytes, "and put back by the undo")
-        XCTAssertFalse(FileManager.default.fileExists(atPath: Storage.settingsURL.path), "the unreadable one is beside it")
-        XCTAssertEqual(try asides("settings.json.corrupt-").count, 1)
+        XCTAssertEqual(try Data(contentsOf: Storage.settingsURL), junk, "the unreadable one is back under its name")
+        XCTAssertTrue(Storage.isHeld(Storage.settingsURL))
+        XCTAssertTrue(try asides("settings.json.corrupt-").isEmpty)
         app.history.add(.text("later")); app.history.flush()
         XCTAssertEqual(try Data(contentsOf: Storage.historyURL), historyBytes, "nothing writes it meanwhile")
     }
@@ -118,13 +120,15 @@ final class Sec10RoundThreeTests: XCTestCase {
         XCTAssertEqual(started.wait(timeout: .now() + 3), .success)
 
         var result: Storage.LoadResult<[ClipItem]>?
-        let readDone = expectation(description: "read")
+        let readStarted = expectation(description: "read called")
+        let readDone = expectation(description: "read returned")
         DispatchQueue.global().async {
+            readStarted.fulfill()
             result = Storage.read([ClipItem].self, from: url)      // blocks behind the write
             readDone.fulfill()
         }
-        Thread.sleep(forTimeInterval: 0.2)
-        XCTAssertNil(result, "still waiting")
+        wait(for: [readStarted], timeout: 5)
+        XCTAssertEqual(XCTWaiter.wait(for: [readDone], timeout: 0.5), .timedOut, "the read is waiting for the write")
         resume.signal()
         wait(for: [readDone], timeout: 5)
         Storage.waitUntilSaved()
