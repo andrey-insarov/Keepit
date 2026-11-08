@@ -873,6 +873,9 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
     @objc private func exportTapped() { app.exportBackup() }
     @objc private func restoreTapped() { app.restoreBackupTapped() }
     @objc private func backUpNowTapped() {
+        if app.backupPause() == .passwordNeeded {
+            guard app.confirmPasswordForBackups() else { backupStateChanged(); return }
+        }
         backupNow.isEnabled = false
         app.backup.backUpNow { [weak self] result in
             self?.backupNow.isEnabled = true
@@ -915,6 +918,8 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             backupStatus.stringValue = L("Set a Keepit password (Security) to enable automatic backups.")
         } else if !on {
             backupStatus.stringValue = L("Automatic backup is off.")
+        } else if let pause = app.backupPause(), pause != .locked, let why = pause.errorDescription {
+            backupStatus.stringValue = why                    // paused, not failed and not the last success (SEC01 audit, round 5)
         } else if let e = st?.lastError {
             backupStatus.stringValue = LF("Last backup failed: %@", e)
         } else if let d = st?.lastSuccess, let size = st?.lastSize {

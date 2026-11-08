@@ -379,6 +379,13 @@ extension AppDelegate {
 
     func askRollbackInputs() -> RollbackInputs? {
         var password: SecureBuffer?
+        // With the vault on, the copy is sealed with the vault key under the vault's header — which
+        // needs a proven way in (Vault.backupHeader). A Touch ID key on a vault without a recovery
+        // phrase has none: ask for the password here, in the dialog stage, not in the commit stage
+        // (SEC01 audit, round 5 — the pause used to surface there as "Keepit was locked").
+        if Vault.isEnabled, hasDataToLose, backupPause() == .passwordNeeded {
+            guard confirmPasswordForBackups() else { return nil }
+        }
         if !Vault.isEnabled, hasDataToLose {
             guard let pw = Vault.askPassword(title: L("Password for the copy of your current data"),
                                              message: L("Before replacing, Keepit saves what you have now as a .keepit file. Choose a password for that file; you will need it to go back."),
@@ -429,7 +436,7 @@ extension AppDelegate {
             }
         } else {
             guard let key = Storage.key, let header = Vault.backupHeader(app: app, sourceID: settings.backupSourceID) else {
-                Vault.error(RestoreCommit.Failure.locked.localizedDescription); return false
+                Vault.error((backupPause() ?? .locked).errorDescription ?? RestoreCommit.Failure.locked.localizedDescription); return false
             }
             seal = { try Backup.encodeAutomatic(json: try Backup.payloadJSON(history: items, templatesJSON: templatesJSON, settings: forBackup, created: created, app: app),
                                                 dataKey: key, vault: header) }

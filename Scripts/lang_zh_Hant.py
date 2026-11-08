@@ -557,4 +557,7 @@ T = {
 '%@ would be larger than Keepit can read back. Lower the limits in Settings → History first.': '%@ 將超過 Keepit 能夠讀回的大小。請先在 設定 → 歷史記錄 中降低限制。',
 'Keepit could not finish undoing a failed change to the password protection: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again — the data comes back as it was before the change.': 'Keepit 無法完成對密碼保護變更失敗後的撤銷：%@\n\n不會更改任何內容。請修正上述檔案（權限、鎖定旗標、磁碟空間）後重新啟動 Keepit——資料將回到變更前的狀態。',
 "The change is done, but the undo copies could not be removed: %@\n\nDelete the folder “%@” in Keepit's data folder by hand — it holds the data as it was before the change.": '變更已完成，但用於撤銷的副本無法刪除：%@\n\n請手動刪除 Keepit 資料夾中的「%@」資料夾——其中保存著變更前的資料。',
+'Automatic backup is paused until you confirm the password: Touch ID opened this vault, and it has no recovery phrase. Back Up Now asks for the password; a recovery phrase (Security → Create New…) makes Touch ID enough from then on.': '自動備份已暫停，直到您確認密碼：此保險庫由 Touch ID 開啟，且沒有復原助記詞。「立即備份」會要求輸入密碼；建立復原助記詞（安全性 → 新建…）後，僅憑 Touch ID 即可。',
+"Automatic backup is paused: some of Keepit's data could not be read. Restore a backup (Replace) or start fresh first.": '自動備份已暫停：Keepit 無法讀取部分資料。請先還原備份（取代）或重新開始。',
+'Enter the Keepit password to continue automatic backups. Touch ID opened this vault, and it has no recovery phrase, so the password has to be confirmed once.': '請輸入 Keepit 密碼以繼續自動備份。此保險庫由 Touch ID 開啟，且沒有復原助記詞，因此需要確認一次密碼。',
 }

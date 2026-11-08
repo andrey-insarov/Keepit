@@ -1875,6 +1875,7 @@ extension AppDelegate {
         }
         backup = BackupEngine(stateURL: Storage.directory.appendingPathComponent("backup.json"), sourceID: settings.backupSourceID ?? "")
         backup.snapshotProvider = { [weak self] in self?.backupSnapshot() }
+        backup.pauseReason = { [weak self] in self?.backupPause() }
         backup.onStateChange = { [weak self] _ in self?.preferencesWindow?.backupStateChanged() }
         history.onChange = { [weak self] in self?.backup.noteChange() }
         templates.onChange = { [weak self] in self?.backup.noteChange() }
@@ -1902,6 +1903,30 @@ extension AppDelegate {
     }
 
     /// One consistent state for a backup, or nil when there is nothing to back up with (locked, no vault).
+    /// Why `backupSnapshot` returns nil right now, for the engine's answer and the Settings status
+    /// line — nil when a snapshot is available. Mirrors `backupSnapshot`'s guards, in its order.
+    func backupPause() -> BackupEngine.Failure? {
+        if isLocked || !Vault.isEnabled || Storage.key == nil || RestoreCommit.hasArmedJournal { return .locked }
+        if hasUnreadableData { return .unreadableData }
+        if Vault.backupHeader(app: "") == nil { return .passwordNeeded }
+        return nil
+    }
+
+    /// Back Up Now while backups are paused for the password (a Touch ID key on a vault without a
+    /// recovery phrase, SEC01 audit round 5): ask for it once. The key derived from it carries the
+    /// proof the header needs; the bytes are the same, so nothing else changes.
+    func confirmPasswordForBackups() -> Bool {
+        guard !isLocked, Vault.isEnabled else { return false }
+        let g = lockCount
+        guard let pw = Vault.askPassword(title: L("Confirm"), message: L("Enter the Keepit password to continue automatic backups. Touch ID opened this vault, and it has no recovery phrase, so the password has to be confirmed once.")) else { return false }
+        let key = Vault.unlock(password: pw)
+        pw.zero()
+        guard let key else { Vault.error(L("Wrong password.")); return false }
+        guard !isLocked, lockCount == g else { key.zero(); return false }
+        Storage.key = key
+        return true
+    }
+
     func backupSnapshot() -> BackupEngine.Snapshot? {
         // A store whose file could not be read holds nothing of the user's: a backup of it would
         // be an empty one, and rotation would push a good earlier copy out for it. While a journal
