@@ -873,15 +873,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         // Committed: the files open with the new password whatever happens from here.
         var oldBytes = oldKey.withBytes { Data($0) }  // for the set-aside copies below; the live key goes first
         Storage.key = newKey                         // zeroes oldKey
-        syncBiometricKey()
-        backup?.forceNext()                           // the next copy must open with the new password
         // The .corrupt-… copies sealed with the old key follow (SEC02) — outside the transaction:
         // a stop here leaves them under the old key, unreadable with the new password but never
-        // plain; nothing of the live data depends on them.
+        // plain; nothing of the live data depends on them. Right here, before the Touch ID step
+        // and the backup's state change: either can run a dialog or a callback in which a lock
+        // zeroes `newKey` (round 1: a lock there, and the re-seal used a zeroed key).
         let oldCopy = oldBytes.withUnsafeBytes { SecureKey(bytes: $0) }
         oldBytes.resetBytes(in: 0..<oldBytes.count)
         Storage.resealSetAsideCopies(from: oldCopy, to: newKey)
         oldCopy.zero()
+        syncBiometricKey()
+        backup?.forceNext()                           // the next copy must open with the new password
         if let e = unswept { reportUnsweptJournal(FileJournal.protection.directory, e) }
         return true
     }

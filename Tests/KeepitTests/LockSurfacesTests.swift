@@ -47,9 +47,14 @@ final class LockSurfacesTests: XCTestCase {
         wait(for: [e], timeout: 2)
     }
 
-    private func unlock(_ a: AppDelegate) {
-        Vault.promptForTesting = { _ in .password(.of("pw")) }
+    private func unlock(_ a: AppDelegate, password: String = "pw") {
+        Vault.promptForTesting = { _ in .password(.of(password)) }
         XCTAssertTrue(a.unlock())
+    }
+    private func after(_ seconds: TimeInterval, _ body: @escaping () -> Void) -> Timer {
+        let t = Timer(timeInterval: seconds, repeats: false) { _ in body() }
+        RunLoop.main.add(t, forMode: .common)
+        return t
     }
 
     // MARK: SEC05 — the paste queue keeps no copies
@@ -200,6 +205,58 @@ final class LockSurfacesTests: XCTestCase {
         XCTAssertTrue(RecoveryDialogs.present(words: Array(repeating: "abandon", count: 24)))
     }
 
+    /// Print… runs the print panel as its own app-modal session over the phrase sheet
+    /// (`NSPrintOperation.run()`), and its preview is the phrase (audit round 1: a lock then left
+    /// both on screen). Stand-in for the panel: a bare window run modally inside `runForeign`.
+    /// A lock while it is up ends the panel's session, and the sheet's as soon as control is back
+    /// in its loop — the sheet returns `.abort`, "not confirmed".
+    func testALockDuringThePrintPanelEndsItAndThePhraseSheetUnderIt() throws {
+        let a = try app()
+        let sheet = NSAlert(); sheet.messageText = "phrase"; sheet.addButton(withTitle: "I've saved it")
+        let panel = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 200, height: 100), styleMask: .titled, backing: .buffered, defer: false)
+        var panelResponse: NSApplication.ModalResponse?
+        var lockedOverThePanel = false
+        let endSheet = after(3.0) { NSApp.stopModal(withCode: .OK) }
+        let pressPrint = after(0.05) {
+            let lockTimer = self.after(0.05) {
+                lockedOverThePanel = NSApp.modalWindow === panel
+                a.lock()
+            }
+            let endPanel = self.after(0.5) { NSApp.stopModal(withCode: .OK) }
+            AbortableModal.runForeign { panelResponse = NSApp.runModal(for: panel) }
+            lockTimer.invalidate(); endPanel.invalidate(); panel.orderOut(nil)
+        }
+        let sheetResponse = AbortableModal.run(sheet)
+        pressPrint.invalidate(); endSheet.invalidate(); sheet.window.orderOut(nil)
+        XCTAssertTrue(lockedOverThePanel, "the lock landed while the panel was the session")
+        XCTAssertTrue(a.isLocked)
+        XCTAssertEqual(panelResponse, .abort, "the panel's session ends with the lock")
+        XCTAssertEqual(sheetResponse, .abort, "and the sheet's as soon as control is back in its loop")
+        XCTAssertEqual(AbortableModal.depth, 0)
+    }
+
+    /// Without a lock the foreign panel completes on its own and the sheet stays — Print… then
+    /// "I've saved it" is still one confirmation.
+    func testThePrintPanelWithoutALockLeavesTheSheetRunning() throws {
+        let sheet = NSAlert(); sheet.messageText = "phrase"; sheet.addButton(withTitle: "I've saved it")
+        let panel = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 200, height: 100), styleMask: .titled, backing: .buffered, defer: false)
+        var panelResponse: NSApplication.ModalResponse?
+        var sheetStillUp = false
+        let endSheet = after(3.0) { NSApp.stopModal(withCode: .OK) }
+        let pressPrint = after(0.05) {
+            let endPanel = self.after(0.05) { NSApp.stopModal(withCode: .OK) }
+            AbortableModal.runForeign { panelResponse = NSApp.runModal(for: panel) }
+            endPanel.invalidate(); panel.orderOut(nil)
+            sheetStillUp = NSApp.modalWindow === sheet.window
+            NSApp.stopModal(withCode: .alertFirstButtonReturn)
+        }
+        let sheetResponse = AbortableModal.run(sheet)
+        pressPrint.invalidate(); endSheet.invalidate(); sheet.window.orderOut(nil)
+        XCTAssertEqual(panelResponse, .OK)
+        XCTAssertTrue(sheetStillUp)
+        XCTAssertEqual(sheetResponse, .alertFirstButtonReturn)
+    }
+
     // MARK: SEC05 — open menus
 
     private final class RecordingMenu: NSMenu {
@@ -332,12 +389,23 @@ final class LockSurfacesTests: XCTestCase {
         let target = try plantCopy("elsewhere.txt", "pointed at")
         let link = Storage.directory.appendingPathComponent("templates.json.corrupt-3")
         try FileManager.default.createSymbolicLink(at: link, withDestinationURL: target)
+        // One byte over the read limit — a sparse file, so it costs nothing on disk; BoundedFileReader
+        // refuses it on its size before reading (audit round 1: the earlier test made no such file).
+        let big = Storage.directory.appendingPathComponent("history.json.corrupt-4")
+        XCTAssertTrue(FileManager.default.createFile(atPath: big.path, contents: nil))
+        let handle = try FileHandle(forWritingTo: big)
+        try handle.truncate(atOffset: UInt64(Limits.dataFileMaxBytes) + 1)
+        try handle.close()
         RecoveryDialogs.presentSinkForTesting = { _ in }
         XCTAssertTrue(a.enableProtection(with: .of("pw")))
         let key = try XCTUnwrap(Storage.key)
         XCTAssertEqual(opens(plain, with: key), "plain")
         XCTAssertEqual(try Data(contentsOf: sealedElsewhere), foreign, "already sealed: left alone")
         XCTAssertEqual(try Data(contentsOf: target), Data("pointed at".utf8), "a symlink is not followed")
+        XCTAssertEqual(try XCTUnwrap(try big.resourceValues(forKeys: [.fileSizeKey]).fileSize), Limits.dataFileMaxBytes + 1, "over the limit: left as it is")
+        let head = try FileHandle(forReadingFrom: big)
+        XCTAssertEqual(try head.read(upToCount: 64), Data(count: 64), "and not sealed: still the zeros it was")
+        try head.close()
     }
 
     func testAPasswordChangeReSealsTheCopiesAndDisableUnsealsThem() throws {
@@ -354,6 +422,27 @@ final class LockSurfacesTests: XCTestCase {
         Vault.askPasswordForTesting = { _ in .of("new") }
         XCTAssertTrue(a.disableProtection())
         XCTAssertEqual(try Data(contentsOf: h), Data("old history".utf8), "plain again, like the live files")
+    }
+
+    /// Audit round 1 (P2): a lock in the follow-ups of a password change — the Touch ID step or
+    /// the backup's state change, after the new key is published — zeroes the new key; the
+    /// re-seal of the copies then used it and the process stopped. The copies are re-sealed first,
+    /// with both keys alive; the lock finds nothing left to do with them.
+    func testALockInTheRekeyFollowUpFindsTheCopiesAlreadyReSealed() throws {
+        let a = try app(protected: false)
+        let h = try plantCopy("history.json.corrupt-1", "old history")
+        RecoveryDialogs.presentSinkForTesting = { _ in }
+        XCTAssertTrue(a.enableProtection(with: .of("pw")))
+        Vault.askPasswordForTesting = { _ in .of("new") }
+        a.backup.onStateChange = { _ in a.lock() }        // the auditor's probe: the lock lands in forceNext()
+        defer { a.backup.onStateChange = nil }
+        a.changePassword()
+        XCTAssertTrue(a.isLocked)
+        XCTAssertNil(Storage.key)
+        a.backup.onStateChange = nil
+        unlock(a, password: "new")
+        XCTAssertEqual(opens(h, with: try XCTUnwrap(Storage.key)), "old history", "re-sealed with the new key before the lock could land")
+        a.lock()
     }
 
     func testResetRemovesEveryCopyAndNothingElse() throws {

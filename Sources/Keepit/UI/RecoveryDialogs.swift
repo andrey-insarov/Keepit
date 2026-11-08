@@ -138,7 +138,8 @@ enum RecoveryDialogs {
             let op = NSPrintOperation(view: page)
             op.showsPrintPanel = true
             op.showsProgressPanel = true
-            op.run()
+            // The panel's preview is the phrase: a lock ends the panel and then the sheet under it.
+            AbortableModal.runForeign { op.run() }
         }
     }
 }

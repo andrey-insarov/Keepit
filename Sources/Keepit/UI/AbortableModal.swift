@@ -8,10 +8,13 @@ import AppKit
 /// callers treat that as Cancel — and, where the dialog's result would have acted on data read
 /// before it opened, check the lock generation as well (`lockCount`), because a lock followed by
 /// an unlock also ends here. A wrapped dialog opened over another wrapped dialog unwinds both: when
-/// the inner one returns into the outer one's loop, the request is applied again.
+/// the inner one returns into the outer one's loop, the request is applied again. A system panel
+/// that one of ours opens *and that shows the same content* — the print panel over the recovery
+/// phrase — is run through `runForeign`, and a lock ends it and then the dialog under it.
 enum AbortableModal {
     private(set) static var windows: [NSWindow] = []
     private static var abortRequested = false
+    private static var foreignDepth = 0
 
     static var depth: Int { windows.count }
     static var isRunning: Bool { !windows.isEmpty }
@@ -34,10 +37,26 @@ enum AbortableModal {
         return response
     }
 
-    /// What `lock()` calls: ends the current modal session if it belongs to an abortable dialog.
+    /// A system panel with its own app-modal session, opened from an abortable dialog and showing
+    /// what the dialog shows (`NSPrintOperation.run()` from the recovery-phrase sheet: the panel's
+    /// preview is the phrase). While it runs, `NSApp.modalWindow` is the panel, so the plain rule
+    /// above would leave both it and the sheet behind it on screen (3.0.6 audit, SEC05 round 1:
+    /// Show… → Print… → lock → Cancel left the phrase open). A lock during `body` ends the
+    /// panel's session; when control is back in the dialog's loop, the request ends the dialog.
+    static func runForeign(_ body: () -> Void) {
+        foreignDepth += 1
+        body()
+        foreignDepth -= 1
+        if abortRequested, let top = windows.last, NSApp.modalWindow === top { NSApp.abortModal() }
+    }
+
+    /// What `lock()` calls: ends the current modal session if it belongs to an abortable dialog —
+    /// or to a foreign panel such a dialog opened through `runForeign`. Any other session (a
+    /// password prompt over a template prompt, say) is left alone, and the request with it.
     static func abortIfRunning() {
-        guard let top = windows.last, NSApp.modalWindow === top else { return }
+        guard let top = windows.last else { return }
+        guard NSApp.modalWindow === top || foreignDepth > 0 else { return }
         abortRequested = true
-        NSApp.abortModal()
+        if NSApp.modalWindow != nil { NSApp.abortModal() }   // a foreign step between two sessions: the request waits in runForeign
     }
 }
