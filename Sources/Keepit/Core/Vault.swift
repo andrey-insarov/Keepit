@@ -13,6 +13,10 @@ final class SecureKey {
     static let size = 32
     private let ptr: UnsafeMutableRawPointer
     private(set) var isZeroed = false
+    /// Where this key came from, for a data key: the vault.json it was derived from, unwrapped by
+    /// or prepared for, and what that operation proved (`Vault.Provenance`). Travels with the key;
+    /// nil for a key that was only built from bytes.
+    var provenance: Vault.Provenance?
     /// True when mlock succeeded for this buffer.
     private(set) var isPageLocked = false
 
@@ -170,19 +174,58 @@ enum Vault {
 
     // MARK: Enable / verify / disable
 
-    /// The vault.json the key in memory belongs to: read when `Storage.key` is set (a key derived
-    /// from the password, unwrapped by the phrase, verified for Touch ID, or published after a
-    /// commit that wrote the file), updated when a recovery block is written for that key, nil
-    /// when there is no key. `backupHeader` is built only from a file that still equals it: the
-    /// header's parameters must be the ones that derive the key the payload is sealed with, or no
-    /// password and no phrase opens the archive (SEC01 audit, round 3 — `verify` alone passed a
-    /// vault.json with a damaged salt and an intact check; and the file is read once, so the
-    /// check and the header cannot come from two different versions).
-    private(set) static var liveMeta: Meta?
+    /// What the operation that produced a data key proved about the vault.json it belongs to. A
+    /// backup is sealed under a header only when that header is this `meta` and at least one way
+    /// in is proven: the password derives the key under these parameters (a password unlock, or a
+    /// vault prepared here for that password), or the recovery block unwraps to this key (a phrase
+    /// unlock, a block written for the key, or checked when a Touch ID key is admitted). `check`
+    /// alone proves neither (SEC01 audit, rounds 3–4: a damaged salt with an intact check passed
+    /// `verify`, and a setter that read the file at assignment adopted it as the key's own).
+    struct Provenance: Equatable {
+        var meta: Meta
+        var passwordDerives: Bool
+        var phraseOpens: Bool
+        var opensSomehow: Bool { passwordDerives || phraseOpens }
+    }
 
-    /// Called by `Storage.key`'s setter.
-    static func keyDidChange(_ key: SecureKey?) {
-        liveMeta = key == nil ? nil : readMeta()
+    /// The vault.json the key in memory belongs to, by its provenance.
+    static var liveMeta: Meta? { Storage.key?.provenance?.meta }
+
+    /// A vault prepared here for a password: the parameters derive the key by construction; the
+    /// phrase opens it iff a block was made for it. The file is written by the caller's commit.
+    static func notePrepared(_ key: SecureKey, meta: Meta) {
+        key.provenance = Provenance(meta: meta, passwordDerives: true, phraseOpens: meta.recovery != nil)
+    }
+
+    /// Does `meta`'s recovery block unwrap to exactly `key`? The proof that the phrase opens an
+    /// archive carrying this header — the one check available for a key that did not come from
+    /// the password.
+    static func recoveryOpens(_ meta: Meta, with key: SecureKey) -> Bool {
+        guard let rec = meta.recovery, var entropyData = try? decrypt(rec.wrappedEntropy, key: key) else { return false }
+        defer { entropyData.resetBytes(in: 0..<entropyData.count) }
+        let rkey = recoveryKey(entropy: [UInt8](entropyData), salt: rec.salt)
+        defer { rkey.zero() }
+        guard var unwrapped = try? decrypt(rec.wrappedKey, key: rkey), unwrapped.count == SecureKey.size else { return false }
+        defer { unwrapped.resetBytes(in: 0..<unwrapped.count) }
+        var mine = key.withBytes { Data($0) }
+        defer { mine.resetBytes(in: 0..<mine.count) }
+        return constantTimeEqual(unwrapped, mine)
+    }
+
+    private static func constantTimeEqual(_ a: Data, _ b: Data) -> Bool {
+        guard a.count == b.count else { return false }
+        var diff: UInt8 = 0
+        for (x, y) in zip(a, b) { diff |= x ^ y }
+        return diff == 0
+    }
+
+    /// Admit a key that came from Touch ID (not from the password): it must open the check, and
+    /// its provenance records what else is known — the password parameters are unproven, the
+    /// phrase is proven iff the block unwraps to this key. Returns false when the check fails.
+    static func admitBiometric(_ key: SecureKey) -> Bool {
+        guard let meta = readMeta(), verify(key, against: meta) else { return false }
+        key.provenance = Provenance(meta: meta, passwordDerives: false, phraseOpens: recoveryOpens(meta, with: key))
+        return true
     }
 
     private static func readMeta() -> Meta? {
@@ -218,7 +261,9 @@ enum Vault {
         let key = try deriveKey(password: password, salt: salt, rounds: rounds)
         do {
             let check = try encrypt(okToken, key: key)
-            return (key, Meta(formatVersion: formatVersion, kdf: kdfPBKDF2SHA256, rounds: rounds, salt: salt, check: check, recovery: nil))
+            let meta = Meta(formatVersion: formatVersion, kdf: kdfPBKDF2SHA256, rounds: rounds, salt: salt, check: check, recovery: nil)
+            notePrepared(key, meta: meta)
+            return (key, meta)
         } catch { key.zero(); throw error }
     }
 
@@ -229,6 +274,7 @@ enum Vault {
         var meta = prepared
         do {
             if let rec = oldRecovery { meta.recovery = try rewrapped(rec, from: old, to: key) }
+            notePrepared(key, meta: meta)
             return (key, meta)
         } catch { key.zero(); throw error }
     }
@@ -296,20 +342,22 @@ enum Vault {
         guard var meta = readMeta() else { throw CocoaError(.fileNoSuchFile) }
         let words = try addRecovery(to: &meta, for: key, entropy: given)
         try writeMeta(meta)
-        if key === Storage.key { liveMeta = meta }      // a new block for the live key: backups carry it from now on
+        key.provenance = Provenance(meta: meta, passwordDerives: key.provenance?.passwordDerives ?? false, phraseOpens: true)   // a block made for this key
         return words
     }
 
     /// Recover the data key from the phrase; nil if the phrase is wrong or no recovery block exists.
     static func unlockWithRecovery(words: [String]) -> SecureKey? {
-        guard let rec = readMeta()?.recovery, var entropy = Mnemonic.decode(words) else { return nil }
+        guard let meta = readMeta(), let rec = meta.recovery, var entropy = Mnemonic.decode(words) else { return nil }
         defer { entropy.withUnsafeMutableBytes { _ = memset_s($0.baseAddress, $0.count, 0, $0.count) } }
         let rkey = recoveryKey(entropy: entropy, salt: rec.salt)
         defer { rkey.zero() }
         guard var keyBytes = try? decrypt(rec.wrappedKey, key: rkey), keyBytes.count == SecureKey.size else { return nil }
         defer { keyBytes.resetBytes(in: 0..<keyBytes.count) }
         let key = keyBytes.withUnsafeBytes { SecureKey(bytes: $0) }
-        guard verify(key) else { key.zero(); return nil }
+        guard verify(key, against: meta) else { key.zero(); return nil }
+        // Proven: the block unwraps to this key. The password parameters: unknown until a password unlock.
+        key.provenance = Provenance(meta: meta, passwordDerives: false, phraseOpens: true)
         return key
     }
 
@@ -320,7 +368,7 @@ enum Vault {
         guard let rec = oldRecovery, var meta = readMeta() else { return false }
         meta.recovery = try rewrapped(rec, from: old, to: new)
         try writeMeta(meta)
-        if new === Storage.key { liveMeta = meta }
+        new.provenance = Provenance(meta: meta, passwordDerives: new.provenance?.passwordDerives ?? false, phraseOpens: true)
         return true
     }
 
@@ -329,12 +377,13 @@ enum Vault {
 
     /// The header an automatic backup carries: this vault's KDF parameters and recovery block, so
     /// the same password — or phrase — opens the file on any Mac. nil when protection is off.
-    /// nil without a vault, and — while a key is in memory — nil when vault.json is not the one
-    /// that key belongs to (`liveMeta`): an archive sealed with the key under another header
-    /// opens with nothing. Every caller that seals with `Storage.key` goes through here.
+    /// nil without a vault, and — while a key is in memory — nil unless vault.json is the one the
+    /// key's provenance names and that provenance proves a way in (`Provenance.opensSomehow`): an
+    /// archive sealed with the key under any other header opens with nothing. Every caller that
+    /// seals with `Storage.key` goes through here. The file is read once.
     static func backupHeader(app: String, label: String? = nil, sourceID: String? = nil, backupID: String? = nil) -> Container.Header? {
         guard let m = readMeta() else { return nil }
-        if Storage.key != nil { guard let live = liveMeta, m == live else { return nil } }
+        if let key = Storage.key { guard let p = key.provenance, p.meta == m, p.opensSomehow else { return nil } }
         let rec = m.recovery.map { Container.Recovery(salt: $0.salt, wrappedKey: $0.wrappedKey, wrappedEntropy: $0.wrappedEntropy) }
         return Container.Header(mode: .auto, kdf: m.kdfName, rounds: m.kdfRounds, salt: m.salt, recovery: rec,
                                 app: app, minReader: Backup.minReader, label: label, sourceID: sourceID, backupID: backupID)
@@ -343,16 +392,24 @@ enum Vault {
     /// Returns the key if the password matches, nil otherwise.
     static func unlock(password: SecureBuffer) -> SecureKey? {
         guard let meta = readMeta(), let key = deriveKey(password: password, meta: meta) else { return nil }
-        guard let plain = try? decrypt(meta.check, key: key), plain == okToken else {
+        guard verify(key, against: meta) else {
             key.zero()
             return nil
         }
+        // Proven: these parameters derive this key from the password. The phrase: iff its block unwraps to it.
+        key.provenance = Provenance(meta: meta, passwordDerives: true, phraseOpens: recoveryOpens(meta, with: key))
         return key
     }
 
-    /// Does this key open the vault? (Used for keys that came from Touch ID rather than a password.)
+    /// Does this key open the vault's check? Not a proof that the password or the phrase derive
+    /// it — see `Provenance`. (Touch ID keys are admitted through `admitBiometric`.)
     static func verify(_ key: SecureKey) -> Bool {
-        guard let meta = readMeta(), let plain = try? decrypt(meta.check, key: key) else { return false }
+        guard let meta = readMeta() else { return false }
+        return verify(key, against: meta)
+    }
+
+    static func verify(_ key: SecureKey, against meta: Meta) -> Bool {
+        guard let plain = try? decrypt(meta.check, key: key) else { return false }
         return plain == okToken
     }
 

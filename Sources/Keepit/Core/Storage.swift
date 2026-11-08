@@ -67,7 +67,6 @@ enum Storage {
     /// Only ever assigned on the main thread.
     static var key: SecureKey? {
         didSet {
-            Vault.keyDidChange(key)                      // the vault.json this key belongs to (Vault.liveMeta)
             guard let old = oldValue, old !== key else { return }
             ioQueue.sync { old.zero() }
         }

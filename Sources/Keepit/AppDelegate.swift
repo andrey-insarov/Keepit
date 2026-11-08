@@ -752,7 +752,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if settings.biometricUnlock, BiometricUnlock.isAvailable, BiometricUnlock.isConfigured {
             NSApp.activate(ignoringOtherApps: true)
             if let key = BiometricUnlock.retrieve(reasonKey: "unlock the clipboard history and templates") {
-                if Vault.verify(key) {
+                if Vault.admitBiometric(key) {           // check opened; provenance says what else is proven (backups need the phrase or a password unlock)
                     Storage.key = key
                     return true
                 }
@@ -964,6 +964,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             // The phrase goes into the first vault.json, not a second write after the commit: a
             // stop between the two could not leave a vault without a phrase (design review, Q3).
             let words = try Vault.addRecovery(to: &meta, for: key, entropy: recoveryEntropy)
+            Vault.notePrepared(key, meta: meta)                 // the block is part of what the commit writes
             return PreparedVault(key: key, meta: try Vault.encodeMeta(meta), words: recoveryEntropy == nil ? words : nil)
         } catch { key.zero(); throw error }
     }
