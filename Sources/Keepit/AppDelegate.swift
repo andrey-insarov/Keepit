@@ -186,6 +186,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         Vault.error(LF("The change is done, but the undo copies could not be removed: %@\n\nDelete the folder “%@” in Keepit's data folder by hand — it holds the data as it was before the change.", error.localizedDescription, directory.lastPathComponent))
     }
 
+    /// Reports that could not be shown where they arose — a restore commit cut short by a lock
+    /// (`lockedAfterWrite`) — wait for the next unlock (SEC01 audit, round 2).
+    var unsweptToReport: [(URL, Error)] = []
+    func reportUnsweptJournals() {
+        let pending = unsweptToReport
+        unsweptToReport = []
+        for (dir, e) in pending { reportUnsweptJournal(dir, e) }
+    }
+
     // MARK: - Lifecycle
 
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -495,6 +504,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         // A lock ended the new-password prompt: the stores are purged, the key is gone; nothing of
         // the unlock may go on (SEC13 design review: the watcher and hot keys used to restart).
         guard !isLocked else { return false }
+        reportUnsweptJournals()                         // a restore commit that a lock cut short had no chance to
         if !(pausedUntil.map { $0 > Date() } ?? false) { monitor.start() }   // keep a running pause
         registerHotKeys()
         backup.runIfDue()
@@ -521,17 +531,22 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// One refusal for everything that would build on data Keepit could not read: a backup, an
     /// archive, a Merge, a password change. Returns false (after saying so) when there is such data.
     func refuseWhileUnreadable() -> Bool {
-        if RestoreCommit.hasArmedJournal {
-            // An undo that did not finish: the process is on its way out (stopForUnfinishedUndo);
-            // nothing that writes may start meanwhile (SEC01 audit, round 1: Create New… wrote
-            // vault.json around the holds, and the launch replay then revived the old phrase).
-            if let test = refusalForTesting { test(); return true }
-            Vault.error(RestoreCommit.Failure.journalArmed.localizedDescription)
-            return true
-        }
+        if refuseWhileJournalArmed() { return true }
         guard hasUnreadableData else { return false }
         if let test = refusalForTesting { test(); return true }
         Vault.error(L("Keepit could not read some of its data, so this is not available now. Restore a backup (Replace) or start fresh first — Keepit asks at the next launch or unlock."))
+        return true
+    }
+
+    /// An undo that did not finish: the process is on its way out (`stopForUnfinishedUndo`), and
+    /// nothing that writes or rebuilds may start meanwhile — not a password change (SEC01 audit,
+    /// round 1: Create New… wrote vault.json around the holds, and the launch replay then revived
+    /// the old phrase), not Reset or uninstall (round 2: a Reset from inside the alert cleared the
+    /// pins and left the journal armed). Returns true (after saying so) while a journal is armed.
+    func refuseWhileJournalArmed() -> Bool {
+        guard RestoreCommit.hasArmedJournal else { return false }
+        if let test = refusalForTesting { test(); return true }
+        Vault.error(RestoreCommit.Failure.journalArmed.localizedDescription)
         return true
     }
 
@@ -1876,9 +1891,14 @@ extension AppDelegate {
     /// One consistent state for a backup, or nil when there is nothing to back up with (locked, no vault).
     func backupSnapshot() -> BackupEngine.Snapshot? {
         // A store whose file could not be read holds nothing of the user's: a backup of it would
-        // be an empty one, and rotation would push a good earlier copy out for it.
+        // be an empty one, and rotation would push a good earlier copy out for it. While a journal
+        // is armed (an undo that did not finish; the alert is up, the process about to leave)
+        // vault.json may be the new one over the old key in memory: an archive with that header
+        // opens with no password and no phrase, and rotation would drop the last good copy for it
+        // (SEC01 audit, round 2). `Vault.verify` is the same guard in general: the header must be
+        // the vault of the key that seals the payload.
         guard !isLocked, Vault.isEnabled, let key = Storage.key,
-              !hasUnreadableData,
+              !hasUnreadableData, !RestoreCommit.hasArmedJournal, Vault.verify(key),
               let header = Vault.backupHeader(app: "Keepit \(AppInfo.version)"),
               let tree = try? Storage.encoder.encode(templates.root) else { return nil }
         return BackupEngine.Snapshot(history: history.items, templatesJSON: tree, settings: settings.forBackup,

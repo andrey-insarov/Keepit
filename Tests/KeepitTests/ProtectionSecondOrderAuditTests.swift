@@ -229,10 +229,14 @@ final class ProtectionSecondOrderAuditTests: XCTestCase {
         let json = Data(repeating: 0x20, count: 1000)
         let sealed = [RestoreCommit.Step(name: "a", url: Storage.templatesURL, data: json, encrypt: false)]
         let toSeal = [RestoreCommit.Step(name: "b", url: Storage.templatesURL, data: json, encrypt: true)]
-        XCTAssertNil(RestoreCommit.stepOverLimit(sealed, limit: 1000))
-        XCTAssertEqual(RestoreCommit.stepOverLimit(toSeal, limit: 1000), "b")
-        XCTAssertNil(RestoreCommit.stepOverLimit(toSeal, limit: 1000 + Vault.sealOverhead))
-        XCTAssertEqual(RestoreCommit.stepOverLimit(toSeal, limit: 1000 + Vault.sealOverhead - 1), "b")
+        XCTAssertNil(RestoreCommit.stepOverLimit(sealed, limit: 1000, sealing: true))
+        XCTAssertEqual(RestoreCommit.stepOverLimit(toSeal, limit: 1000, sealing: true), "b")
+        XCTAssertNil(RestoreCommit.stepOverLimit(toSeal, limit: 1000 + Vault.sealOverhead, sealing: true))
+        XCTAssertEqual(RestoreCommit.stepOverLimit(toSeal, limit: 1000 + Vault.sealOverhead - 1, sealing: true), "b")
+        // No key in memory: writeNow writes plain, nothing is reserved (round 2).
+        XCTAssertNil(RestoreCommit.stepOverLimit(toSeal, limit: 1000, sealing: false))
+        XCTAssertNil(Storage.key)
+        XCTAssertNil(RestoreCommit.stepOverLimit(toSeal, limit: 1000), "the default follows Storage.key")
         // The overhead is what encrypt adds.
         let key = try Vault.enable(password: .of("k"), rounds: 1000)
         defer { key.zero() }

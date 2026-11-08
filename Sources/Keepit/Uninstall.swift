@@ -8,17 +8,19 @@ extension AppDelegate {
         // The lock generation is checked after each dialog (SEC13): a lock during the
         // authentication or the confirmation voids it — the destructive step never runs on an
         // answer given before a lock.
+        if refuseWhileJournalArmed() { return }        // an undo that did not finish: the journal is the data; the process is leaving
         let g = lockCount
         if Vault.isEnabled {
             guard authenticateForChange(reasonKey: "delete Keepit and all its data"), !isLocked, lockCount == g else { return }
         }
-        guard UninstallDialog.confirm(), !isLocked, lockCount == g else { return }
+        guard UninstallDialog.confirm(), !isLocked, lockCount == g, !refuseWhileJournalArmed() else { return }
         performUninstall()
     }
 
     /// Settings → Advanced → Reset…: back to the state of a fresh install — history, templates, settings,
     /// password, Touch ID key — without touching the app itself or its permissions.
     func resetRequested() {
+        if refuseWhileJournalArmed() { return }        // SEC01 audit, round 2: a Reset from inside the alert cleared the pins and left the journal armed
         let g = lockCount
         if Vault.isEnabled {
             guard authenticateForChange(reasonKey: "reset Keepit"), !isLocked, lockCount == g else { return }
@@ -30,7 +32,7 @@ extension AppDelegate {
         a.addButton(withTitle: L("Reset"))
         a.addButton(withTitle: L("Cancel"))
         a.buttons.first?.hasDestructiveAction = true
-        guard AbortableModal.run(a) == .alertFirstButtonReturn, !isLocked, lockCount == g else { return }
+        guard AbortableModal.run(a) == .alertFirstButtonReturn, !isLocked, lockCount == g, !refuseWhileJournalArmed() else { return }
         performReset()
     }
 

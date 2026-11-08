@@ -269,14 +269,17 @@ extension AppDelegate {
             movedAside = try Storage.setAside(unreadable)
             if unreadable.contains(Storage.settingsURL) { Storage.unpin(Storage.historyURL) }
         }
-        let unswept: (URL, Error)?
         do {
+            // A sweep that failed is queued, not shown here: an alert between the files and the
+            // stores would let a debounced save land on the restored files, and a lock during the
+            // publish (`lockedAfterWrite`) would lose it — it is shown at the end, or at the next
+            // unlock (SEC01 audit, round 2).
             if let v = newVault {
                 var steps = [RestoreCommit.Step(name: ProtectionCommit.vaultName, url: Vault.metaURL, data: v.meta, encrypt: false)]
                 steps += try RestoreCommit.steps(templatesJSON: templatesJSON, historyJSON: historyJSON, settingsJSON: settingsJSON, sealWith: v.key)
-                unswept = try RestoreCommit.writeFiles(steps, journal: .protection).map { (FileJournal.protection.directory, $0) }
+                if let e = try RestoreCommit.writeFiles(steps, journal: .protection) { unsweptToReport.append((FileJournal.protection.directory, e)) }
             } else {
-                unswept = try RestoreCommit.writeFiles(templatesJSON: templatesJSON, historyJSON: historyJSON, settingsJSON: settingsJSON).map { (FileJournal.restore.directory, $0) }
+                if let e = try RestoreCommit.writeFiles(templatesJSON: templatesJSON, historyJSON: historyJSON, settingsJSON: settingsJSON) { unsweptToReport.append((FileJournal.restore.directory, e)) }
             }
         } catch {
             undoSetAsideAfterFailedCommit(movedAside: movedAside, unreadable: unreadable)   // the stores' loadFailure never moved
@@ -305,7 +308,7 @@ extension AppDelegate {
         registerHotKeys()
         viewer?.refresh()
         backup?.noteChange()
-        if let u = unswept { reportUnsweptJournal(u.0, u.1) }        // the commit stands; the copies are still there
+        reportUnsweptJournals()                      // the commit stands; the copies are still there
     }
 
     final class UnlockedBackup {

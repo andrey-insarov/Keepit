@@ -212,12 +212,13 @@ enum RestoreCommit {
 
     /// The bytes a step writes must be readable back under `Limits.dataFileMaxBytes`. A step that
     /// `Storage.writeNow` still seals grows by `Vault.sealOverhead` on the way (SEC01 audit, round
-    /// 1: a plain restore into an existing vault compared the JSON, not the sealed file). Returns
-    /// the first step over the limit. `limit` is a parameter for the tests.
-    static func stepOverLimit(_ steps: [Step], limit: Int = Limits.dataFileMaxBytes) -> String? {
+    /// 1: a plain restore into an existing vault compared the JSON, not the sealed file) — when a
+    /// key is in memory; without one `writeNow` writes plain (round 2: no reserve then). Returns
+    /// the first step over the limit. `limit` and `sealing` are parameters for the tests.
+    static func stepOverLimit(_ steps: [Step], limit: Int = Limits.dataFileMaxBytes, sealing: Bool = Storage.key != nil) -> String? {
         for s in steps {
             guard let d = s.data else { continue }
-            let written = s.encrypt ? d.count + Vault.sealOverhead : d.count
+            let written = s.encrypt && sealing ? d.count + Vault.sealOverhead : d.count
             if written > limit { return s.name }
         }
         return nil
