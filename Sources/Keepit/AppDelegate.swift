@@ -972,7 +972,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         return false
     }
 
-    private var phraseNotConfirmed = false
+    var phraseNotConfirmed = false   // set by presentRecoveryPhrase, publishEnabledVault and a restore commit cut short by a lock
     var phraseNotConfirmedForTesting: Bool { phraseNotConfirmed }
     private func remindPhraseNotConfirmedLater() {
         guard phraseNotConfirmed else { return }
@@ -1053,7 +1053,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func publishEnabledVault(_ prepared: PreparedVault, unswept: Error? = nil) {
         let g = lockCount
         Storage.key = prepared.key
-        Storage.sealSetAsideCopies(with: prepared.key)   // the .corrupt-… copies were plain like the files; now sealed like them (SEC02)
+        Storage.sealSetAsideCopies(with: prepared.key)   // the .corrupt-… copies were plain like the files; now sealed like them (SEC02). A restore that made the vault sealed them inside its commit already (then this finds nothing to do)
         syncBiometricKey()
         configureBackup()                             // a folder kept in settings becomes a destination again
         backup?.forceNext()

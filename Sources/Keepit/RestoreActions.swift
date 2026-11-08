@@ -290,6 +290,12 @@ extension AppDelegate {
             // stores publish (their next save must seal with it). The key is Storage's from here;
             // the caller must not zero it.
             Storage.key = v.key
+            // The .corrupt-… copies this Replace (and earlier ones) set aside were plain like the
+            // files, on a Mac without a vault: sealed now, like the files — here, before the stores
+            // publish and run their observers, not in publishEnabledVault after the commit: a lock
+            // in a callback below ends the restore with lockedAfterWrite and nothing after this
+            // function runs (candidate review, P1 / SEC02).
+            Storage.sealSetAsideCopies(with: v.key)
         }
         if unreadable.contains(Storage.settingsURL) { Storage.clearSetAsideMarker() }   // the plan's settings.json exists (also from .pending, where nothing was moved)
         settingsLoadFailure = nil
@@ -302,7 +308,11 @@ extension AppDelegate {
         history.publish(plan.history, settings: plan.settings)
         templates.publish(plan.templates)
         apply(settings: plan.settings)          // trust and backup setup stayed this installation's (RestorePlan)
-        guard !isLocked, lockCount == generation else { throw RestoreCommit.Failure.lockedAfterWrite }
+        guard !isLocked, lockCount == generation else {
+            // The vault's new phrase was never shown: the note after the next unlock points at Show….
+            if newVault?.words != nil { phraseNotConfirmed = true }
+            throw RestoreCommit.Failure.lockedAfterWrite
+        }
         history.notePublished()
         templates.changed()
         registerHotKeys()

@@ -645,3 +645,5 @@
 "This password opens a different vault than the one Keepit's data is encrypted with: vault.json has changed since Keepit was unlocked. Nothing was changed. Save your data first with Settings → Backup → Save to Archive… (it has its own password), then put the original vault.json back or set the password again." = "This password opens a different vault than the one Keepit's data is encrypted with: vault.json has changed since Keepit was unlocked. Nothing was changed. Save your data first with Settings → Backup → Save to Archive… (it has its own password), then put the original vault.json back or set the password again.";
 
 "The recovery phrase was closed when Keepit locked, before you confirmed it. Settings → Security → Show… shows it again." = "The recovery phrase was closed when Keepit locked, before you confirmed it. Settings → Security → Show… shows it again.";
+
+"Archive not saved: Keepit was locked meanwhile." = "Archive not saved: Keepit was locked meanwhile.";
