@@ -546,4 +546,6 @@ T = {
 'Replace data Keepit cannot read?': 'Gegevens vervangen die Keepit niet kan lezen?',
 'These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them.': 'Deze bestanden worden hernoemd naar .corrupt-… en naast de herstelde bewaard; Keepit opent of wijzigt ze niet.',
 'Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup.': 'Opnieuw beginnen behoudt de instellingen waarmee Keepit nu draait. Als automatische reservekopie aanstond, zet deze dan opnieuw aan in Instellingen → Reservekopie.',
+'Could not save the settings: %@': 'Kon de instellingen niet bewaren: %@',
+'moved by an interrupted Start Fresh or Restore and not yet put back; the earlier file is kept as a .corrupt-… file': 'verplaatst door een onderbroken ‘Opnieuw beginnen’ of herstel en nog niet teruggezet; het eerdere bestand blijft bewaard als .corrupt-…-bestand',
 }

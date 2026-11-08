@@ -546,3 +546,5 @@
 "Replace data Keepit cannot read?" = "להחליף נתונים ש‑Keepit לא מצליח לקרוא?";
 "These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them." = "שמות הקבצים האלה ישונו ל‑‎.corrupt-…‎ והם יישמרו ליד הקבצים המשוחזרים; Keepit לא פותח ולא משנה אותם.";
 "Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup." = "התחלה מחדש שומרת את ההגדרות שבהן Keepit פועל כעת. אם גיבוי אוטומטי היה פעיל, הפעילו אותו שוב בהגדרות ← גיבוי.";
+"Could not save the settings: %@" = "לא ניתן לשמור את ההגדרות: %@";
+"moved by an interrupted Start Fresh or Restore and not yet put back; the earlier file is kept as a .corrupt-… file" = "הועבר על ידי „התחל מחדש” או שחזור שנקטעו וטרם הוחזר; הקובץ הקודם נשמר כקובץ ‎.corrupt-…‎";

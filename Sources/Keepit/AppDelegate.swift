@@ -108,14 +108,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         // A restore interrupted between its three file writes is put right before anything is read.
         do { if try RestoreCommit.recoverIfNeeded() { Log.storage.notice("replayed an interrupted restore") } }
         catch { recoveryError = error; Log.storage.error("restore journal could not be replayed: \(error.localizedDescription)") }
-        Storage.recoverSetAside()                         // after the journal: a Replace stopped between the rename and its files
+        let aside = Storage.recoverSetAside()             // after the journal: a Replace stopped between the rename and its files
         let stored = Storage.read(Settings.self, from: Storage.settingsURL, encrypted: false)
-        if case .missing = stored { isFirstRun = true } else { isFirstRun = false }   // an unreadable file is not a first run
-        if let f = stored.failure {
+        if aside == .pending {
+            // settings.json is away and could not come back: not a first run, and nothing writes
+            // the defaults over its name until Start Fresh or a Replace does so on purpose.
+            isFirstRun = false
+            settingsLoadFailure = .interruptedMove
+            settings = Settings.whileUnreadable
+            Storage.hold(Storage.settingsURL)
+            Storage.pin(Storage.historyURL)
+        } else if let f = stored.failure {
+            isFirstRun = false
             settingsLoadFailure = f
             settings = Settings.whileUnreadable
             Storage.pin(Storage.historyURL)
         } else {
+            if case .missing = stored { isFirstRun = true } else { isFirstRun = false }
             settings = stored.value ?? Settings()
         }
         super.init()
@@ -511,34 +520,61 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func startFresh() {
         let unreadable = unreadableDataFiles
         guard !unreadable.isEmpty, !isLocked else { return }
+        let moved: [URL]
         do {
-            try Storage.setAside(unreadable.map(\.url))
+            moved = try Storage.setAside(unreadable.map(\.url))
         } catch {
             Vault.error(LF("Could not set the unreadable file aside: %@", error.localizedDescription))
             return
         }
-        startOverAfterSetAside(unreadable.map(\.url))
+        startOverAfterSetAside(unreadable.map(\.url), moved: moved)
     }
 
     /// The second half of Start Fresh, once the files are beside the new ones: the stores whose file
     /// was unreadable load the fresh start; an unreadable settings.json gives way to the defaults,
     /// and the history kept in memory meanwhile is saved under them.
-    func startOverAfterSetAside(_ urls: [URL]) {
+    func startOverAfterSetAside(_ urls: [URL], moved: [URL] = []) {
         if urls.contains(Storage.historyURL) { history.reload() }
         if urls.contains(Storage.templatesURL) { templates.reload() }
         if urls.contains(Storage.settingsURL) {
-            settingsLoadFailure = nil
-            Storage.unpin(Storage.historyURL)
             // The settings Keepit has been running on — Settings.whileUnreadable plus whatever the
             // user changed meanwhile — become the file, not the defaults: the defaults' limits would
             // trim a history the old file allowed (3.0.6 audit, round 4). The user lowers them in
-            // Settings when they like; until then the ceilings stay.
-            apply(settings: settings)
-            Storage.waitUntilSaved()
+            // Settings when they like; until then the ceilings stay. Safe mode ends only once that
+            // file is on disk (round 6): the write is synchronous and checked, and if it fails the
+            // old file goes back under its name and nothing else changes.
+            do {
+                try Storage.writeNow(try Storage.prettyEncoder.encode(settings), to: Storage.settingsURL, encrypt: false)
+            } catch {
+                Storage.putBack(moved.filter { $0.deletingPathExtension() == Storage.settingsURL })
+                Storage.hold(Storage.settingsURL)        // whether or not it came back: nothing writes its name
+                Vault.error(LF("Could not save the settings: %@", error.localizedDescription))
+                viewer?.refresh()
+                return
+            }
             Storage.clearSetAsideMarker()                // the new settings.json exists
+            settingsLoadFailure = nil
+            Storage.unpin(Storage.historyURL)
+            apply(settings: settings)
         }
         viewer?.refresh()
         backup?.noteChange()
+    }
+
+    /// The catch of a restore commit that failed after `Storage.setAside`: the files go back under
+    /// their names — unless the journal is still armed (its undo failed), in which case the next
+    /// launch's replay is the authority and would remove a settings.json put back now (3.0.6
+    /// audit, round 6); then the files stay aside with the marker, and `recoverSetAside` puts
+    /// settings.json back after the replay. Safe mode goes on either way.
+    func undoSetAsideAfterFailedCommit(movedAside: [URL], unreadable: [URL]) {
+        guard !movedAside.isEmpty else { return }
+        if RestoreCommit.hasArmedJournal {
+            Log.storage.notice("restore journal still armed; the files set aside stay aside until the next launch")
+            if unreadable.contains(Storage.settingsURL) { Storage.hold(Storage.settingsURL) }
+        } else {
+            Storage.putBack(movedAside)
+        }
+        if unreadable.contains(Storage.settingsURL) { Storage.pin(Storage.historyURL) }
     }
 
     private static func describe(_ f: Storage.LoadFailure) -> String {
@@ -549,6 +585,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         case .malformed:          return L("not in the expected format")
         case .tooLarge:           return L("larger than Keepit can read")
         case .io(let code):       return LF("could not be read (error %d)", code)
+        case .interruptedMove:    return L("moved by an interrupted Start Fresh or Restore and not yet put back; the earlier file is kept as a .corrupt-… file")
         }
     }
 

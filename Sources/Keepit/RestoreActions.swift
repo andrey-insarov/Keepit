@@ -251,10 +251,7 @@ extension AppDelegate {
         do {
             try RestoreCommit.writeFiles(templatesJSON: templatesJSON, historyJSON: historyJSON, settingsJSON: settingsJSON)
         } catch {
-            if !movedAside.isEmpty {
-                Storage.putBack(movedAside)                                           // the stores' loadFailure never moved
-                if unreadable.contains(Storage.settingsURL) { Storage.pin(Storage.historyURL) }   // safe mode goes on
-            }
+            undoSetAsideAfterFailedCommit(movedAside: movedAside, unreadable: unreadable)   // the stores' loadFailure never moved
             throw error
         }
         if !movedAside.isEmpty { Storage.clearSetAsideMarker() }          // the plan's settings.json exists

@@ -101,7 +101,7 @@ final class Sec10RoundFiveAuditTests: XCTestCase {
         let live = try Data(contentsOf: Storage.settingsURL)
 
         try Data("settings.json.corrupt-1".utf8).write(to: Storage.setAsideMarker)   // a leftover
-        XCTAssertFalse(Storage.recoverSetAside())
+        XCTAssertEqual(Storage.recoverSetAside(), .nothing)
         XCTAssertFalse(FileManager.default.fileExists(atPath: Storage.setAsideMarker.path))
         XCTAssertEqual(try Data(contentsOf: Storage.settingsURL), live)
     }
@@ -109,7 +109,7 @@ final class Sec10RoundFiveAuditTests: XCTestCase {
     /// The marker names a file: anything else in it is ignored.
     func testMarkerNamingAnotherPathIsIgnored() throws {
         try Data("../other.json".utf8).write(to: Storage.setAsideMarker)
-        XCTAssertFalse(Storage.recoverSetAside())
+        XCTAssertEqual(Storage.recoverSetAside(), .nothing)
         XCTAssertFalse(FileManager.default.fileExists(atPath: Storage.setAsideMarker.path))
         XCTAssertFalse(FileManager.default.fileExists(atPath: Storage.settingsURL.path))
     }

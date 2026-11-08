@@ -546,3 +546,5 @@
 "Replace data Keepit cannot read?" = "Kas asendada andmed, mida Keepit lugeda ei saa?";
 "These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them." = "Need failid nimetatakse ümber .corrupt-… ja jäetakse taastatute kõrvale; Keepit neid ei ava ega muuda.";
 "Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup." = "Otsast alustamine säilitab seaded, millega Keepit praegu töötab. Kui automaatne varundamine oli sisse lülitatud, lülitage see uuesti sisse jaotises Seaded → Varukoopia.";
+"Could not save the settings: %@" = "Seadeid ei õnnestunud salvestada: %@";
+"moved by an interrupted Start Fresh or Restore and not yet put back; the earlier file is kept as a .corrupt-… file" = "katkenud „Alusta otsast“ või taaste poolt teisaldatud ja veel tagasi panemata; varasem fail jääb .corrupt-… failina alles";

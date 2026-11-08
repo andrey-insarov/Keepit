@@ -546,4 +546,6 @@ T = {
 'Replace data Keepit cannot read?': 'Substituir os dados que o Keepit não consegue ler?',
 'These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them.': 'Estes arquivos são renomeados para .corrupt-… e mantidos ao lado dos restaurados; o Keepit não os abre nem os altera.',
 'Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup.': 'Começar do zero mantém os ajustes com os quais o Keepit está funcionando agora. Se o backup automático estava ativado, ative-o novamente em Ajustes → Backup.',
+'Could not save the settings: %@': 'Não foi possível salvar os ajustes: %@',
+'moved by an interrupted Start Fresh or Restore and not yet put back; the earlier file is kept as a .corrupt-… file': 'movido por um “Começar do zero” ou restauração interrompidos e ainda não devolvido; o arquivo anterior é mantido como um arquivo .corrupt-…',
 }

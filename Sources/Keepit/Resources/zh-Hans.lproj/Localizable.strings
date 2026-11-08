@@ -546,3 +546,5 @@
 "Replace data Keepit cannot read?" = "要替换 Keepit 无法读取的数据吗？";
 "These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them." = "这些文件会被重命名为 .corrupt-… 并保留在恢复的文件旁边；Keepit 不会打开或更改它们。";
 "Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup." = "重新开始会保留 Keepit 当前运行所用的设置。如果您之前开启了自动备份，请在“设置 → 备份”中重新开启。";
+"Could not save the settings: %@" = "无法保存设置：%@";
+"moved by an interrupted Start Fresh or Restore and not yet put back; the earlier file is kept as a .corrupt-… file" = "已被中断的“重新开始”或恢复操作移走，尚未放回；之前的文件以 .corrupt-… 文件的形式保留";

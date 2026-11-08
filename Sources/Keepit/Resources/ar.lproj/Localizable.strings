@@ -546,3 +546,5 @@
 "Replace data Keepit cannot read?" = "هل تريد استبدال البيانات التي يتعذّر على Keepit قراءتها؟";
 "These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them." = "تُعاد تسمية هذه الملفات إلى ‎.corrupt-…‎ ويُحتفظ بها بجوار الملفات المستعادة؛ لا يفتحها Keepit ولا يغيّرها.";
 "Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup." = "البدء من جديد يحتفظ بالإعدادات التي يعمل بها Keepit الآن. إذا كان النسخ الاحتياطي التلقائي مفعّلاً لديك، فأعد تفعيله من الإعدادات ← النسخ الاحتياطي.";
+"Could not save the settings: %@" = "تعذّر حفظ الإعدادات: %@";
+"moved by an interrupted Start Fresh or Restore and not yet put back; the earlier file is kept as a .corrupt-… file" = "نُقل بواسطة «البدء من جديد» أو استعادة متوقّفة ولم يُعَد بعد؛ يُحتفظ بالملف السابق كملف ‎.corrupt-…‎";

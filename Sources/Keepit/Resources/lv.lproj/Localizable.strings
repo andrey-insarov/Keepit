@@ -546,3 +546,5 @@
 "Replace data Keepit cannot read?" = "Aizstāt datus, kurus Keepit nevar nolasīt?";
 "These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them." = "Šie faili tiks pārdēvēti par .corrupt-… un paliks blakus atjaunotajiem; Keepit tos neatver un nemaina.";
 "Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup." = "Sākot no jauna, tiek saglabāti iestatījumi, ar kuriem Keepit darbojas pašlaik. Ja bija ieslēgta automātiskā rezerves kopēšana, ieslēdziet to vēlreiz sadaļā Iestatījumi → Rezerves kopija.";
+"Could not save the settings: %@" = "Neizdevās saglabāt iestatījumus: %@";
+"moved by an interrupted Start Fresh or Restore and not yet put back; the earlier file is kept as a .corrupt-… file" = "pārvietots ar pārtrauktu “Sākt no jauna” vai atjaunošanu un vēl nav nolikts atpakaļ; iepriekšējais fails paliek kā .corrupt-… fails";

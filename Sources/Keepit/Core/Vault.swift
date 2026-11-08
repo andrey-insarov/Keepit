@@ -401,7 +401,11 @@ enum Vault {
         }
     }
 
+    /// Tests only: receives the text instead of the alert.
+    static var errorSinkForTesting: ((String) -> Void)?
+
     static func error(_ text: String) {
+        if let sink = errorSinkForTesting { sink(text); return }
         let a = NSAlert()
         a.messageText = text
         a.alertStyle = .warning

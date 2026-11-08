@@ -546,4 +546,6 @@ T = {
 'Replace data Keepit cannot read?': 'Keepit’in okuyamadığı veriler değiştirilsin mi?',
 'These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them.': 'Bu dosyaların adı .corrupt-… olarak değiştirilir ve geri yüklenenlerin yanında saklanır; Keepit bunları açmaz veya değiştirmez.',
 'Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup.': 'Sıfırdan başlamak, Keepit’in şu anda çalıştığı ayarları korur. Otomatik yedekleme açıksa, Ayarlar → Yedekleme bölümünden yeniden açın.',
+'Could not save the settings: %@': 'Ayarlar kaydedilemedi: %@',
+'moved by an interrupted Start Fresh or Restore and not yet put back; the earlier file is kept as a .corrupt-… file': 'yarıda kalan bir “Sıfırdan Başla” veya geri yükleme tarafından taşındı ve henüz geri konmadı; önceki dosya .corrupt-… dosyası olarak saklanıyor',
 }

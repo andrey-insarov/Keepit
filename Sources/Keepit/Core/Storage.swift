@@ -85,6 +85,7 @@ enum Storage {
         case malformed              // decrypted (or plain) bytes that are not the expected JSON
         case tooLarge
         case io(Int32)              // errno from open/read, or the path is not a regular file
+        case interruptedMove        // settings.json only: a Start Fresh or Replace stopped after moving it, and it could not be moved back yet
     }
 
     /// The outcome of reading a data file: three answers, not one `nil` for all of them. A store
@@ -280,29 +281,45 @@ enum Storage {
         ioQueue.sync { try? FileManager.default.removeItem(at: setAsideMarker) }
     }
 
+    enum SetAsideRecovery: Equatable {
+        case nothing        // no marker, or a leftover beside an existing settings.json (removed)
+        case restored       // settings.json was put back under its name; the marker is gone
+        case pending        // settings.json is absent and could not be put back; the marker stays
+    }
+
     /// At launch, before settings.json is read: a marker with no settings.json means Start Fresh or
     /// a Replace stopped between the rename and the new file. The old file goes back under its name
     /// (so the launch is in safe mode again, not a first run), and the marker goes. A marker beside
-    /// an existing settings.json is a leftover from a completed operation and just goes. Returns
-    /// true when a file was put back.
+    /// an existing settings.json is a leftover from a completed operation and just goes. If the
+    /// file cannot be put back — the move fails, or the named file is gone — the marker stays, so
+    /// the launch is still not a first run (`.pending`: the app runs in safe mode and the next
+    /// launch tries again; 3.0.6 audit, round 6). Only a marker that names no usable file at all
+    /// is dropped.
     @discardableResult
-    static func recoverSetAside() -> Bool {
+    static func recoverSetAside() -> SetAsideRecovery {
         let fm = FileManager.default
         return ioQueue.sync {
-            guard fm.fileExists(atPath: setAsideMarker.path) else { return false }
-            defer { try? fm.removeItem(at: setAsideMarker) }
-            guard !fm.fileExists(atPath: settingsURL.path),
-                  let name = try? String(contentsOf: setAsideMarker, encoding: .utf8).trimmingCharacters(in: .whitespacesAndNewlines),
-                  !name.isEmpty, !name.contains("/"), name.hasPrefix(settingsURL.lastPathComponent + ".corrupt-") else { return false }
+            guard fm.fileExists(atPath: setAsideMarker.path) else { return .nothing }
+            if fm.fileExists(atPath: settingsURL.path) { try? fm.removeItem(at: setAsideMarker); return .nothing }
+            guard let name = try? String(contentsOf: setAsideMarker, encoding: .utf8).trimmingCharacters(in: .whitespacesAndNewlines),
+                  !name.isEmpty, !name.contains("/"), name.hasPrefix(settingsURL.lastPathComponent + ".corrupt-") else {
+                Log.storage.error("set-aside marker names no file; dropping it")
+                try? fm.removeItem(at: setAsideMarker)
+                return .nothing
+            }
             let aside = directory.appendingPathComponent(name)
-            guard fm.fileExists(atPath: aside.path) else { return false }
+            guard fm.fileExists(atPath: aside.path) else {
+                Log.storage.error("set-aside marker names \(name), which is gone; keeping safe mode")
+                return .pending
+            }
             do {
                 try fm.moveItem(at: aside, to: settingsURL)
+                try? fm.removeItem(at: setAsideMarker)
                 Log.storage.notice("settings.json put back after an interrupted Start Fresh or Replace")
-                return true
+                return .restored
             } catch {
-                Log.storage.error("could not put settings.json back: \(error.localizedDescription)")
-                return false
+                Log.storage.error("could not put settings.json back: \(error.localizedDescription); keeping safe mode")
+                return .pending
             }
         }
     }

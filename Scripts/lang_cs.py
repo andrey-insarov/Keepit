@@ -546,4 +546,6 @@ T = {
 'Replace data Keepit cannot read?': 'Nahradit data, která Keepit nedokáže přečíst?',
 'These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them.': 'Tyto soubory se přejmenují na .corrupt-… a zůstanou vedle obnovených; Keepit je neotevírá ani nemění.',
 'Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup.': 'Začátek znovu zachová nastavení, se kterými Keepit nyní běží. Pokud byla zapnutá automatická záloha, zapněte ji znovu v Nastavení → Záloha.',
+'Could not save the settings: %@': 'Nastavení se nepodařilo uložit: %@',
+'moved by an interrupted Start Fresh or Restore and not yet put back; the earlier file is kept as a .corrupt-… file': 'přesunutý přerušeným „Začít znovu“ nebo obnovením a dosud nevrácený; dřívější soubor zůstává jako soubor .corrupt-…',
 }
