@@ -545,3 +545,4 @@
 "Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file." = "تعذّر على Keepit قراءة بياناته الحالية، لذا لا يمكن دمج نسخة احتياطية معها. اختر «استبدال»: يُحتفظ بالملف غير القابل للقراءة بجوار الملف المستعاد كملف ‎.corrupt-…‎.";
 "Replace data Keepit cannot read?" = "هل تريد استبدال البيانات التي يتعذّر على Keepit قراءتها؟";
 "These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them." = "تُعاد تسمية هذه الملفات إلى ‎.corrupt-…‎ ويُحتفظ بها بجوار الملفات المستعادة؛ لا يفتحها Keepit ولا يغيّرها.";
+"Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup." = "البدء من جديد يحتفظ بالإعدادات التي يعمل بها Keepit الآن. إذا كان النسخ الاحتياطي التلقائي مفعّلاً لديك، فأعد تفعيله من الإعدادات ← النسخ الاحتياطي.";

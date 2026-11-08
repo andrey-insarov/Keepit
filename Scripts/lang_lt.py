@@ -545,4 +545,5 @@ T = {
 'Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file.': '„Keepit“ nepavyko perskaityti dabartinių duomenų, todėl atsarginės kopijos su jais sujungti negalima. Pasirinkite Pakeisti: neperskaitomas failas liks šalia atkurtojo kaip .corrupt-… failas.',
 'Replace data Keepit cannot read?': 'Pakeisti duomenis, kurių „Keepit“ negali perskaityti?',
 'These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them.': 'Šie failai bus pervadinti į .corrupt-… ir paliekami šalia atkurtųjų; „Keepit“ jų neatidaro ir nekeičia.',
+'Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup.': 'Pradedant iš naujo išsaugomi nustatymai, su kuriais „Keepit“ veikia dabar. Jei buvo įjungta automatinė atsarginė kopija, vėl ją įjunkite skiltyje Nustatymai → Atsarginė kopija.',
 }

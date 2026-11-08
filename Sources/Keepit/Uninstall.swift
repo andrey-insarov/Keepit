@@ -37,7 +37,7 @@ extension AppDelegate {
         Storage.clearKey()
         BiometricUnlock.remove()
         Vault.disable()
-        for url in [Storage.historyURL, Storage.templatesURL, Storage.settingsURL, Storage.directory.appendingPathComponent("backup.json")] {
+        for url in [Storage.historyURL, Storage.templatesURL, Storage.settingsURL, Storage.setAsideMarker, Storage.directory.appendingPathComponent("backup.json")] {
             try? FileManager.default.removeItem(at: url)
         }
         clearLoadFailuresForReset()                    // the files are gone; nothing left to keep

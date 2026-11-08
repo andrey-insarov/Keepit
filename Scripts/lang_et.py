@@ -545,4 +545,5 @@ T = {
 'Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file.': 'Keepit ei saanud praeguseid andmeid lugeda, seega ei saa varukoopiat nendega ühendada. Valige Asenda: loetamatu fail jääb taastatu kõrvale .corrupt-… failina.',
 'Replace data Keepit cannot read?': 'Kas asendada andmed, mida Keepit lugeda ei saa?',
 'These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them.': 'Need failid nimetatakse ümber .corrupt-… ja jäetakse taastatute kõrvale; Keepit neid ei ava ega muuda.',
+'Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup.': 'Otsast alustamine säilitab seaded, millega Keepit praegu töötab. Kui automaatne varundamine oli sisse lülitatud, lülitage see uuesti sisse jaotises Seaded → Varukoopia.',
 }

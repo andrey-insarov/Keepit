@@ -545,3 +545,4 @@
 "Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file." = "Keepit 無法讀取目前的資料，因此無法將備份合併進去。請選擇「取代」：無法讀取的檔案會以 .corrupt-… 檔案的形式保留在還原的檔案旁邊。";
 "Replace data Keepit cannot read?" = "要取代 Keepit 無法讀取的資料嗎？";
 "These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them." = "這些檔案會被重新命名為 .corrupt-… 並保留在還原的檔案旁邊；Keepit 不會開啟或更改它們。";
+"Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup." = "重新開始會保留 Keepit 目前執行所用的設定。如果您之前開啟了自動備份，請在「設定 → 備份」中重新開啟。";

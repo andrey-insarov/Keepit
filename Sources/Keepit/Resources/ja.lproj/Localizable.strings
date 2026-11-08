@@ -545,3 +545,4 @@
 "Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file." = "Keepit は現在のデータを読み込めなかったため、バックアップを結合できません。「置き換え」を選んでください。読み込めないファイルは復元したファイルの隣に .corrupt-… ファイルとして残ります。";
 "Replace data Keepit cannot read?" = "Keepit が読み込めないデータを置き換えますか？";
 "These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them." = "これらのファイルは .corrupt-… に名前が変更され、復元したファイルの隣に保管されます。Keepit はこれらを開いたり変更したりしません。";
+"Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup." = "最初からやり直すと、Keepit が現在使用している設定が保存されます。自動バックアップを有効にしていた場合は、設定 → バックアップで再度有効にしてください。";

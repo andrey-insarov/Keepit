@@ -545,4 +545,5 @@ T = {
 'Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file.': 'Keepit nevarēja nolasīt pašreizējos datus, tāpēc rezerves kopiju ar tiem apvienot nevar. Izvēlieties Aizstāt: nenolasāmais fails paliks blakus atjaunotajam kā .corrupt-… fails.',
 'Replace data Keepit cannot read?': 'Aizstāt datus, kurus Keepit nevar nolasīt?',
 'These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them.': 'Šie faili tiks pārdēvēti par .corrupt-… un paliks blakus atjaunotajiem; Keepit tos neatver un nemaina.',
+'Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup.': 'Sākot no jauna, tiek saglabāti iestatījumi, ar kuriem Keepit darbojas pašlaik. Ja bija ieslēgta automātiskā rezerves kopēšana, ieslēdziet to vēlreiz sadaļā Iestatījumi → Rezerves kopija.',
 }

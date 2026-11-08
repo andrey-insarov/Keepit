@@ -222,10 +222,18 @@ enum Storage {
                         n += 1
                         bak = url.appendingPathExtension("corrupt-\(stamp)-\(n)")
                     }
+                    // settings.json alone leaves a marker first: without the file, a launch looks
+                    // like a first run and the defaults replace safe mode (3.0.6 audit, round 5).
+                    // The caller clears it once the new settings.json exists; a launch that finds
+                    // the marker and no settings.json moves the file back (`recoverSetAside`).
+                    if url == settingsURL {
+                        try Data(bak.lastPathComponent.utf8).write(to: setAsideMarker, options: .atomic)
+                    }
                     try fm.moveItem(at: url, to: bak)
                     done.append((url, bak))
                 }
             } catch {
+                try? fm.removeItem(at: setAsideMarker)
                 for d in done.reversed() {
                     do { try fm.moveItem(at: d.to, to: d.from) }
                     catch let undo { Log.storage.error("could not move \(d.to.lastPathComponent) back: \(undo.localizedDescription)") }
@@ -242,7 +250,8 @@ enum Storage {
     /// `.corrupt-…` extension stripped) and is held again, so the state is exactly what it was
     /// before — a restore commit that fails after the rename uses it (3.0.6 audit, round 4: a
     /// settings.json left aside looked like a first run at the next launch). A file whose original
-    /// name is taken again meanwhile, or that cannot be moved, is left where it is and logged.
+    /// name is taken again meanwhile, or that cannot be moved, is left where it is and logged; for
+    /// settings.json the marker then stays, and the next launch tries again.
     static func putBack(_ moved: [URL]) {
         let fm = FileManager.default
         ioQueue.sync {
@@ -252,8 +261,48 @@ enum Storage {
                     Log.storage.error("could not put \(aside.lastPathComponent) back: \(original.lastPathComponent) exists again")
                     continue
                 }
-                do { try fm.moveItem(at: aside, to: original); hold(original) }
-                catch { Log.storage.error("could not put \(aside.lastPathComponent) back: \(error.localizedDescription)") }
+                do {
+                    try fm.moveItem(at: aside, to: original)
+                    hold(original)
+                    if original == settingsURL { try? fm.removeItem(at: setAsideMarker) }
+                } catch { Log.storage.error("could not put \(aside.lastPathComponent) back: \(error.localizedDescription)") }
+            }
+        }
+    }
+
+    /// Where `setAside` notes that settings.json is being moved: the aside file's name, written
+    /// before the rename, removed by `clearSetAsideMarker` once a new settings.json exists.
+    static var setAsideMarker: URL { settingsURL.appendingPathExtension("set-aside") }
+
+    /// The caller of `setAside` says the new settings.json is in place (Start Fresh wrote the running
+    /// settings; a restore commit wrote the plan's).
+    static func clearSetAsideMarker() {
+        ioQueue.sync { try? FileManager.default.removeItem(at: setAsideMarker) }
+    }
+
+    /// At launch, before settings.json is read: a marker with no settings.json means Start Fresh or
+    /// a Replace stopped between the rename and the new file. The old file goes back under its name
+    /// (so the launch is in safe mode again, not a first run), and the marker goes. A marker beside
+    /// an existing settings.json is a leftover from a completed operation and just goes. Returns
+    /// true when a file was put back.
+    @discardableResult
+    static func recoverSetAside() -> Bool {
+        let fm = FileManager.default
+        return ioQueue.sync {
+            guard fm.fileExists(atPath: setAsideMarker.path) else { return false }
+            defer { try? fm.removeItem(at: setAsideMarker) }
+            guard !fm.fileExists(atPath: settingsURL.path),
+                  let name = try? String(contentsOf: setAsideMarker, encoding: .utf8).trimmingCharacters(in: .whitespacesAndNewlines),
+                  !name.isEmpty, !name.contains("/"), name.hasPrefix(settingsURL.lastPathComponent + ".corrupt-") else { return false }
+            let aside = directory.appendingPathComponent(name)
+            guard fm.fileExists(atPath: aside.path) else { return false }
+            do {
+                try fm.moveItem(at: aside, to: settingsURL)
+                Log.storage.notice("settings.json put back after an interrupted Start Fresh or Replace")
+                return true
+            } catch {
+                Log.storage.error("could not put settings.json back: \(error.localizedDescription)")
+                return false
             }
         }
     }

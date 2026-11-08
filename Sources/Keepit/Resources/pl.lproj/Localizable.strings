@@ -545,3 +545,4 @@
 "Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file." = "Keepit nie mógł odczytać bieżących danych, więc nie można scalić z nimi kopii zapasowej. Wybierz Zastąp: nieczytelny plik pozostanie obok przywróconego jako plik .corrupt-….";
 "Replace data Keepit cannot read?" = "Zastąpić dane, których Keepit nie może odczytać?";
 "These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them." = "Te pliki otrzymają nazwę .corrupt-… i pozostaną obok przywróconych; Keepit ich nie otwiera ani nie zmienia.";
+"Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup." = "Rozpoczęcie od nowa zachowuje ustawienia, z którymi Keepit działa teraz. Jeśli automatyczna kopia zapasowa była włączona, włącz ją ponownie w Ustawienia → Kopia zapasowa.";

@@ -619,3 +619,5 @@
 "Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file." = "Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file.";
 "Replace data Keepit cannot read?" = "Replace data Keepit cannot read?";
 "These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them." = "These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them.";
+
+"Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup." = "Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup.";

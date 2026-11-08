@@ -108,6 +108,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         // A restore interrupted between its three file writes is put right before anything is read.
         do { if try RestoreCommit.recoverIfNeeded() { Log.storage.notice("replayed an interrupted restore") } }
         catch { recoveryError = error; Log.storage.error("restore journal could not be replayed: \(error.localizedDescription)") }
+        Storage.recoverSetAside()                         // after the journal: a Replace stopped between the rename and its files
         let stored = Storage.read(Settings.self, from: Storage.settingsURL, encrypted: false)
         if case .missing = stored { isFirstRun = true } else { isFirstRun = false }   // an unreadable file is not a first run
         if let f = stored.failure {
@@ -487,6 +488,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         a.messageText = L("Keepit cannot read its data")
         a.informativeText = unreadable.map { $0.url.lastPathComponent + " — " + Self.describe($0.failure) }.joined(separator: "\n") + "\n\n"
             + L("Nothing on disk has been changed, and Keepit will not save history or templates until this is resolved. Restore a backup (Settings → Backup), or start fresh: the unreadable file is kept next to the new one as a .corrupt-… file.")
+            + (settingsLoadFailure != nil ? "\n\n" + L("Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup.") : "")
         a.addButton(withTitle: L("Continue Without Saving"))
         a.addButton(withTitle: L("Start Fresh"))
         a.buttons[1].hasDestructiveAction = true
@@ -532,6 +534,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             // trim a history the old file allowed (3.0.6 audit, round 4). The user lowers them in
             // Settings when they like; until then the ceilings stay.
             apply(settings: settings)
+            Storage.waitUntilSaved()
+            Storage.clearSetAsideMarker()                // the new settings.json exists
         }
         viewer?.refresh()
         backup?.noteChange()

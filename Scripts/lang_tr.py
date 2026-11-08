@@ -545,4 +545,5 @@ T = {
 'Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file.': 'Keepit mevcut verilerini okuyamadı, bu yüzden bir yedek bunlarla birleştirilemez. Değiştir’i seçin: okunamayan dosya, geri yüklenenin yanında .corrupt-… dosyası olarak saklanır.',
 'Replace data Keepit cannot read?': 'Keepit’in okuyamadığı veriler değiştirilsin mi?',
 'These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them.': 'Bu dosyaların adı .corrupt-… olarak değiştirilir ve geri yüklenenlerin yanında saklanır; Keepit bunları açmaz veya değiştirmez.',
+'Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup.': 'Sıfırdan başlamak, Keepit’in şu anda çalıştığı ayarları korur. Otomatik yedekleme açıksa, Ayarlar → Yedekleme bölümünden yeniden açın.',
 }
