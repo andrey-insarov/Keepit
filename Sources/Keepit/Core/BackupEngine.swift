@@ -397,65 +397,59 @@ final class BackupEngine {
         // 1. Only records whose name is exactly what we would have written; the rest are forgotten.
         let wellFormed = records.filter { isWellFormed($0, sourceID: sourceID) }
         if wellFormed.count != records.count { Log.storage.error("backup rotation: \(records.count - wellFormed.count) record(s) with a foreign or malformed name forgotten") }
-        // 2. One candidate per backupID. Identical duplicates collapse; records that disagree about
-        //    one id are a conflict: nothing under those names is deleted this time.
+        // 2. Identical duplicates collapse; nothing is read yet. With `keep` or fewer distinct ids
+        //    nothing could be deleted, whatever the files say: return them unread.
         var order: [String] = []
-        var groups: [String: [BackupState.Record]] = [:]
-        for r in wellFormed {
-            if groups[r.backupID] == nil { order.append(r.backupID) }
-            groups[r.backupID, default: []].append(r)
+        var byID: [String: [BackupState.Record]] = [:]
+        for r in wellFormed where !(byID[r.backupID]?.contains(r) ?? false) {
+            if byID[r.backupID] == nil { order.append(r.backupID) }
+            byID[r.backupID, default: []].append(r)
         }
-        struct Candidate { let records: [BackupState.Record]; let conflict: Bool; let date: Date }
-        let candidates = order.map { id -> Candidate in
-            let rs = groups[id]!
-            let distinct = Array(Set(rs))
-            return Candidate(records: distinct, conflict: distinct.count > 1, date: distinct.map(\.date).max()!)
-        }.sorted { $0.date > $1.date }                                  // newest first
-        // Nothing could be deleted with `keep` or fewer archives: no need to read any of them.
-        guard candidates.count > keep else { return candidates.flatMap(\.records) }
+        let distinct = order.flatMap { byID[$0]! }
+        guard order.count > keep else { return distinct }
 
+        // 3. Verify every record on its own, before anything is ordered or counted (round 1 of the
+        //    PR: a record with a forged future date, no file, and a real sibling's id put that
+        //    sibling first and spent the budget on it — the archive just written was deleted).
+        //    Only verified records take part in the order and in the count.
         let outcome: [BackupState.Record]? = try? destination.withFolder { (folder: URL) -> [BackupState.Record]? in
             let dirFD = open(folder.path, O_RDONLY | O_DIRECTORY | O_CLOEXEC)
             guard dirFD >= 0 else { return nil }
             defer { close(dirFD) }
-            var kept: [BackupState.Record] = []
-            var verifiedCount = 0
-            for c in candidates {
-                if c.conflict {
-                    Log.storage.error("backup rotation: \(c.records.count) records disagree about one archive; none of them is deleted")
-                    var counted = false
-                    for r in c.records {
-                        switch verify(r, in: dirFD) {
-                        case .verified: kept.append(r); counted = true
-                        case .transient: kept.append(r)
-                        case .mismatch, .gone: break                     // forgotten, the object stays
-                        }
-                    }
-                    if counted { verifiedCount += 1 }
-                    continue
-                }
-                let r = c.records[0]
+            var kept: [BackupState.Record] = []                          // the registry afterwards
+            var verified: [BackupState.Record] = []
+            for r in distinct {
                 switch verify(r, in: dirFD) {
                 case .verified:
-                    if verifiedCount < keep {
-                        verifiedCount += 1
-                        kept.append(r)
-                    } else if r.name.withCString({ unlinkat(dirFD, $0, 0) }) != 0 {
-                        Log.storage.error("backup rotation: could not delete an old archive (errno \(errno)); kept for the next rotation")
-                        kept.append(r)                                  // retry next time
-                    }
+                    verified.append(r)
+                    kept.append(r)
+                case .transient(let e):
+                    Log.storage.error("backup rotation: an archive could not be checked (errno \(e)); kept for the next rotation")
+                    kept.append(r)                                       // not counted, not ordered: cannot displace a verified one
                 case .mismatch:
                     Log.storage.error("backup rotation: a registry record does not describe the object under its name; forgotten, nothing deleted")
                 case .gone:
                     break                                                // deleted by hand: forget it
-                case .transient(let e):
-                    Log.storage.error("backup rotation: an archive could not be checked (errno \(e)); kept for the next rotation")
-                    kept.append(r)                                       // not counted: cannot displace a verified one
+                }
+            }
+            // 4. Records that disagree about one id are a conflict, whatever their files turned out to
+            //    be: nothing under those names is deleted and none of them counts toward `keep` — the
+            //    budget is spent only on unambiguous, verified archives, so a forged twin can neither
+            //    promote its sibling nor make room by it. A human sorts the folder out; logged once.
+            let conflicting = Set(order.filter { byID[$0]!.count > 1 })
+            if !conflicting.isEmpty { Log.storage.error("backup rotation: \(conflicting.count) archive id(s) with records that disagree; none of them is deleted or counted") }
+            // 5. Retention over the verified, unambiguous archives, newest first by their own dates.
+            let ranked = verified.filter { !conflicting.contains($0.backupID) }.sorted { $0.date > $1.date }
+            for r in ranked.dropFirst(keep) {
+                if r.name.withCString({ unlinkat(dirFD, $0, 0) }) == 0 {
+                    kept.removeAll { $0 == r }
+                } else {
+                    Log.storage.error("backup rotation: could not delete an old archive (errno \(errno)); kept for the next rotation")
                 }
             }
             return kept
         }
-        return outcome ?? candidates.flatMap(\.records)                 // folder not reachable: change nothing, retry later
+        return outcome ?? distinct                                       // folder not reachable: change nothing, retry later
     }
 
     enum Verification: Equatable { case verified, mismatch, gone, transient(Int32) }

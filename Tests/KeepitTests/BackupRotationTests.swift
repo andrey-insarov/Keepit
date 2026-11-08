@@ -234,4 +234,20 @@ final class BackupRotationTests: XCTestCase {
         var tooBig = a; tooBig.size = Limits.dataFileMaxBytes + 1
         XCTAssertEqual(BackupEngine.verify(tooBig, in: fd), .mismatch)
     }
+
+    // MARK: auditor's probes, round 1 of the PR (kept as written)
+
+    /// A record with a real sibling's id, a forged future date and no file used to put the sibling
+    /// first in the order and spend the budget on it; the archive just written was deleted.
+    func testAuditMissingFutureConflictCannotDisplaceANewerVerifiedArchive() throws {
+        let old = try archive(1, minutes: 0)
+        let futureTwin = try archive(1, minutes: 100, write: false)
+        let current = try archive(2, minutes: 10)
+        let result = rotate([old, futureTwin, current], keep: 1)
+        XCTAssertTrue(files().contains(old.name), "conflict names remain protected")
+        XCTAssertTrue(files().contains(current.name), "a missing future twin must not promote its old sibling above the current archive")
+        XCTAssertTrue(result.contains(current))
+        XCTAssertTrue(result.contains(old), "verified member of a conflict: kept, not counted")
+        XCTAssertFalse(result.contains(futureTwin), "the twin without a file is forgotten")
+    }
 }
