@@ -108,7 +108,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         // A restore interrupted between its three file writes is put right before anything is read.
         do { if try RestoreCommit.recoverIfNeeded() { Log.storage.notice("replayed an interrupted restore") } }
         catch { recoveryError = error; Log.storage.error("restore journal could not be replayed: \(error.localizedDescription)") }
-        let aside = Storage.recoverSetAside()             // after the journal: a Replace stopped between the rename and its files
+        // After the journal, and only after a replay that succeeded (or had nothing to do): with the
+        // journal still armed the next launch's replay would remove a settings.json put back now
+        // as "previously absent" (3.0.6 audit, round 7). On a failed replay the app quits before
+        // any store is created; the marker waits with the journal.
+        let aside: Storage.SetAsideRecovery = recoveryError == nil ? Storage.recoverSetAside() : .pending
         let stored = Storage.read(Settings.self, from: Storage.settingsURL, encrypted: false)
         if aside == .pending {
             // settings.json is away and could not come back: not a first run, and nothing writes
@@ -567,13 +571,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// audit, round 6); then the files stay aside with the marker, and `recoverSetAside` puts
     /// settings.json back after the replay. Safe mode goes on either way.
     func undoSetAsideAfterFailedCommit(movedAside: [URL], unreadable: [URL]) {
-        guard !movedAside.isEmpty else { return }
+        guard !unreadable.isEmpty else { return }
         if RestoreCommit.hasArmedJournal {
             Log.storage.notice("restore journal still armed; the files set aside stay aside until the next launch")
-            if unreadable.contains(Storage.settingsURL) { Storage.hold(Storage.settingsURL) }
-        } else {
+        } else if !movedAside.isEmpty {
             Storage.putBack(movedAside)
         }
+        // Every protection the commit lifted comes back, whether or not a file was moved (a file
+        // already absent — `.pending` — was not moved, and used to be left unheld; round 7): the
+        // unreadable names are held again, and history.json is pinned again while settings are
+        // unknown. putBack holds what it returns; holding it twice is harmless.
+        for url in unreadable { Storage.hold(url) }
         if unreadable.contains(Storage.settingsURL) { Storage.pin(Storage.historyURL) }
     }
 
