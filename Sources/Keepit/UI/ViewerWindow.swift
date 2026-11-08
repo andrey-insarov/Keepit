@@ -1139,8 +1139,14 @@ final class ViewerWindowController: NSWindowController,
     func loadTextForTesting(_ text: String, editable: Bool = true) {
         textFormat.load(format: ClipItem.Format.text, data: Data(text.utf8), editable: editable)
     }
-    func typeForTesting(_ text: String) {        // an edit through the text view, so it lands on its undo stack
-        textFormat.textView.insertText(text, replacementRange: NSRange(location: 0, length: 0))
+    func typeForTesting(_ text: String) {
+        // An edit with an undo action behind it. insertText(_:replacementRange:) alone registers
+        // none outside a key window (CI), so the action is put on the editor's undo manager by hand
+        // — what matters here is that discardContents() empties that stack.
+        let tv = textFormat.textView
+        let before = tv.string
+        tv.insertText(text, replacementRange: NSRange(location: 0, length: 0))
+        tv.undoManager?.registerUndo(withTarget: tv) { $0.string = before }
     }
 }
 

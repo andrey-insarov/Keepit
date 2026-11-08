@@ -116,7 +116,6 @@ final class LockSurfacesTests: XCTestCase {
         let viewer = try XCTUnwrap(a.viewer)
         viewer.loadTextForTesting("secret item")
         viewer.typeForTesting("edited ")
-        spinMainQueue()                                // the undo group closes with the event
         XCTAssertTrue(viewer.canUndoForTesting, "an edit on the undo stack")
         XCTAssertGreaterThan(viewer.nodeCountForTesting, 3, "the tree holds the items")
 
