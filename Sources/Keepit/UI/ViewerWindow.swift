@@ -1109,6 +1109,39 @@ final class ViewerWindowController: NSWindowController,
         templates.flush()
         history.flush()
     }
+
+    /// A lock: the window closes (a pending edit is committed and the stores flushed, as on any
+    /// close), then nothing of what it showed stays — the node tree, the format views and the
+    /// editor's undo stack kept the items after `close()` (3.0.5 security review, SEC05). The app
+    /// lets the controller go afterwards; ⌥E after the unlock builds a fresh one from the stores.
+    func discardContents() {
+        close()
+        nodes = ["clip": clipboardRoot, "hist": historyRoot, "tmpl": templateRoot]
+        clipboardRoot.children = []; historyRoot.children = []; templateRoot.children = []
+        currentClipboard = nil
+        editingNode = nil
+        query = ""
+        searchField.stringValue = ""
+        nameField.stringValue = ""
+        statusBar.stringValue = ""
+        textFormat.clear(); imageFormat.clear(); filesFormat.clear(); hexFormat.clear(); infoFormat.clear()
+        suppressSelectionEvents = true
+        outline.reloadData()
+        suppressSelectionEvents = false
+        discarded = true
+    }
+
+    /// Tests only.
+    private(set) var discarded = false
+    var nodeCountForTesting: Int { nodes.count }
+    var shownTextForTesting: String { textFormat.textView.string }
+    var canUndoForTesting: Bool { textFormat.textView.undoManager?.canUndo == true }
+    func loadTextForTesting(_ text: String, editable: Bool = true) {
+        textFormat.load(format: ClipItem.Format.text, data: Data(text.utf8), editable: editable)
+    }
+    func typeForTesting(_ text: String) {        // an edit through the text view, so it lands on its undo stack
+        textFormat.textView.insertText(text, replacementRange: NSRange(location: 0, length: 0))
+    }
 }
 
 private extension VNode.Kind {

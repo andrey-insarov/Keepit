@@ -68,6 +68,14 @@ final class TextFormatView: NSView, NSTextViewDelegate {
         textView.scroll(.zero)
     }
 
+    /// Nothing of the last item stays in the view, its storage or its undo stack (SEC05).
+    func clear() {
+        dirty = false
+        textView.textStorage?.setAttributedString(NSAttributedString())
+        textView.undoManager?.removeAllActions()
+        textView.isEditable = false
+    }
+
     func textDidChange(_ notification: Notification) { dirty = true }
 
     func textDidEndEditing(_ notification: Notification) { commit() }
@@ -129,6 +137,8 @@ final class ImageFormatView: NSView {
     }
     required init?(coder: NSCoder) { fatalError() }
 
+    func clear() { imageView.image = nil; info.stringValue = "" }
+
     func load(data: Data) {
         guard let img = NSImage(data: data) else {
             imageView.image = nil
@@ -170,6 +180,8 @@ final class FilesFormatView: NSView, NSTableViewDataSource, NSTableViewDelegate 
         pinToEdges(scroll)
     }
     required init?(coder: NSCoder) { fatalError() }
+
+    func clear() { paths = []; table.reloadData() }
 
     func load(paths: [String]) {
         self.paths = paths
@@ -218,6 +230,8 @@ final class HexFormatView: NSView {
         pinToEdges(scroll)
     }
     required init?(coder: NSCoder) { fatalError() }
+
+    func clear() { textView.string = "" }
 
     func load(data: Data) {
         let shown = data.prefix(Self.limit)
@@ -269,4 +283,5 @@ final class InfoView: NSView {
     required init?(coder: NSCoder) { fatalError() }
 
     func load(_ text: String) { label.stringValue = text }
+    func clear() { label.stringValue = "" }
 }

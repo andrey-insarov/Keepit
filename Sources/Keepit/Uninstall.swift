@@ -48,6 +48,7 @@ extension AppDelegate {
             try? FileManager.default.removeItem(at: url)
         }
         try? FileJournal.restore.sweepOrThrow(); try? FileJournal.protection.sweepOrThrow()   // armed or not: a replay at the next launch would bring the deleted files back
+        Storage.removeSetAsideCopies()                 // the .corrupt-… copies hold the same data (SEC14)
         clearLoadFailuresForReset()                    // the files are gone; nothing left to keep
         apply(settings: Settings())
         history.reload()

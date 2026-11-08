@@ -40,6 +40,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var lastClosedWasHistoryMenu = false
     /// Menus of ours currently tracking (history, template, action submenus); global hot keys pause meanwhile.
     private var openMenus = 0
+    /// The menus this delegate has open, so a lock can close them (SEC05: a history menu stayed
+    /// open over a locked app; the lock hot key is delivered inside the tracking loop). Weak: a
+    /// menu that went away without `menuDidClose` is simply gone.
+    private let openTrackedMenus = NSHashTable<NSMenu>.weakObjects()
+    var openTrackedMenusForTesting: Int { openTrackedMenus.count }
+    private func cancelOpenMenus() {
+        for menu in openTrackedMenus.allObjects { menu.cancelTracking() }
+    }
 
     /// True while the vault key is wiped and data is unloaded (password set, not yet entered).
     private(set) var isLocked = false
@@ -478,9 +486,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         cancelAutoUnlock()
         isLocked = true
         lockCount += 1
-        AbortableModal.abortIfRunning()      // a template prompt or a keepit:// confirmation does not outlive the lock
-        queue.stop()
-        viewer?.close()
+        AbortableModal.abortIfRunning()      // a template prompt, a keepit:// confirmation, the recovery phrase: none outlives the lock
+        cancelOpenMenus()                    // a history menu stayed open over a locked app (SEC05)
+        PreviewPanel.shared.purge()          // the preview beside it, and a show scheduled just before (SEC05)
+        queue.stop()                         // also an ended queue's copies (SEC03)
+        viewer?.discardContents()            // commits a pending edit, then empties tree, views, undo (SEC05)
+        viewer = nil
         preferencesWindow?.close()
         monitor.stop()
         hotKeys.unregisterAll()
@@ -515,6 +526,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         // the unlock may go on (SEC13 design review: the watcher and hot keys used to restart).
         guard !isLocked else { return false }
         reportUnsweptJournalsLater()                    // a restore commit that a lock cut short had no chance to; after unlock() is done
+        remindPhraseNotConfirmedLater()                 // a phrase dialog the lock closed (SEC05), same timing
         if !(pausedUntil.map { $0 > Date() } ?? false) { monitor.start() }   // keep a running pause
         registerHotKeys()
         backup.runIfDue()
@@ -859,9 +871,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             return false
         }
         // Committed: the files open with the new password whatever happens from here.
+        var oldBytes = oldKey.withBytes { Data($0) }  // for the set-aside copies below; the live key goes first
         Storage.key = newKey                         // zeroes oldKey
         syncBiometricKey()
         backup?.forceNext()                           // the next copy must open with the new password
+        // The .corrupt-… copies sealed with the old key follow (SEC14) — outside the transaction:
+        // a stop here leaves them under the old key, unreadable with the new password but never
+        // plain; nothing of the live data depends on them.
+        let oldCopy = oldBytes.withUnsafeBytes { SecureKey(bytes: $0) }
+        oldBytes.resetBytes(in: 0..<oldBytes.count)
+        Storage.resealSetAsideCopies(from: oldCopy, to: newKey)
+        oldCopy.zero()
         if let e = unswept { reportUnsweptJournal(FileJournal.protection.directory, e) }
         return true
     }
@@ -902,7 +922,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         do {
             let words = try Vault.createRecovery(for: key)
             backup?.forceNext()                       // a copy with the new phrase in its header
-            RecoveryDialogs.present(words: words, title: L("Your new recovery phrase (the old one no longer works)"))
+            presentRecoveryPhrase(words: words, title: L("Your new recovery phrase (the old one no longer works)"))
         } catch {
             Vault.error(LF("Could not create the recovery phrase: %@", error.localizedDescription))
             return
@@ -932,7 +952,33 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             Vault.error(L("This vault has no recovery phrase yet. Create one with Create New…"))
             return
         }
-        RecoveryDialogs.present(words: words, title: L("Your recovery phrase"))
+        presentRecoveryPhrase(words: words, title: L("Your recovery phrase"))
+    }
+
+    /// The phrase dialog, lock-aware: a lock closes it (SEC05), and the phrase the user did not
+    /// confirm is pointed at after the next unlock — once — since it is in vault.json and Show…
+    /// returns it. The same note covers a phrase that was never shown because a lock landed
+    /// between the commit and the dialog (`publishEnabledVault`).
+    @discardableResult
+    func presentRecoveryPhrase(words: [String], title: String = L("Your recovery phrase")) -> Bool {
+        let g = lockCount
+        // A print panel over the sheet is modal in its own right: a lock during it cannot close the
+        // sheet, and the sheet is dismissed afterwards; the confirmation then counts only if no
+        // lock came in between.
+        if RecoveryDialogs.present(words: words, title: title), !isLocked, lockCount == g { return true }
+        phraseNotConfirmed = true
+        return false
+    }
+
+    private var phraseNotConfirmed = false
+    var phraseNotConfirmedForTesting: Bool { phraseNotConfirmed }
+    private func remindPhraseNotConfirmedLater() {
+        guard phraseNotConfirmed else { return }
+        DispatchQueue.main.async { [weak self] in
+            guard let self, !self.isLocked, self.phraseNotConfirmed else { return }
+            self.phraseNotConfirmed = false
+            self.info(L("The recovery phrase was closed when Keepit locked, before you confirmed it. Settings → Security → Show… shows it again."))
+        }
     }
 
     /// Turn protection on: set a password, re-save data encrypted.
@@ -1005,12 +1051,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func publishEnabledVault(_ prepared: PreparedVault, unswept: Error? = nil) {
         let g = lockCount
         Storage.key = prepared.key
+        Storage.sealSetAsideCopies(with: prepared.key)   // the .corrupt-… copies were plain like the files; now sealed like them (SEC14)
         syncBiometricKey()
         configureBackup()                             // a folder kept in settings becomes a destination again
         backup?.forceNext()
         if let e = unswept { reportUnsweptJournal(FileJournal.protection.directory, e) }
-        guard !isLocked, lockCount == g else { return }
-        if let words = prepared.words { RecoveryDialogs.present(words: words) }
+        guard !isLocked, lockCount == g else {
+            if prepared.words != nil { phraseNotConfirmed = true }   // never seen: the note after the unlock points at Show…
+            return
+        }
+        if let words = prepared.words { presentRecoveryPhrase(words: words) }
         else { info(L("Protection is on. The recovery phrase from the backup also opens Keepit on this Mac.")) }
     }
 
@@ -1065,6 +1115,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             Vault.error(LF("Could not disable protection: %@", error.localizedDescription))
             return false
         }
+        if let key = Storage.key { Storage.unsealSetAsideCopies(with: key) }   // plain again, like the live files (SEC14)
         Storage.key = nil
         BiometricUnlock.remove()                      // the setting stays as the user left it; the entry wrapped a key that is gone
         apply(settings: newSettings)                  // → configureBackup(): destination nil
@@ -1376,6 +1427,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     func menuWillOpen(_ menu: NSMenu) {
         openMenus += 1
+        openTrackedMenus.add(menu)
         if let s = historySearchItem, menu.items.first === s { s.focus() }
         if menu.items.contains(where: { $0.tag == MenuBuilder.historyTag }) {
             ExtendedMenuWatch.shared.watch(menu) { [weak self] mi in
@@ -1388,6 +1440,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     func menuDidClose(_ menu: NSMenu) {
         openMenus = max(0, openMenus - 1)
+        openTrackedMenus.remove(menu)
         if menu.title == Self.actionMenuTitle { ExtendedMenuWatch.shared.submenuClosed(); return }
         ExtendedMenuWatch.shared.stop(menu)
         PreviewPanel.shared.hide()

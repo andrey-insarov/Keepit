@@ -5,16 +5,23 @@ enum Storage {
     /// Data folder. Tests and `--selftest` point this at a temporary directory
     /// (also honoured from the environment: KEEPIT_DATA_DIR).
     static var directory: URL = {
-        let dir: URL
-        if let env = ProcessInfo.processInfo.environment["KEEPIT_DATA_DIR"], !env.isEmpty {
-            dir = URL(fileURLWithPath: env, isDirectory: true)
-        } else {
-            dir = defaultDirectory
-        }
+        let dir = chooseDirectory(environment: ProcessInfo.processInfo.environment, selfTest: SelfTest.isActive)
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         return dir
     }() {
         didSet { try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true) }
+    }
+
+    /// KEEPIT_DATA_DIR when set; otherwise, for `--selftest`, a folder of its own — a bare
+    /// `--selftest` used to run on the real data (capture, templates, a vault enabled and disabled
+    /// in it; 3.0.5 security review, SEC09); `SelfTest.run` refuses the default folder as a second
+    /// line — otherwise the default folder.
+    static func chooseDirectory(environment: [String: String], selfTest: Bool) -> URL {
+        if let env = environment["KEEPIT_DATA_DIR"], !env.isEmpty { return URL(fileURLWithPath: env, isDirectory: true) }
+        if selfTest {
+            return FileManager.default.temporaryDirectory.appendingPathComponent("keepit-selftest-\(ProcessInfo.processInfo.processIdentifier)", isDirectory: true)
+        }
+        return defaultDirectory
     }
 
     /// Where a normal installation keeps its data (Application Support, or the sandbox container).
@@ -269,6 +276,84 @@ enum Storage {
                 } catch { Log.storage.error("could not put \(aside.lastPathComponent) back: \(error.localizedDescription)") }
             }
         }
+    }
+
+    // MARK: Set-aside copies and the vault (3.0.5 security review, SEC14)
+
+    /// The `.corrupt-…` copies of the two data files, in the data folder: regular files whose name
+    /// is `history.json.corrupt-…` or `templates.json.corrupt-…`. settings.json copies hold no
+    /// clipboard content and may still be named by the set-aside marker, so they are never touched.
+    static func setAsideCopies() -> [URL] {
+        let fm = FileManager.default
+        guard let names = try? fm.contentsOfDirectory(atPath: directory.path) else { return [] }
+        let prefixes = [historyURL.lastPathComponent + ".corrupt-", templatesURL.lastPathComponent + ".corrupt-"]
+        return names.filter { n in prefixes.contains { n.hasPrefix($0) } }.sorted().map { directory.appendingPathComponent($0) }
+            .filter { (try? $0.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile) == true }
+    }
+
+    /// Protection turned on: the copies that were plain — legitimately, while the live files were
+    /// plain too — are sealed with the new key, in place, atomically. A copy that is already sealed,
+    /// is larger than the read limit (sealing it would need a streaming encryptor; logged) or
+    /// cannot be read is left as it is. Returns the copies sealed.
+    /// Only here, never for a copy set aside *under* a vault: a plain file found under a vault was
+    /// refused as `.notEncrypted` (SEC06) and may be planted — sealing it with the vault's key would
+    /// turn it into a file the vault accepts if it were ever renamed back.
+    @discardableResult
+    static func sealSetAsideCopies(with key: SecureKey) -> [URL] {
+        rewriteSetAsideCopies { bytes in
+            if Vault.isEncrypted(bytes) { return nil }
+            return try Vault.encrypt(bytes, key: key)
+        }
+    }
+
+    /// The password changed: copies sealed with the old key are re-sealed with the new one, so
+    /// they stay openable. A copy the old key does not open (plain, or another key's) is left alone.
+    @discardableResult
+    static func resealSetAsideCopies(from old: SecureKey, to new: SecureKey) -> [URL] {
+        rewriteSetAsideCopies { bytes in
+            guard Vault.isEncrypted(bytes), let plain = try? Vault.decrypt(bytes, key: old) else { return nil }
+            return try Vault.encrypt(plain, key: new)
+        }
+    }
+
+    /// Protection turned off: copies the key opens become plain again, like the live files.
+    @discardableResult
+    static func unsealSetAsideCopies(with key: SecureKey) -> [URL] {
+        rewriteSetAsideCopies { bytes in
+            guard Vault.isEncrypted(bytes), let plain = try? Vault.decrypt(bytes, key: key) else { return nil }
+            return plain
+        }
+    }
+
+    /// Reset: every `.corrupt-…` copy of every data file goes with the files (SEC14: Reset left them).
+    static func removeSetAsideCopies() {
+        let fm = FileManager.default
+        guard let names = try? fm.contentsOfDirectory(atPath: directory.path) else { return }
+        let prefixes = [historyURL, templatesURL, settingsURL].map { $0.lastPathComponent + ".corrupt-" }
+        ioQueue.sync {
+            for n in names where prefixes.contains(where: { n.hasPrefix($0) }) {
+                try? fm.removeItem(at: directory.appendingPathComponent(n))
+            }
+        }
+    }
+
+    /// `transform` returns the new bytes, or nil to leave the copy as it is. On `ioQueue`, so no
+    /// save or set-aside interleaves; each copy is written atomically or not at all.
+    private static func rewriteSetAsideCopies(_ transform: (Data) throws -> Data?) -> [URL] {
+        var done: [URL] = []
+        ioQueue.sync {
+            for url in setAsideCopies() {
+                do {
+                    let bytes = try BoundedFileReader.read(url, max: Limits.dataFileMaxBytes)
+                    guard let out = try transform(bytes) else { continue }
+                    try out.write(to: url, options: .atomic)
+                    done.append(url)
+                } catch {
+                    Log.storage.error("set-aside copy \(url.lastPathComponent) left as it is: \(error.localizedDescription)")
+                }
+            }
+        }
+        return done
     }
 
     /// Where `setAside` notes that settings.json is being moved: the aside file's name, written

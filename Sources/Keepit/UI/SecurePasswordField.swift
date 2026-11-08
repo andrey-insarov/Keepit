@@ -85,12 +85,55 @@ final class SecurePasswordField: NSView {
     override var acceptsFirstResponder: Bool { true }
     override var focusRingType: NSFocusRingType { get { .exterior } set {} }
 
+    /// Secure Event Input while this field has the focus *and* its window is key *and* Keepit is
+    /// the active app (SEC04) — not while the dialog is merely open, so switching to another app
+    /// with a password prompt behind does not leave the whole system in secure input. Re-evaluated
+    /// on focus changes, key-window changes and app activation; ended when the view leaves its
+    /// window and in deinit.
+    private let secureInput = SecureEventInput()
+    private var observers: [NSObjectProtocol] = []
+    /// Tests only: stand in for the window being key and the app active (neither holds in XCTest).
+    var assumeKeyAndActiveForTesting = false
+    var hasSecureInputForTesting: Bool { secureInput.isOn }
+
     init(frame: NSRect, buffer: SecureBuffer = SecureBuffer()) {
         self.buffer = buffer
         super.init(frame: frame)
         wantsLayer = true
+        let nc = NotificationCenter.default
+        for name in [NSApplication.didBecomeActiveNotification, NSApplication.didResignActiveNotification] {
+            observers.append(nc.addObserver(forName: name, object: nil, queue: .main) { [weak self] _ in self?.updateSecureInput() })
+        }
     }
     required init?(coder: NSCoder) { fatalError() }
+
+    deinit {
+        observers.forEach { NotificationCenter.default.removeObserver($0) }
+        secureInput.end()
+    }
+
+    private var windowObservers: [NSObjectProtocol] = []
+    override func viewWillMove(toWindow newWindow: NSWindow?) {
+        windowObservers.forEach { NotificationCenter.default.removeObserver($0) }
+        windowObservers = []
+        if let w = newWindow {
+            let nc = NotificationCenter.default
+            for name in [NSWindow.didBecomeKeyNotification, NSWindow.didResignKeyNotification] {
+                windowObservers.append(nc.addObserver(forName: name, object: w, queue: .main) { [weak self] _ in self?.updateSecureInput() })
+            }
+        } else {
+            secureInput.end()                     // leaving the window: the focus is gone with it
+        }
+        super.viewWillMove(toWindow: newWindow)
+    }
+
+    /// `becoming`: called from `becomeFirstResponder`, where the window has not recorded the new
+    /// responder yet.
+    private func updateSecureInput(becoming: Bool = false, resigning: Bool = false) {
+        let focused = !resigning && (becoming || window?.firstResponder === self)
+        let keyAndActive = assumeKeyAndActiveForTesting || ((window?.isKeyWindow ?? false) && NSApp.isActive)
+        if focused && keyAndActive { secureInput.begin() } else { secureInput.end() }
+    }
 
 
     func clear() {
@@ -103,8 +146,8 @@ final class SecurePasswordField: NSView {
         window?.makeFirstResponder(self)
     }
 
-    override func becomeFirstResponder() -> Bool { needsDisplay = true; return true }
-    override func resignFirstResponder() -> Bool { needsDisplay = true; return true }
+    override func becomeFirstResponder() -> Bool { needsDisplay = true; updateSecureInput(becoming: true); return true }
+    override func resignFirstResponder() -> Bool { needsDisplay = true; updateSecureInput(resigning: true); return true }
 
     override func keyDown(with event: NSEvent) {
         let flags = event.modifierFlags.intersection(.deviceIndependentFlagsMask)

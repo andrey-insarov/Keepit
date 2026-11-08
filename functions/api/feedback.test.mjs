@@ -1,7 +1,7 @@
 // node --test functions/api — no network, no Workers runtime: the pure parts only.
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { sniffImage, validate, TYPES, LIMITS, IMAGE_MAX_EDGE } from "./feedback.js";
+import { sniffImage, validate, TYPES, LIMITS, IMAGE_MAX_EDGE, turnstileVerdict, allowedTurnstileHostnames, confirmationEmail, DEFAULT_TURNSTILE_HOSTNAMES } from "./feedback.js";
 
 import { deflateSync } from "node:zlib";
 
@@ -116,4 +116,30 @@ test("type must be an own key of TYPES — prototype names are refused with a 40
   }
   assert.equal(Object.getPrototypeOf(TYPES), null);
   assert.ok(Object.isFrozen(TYPES));
+});
+
+test("Turnstile: success alone is not enough — the token must have been solved on an allowed host (SEC09)", () => {
+  assert.equal(turnstileVerdict({ success: true, hostname: "keep.it.com" }), true);
+  assert.equal(turnstileVerdict({ success: true, hostname: "KEEP.IT.COM" }), true, "case-insensitive");
+  assert.equal(turnstileVerdict({ success: true, hostname: "evil.example" }), false, "another site using the same site key");
+  assert.equal(turnstileVerdict({ success: true }), false, "a missing hostname is refused");
+  assert.equal(turnstileVerdict({ success: false, hostname: "keep.it.com" }), false);
+  assert.equal(turnstileVerdict(undefined), false);
+  assert.equal(turnstileVerdict({ success: true, hostname: "staging.keep.it.com" }, ["staging.keep.it.com"]), true);
+});
+
+test("Turnstile hostnames come from TURNSTILE_HOSTNAMES, default the production host", () => {
+  assert.deepEqual(allowedTurnstileHostnames({}), DEFAULT_TURNSTILE_HOSTNAMES);
+  assert.deepEqual(allowedTurnstileHostnames({ TURNSTILE_HOSTNAMES: "" }), DEFAULT_TURNSTILE_HOSTNAMES);
+  assert.deepEqual(allowedTurnstileHostnames({ TURNSTILE_HOSTNAMES: "Keep.it.com, staging.keep.it.com ," }), ["keep.it.com", "staging.keep.it.com"]);
+});
+
+test("the confirmation to the (unverified) sender carries nothing the submitter wrote (SEC09)", () => {
+  const m = confirmationEmail("support@keep.it.com", "a@example.test", "support@keep.it.com");
+  assert.deepEqual(m.to, ["a@example.test"]);
+  assert.equal(m.reply_to, "support@keep.it.com");
+  assert.doesNotMatch(m.text, /\$\{|Hi /, "no name, no message");
+  assert.match(m.text, /did not write to us/);
+  const fixed = confirmationEmail("f", "t", "r").text;
+  assert.equal(fixed, confirmationEmail("f", "u", "r").text, "the same text for every recipient");
 });
