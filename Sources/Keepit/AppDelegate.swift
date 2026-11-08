@@ -146,6 +146,30 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             return !self.isLocked && self.lockCount == generation
         }
         Paster.currentGeneration = { [weak self] in self?.lockCount ?? -1 }
+        // A save refused as too large (3.0.7): told once per file, on the main queue, never from
+        // the write itself; while locked it waits for the unlock.
+        Storage.onWriteRefused = { [weak self] url, _ in
+            DispatchQueue.main.async { [weak self] in
+                guard let self, !self.refusedWritesReported.contains(url.lastPathComponent) else { return }
+                self.refusedWritesToReport.insert(url.lastPathComponent)
+                self.reportRefusedWritesLater()
+            }
+        }
+    }
+
+    /// Files whose save was refused as too large: the names still to report, and the ones already said.
+    var refusedWritesToReport: Set<String> = []
+    private var refusedWritesReported: Set<String> = []
+    func reportRefusedWritesLater() {
+        guard !refusedWritesToReport.isEmpty else { return }
+        DispatchQueue.main.async { [weak self] in
+            guard let self, !self.isLocked else { return }
+            for name in self.refusedWritesToReport.sorted() {
+                self.refusedWritesReported.insert(name)
+                Vault.error(LF("Keepit could not save %@: the file would be larger than %d MB, the most it can read back. The previous file is kept and nothing is lost in memory; remove some items (or smaller limits in Settings) and it saves again.", name, Limits.dataFileMaxBytes / 1024 / 1024))
+            }
+            self.refusedWritesToReport = []
+        }
     }
 
     /// Tests only: the two stores without the rest of the launch (no password gate, monitor, timers,
@@ -211,6 +235,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func reportUnsweptJournalsLater() {
         guard !unsweptToReport.isEmpty else { return }
         DispatchQueue.main.async { [weak self] in self?.reportUnsweptJournals() }
+    }
+    /// After a commit's follow-ups (Touch ID sync, the backup's state change — either can run a
+    /// dialog or a callback in which a lock lands): shown now if still unlocked, otherwise queued for
+    /// the next unlock like the others (3.0.7: a plain alert used to open over a locked app).
+    func reportUnsweptJournalOrDefer(_ directory: URL, _ error: Error) {
+        if isLocked { unsweptToReport.append((directory, error)) } else { reportUnsweptJournal(directory, error) }
     }
     private func reportUnsweptJournals() {
         while !isLocked, !unsweptToReport.isEmpty {
@@ -579,6 +609,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         reportUnsweptJournalsLater()                    // a restore commit that a lock cut short had no chance to; after unlock() is done
         remindPhraseNotConfirmedLater()                 // a phrase dialog the lock closed (SEC05), same timing
         reportHistoryRemovalLater()                     // history.json a lock could not remove (SEC11), same timing
+        reportRefusedWritesLater()                      // a save refused as too large while locked (3.0.7)
         if !(pausedUntil.map { $0 > Date() } ?? false) { monitor.start() }   // keep a running pause
         registerHotKeys()
         backup.runIfDue()
@@ -887,7 +918,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             }
             defer { newPw.zero() }
             guard !isLocked, lockCount == g else { return false }
-            if rekey(with: newPw, generation: g) { needsPasswordReset = false; return true }
+            if rekey(with: newPw, generation: g, forced: true) { needsPasswordReset = false; return true }
             return false                                            // the commit failed and said so; the flag stays for next time
         }
     }
@@ -905,7 +936,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// read before its last dialog; nothing happens if a lock came since. Returns true when the new
     /// key is live. On any failure the files, vault.json and `Storage.key` are as they were.
     @discardableResult
-    private func rekey(with pw: SecureBuffer, generation: Int) -> Bool {
+    private func rekey(with pw: SecureBuffer, generation: Int, forced: Bool = false) -> Bool {
         guard !isLocked, lockCount == generation, let oldKey = Storage.key else { return false }
         if refuseWhileUnreadable() { return false }          // re-keying around a held file would destroy the way to read it by hand
         let newKey: SecureKey
@@ -919,7 +950,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                                                         settingsJSON: try Storage.prettyEncoder.encode(settings)))
         } catch {
             if RestoreCommit.hasArmedJournal { stopForUnfinishedProtectionUndo(error); return false }
-            Vault.error(LF("Could not change the password: %@", error.localizedDescription))
+            // Say what did *not* happen too (3.0.7): the old password still opens everything, and
+            // after a phrase unlock the new password is asked for again at the next unlock.
+            Vault.error(forced
+                ? LF("Could not set the new password: %@\n\nThe password has not changed: the data still opens as before. Keepit asks for a new password again at the next unlock.", error.localizedDescription)
+                : LF("Could not change the password: %@\n\nThe password has not changed: the data still opens with the current one.", error.localizedDescription))
             return false
         }
         // Committed: the files open with the new password whatever happens from here.
@@ -936,7 +971,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         oldCopy.zero()
         syncBiometricKey()
         backup?.forceNext()                           // the next copy must open with the new password
-        if let e = unswept { reportUnsweptJournal(FileJournal.protection.directory, e) }
+        if let e = unswept { reportUnsweptJournalOrDefer(FileJournal.protection.directory, e) }
         return true
     }
 
@@ -1109,7 +1144,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         syncBiometricKey()
         configureBackup()                             // a folder kept in settings becomes a destination again
         backup?.forceNext()
-        if let e = unswept { reportUnsweptJournal(FileJournal.protection.directory, e) }
+        if let e = unswept { reportUnsweptJournalOrDefer(FileJournal.protection.directory, e) }
         guard !isLocked, lockCount == g else {
             if prepared.words != nil { phraseNotConfirmed = true }   // never seen: the note after the unlock points at Show…
             return
@@ -1173,7 +1208,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         Storage.key = nil
         BiometricUnlock.remove()                      // the setting stays as the user left it; the entry wrapped a key that is gone
         apply(settings: newSettings)                  // → configureBackup(): destination nil
-        if let e = unswept { reportUnsweptJournal(FileJournal.protection.directory, e) }
+        if let e = unswept { reportUnsweptJournalOrDefer(FileJournal.protection.directory, e) }
         return true
     }
 

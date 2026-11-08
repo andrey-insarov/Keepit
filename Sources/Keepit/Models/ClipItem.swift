@@ -58,6 +58,11 @@ struct ClipItem: Codable, Identifiable, Equatable {
     var primaryFormat: String? { orderedFormats.first }
 
     var byteSize: Int { formats.values.reduce(0) { $0 + $1.count } }
+    /// An upper estimate of what this item occupies in history.json: every format as Base64
+    /// (4 bytes per 3, rounded up) plus its key, plus the item's own fields. Never below the real size.
+    var serializedEstimate: Int {
+        formats.reduce(256) { $0 + ($1.value.count + 2) / 3 * 4 + $1.key.utf8.count + 16 }
+    }
 
     static func hash(of d: Data) -> String {
         SHA256.hash(data: d).map { String(format: "%02x", $0) }.joined()

@@ -6,10 +6,52 @@ enum Storage {
     /// (also honoured from the environment: KEEPIT_DATA_DIR).
     static var directory: URL = {
         let dir = chooseDirectory(environment: ProcessInfo.processInfo.environment, selfTest: SelfTest.isActive)
-        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        createPrivateDirectory(dir)
         return dir
     }() {
-        didSet { try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true) }
+        didSet { createPrivateDirectory(directory) }
+    }
+
+    // MARK: Permissions (3.0.7)
+
+    /// The data folder is created `0700` and every file Keepit creates is `0600` from its first byte;
+    /// a folder or file that already exists keeps the mode it has (a user's deliberate change is not
+    /// undone), and a rename (`setAside`, the `.corrupt-…` copies) moves the inode with its mode.
+    static let directoryMode: Int = 0o700
+    static let fileMode: mode_t = 0o600
+
+    static func createPrivateDirectory(_ dir: URL) {
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true, attributes: [.posixPermissions: directoryMode])
+    }
+
+    /// Atomic write of a file Keepit owns: a temporary name in the same folder, created `0600`
+    /// (`O_CREAT|O_EXCL`) before the first byte lands, then renamed over the destination. Replaces
+    /// `Data.write(options: .atomic)`, whose temporary file took the umask's mode (usually 0644).
+    static func writeAtomically(_ data: Data, to url: URL) throws {
+        let dir = url.deletingLastPathComponent()
+        let temp = dir.appendingPathComponent(".\(url.lastPathComponent).\(UUID().uuidString.prefix(8)).tmp")
+        let fd = temp.withUnsafeFileSystemRepresentation { open($0!, O_WRONLY | O_CREAT | O_EXCL | O_CLOEXEC, fileMode) }
+        guard fd >= 0 else { throw NSError(domain: NSPOSIXErrorDomain, code: Int(errno), userInfo: [NSFilePathErrorKey: temp.path]) }
+        var failed: Int32? = nil
+        data.withUnsafeBytes { raw in
+            var offset = 0
+            while offset < raw.count {
+                let n = Darwin.write(fd, raw.baseAddress! + offset, raw.count - offset)
+                if n < 0 { if errno == EINTR { continue }; failed = errno; return }
+                offset += n
+            }
+        }
+        if failed == nil, fsync(fd) != 0 { failed = errno }
+        close(fd)
+        if let e = failed {
+            unlink(temp.path)
+            throw NSError(domain: NSPOSIXErrorDomain, code: Int(e), userInfo: [NSFilePathErrorKey: url.path])
+        }
+        guard rename(temp.path, url.path) == 0 else {
+            let e = errno
+            unlink(temp.path)
+            throw NSError(domain: NSPOSIXErrorDomain, code: Int(e), userInfo: [NSFilePathErrorKey: url.path])
+        }
     }
 
     /// KEEPIT_DATA_DIR when set; otherwise, for `--selftest`, a folder of its own — a bare
@@ -235,7 +277,7 @@ enum Storage {
                     // The caller clears it once the new settings.json exists; a launch that finds
                     // the marker and no settings.json moves the file back (`recoverSetAside`).
                     if url == settingsURL {
-                        try Data(bak.lastPathComponent.utf8).write(to: setAsideMarker, options: .atomic)
+                        try writeAtomically(Data(bak.lastPathComponent.utf8), to: setAsideMarker)
                     }
                     try fm.moveItem(at: url, to: bak)
                     done.append((url, bak))
@@ -346,7 +388,7 @@ enum Storage {
                 do {
                     let bytes = try BoundedFileReader.read(url, max: Limits.dataFileMaxBytes)
                     guard let out = try transform(bytes) else { continue }
-                    try out.write(to: url, options: .atomic)
+                    try writeAtomically(out, to: url)
                     done.append(url)
                 } catch {
                     Log.storage.error("set-aside copy \(url.lastPathComponent) left as it is: \(error.localizedDescription)")
@@ -432,7 +474,17 @@ enum Storage {
     enum Failure: Error, Equatable {
         case locked
         case held(String)           // the file could not be read and is kept as it is (see `hold`)
+        /// The serialized (and sealed) file would be larger than the reader accepts: nothing is
+        /// written, the previous file stays (3.0.7). The stores keep themselves under the limit;
+        /// this is the last line, not the policy.
+        case tooLarge(String)
     }
+
+    /// Tests only: a smaller reader limit so `.tooLarge` can be exercised with small files.
+    static var fileLimitForTesting: Int?
+    static var fileLimit: Int { fileLimitForTesting ?? Limits.dataFileMaxBytes }
+    /// Set by the app: a save that was refused as too large, to be reported once (never from the queue).
+    static var onWriteRefused: ((URL, Failure) -> Void)?
 
     /// The throwing, synchronous write for a caller that must know the outcome (a restore commit).
     /// Same rules as `save`: encrypted with the current key, refused while locked, through `ioQueue`.
@@ -444,7 +496,8 @@ enum Storage {
             if isHeld(url) { throw Failure.held(url.lastPathComponent) }   // again, in order with the reads
             var d = data
             if let k { d = try Vault.encrypt(d, key: k) }
-            try d.write(to: url, options: .atomic)
+            if d.count > fileLimit { throw Failure.tooLarge(url.lastPathComponent) }
+            try writeAtomically(d, to: url)
         }
     }
 
@@ -453,7 +506,8 @@ enum Storage {
         if isHeld(url) { throw Failure.held(url.lastPathComponent) }
         try ioQueue.sync {
             if isHeld(url) { throw Failure.held(url.lastPathComponent) }
-            try bytes.write(to: url, options: .atomic)
+            if bytes.count > fileLimit { throw Failure.tooLarge(url.lastPathComponent) }
+            try writeAtomically(bytes, to: url)
         }
     }
 
@@ -490,7 +544,15 @@ enum Storage {
                 var data = try produce()
                 if let k { data = try Vault.encrypt(data, key: k) }
                 if isHeld(url) { return }                      // held while encoding (a read on another queue)
-                try data.write(to: url, options: .atomic)
+                // The final size, sealed: over the reader's limit nothing is written and the previous
+                // file stays. The stores trim themselves before encoding; this only catches what
+                // that estimate missed, and says so once (3.0.7).
+                if data.count > fileLimit {
+                    Log.storage.error("not saving \(url.lastPathComponent): \(data.count) bytes is over the data-file limit; the previous file is kept")
+                    onWriteRefused?(url, .tooLarge(url.lastPathComponent))
+                    return
+                }
+                try writeAtomically(data, to: url)
             } catch {
                 Log.storage.error("failed to save \(url.lastPathComponent): \(error.localizedDescription)")
             }

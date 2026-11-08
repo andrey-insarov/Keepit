@@ -37,8 +37,12 @@ under `~/Library/Containers/com.it.keep/`):
 | `vault.json` | Encryption metadata: KDF name and round count, PBKDF2 salt, a sealed verifier, the wrapped recovery material | — |
 | `restore-journal/`, `protection-journal/` | Only during a restore or a password change: the previous bytes of the files above, so an interrupted commit is undone at the next launch | As the originals |
 
-The history is written when it changes and read on launch. With *Save history on quit, restore on
-start* off, `history.json` is removed the moment the setting is turned off, and again at every lock
+The data folder is created with mode 0700 and every file Keepit creates (the data files, `vault.json`,
+the journals, the copies it writes) with 0600, from the first byte — the temporary file of an atomic
+write is created 0600 before anything lands in it. A folder or file that already existed keeps the
+mode it had, and a rename (a `.corrupt-…` copy set aside) moves the file with its mode: Keepit does
+not change permissions you set. The history is written when it changes and read on launch. With
+*Save history on quit, restore on start* off, `history.json` is removed the moment the setting is turned off, and again at every lock
 and at quit; history then lives only in memory until Keepit quits. If the file cannot be removed
 (permissions, a locked flag, a file Keepit could not read and therefore keeps), Keepit says so rather
 than assuming it is gone. Without a password the JSON is plain
@@ -260,16 +264,33 @@ a URL — browsers do confirm the first time for a custom scheme, scripts do not
 `paste` change the clipboard or type into the front application without a prompt. With the option
 off, Keepit ignores such URLs with a beep and logs that it did.
 
-With it on, Keepit checks the sender. macOS delivers the URL as an Apple Event that names the process
-behind it. A state-changing command runs without asking only if that process is on your list of
-trusted apps; otherwise a dialog shows the full URL with *Allow*, *Always Allow* and *Cancel*, and
-*Always Allow* adds the app to the list (*Settings → Advanced → Forget Trusted Apps* clears it).
-A web browser (anything registered with the system to open `https://` links) or a sender that cannot
-be identified is asked every time and cannot be added — a web page could be behind it. Commands
-that only open Keepit's own windows (`history`, `templates`, `viewer`, `settings`) never ask. A URL
-with a repeated parameter name is refused. This is a reasonable barrier, not a proof: a local
-process that wanted to impersonate another could, and the sender of a URL opened while Keepit was
-not yet running may be unknown — which is why unknown means "ask".
+With it on, Keepit checks the sender. macOS delivers the URL as an Apple Event that carries the
+kernel's audit token of the process behind it; from that token Keepit reads the process's **code-signing
+identity** — its signing identifier and Team ID — and checks that the running code is valid against
+its own signature. Three kinds of sender:
+
+- **A third-party application** (signed with a Developer ID or by the Mac App Store, so it has a
+  Team ID). A state-changing command runs without asking only if your list of trusted apps holds an
+  entry for it; otherwise a dialog shows the full URL with *Allow*, *Always Allow* and *Cancel*.
+  *Always Allow* stores the pair (identifier, Team ID) — never the bundle identifier the process
+  claims, and never the sender's own signing requirement. At every later command Keepit builds its
+  own requirement from that pair (Apple's chain, that identifier, that Team ID) and lets the Security
+  framework evaluate it against the live process; Keepit compares no names itself. A program that
+  claims a trusted app's bundle identifier under another signature, or none, is asked. Allowing an
+  app always means allowing whatever that app runs — its extensions, workflows and scripts — which
+  the dialog says. *Settings → Advanced → Forget Trusted Apps* clears the list.
+- **Apple's own script hosts** — Shortcuts, Automator, Script Editor, `osascript`, Terminal, `open`
+  (Apple-signed, no Team ID). Their signature names an interpreter, not the shortcut or script it is
+  running, so they are asked every time and are never offered *Always Allow*.
+- **A web browser** (anything registered with the system to open `https://` links) or a sender
+  that cannot be identified (unsigned, ad-hoc signed, tampered, already gone) is asked every time and
+  cannot be added — a web page could be behind it.
+
+Commands that only open Keepit's own windows (`history`, `templates`, `viewer`, `settings`) never
+ask. A URL with a repeated parameter name is refused. The list of trusted apps is this installation's:
+it is not written into backups and a restore never brings one in. Before 3.0.7 the list held bundle
+identifiers, which any local program can claim; that list is ignored and emptied at the first launch
+of 3.0.7, so each trusted app is asked once more.
 
 ## System log
 

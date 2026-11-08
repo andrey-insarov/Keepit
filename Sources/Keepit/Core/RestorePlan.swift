@@ -318,15 +318,15 @@ struct FileJournal {
         let fm = FileManager.default
         if isArmed { throw RestoreCommit.Failure.journalArmed }
         if fm.fileExists(atPath: directory.path) { try fm.removeItem(at: directory) }
-        try fm.createDirectory(at: directory, withIntermediateDirectories: true)
+        try fm.createDirectory(at: directory, withIntermediateDirectories: true, attributes: [.posixPermissions: Storage.directoryMode])
         try Storage.ioQueue.sync {
             for name in names {
                 switch try Self.readPrevious(liveURL(name)) {
                 case .absent: break
-                case .bytes(let b): try b.write(to: directory.appendingPathComponent(name), options: .atomic)
+                case .bytes(let b): try Storage.writeAtomically(b, to: directory.appendingPathComponent(name))   // 0600 (3.0.7)
                 }
             }
-            try Data("1".utf8).write(to: marker, options: .atomic)
+            try Storage.writeAtomically(Data("1".utf8), to: marker)
         }
     }
 

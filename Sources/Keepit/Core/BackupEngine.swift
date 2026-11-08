@@ -541,7 +541,7 @@ final class BackupEngine {
     func resetRegistry() { state.records = []; generation &+= 1; persist() }
 
     private func persist() {
-        if let d = try? JSONEncoder.iso.encode(state) { try? d.write(to: stateURL, options: .atomic) }
+        if let d = try? JSONEncoder.iso.encode(state) { try? Storage.writeAtomically(d, to: stateURL) }   // 0600 (3.0.7)
         onStateChange?(state)
     }
 }

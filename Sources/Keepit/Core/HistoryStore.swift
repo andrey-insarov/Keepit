@@ -253,6 +253,16 @@ final class HistoryStore {
         while total > settings.maxHistoryBytes, items.count > 1 {
             total -= items.removeLast().byteSize
         }
+        // The file, not the raw bytes: what the reader will accept (Limits.historyFileBudget). The
+        // estimate is computed here, in the store's own context on the main thread, before any
+        // snapshot is encoded — so memory and disk agree, and no store mutation happens off-thread.
+        var estimate = items.reduce(0) { $0 + $1.serializedEstimate }
+        let budget = Limits.effectiveHistoryFileBudget
+        if estimate > budget {
+            let before = items.count
+            while estimate > budget, items.count > 1 { estimate -= items.removeLast().serializedEstimate }
+            Log.storage.error("history trimmed to fit the data-file limit: \(before - items.count) oldest item(s) dropped")
+        }
         return items
     }
 

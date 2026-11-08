@@ -18,6 +18,16 @@ enum Limits {
     static let fileListEntriesCeiling = 10_000
     static let filePathMaxBytes = 4_096              // one entry of a file list (PATH_MAX is 1 024 on macOS)
     static let dataFileMaxBytes = 512 * 1024 * 1024
+    /// What a history may occupy *in the file*: the reader's limit minus the GCM seal. The JSON
+    /// carries every format as Base64 (4/3 of the bytes) plus the item's fields, so the setting
+    /// `maxHistoryBytes` (raw bytes) is capped at `historyBytesCeiling`, and `HistoryStore` trims by
+    /// its serialized estimate before a snapshot is taken (3.0.7, the write/read limit mismatch:
+    /// 400 MiB of raw bytes made a ≈533 MiB file the reader then refused).
+    static var historyFileBudget: Int { dataFileMaxBytes - Vault.sealOverhead - 1024 }
+    static var historyBytesCeiling: Int { historyFileBudget * 3 / 4 - 16 * 1024 * 1024 }   // ≈ 368 MiB
+    /// Tests only: a smaller file budget so the trim can be exercised with small items.
+    static var historyFileBudgetForTesting: Int?
+    static var effectiveHistoryFileBudget: Int { historyFileBudgetForTesting ?? historyFileBudget }
     static let imageMaxPixels = 40_000_000           // 40 MP: a 10 MB PNG can still be a 20 000×20 000 bomb
     static let queueMaxItems = 500                    // paste queue entries per session
     static let promptInputMaxChars = 10_000           // one {input:} answer
