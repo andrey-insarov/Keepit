@@ -614,3 +614,13 @@
 "not in the expected format" = "not in the expected format";
 "larger than Keepit can read" = "larger than Keepit can read";
 "could not be read (error %d)" = "could not be read (error %d)";
+
+"Keepit could not read some of its data, so this is not available now. Restore a backup (Replace) or start fresh first — Keepit asks at the next launch or unlock." = "Keepit could not read some of its data, so this is not available now. Restore a backup (Replace) or start fresh first — Keepit asks at the next launch or unlock.";
+"Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file." = "Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file.";
+"Replace data Keepit cannot read?" = "Replace data Keepit cannot read?";
+"These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them." = "These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them.";
+
+"Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup." = "Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup.";
+
+"Could not save the settings: %@" = "Could not save the settings: %@";
+"moved by an interrupted Start Fresh or Restore and not yet put back; the earlier file is kept as a .corrupt-… file" = "moved by an interrupted Start Fresh or Restore and not yet put back; the earlier file is kept as a .corrupt-… file";

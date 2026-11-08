@@ -12,6 +12,7 @@ final class TempStorage {
     }
     func restore() {
         Storage.clearKey()
+        Storage.releaseAll()
         Storage.directory = previous
         try? FileManager.default.removeItem(at: dir)
     }

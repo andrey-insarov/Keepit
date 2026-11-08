@@ -250,6 +250,12 @@ enum RestoreCommit {
     }
 
     static func writeFiles(_ steps: [Step]) throws {
+        // A held file (one Keepit could not read) is never replaced by a commit: the caller sets
+        // it aside first (Replace) or does not get here (Merge). Refused before anything is
+        // journalled or written.
+        for s in steps where Storage.isHeld(s.url) {
+            throw Failure.cannotReadPrevious(s.name, Storage.Failure.held(s.url.lastPathComponent))
+        }
         for s in steps {
             do { _ = try readPrevious(s.url) } catch { throw Failure.cannotReadPrevious(s.name, error) }
         }

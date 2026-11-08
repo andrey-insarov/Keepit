@@ -21,6 +21,7 @@ extension AppDelegate {
 
     @objc func exportBackup() {
         guard !isLocked else { NSSound.beep(); return }
+        if refuseWhileUnreadable() { return }               // an archive of what is in memory would be empty in its place
         let panel = NSSavePanel()
         panel.title = L("Save to Archive")
         panel.nameFieldStringValue = Backup.suggestedFileName()

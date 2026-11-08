@@ -541,4 +541,11 @@ T = {
 'not in the expected format': '예상된 형식이 아닙니다',
 'larger than Keepit can read': 'Keepit이 읽을 수 있는 크기보다 큽니다',
 'could not be read (error %d)': '읽을 수 없습니다 (오류 %d)',
+'Keepit could not read some of its data, so this is not available now. Restore a backup (Replace) or start fresh first — Keepit asks at the next launch or unlock.': 'Keepit이 일부 데이터를 읽지 못해 지금은 사용할 수 없습니다. 먼저 백업을 복원(대치)하거나 새로 시작하세요. 다음에 실행하거나 잠금을 해제할 때 Keepit이 묻습니다.',
+'Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file.': 'Keepit이 현재 데이터를 읽지 못해 백업을 병합할 수 없습니다. 대치를 선택하세요. 읽을 수 없는 파일은 복원된 파일 옆에 .corrupt-… 파일로 보관됩니다.',
+'Replace data Keepit cannot read?': 'Keepit이 읽을 수 없는 데이터를 대치하시겠습니까?',
+'These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them.': '이 파일들은 .corrupt-…(으)로 이름이 바뀌어 복원된 파일 옆에 보관됩니다. Keepit은 이 파일들을 열거나 변경하지 않습니다.',
+'Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup.': '새로 시작하면 Keepit이 지금 사용 중인 설정이 유지됩니다. 자동 백업을 켜 두셨다면 설정 → 백업에서 다시 켜 주세요.',
+'Could not save the settings: %@': '설정을 저장하지 못했습니다: %@',
+'moved by an interrupted Start Fresh or Restore and not yet put back; the earlier file is kept as a .corrupt-… file': '중단된 ‘새로 시작’ 또는 복원으로 옮겨졌으며 아직 되돌려지지 않았습니다. 이전 파일은 .corrupt-… 파일로 보관됩니다',
 }

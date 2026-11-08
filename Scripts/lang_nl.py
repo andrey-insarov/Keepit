@@ -541,4 +541,11 @@ T = {
 'not in the expected format': 'niet in de verwachte indeling',
 'larger than Keepit can read': 'groter dan Keepit kan lezen',
 'could not be read (error %d)': 'kon niet worden gelezen (fout %d)',
+'Keepit could not read some of its data, so this is not available now. Restore a backup (Replace) or start fresh first — Keepit asks at the next launch or unlock.': 'Keepit kon een deel van zijn gegevens niet lezen, dus dit is nu niet beschikbaar. Herstel eerst een reservekopie (Vervang) of begin opnieuw — Keepit vraagt het bij de volgende start of ontgrendeling.',
+'Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file.': 'Keepit kon de huidige gegevens niet lezen, dus een reservekopie kan er niet mee worden samengevoegd. Kies Vervang: het onleesbare bestand blijft naast het herstelde bewaard als .corrupt-…-bestand.',
+'Replace data Keepit cannot read?': 'Gegevens vervangen die Keepit niet kan lezen?',
+'These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them.': 'Deze bestanden worden hernoemd naar .corrupt-… en naast de herstelde bewaard; Keepit opent of wijzigt ze niet.',
+'Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup.': 'Opnieuw beginnen behoudt de instellingen waarmee Keepit nu draait. Als automatische reservekopie aanstond, zet deze dan opnieuw aan in Instellingen → Reservekopie.',
+'Could not save the settings: %@': 'Kon de instellingen niet bewaren: %@',
+'moved by an interrupted Start Fresh or Restore and not yet put back; the earlier file is kept as a .corrupt-… file': 'verplaatst door een onderbroken ‘Opnieuw beginnen’ of herstel en nog niet teruggezet; het eerdere bestand blijft bewaard als .corrupt-…-bestand',
 }

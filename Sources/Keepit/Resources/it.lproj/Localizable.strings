@@ -541,3 +541,10 @@
 "not in the expected format" = "non nel formato previsto";
 "larger than Keepit can read" = "più grande di quanto Keepit possa leggere";
 "could not be read (error %d)" = "impossibile leggerlo (errore %d)";
+"Keepit could not read some of its data, so this is not available now. Restore a backup (Replace) or start fresh first — Keepit asks at the next launch or unlock." = "Keepit non è riuscito a leggere parte dei suoi dati, quindi questa funzione non è disponibile ora. Ripristina prima un backup (Sostituisci) oppure ricomincia da capo: Keepit lo chiederà al prossimo avvio o sblocco.";
+"Keepit could not read its current data, so a backup cannot be merged into it. Choose Replace: the unreadable file is kept next to the restored one as a .corrupt-… file." = "Keepit non è riuscito a leggere i dati attuali, quindi non è possibile unirvi un backup. Scegli Sostituisci: il file illeggibile resta accanto a quello ripristinato come file .corrupt-….";
+"Replace data Keepit cannot read?" = "Sostituire i dati che Keepit non riesce a leggere?";
+"These files are renamed .corrupt-… and kept next to the restored ones; Keepit does not open or change them." = "Questi file vengono rinominati .corrupt-… e conservati accanto a quelli ripristinati; Keepit non li apre né li modifica.";
+"Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup." = "Ricominciare da capo mantiene le impostazioni con cui Keepit sta funzionando ora. Se il backup automatico era attivo, riattivalo in Impostazioni → Backup.";
+"Could not save the settings: %@" = "Impossibile salvare le impostazioni: %@";
+"moved by an interrupted Start Fresh or Restore and not yet put back; the earlier file is kept as a .corrupt-… file" = "spostato da un «Ricomincia da capo» o da un ripristino interrotti e non ancora rimesso a posto; il file precedente resta come file .corrupt-…";
