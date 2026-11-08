@@ -29,19 +29,19 @@ def page_url(out_name: str) -> str:
 # (source, output, <title>, meta description, sidebar TOC?, schema.org type, breadcrumb label)
 PAGES = [
     ("GUIDE.md", "guide.html", "Keepit User Guide – Clipboard Manager for Mac",
-     "How to use Keepit, the free clipboard manager for Mac: clipboard history menu, hot keys, templates and placeholders, the Viewer, encryption and Touch ID, automation.", True, "TechArticle", "User guide"),
+     "How to use Keepit, the free clipboard manager for Mac: the history menu, hot keys, templates and placeholders, the Viewer, encryption and Touch ID.", True, "TechArticle", "User guide"),
     ("SECURITY.md", "security.html", "Keepit Security – Encrypted Clipboard Manager for Mac",
-     "What Keepit stores and where, how the clipboard history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download.", True, "TechArticle", "Security"),
-    ("SUPPORT.md", "support.html", "Keepit Support",
+     "What Keepit stores and where, how the history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download.", True, "TechArticle", "Security"),
+    ("SUPPORT.md", "support.html", "Keepit Support – Help with the Mac Clipboard Manager",
      "How to get help with Keepit, the clipboard manager for Mac, and quick answers to the usual questions.", False, "WebPage", "Support"),
     ("PRIVACY.md", "privacy.html", "Keepit Privacy Policy",
-     "Keepit's privacy policy: the app collects, transmits and shares nothing; everything stays on your Mac, and optional backups go only to a folder you choose, encrypted.", False, "WebPage", "Privacy policy"),
+     "Keepit's privacy policy: the app collects and shares nothing. No account, no Keepit server; optional backups go encrypted to a folder you choose.", False, "WebPage", "Privacy policy"),
     ("CLIPBOARD-HISTORY-MAC.md", "clipboard-history-mac.html", "How to See Clipboard History on a Mac (2026)",
-     "macOS 26 Tahoe keeps a short clipboard history in Spotlight (⌘Space, then ⌘4); earlier versions keep one item. How to open it, what it does not keep, and how to get a full, searchable clipboard history with a free, open-source app.", False, "HowTo", "Clipboard history on a Mac"),
+     "macOS 26 keeps a short clipboard history in Spotlight (⌘Space, ⌘4); older versions keep one item. How to open it and get a full, searchable history.", False, "HowTo", "Clipboard history on a Mac"),
     ("PASTE-AS-PLAIN-TEXT-MAC.md", "paste-as-plain-text-mac.html", "How to Paste as Plain Text on a Mac",
-     "The macOS shortcut for pasting without formatting (Paste and Match Style, ⌥⇧⌘V), how to remap it per app, and a one-key plain-text paste that works in every app.", False, "HowTo", "Paste as plain text on a Mac"),
+     "The Mac shortcut for pasting without formatting (⌥⇧⌘V), how to remap it per app, and a one-key plain-text paste that works in every app.", False, "HowTo", "Paste as plain text on a Mac"),
     ("CLEAR-CLIPBOARD-MAC.md", "clear-clipboard-mac.html", "How to Clear the Clipboard on a Mac",
-     "Three things to clear on a Mac: the system clipboard (copy an empty selection, pbcopy from Terminal), Spotlight's clipboard history in macOS 26 Tahoe, and a clipboard manager's history.", False, "HowTo", "Clear the clipboard on a Mac"),
+     "Three things to clear on a Mac: the system clipboard (pbcopy in Terminal), Spotlight's clipboard history in macOS 26, and a clipboard manager's history.", False, "HowTo", "Clear the clipboard on a Mac"),
 ]
 
 HEADER = """<header><div class="wrap">
