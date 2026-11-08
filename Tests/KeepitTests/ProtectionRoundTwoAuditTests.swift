@@ -183,10 +183,15 @@ final class ProtectionRoundTwoAuditTests: XCTestCase {
         app.history.onChange = nil
         Vault.promptForTesting = { _ in .password(.of("new")) }
         XCTAssertTrue(app.unlock())
-        XCTAssertEqual(errors.count, 1)
-        XCTAssertTrue(errors[0].contains("protection-journal"), errors[0])
-        XCTAssertTrue(app.unsweptToReport.isEmpty)
         XCTAssertEqual(app.history.items.map(\.plainText), ["restored"])
+        // Round 3: the alert comes after unlock() has returned, on the next main-queue turn.
+        XCTAssertTrue(errors.isEmpty, "not inside unlock()")
+        let turn = expectation(description: "main queue turn")
+        DispatchQueue.main.async { turn.fulfill() }
+        wait(for: [turn], timeout: 2)
+        XCTAssertEqual(errors.count, 1)
+        XCTAssertTrue(errors.first?.contains("protection-journal") ?? false, "\(errors)")
+        XCTAssertTrue(app.unsweptToReport.isEmpty)
         app.lock()
     }
 }

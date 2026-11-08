@@ -113,7 +113,7 @@ final class ProtectionRoundThreeAuditTests: XCTestCase {
         XCTAssertTrue(app.unlock())
         spinMainQueue()
         XCTAssertEqual(errors.count, 1)
-        XCTAssertTrue(errors[0].contains("protection-journal"))
+        XCTAssertTrue(try XCTUnwrap(errors.first).contains("protection-journal"))
         app.lock()
     }
 

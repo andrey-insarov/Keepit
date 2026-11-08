@@ -121,7 +121,7 @@ final class LockDuringProtectionDialogsTests: XCTestCase {
         XCTAssertEqual(asked, 0)
         XCTAssertTrue(a.isLocked)
         XCTAssertTrue(opens("old")); XCTAssertFalse(opens("new"))
-        XCTAssertNotNil(Vault.unlockWithRecovery(words: shownPhrases[0]), "the phrase shown is the one in vault.json")
+        XCTAssertNotNil(Vault.unlockWithRecovery(words: try XCTUnwrap(shownPhrases.first)), "the phrase shown is the one in vault.json")
         XCTAssertTrue(errors.isEmpty)
     }
 
@@ -134,7 +134,7 @@ final class LockDuringProtectionDialogsTests: XCTestCase {
         XCTAssertTrue(a.isLocked)
         XCTAssertNil(Storage.key)
         XCTAssertTrue(opens("old")); XCTAssertFalse(opens("new"))
-        XCTAssertNotNil(Vault.unlockWithRecovery(words: shownPhrases[0]))
+        XCTAssertNotNil(Vault.unlockWithRecovery(words: try XCTUnwrap(shownPhrases.first)))
         XCTAssertTrue(errors.isEmpty)
     }
 

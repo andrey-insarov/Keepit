@@ -76,7 +76,7 @@ final class ProtectionCommitTests: XCTestCase {
         XCTAssertTrue(try loads(Storage.templatesURL, with: "new"))
         XCTAssertEqual(shownPhrases.count, 1, "the phrase, from the same vault.json the commit wrote")
         XCTAssertTrue(Vault.hasRecovery, "in the first vault.json, not a second write")
-        XCTAssertNotNil(Vault.unlockWithRecovery(words: shownPhrases[0]))
+        XCTAssertNotNil(Vault.unlockWithRecovery(words: try XCTUnwrap(shownPhrases.first)))
         XCTAssertFalse(FileManager.default.fileExists(atPath: FileJournal.protection.directory.path))
         XCTAssertEqual(a.history.items.map(\.plainText), ["item two", "item one"], "memory untouched")
     }
@@ -367,6 +367,6 @@ final class ProtectionCommitTests: XCTestCase {
         a.authenticateForTesting = { true }
         a.showRecoveryPhrase()
         XCTAssertEqual(shownPhrases.count, 2)
-        XCTAssertEqual(shownPhrases[1], first, "the same phrase, from the entropy wrapped under the data key")
+        XCTAssertEqual(shownPhrases.dropFirst().first, first, "the same phrase, from the entropy wrapped under the data key")
     }
 }

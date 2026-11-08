@@ -210,7 +210,7 @@ final class ProtectionSecondOrderAuditTests: XCTestCase {
         XCTAssertNotNil(Storage.key, "published: the commit stands")
         XCTAssertTrue(Vault.isEncrypted(try Data(contentsOf: Storage.historyURL)))
         XCTAssertEqual(errors.count, 1)
-        XCTAssertTrue(errors[0].contains("protection-journal"), "names the folder: \(errors[0])")
+        XCTAssertTrue(try XCTUnwrap(errors.first).contains("protection-journal"), "names the folder: \(errors)")
         XCTAssertFalse(Vault.isEncrypted(try Data(contentsOf: copy)), "the plain copy is still there — which is what the alert says")
 
         // The next launch: no replay (nothing armed), no stop; the leftover is noted for the alert.
