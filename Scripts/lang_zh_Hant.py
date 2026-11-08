@@ -564,4 +564,5 @@ T = {
 'Enter the Keepit password to continue automatic backups. The password or the recovery phrase has not been confirmed for this vault yet — it was opened with Touch ID, or vault.json changed since — so the password has to be confirmed once.': '請輸入 Keepit 密碼以繼續自動備份。此保險庫的密碼或復原助記詞尚未確認（它由 Touch ID 開啟，或此後 vault.json 發生了變化），因此需要確認一次密碼。',
 "This password opens a different vault than the one Keepit's data is encrypted with: vault.json has changed since Keepit was unlocked. Nothing was changed. Save your data first with Settings → Backup → Save to Archive… (it has its own password), then put the original vault.json back or set the password again.": '此密碼開啟的保險庫與加密 Keepit 資料的保險庫不同：解鎖後 vault.json 已發生變化。未做任何更改。請先透過 設定 → 備份 → 儲存為封存檔…（它有自己的密碼）儲存資料，然後放回原來的 vault.json 或重新設定密碼。',
 'The recovery phrase was closed when Keepit locked, before you confirmed it. Settings → Security → Show… shows it again.': 'Keepit 鎖定時，復原助記詞視窗在您確認之前已關閉。設定 → 安全性 → 顯示… 可再次顯示它。',
+'Archive not saved: Keepit was locked meanwhile.': '封存檔未儲存：期間 Keepit 已鎖定。',
 }

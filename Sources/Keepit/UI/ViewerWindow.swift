@@ -687,7 +687,11 @@ final class ViewerWindowController: NSWindowController,
         default: ext = "bin"
         }
         panel.nameFieldStringValue = "keepit-item.\(ext)"
+        let generation = app.lockCount
         guard panel.runModal() == .OK, let url = panel.url else { return }
+        // Same shape as Save to Archive (candidate review, P2): the bytes were taken before the
+        // panel; a lock during it has emptied the Viewer, and nothing from before it is written.
+        guard !app.isLocked, app.lockCount == generation else { return }
         do { try data.write(to: url) } catch {
             NSAlert(error: error).runModal()
         }
