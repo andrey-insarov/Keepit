@@ -5,11 +5,16 @@ enum RecoveryDialogs {
 
     /// Show a freshly generated phrase. The user must tick the disclaimer before continuing.
     /// There is deliberately no "Copy" button: Keepit itself would record the phrase in its history.
-    /// Tests only: receives the words instead of the dialog.
+    /// A lock closes the dialog (3.0.5 security review, SEC05: it used to stay on screen over a
+    /// locked app) — safe since the phrase is in vault.json and Settings → Security → Show… shows
+    /// it again. Returns false when the lock closed it before "I've saved it".
+    /// Tests only: receives the words instead of the dialog; `presentResultForTesting` is the answer.
     static var presentSinkForTesting: (([String]) -> Void)?
+    static var presentResultForTesting = true
 
-    static func present(words: [String], title: String = L("Your recovery phrase")) {
-        if let sink = presentSinkForTesting { sink(words); return }
+    @discardableResult
+    static func present(words: [String], title: String = L("Your recovery phrase")) -> Bool {
+        if let sink = presentSinkForTesting { sink(words); return presentResultForTesting }
         let a = NSAlert()
         a.messageText = title
         a.informativeText = L("Write these 24 words down or print them and keep the sheet somewhere safe. ")
@@ -59,12 +64,20 @@ enum RecoveryDialogs {
         printButton.action = #selector(Printer.fire)
 
         NSApp.activate(ignoringOtherApps: true)
-        a.runModal()
+        let response = AbortableModal.run(a)
         _ = toggler; _ = printer   // keep targets alive until the alert closes
+        return response == .alertFirstButtonReturn
     }
 
-    /// Ask for the 24 words. Returns nil on Cancel; loops until the checksum validates.
+    /// Tests only: answers `askPhrase` instead of the dialog.
+    static var askPhraseForTesting: (() -> [String]?)?
+
+    /// Ask for the 24 words. Returns nil on Cancel — or when a lock closed the box (an
+    /// `AbortableModal`); loops until the checksum validates. The box runs under Secure Event
+    /// Input (SEC03) for as long as it is open; the token ends before an error alert and is taken
+    /// again for the next attempt.
     static func askPhrase() -> [String]? {
+        if let test = askPhraseForTesting { return test() }
         while true {
             let a = NSAlert()
             a.messageText = L("Enter your recovery phrase")
@@ -83,9 +96,13 @@ enum RecoveryDialogs {
             a.addButton(withTitle: L("Cancel"))
             a.window.initialFirstResponder = tv
             NSApp.activate(ignoringOtherApps: true)
-            guard a.runModal() == .alertFirstButtonReturn else { return nil }
+            let secure = SecureEventInput()
+            secure.begin()
+            let response = AbortableModal.run(a)
             let words = Mnemonic.parse(String(tv.string.prefix(Limits.recoveryInputMaxChars)))
             tv.string = ""
+            secure.end()
+            guard response == .alertFirstButtonReturn else { return nil }
             if words.count != Mnemonic.wordCount {
                 Vault.error(LF("That's %d word(s); the phrase has %d.", words.count, Mnemonic.wordCount))
                 continue
@@ -121,7 +138,8 @@ enum RecoveryDialogs {
             let op = NSPrintOperation(view: page)
             op.showsPrintPanel = true
             op.showsProgressPanel = true
-            op.run()
+            // The panel's preview is the phrase: a lock ends the panel and then the sheet under it.
+            AbortableModal.runForeign { op.run() }
         }
     }
 }

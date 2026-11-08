@@ -248,7 +248,24 @@ export function validate(form) {
   return { ok: true, data: { name, email, type, message, files } };
 }
 
-async function turnstileOK(token, secret, ip) {
+/** Hostnames a Turnstile token may have been solved on (3.0.5 security review, SEC09: unchecked, a
+ *  token solved on any page using the same site key passed). `TURNSTILE_HOSTNAMES`: comma-separated,
+ *  default the production host. */
+export const DEFAULT_TURNSTILE_HOSTNAMES = ["keep.it.com"];
+export function allowedTurnstileHostnames(env) {
+  const raw = (env && env.TURNSTILE_HOSTNAMES) || "";
+  const list = raw.split(",").map((h) => h.trim().toLowerCase()).filter(Boolean);
+  return list.length ? list : DEFAULT_TURNSTILE_HOSTNAMES;
+}
+/** The verdict on a siteverify answer: success, and a hostname from the allowed list (a missing
+ *  hostname is refused — siteverify returns it for every solved token). */
+export function turnstileVerdict(answer, hostnames = DEFAULT_TURNSTILE_HOSTNAMES) {
+  if (!answer || answer.success !== true) return false;
+  const host = typeof answer.hostname === "string" ? answer.hostname.toLowerCase() : "";
+  return host !== "" && hostnames.includes(host);
+}
+
+async function turnstileOK(token, secret, ip, hostnames) {
   if (!token) return false;
   const body = new FormData();
   body.append("secret", secret);
@@ -256,7 +273,18 @@ async function turnstileOK(token, secret, ip) {
   if (ip) body.append("remoteip", ip);
   const r = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", { method: "POST", body });
   const j = await r.json().catch(() => ({}));
-  return j.success === true;
+  return turnstileVerdict(j, hostnames);
+}
+
+/** The confirmation to the sender: a fixed text. The address is unverified — anyone can type any
+ *  address into the form — so nothing the submitter wrote is echoed to it (SEC09: the message
+ *  body used to be, which made the form a relay for arbitrary text to arbitrary addresses). */
+export function confirmationEmail(from, to, replyTo) {
+  return {
+    from, to: [to], reply_to: replyTo,
+    subject: "We received your message — Keepit",
+    text: "Thank you — your message has reached Keepit support. We reply to this address.\n\nIf you did not write to us, someone entered your address in the support form at keep.it.com; nothing else is sent to it, and you can ignore this e-mail.\n\n— Keepit, keep.it.com",
+  };
 }
 
 function b64(buf) {
@@ -311,7 +339,7 @@ export async function onRequestPost({ request, env }) {
   const { name, email, type, message, files } = v.data;
 
   const ip = request.headers.get("cf-connecting-ip") || "";
-  if (!(await turnstileOK(form.get("cf-turnstile-response"), env.TURNSTILE_SECRET, ip))) {
+  if (!(await turnstileOK(form.get("cf-turnstile-response"), env.TURNSTILE_SECRET, ip, allowedTurnstileHostnames(env)))) {
     return json(400, { error: "The anti-spam check did not pass. Please try again." });
   }
 
@@ -337,11 +365,7 @@ export async function onRequestPost({ request, env }) {
   await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, "content-type": "application/json" },
-    body: JSON.stringify({
-      from: env.FEEDBACK_FROM, to: [email], reply_to: env.FEEDBACK_TO,
-      subject: "We received your message — Keepit",
-      text: `Hi ${name},\n\nThank you — your message has reached Keepit support.\n\nYour message:\n\n${message}\n\n— Keepit, keep.it.com`,
-    }),
+    body: JSON.stringify(confirmationEmail(env.FEEDBACK_FROM, email, env.FEEDBACK_TO)),
   }).catch(() => {});
   return json(200, { ok: true });
 }

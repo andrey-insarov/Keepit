@@ -23,8 +23,13 @@ final class TextFormatView: NSView, NSTextViewDelegate {
     let textView: NSTextView
     private var format = ClipItem.Format.text
     private var dirty = false
+    /// The editor's own undo stack, so it exists wherever the view is (not the window's, which is
+    /// nil while the pane is not shown) and `clear()` empties exactly it.
+    let editorUndo = UndoManager()
     /// Called when editing ends with the new bytes for `format`.
     var onCommit: ((String, Data) -> Void)?
+
+    func undoManager(for view: NSTextView) -> UndoManager? { editorUndo }
 
     override init(frame: NSRect) {
         // The factory wires up a text view that fills the whole scroll area (clicking anywhere focuses it).
@@ -64,8 +69,16 @@ final class TextFormatView: NSView, NSTextViewDelegate {
             textView.font = NSFont.monospacedSystemFont(ofSize: 13, weight: .regular)
             textView.string = String(data: data, encoding: .utf8) ?? String(decoding: data, as: UTF8.self)
         }
-        textView.undoManager?.removeAllActions()
+        editorUndo.removeAllActions()
         textView.scroll(.zero)
+    }
+
+    /// Nothing of the last item stays in the view, its storage or its undo stack (SEC05).
+    func clear() {
+        dirty = false
+        textView.textStorage?.setAttributedString(NSAttributedString())
+        editorUndo.removeAllActions()
+        textView.isEditable = false
     }
 
     func textDidChange(_ notification: Notification) { dirty = true }
@@ -129,6 +142,8 @@ final class ImageFormatView: NSView {
     }
     required init?(coder: NSCoder) { fatalError() }
 
+    func clear() { imageView.image = nil; info.stringValue = "" }
+
     func load(data: Data) {
         guard let img = NSImage(data: data) else {
             imageView.image = nil
@@ -170,6 +185,8 @@ final class FilesFormatView: NSView, NSTableViewDataSource, NSTableViewDelegate 
         pinToEdges(scroll)
     }
     required init?(coder: NSCoder) { fatalError() }
+
+    func clear() { paths = []; table.reloadData() }
 
     func load(paths: [String]) {
         self.paths = paths
@@ -218,6 +235,8 @@ final class HexFormatView: NSView {
         pinToEdges(scroll)
     }
     required init?(coder: NSCoder) { fatalError() }
+
+    func clear() { textView.string = "" }
 
     func load(data: Data) {
         let shown = data.prefix(Self.limit)
@@ -269,4 +288,5 @@ final class InfoView: NSView {
     required init?(coder: NSCoder) { fatalError() }
 
     func load(_ text: String) { label.stringValue = text }
+    func clear() { label.stringValue = "" }
 }

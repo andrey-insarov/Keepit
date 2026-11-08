@@ -215,7 +215,13 @@ app: build $(ICNS)
 	xattr -cr $(BUNDLE)
 	codesign --force $(if $(filter -,$(SIGN_ID)),--deep,) $(SIGN_FLAGS) --sign "$(SIGN_ID)" $(BUNDLE)
 	codesign --verify --strict --deep --verbose=2 $(BUNDLE)
-	@if [ "$(SIGN_ID)" != "-" ]; then codesign -d --entitlements - $(CONTENTS)/Frameworks/Sparkle.framework/Versions/B/Autoupdate 2>&1 | grep -q application-identifier && (echo "Autoupdate must not carry the app's entitlements"; exit 1) || true; fi
+	# `… && (exit 1) || true` never failed: the subshell's exit 1 was swallowed by `|| true`
+	# (3.0.5 security review, SEC14). A plain if, and the recipe fails when the check does.
+	@if [ "$(SIGN_ID)" != "-" ]; then \
+	  if codesign -d --entitlements - $(CONTENTS)/Frameworks/Sparkle.framework/Versions/B/Autoupdate 2>&1 | grep -q application-identifier; then \
+	    echo "Autoupdate must not carry the app's entitlements"; exit 1; \
+	  fi; \
+	fi
 	@echo "Built $(BUNDLE)"
 
 run: app

@@ -139,6 +139,23 @@ final class PreviewPanel {
         if panel.isVisible { panel.orderOut(nil) }
     }
 
+    /// A lock: hide, and keep nothing of the last item — its text, image and footer stayed in the
+    /// views (3.0.5 security review, SEC05), and a show scheduled just before the lock would have
+    /// put the item on screen after it (the timer is the pending show; `hide` cancels it).
+    func purge() {
+        hide()
+        imageView.image = nil
+        textView.string = ""
+        footer.stringValue = ""
+    }
+
+    /// Tests only.
+    var hasPendingShowForTesting: Bool { showTimer != nil }
+    var shownTextForTesting: String { textView.string }
+    var shownImageForTesting: NSImage? { imageView.image }
+    var isVisibleForTesting: Bool { panel.isVisible }
+    func showNowForTesting(_ item: ClipItem) { show(item, besides: NSRect(x: 100, y: 500, width: 200, height: 200)) }
+
     private func show(_ item: ClipItem, besides menuFrame: NSRect) {
         var size = maxSize
         switch item.kind {

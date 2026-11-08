@@ -93,7 +93,8 @@ Turn on *Require password at launch* and the history and templates files are enc
   does; otherwise the next lock or sleep starts the count. A Mac waking into another user's
   session is not "back".) A template's fill-in dialog or a `keepit://`
   confirmation that is open at that moment is closed, and whatever it would have pasted or added
-  is dropped. After that Keepit holds nothing it could decrypt
+  is dropped; so are the history menu and the preview beside it, the Viewer (its tree, views and
+  undo stack), the paste queue's copies and the recovery-phrase sheet. After that Keepit holds nothing it could decrypt
   until you unlock again (the copies Swift and CryptoKit may have made are covered under
   *Limitations*). With the default *Never*, locking the Mac does **not** lock Keepit: the key and
   the decrypted data stay in the process for as long as you are away, protected by the Mac's own
@@ -108,6 +109,13 @@ Turn on *Require password at launch* and the history and templates files are enc
   Show…* shows it again after Touch ID or the password. These operations wait while a data file
   is held as unreadable — re-encrypting around it would destroy the one way left to read it. A lock
   during any of their dialogs voids the answer.
+- **Secure Event Input**: while a password field has the focus in a key window of the active app,
+  and while the recovery-phrase box is open, Keepit asks macOS for Secure Event Input — keystrokes
+  go to Keepit only, not to other processes' event taps. It ends with the focus, so a prompt left
+  behind another app does not hold the whole system in secure input.
+- **Set-aside copies**: a `.corrupt-…` copy left by *Start Fresh* or a *Replace* follows the vault —
+  sealed when protection is turned on, re-sealed on a password change, plain again when protection
+  is turned off, removed by *Reset*. A plain copy set aside *under* a vault is left as it is.
 - **Password strength**: the password dialog shows an entropy estimate and explains it; Keepit does
   not enforce a minimum, because the recovery phrase and Touch ID are the usual way in.
 - **On-screen keyboard**: the keyboard button next to the password field opens a small panel for

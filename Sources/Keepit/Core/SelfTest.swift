@@ -26,6 +26,12 @@ enum SelfTest {
 
     static func run(app: AppDelegate) {
         log.append("Keepit \(AppInfo.version) (\(AppInfo.build)) self-test, data dir: \(Storage.directory.path)")
+        // Never on the user's data (SEC04): Storage picks a temp folder for a bare --selftest, and
+        // KEEPIT_DATA_DIR may point anywhere but here.
+        guard !Storage.isDefaultDirectory else {
+            check(false, "refusing to run on the default data folder; set KEEPIT_DATA_DIR")
+            finish()
+        }
         let marker = "Keepit self-test \(UUID().uuidString)"
 
         // 1. Clipboard capture → history
@@ -110,7 +116,7 @@ enum SelfTest {
         }
     }
 
-    private static func finish() {
+    private static func finish() -> Never {
         log.append(failures == 0 ? "RESULT: OK" : "RESULT: \(failures) failure(s)")
         let text = log.joined(separator: "\n") + "\n"
         try? text.write(to: outputDir.appendingPathComponent("report.txt"), atomically: true, encoding: .utf8)

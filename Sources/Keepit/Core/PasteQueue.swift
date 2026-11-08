@@ -31,12 +31,24 @@ final class PasteQueue {
         onChange?()
     }
 
+    /// Ends the queue and drops its copies. Also on a queue that already ended by itself: nothing
+    /// may stay behind (3.0.5 security review, SEC05 — `stop()` returned early then, and the copies
+    /// taken under the queue outlived it; a lock calls this). Announces a change only if it was on.
     func stop() {
-        guard isActive else { return }
+        let wasActive = isActive
+        isActive = false
+        timer?.invalidate(); timer = nil
+        items = []; next = 0
+        if wasActive { onChange?() }
+    }
+
+    /// The queue ended by itself (last item taken, or the timeout): nothing of what it held stays.
+    private func exhausted() {
         isActive = false
         timer?.invalidate(); timer = nil
         items = []; next = 0
         onChange?()
+        onAutoStop?()
     }
 
     func toggle() { isActive ? stop() : start() }
@@ -56,10 +68,7 @@ final class PasteQueue {
         guard isActive, let item = nextItem else { return nil }
         next += 1
         if next >= items.count {
-            isActive = false
-            timer?.invalidate(); timer = nil
-            onChange?()
-            onAutoStop?()
+            exhausted()                               // the copies go with it (SEC05)
         } else {
             armTimer()
             onChange?()
@@ -72,11 +81,7 @@ final class PasteQueue {
         guard isActive else { return nil }
         let texts = pending.compactMap { $0.plainText }
         guard !texts.isEmpty else { return nil }
-        next = items.count
-        isActive = false
-        timer?.invalidate(); timer = nil
-        onChange?()
-        onAutoStop?()
+        exhausted()
         return texts.joined(separator: separator)
     }
 
@@ -85,11 +90,7 @@ final class PasteQueue {
         guard timeout > 0 else { timer = nil; return }
         let t = Timer(timeInterval: timeout, repeats: false) { [weak self] _ in
             guard let self, self.isActive else { return }
-            self.isActive = false
-            self.timer = nil
-            self.items = []; self.next = 0
-            self.onChange?()
-            self.onAutoStop?()
+            self.exhausted()
         }
         RunLoop.main.add(t, forMode: .common)
         timer = t
