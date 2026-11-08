@@ -624,3 +624,11 @@
 
 "Could not save the settings: %@" = "Could not save the settings: %@";
 "moved by an interrupted Start Fresh or Restore and not yet put back; the earlier file is kept as a .corrupt-… file" = "moved by an interrupted Start Fresh or Restore and not yet put back; the earlier file is kept as a .corrupt-… file";
+
+"Show…" = "Show…";
+"Shows the current 24-word phrase again after you confirm the password or Touch ID — for a sheet you did not get to write down." = "Shows the current 24-word phrase again after you confirm the password or Touch ID — for a sheet you did not get to write down.";
+"show the recovery phrase" = "show the recovery phrase";
+"This vault has no recovery phrase yet. Create one with Create New…" = "This vault has no recovery phrase yet. Create one with Create New…";
+"Could not disable protection: %@" = "Could not disable protection: %@";
+"Keepit could not read its settings, so a backup that needs a new password cannot be restored now. Start fresh first — Keepit asks at the next launch or unlock." = "Keepit could not read its settings, so a backup that needs a new password cannot be restored now. Start fresh first — Keepit asks at the next launch or unlock.";
+"%@ would be larger than Keepit can read back. Lower the limits in Settings → History first." = "%@ would be larger than Keepit can read back. Lower the limits in Settings → History first.";

@@ -548,3 +548,10 @@
 "Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup." = "Začátek znovu zachová nastavení, se kterými Keepit nyní běží. Pokud byla zapnutá automatická záloha, zapněte ji znovu v Nastavení → Záloha.";
 "Could not save the settings: %@" = "Nastavení se nepodařilo uložit: %@";
 "moved by an interrupted Start Fresh or Restore and not yet put back; the earlier file is kept as a .corrupt-… file" = "přesunutý přerušeným „Začít znovu“ nebo obnovením a dosud nevrácený; dřívější soubor zůstává jako soubor .corrupt-…";
+"Show…" = "Zobrazit…";
+"Shows the current 24-word phrase again after you confirm the password or Touch ID — for a sheet you did not get to write down." = "Po potvrzení heslem nebo Touch ID znovu zobrazí aktuální frázi o 24 slovech — pokud jste si ji nestihli zapsat.";
+"show the recovery phrase" = "zobrazit obnovovací frázi";
+"This vault has no recovery phrase yet. Create one with Create New…" = "Tento trezor zatím nemá obnovovací frázi. Vytvořte ji tlačítkem „Vytvořit novou…“.";
+"Could not disable protection: %@" = "Ochranu se nepodařilo vypnout: %@";
+"Keepit could not read its settings, so a backup that needs a new password cannot be restored now. Start fresh first — Keepit asks at the next launch or unlock." = "Keepit nemohl přečíst svá nastavení, proto zálohu, která vyžaduje nové heslo, teď nelze obnovit. Nejprve začněte znovu — Keepit se zeptá při příštím spuštění nebo odemknutí.";
+"%@ would be larger than Keepit can read back. Lower the limits in Settings → History first." = "%@ by byl větší, než Keepit dokáže zpětně načíst. Nejprve snižte limity v Nastavení → Historie.";

@@ -548,4 +548,11 @@ T = {
 'Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup.': 'Opnieuw beginnen behoudt de instellingen waarmee Keepit nu draait. Als automatische reservekopie aanstond, zet deze dan opnieuw aan in Instellingen → Reservekopie.',
 'Could not save the settings: %@': 'Kon de instellingen niet bewaren: %@',
 'moved by an interrupted Start Fresh or Restore and not yet put back; the earlier file is kept as a .corrupt-… file': 'verplaatst door een onderbroken ‘Opnieuw beginnen’ of herstel en nog niet teruggezet; het eerdere bestand blijft bewaard als .corrupt-…-bestand',
+'Show…': 'Toon…',
+'Shows the current 24-word phrase again after you confirm the password or Touch ID — for a sheet you did not get to write down.': 'Toont de huidige zin van 24 woorden opnieuw nadat je het wachtwoord of Touch ID hebt bevestigd — voor het geval je hem niet kon opschrijven.',
+'show the recovery phrase': 'de herstelzin tonen',
+'This vault has no recovery phrase yet. Create one with Create New…': 'Deze kluis heeft nog geen herstelzin. Maak er een met ‘Maak nieuwe…’.',
+'Could not disable protection: %@': 'Beveiliging kon niet worden uitgeschakeld: %@',
+'Keepit could not read its settings, so a backup that needs a new password cannot be restored now. Start fresh first — Keepit asks at the next launch or unlock.': 'Keepit kon zijn instellingen niet lezen, dus een reservekopie die een nieuw wachtwoord nodig heeft kan nu niet worden hersteld. Begin eerst opnieuw — Keepit vraagt het bij de volgende start of ontgrendeling.',
+'%@ would be larger than Keepit can read back. Lower the limits in Settings → History first.': '%@ zou groter worden dan Keepit kan teruglezen. Verlaag eerst de limieten in Instellingen → Geschiedenis.',
 }

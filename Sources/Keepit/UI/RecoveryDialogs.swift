@@ -5,7 +5,11 @@ enum RecoveryDialogs {
 
     /// Show a freshly generated phrase. The user must tick the disclaimer before continuing.
     /// There is deliberately no "Copy" button: Keepit itself would record the phrase in its history.
+    /// Tests only: receives the words instead of the dialog.
+    static var presentSinkForTesting: (([String]) -> Void)?
+
     static func present(words: [String], title: String = L("Your recovery phrase")) {
+        if let sink = presentSinkForTesting { sink(words); return }
         let a = NSAlert()
         a.messageText = title
         a.informativeText = L("Write these 24 words down or print them and keep the sheet somewhere safe. ")

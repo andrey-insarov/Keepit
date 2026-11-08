@@ -142,8 +142,17 @@ extension AppDelegate {
         }
         defer { rollback?.password?.zero() }
         // A backup opened with its phrase on a Mac without a password: the data must not land
-        // unprotected (docs/BACKUP.md, Restore 8). Password and vault first; cancelling changes nothing.
+        // unprotected (docs/BACKUP.md, Restore 8). The password is asked now; the vault itself is
+        // created *inside* the restore commit, sealed together with the restored files (design
+        // review of SEC01: no separate enable before the commit, nothing to bypass). Not from safe
+        // mode: the settings that would govern the new vault are unknown (Q5).
+        var newVault: PreparedVault?
+        defer { if let v = newVault, Storage.key !== v.key { v.discard() } }   // never the key that went live
         if !Vault.isEnabled, unlocked.viaRecovery {
+            guard settingsLoadFailure == nil else {
+                Vault.error(L("Keepit could not read its settings, so a backup that needs a new password cannot be restored now. Start fresh first — Keepit asks at the next launch or unlock."))
+                return
+            }
             guard lockCount == lockAtStart else { Vault.error(RestoreCommit.Failure.locked.localizedDescription); return }
             guard let pw = Vault.askPassword(title: L("Set Keepit password"),
                                              message: L("This backup was opened with its recovery phrase. Choose a password for Keepit on this Mac; the restored data is protected with it."),
@@ -161,7 +170,9 @@ extension AppDelegate {
             case .alertSecondButtonReturn: keep = false
             default: return
             }
-            guard enableProtection(with: pw, recoveryEntropy: keep ? unlocked.recoveryEntropy : nil, duringRestore: !unreadable.isEmpty) else { return }
+            guard lockCount == lockAtStart else { Vault.error(RestoreCommit.Failure.locked.localizedDescription); return }
+            do { newVault = try prepareVault(password: pw, recoveryEntropy: keep ? unlocked.recoveryEntropy : nil) }
+            catch { Vault.error(LF("Could not enable protection: %@", error.localizedDescription)); return }
         }
 
         // 6. Commit stage: no more questions. The clipboard watcher is paused so the stores stand
@@ -183,7 +194,10 @@ extension AppDelegate {
                 guard lockCount == lockAtStart else { Vault.error(RestoreCommit.Failure.locked.localizedDescription); return }
                 if dataStamp != stamp { continue }                     // the copy is of an older state: once more
             }
-            do { try commit(plan) } catch RestoreCommit.Failure.lockedAfterWrite {
+            do {
+                try commit(plan, newVault: newVault)
+            } catch RestoreCommit.Failure.lockedAfterWrite {
+                newVault = nil                                           // the key is Storage's (and the lock has cleared it)
                 info(L("Keepit was locked during the restore. The restored data is on disk and is loaded when you unlock."))
                 return
             } catch {
@@ -197,6 +211,10 @@ extension AppDelegate {
             break
         }
         guard committed else { Vault.error(L("Restore cancelled: the data kept changing. Please try again.")); return }
+        if let v = newVault {
+            newVault = nil                                               // live in Storage.key since the commit
+            publishEnabledVault(v)                                       // Touch ID, backup, the phrase (or the note that the old one works)
+        }
 
         // 8. A fresh installation restored with a password: offer to keep it as the vault password.
         if !Vault.isEnabled, let pw = unlocked.password {
@@ -225,7 +243,10 @@ extension AppDelegate {
 
     /// The transaction: the three files first, as one; the live stores only when they are on disk.
     /// A failed write leaves the files as they were and throws — nothing in memory has moved.
-    func commit(_ plan: RestorePlan) throws {
+    /// `newVault`: a vault prepared for this restore (a phrase-opened backup on a Mac without a
+    /// password). Its vault.json and the files sealed with its key go through the `protection`
+    /// journal as one commit; the key goes live only after it.
+    func commit(_ plan: RestorePlan, newVault: PreparedVault? = nil) throws {
         let generation = lockCount
         history.flush(); templates.flush()          // pending debounced saves land first; the journal copies what they wrote
         let templatesJSON = try Storage.encoder.encode(plan.templates)
@@ -249,10 +270,22 @@ extension AppDelegate {
             if unreadable.contains(Storage.settingsURL) { Storage.unpin(Storage.historyURL) }
         }
         do {
-            try RestoreCommit.writeFiles(templatesJSON: templatesJSON, historyJSON: historyJSON, settingsJSON: settingsJSON)
+            if let v = newVault {
+                var steps = [RestoreCommit.Step(name: ProtectionCommit.vaultName, url: Vault.metaURL, data: v.meta, encrypt: false)]
+                steps += try RestoreCommit.steps(templatesJSON: templatesJSON, historyJSON: historyJSON, settingsJSON: settingsJSON, sealWith: v.key)
+                try RestoreCommit.writeFiles(steps, journal: .protection)
+            } else {
+                try RestoreCommit.writeFiles(templatesJSON: templatesJSON, historyJSON: historyJSON, settingsJSON: settingsJSON)
+            }
         } catch {
             undoSetAsideAfterFailedCommit(movedAside: movedAside, unreadable: unreadable)   // the stores' loadFailure never moved
             throw error
+        }
+        if let v = newVault {
+            // Committed: the vault exists and the files open with its key. Live now, before the
+            // stores publish (their next save must seal with it). The key is Storage's from here;
+            // the caller must not zero it.
+            Storage.key = v.key
         }
         if unreadable.contains(Storage.settingsURL) { Storage.clearSetAsideMarker() }   // the plan's settings.json exists (also from .pending, where nothing was moved)
         settingsLoadFailure = nil

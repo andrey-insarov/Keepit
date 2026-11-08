@@ -548,3 +548,10 @@
 "Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup." = "При начале заново сохраняются настройки, с которыми Keepit работает сейчас. Если у вас был включён автобэкап, включите его снова в Настройки → Резервная копия.";
 "Could not save the settings: %@" = "Не удалось сохранить настройки: %@";
 "moved by an interrupted Start Fresh or Restore and not yet put back; the earlier file is kept as a .corrupt-… file" = "перемещён прерванным «Начать заново» или восстановлением и ещё не возвращён; прежний файл сохранён как файл .corrupt-…";
+"Show…" = "Показать…";
+"Shows the current 24-word phrase again after you confirm the password or Touch ID — for a sheet you did not get to write down." = "Снова показывает текущую фразу из 24 слов после подтверждения паролем или Touch ID — если вы не успели её записать.";
+"show the recovery phrase" = "показать фразу восстановления";
+"This vault has no recovery phrase yet. Create one with Create New…" = "У этого хранилища ещё нет фразы восстановления. Создайте её кнопкой «Создать новую…».";
+"Could not disable protection: %@" = "Не удалось отключить защиту: %@";
+"Keepit could not read its settings, so a backup that needs a new password cannot be restored now. Start fresh first — Keepit asks at the next launch or unlock." = "Keepit не смог прочитать свои настройки, поэтому резервную копию, для которой нужен новый пароль, сейчас восстановить нельзя. Сначала начните заново — Keepit спросит при следующем запуске или разблокировке.";
+"%@ would be larger than Keepit can read back. Lower the limits in Settings → History first." = "%@ получится больше, чем Keepit сможет потом прочитать. Сначала уменьшите лимиты в Настройках → История.";

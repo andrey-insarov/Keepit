@@ -179,13 +179,76 @@ enum Vault {
 
     /// Create the vault for a new password and return its key. Any existing recovery block is
     /// dropped (it wrapped the old key) — call `rewrapRecovery(from:to:)` afterwards to keep it.
+    /// Writes vault.json at once; the protection commit uses `prepareEnable` instead and writes
+    /// the bytes inside its journal.
     static func enable(password: SecureBuffer, rounds: UInt32 = defaultRounds) throws -> SecureKey {
+        let (key, meta) = try prepareEnable(password: password, rounds: rounds)
+        do { try writeMeta(meta) } catch { key.zero(); throw error }
+        return key
+    }
+
+    // MARK: Prepared vaults (nothing written)
+
+    /// A new vault for `password`, in memory: its key and the `Meta` that `encodeMeta` turns into
+    /// vault.json. The caller writes the bytes in its transaction (ProtectionCommit) and zeroes the
+    /// key if it does not.
+    static func prepareEnable(password: SecureBuffer, rounds: UInt32 = defaultRounds) throws -> (key: SecureKey, meta: Meta) {
         let salt = try randomBytes(16)
         let key = try deriveKey(password: password, salt: salt, rounds: rounds)
-        let check = try encrypt(okToken, key: key)
-        try writeMeta(Meta(formatVersion: formatVersion, kdf: kdfPBKDF2SHA256, rounds: rounds,
-                           salt: salt, check: check, recovery: nil))
-        return key
+        do {
+            let check = try encrypt(okToken, key: key)
+            return (key, Meta(formatVersion: formatVersion, kdf: kdfPBKDF2SHA256, rounds: rounds, salt: salt, check: check, recovery: nil))
+        } catch { key.zero(); throw error }
+    }
+
+    /// A new vault for a new password that keeps the current recovery phrase valid: the block is
+    /// re-wrapped from `old` to the new key in memory. `oldRecovery` nil → no block.
+    static func prepareRekey(password: SecureBuffer, from old: SecureKey, oldRecovery: Recovery?, rounds: UInt32 = defaultRounds) throws -> (key: SecureKey, meta: Meta) {
+        let (key, prepared) = try prepareEnable(password: password, rounds: rounds)
+        var meta = prepared
+        do {
+            if let rec = oldRecovery { meta.recovery = try rewrapped(rec, from: old, to: key) }
+            return (key, meta)
+        } catch { key.zero(); throw error }
+    }
+
+    /// Add a recovery block to a prepared `meta` for `key` (a fresh phrase, or `entropy` the user
+    /// already holds) and return the words. Nothing is written.
+    static func addRecovery(to meta: inout Meta, for key: SecureKey, entropy given: [UInt8]? = nil) throws -> [String] {
+        if let g = given, g.count != Mnemonic.entropyBytes { throw CocoaError(.fileReadCorruptFile) }
+        var entropy = try given ?? [UInt8](randomBytes(Mnemonic.entropyBytes))
+        defer { entropy.withUnsafeMutableBytes { _ = memset_s($0.baseAddress, $0.count, 0, $0.count) } }
+        let salt = try randomBytes(16)
+        let rkey = recoveryKey(entropy: entropy, salt: salt)
+        defer { rkey.zero() }
+        var keyBytes = key.withBytes { Data($0) }
+        defer { keyBytes.resetBytes(in: 0..<keyBytes.count) }
+        let wrappedKey = try encrypt(keyBytes, key: rkey)
+        let wrappedEntropy = try encrypt(Data(entropy), key: key)
+        meta.recovery = Recovery(salt: salt, wrappedKey: wrappedKey, wrappedEntropy: wrappedEntropy)
+        return Mnemonic.encode(entropy)
+    }
+
+    static func encodeMeta(_ meta: Meta) throws -> Data { try JSONEncoder().encode(meta) }
+
+    /// The current phrase's words, for a key that opens the vault: the entropy is wrapped with the
+    /// data key, so the words can be shown again after authentication (a phrase the user never
+    /// saw because a lock or a crash came between the commit and the dialog). nil without a block.
+    static func recoveryWords(for key: SecureKey) -> [String]? {
+        guard let rec = readMeta()?.recovery, var entropyData = try? decrypt(rec.wrappedEntropy, key: key) else { return nil }
+        defer { entropyData.resetBytes(in: 0..<entropyData.count) }
+        return Mnemonic.encode([UInt8](entropyData))
+    }
+
+    private static func rewrapped(_ rec: Recovery, from old: SecureKey, to new: SecureKey) throws -> Recovery {
+        var entropyData = try decrypt(rec.wrappedEntropy, key: old)
+        defer { entropyData.resetBytes(in: 0..<entropyData.count) }
+        let entropy = [UInt8](entropyData)
+        let rkey = recoveryKey(entropy: entropy, salt: rec.salt)
+        defer { rkey.zero() }
+        var keyBytes = new.withBytes { Data($0) }
+        defer { keyBytes.resetBytes(in: 0..<keyBytes.count) }
+        return Recovery(salt: rec.salt, wrappedKey: try encrypt(keyBytes, key: rkey), wrappedEntropy: try encrypt(entropyData, key: new))
     }
 
     /// The KDF parameters of the current vault (nil when protection is off) — for the security
@@ -210,19 +273,9 @@ enum Vault {
     /// backup), that phrase is wrapped for this vault instead, under a new salt.
     static func createRecovery(for key: SecureKey, entropy given: [UInt8]? = nil) throws -> [String] {
         guard var meta = readMeta() else { throw CocoaError(.fileNoSuchFile) }
-        if let g = given, g.count != Mnemonic.entropyBytes { throw CocoaError(.fileReadCorruptFile) }
-        var entropy = try given ?? [UInt8](randomBytes(Mnemonic.entropyBytes))
-        defer { entropy.withUnsafeMutableBytes { _ = memset_s($0.baseAddress, $0.count, 0, $0.count) } }
-        let salt = try randomBytes(16)
-        let rkey = recoveryKey(entropy: entropy, salt: salt)
-        defer { rkey.zero() }
-        var keyBytes = key.withBytes { Data($0) }
-        defer { keyBytes.resetBytes(in: 0..<keyBytes.count) }
-        let wrappedKey = try encrypt(keyBytes, key: rkey)
-        let wrappedEntropy = try encrypt(Data(entropy), key: key)
-        meta.recovery = Recovery(salt: salt, wrappedKey: wrappedKey, wrappedEntropy: wrappedEntropy)
+        let words = try addRecovery(to: &meta, for: key, entropy: given)
         try writeMeta(meta)
-        return Mnemonic.encode(entropy)
+        return words
     }
 
     /// Recover the data key from the phrase; nil if the phrase is wrong or no recovery block exists.
@@ -243,16 +296,7 @@ enum Vault {
     @discardableResult
     static func rewrapRecovery(from old: SecureKey, to new: SecureKey, oldRecovery: Recovery?) throws -> Bool {
         guard let rec = oldRecovery, var meta = readMeta() else { return false }
-        var entropyData = try decrypt(rec.wrappedEntropy, key: old)
-        defer { entropyData.resetBytes(in: 0..<entropyData.count) }
-        let entropy = [UInt8](entropyData)
-        let rkey = recoveryKey(entropy: entropy, salt: rec.salt)
-        defer { rkey.zero() }
-        var keyBytes = new.withBytes { Data($0) }
-        defer { keyBytes.resetBytes(in: 0..<keyBytes.count) }
-        meta.recovery = Recovery(salt: rec.salt,
-                                 wrappedKey: try encrypt(keyBytes, key: rkey),
-                                 wrappedEntropy: try encrypt(entropyData, key: new))
+        meta.recovery = try rewrapped(rec, from: old, to: new)
         try writeMeta(meta)
         return true
     }
@@ -300,7 +344,12 @@ enum Vault {
     /// Modal password prompt built on SecurePasswordField. Returns the locked bytes, or nil on Cancel.
     /// `confirm` shows a second field and insists both match (constant-time compare).
     /// The caller must `zero()` the returned buffer when done.
+    /// Tests only: answers `askPassword` (by title) instead of the dialog; nil = Cancel. The closure
+    /// may lock the app first, to stand for a lock while the prompt is up.
+    static var askPasswordForTesting: ((String) -> SecureBuffer?)?
+
     static func askPassword(title: String, message: String, confirm: Bool = false, cancelQuits: Bool = false) -> SecureBuffer? {
+        if let test = askPasswordForTesting { return test(title) }
         if case .password(let b) = prompt(title: title, message: message, confirm: confirm, cancelQuits: cancelQuits, offerRecovery: false) {
             return b
         }
@@ -309,7 +358,11 @@ enum Vault {
 
     /// Same prompt, optionally with a third "Recovery Access…" button.
     /// `recoveryAvailable` overrides the local vault's state — a backup file carries its own recovery block.
+    /// Tests only: answers `prompt` (by title) instead of the dialog — the unlock prompt.
+    static var promptForTesting: ((String) -> PromptResult)?
+
     static func prompt(title: String, message: String, confirm: Bool = false, cancelQuits: Bool = false, offerRecovery: Bool, recoveryAvailable: Bool? = nil) -> PromptResult {
+        if let test = promptForTesting { return test(title) }
         while true {
             let a = NSAlert()
             a.messageText = title

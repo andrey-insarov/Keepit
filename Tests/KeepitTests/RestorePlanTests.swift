@@ -208,7 +208,7 @@ final class RestorePlanTests: XCTestCase {
     func testInterruptedCommitIsReplayedAtLaunch() throws {
         let fm = FileManager.default
         try fm.createDirectory(at: Storage.directory, withIntermediateDirectories: true)
-        let steps = RestoreCommit.steps(templatesJSON: Data("new-templates".utf8), historyJSON: Data("new-history".utf8), settingsJSON: Data("new-settings".utf8))
+        let steps = try RestoreCommit.steps(templatesJSON: Data("new-templates".utf8), historyJSON: Data("new-history".utf8), settingsJSON: Data("new-settings".utf8))
         func resetLive() throws {
             try Data("old-templates".utf8).write(to: Storage.templatesURL)
             try Data("old-settings".utf8).write(to: Storage.settingsURL)
@@ -254,7 +254,7 @@ final class RestorePlanTests: XCTestCase {
         assertLiveIsOld()
         // A completed commit leaves no journal behind.
         try resetLive()
-        try RestoreCommit.writeFiles(steps)
+        try RestoreCommit.writeFiles(steps, journal: .restore)
         XCTAssertEqual(try Data(contentsOf: Storage.historyURL), Data("new-history".utf8))
         XCTAssertFalse(fm.fileExists(atPath: RestoreCommit.journalDirectory.path))
         XCTAssertFalse(try RestoreCommit.recoverIfNeeded())

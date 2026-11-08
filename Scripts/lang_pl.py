@@ -548,4 +548,11 @@ T = {
 'Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup.': 'Rozpoczęcie od nowa zachowuje ustawienia, z którymi Keepit działa teraz. Jeśli automatyczna kopia zapasowa była włączona, włącz ją ponownie w Ustawienia → Kopia zapasowa.',
 'Could not save the settings: %@': 'Nie udało się zapisać ustawień: %@',
 'moved by an interrupted Start Fresh or Restore and not yet put back; the earlier file is kept as a .corrupt-… file': 'przeniesiony przez przerwane „Zacznij od nowa” lub przywracanie i jeszcze nieprzywrócony; wcześniejszy plik pozostaje jako plik .corrupt-…',
+'Show…': 'Pokaż…',
+'Shows the current 24-word phrase again after you confirm the password or Touch ID — for a sheet you did not get to write down.': 'Po potwierdzeniu hasłem lub Touch ID ponownie pokazuje bieżącą frazę 24 słów — gdyby nie udało się jej zapisać.',
+'show the recovery phrase': 'pokazać frazę odzyskiwania',
+'This vault has no recovery phrase yet. Create one with Create New…': 'Ten sejf nie ma jeszcze frazy odzyskiwania. Utwórz ją przyciskiem „Utwórz nową…”.',
+'Could not disable protection: %@': 'Nie udało się wyłączyć ochrony: %@',
+'Keepit could not read its settings, so a backup that needs a new password cannot be restored now. Start fresh first — Keepit asks at the next launch or unlock.': 'Keepit nie mógł odczytać swoich ustawień, więc kopii zapasowej wymagającej nowego hasła nie można teraz przywrócić. Najpierw zacznij od nowa — Keepit zapyta przy następnym uruchomieniu lub odblokowaniu.',
+'%@ would be larger than Keepit can read back. Lower the limits in Settings → History first.': '%@ byłby większy, niż Keepit może potem odczytać. Najpierw obniż limity w Ustawieniach → Historia.',
 }

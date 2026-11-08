@@ -46,6 +46,7 @@ extension AppDelegate {
     }
 
     func info(_ text: String) {
+        if let sink = infoSinkForTesting { sink(text); return }
         let a = NSAlert()
         a.messageText = text
         a.alertStyle = .informational

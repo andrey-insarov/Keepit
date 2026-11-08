@@ -548,3 +548,10 @@
 "Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup." = "Ricominciare da capo mantiene le impostazioni con cui Keepit sta funzionando ora. Se il backup automatico era attivo, riattivalo in Impostazioni → Backup.";
 "Could not save the settings: %@" = "Impossibile salvare le impostazioni: %@";
 "moved by an interrupted Start Fresh or Restore and not yet put back; the earlier file is kept as a .corrupt-… file" = "spostato da un «Ricomincia da capo» o da un ripristino interrotti e non ancora rimesso a posto; il file precedente resta come file .corrupt-…";
+"Show…" = "Mostra…";
+"Shows the current 24-word phrase again after you confirm the password or Touch ID — for a sheet you did not get to write down." = "Mostra di nuovo la frase attuale di 24 parole dopo la conferma con password o Touch ID, se non hai fatto in tempo a trascriverla.";
+"show the recovery phrase" = "mostrare la frase di recupero";
+"This vault has no recovery phrase yet. Create one with Create New…" = "Questa cassaforte non ha ancora una frase di recupero. Creane una con «Crea nuova…».";
+"Could not disable protection: %@" = "Impossibile disattivare la protezione: %@";
+"Keepit could not read its settings, so a backup that needs a new password cannot be restored now. Start fresh first — Keepit asks at the next launch or unlock." = "Keepit non è riuscito a leggere le sue impostazioni, quindi un backup che richiede una nuova password non può essere ripristinato ora. Prima ricomincia da capo: Keepit lo chiederà al prossimo avvio o sblocco.";
+"%@ would be larger than Keepit can read back. Lower the limits in Settings → History first." = "%@ sarebbe più grande di quanto Keepit possa rileggere. Prima abbassa i limiti in Impostazioni → Cronologia.";

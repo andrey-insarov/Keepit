@@ -35,6 +35,7 @@ under `~/Library/Containers/com.it.keep/`):
 | `templates.json` | The template tree, including per-template hot keys | Yes |
 | `settings.json` | Settings: hot keys, limits, ignore list — no clipboard data | No |
 | `vault.json` | Encryption metadata: KDF name and round count, PBKDF2 salt, a sealed verifier, the wrapped recovery material | — |
+| `restore-journal/`, `protection-journal/` | Only during a restore or a password change: the previous bytes of the files above, so an interrupted commit is undone at the next launch | As the originals |
 
 The history is written when it changes and read on launch. Without a password the JSON is plain
 text on disk, protected only by your macOS account and FileVault. *Settings → Advanced → Open
@@ -97,6 +98,16 @@ Turn on *Require password at launch* and the history and templates files are enc
   *Limitations*). With the default *Never*, locking the Mac does **not** lock Keepit: the key and
   the decrypted data stay in the process for as long as you are away, protected by the Mac's own
   lock and nothing else.
+- **Turning protection on or off, changing the password**: one transaction. The new `vault.json`
+  and the data files sealed with the new key (or written plain, when protection goes off) are
+  prepared in memory and written through the same kind of journal a restore uses
+  (`protection-journal/`, with the previous bytes of `vault.json`, `history.json`,
+  `templates.json` and `settings.json`): all of them change or none, a crash in between is undone
+  at the next launch before anything is read, and the key in memory changes only once the files
+  have. The recovery phrase is part of the first `vault.json` ever written; *Settings → Security →
+  Show…* shows it again after Touch ID or the password. These operations wait while a data file
+  is held as unreadable — re-encrypting around it would destroy the one way left to read it. A lock
+  during any of their dialogs voids the answer.
 - **Password strength**: the password dialog shows an entropy estimate and explains it; Keepit does
   not enforce a minimum, because the recovery phrase and Touch ID are the usual way in.
 - **On-screen keyboard**: the keyboard button next to the password field opens a small panel for

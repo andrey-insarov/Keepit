@@ -548,4 +548,11 @@ T = {
 'Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup.': 'Sıfırdan başlamak, Keepit’in şu anda çalıştığı ayarları korur. Otomatik yedekleme açıksa, Ayarlar → Yedekleme bölümünden yeniden açın.',
 'Could not save the settings: %@': 'Ayarlar kaydedilemedi: %@',
 'moved by an interrupted Start Fresh or Restore and not yet put back; the earlier file is kept as a .corrupt-… file': 'yarıda kalan bir “Sıfırdan Başla” veya geri yükleme tarafından taşındı ve henüz geri konmadı; önceki dosya .corrupt-… dosyası olarak saklanıyor',
+'Show…': 'Göster…',
+'Shows the current 24-word phrase again after you confirm the password or Touch ID — for a sheet you did not get to write down.': 'Parolayı veya Touch ID’yi onayladıktan sonra geçerli 24 sözcüklük ifadeyi yeniden gösterir — not alamadıysanız diye.',
+'show the recovery phrase': 'kurtarma ifadesini göstermek',
+'This vault has no recovery phrase yet. Create one with Create New…': 'Bu kasanın henüz kurtarma ifadesi yok. “Yeni oluştur…” ile bir tane oluşturun.',
+'Could not disable protection: %@': 'Koruma kapatılamadı: %@',
+'Keepit could not read its settings, so a backup that needs a new password cannot be restored now. Start fresh first — Keepit asks at the next launch or unlock.': 'Keepit ayarlarını okuyamadı, bu nedenle yeni parola gerektiren bir yedek şu anda geri yüklenemez. Önce sıfırdan başlayın — Keepit bir sonraki açılışta veya kilit açmada soracak.',
+'%@ would be larger than Keepit can read back. Lower the limits in Settings → History first.': '%@, Keepit’in geri okuyabileceğinden büyük olur. Önce Ayarlar → Geçmiş’ten sınırları düşürün.',
 }

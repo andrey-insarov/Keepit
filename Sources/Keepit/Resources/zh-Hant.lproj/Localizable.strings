@@ -548,3 +548,10 @@
 "Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup." = "重新開始會保留 Keepit 目前執行所用的設定。如果您之前開啟了自動備份，請在「設定 → 備份」中重新開啟。";
 "Could not save the settings: %@" = "無法儲存設定：%@";
 "moved by an interrupted Start Fresh or Restore and not yet put back; the earlier file is kept as a .corrupt-… file" = "已被中斷的「重新開始」或還原操作移走，尚未放回；之前的檔案以 .corrupt-… 檔案的形式保留";
+"Show…" = "顯示…";
+"Shows the current 24-word phrase again after you confirm the password or Touch ID — for a sheet you did not get to write down." = "在確認密碼或 Touch ID 後再次顯示目前的 24 個單字助記詞——以防您當時沒來得及抄寫。";
+"show the recovery phrase" = "顯示復原助記詞";
+"This vault has no recovery phrase yet. Create one with Create New…" = "此保險庫尚無復原助記詞。請用「新建…」建立一個。";
+"Could not disable protection: %@" = "無法關閉保護：%@";
+"Keepit could not read its settings, so a backup that needs a new password cannot be restored now. Start fresh first — Keepit asks at the next launch or unlock." = "Keepit 無法讀取其設定，因此目前無法還原需要設定新密碼的備份。請先重新開始——Keepit 會在下次啟動或解鎖時詢問。";
+"%@ would be larger than Keepit can read back. Lower the limits in Settings → History first." = "%@ 將超過 Keepit 能夠讀回的大小。請先在 設定 → 歷史記錄 中降低限制。";

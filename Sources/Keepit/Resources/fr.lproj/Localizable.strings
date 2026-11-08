@@ -548,3 +548,10 @@
 "Starting fresh keeps the settings Keepit is running on now. If you had automatic backup on, turn it on again in Settings → Backup." = "Repartir de zéro conserve les réglages avec lesquels Keepit fonctionne actuellement. Si la sauvegarde automatique était activée, réactivez-la dans Réglages → Sauvegarde.";
 "Could not save the settings: %@" = "Impossible d’enregistrer les réglages : %@";
 "moved by an interrupted Start Fresh or Restore and not yet put back; the earlier file is kept as a .corrupt-… file" = "déplacé par un « Repartir de zéro » ou une restauration interrompus et pas encore remis en place ; le fichier précédent est conservé sous la forme d’un fichier .corrupt-…";
+"Show…" = "Afficher…";
+"Shows the current 24-word phrase again after you confirm the password or Touch ID — for a sheet you did not get to write down." = "Affiche de nouveau la phrase actuelle de 24 mots après confirmation du mot de passe ou de Touch ID — si vous n’avez pas pu la noter.";
+"show the recovery phrase" = "afficher la phrase de récupération";
+"This vault has no recovery phrase yet. Create one with Create New…" = "Ce coffre n’a pas encore de phrase de récupération. Créez-en une avec « Créer une nouvelle… ».";
+"Could not disable protection: %@" = "Impossible de désactiver la protection : %@";
+"Keepit could not read its settings, so a backup that needs a new password cannot be restored now. Start fresh first — Keepit asks at the next launch or unlock." = "Keepit n’a pas pu lire ses réglages ; une sauvegarde qui nécessite un nouveau mot de passe ne peut donc pas être restaurée pour le moment. Repartez d’abord de zéro — Keepit le proposera au prochain lancement ou déverrouillage.";
+"%@ would be larger than Keepit can read back. Lower the limits in Settings → History first." = "%@ dépasserait la taille que Keepit peut relire. Réduisez d’abord les limites dans Réglages → Historique.";
