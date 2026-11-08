@@ -152,6 +152,9 @@ enum Vault {
         }
     }
 
+    /// How much larger than its plaintext a sealed blob is: the marker, the GCM nonce and tag.
+    static var sealOverhead: Int { magic.count + 12 + 16 }
+
     static func isEncrypted(_ data: Data) -> Bool {
         data.count > magic.count && data.prefix(magic.count) == magic
     }
@@ -173,6 +176,9 @@ enum Vault {
     }
 
     private static func writeMeta(_ meta: Meta) throws {
+        // Held like a data file: after an undo that did not finish, vault.json is pinned until the
+        // launch replay (SEC01 audit, round 1: Create New… wrote around the holds).
+        if Storage.isHeld(metaURL) { throw Storage.Failure.held(metaURL.lastPathComponent) }
         let data = try JSONEncoder().encode(meta)
         try data.write(to: metaURL, options: .atomic)
     }

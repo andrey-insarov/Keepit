@@ -269,13 +269,14 @@ extension AppDelegate {
             movedAside = try Storage.setAside(unreadable)
             if unreadable.contains(Storage.settingsURL) { Storage.unpin(Storage.historyURL) }
         }
+        let unswept: (URL, Error)?
         do {
             if let v = newVault {
                 var steps = [RestoreCommit.Step(name: ProtectionCommit.vaultName, url: Vault.metaURL, data: v.meta, encrypt: false)]
                 steps += try RestoreCommit.steps(templatesJSON: templatesJSON, historyJSON: historyJSON, settingsJSON: settingsJSON, sealWith: v.key)
-                try RestoreCommit.writeFiles(steps, journal: .protection)
+                unswept = try RestoreCommit.writeFiles(steps, journal: .protection).map { (FileJournal.protection.directory, $0) }
             } else {
-                try RestoreCommit.writeFiles(templatesJSON: templatesJSON, historyJSON: historyJSON, settingsJSON: settingsJSON)
+                unswept = try RestoreCommit.writeFiles(templatesJSON: templatesJSON, historyJSON: historyJSON, settingsJSON: settingsJSON).map { (FileJournal.restore.directory, $0) }
             }
         } catch {
             undoSetAsideAfterFailedCommit(movedAside: movedAside, unreadable: unreadable)   // the stores' loadFailure never moved
@@ -304,6 +305,7 @@ extension AppDelegate {
         registerHotKeys()
         viewer?.refresh()
         backup?.noteChange()
+        if let u = unswept { reportUnsweptJournal(u.0, u.1) }        // the commit stands; the copies are still there
     }
 
     final class UnlockedBackup {

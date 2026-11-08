@@ -205,8 +205,22 @@ enum RestoreCommit {
     /// any write puts the previous files back (`replayJournal`) and names the file; a process
     /// killed in between is put right by `recoverIfNeeded` at the next launch. Nothing in memory
     /// has changed in any failure case.
-    static func writeFiles(templatesJSON: Data, historyJSON: Data?, settingsJSON: Data) throws {
+    @discardableResult
+    static func writeFiles(templatesJSON: Data, historyJSON: Data?, settingsJSON: Data) throws -> Error? {
         try writeFiles(try steps(templatesJSON: templatesJSON, historyJSON: historyJSON, settingsJSON: settingsJSON), journal: .restore)
+    }
+
+    /// The bytes a step writes must be readable back under `Limits.dataFileMaxBytes`. A step that
+    /// `Storage.writeNow` still seals grows by `Vault.sealOverhead` on the way (SEC01 audit, round
+    /// 1: a plain restore into an existing vault compared the JSON, not the sealed file). Returns
+    /// the first step over the limit. `limit` is a parameter for the tests.
+    static func stepOverLimit(_ steps: [Step], limit: Int = Limits.dataFileMaxBytes) -> String? {
+        for s in steps {
+            guard let d = s.data else { continue }
+            let written = s.encrypt ? d.count + Vault.sealOverhead : d.count
+            if written > limit { return s.name }
+        }
+        return nil
     }
 
     /// Tests only: runs after every file is written and before the marker goes (a disk that fails
@@ -217,9 +231,12 @@ enum RestoreCommit {
     /// After this returns, the new files are the state at the next launch whatever else fails;
     /// the caller publishes the new state in memory unconditionally (3.0.6 design review of SEC01:
     /// an error after the marker is gone must not leave the old key in memory over new files).
-    /// A failed disarm is undone like a failed write; a failed sweep is logged, and the next launch
-    /// deletes the unarmed leftovers.
-    static func writeFiles(_ steps: [Step], journal: FileJournal) throws {
+    /// A failed disarm is undone like a failed write. A failed sweep is returned, not thrown: the
+    /// commit stands, but the copies — plain data, when protection was just turned on — are still
+    /// in the journal directory, and the caller tells the user (SEC01 audit, round 1). The next
+    /// launch tries the removal again.
+    @discardableResult
+    static func writeFiles(_ steps: [Step], journal: FileJournal) throws -> Error? {
         // A held file (one Keepit could not read) is never replaced by a commit: the caller sets
         // it aside first (Replace) or does not get here (Merge). Refused before anything is
         // journalled or written.
@@ -228,8 +245,8 @@ enum RestoreCommit {
         }
         for s in steps {
             do { _ = try readPrevious(s.url) } catch { throw Failure.cannotReadPrevious(s.name, error) }
-            if let d = s.data, d.count > Limits.dataFileMaxBytes { throw Failure.tooLarge(s.name) }   // the next launch could not read it back
         }
+        if let name = stepOverLimit(steps) { throw Failure.tooLarge(name) }   // the next launch could not read it back
         if hasArmedJournal { throw Failure.journalArmed }
         do { try journal.write() } catch let e as Failure { throw e } catch { throw Failure.cannotJournal(error) }
         for s in steps {
@@ -248,8 +265,14 @@ enum RestoreCommit {
             if undo.isEmpty { throw Failure.writeFailed("commit", error) }
             throw Failure.undoFailed("commit", error, undo: undo)
         }
-        journal.sweep()
+        return journal.sweep()
     }
+
+    /// Journal directories a launch found without a marker and could not remove (`recoverIfNeeded`).
+    /// The commit they belonged to stands; the copies in them are the data as it was before it.
+    static private(set) var unsweptJournals: [(URL, Error)] = []
+    static func noteUnswept(_ directory: URL, _ error: Error) { unsweptJournals.append((directory, error)) }
+    static func clearUnsweptForTesting() { unsweptJournals = [] }
 
     /// Marker first (disarms), then the copies. Kept for callers that clear by hand (tests).
     static func clearJournal() throws { try FileJournal.restore.disarm(); try FileJournal.restore.sweepOrThrow() }
@@ -332,12 +355,20 @@ struct FileJournal {
     }
 
     /// At launch, before any store is loaded. Returns true when the journal was replayed.
-    /// An unarmed journal (no marker) is deleted: the commit never started, or finished.
+    /// An unarmed journal (no marker) is deleted: the commit never started, or finished. If it
+    /// cannot be deleted that is not a reason to stop the launch — nothing needs replaying — but
+    /// it is noted (`RestoreCommit.unsweptJournals`) so the user hears about the copies.
     @discardableResult
     func recoverIfNeeded() throws -> Bool {
         let fm = FileManager.default
         guard fm.fileExists(atPath: directory.path) else { return false }
-        guard isArmed else { try fm.removeItem(at: directory); return false }
+        guard isArmed else {
+            do { try fm.removeItem(at: directory) } catch {
+                Log.storage.error("journal copies not removed at launch: \(error.localizedDescription)")
+                RestoreCommit.noteUnswept(directory, error)
+            }
+            return false
+        }
         let errors = replay()
         if let first = errors.first { throw RestoreCommit.Failure.undoFailed(directory.lastPathComponent, first.1, undo: errors) }
         return true
@@ -350,9 +381,12 @@ struct FileJournal {
     }
 
     /// Cleanup after `disarm`: the copies. A failure here changes nothing about the commit; it is
-    /// logged, and the next launch removes the unarmed directory.
-    func sweep() {
-        do { try sweepOrThrow() } catch { Log.storage.error("journal copies not removed: \(error.localizedDescription)") }
+    /// logged and returned for the caller to report, and the next launch tries again.
+    func sweep() -> Error? {
+        do { try sweepOrThrow(); return nil } catch {
+            Log.storage.error("journal copies not removed: \(error.localizedDescription)")
+            return error
+        }
     }
 
     func sweepOrThrow() throws {

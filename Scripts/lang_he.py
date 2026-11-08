@@ -555,4 +555,6 @@ T = {
 'Could not disable protection: %@': 'לא ניתן לבטל את ההגנה: %@',
 'Keepit could not read its settings, so a backup that needs a new password cannot be restored now. Start fresh first — Keepit asks at the next launch or unlock.': 'Keepit לא הצליח לקרוא את ההגדרות שלו, ולכן אי אפשר כעת לשחזר גיבוי שדורש סיסמה חדשה. התחילו מחדש קודם — Keepit ישאל בהפעלה או בביטול הנעילה הבאים.',
 '%@ would be larger than Keepit can read back. Lower the limits in Settings → History first.': '%@ יהיה גדול מכפי ש‑Keepit יוכל לקרוא בחזרה. הקטינו קודם את המגבלות בהגדרות ← היסטוריה.',
+'Keepit could not finish undoing a failed change to the password protection: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again — the data comes back as it was before the change.': 'Keepit לא הצליח להשלים את ביטול השינוי שנכשל בהגנת הסיסמה: %@\n\nדבר לא ישתנה. תקנו את הקובץ שצוין למעלה (הרשאות, דגל נעילה, מקום בדיסק) והפעילו את Keepit מחדש — הנתונים יחזרו למצבם שלפני השינוי.',
+"The change is done, but the undo copies could not be removed: %@\n\nDelete the folder “%@” in Keepit's data folder by hand — it holds the data as it was before the change.": 'השינוי בוצע, אך לא ניתן היה להסיר את עותקי הביטול: %@\n\nמחקו ידנית את התיקייה „%@“ בתיקיית הנתונים של Keepit — היא מכילה את הנתונים כפי שהיו לפני השינוי.',
 }

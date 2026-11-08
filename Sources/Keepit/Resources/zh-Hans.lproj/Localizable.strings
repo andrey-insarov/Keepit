@@ -555,3 +555,5 @@
 "Could not disable protection: %@" = "无法关闭保护：%@";
 "Keepit could not read its settings, so a backup that needs a new password cannot be restored now. Start fresh first — Keepit asks at the next launch or unlock." = "Keepit 无法读取其设置，因此目前无法恢复需要设置新密码的备份。请先重新开始——Keepit 会在下次启动或解锁时询问。";
 "%@ would be larger than Keepit can read back. Lower the limits in Settings → History first." = "%@ 将超过 Keepit 能够读回的大小。请先在 设置 → 历史 中降低限制。";
+"Keepit could not finish undoing a failed change to the password protection: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again — the data comes back as it was before the change." = "Keepit 无法完成对密码保护更改失败后的撤销：%@\n\n不会更改任何内容。请修复上述文件（权限、锁定标志、磁盘空间）后重新启动 Keepit——数据将恢复到更改前的状态。";
+"The change is done, but the undo copies could not be removed: %@\n\nDelete the folder “%@” in Keepit's data folder by hand — it holds the data as it was before the change." = "更改已完成，但用于撤销的副本无法删除：%@\n\n请手动删除 Keepit 数据文件夹中的“%@”文件夹——其中保存着更改前的数据。";

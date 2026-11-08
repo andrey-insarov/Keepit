@@ -555,4 +555,6 @@ T = {
 'Could not disable protection: %@': '無法關閉保護：%@',
 'Keepit could not read its settings, so a backup that needs a new password cannot be restored now. Start fresh first — Keepit asks at the next launch or unlock.': 'Keepit 無法讀取其設定，因此目前無法還原需要設定新密碼的備份。請先重新開始——Keepit 會在下次啟動或解鎖時詢問。',
 '%@ would be larger than Keepit can read back. Lower the limits in Settings → History first.': '%@ 將超過 Keepit 能夠讀回的大小。請先在 設定 → 歷史記錄 中降低限制。',
+'Keepit could not finish undoing a failed change to the password protection: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again — the data comes back as it was before the change.': 'Keepit 無法完成對密碼保護變更失敗後的撤銷：%@\n\n不會更改任何內容。請修正上述檔案（權限、鎖定旗標、磁碟空間）後重新啟動 Keepit——資料將回到變更前的狀態。',
+"The change is done, but the undo copies could not be removed: %@\n\nDelete the folder “%@” in Keepit's data folder by hand — it holds the data as it was before the change.": '變更已完成，但用於撤銷的副本無法刪除：%@\n\n請手動刪除 Keepit 資料夾中的「%@」資料夾——其中保存著變更前的資料。',
 }

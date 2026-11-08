@@ -149,9 +149,41 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// saved), so: explain, change nothing, leave. `exit`, not `terminate()`: the latter runs
     /// `applicationWillTerminate`, which saves; and no `defer` on the way restarts the watcher.
     func stopForUnfinishedUndo(_ error: Error) -> Never {
+        pinDataFilesForUnfinishedUndo()
         Log.storage.error("unfinished restore undo; quitting without saving: \(error.localizedDescription)")
         Vault.error(LF("Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again.", error.localizedDescription))
         exit(1)
+    }
+
+    /// Before the alert that precedes a quit for an unfinished undo: nothing may land on the mixed
+    /// files while the alert is up — a debounced save fires inside its modal loop (SEC01 audit,
+    /// round 1: the first alert let a copy taken during it be saved, and the launch replay then
+    /// discarded it). Pinned, not held: a successful read must not lift this.
+    private func pinDataFilesForUnfinishedUndo() {
+        for url in [Vault.metaURL, Storage.templatesURL, Storage.historyURL, Storage.settingsURL] { Storage.pin(url) }
+    }
+
+    /// Tests only: stands for `exit(1)` after an unfinished protection undo; the test goes on.
+    var exitForTesting: ((Error) -> Void)?
+
+    /// A protection commit whose undo did not finish (the journal is still armed): the files may be
+    /// a mix and the journal is their only intact copy. Same answer as for a restore: pin, explain,
+    /// quit without saving — the next launch replays the journal before anything is read. Going on
+    /// was not safe (round 1): a lock and an unlock released the holds, and vault.json was written
+    /// around them by Create New….
+    private func stopForUnfinishedProtectionUndo(_ error: Error) {
+        pinDataFilesForUnfinishedUndo()
+        Log.storage.error("unfinished protection undo; quitting without saving: \(error.localizedDescription)")
+        Vault.error(LF("Keepit could not finish undoing a failed change to the password protection: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again — the data comes back as it was before the change.", error.localizedDescription))
+        if let test = exitForTesting { test(error); return }
+        exit(1)
+    }
+
+    /// The copies a commit could not remove after it succeeded (the change stands; the folder holds
+    /// the data as it was before it, plain if protection was off). Said at once, and again at launch
+    /// while the folder is still there.
+    func reportUnsweptJournal(_ directory: URL, _ error: Error) {
+        Vault.error(LF("The change is done, but the undo copies could not be removed: %@\n\nDelete the folder “%@” in Keepit's data folder by hand — it holds the data as it was before the change.", error.localizedDescription, directory.lastPathComponent))
     }
 
     // MARK: - Lifecycle
@@ -173,7 +205,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             if self.history.expire() > 0 { self.viewer?.refresh() }
         }
         templates = TemplateStore()
-        DispatchQueue.main.async { [weak self] in self?.reportUnreadableFiles() }   // after launch has set everything up
+        DispatchQueue.main.async { [weak self] in                                     // after launch has set everything up
+            guard let self else { return }
+            self.reportUnreadableFiles()
+            for (dir, e) in RestoreCommit.unsweptJournals { self.reportUnsweptJournal(dir, e) }
+        }
         monitor = ClipboardMonitor(settings: settings)
         setUpBackup()                                  // before completeRecovery(): rekey() tells the engine about the new key
         if needsPasswordReset { completeRecovery() }    // locked meanwhile → launch goes on locked; asked again at unlock
@@ -485,6 +521,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// One refusal for everything that would build on data Keepit could not read: a backup, an
     /// archive, a Merge, a password change. Returns false (after saying so) when there is such data.
     func refuseWhileUnreadable() -> Bool {
+        if RestoreCommit.hasArmedJournal {
+            // An undo that did not finish: the process is on its way out (stopForUnfinishedUndo);
+            // nothing that writes may start meanwhile (SEC01 audit, round 1: Create New… wrote
+            // vault.json around the holds, and the launch replay then revived the old phrase).
+            if let test = refusalForTesting { test(); return true }
+            Vault.error(RestoreCommit.Failure.journalArmed.localizedDescription)
+            return true
+        }
         guard hasUnreadableData else { return false }
         if let test = refusalForTesting { test(); return true }
         Vault.error(L("Keepit could not read some of its data, so this is not available now. Restore a backup (Replace) or start fresh first — Keepit asks at the next launch or unlock."))
@@ -774,31 +818,25 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         guard !isLocked, lockCount == generation, let oldKey = Storage.key else { return false }
         if refuseWhileUnreadable() { return false }          // re-keying around a held file would destroy the way to read it by hand
         let newKey: SecureKey
+        let unswept: Error?
         do {
             let prepared = try Vault.prepareRekey(password: pw, from: oldKey, oldRecovery: Vault.currentRecovery)
             newKey = prepared.key
             let data = try dataForProtectionCommit()
-            try ProtectionCommit.commit(.init(meta: try Vault.encodeMeta(prepared.meta), key: newKey,
-                                              templatesJSON: data.templates, historyJSON: data.history,
-                                              settingsJSON: try Storage.prettyEncoder.encode(settings)))
+            unswept = try ProtectionCommit.commit(.init(meta: try Vault.encodeMeta(prepared.meta), key: newKey,
+                                                        templatesJSON: data.templates, historyJSON: data.history,
+                                                        settingsJSON: try Storage.prettyEncoder.encode(settings)))
         } catch {
+            if RestoreCommit.hasArmedJournal { stopForUnfinishedProtectionUndo(error); return false }
             Vault.error(LF("Could not change the password: %@", error.localizedDescription))
-            if RestoreCommit.hasArmedJournal { holdUntilRelaunch() }
             return false
         }
         // Committed: the files open with the new password whatever happens from here.
         Storage.key = newKey                         // zeroes oldKey
         syncBiometricKey()
         backup?.forceNext()                           // the next copy must open with the new password
+        if let e = unswept { reportUnsweptJournal(FileJournal.protection.directory, e) }
         return true
-    }
-
-    /// An undo that did not finish (the journal is still armed): the files may be a mix and the
-    /// journal is their only intact copy. Nothing may be saved over them — the names are held
-    /// until the next launch replays the journal — and the user is told to relaunch.
-    private func holdUntilRelaunch() {
-        for url in [Vault.metaURL, Storage.templatesURL, Storage.historyURL, Storage.settingsURL] { Storage.hold(url) }
-        Vault.error(RestoreCommit.Failure.journalArmed.localizedDescription)
     }
 
     /// Confirm identity for sensitive changes: Touch ID (if allowed) or the current password.
@@ -914,28 +952,36 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             Vault.error(LF("Could not enable protection: %@", error.localizedDescription))
             return false
         }
+        let unswept: Error?
         do {
             let data = try dataForProtectionCommit()
-            try ProtectionCommit.commit(.init(meta: prepared.meta, key: prepared.key,
-                                              templatesJSON: data.templates, historyJSON: data.history,
-                                              settingsJSON: try Storage.prettyEncoder.encode(settings)))
+            unswept = try ProtectionCommit.commit(.init(meta: prepared.meta, key: prepared.key,
+                                                        templatesJSON: data.templates, historyJSON: data.history,
+                                                        settingsJSON: try Storage.prettyEncoder.encode(settings)))
         } catch {
             prepared.discard()
+            if RestoreCommit.hasArmedJournal { stopForUnfinishedProtectionUndo(error); return false }
             Vault.error(LF("Could not enable protection: %@", error.localizedDescription))
-            if RestoreCommit.hasArmedJournal { holdUntilRelaunch() }
             return false
         }
-        publishEnabledVault(prepared)
+        publishEnabledVault(prepared, unswept: unswept)
         return true
     }
 
     /// After a commit that created a vault (enableProtection, or a restore that made one): the key
-    /// goes live and the follow-ups run. Nothing here can undo the commit.
-    func publishEnabledVault(_ prepared: PreparedVault) {
+    /// goes live and the follow-ups run. Nothing here can undo the commit. The dialogs at the end
+    /// (the phrase, or the note about the old one) need the app still unlocked in the same lock
+    /// generation: the Touch ID step can show a modal alert, and a lock during it must not be
+    /// followed by the phrase on screen (SEC01 audit, round 1). The phrase is in vault.json;
+    /// Settings → Security → Show… shows it after the next unlock.
+    func publishEnabledVault(_ prepared: PreparedVault, unswept: Error? = nil) {
+        let g = lockCount
         Storage.key = prepared.key
         syncBiometricKey()
         configureBackup()                             // a folder kept in settings becomes a destination again
         backup?.forceNext()
+        if let e = unswept { reportUnsweptJournal(FileJournal.protection.directory, e) }
+        guard !isLocked, lockCount == g else { return }
         if let words = prepared.words { RecoveryDialogs.present(words: words) }
         else { info(L("Protection is on. The recovery phrase from the backup also opens Keepit on this Mac.")) }
     }
@@ -980,19 +1026,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         guard !isLocked, lockCount == g, Storage.key != nil else { return false }
         var newSettings = settings
         newSettings.backupEnabled = false
+        let unswept: Error?
         do {
             let data = try dataForProtectionCommit()
-            try ProtectionCommit.commit(.init(meta: nil, key: nil,
-                                              templatesJSON: data.templates, historyJSON: data.history,
-                                              settingsJSON: try Storage.prettyEncoder.encode(newSettings)))
+            unswept = try ProtectionCommit.commit(.init(meta: nil, key: nil,
+                                                        templatesJSON: data.templates, historyJSON: data.history,
+                                                        settingsJSON: try Storage.prettyEncoder.encode(newSettings)))
         } catch {
+            if RestoreCommit.hasArmedJournal { stopForUnfinishedProtectionUndo(error); return false }
             Vault.error(LF("Could not disable protection: %@", error.localizedDescription))
-            if RestoreCommit.hasArmedJournal { holdUntilRelaunch() }
             return false
         }
         Storage.key = nil
         BiometricUnlock.remove()                      // the setting stays as the user left it; the entry wrapped a key that is gone
         apply(settings: newSettings)                  // → configureBackup(): destination nil
+        if let e = unswept { reportUnsweptJournal(FileJournal.protection.directory, e) }
         return true
     }
 

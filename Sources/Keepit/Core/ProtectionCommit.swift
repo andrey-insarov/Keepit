@@ -43,8 +43,10 @@ enum ProtectionCommit {
     }
 
     /// The transaction. Throws `RestoreCommit.Failure`; on return the new files are the state at
-    /// the next launch, whatever happens afterwards.
-    static func commit(_ plan: Plan) throws {
+    /// the next launch, whatever happens afterwards. Returns the sweep's error when the journal
+    /// copies could not be removed (the caller reports it; the commit stands).
+    @discardableResult
+    static func commit(_ plan: Plan) throws -> Error? {
         try RestoreCommit.writeFiles(try steps(plan), journal: .protection)
     }
 }

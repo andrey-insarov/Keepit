@@ -555,3 +555,5 @@
 "Could not disable protection: %@" = "保護を解除できませんでした: %@";
 "Keepit could not read its settings, so a backup that needs a new password cannot be restored now. Start fresh first — Keepit asks at the next launch or unlock." = "Keepit は設定を読み込めなかったため、新しいパスワードが必要なバックアップは現在復元できません。先に最初からやり直してください。次回の起動時またはロック解除時に Keepit が確認します。";
 "%@ would be larger than Keepit can read back. Lower the limits in Settings → History first." = "%@ が Keepit で読み戻せるサイズを超えてしまいます。先に 設定 → 履歴 で上限を下げてください。";
+"Keepit could not finish undoing a failed change to the password protection: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again — the data comes back as it was before the change." = "Keepit はパスワード保護の変更に失敗した後の取り消しを完了できませんでした：%@\n\n何も変更されません。上記のファイルの問題（権限、ロックフラグ、ディスク容量）を解決して、Keepit を再起動してください。データは変更前の状態に戻ります。";
+"The change is done, but the undo copies could not be removed: %@\n\nDelete the folder “%@” in Keepit's data folder by hand — it holds the data as it was before the change." = "変更は完了しましたが、取り消し用のコピーを削除できませんでした：%@\n\nKeepit のデータフォルダ内のフォルダ「%@」を手動で削除してください。変更前の状態のデータが入っています。";
