@@ -54,7 +54,8 @@ final class Sec10RoundFiveAuditTests: XCTestCase {
         restarted.history.flush()
         XCTAssertEqual(HistoryStore(settings: .whileUnreadable).items.count, originals.count)
         XCTAssertEqual(try Data(contentsOf: Storage.settingsURL), brokenSettings, "back under its name")
-        XCTAssertFalse(FileManager.default.fileExists(atPath: XCTUnwrap(moved.first).path))
+        let asideURL = try XCTUnwrap(moved.first)
+        XCTAssertFalse(FileManager.default.fileExists(atPath: asideURL.path))
         XCTAssertFalse(FileManager.default.fileExists(atPath: Storage.setAsideMarker.path))
     }
 
