@@ -1135,7 +1135,7 @@ final class ViewerWindowController: NSWindowController,
     private(set) var discarded = false
     var nodeCountForTesting: Int { nodes.count }
     var shownTextForTesting: String { textFormat.textView.string }
-    var canUndoForTesting: Bool { textFormat.textView.undoManager?.canUndo == true }
+    var canUndoForTesting: Bool { textFormat.editorUndo.canUndo }
     func loadTextForTesting(_ text: String, editable: Bool = true) {
         textFormat.load(format: ClipItem.Format.text, data: Data(text.utf8), editable: editable)
     }
@@ -1146,7 +1146,7 @@ final class ViewerWindowController: NSWindowController,
         let tv = textFormat.textView
         let before = tv.string
         tv.insertText(text, replacementRange: NSRange(location: 0, length: 0))
-        tv.undoManager?.registerUndo(withTarget: tv) { $0.string = before }
+        textFormat.editorUndo.registerUndo(withTarget: tv) { $0.string = before }
     }
 }
 

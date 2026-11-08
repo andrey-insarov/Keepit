@@ -23,8 +23,13 @@ final class TextFormatView: NSView, NSTextViewDelegate {
     let textView: NSTextView
     private var format = ClipItem.Format.text
     private var dirty = false
+    /// The editor's own undo stack, so it exists wherever the view is (not the window's, which is
+    /// nil while the pane is not shown) and `clear()` empties exactly it.
+    let editorUndo = UndoManager()
     /// Called when editing ends with the new bytes for `format`.
     var onCommit: ((String, Data) -> Void)?
+
+    func undoManager(for view: NSTextView) -> UndoManager? { editorUndo }
 
     override init(frame: NSRect) {
         // The factory wires up a text view that fills the whole scroll area (clicking anywhere focuses it).
@@ -64,7 +69,7 @@ final class TextFormatView: NSView, NSTextViewDelegate {
             textView.font = NSFont.monospacedSystemFont(ofSize: 13, weight: .regular)
             textView.string = String(data: data, encoding: .utf8) ?? String(decoding: data, as: UTF8.self)
         }
-        textView.undoManager?.removeAllActions()
+        editorUndo.removeAllActions()
         textView.scroll(.zero)
     }
 
@@ -72,7 +77,7 @@ final class TextFormatView: NSView, NSTextViewDelegate {
     func clear() {
         dirty = false
         textView.textStorage?.setAttributedString(NSAttributedString())
-        textView.undoManager?.removeAllActions()
+        editorUndo.removeAllActions()
         textView.isEditable = false
     }
 
