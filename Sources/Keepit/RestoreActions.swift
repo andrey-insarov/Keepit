@@ -254,7 +254,7 @@ extension AppDelegate {
             undoSetAsideAfterFailedCommit(movedAside: movedAside, unreadable: unreadable)   // the stores' loadFailure never moved
             throw error
         }
-        if !movedAside.isEmpty { Storage.clearSetAsideMarker() }          // the plan's settings.json exists
+        if unreadable.contains(Storage.settingsURL) { Storage.clearSetAsideMarker() }   // the plan's settings.json exists (also from .pending, where nothing was moved)
         settingsLoadFailure = nil
         // Both models and the settings they are trimmed under in one step, with no observer called and
         // no save scheduled in between: nothing — a lock in a callback included — can run while one
