@@ -1913,17 +1913,26 @@ extension AppDelegate {
     }
 
     /// Back Up Now while backups are paused for the password (a Touch ID key on a vault without a
-    /// recovery phrase, SEC01 audit round 5): ask for it once. The key derived from it carries the
-    /// proof the header needs; the bytes are the same, so nothing else changes.
+    /// recovery phrase, or a vault.json that changed since the unlock — SEC01 audit, rounds 5–6):
+    /// ask for it once. The key it derives must be the key in memory, byte for byte; then only the
+    /// provenance moves over (the session's key object stays). A different key means vault.json
+    /// is not the vault the data is encrypted with: nothing is adopted, and the user is told how
+    /// to save the data first (round 6: the derived key was adopted and the old one zeroed, with
+    /// history and templates still sealed under it).
     func confirmPasswordForBackups() -> Bool {
         guard !isLocked, Vault.isEnabled else { return false }
         let g = lockCount
-        guard let pw = Vault.askPassword(title: L("Confirm"), message: L("Enter the Keepit password to continue automatic backups. Touch ID opened this vault, and it has no recovery phrase, so the password has to be confirmed once.")) else { return false }
-        let key = Vault.unlock(password: pw)
+        guard let pw = Vault.askPassword(title: L("Confirm"), message: L("Enter the Keepit password to continue automatic backups. The password or the recovery phrase has not been confirmed for this vault yet — it was opened with Touch ID, or vault.json changed since — so the password has to be confirmed once.")) else { return false }
+        let derived = Vault.unlock(password: pw)
         pw.zero()
-        guard let key else { Vault.error(L("Wrong password.")); return false }
-        guard !isLocked, lockCount == g else { key.zero(); return false }
-        Storage.key = key
+        guard let derived else { Vault.error(L("Wrong password.")); return false }
+        defer { derived.zero() }
+        guard !isLocked, lockCount == g, let current = Storage.key else { return false }
+        guard current.sameBytes(as: derived) else {
+            Vault.error(L("This password opens a different vault than the one Keepit's data is encrypted with: vault.json has changed since Keepit was unlocked. Nothing was changed. Save your data first with Settings → Backup → Save to Archive… (it has its own password), then put the original vault.json back or set the password again."))
+            return false
+        }
+        current.provenance = derived.provenance
         return true
     }
 

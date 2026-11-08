@@ -82,9 +82,10 @@ final class BackupEngine {
         /// The wait for a one-off copy ended before its completion arrived (the panel was stopped by something else).
         case notFinished
         /// Paused, not failed (SEC01 audit, round 5: a pause that looked like "locked" in an unlocked
-        /// app, with the last success still on the status line). The key in memory came from Touch ID
-        /// and the vault has no recovery phrase: nothing proves an archive under this header would
-        /// open, so none is made until the password has been confirmed once (Back Up Now asks).
+        /// app, with the last success still on the status line). Nothing proves an archive under the
+        /// vault's header would open — the key came from Touch ID and the block does not prove it,
+        /// or vault.json is not the key's file any more — so none is made until the password has
+        /// been confirmed once (Back Up Now asks).
         case passwordNeeded
         /// Paused: a data file could not be read; a backup of what is in memory would stand in for it.
         case unreadableData
@@ -98,7 +99,7 @@ final class BackupEngine {
             case .verifyFailed: return L("The written backup did not read back correctly")
             case .nothingToBackUp: return "nothing changed"
             case .notFinished: return L("The copy was not finished")
-            case .passwordNeeded: return L("Automatic backup is paused until you confirm the password: Touch ID opened this vault, and it has no recovery phrase. Back Up Now asks for the password; a recovery phrase (Security → Create New…) makes Touch ID enough from then on.")
+            case .passwordNeeded: return L("Automatic backup is paused: the password or the recovery phrase has not been confirmed for this vault yet (it was opened with Touch ID, or vault.json changed since). Back Up Now asks for the password; a recovery phrase (Security → Create New…) makes Touch ID enough from then on.")
             case .unreadableData: return L("Automatic backup is paused: some of Keepit's data could not be read. Restore a backup (Replace) or start fresh first.")
             }
         }

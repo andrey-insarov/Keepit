@@ -42,6 +42,14 @@ final class SecureKey {
         return try body(UnsafeRawBufferPointer(start: ptr, count: SecureKey.size))
     }
 
+    /// Same key material, compared in constant time. False if either side is zeroed.
+    func sameBytes(as other: SecureKey) -> Bool {
+        guard !isZeroed, !other.isZeroed else { return false }
+        var diff: UInt8 = 0
+        for i in 0..<SecureKey.size { diff |= ptr.load(fromByteOffset: i, as: UInt8.self) ^ other.ptr.load(fromByteOffset: i, as: UInt8.self) }
+        return diff == 0
+    }
+
     func zero() {
         guard !isZeroed else { return }
         _ = memset_s(ptr, SecureKey.size, 0, SecureKey.size)
