@@ -223,14 +223,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             if self.history.expire() > 0 { self.viewer?.refresh() }
         }
         templates = TemplateStore()
-        DispatchQueue.main.async { [weak self] in                                     // after launch has set everything up
-            guard let self else { return }
-            self.reportUnreadableFiles()
-            for (dir, e) in RestoreCommit.unsweptJournals { self.reportUnsweptJournal(dir, e) }
-        }
+        DispatchQueue.main.async { [weak self] in self?.reportUnreadableFiles() }   // after launch has set everything up
+        unsweptToReport += RestoreCommit.unsweptJournals                              // same queue, same one-at-a-time loop
+        reportUnsweptJournalsLater()
         monitor = ClipboardMonitor(settings: settings)
         setUpBackup()                                  // before completeRecovery(): rekey() tells the engine about the new key
-        if needsPasswordReset { completeRecovery() }    // locked meanwhile → launch goes on locked; asked again at unlock
+        // A lock cannot land inside completeRecovery() here: no hot key, status item or screen-lock
+        // observer exists yet (all below), and keepit:// waits for isReadyForOpens. A failed commit
+        // leaves the flag; the next unlock asks again.
+        if needsPasswordReset { completeRecovery() }
 
         buildStatusItem()
 
@@ -567,7 +568,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// arrives after a lock (or after a lock and an unlock) does nothing.
     func reportUnreadableFiles() {
         let unreadable = unreadableDataFiles
-        guard !unreadable.isEmpty, !isLocked else { return }
+        // Not over an unfinished undo's alert: Start Fresh would move files the journal is about
+        // to put back (the process is leaving; the launch replay comes first).
+        guard !unreadable.isEmpty, !isLocked, !RestoreCommit.hasArmedJournal else { return }
         let generation = lockCount
         let a = NSAlert()
         a.alertStyle = .critical
@@ -596,7 +599,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// is reset.
     func startFresh() {
         let unreadable = unreadableDataFiles
-        guard !unreadable.isEmpty, !isLocked else { return }
+        guard !unreadable.isEmpty, !isLocked, !refuseWhileJournalArmed() else { return }   // the answer may arrive after a commit failed (SEC01 self-review)
         let moved: [URL]
         do {
             moved = try Storage.setAside(unreadable.map(\.url))

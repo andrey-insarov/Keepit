@@ -193,4 +193,28 @@ final class ProtectionRoundThreeAuditTests: XCTestCase {
         Storage.key = try XCTUnwrap(Vault.unlock(password: .of("other")))
         XCTAssertNotNil(Vault.backupHeader(app: "Keepit test"))
     }
+
+    // MARK: Self-review before round 4: the remaining writers around an armed journal
+
+    func testStartFreshIsRefusedWhileAJournalIsArmed() throws {
+        // Start Fresh moves files the launch replay is about to put back; its alert could be open
+        // (from an unlock a moment earlier) when a commit's undo fails.
+        Storage.key = try Vault.enable(password: .of("old"), rounds: 1000)
+        try Data("{".utf8).write(to: Storage.templatesURL)
+        let app = app()
+        app.templates.reload()
+        XCTAssertTrue(app.hasUnreadableData)
+        try FileJournal.protection.write()
+        var refused = 0
+        app.refusalForTesting = { refused += 1 }
+        var shown = 0
+        AbortableModal.responseForTesting = { _ in shown += 1; return .alertFirstButtonReturn }
+
+        app.reportUnreadableFiles()
+        XCTAssertEqual(shown, 0, "no Start Fresh offer over an unfinished undo")
+        app.startFresh()
+        XCTAssertEqual(refused, 1)
+        XCTAssertEqual(try Data(contentsOf: Storage.templatesURL), Data("{".utf8), "nothing moved")
+        XCTAssertTrue(Storage.isHeld(Storage.templatesURL))
+    }
 }
