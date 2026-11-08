@@ -92,6 +92,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         (nil, L("Never")), (0, L("Immediately")), (5 * 60, L("After 5 minutes")), (15 * 60, L("After 15 minutes")), (3600, L("After 1 hour")),
     ]
     private let newPhrase    = NSButton(title: L("Create New…"), target: nil, action: nil)
+    private let showPhrase   = NSButton(title: L("Show…"), target: nil, action: nil)
 
     private let pollInterval = NSTextField()
     private let resetAll     = NSButton(title: L("Reset…"), target: nil, action: nil)
@@ -433,6 +434,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         trustedReset.title = LF("Forget Trusted Apps (%d)", 999)       // measured with the widest title it can get; load() sets the real one
         changePw.target = self; changePw.action = #selector(changePasswordTapped)
         newPhrase.target = self; newPhrase.action = #selector(newPhraseTapped)
+        showPhrase.target = self; showPhrase.action = #selector(showPhraseTapped)
         let security = grid([
             header(L("Password")),
             [NSView(), help(protect, L("History and templates are stored AES-256 encrypted; the key is derived from the password and asked for every time Keepit starts."))],
@@ -441,6 +443,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             [NSView(), help(check(touchIDChange), L("Let Touch ID stand in for the current password when changing it. Off = always type the current password first."))],
             row(L("Auto-lock Keepit:"), help(popup(lockAfter, Self.lockDelays.map { $0.1 }), L("Lock Keepit on its own once the Mac has been locked or asleep for this long. Never: locking the Mac leaves Keepit unlocked. Immediately: Keepit locks with the Mac. With a delay, a short absence changes nothing — Keepit stays unlocked and keeps recording — and a longer one wipes the key from memory and unloads history and templates; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked."))),
             header(L("Recovery phrase")),
+            [NSView(), help(button(showPhrase), L("Shows the current 24-word phrase again after you confirm the password or Touch ID — for a sheet you did not get to write down."))],
             [NSView(), help(button(newPhrase), L("Issues a new 24-word phrase and invalidates the old one. Use it if the printed sheet was lost or seen by someone; you will then be offered to change the password too."))],
         ])
 
@@ -686,6 +689,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         lockAfter.selectItem(at: Self.lockDelays.firstIndex { $0.0 == s.lockAfterScreenLock } ?? 0)
         lockAfter.isEnabled = Vault.isEnabled
         newPhrase.isEnabled = Vault.isEnabled
+        showPhrase.isEnabled = Vault.isEnabled && Vault.hasRecovery
 
         setNumber(pollInterval, s.pollInterval)
     }
@@ -865,9 +869,13 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
 
     @objc private func changePasswordTapped() { app.changePassword() }
     @objc private func newPhraseTapped() { app.regenerateRecoveryPhrase() }
+    @objc private func showPhraseTapped() { app.showRecoveryPhrase() }
     @objc private func exportTapped() { app.exportBackup() }
     @objc private func restoreTapped() { app.restoreBackupTapped() }
     @objc private func backUpNowTapped() {
+        if app.backupPause() == .passwordNeeded {
+            guard app.confirmPasswordForBackups() else { backupStateChanged(); return }
+        }
         backupNow.isEnabled = false
         app.backup.backUpNow { [weak self] result in
             self?.backupNow.isEnabled = true
@@ -910,6 +918,8 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             backupStatus.stringValue = L("Set a Keepit password (Security) to enable automatic backups.")
         } else if !on {
             backupStatus.stringValue = L("Automatic backup is off.")
+        } else if let pause = app.backupPause(), pause != .locked, let why = pause.errorDescription {
+            backupStatus.stringValue = why                    // paused, not failed and not the last success (SEC01 audit, round 5)
         } else if let e = st?.lastError {
             backupStatus.stringValue = LF("Last backup failed: %@", e)
         } else if let d = st?.lastSuccess, let size = st?.lastSize {

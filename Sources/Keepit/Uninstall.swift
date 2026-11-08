@@ -5,18 +5,25 @@ import ServiceManagement
 /// acknowledgement, then wipe everything Keepit ever wrote and move the app to the Trash.
 extension AppDelegate {
     func uninstallRequested() {
+        // The lock generation is checked after each dialog (SEC13): a lock during the
+        // authentication or the confirmation voids it — the destructive step never runs on an
+        // answer given before a lock.
+        if refuseWhileJournalArmed() { return }        // an undo that did not finish: the journal is the data; the process is leaving
+        let g = lockCount
         if Vault.isEnabled {
-            guard authenticateForChange(reasonKey: "delete Keepit and all its data") else { return }
+            guard authenticateForChange(reasonKey: "delete Keepit and all its data"), !isLocked, lockCount == g else { return }
         }
-        guard UninstallDialog.confirm() else { return }
+        guard UninstallDialog.confirm(), !isLocked, lockCount == g, !refuseWhileJournalArmed() else { return }
         performUninstall()
     }
 
     /// Settings → Advanced → Reset…: back to the state of a fresh install — history, templates, settings,
     /// password, Touch ID key — without touching the app itself or its permissions.
     func resetRequested() {
+        if refuseWhileJournalArmed() { return }        // SEC01 audit, round 2: a Reset from inside the alert cleared the pins and left the journal armed
+        let g = lockCount
         if Vault.isEnabled {
-            guard authenticateForChange(reasonKey: "reset Keepit") else { return }
+            guard authenticateForChange(reasonKey: "reset Keepit"), !isLocked, lockCount == g else { return }
         }
         let a = NSAlert()
         a.alertStyle = .critical
@@ -25,7 +32,7 @@ extension AppDelegate {
         a.addButton(withTitle: L("Reset"))
         a.addButton(withTitle: L("Cancel"))
         a.buttons.first?.hasDestructiveAction = true
-        guard a.runModal() == .alertFirstButtonReturn else { return }
+        guard AbortableModal.run(a) == .alertFirstButtonReturn, !isLocked, lockCount == g, !refuseWhileJournalArmed() else { return }
         performReset()
     }
 
@@ -40,6 +47,7 @@ extension AppDelegate {
         for url in [Storage.historyURL, Storage.templatesURL, Storage.settingsURL, Storage.setAsideMarker, Storage.directory.appendingPathComponent("backup.json")] {
             try? FileManager.default.removeItem(at: url)
         }
+        try? FileJournal.restore.sweepOrThrow(); try? FileJournal.protection.sweepOrThrow()   // armed or not: a replay at the next launch would bring the deleted files back
         clearLoadFailuresForReset()                    // the files are gone; nothing left to keep
         apply(settings: Settings())
         history.reload()

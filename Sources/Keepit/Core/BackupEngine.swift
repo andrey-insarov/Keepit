@@ -81,6 +81,14 @@ final class BackupEngine {
         case notEnabled, locked, noVault, folderUnavailable, writeFailed(String), verifyFailed, nothingToBackUp
         /// The wait for a one-off copy ended before its completion arrived (the panel was stopped by something else).
         case notFinished
+        /// Paused, not failed (SEC01 audit, round 5: a pause that looked like "locked" in an unlocked
+        /// app, with the last success still on the status line). Nothing proves an archive under the
+        /// vault's header would open — the key came from Touch ID and the block does not prove it,
+        /// or vault.json is not the key's file any more — so none is made until the password has
+        /// been confirmed once (Back Up Now asks).
+        case passwordNeeded
+        /// Paused: a data file could not be read; a backup of what is in memory would stand in for it.
+        case unreadableData
         var errorDescription: String? {
             switch self {
             case .notEnabled: return "automatic backup is off"
@@ -91,8 +99,12 @@ final class BackupEngine {
             case .verifyFailed: return L("The written backup did not read back correctly")
             case .nothingToBackUp: return "nothing changed"
             case .notFinished: return L("The copy was not finished")
+            case .passwordNeeded: return L("Automatic backup is paused: the password or the recovery phrase has not been confirmed for this vault yet (it was opened with Touch ID, or vault.json changed since). Back Up Now asks for the password; a recovery phrase (Security → Create New…) makes Touch ID enough from then on.")
+            case .unreadableData: return L("Automatic backup is paused: some of Keepit's data could not be read. Restore a backup (Replace) or start fresh first.")
             }
         }
+        /// A pause: the dirty state waits, nothing is recorded as a failure, no backoff.
+        var isPause: Bool { [.nothingToBackUp, .locked, .notEnabled, .passwordNeeded, .unreadableData].contains(self) }
     }
 
     static let quietInterval: TimeInterval = 5 * 60
@@ -111,6 +123,9 @@ final class BackupEngine {
     var appName = "Keepit \(AppInfo.version)"
     /// Builds the payload and the auto header from the live stores; nil when locked or no vault.
     var snapshotProvider: (() -> Snapshot?)?
+    /// Why `snapshotProvider` returned nil, when it did — `.locked` if unset. Settings shows the
+    /// same answer on the status line, so a pause is never mistaken for a lock or a success.
+    var pauseReason: (() -> Failure?)?
     var now: () -> Date = { Date() }
     var onStateChange: ((BackupState) -> Void)?
 
@@ -192,7 +207,7 @@ final class BackupEngine {
     private func run(force: Bool, completion: ((Result<Void, Error>) -> Void)?) {
         guard !inFlight else { completion?(.failure(Failure.nothingToBackUp)); return }
         guard let destination else { finish(.failure(Failure.notEnabled), completion); return }
-        guard let snap = snapshotProvider?() else { finish(.failure(Failure.locked), completion); return }
+        guard let snap = snapshotProvider?() else { finish(.failure(pauseReason?() ?? Failure.locked), completion); return }
         inFlight = true
         forcedSinceSnapshot = false
         firstChangeAfterSnapshot = nil
@@ -295,7 +310,7 @@ final class BackupEngine {
 
     private func finish(_ r: Result<Void, Error>, _ completion: ((Result<Void, Error>) -> Void)?) {
         // Not being able to start (locked, off) is not a failure to retry with backoff; the dirty state simply waits.
-        if case .failure(let e) = r, let f = e as? Failure, ![.nothingToBackUp, .locked, .notEnabled].contains(f) { record(failure: e) }
+        if case .failure(let e) = r, let f = e as? Failure, !f.isPause { record(failure: e) }
         completion?(r)
     }
 

@@ -149,9 +149,59 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// saved), so: explain, change nothing, leave. `exit`, not `terminate()`: the latter runs
     /// `applicationWillTerminate`, which saves; and no `defer` on the way restarts the watcher.
     func stopForUnfinishedUndo(_ error: Error) -> Never {
+        pinDataFilesForUnfinishedUndo()
         Log.storage.error("unfinished restore undo; quitting without saving: \(error.localizedDescription)")
         Vault.error(LF("Keepit could not finish undoing an interrupted restore: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again.", error.localizedDescription))
         exit(1)
+    }
+
+    /// Before the alert that precedes a quit for an unfinished undo: nothing may land on the mixed
+    /// files while the alert is up — a debounced save fires inside its modal loop (SEC01 audit,
+    /// round 1: the first alert let a copy taken during it be saved, and the launch replay then
+    /// discarded it). Pinned, not held: a successful read must not lift this.
+    private func pinDataFilesForUnfinishedUndo() {
+        for url in [Vault.metaURL, Storage.templatesURL, Storage.historyURL, Storage.settingsURL] { Storage.pin(url) }
+    }
+
+    /// Tests only: stands for `exit(1)` after an unfinished protection undo; the test goes on.
+    var exitForTesting: ((Error) -> Void)?
+
+    /// A protection commit whose undo did not finish (the journal is still armed): the files may be
+    /// a mix and the journal is their only intact copy. Same answer as for a restore: pin, explain,
+    /// quit without saving — the next launch replays the journal before anything is read. Going on
+    /// was not safe (round 1): a lock and an unlock released the holds, and vault.json was written
+    /// around them by Create New….
+    private func stopForUnfinishedProtectionUndo(_ error: Error) {
+        pinDataFilesForUnfinishedUndo()
+        Log.storage.error("unfinished protection undo; quitting without saving: \(error.localizedDescription)")
+        Vault.error(LF("Keepit could not finish undoing a failed change to the password protection: %@\n\nNothing will be changed. Fix the file named above (permissions, a locked flag, disk space) and launch Keepit again — the data comes back as it was before the change.", error.localizedDescription))
+        if let test = exitForTesting { test(error); return }
+        exit(1)
+    }
+
+    /// The copies a commit could not remove after it succeeded (the change stands; the folder holds
+    /// the data as it was before it, plain if protection was off). Said at once, and again at launch
+    /// while the folder is still there.
+    func reportUnsweptJournal(_ directory: URL, _ error: Error) {
+        Vault.error(LF("The change is done, but the undo copies could not be removed: %@\n\nDelete the folder “%@” in Keepit's data folder by hand — it holds the data as it was before the change.", error.localizedDescription, directory.lastPathComponent))
+    }
+
+    /// Reports that could not be shown where they arose — a restore commit cut short by a lock
+    /// (`lockedAfterWrite`) — wait for the next unlock (SEC01 audit, round 2). Shown after the
+    /// flow that queued them has finished, never inside it: a lock during the alert must find
+    /// nothing of an `unlock()` or a restore left to run (round 3: shown inside `unlock()`, a lock
+    /// during the alert was followed by the watcher and hot keys restarting). One alert at a time,
+    /// the lock state checked before each; what is not shown waits for the next unlock.
+    var unsweptToReport: [(URL, Error)] = []
+    func reportUnsweptJournalsLater() {
+        guard !unsweptToReport.isEmpty else { return }
+        DispatchQueue.main.async { [weak self] in self?.reportUnsweptJournals() }
+    }
+    private func reportUnsweptJournals() {
+        while !isLocked, !unsweptToReport.isEmpty {
+            let (dir, e) = unsweptToReport.removeFirst()
+            reportUnsweptJournal(dir, e)
+        }
     }
 
     // MARK: - Lifecycle
@@ -174,8 +224,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         templates = TemplateStore()
         DispatchQueue.main.async { [weak self] in self?.reportUnreadableFiles() }   // after launch has set everything up
+        unsweptToReport += RestoreCommit.unsweptJournals                              // same queue, same one-at-a-time loop
+        reportUnsweptJournalsLater()
         monitor = ClipboardMonitor(settings: settings)
         setUpBackup()                                  // before completeRecovery(): rekey() tells the engine about the new key
+        // A lock cannot land inside completeRecovery() here: no hot key, status item or screen-lock
+        // observer exists yet (all below), and keepit:// waits for isReadyForOpens. A failed commit
+        // leaves the flag; the next unlock asks again.
         if needsPasswordReset { completeRecovery() }
 
         buildStatusItem()
@@ -455,7 +510,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         // nothing of unlock() left to undo (3.0.6 audit: the rest of unlock() restarted the
         // watcher and hot keys after a lock that came during the alert).
         DispatchQueue.main.async { [weak self] in self?.reportUnreadableFiles() }
-        if needsPasswordReset { completeRecovery() }
+        if needsPasswordReset { completeRecovery() }    // a failed commit leaves the flag: asked again next time
+        // A lock ended the new-password prompt: the stores are purged, the key is gone; nothing of
+        // the unlock may go on (SEC13 design review: the watcher and hot keys used to restart).
+        guard !isLocked else { return false }
+        reportUnsweptJournalsLater()                    // a restore commit that a lock cut short had no chance to; after unlock() is done
         if !(pausedUntil.map { $0 > Date() } ?? false) { monitor.start() }   // keep a running pause
         registerHotKeys()
         backup.runIfDue()
@@ -465,6 +524,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     /// Tests only: called instead of the alert `refuseWhileUnreadable` shows.
     var refusalForTesting: (() -> Void)?
+    /// Tests only: receives `info` texts instead of the alert.
+    var infoSinkForTesting: ((String) -> Void)?
 
     /// The data files that exist but could not be read, with the reason.
     var unreadableDataFiles: [(url: URL, failure: Storage.LoadFailure)] {
@@ -480,9 +541,22 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// One refusal for everything that would build on data Keepit could not read: a backup, an
     /// archive, a Merge, a password change. Returns false (after saying so) when there is such data.
     func refuseWhileUnreadable() -> Bool {
+        if refuseWhileJournalArmed() { return true }
         guard hasUnreadableData else { return false }
         if let test = refusalForTesting { test(); return true }
         Vault.error(L("Keepit could not read some of its data, so this is not available now. Restore a backup (Replace) or start fresh first — Keepit asks at the next launch or unlock."))
+        return true
+    }
+
+    /// An undo that did not finish: the process is on its way out (`stopForUnfinishedUndo`), and
+    /// nothing that writes or rebuilds may start meanwhile — not a password change (SEC01 audit,
+    /// round 1: Create New… wrote vault.json around the holds, and the launch replay then revived
+    /// the old phrase), not Reset or uninstall (round 2: a Reset from inside the alert cleared the
+    /// pins and left the journal armed). Returns true (after saying so) while a journal is armed.
+    func refuseWhileJournalArmed() -> Bool {
+        guard RestoreCommit.hasArmedJournal else { return false }
+        if let test = refusalForTesting { test(); return true }
+        Vault.error(RestoreCommit.Failure.journalArmed.localizedDescription)
         return true
     }
 
@@ -494,7 +568,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// arrives after a lock (or after a lock and an unlock) does nothing.
     func reportUnreadableFiles() {
         let unreadable = unreadableDataFiles
-        guard !unreadable.isEmpty, !isLocked else { return }
+        // Not over an unfinished undo's alert: Start Fresh would move files the journal is about
+        // to put back (the process is leaving; the launch replay comes first).
+        guard !unreadable.isEmpty, !isLocked, !RestoreCommit.hasArmedJournal else { return }
         let generation = lockCount
         let a = NSAlert()
         a.alertStyle = .critical
@@ -523,7 +599,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// is reset.
     func startFresh() {
         let unreadable = unreadableDataFiles
-        guard !unreadable.isEmpty, !isLocked else { return }
+        guard !unreadable.isEmpty, !isLocked, !refuseWhileJournalArmed() else { return }   // the answer may arrive after a commit failed (SEC01 self-review)
         let moved: [URL]
         do {
             moved = try Storage.setAside(unreadable.map(\.url))
@@ -676,7 +752,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if settings.biometricUnlock, BiometricUnlock.isAvailable, BiometricUnlock.isConfigured {
             NSApp.activate(ignoringOtherApps: true)
             if let key = BiometricUnlock.retrieve(reasonKey: "unlock the clipboard history and templates") {
-                if Vault.verify(key) {
+                if Vault.admitBiometric(key) {           // check opened; provenance says what else is proven (backups need the phrase or a password unlock)
                     Storage.key = key
                     return true
                 }
@@ -699,7 +775,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 pw.zero()
                 if let key = key {
                     Storage.key = key
-                    if settings.biometricUnlock && !BiometricUnlock.isConfigured { syncBiometricKey(quiet: true) }
+                    // Not only when nothing is stored: an entry that wraps an old key (a password
+                    // change committed but the process stopped before the refresh) counts as
+                    // configured, fails Vault.verify every time and would ask for the password at
+                    // every unlock (design review of SEC01, Q4). The password just proved the key.
+                    if settings.biometricUnlock { syncBiometricKey(quiet: true) }
                     return true
                 }
                 // Slow down guessing: 1 s, 2 s, 4 s after each miss, then a 30 s lockout.
@@ -713,7 +793,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     // MARK: Recovery phrase
 
-    private var needsPasswordReset = false
+    var needsPasswordReset = false                      // internal: tests set it to stand for a phrase unlock
 
     /// Unlock with the 24 words; a new password must be set right after (the old one is unknown).
     private func recoverWithPhrase() -> Bool {
@@ -727,40 +807,73 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         return true
     }
 
-    /// After a phrase recovery: force a new password, re-encrypt, keep the phrase valid.
-    private func completeRecovery() {
-        needsPasswordReset = false
-        var newPw: SecureBuffer?
-        while newPw == nil {
-            newPw = Vault.askPassword(title: L("Set a new password"),
-                                      message: L("You unlocked with the recovery phrase. Choose a new password now; the recovery phrase stays valid."),
-                                      confirm: true)
+    /// After a phrase recovery: force a new password, re-encrypt, keep the phrase valid. A lock
+    /// while the prompt is up ends the loop; `needsPasswordReset` stays, and the next unlock asks
+    /// again (3.0.6 design review of SEC13: the loop never ended, and the caller went on).
+    /// Returns false when nothing was done — the caller must not continue as if unlocked.
+    @discardableResult
+    func completeRecovery() -> Bool {
+        while true {
+            let g = lockCount
+            guard let newPw = Vault.askPassword(title: L("Set a new password"),
+                                                message: L("You unlocked with the recovery phrase. Choose a new password now; the recovery phrase stays valid."),
+                                                confirm: true) else {
+                if isLocked || lockCount != g { return false }
+                continue                                            // Cancel is not an option here
+            }
+            defer { newPw.zero() }
+            guard !isLocked, lockCount == g else { return false }
+            if rekey(with: newPw, generation: g) { needsPasswordReset = false; return true }
+            return false                                            // the commit failed and said so; the flag stays for next time
         }
-        rekey(with: newPw!)
-        newPw!.zero()
     }
 
-    /// Replace the data key with one derived from `pw`, re-encrypt everything, keep recovery + Touch ID in sync.
-    private func rekey(with pw: SecureBuffer) {
-        guard let oldKey = Storage.key else { return }
-        if refuseWhileUnreadable() { return }               // every caller checks too; this is the one that must hold
-        let oldRecovery = Vault.currentRecovery
+    /// The data files, as the stores hold them, encoded for a protection commit; pending debounced
+    /// saves land first. History not kept on disk → nil (the file is removed, as a restore does).
+    private func dataForProtectionCommit() throws -> (templates: Data, history: Data?) {
+        history.flush(); templates.flush()
+        return (try Storage.encoder.encode(templates.root),
+                settings.historySave ? try Storage.encoder.encode(history.items) : nil)
+    }
+
+    /// Replace the data key with one derived from `pw`, re-encrypt everything, keep recovery + Touch ID
+    /// in sync — as one transaction (`ProtectionCommit`). `generation`: the lock count the caller
+    /// read before its last dialog; nothing happens if a lock came since. Returns true when the new
+    /// key is live. On any failure the files, vault.json and `Storage.key` are as they were.
+    @discardableResult
+    private func rekey(with pw: SecureBuffer, generation: Int) -> Bool {
+        guard !isLocked, lockCount == generation, let oldKey = Storage.key else { return false }
+        if refuseWhileUnreadable() { return false }          // re-keying around a held file would destroy the way to read it by hand
+        let newKey: SecureKey
+        let unswept: Error?
         do {
-            let newKey = try Vault.enable(password: pw)
-            try Vault.rewrapRecovery(from: oldKey, to: newKey, oldRecovery: oldRecovery)
-            Storage.key = newKey                     // zeroes oldKey
+            let prepared = try Vault.prepareRekey(password: pw, from: oldKey, oldRecovery: Vault.currentRecovery)
+            newKey = prepared.key
+            let data = try dataForProtectionCommit()
+            unswept = try ProtectionCommit.commit(.init(meta: try Vault.encodeMeta(prepared.meta), key: newKey,
+                                                        templatesJSON: data.templates, historyJSON: data.history,
+                                                        settingsJSON: try Storage.prettyEncoder.encode(settings)))
         } catch {
+            if RestoreCommit.hasArmedJournal { stopForUnfinishedProtectionUndo(error); return false }
             Vault.error(LF("Could not change the password: %@", error.localizedDescription))
-            return
+            return false
         }
-        history.saveNow()
-        templates.saveNow()
+        // Committed: the files open with the new password whatever happens from here.
+        Storage.key = newKey                         // zeroes oldKey
         syncBiometricKey()
         backup?.forceNext()                           // the next copy must open with the new password
+        if let e = unswept { reportUnsweptJournal(FileJournal.protection.directory, e) }
+        return true
     }
 
     /// Confirm identity for sensitive changes: Touch ID (if allowed) or the current password.
+    /// Callers read `lockCount` before and check it after: a lock during the prompt (or a lock
+    /// and an unlock) means the answer is void.
+    /// Tests only: stands for the whole authentication; may lock the app first.
+    var authenticateForTesting: (() -> Bool)?
+
     func authenticateForChange(reasonKey: String) -> Bool {
+        if let test = authenticateForTesting { return test() }
         if settings.biometricUnlock, settings.biometricPasswordChange, BiometricUnlock.isAvailable, BiometricUnlock.isConfigured,
            let k = BiometricUnlock.retrieve(reasonKey: reasonKey) {
             let ok = Vault.verify(k)
@@ -778,11 +891,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         return true
     }
 
-    /// Settings → Security → Recovery phrase → Create New…: invalidates the old sheet.
+    /// Settings → Security → Recovery phrase → Create New…: invalidates the old sheet. The key is
+    /// read *after* the authentication dialog and the lock check (SEC13: it used to be captured
+    /// before, and a lock in between zeroed it under `createRecovery`).
     func regenerateRecoveryPhrase() {
-        guard Vault.isEnabled, let key = Storage.key else { return }
-        if refuseWhileUnreadable() { return }               // the follow-up offers a password change
-        guard authenticateForChange(reasonKey: "generate a new recovery phrase") else { return }
+        guard Vault.isEnabled else { return }
+        if refuseWhileUnreadable() { return }                // the flow can end in a password change (PR #34 kept this refusal; its audit tests it)
+        var g = lockCount
+        guard authenticateForChange(reasonKey: "generate a new recovery phrase"), !isLocked, lockCount == g, let key = Storage.key else { return }
         do {
             let words = try Vault.createRecovery(for: key)
             backup?.forceNext()                       // a copy with the new phrase in its header
@@ -791,59 +907,111 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             Vault.error(LF("Could not create the recovery phrase: %@", error.localizedDescription))
             return
         }
+        guard !isLocked, lockCount == g else { return }
         // If the old phrase leaked, whoever has it may already hold the current data key.
         let a = NSAlert()
         a.messageText = L("Was the old phrase exposed?")
         a.informativeText = L("A leaked phrase reveals the current data key, so a new phrase alone is not enough. Changing the password now re-encrypts everything with a fresh key (the new phrase stays valid; the Touch ID entry is refreshed).")
         a.addButton(withTitle: L("Change Password Now"))
         a.addButton(withTitle: L("No, Keep Password"))
-        if a.runModal() == .alertFirstButtonReturn {
-            guard let pw = Vault.askPassword(title: L("New password"), message: L("Enter the new password twice. Backups made so far still open with the old password."), confirm: true) else { return }
-            rekey(with: pw)
-            pw.zero()
+        guard AbortableModal.run(a) == .alertFirstButtonReturn, !isLocked, lockCount == g else { return }
+        g = lockCount
+        guard let pw = Vault.askPassword(title: L("New password"), message: L("Enter the new password twice. Backups made so far still open with the old password."), confirm: true) else { return }
+        defer { pw.zero() }
+        rekey(with: pw, generation: g)
+    }
+
+    /// Settings → Security → Recovery phrase → Show…: the current phrase again, after
+    /// authentication — for a phrase the user never saw because a lock or a crash came between
+    /// the commit that created it and the dialog (design review of SEC01).
+    func showRecoveryPhrase() {
+        guard Vault.isEnabled else { return }
+        let g = lockCount
+        guard authenticateForChange(reasonKey: "show the recovery phrase"), !isLocked, lockCount == g, let key = Storage.key else { return }
+        guard let words = Vault.recoveryWords(for: key) else {
+            Vault.error(L("This vault has no recovery phrase yet. Create one with Create New…"))
+            return
         }
+        RecoveryDialogs.present(words: words, title: L("Your recovery phrase"))
     }
 
     /// Turn protection on: set a password, re-save data encrypted.
     func enableProtection() -> Bool {
         if refuseWhileUnreadable() { return false }
+        let g = lockCount
         guard let pw = Vault.askPassword(title: L("Set Keepit password"),
                                          message: L("You'll be asked for it every time Keepit starts. A recovery phrase for it is shown next."),
                                          confirm: true) else { return false }
         defer { pw.zero() }
+        guard !isLocked, lockCount == g else { return false }
         return enableProtection(with: pw)
     }
 
-    /// Turn protection on with a password already in hand (a restored backup's). The caller wipes `pw`.
+    /// A vault prepared in memory for a password, with its recovery block: nothing on disk yet.
     /// `recoveryEntropy`: keep a phrase the user already holds (the one that opened a restored
-    /// backup) instead of showing a new one.
-    /// `duringRestore`: a Replace that is about to set the unreadable files aside and write the
-    /// restored ones may turn protection on first; nothing else may while data is unreadable.
-    func enableProtection(with pw: SecureBuffer, recoveryEntropy: [UInt8]? = nil, duringRestore: Bool = false) -> Bool {
-        // Re-saving encrypted is the whole point; a held file would stay plain and be refused
-        // afterwards (SEC06), or be left under no key at all. Until SEC01's transaction, not at all.
-        if !duringRestore, refuseWhileUnreadable() { return false }
+    /// backup) instead of making a new one; `words` is then nil (nothing new to show).
+    struct PreparedVault {
+        let key: SecureKey
+        let meta: Data
+        let words: [String]?
+        func discard() { key.zero() }
+    }
+
+    func prepareVault(password pw: SecureBuffer, recoveryEntropy: [UInt8]? = nil) throws -> PreparedVault {
+        let (key, prepared) = try Vault.prepareEnable(password: pw)
+        var meta = prepared
         do {
-            Storage.key = try Vault.enable(password: pw)
+            // The phrase goes into the first vault.json, not a second write after the commit: a
+            // stop between the two could not leave a vault without a phrase (design review, Q3).
+            let words = try Vault.addRecovery(to: &meta, for: key, entropy: recoveryEntropy)
+            Vault.notePrepared(key, meta: meta)                 // the block is part of what the commit writes
+            return PreparedVault(key: key, meta: try Vault.encodeMeta(meta), words: recoveryEntropy == nil ? words : nil)
+        } catch { key.zero(); throw error }
+    }
+
+    /// Turn protection on with a password already in hand. The caller wipes `pw`. One transaction:
+    /// vault.json and the data files sealed with the new key, or nothing.
+    func enableProtection(with pw: SecureBuffer, recoveryEntropy: [UInt8]? = nil) -> Bool {
+        if refuseWhileUnreadable() { return false }          // a held file would stay plain under a vault (SEC06) — refused (design review)
+        let prepared: PreparedVault
+        do {
+            prepared = try prepareVault(password: pw, recoveryEntropy: recoveryEntropy)
         } catch {
             Vault.error(LF("Could not enable protection: %@", error.localizedDescription))
             return false
         }
-        history.saveNow()
-        templates.saveNow()
+        let unswept: Error?
+        do {
+            let data = try dataForProtectionCommit()
+            unswept = try ProtectionCommit.commit(.init(meta: prepared.meta, key: prepared.key,
+                                                        templatesJSON: data.templates, historyJSON: data.history,
+                                                        settingsJSON: try Storage.prettyEncoder.encode(settings)))
+        } catch {
+            prepared.discard()
+            if RestoreCommit.hasArmedJournal { stopForUnfinishedProtectionUndo(error); return false }
+            Vault.error(LF("Could not enable protection: %@", error.localizedDescription))
+            return false
+        }
+        publishEnabledVault(prepared, unswept: unswept)
+        return true
+    }
+
+    /// After a commit that created a vault (enableProtection, or a restore that made one): the key
+    /// goes live and the follow-ups run. Nothing here can undo the commit. The dialogs at the end
+    /// (the phrase, or the note about the old one) need the app still unlocked in the same lock
+    /// generation: the Touch ID step can show a modal alert, and a lock during it must not be
+    /// followed by the phrase on screen (SEC01 audit, round 1). The phrase is in vault.json;
+    /// Settings → Security → Show… shows it after the next unlock.
+    func publishEnabledVault(_ prepared: PreparedVault, unswept: Error? = nil) {
+        let g = lockCount
+        Storage.key = prepared.key
         syncBiometricKey()
         configureBackup()                             // a folder kept in settings becomes a destination again
-        if let key = Storage.key {
-            do {
-                let words = try Vault.createRecovery(for: key, entropy: recoveryEntropy)
-                backup?.forceNext()
-                if recoveryEntropy == nil { RecoveryDialogs.present(words: words) }
-                else { info(L("Protection is on. The recovery phrase from the backup also opens Keepit on this Mac.")) }
-            } catch {
-                Vault.error(LF("Could not set up the recovery phrase: %@", error.localizedDescription))
-            }
-        }
-        return true
+        backup?.forceNext()
+        if let e = unswept { reportUnsweptJournal(FileJournal.protection.directory, e) }
+        guard !isLocked, lockCount == g else { return }
+        if let words = prepared.words { RecoveryDialogs.present(words: words) }
+        else { info(L("Protection is on. The recovery phrase from the backup also opens Keepit on this Mac.")) }
     }
 
     /// Store / refresh / remove the Touch ID copy of the key according to settings.
@@ -868,39 +1036,51 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
 
-    /// Turn protection off after verifying the password; data is re-saved as plain JSON.
+    /// Turn protection off after verifying the password; data is re-saved as plain JSON — one
+    /// transaction: vault.json removed and the plain files written, or nothing. Automatic backup
+    /// needs the vault, so `backupEnabled` goes off in the same commit.
     func disableProtection() -> Bool {
         if refuseWhileUnreadable() { return false }
+        let g = lockCount
         guard let pw = Vault.askPassword(title: L("Disable password protection"),
                                          message: L("Enter the current password. History and templates will be stored unencrypted.")) else { return false }
         let check = Vault.unlock(password: pw)
         pw.zero()
-        guard check != nil else {
+        guard let c = check else {
             Vault.error(L("Wrong password."))
             return false
         }
-        check?.zero()
-        Storage.key = nil
-        Vault.disable()
-        BiometricUnlock.remove()
-        history.saveNow()
-        templates.saveNow()
-        if settings.backupEnabled {                   // automatic backup needs the vault: off together, visibly
-            var s = settings; s.backupEnabled = false
-            apply(settings: s)                        // → configureBackup(): destination nil
+        c.zero()
+        guard !isLocked, lockCount == g, Storage.key != nil else { return false }
+        var newSettings = settings
+        newSettings.backupEnabled = false
+        let unswept: Error?
+        do {
+            let data = try dataForProtectionCommit()
+            unswept = try ProtectionCommit.commit(.init(meta: nil, key: nil,
+                                                        templatesJSON: data.templates, historyJSON: data.history,
+                                                        settingsJSON: try Storage.prettyEncoder.encode(newSettings)))
+        } catch {
+            if RestoreCommit.hasArmedJournal { stopForUnfinishedProtectionUndo(error); return false }
+            Vault.error(LF("Could not disable protection: %@", error.localizedDescription))
+            return false
         }
+        Storage.key = nil
+        BiometricUnlock.remove()                      // the setting stays as the user left it; the entry wrapped a key that is gone
+        apply(settings: newSettings)                  // → configureBackup(): destination nil
+        if let e = unswept { reportUnsweptJournal(FileJournal.protection.directory, e) }
         return true
     }
 
     func changePassword() {
         guard Vault.isEnabled, Storage.key != nil else { return }
-        // 3.0.6 audit: a file that decrypted but did not decode stayed under the old key while
-        // vault.json moved to the new one — and the old password no longer opens the vault.
         if refuseWhileUnreadable() { return }
-        guard authenticateForChange(reasonKey: "change the Keepit password") else { return }
+        var g = lockCount
+        guard authenticateForChange(reasonKey: "change the Keepit password"), !isLocked, lockCount == g else { return }
+        g = lockCount
         guard let pw = Vault.askPassword(title: L("New password"), message: L("Enter the new password twice. Backups made so far still open with the old password."), confirm: true) else { return }
         defer { pw.zero() }
-        rekey(with: pw)
+        rekey(with: pw, generation: g)
     }
 
     // MARK: - Settings
@@ -1695,6 +1875,7 @@ extension AppDelegate {
         }
         backup = BackupEngine(stateURL: Storage.directory.appendingPathComponent("backup.json"), sourceID: settings.backupSourceID ?? "")
         backup.snapshotProvider = { [weak self] in self?.backupSnapshot() }
+        backup.pauseReason = { [weak self] in self?.backupPause() }
         backup.onStateChange = { [weak self] _ in self?.preferencesWindow?.backupStateChanged() }
         history.onChange = { [weak self] in self?.backup.noteChange() }
         templates.onChange = { [weak self] in self?.backup.noteChange() }
@@ -1722,11 +1903,50 @@ extension AppDelegate {
     }
 
     /// One consistent state for a backup, or nil when there is nothing to back up with (locked, no vault).
+    /// Why `backupSnapshot` returns nil right now, for the engine's answer and the Settings status
+    /// line — nil when a snapshot is available. Mirrors `backupSnapshot`'s guards, in its order.
+    func backupPause() -> BackupEngine.Failure? {
+        if isLocked || !Vault.isEnabled || Storage.key == nil || RestoreCommit.hasArmedJournal { return .locked }
+        if hasUnreadableData { return .unreadableData }
+        if Vault.backupHeader(app: "") == nil { return .passwordNeeded }
+        return nil
+    }
+
+    /// Back Up Now while backups are paused for the password (a Touch ID key on a vault without a
+    /// recovery phrase, or a vault.json that changed since the unlock — SEC01 audit, rounds 5–6):
+    /// ask for it once. The key it derives must be the key in memory, byte for byte; then only the
+    /// provenance moves over (the session's key object stays). A different key means vault.json
+    /// is not the vault the data is encrypted with: nothing is adopted, and the user is told how
+    /// to save the data first (round 6: the derived key was adopted and the old one zeroed, with
+    /// history and templates still sealed under it).
+    func confirmPasswordForBackups() -> Bool {
+        guard !isLocked, Vault.isEnabled else { return false }
+        let g = lockCount
+        guard let pw = Vault.askPassword(title: L("Confirm"), message: L("Enter the Keepit password to continue automatic backups. The password or the recovery phrase has not been confirmed for this vault yet — it was opened with Touch ID, or vault.json changed since — so the password has to be confirmed once.")) else { return false }
+        let derived = Vault.unlock(password: pw)
+        pw.zero()
+        guard let derived else { Vault.error(L("Wrong password.")); return false }
+        defer { derived.zero() }
+        guard !isLocked, lockCount == g, let current = Storage.key else { return false }
+        guard current.sameBytes(as: derived) else {
+            Vault.error(L("This password opens a different vault than the one Keepit's data is encrypted with: vault.json has changed since Keepit was unlocked. Nothing was changed. Save your data first with Settings → Backup → Save to Archive… (it has its own password), then put the original vault.json back or set the password again."))
+            return false
+        }
+        current.provenance = derived.provenance
+        return true
+    }
+
     func backupSnapshot() -> BackupEngine.Snapshot? {
         // A store whose file could not be read holds nothing of the user's: a backup of it would
-        // be an empty one, and rotation would push a good earlier copy out for it.
+        // be an empty one, and rotation would push a good earlier copy out for it. While a journal
+        // is armed (an undo that did not finish; the alert is up, the process about to leave)
+        // vault.json may be the new one over the old key in memory: an archive with that header
+        // opens with no password and no phrase, and rotation would drop the last good copy for it
+        // (SEC01 audit, round 2). `Vault.backupHeader` is the same guard in general: it is built
+        // only from the vault.json the key in memory belongs to (round 3: `verify` was not enough —
+        // a damaged salt with an intact check passed it, and the password opened nothing).
         guard !isLocked, Vault.isEnabled, let key = Storage.key,
-              !hasUnreadableData,
+              !hasUnreadableData, !RestoreCommit.hasArmedJournal,
               let header = Vault.backupHeader(app: "Keepit \(AppInfo.version)"),
               let tree = try? Storage.encoder.encode(templates.root) else { return nil }
         return BackupEngine.Snapshot(history: history.items, templatesJSON: tree, settings: settings.forBackup,

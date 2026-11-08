@@ -16,8 +16,13 @@ enum AbortableModal {
     static var depth: Int { windows.count }
     static var isRunning: Bool { !windows.isEmpty }
 
+    /// Tests only: answers the alert (by its message) instead of running it. The closure may lock
+    /// the app first, as a lock during the dialog would.
+    static var responseForTesting: ((String) -> NSApplication.ModalResponse)?
+
     @discardableResult
     static func run(_ alert: NSAlert) -> NSApplication.ModalResponse {
+        if let test = responseForTesting { return test(alert.messageText) }
         windows.append(alert.window)
         let response = alert.runModal()
         windows.removeLast()
