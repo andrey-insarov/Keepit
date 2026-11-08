@@ -1,4 +1,5 @@
 import AppKit
+import Carbon.HIToolbox
 import XCTest
 @testable import Keepit
 
