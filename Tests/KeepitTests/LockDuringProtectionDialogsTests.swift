@@ -154,11 +154,16 @@ final class LockDuringProtectionDialogsTests: XCTestCase {
     func testLockDuringPasswordPromptVoidsDisable() throws {
         let a = try app()
         let vault = try bytes(Vault.metaURL)
-        let sealed = try bytes(Storage.historyURL)
         Vault.askPasswordForTesting = { _ in a.lock(); return .of("old") }
         XCTAssertFalse(a.disableProtection())
         XCTAssertTrue(Vault.isEnabled)
-        XCTAssertEqual(try bytes(Storage.historyURL), sealed, "not rewritten plain")
+        // The lock itself re-saves before purging (fresh nonce, same items), so the bytes differ;
+        // what matters is that the file is still sealed, under the old key.
+        let history = try bytes(Storage.historyURL)
+        XCTAssertTrue(Vault.isEncrypted(history), "not rewritten plain")
+        let old = try XCTUnwrap(Vault.unlock(password: .of("old")))
+        XCTAssertNoThrow(try Vault.decrypt(history, key: old))
+        old.zero()
         try assertNothingHappened(a, vault: vault)
     }
 
