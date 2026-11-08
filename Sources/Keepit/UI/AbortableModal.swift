@@ -58,5 +58,26 @@ enum AbortableModal {
         guard NSApp.modalWindow === top || foreignDepth > 0 else { return }
         abortRequested = true
         if NSApp.modalWindow != nil { NSApp.abortModal() }   // a foreign step between two sessions: the request waits in runForeign
+        if foreignDepth > 0 { chaseForeignSessions() }
+    }
+
+    /// `abortModal` ends the innermost session only. A session opened over the foreign panel (a
+    /// save panel over the print panel, say) is the one that goes, and the panel — still showing
+    /// the phrase — is the session again (audit round 2). So, while the request stands and the
+    /// foreign call has not returned, each following tick ends whatever session is current until
+    /// the dialog's own loop has control; `runForeign` then ends the dialog. Bounded to a second:
+    /// a session that does not end on `abortModal` is not chased forever — the key is gone by
+    /// then, and the request still ends the dialog when the foreign call returns.
+    private static var chase: Timer?
+    private static func chaseForeignSessions(ticks: Int = 50) {
+        chase?.invalidate()
+        var left = ticks
+        let t = Timer(timeInterval: 0.02, repeats: true) { timer in
+            left -= 1
+            guard left > 0, abortRequested, foreignDepth > 0, let top = windows.last else { timer.invalidate(); chase = nil; return }
+            if let current = NSApp.modalWindow, current !== top { NSApp.abortModal() }
+        }
+        RunLoop.main.add(t, forMode: .common)   // modalPanel is a common mode: the timer fires inside the sessions it ends
+        chase = t
     }
 }

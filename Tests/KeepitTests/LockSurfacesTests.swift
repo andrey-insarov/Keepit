@@ -235,6 +235,46 @@ final class LockSurfacesTests: XCTestCase {
         XCTAssertEqual(AbortableModal.depth, 0)
     }
 
+    /// Audit round 2: a third session over the print panel (a save panel from the panel's PDF menu,
+    /// say). `abortModal` ends only that one and the panel — its preview is the phrase — would be
+    /// the session again. The request is chased down: the save panel goes, then the panel on the
+    /// next tick, then the sheet when control is back in its loop.
+    func testALockUnderANestedSessionOverThePrintPanelEndsAllThree() throws {
+        let a = try app()
+        let sheet = NSAlert(); sheet.messageText = "phrase"; sheet.addButton(withTitle: "I've saved it")
+        let panel = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 200, height: 100), styleMask: .titled, backing: .buffered, defer: false)
+        let save = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 200, height: 100), styleMask: .titled, backing: .buffered, defer: false)
+        var panelResponse: NSApplication.ModalResponse?
+        var saveResponse: NSApplication.ModalResponse?
+        var lockedOverTheSavePanel = false
+        var panelWasTheSessionAgain = false
+        let endSheet = after(4.0) { NSApp.stopModal(withCode: .OK) }
+        let pressPrint = after(0.05) {
+            let pressSave = self.after(0.05) {
+                let lockTimer = self.after(0.05) {
+                    lockedOverTheSavePanel = NSApp.modalWindow === save
+                    a.lock()
+                }
+                let endSave = self.after(0.5) { NSApp.stopModal(withCode: .OK) }
+                saveResponse = NSApp.runModal(for: save)      // the third session, over the panel
+                lockTimer.invalidate(); endSave.invalidate(); save.orderOut(nil)
+                panelWasTheSessionAgain = NSApp.modalWindow === panel
+            }
+            let endPanel = self.after(1.5) { NSApp.stopModal(withCode: .OK) }
+            AbortableModal.runForeign { panelResponse = NSApp.runModal(for: panel) }
+            pressSave.invalidate(); endPanel.invalidate(); panel.orderOut(nil)
+        }
+        let sheetResponse = AbortableModal.run(sheet)
+        pressPrint.invalidate(); endSheet.invalidate(); sheet.window.orderOut(nil)
+        XCTAssertTrue(lockedOverTheSavePanel)
+        XCTAssertTrue(panelWasTheSessionAgain, "abortModal ended the innermost session only")
+        XCTAssertTrue(a.isLocked)
+        XCTAssertEqual(saveResponse, .abort)
+        XCTAssertEqual(panelResponse, .abort, "the panel's session is ended on the next tick")
+        XCTAssertEqual(sheetResponse, .abort, "and the sheet's when control is back in its loop")
+        XCTAssertEqual(AbortableModal.depth, 0)
+    }
+
     /// Without a lock the foreign panel completes on its own and the sheet stays — Print… then
     /// "I've saved it" is still one confirmation.
     func testThePrintPanelWithoutALockLeavesTheSheetRunning() throws {
