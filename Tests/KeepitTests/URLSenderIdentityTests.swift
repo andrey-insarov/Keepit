@@ -25,19 +25,34 @@ final class URLSenderIdentityTests: XCTestCase {
 
     // MARK: the real Security framework, on this process
 
-    func testTheTestProcessHasAnAppleIdentityAndFailsAnyTeamRequirement() throws {
-        let me = try XCTUnwrap(CodeIdentity.read(pid: getpid()), "xctest is Apple-signed: it must have an identity")
-        XCTAssertFalse(me.identifier.isEmpty)
-        XCTAssertNil(me.teamID)
-        XCTAssertTrue(me.isAppleHost, "Apple-signed, no Team ID: a script host, asked every time")
-        // Keepit's requirement for a third-party app never validates against Apple's own code,
-        // whatever identifier is written into it — the chain and the Team ID are the OS's to check.
-        XCTAssertFalse(me.validates(TrustedSender(identifier: me.identifier, teamID: "ABCDE12345", displayName: "")))
-        XCTAssertFalse(me.validates(TrustedSender(identifier: "com.example.other", teamID: "ABCDE12345", displayName: "")))
+    /// launchd (pid 1) is Apple-signed on every macOS: an identity with no Team ID, an Apple host.
+    /// Keepit's requirement for a third-party app never validates against Apple's own code, whatever
+    /// identifier is written into it — the chain and the Team ID are the OS's to check.
+    func testLaunchdHasAnAppleIdentityAndFailsAnyTeamRequirement() throws {
+        let launchd = try CodeIdentity.read(pid: 1).get()
+        XCTAssertFalse(launchd.identifier.isEmpty)
+        XCTAssertNil(launchd.teamID)
+        XCTAssertTrue(launchd.isAppleHost, "Apple-signed, no Team ID: a script host, asked every time")
+        XCTAssertFalse(launchd.validates(TrustedSender(identifier: launchd.identifier, teamID: "ABCDE12345", displayName: "")))
+        XCTAssertFalse(launchd.validates(TrustedSender(identifier: "com.example.other", teamID: "ABCDE12345", displayName: "")))
+    }
+
+    /// The test process itself depends on the environment (under `swift test` the xctest host has a
+    /// foreign bundle loaded and may not validate): recorded, not asserted. PR (3) round 1: on the
+    /// CI runner it had no identity — which is the right answer for a process in that state.
+    func testTheTestProcessIdentityIsRecorded() {
+        switch CodeIdentity.read(pid: getpid()) {
+        case .success(let me):
+            XCTAssertFalse(me.identifier.isEmpty)
+            if me.teamID == nil { XCTAssertTrue(me.isAppleHost) }
+        case .failure(let why):
+            print("URLSenderIdentityTests: the test process has no code identity here: \(why)")
+        }
     }
 
     func testAGonePIDHasNoIdentity() {
-        XCTAssertNil(CodeIdentity.read(pid: 999_999))
+        guard case .failure(let why) = CodeIdentity.read(pid: 999_999) else { return XCTFail("a PID that does not exist") }
+        guard case .noCode = why else { return XCTFail("\(why)") }
     }
 
     // MARK: the requirement is Keepit's, built from two checked facts

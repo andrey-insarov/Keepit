@@ -34,38 +34,55 @@ struct CodeIdentity: Equatable {
     }
     static var validatesForTesting: ((CodeIdentity, TrustedSender) -> Bool)?
 
+    /// Why a sender has no identity. Every case is "unidentified" to the app; the distinction is
+    /// for the log and the tests.
+    enum ReadError: Error, Equatable {
+        case noCode(OSStatus)          // no such process, or the guest could not be resolved
+        case invalid(OSStatus)         // the running code does not validate against its own signature
+        case noStaticCode(OSStatus)
+        case noSigningInformation(OSStatus)
+        case noIdentifier              // unsigned: no signing identifier at all
+        case adHoc                     // no Team ID and not Apple's: `anchor apple` fails
+    }
+
     /// The sender named by an audit token (`keySenderAuditTokenAttr`), or nil when it is unsigned,
     /// ad-hoc signed, does not validate against its own signature, or is gone.
     static func read(auditToken: Data) -> CodeIdentity? {
         guard auditToken.count == MemoryLayout<audit_token_t>.size else { return nil }
-        return read(attributes: [kSecGuestAttributeAudit: auditToken])
+        switch read(attributes: [kSecGuestAttributeAudit: auditToken]) {
+        case .success(let i): return i
+        case .failure(let e): Log.system.notice("keepit:// sender has no identity: \(String(describing: e), privacy: .public)"); return nil
+        }
     }
 
-    /// By PID — for the test process itself and for diagnostics; the app uses the audit token.
-    static func read(pid: pid_t) -> CodeIdentity? {
+    /// By PID — for tests and diagnostics; the app uses the audit token.
+    static func read(pid: pid_t) -> Result<CodeIdentity, ReadError> {
         read(attributes: [kSecGuestAttributePid: NSNumber(value: pid)])
     }
 
-    private static func read(attributes: [CFString: Any]) -> CodeIdentity? {
+    private static func read(attributes: [CFString: Any]) -> Result<CodeIdentity, ReadError> {
         var codeRef: SecCode?
-        guard SecCodeCopyGuestWithAttributes(nil, attributes as CFDictionary, [], &codeRef) == errSecSuccess, let code = codeRef else { return nil }
+        var status = SecCodeCopyGuestWithAttributes(nil, attributes as CFDictionary, [], &codeRef)
+        guard status == errSecSuccess, let code = codeRef else { return .failure(.noCode(status)) }
         // The running code must validate against its own signature: a tampered binary has no identity.
-        guard SecCodeCheckValidity(code, [], nil) == errSecSuccess else { return nil }
+        status = SecCodeCheckValidity(code, [], nil)
+        guard status == errSecSuccess else { return .failure(.invalid(status)) }
         var staticRef: SecStaticCode?
-        guard SecCodeCopyStaticCode(code, [], &staticRef) == errSecSuccess, let staticCode = staticRef else { return nil }
+        status = SecCodeCopyStaticCode(code, [], &staticRef)
+        guard status == errSecSuccess, let staticCode = staticRef else { return .failure(.noStaticCode(status)) }
         var infoRef: CFDictionary?
-        guard SecCodeCopySigningInformation(staticCode, SecCSFlags(rawValue: UInt32(kSecCSSigningInformation)), &infoRef) == errSecSuccess,
-              let info = infoRef as? [String: Any],
-              let identifier = info[kSecCodeInfoIdentifier as String] as? String, !identifier.isEmpty else { return nil }
+        status = SecCodeCopySigningInformation(staticCode, SecCSFlags(rawValue: UInt32(kSecCSSigningInformation)), &infoRef)
+        guard status == errSecSuccess, let info = infoRef as? [String: Any] else { return .failure(.noSigningInformation(status)) }
+        guard let identifier = info[kSecCodeInfoIdentifier as String] as? String, !identifier.isEmpty else { return .failure(.noIdentifier) }
         let teamID = info[kSecCodeInfoTeamIdentifier as String] as? String
         // Apple's own code: no Team ID, and it satisfies `anchor apple`. Ad-hoc code has no Team ID
         // either and fails it — no identity.
         var apple = false
         if teamID == nil {
-            guard let req = Self.requirement("anchor apple"), SecCodeCheckValidityWithErrors(code, [], req, nil) == errSecSuccess else { return nil }
+            guard let req = Self.requirement("anchor apple"), SecCodeCheckValidityWithErrors(code, [], req, nil) == errSecSuccess else { return .failure(.adHoc) }
             apple = true
         }
-        return CodeIdentity(identifier: identifier, teamID: teamID, isAppleHost: apple, code: code)
+        return .success(CodeIdentity(identifier: identifier, teamID: teamID, isAppleHost: apple, code: code))
     }
 
     /// Whether this live sender satisfies the requirement Keepit builds for `trusted`. The chain
