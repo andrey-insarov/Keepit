@@ -81,9 +81,10 @@ final class HistoryStore {
         return out
     }
 
-    /// Drop everything from memory without touching the disk (lock).
+    /// Drop everything from memory (lock). A pending save lands first; with history-save off, the
+    /// file on disk is removed instead (SEC11) — the setting means "no history on disk".
     func purge() {
-        saver.flush()
+        if settings.historySave { saver.flush() } else { report(removeSavedFile(), .lock) }
         isPurged = true
         revision += 1
         items = []
@@ -197,10 +198,15 @@ final class HistoryStore {
         return added
     }
 
+    /// Settings changed. Turning *Save history* off removes the saved file at once (SEC11): until
+    /// 3.0.7 it stayed on disk until the next lock or quit, and the setting said nothing about it.
+    /// The removal is reported through `onSavedFileRemovalFailed` with `.settingChanged`.
     func updateSettings(_ s: Settings) {
+        let wasSaving = settings.historySave
         settings = s
         trim()
         changed()
+        if wasSaving, !s.historySave { report(removeSavedFile(), .settingChanged) }
     }
 
     var textItems: [ClipItem] { items.filter { $0.kind != .image } }
@@ -259,19 +265,43 @@ final class HistoryStore {
     /// Write the history to disk. `background: true` (debounced saves) queues the encode/encrypt/write
     /// off the main thread; the default waits for it.
     func saveNow(background: Bool = false) {
+        if !settings.historySave {             // even while purged: this removes, it writes nothing
+            report(removeSavedFile(), .save)
+            return
+        }
         if isPurged { return }
         if loadFailure != nil {                // neither written over nor deleted: see loadFailure
             Log.storage.notice("not saving history.json: the file on disk could not be read and is being kept as it is")
             return
         }
-        if settings.historySave {
-            Storage.save(items, to: Storage.historyURL, background: background)
-        } else {
-            try? Storage.removeNow(Storage.historyURL)      // refused for a held file
-        }
+        Storage.save(items, to: Storage.historyURL, background: background)
     }
 
+    /// A pending save lands now (quit, a protection commit, a backup). With history-save off this
+    /// removes the saved file instead, so a removal that failed earlier is retried at quit (SEC11).
     func flush() {
-        if settings.historySave { saver.flush() }
+        if settings.historySave { saver.flush() } else { report(removeSavedFile(), .flush) }
+    }
+
+    // MARK: History-save off (SEC11)
+
+    /// Where a removal of the saved file was asked for; the app decides how a failure is told.
+    enum RemovalOccasion { case settingChanged, lock, flush, save }
+
+    /// Called on the caller's thread when `removeSavedFile()` failed. Unset → logged only. A held
+    /// file (SEC10) counts as a failure too: it is not ours to delete, and the SEC10 report says why.
+    var onSavedFileRemovalFailed: ((Error, RemovalOccasion) -> Void)?
+
+    /// Removes history.json through `ioQueue`, in order after any queued write. A missing file is
+    /// success; a held file is refused (`Storage.Failure.held`). Saves nothing, so it may run while
+    /// purged. The result is returned, not discarded: the setting promises the file is gone.
+    func removeSavedFile() -> Result<Void, Error> {
+        Result { try Storage.removeNow(Storage.historyURL) }
+    }
+
+    private func report(_ r: Result<Void, Error>, _ occasion: RemovalOccasion) {
+        guard case .failure(let e) = r else { return }
+        Log.storage.error("history.json could not be removed (\(String(describing: occasion))): \(String(describing: e))")
+        onSavedFileRemovalFailed?(e, occasion)
     }
 }

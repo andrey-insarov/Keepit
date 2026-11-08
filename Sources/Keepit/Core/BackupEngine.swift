@@ -55,7 +55,7 @@ final class BookmarkDestination: BackupDestination {
 /// Bookkeeping that survives relaunches — backup.json in the data folder, plaintext (it holds no
 /// content: a fingerprint of the last snapshot, the registry of this installation's own files).
 struct BackupState: Codable, Equatable {
-    struct Record: Codable, Equatable {
+    struct Record: Codable, Hashable {
         var backupID: String
         var name: String
         var size: Int
@@ -74,6 +74,30 @@ struct BackupState: Codable, Equatable {
     var failures = 0
     var nextRetryAt: Date?
     var records: [Record] = []
+
+    init() {}
+
+    /// A record that does not decode — a field missing, a wrong type — is dropped on its own; the
+    /// rest of the registry stays (SEC12). Before 3.0.7 one bad record reset the whole state.
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        dirty = try c.decodeIfPresent(Bool.self, forKey: .dirty) ?? false
+        firstDirtyAt = try c.decodeIfPresent(Date.self, forKey: .firstDirtyAt)
+        lastFingerprint = try c.decodeIfPresent(String.self, forKey: .lastFingerprint)
+        credentialsStamp = try c.decodeIfPresent(String.self, forKey: .credentialsStamp)
+        lastSuccess = try c.decodeIfPresent(Date.self, forKey: .lastSuccess)
+        lastName = try c.decodeIfPresent(String.self, forKey: .lastName)
+        lastSize = try c.decodeIfPresent(Int.self, forKey: .lastSize)
+        lastError = try c.decodeIfPresent(String.self, forKey: .lastError)
+        failures = try c.decodeIfPresent(Int.self, forKey: .failures) ?? 0
+        nextRetryAt = try c.decodeIfPresent(Date.self, forKey: .nextRetryAt)
+        records = try c.decodeIfPresent([Lossy<Record>].self, forKey: .records)?.compactMap(\.value) ?? []
+    }
+
+    private struct Lossy<T: Decodable>: Decodable {
+        let value: T?
+        init(from decoder: Decoder) throws { value = try? T(from: decoder) }
+    }
 }
 
 final class BackupEngine {
@@ -158,6 +182,16 @@ final class BackupEngine {
         self.stateURL = stateURL
         self.sourceID = sourceID
         state = (try? JSONDecoder.iso.decode(BackupState.self, from: BoundedFileReader.read(stateURL, max: 1 << 20))) ?? BackupState()
+        // SEC12: a record is believed only if its name is exactly what this engine would have written
+        // for it. backup.json is plaintext in the data folder; a restored or synced registry may
+        // describe files that are not ours, under names that are not even basenames. Such records
+        // are dropped here, so nothing else in the engine ("last success", rollback copies) sees them;
+        // their files stay where they are.
+        if Self.isSeriesID(sourceID) {
+            let before = state.records.count
+            state.records = state.records.filter { Self.isWellFormed($0, sourceID: sourceID) }
+            if state.records.count != before { Log.storage.error("backup registry: \(before - self.state.records.count) record(s) with a foreign or malformed name dropped") }
+        }
     }
 
     // MARK: Triggers
@@ -223,6 +257,7 @@ final class BackupEngine {
         header.created = now()
         let name = Self.fileName(created: header.created, sourceID: sourceID, backupID: backupID)
         let keep = keepCount
+        let series = sourceID
         let stamp = snap.credentialsStamp
         let lastFingerprint = state.lastFingerprint, lastStamp = state.credentialsStamp
 
@@ -263,7 +298,7 @@ final class BackupEngine {
                 let result = Result { () -> (records: [BackupState.Record], size: Int) in
                     let size = try Self.write(sealed.bytes, sha: sealed.sha, name: name, to: destination)
                     let newRecord = BackupState.Record(backupID: backupID, name: name, size: size, date: header.created, sha256: sealed.sha)
-                    let records = Self.rotate(recordsAtStart + [newRecord], keep: keep, in: destination)
+                    let records = Self.rotate(recordsAtStart + [newRecord], keep: keep, sourceID: series, in: destination)
                     return (records, size)
                 }
                 DispatchQueue.main.async {
@@ -344,23 +379,132 @@ final class BackupEngine {
         }
     }
 
-    /// Keep the last `keep` files of *this* series — by the registry, never by what the folder
-    /// looks like. Foreign files, other series and before-restore copies are untouched. Runs on the
-    /// backup queue; returns the registry as it should be afterwards: a record whose file could
-    /// not be deleted stays, so the next rotation tries again.
-    static func rotate(_ records: [BackupState.Record], keep: Int, in destination: BackupDestination) -> [BackupState.Record] {
-        let sorted = records.sorted { $0.date < $1.date }
-        guard sorted.count > keep else { return records }
-        let doomed = sorted.prefix(sorted.count - keep)
-        var gone = Set<String>()
-        try? destination.withFolder { folder in
-            for r in doomed {
-                let url = folder.appendingPathComponent(r.name)
-                if !FileManager.default.fileExists(atPath: url.path) { gone.insert(r.backupID); continue }   // deleted by hand: forget it
-                if (try? FileManager.default.removeItem(at: url)) != nil { gone.insert(r.backupID) }
+    // MARK: Rotation (SEC12)
+
+    /// Keep the last `keep` archives of *this* series. The registry says which files are ours, but
+    /// it is plaintext in the data folder and may have been restored, synced or edited: so a file
+    /// is deleted only when it is *provably* the one its record describes — the name derived from
+    /// the record's own fields, a regular file of the recorded size, with the recorded SHA-256 —
+    /// and only archives that pass that check count toward `keep`. A record that fails is forgotten
+    /// and its object left alone; a record whose check could not be run (I/O) stays for the next
+    /// rotation and does not count, so an unverified record never displaces a verified archive.
+    /// Runs on the backup queue; returns the registry as it should be afterwards.
+    static func rotate(_ records: [BackupState.Record], keep: Int, sourceID: String, in destination: BackupDestination) -> [BackupState.Record] {
+        guard isSeriesID(sourceID) else {
+            Log.storage.error("backup rotation skipped: the installation's series id is malformed")
+            return records
+        }
+        // 1. Only records whose name is exactly what we would have written; the rest are forgotten.
+        let wellFormed = records.filter { isWellFormed($0, sourceID: sourceID) }
+        if wellFormed.count != records.count { Log.storage.error("backup rotation: \(records.count - wellFormed.count) record(s) with a foreign or malformed name forgotten") }
+        // 2. Identical duplicates collapse; nothing is read yet. With `keep` or fewer distinct ids
+        //    nothing could be deleted, whatever the files say: return them unread.
+        var order: [String] = []
+        var byID: [String: [BackupState.Record]] = [:]
+        for r in wellFormed where !(byID[r.backupID]?.contains(r) ?? false) {
+            if byID[r.backupID] == nil { order.append(r.backupID) }
+            byID[r.backupID, default: []].append(r)
+        }
+        let distinct = order.flatMap { byID[$0]! }
+        guard order.count > keep else { return distinct }
+
+        // 3. Verify every record on its own, before anything is ordered or counted (round 1 of the
+        //    PR: a record with a forged future date, no file, and a real sibling's id put that
+        //    sibling first and spent the budget on it — the archive just written was deleted).
+        //    Only verified records take part in the order and in the count.
+        let outcome: [BackupState.Record]? = try? destination.withFolder { (folder: URL) -> [BackupState.Record]? in
+            let dirFD = open(folder.path, O_RDONLY | O_DIRECTORY | O_CLOEXEC)
+            guard dirFD >= 0 else { return nil }
+            defer { close(dirFD) }
+            var kept: [BackupState.Record] = []                          // the registry afterwards
+            var verified: [BackupState.Record] = []
+            for r in distinct {
+                switch verify(r, in: dirFD) {
+                case .verified:
+                    verified.append(r)
+                    kept.append(r)
+                case .transient(let e):
+                    Log.storage.error("backup rotation: an archive could not be checked (errno \(e)); kept for the next rotation")
+                    kept.append(r)                                       // not counted, not ordered: cannot displace a verified one
+                case .mismatch:
+                    Log.storage.error("backup rotation: a registry record does not describe the object under its name; forgotten, nothing deleted")
+                case .gone:
+                    break                                                // deleted by hand: forget it
+                }
+            }
+            // 4. Records that disagree about one id are a conflict, whatever their files turned out to
+            //    be: nothing under those names is deleted and none of them counts toward `keep` — the
+            //    budget is spent only on unambiguous, verified archives, so a forged twin can neither
+            //    promote its sibling nor make room by it. A human sorts the folder out; logged once.
+            let conflicting = Set(order.filter { byID[$0]!.count > 1 })
+            if !conflicting.isEmpty { Log.storage.error("backup rotation: \(conflicting.count) archive id(s) with records that disagree; none of them is deleted or counted") }
+            // 5. Retention over the verified, unambiguous archives, newest first by their own dates.
+            let ranked = verified.filter { !conflicting.contains($0.backupID) }.sorted { $0.date > $1.date }
+            for r in ranked.dropFirst(keep) {
+                if r.name.withCString({ unlinkat(dirFD, $0, 0) }) == 0 {
+                    kept.removeAll { $0 == r }
+                } else {
+                    Log.storage.error("backup rotation: could not delete an old archive (errno \(errno)); kept for the next rotation")
+                }
+            }
+            return kept
+        }
+        return outcome ?? distinct                                       // folder not reachable: change nothing, retry later
+    }
+
+    enum Verification: Equatable { case verified, mismatch, gone, transient(Int32) }
+
+    /// Opens `record.name` relative to the open directory (never following a symlink), and checks
+    /// type, size and SHA-256 against the record. The object is read through the descriptor that
+    /// was checked; the caller unlinks by name in the same directory.
+    static func verify(_ record: BackupState.Record, in dirFD: Int32) -> Verification {
+        guard record.size >= 0, record.size <= Limits.dataFileMaxBytes else { return .mismatch }
+        let fd = record.name.withCString { openat(dirFD, $0, O_RDONLY | O_NOFOLLOW | O_NONBLOCK | O_CLOEXEC) }
+        guard fd >= 0 else {
+            switch errno {
+            case ENOENT, ENOTDIR: return .gone
+            case ELOOP: return .mismatch                                 // a symlink under our name is not ours
+            default: return .transient(errno)
             }
         }
-        return records.filter { !gone.contains($0.backupID) }
+        defer { close(fd) }
+        var st = stat()
+        guard fstat(fd, &st) == 0 else { return .transient(errno) }
+        guard (st.st_mode & S_IFMT) == S_IFREG else { return .mismatch }
+        guard st.st_size == Int64(record.size) else { return .mismatch }
+        _ = fcntl(fd, F_SETFL, fcntl(fd, F_GETFL) & ~O_NONBLOCK)
+        var hasher = SHA256()
+        var total = 0
+        var buffer = [UInt8](repeating: 0, count: 1 << 20)
+        while true {
+            let n = buffer.withUnsafeMutableBytes { Darwin.read(fd, $0.baseAddress, $0.count) }
+            if n < 0 {
+                if errno == EINTR { continue }
+                return .transient(errno)
+            }
+            if n == 0 { break }
+            total += n
+            if total > record.size { return .mismatch }                   // grew since fstat: not the file we were told about
+            buffer.withUnsafeBufferPointer { hasher.update(bufferPointer: UnsafeRawBufferPointer(start: $0.baseAddress, count: n)) }
+        }
+        guard total == record.size else { return .mismatch }
+        let digest = hasher.finalize().map { String(format: "%02x", $0) }.joined()
+        return digest == record.sha256 ? .verified : .mismatch
+    }
+
+    /// The installation's series id as `backupSourceID` writes it: a lower-case UUID. The derived
+    /// name excludes separators only when every component is known to be safe.
+    static func isSeriesID(_ s: String) -> Bool {
+        UUID(uuidString: s) != nil && s == s.lowercased() && s.count == 36
+    }
+
+    /// True when the record's name is exactly what `fileName` produces from its own fields, and
+    /// every field has the shape we write: a lower-case UUID, a 64-digit lower-case hex digest.
+    static func isWellFormed(_ r: BackupState.Record, sourceID: String) -> Bool {
+        guard isSeriesID(r.backupID), isSeriesID(sourceID) else { return false }
+        guard r.sha256.count == 64, r.sha256.allSatisfy({ $0.isHexDigit && !$0.isUppercase }) else { return false }
+        guard r.size >= 0 else { return false }
+        return r.name == fileName(created: r.date, sourceID: sourceID, backupID: r.backupID)
     }
 
     // MARK: Helpers

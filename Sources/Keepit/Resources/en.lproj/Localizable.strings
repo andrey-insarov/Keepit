@@ -647,3 +647,7 @@
 "The recovery phrase was closed when Keepit locked, before you confirmed it. Settings → Security → Show… shows it again." = "The recovery phrase was closed when Keepit locked, before you confirmed it. Settings → Security → Show… shows it again.";
 
 "Archive not saved: Keepit was locked meanwhile." = "Archive not saved: Keepit was locked meanwhile.";
+
+"Keepit keeps the history in a file in its data folder and loads it at the next start. Turning this off removes the saved history file now; history then lives only in memory until Keepit quits. Keepit tells you if the file could not be removed." = "Keepit keeps the history in a file in its data folder and loads it at the next start. Turning this off removes the saved history file now; history then lives only in memory until Keepit quits. Keepit tells you if the file could not be removed.";
+"History is no longer saved, but the file on disk was not removed: it could not be read and is kept as it is. Restore a backup (Replace) or start fresh first." = "History is no longer saved, but the file on disk was not removed: it could not be read and is kept as it is. Restore a backup (Replace) or start fresh first.";
+"History is no longer saved, but the file on disk could not be removed: %@\n\nIt is still there; Keepit tries again at the next lock and when it quits." = "History is no longer saved, but the file on disk could not be removed: %@\n\nIt is still there; Keepit tries again at the next lock and when it quits.";

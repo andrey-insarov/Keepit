@@ -37,7 +37,11 @@ under `~/Library/Containers/com.it.keep/`):
 | `vault.json` | Encryption metadata: KDF name and round count, PBKDF2 salt, a sealed verifier, the wrapped recovery material | — |
 | `restore-journal/`, `protection-journal/` | Only during a restore or a password change: the previous bytes of the files above, so an interrupted commit is undone at the next launch | As the originals |
 
-The history is written when it changes and read on launch. Without a password the JSON is plain
+The history is written when it changes and read on launch. With *Save history on quit, restore on
+start* off, `history.json` is removed the moment the setting is turned off, and again at every lock
+and at quit; history then lives only in memory until Keepit quits. If the file cannot be removed
+(permissions, a locked flag, a file Keepit could not read and therefore keeps), Keepit says so rather
+than assuming it is gone. Without a password the JSON is plain
 text on disk, protected only by your macOS account and FileVault. *Settings → Advanced → Open
 Data Folder* shows the folder.
 
@@ -171,7 +175,11 @@ compressed with LZFSE and sealed with AES-256-GCM. Two ways to make one, same fi
 - **Automatic** (*Settings → Backup*, needs password protection): Keepit writes a new
   complete copy into the folder you chose about five minutes after the last change (at the latest
   once a day), reads it back and checks it before deleting the oldest of *its own* copies beyond
-  *Keep last*. The file key is derived from your vault's data key with HKDF-SHA256 under a fixed
+  *Keep last*. "Its own" is proven, not looked up: Keepit keeps a registry of the copies it wrote
+  (`backup.json` in the data folder), and a copy is deleted only if its name is exactly what Keepit
+  would have written for that entry, if it is a regular file (not a link or a folder) of the recorded
+  size, and if its SHA-256 matches the entry — and only copies that pass that check count towards
+  *Keep last*. Anything else under a name the registry mentions is left where it is. The file key is derived from your vault's data key with HKDF-SHA256 under a fixed
   label — a separate key on purpose: it opens backups, not the vault, so even someone who extracted
   it from a running process could not use it on the data folder. Deriving it requires the data key,
   which is what the Keepit password or the recovery phrase unlocks — on any Mac. Each copy is sealed
