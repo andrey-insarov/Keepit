@@ -59,6 +59,10 @@ Keepit needs the Accessibility permission to paste for you; without it, chosen i
 ## Keywords (100 chars, comma-separated)
 clipboard,history,paste,copy,snippets,templates,manager,queue,text expander,productivity
 
+## What's new (version 3.0.6)
+• Security fixes from an independent review: a data file Keepit cannot read is kept as it is, never written over; turning protection on or off and changing the password are one all-or-nothing step; locking Keepit closes the recovery phrase, the preview and the Viewer and voids any password dialog that was open.
+• Password fields use Secure Event Input; the self-test runs in a temporary data folder of its own by default.
+
 ## What's new (version 3.0.5)
 • Paste as Strikethrough, Underline or Wavy underline — plain text that keeps its look in chats, forms and terminals; Remove decorations strips them.
 • Locking Keepit now closes an open template question, keepit:// confirmation or Clear History prompt.
