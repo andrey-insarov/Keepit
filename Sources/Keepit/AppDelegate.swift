@@ -140,6 +140,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             settings = stored.value ?? Settings()
         }
         super.init()
+        // A pending paste checks these immediately before every key event (SEC08).
+        Paster.gate = { [weak self] generation in
+            guard let self else { return false }
+            return !self.isLocked && self.lockCount == generation
+        }
+        Paster.currentGeneration = { [weak self] in self?.lockCount ?? -1 }
     }
 
     /// Tests only: the two stores without the rest of the launch (no password gate, monitor, timers,
@@ -531,6 +537,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         isLocked = true
         lockCount += 1
         AbortableModal.abortIfRunning()      // a template prompt, a keepit:// confirmation, the recovery phrase: none outlives the lock
+        Paster.cancelPending("Keepit locked")   // a paste or {cursor} moves still waiting to be typed (SEC08)
         cancelOpenMenus()                    // a history menu stayed open over a locked app (SEC05)
         PreviewPanel.shared.purge()          // the preview beside it, and a show scheduled just before (SEC05)
         queue.stop()                         // also an ended queue's copies (SEC05)
@@ -1842,14 +1849,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         let exp = Snippets.expand(text, context: ctx)
         let out = ClipItem.text(exp.text)
-        let sendKey = settings.pasteAfterSelect
-        Paster.paste(out, into: target, monitor: monitor, settings: settings, sendKey: sendKey, extraDelay: extra)
-        if sendKey, Paster.isTrusted(), let back = exp.charsAfterCursor, back > 0 {
-            // Move the caret to the {cursor} mark once the paste has landed.
-            DispatchQueue.main.asyncAfter(deadline: .now() + settings.pasteDelay + extra + 0.25) {
-                Paster.sendKeyStroke(PasteKey(keyCode: UInt16(kVK_LeftArrow), command: false), times: back)
-            }
-        }
+        // The {cursor} moves belong to the same ticket as the paste key (SEC08): checked before each
+        // one, cancelled with it — never scheduled on their own into whatever is in front.
+        Paster.paste(out, into: target, monitor: monitor, settings: settings, sendKey: settings.pasteAfterSelect, extraDelay: extra,
+                     cursorBack: exp.charsAfterCursor ?? 0)
     }
 
     /// Stop watching the clipboard for a while (typing something sensitive); the icon shows it.

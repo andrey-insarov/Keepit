@@ -238,7 +238,14 @@ verify once that a copy opens with *Restore…* from another machine before rely
 Keepit does not ask for Full Disk Access, Screen Recording, Input Monitoring, Contacts, Calendars,
 Location or the camera, and does not use any of them. The Accessibility permission is powerful — it
 is the same one window managers and automation tools need — which is why the app is signed and
-notarized and the source is public.
+notarized and the source is public. What Keepit does with it is narrow: one ⌘V (and, for a template
+with `{cursor}`, a few left arrows) addressed to the process of the app you were in, never to
+"whatever is in front". Immediately before each of those key events Keepit checks that it is still
+unlocked (and was not locked and unlocked in between), that the target app is still running and is
+the one in front, that nothing else has written the clipboard since, and that no modifier key is
+held; if any of that fails, nothing is typed — the item stays on the clipboard for a manual ⌘V.
+Without a known target app (a keepit:// command with no app in front, the Viewer's own copy) no key
+is sent at all.
 
 **Clipboard access as macOS sees it.** Keepit reads the clipboard by polling (macOS sends no
 notification when it changes), so from macOS 15.4 on, *System Settings → Privacy & Security* lists
