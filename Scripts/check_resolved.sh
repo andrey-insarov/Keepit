@@ -9,16 +9,22 @@ tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
 
 cp Package.resolved "$tmp/committed.json"
-# A binary-artifact download that fails half-way (GitHub 5xx) leaves a file behind, and SwiftPM's own
-# retry then stops with "... already exists in file system". On CI, drop the partial download and try
-# again (3 attempts); the archive is still verified against the checksum in Sparkle's manifest.
+# On CI, SwiftPM's shared cache (~/Library/Caches/org.swift.swiftpm/artifacts) fails on the macos-15
+# runners with "... Sparkle_for_Swift_Package_Manager_zip already exists in file system", even when it
+# is emptied right before (runs 452, 456, 8 Nov). So CI resolves without the shared cache: the binary
+# goes straight to .build/artifacts, where the later build steps find it. The archive is still
+# verified against the checksum in Sparkle's manifest. A failed attempt is retried (3 in all).
+cache_flag=
+if [ -n "${CI:-}" ]; then
+  cache_flag=--disable-dependency-cache
+fi
 attempt=1
-until swift package resolve >/dev/null; do
+until swift package resolve $cache_flag >/dev/null; do
   if [ -z "${CI:-}" ] || [ "$attempt" -ge 3 ]; then
     exit 1
   fi
-  echo "swift package resolve failed (attempt $attempt of 3); clearing the artifact cache and retrying" >&2
-  rm -rf "$HOME/Library/Caches/org.swift.swiftpm/artifacts" .build/artifacts
+  echo "swift package resolve failed (attempt $attempt of 3); clearing .build/artifacts and retrying" >&2
+  rm -rf .build/artifacts
   attempt=$((attempt + 1))
   sleep $((attempt * 15))
 done
