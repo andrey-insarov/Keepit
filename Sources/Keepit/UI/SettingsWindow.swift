@@ -333,7 +333,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         var generalRows: [[NSView]] = [
             header(L("Startup")),
             [NSView(), check(loginItem)],
-            [NSView(), check(saveHistory)],
+            [NSView(), help(check(saveHistory), L("Keepit keeps the history in a file in its data folder and loads it at the next start. Turning this off removes the saved history file now; history then lives only in memory until Keepit quits. Keepit tells you if the file could not be removed."))],
             header(L("Paste")),
             [NSView(), check(pasteAfter)],
             row(L("Paste delay:"), help(number(pasteDelay, unit: L("seconds"), min: 0, max: 5, step: 0.02, decimals: 2),

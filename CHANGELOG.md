@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Backup rotation deletes a file only when it is provably one of Keepit's own copies: its name must be exactly what Keepit would have written for the registry entry (so a registry restored or synced from elsewhere cannot point rotation at `../x`, another folder, or another Mac's series), the object under that name must be a regular file — not a symlink or a folder — of the recorded size, and its SHA-256 must match the entry. Only copies that pass all of that count towards *Keep last*, newest first, so a registry entry without a matching file — or with a file whose bytes do not match — can no longer push a good copy out; two entries for one copy count once, and entries that disagree about one copy delete nothing. A check that fails leaves the file where it is and forgets the entry; a check that could not run (I/O) keeps the entry for the next rotation. One malformed entry no longer resets the whole registry. (3.0.5 security review, SEC12; `BackupRotationTests`.)
+- Turning *Save history on quit, restore on start* off now removes `history.json` at once, and the file is removed again at every lock and at quit (quit used to leave it, since nothing was pending). A removal that fails is reported — after the toggle, in an alert; after a lock, once the next unlock is done — and never assumed: the setting stays off and Keepit tries again at the next lock and at quit. A file Keepit could not read stays held, as in 3.0.6. The setting's (?) says all this. (SEC11; `HistorySaveOffTests`.)
+
 ## 3.0.6 — 2026-11-08
 
 Security patch release after an independent review of 3.0.5 (storage logic and lifecycle; the cryptography, signing, notarization and update channel were found clean). No new features; backups made by 3.0.5 and 3.0.6 open in either.

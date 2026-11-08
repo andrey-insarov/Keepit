@@ -12,6 +12,8 @@ final class BackupEngineTests: XCTestCase {
     var templates: TemplateStore!
     var clock = Date(timeIntervalSince1970: 1_800_000_000)
     var key: SecureKey!
+    /// The series id as the app writes it (a lower-case UUID): rotation believes only names built from one.
+    static let seriesA = "0a0a0a0a-0a0a-4a0a-8a0a-0a0a0a0a0a0a"
 
     override func setUpWithError() throws {
         tmp = TempStorage()
@@ -23,7 +25,7 @@ final class BackupEngineTests: XCTestCase {
         var s = Settings(); s.historySave = false
         history = HistoryStore(settings: s)
         templates = TemplateStore()
-        engine = BackupEngine(stateURL: Storage.directory.appendingPathComponent("backup.json"), sourceID: "src-a")
+        engine = BackupEngine(stateURL: Storage.directory.appendingPathComponent("backup.json"), sourceID: Self.seriesA)
         engine.destination = PlainFolderDestination(folder)
         engine.keepCount = 10
         engine.now = { [unowned self] in self.clock }
@@ -91,7 +93,7 @@ final class BackupEngineTests: XCTestCase {
         XCTAssertEqual(try Backup.decode(file, password: .of("vault pw")).history.map(\.plainText), ["three", "two", "one"])
         XCTAssertEqual(try Backup.decode(file, dataKey: key).history.count, 3)
         guard case .v2(let h, _) = try Backup.inspect(file) else { return XCTFail() }
-        XCTAssertEqual(h.sourceID, "src-a"); XCTAssertNotNil(h.backupID); XCTAssertNotNil(h.recovery); XCTAssertNil(h.label)
+        XCTAssertEqual(h.sourceID, Self.seriesA); XCTAssertNotNil(h.backupID); XCTAssertNotNil(h.recovery); XCTAssertNil(h.label)
         XCTAssertEqual(engine.state.records[0].sha256, BackupEngine.sha256(file))
     }
 
@@ -158,7 +160,7 @@ final class BackupEngineTests: XCTestCase {
             XCTAssertNoThrow(try run().get())
         }
         XCTAssertEqual(engine.state.records.count, 2)
-        let own = ownFiles().filter { $0.contains("-src-a-") }
+        let own = ownFiles().filter { $0.contains("-\(Self.seriesA)-") }
         XCTAssertEqual(own.count, 2)
         XCTAssertEqual(Set(own), Set(engine.state.records.map(\.name)))
         XCTAssertTrue(allFiles().contains("Keepit-20200101T000000Z-src-b-other.keepit"))
@@ -173,7 +175,7 @@ final class BackupEngineTests: XCTestCase {
 
     func testStatePersistsAcrossRelaunch() {
         history.add(.text("x"))
-        let again = BackupEngine(stateURL: Storage.directory.appendingPathComponent("backup.json"), sourceID: "src-a")
+        let again = BackupEngine(stateURL: Storage.directory.appendingPathComponent("backup.json"), sourceID: Self.seriesA)
         XCTAssertTrue(again.state.dirty)
         XCTAssertEqual(again.state.firstDirtyAt, clock)
         again.now = { [unowned self] in self.clock }

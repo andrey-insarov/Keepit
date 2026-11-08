@@ -146,6 +146,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// hot keys or dialogs). The app itself creates them in `applicationDidFinishLaunching`, after the vault.
     func loadStoresForTesting() {
         history = HistoryStore(settings: settings)
+        wireHistoryRemovalReports()
         templates = TemplateStore()
         if monitor == nil { monitor = ClipboardMonitor(settings: settings) }   // idle: never started
         sessionActiveProbe = { nil }                 // a test says so when the session matters; a CI session must not decide
@@ -212,6 +213,48 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
 
+    // MARK: History-save off (SEC11)
+
+    /// With *Save history* off the file is removed when the setting is turned off, at every lock and
+    /// at quit. The store reports a removal that failed; how it is told depends on where it was asked:
+    /// the toggle → an alert after `apply(settings:)` has returned; a lock → kept here and shown
+    /// after the next unlock, never inside `lock()`; quit and other flushes → the store's log line.
+    /// A held file (SEC10) is refused as not ours to delete; the SEC10 report already says what to do,
+    /// so only the toggle repeats it.
+    var historyRemovalToReport: Error?
+    private func wireHistoryRemovalReports() {
+        history.onSavedFileRemovalFailed = { [weak self] error, occasion in
+            guard let self else { return }
+            switch occasion {
+            case .settingChanged:
+                DispatchQueue.main.async { [weak self] in
+                    guard let self, !self.isLocked else { return }
+                    self.reportHistoryRemovalFailure(error)
+                }
+            case .lock:
+                if case Storage.Failure.held = error { return }
+                self.historyRemovalToReport = error
+            case .flush, .save:
+                break
+            }
+        }
+    }
+    func reportHistoryRemovalLater() {
+        guard historyRemovalToReport != nil else { return }
+        DispatchQueue.main.async { [weak self] in
+            guard let self, !self.isLocked, let e = self.historyRemovalToReport else { return }
+            self.historyRemovalToReport = nil
+            self.reportHistoryRemovalFailure(e)
+        }
+    }
+    func reportHistoryRemovalFailure(_ error: Error) {
+        if case Storage.Failure.held = error {
+            Vault.error(L("History is no longer saved, but the file on disk was not removed: it could not be read and is kept as it is. Restore a backup (Replace) or start fresh first."))
+        } else {
+            Vault.error(LF("History is no longer saved, but the file on disk could not be removed: %@\n\nIt is still there; Keepit tries again at the next lock and when it quits.", error.localizedDescription))
+        }
+    }
+
     // MARK: - Lifecycle
 
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -225,6 +268,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             return
         }
         history = HistoryStore(settings: settings)
+        wireHistoryRemovalReports()
         // Age-based expiry also runs on a timer, so items disappear without waiting for the next copy.
         Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
             guard let self, !self.isLocked else { return }
@@ -527,6 +571,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         guard !isLocked else { return false }
         reportUnsweptJournalsLater()                    // a restore commit that a lock cut short had no chance to; after unlock() is done
         remindPhraseNotConfirmedLater()                 // a phrase dialog the lock closed (SEC05), same timing
+        reportHistoryRemovalLater()                     // history.json a lock could not remove (SEC11), same timing
         if !(pausedUntil.map { $0 > Date() } ?? false) { monitor.start() }   // keep a running pause
         registerHotKeys()
         backup.runIfDue()
