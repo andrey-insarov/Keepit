@@ -187,12 +187,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     /// Reports that could not be shown where they arose — a restore commit cut short by a lock
-    /// (`lockedAfterWrite`) — wait for the next unlock (SEC01 audit, round 2).
+    /// (`lockedAfterWrite`) — wait for the next unlock (SEC01 audit, round 2). Shown after the
+    /// flow that queued them has finished, never inside it: a lock during the alert must find
+    /// nothing of an `unlock()` or a restore left to run (round 3: shown inside `unlock()`, a lock
+    /// during the alert was followed by the watcher and hot keys restarting). One alert at a time,
+    /// the lock state checked before each; what is not shown waits for the next unlock.
     var unsweptToReport: [(URL, Error)] = []
-    func reportUnsweptJournals() {
-        let pending = unsweptToReport
-        unsweptToReport = []
-        for (dir, e) in pending { reportUnsweptJournal(dir, e) }
+    func reportUnsweptJournalsLater() {
+        guard !unsweptToReport.isEmpty else { return }
+        DispatchQueue.main.async { [weak self] in self?.reportUnsweptJournals() }
+    }
+    private func reportUnsweptJournals() {
+        while !isLocked, !unsweptToReport.isEmpty {
+            let (dir, e) = unsweptToReport.removeFirst()
+            reportUnsweptJournal(dir, e)
+        }
     }
 
     // MARK: - Lifecycle
@@ -504,7 +513,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         // A lock ended the new-password prompt: the stores are purged, the key is gone; nothing of
         // the unlock may go on (SEC13 design review: the watcher and hot keys used to restart).
         guard !isLocked else { return false }
-        reportUnsweptJournals()                         // a restore commit that a lock cut short had no chance to
+        reportUnsweptJournalsLater()                    // a restore commit that a lock cut short had no chance to; after unlock() is done
         if !(pausedUntil.map { $0 > Date() } ?? false) { monitor.start() }   // keep a running pause
         registerHotKeys()
         backup.runIfDue()
@@ -1895,10 +1904,11 @@ extension AppDelegate {
         // is armed (an undo that did not finish; the alert is up, the process about to leave)
         // vault.json may be the new one over the old key in memory: an archive with that header
         // opens with no password and no phrase, and rotation would drop the last good copy for it
-        // (SEC01 audit, round 2). `Vault.verify` is the same guard in general: the header must be
-        // the vault of the key that seals the payload.
+        // (SEC01 audit, round 2). `Vault.backupHeader` is the same guard in general: it is built
+        // only from the vault.json the key in memory belongs to (round 3: `verify` was not enough —
+        // a damaged salt with an intact check passed it, and the password opened nothing).
         guard !isLocked, Vault.isEnabled, let key = Storage.key,
-              !hasUnreadableData, !RestoreCommit.hasArmedJournal, Vault.verify(key),
+              !hasUnreadableData, !RestoreCommit.hasArmedJournal,
               let header = Vault.backupHeader(app: "Keepit \(AppInfo.version)"),
               let tree = try? Storage.encoder.encode(templates.root) else { return nil }
         return BackupEngine.Snapshot(history: history.items, templatesJSON: tree, settings: settings.forBackup,

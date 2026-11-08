@@ -78,13 +78,13 @@ enum Vault {
         case notSealed                    // decrypt() given bytes that encrypt() did not make
     }
 
-    struct Recovery: Codable {
+    struct Recovery: Codable, Equatable {
         var salt: Data            // HKDF salt for the phrase-derived key
         var wrappedKey: Data      // data key, AES-GCM under the phrase-derived key
         var wrappedEntropy: Data  // phrase entropy, AES-GCM under the data key (lets a password change re-wrap)
     }
 
-    struct Meta: Codable {
+    struct Meta: Codable, Equatable {
         var formatVersion: Int?  // nil = 1 (no KDF fields)
         var kdf: String?         // nil = pbkdf2-hmac-sha256
         var rounds: UInt32?      // nil = 200 000
@@ -169,6 +169,21 @@ enum Vault {
     }
 
     // MARK: Enable / verify / disable
+
+    /// The vault.json the key in memory belongs to: read when `Storage.key` is set (a key derived
+    /// from the password, unwrapped by the phrase, verified for Touch ID, or published after a
+    /// commit that wrote the file), updated when a recovery block is written for that key, nil
+    /// when there is no key. `backupHeader` is built only from a file that still equals it: the
+    /// header's parameters must be the ones that derive the key the payload is sealed with, or no
+    /// password and no phrase opens the archive (SEC01 audit, round 3 — `verify` alone passed a
+    /// vault.json with a damaged salt and an intact check; and the file is read once, so the
+    /// check and the header cannot come from two different versions).
+    private(set) static var liveMeta: Meta?
+
+    /// Called by `Storage.key`'s setter.
+    static func keyDidChange(_ key: SecureKey?) {
+        liveMeta = key == nil ? nil : readMeta()
+    }
 
     private static func readMeta() -> Meta? {
         guard let data = try? BoundedFileReader.read(metaURL, max: 64 * 1024) else { return nil }   // a few hundred bytes of JSON
@@ -281,6 +296,7 @@ enum Vault {
         guard var meta = readMeta() else { throw CocoaError(.fileNoSuchFile) }
         let words = try addRecovery(to: &meta, for: key, entropy: given)
         try writeMeta(meta)
+        if key === Storage.key { liveMeta = meta }      // a new block for the live key: backups carry it from now on
         return words
     }
 
@@ -304,6 +320,7 @@ enum Vault {
         guard let rec = oldRecovery, var meta = readMeta() else { return false }
         meta.recovery = try rewrapped(rec, from: old, to: new)
         try writeMeta(meta)
+        if new === Storage.key { liveMeta = meta }
         return true
     }
 
@@ -312,8 +329,12 @@ enum Vault {
 
     /// The header an automatic backup carries: this vault's KDF parameters and recovery block, so
     /// the same password — or phrase — opens the file on any Mac. nil when protection is off.
+    /// nil without a vault, and — while a key is in memory — nil when vault.json is not the one
+    /// that key belongs to (`liveMeta`): an archive sealed with the key under another header
+    /// opens with nothing. Every caller that seals with `Storage.key` goes through here.
     static func backupHeader(app: String, label: String? = nil, sourceID: String? = nil, backupID: String? = nil) -> Container.Header? {
         guard let m = readMeta() else { return nil }
+        if Storage.key != nil { guard let live = liveMeta, m == live else { return nil } }
         let rec = m.recovery.map { Container.Recovery(salt: $0.salt, wrappedKey: $0.wrappedKey, wrappedEntropy: $0.wrappedEntropy) }
         return Container.Header(mode: .auto, kdf: m.kdfName, rounds: m.kdfRounds, salt: m.salt, recovery: rec,
                                 app: app, minReader: Backup.minReader, label: label, sourceID: sourceID, backupID: backupID)

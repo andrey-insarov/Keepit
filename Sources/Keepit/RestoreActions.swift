@@ -308,7 +308,7 @@ extension AppDelegate {
         registerHotKeys()
         viewer?.refresh()
         backup?.noteChange()
-        reportUnsweptJournals()                      // the commit stands; the copies are still there
+        reportUnsweptJournalsLater()                 // the commit stands; the copies are still there — said once the restore flow is done
     }
 
     final class UnlockedBackup {
