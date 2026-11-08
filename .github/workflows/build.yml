@@ -30,13 +30,6 @@ jobs:
       # is built — a release job must never sign a binary whose dependency nobody reviewed.
       # Pins are compared semantically (identity / location / revision / version) so a change of
       # the file's schema version by a newer SwiftPM does not count as drift.
-      # macos-15 runners (8 Nov 2026) carry a stale SwiftPM artifact cache; resolve then fails with
-      # "…Sparkle_for_Swift_Package_Manager_zip already exists in file system". The runner is
-      # ephemeral, so the global cache is dropped; the fresh download is still verified against
-      # the checksum in Sparkle's own manifest at the pinned revision.
-      - name: Clear SwiftPM artifact cache
-        run: rm -rf ~/Library/Caches/org.swift.swiftpm/artifacts
-
       - name: Dependencies match Package.resolved
         run: Scripts/check_resolved.sh
 
@@ -97,13 +90,6 @@ jobs:
             echo "::error::Tag $GITHUB_REF_NAME but VERSION is $(cat VERSION) — the tag points at the wrong commit (forgot git pull?). Delete the tag and re-tag the right commit."
             exit 1
           fi
-
-      # macos-15 runners (8 Nov 2026) carry a stale SwiftPM artifact cache; resolve then fails with
-      # "…Sparkle_for_Swift_Package_Manager_zip already exists in file system". The runner is
-      # ephemeral, so the global cache is dropped; the fresh download is still verified against
-      # the checksum in Sparkle's own manifest at the pinned revision.
-      - name: Clear SwiftPM artifact cache
-        run: rm -rf ~/Library/Caches/org.swift.swiftpm/artifacts
 
       - name: Dependencies match Package.resolved
         run: Scripts/check_resolved.sh
