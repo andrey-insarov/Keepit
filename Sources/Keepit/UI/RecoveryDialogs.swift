@@ -74,7 +74,7 @@ enum RecoveryDialogs {
 
     /// Ask for the 24 words. Returns nil on Cancel — or when a lock closed the box (an
     /// `AbortableModal`); loops until the checksum validates. The box runs under Secure Event
-    /// Input (SEC04) for as long as it is open; the token ends before an error alert and is taken
+    /// Input (SEC03) for as long as it is open; the token ends before an error alert and is taken
     /// again for the next attempt.
     static func askPhrase() -> [String]? {
         if let test = askPhraseForTesting { return test() }

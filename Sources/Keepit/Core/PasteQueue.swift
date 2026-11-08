@@ -32,7 +32,7 @@ final class PasteQueue {
     }
 
     /// Ends the queue and drops its copies. Also on a queue that already ended by itself: nothing
-    /// may stay behind (3.0.5 security review, SEC03 — `stop()` returned early then, and the copies
+    /// may stay behind (3.0.5 security review, SEC05 — `stop()` returned early then, and the copies
     /// taken under the queue outlived it; a lock calls this). Announces a change only if it was on.
     func stop() {
         let wasActive = isActive
@@ -68,7 +68,7 @@ final class PasteQueue {
         guard isActive, let item = nextItem else { return nil }
         next += 1
         if next >= items.count {
-            exhausted()                               // the copies go with it (SEC03)
+            exhausted()                               // the copies go with it (SEC05)
         } else {
             armTimer()
             onChange?()

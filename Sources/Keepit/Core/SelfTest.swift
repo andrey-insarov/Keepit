@@ -26,7 +26,7 @@ enum SelfTest {
 
     static func run(app: AppDelegate) {
         log.append("Keepit \(AppInfo.version) (\(AppInfo.build)) self-test, data dir: \(Storage.directory.path)")
-        // Never on the user's data (SEC09): Storage picks a temp folder for a bare --selftest, and
+        // Never on the user's data (SEC04): Storage picks a temp folder for a bare --selftest, and
         // KEEPIT_DATA_DIR may point anywhere but here.
         guard !Storage.isDefaultDirectory else {
             check(false, "refusing to run on the default data folder; set KEEPIT_DATA_DIR")

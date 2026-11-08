@@ -489,7 +489,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         AbortableModal.abortIfRunning()      // a template prompt, a keepit:// confirmation, the recovery phrase: none outlives the lock
         cancelOpenMenus()                    // a history menu stayed open over a locked app (SEC05)
         PreviewPanel.shared.purge()          // the preview beside it, and a show scheduled just before (SEC05)
-        queue.stop()                         // also an ended queue's copies (SEC03)
+        queue.stop()                         // also an ended queue's copies (SEC05)
         viewer?.discardContents()            // commits a pending edit, then empties tree, views, undo (SEC05)
         viewer = nil
         preferencesWindow?.close()
@@ -875,7 +875,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         Storage.key = newKey                         // zeroes oldKey
         syncBiometricKey()
         backup?.forceNext()                           // the next copy must open with the new password
-        // The .corrupt-… copies sealed with the old key follow (SEC14) — outside the transaction:
+        // The .corrupt-… copies sealed with the old key follow (SEC02) — outside the transaction:
         // a stop here leaves them under the old key, unreadable with the new password but never
         // plain; nothing of the live data depends on them.
         let oldCopy = oldBytes.withUnsafeBytes { SecureKey(bytes: $0) }
@@ -1051,7 +1051,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func publishEnabledVault(_ prepared: PreparedVault, unswept: Error? = nil) {
         let g = lockCount
         Storage.key = prepared.key
-        Storage.sealSetAsideCopies(with: prepared.key)   // the .corrupt-… copies were plain like the files; now sealed like them (SEC14)
+        Storage.sealSetAsideCopies(with: prepared.key)   // the .corrupt-… copies were plain like the files; now sealed like them (SEC02)
         syncBiometricKey()
         configureBackup()                             // a folder kept in settings becomes a destination again
         backup?.forceNext()
@@ -1115,7 +1115,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             Vault.error(LF("Could not disable protection: %@", error.localizedDescription))
             return false
         }
-        if let key = Storage.key { Storage.unsealSetAsideCopies(with: key) }   // plain again, like the live files (SEC14)
+        if let key = Storage.key { Storage.unsealSetAsideCopies(with: key) }   // plain again, like the live files (SEC02)
         Storage.key = nil
         BiometricUnlock.remove()                      // the setting stays as the user left it; the entry wrapped a key that is gone
         apply(settings: newSettings)                  // → configureBackup(): destination nil

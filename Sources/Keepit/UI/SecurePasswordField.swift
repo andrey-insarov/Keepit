@@ -86,7 +86,7 @@ final class SecurePasswordField: NSView {
     override var focusRingType: NSFocusRingType { get { .exterior } set {} }
 
     /// Secure Event Input while this field has the focus *and* its window is key *and* Keepit is
-    /// the active app (SEC04) — not while the dialog is merely open, so switching to another app
+    /// the active app (SEC03) — not while the dialog is merely open, so switching to another app
     /// with a password prompt behind does not leave the whole system in secure input. Re-evaluated
     /// on focus changes, key-window changes and app activation; ended when the view leaves its
     /// window and in deinit.

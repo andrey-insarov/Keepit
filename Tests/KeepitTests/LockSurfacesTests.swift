@@ -3,8 +3,8 @@ import XCTest
 @testable import Keepit
 
 /// 3.0.6, the last group from the review of 3.0.5: what a lock has to take off the screen and out
-/// of memory (SEC05, SEC02, SEC03), Secure Event Input where a secret is typed (SEC04), the
-/// `.corrupt-…` copies and the vault (SEC14), and the self-test's data folder (SEC09).
+/// of memory (SEC05), Secure Event Input where a secret is typed (SEC03), the `.corrupt-…`
+/// copies and the vault (SEC02), and the self-test's data folder (SEC04).
 final class LockSurfacesTests: XCTestCase {
     private var tmp: TempStorage!
     private var infos: [String] = []
@@ -52,7 +52,7 @@ final class LockSurfacesTests: XCTestCase {
         XCTAssertTrue(a.unlock())
     }
 
-    // MARK: SEC03 — the paste queue keeps no copies
+    // MARK: SEC05 — the paste queue keeps no copies
 
     func testAnExhaustedQueueKeepsNoCopies() {
         let q = PasteQueue(); q.timeout = 0
@@ -217,7 +217,7 @@ final class LockSurfacesTests: XCTestCase {
         XCTAssertEqual(menu.cancelled, 1, "the lock ends the menu's tracking")
     }
 
-    // MARK: SEC04 — Secure Event Input
+    // MARK: SEC03 — Secure Event Input
 
     func testSecureInputFollowsTheFocusOfAPasswordField() {
         let field = SecurePasswordField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
@@ -277,7 +277,7 @@ final class LockSurfacesTests: XCTestCase {
         XCTAssertEqual(SecureEventInput.callsForTesting, ["enable", "disable"])
     }
 
-    // MARK: SEC14 — the .corrupt-… copies and the vault
+    // MARK: SEC02 — the .corrupt-… copies and the vault
 
     private func plantCopy(_ name: String, _ text: String) throws -> URL {
         let url = Storage.directory.appendingPathComponent(name)
@@ -368,7 +368,7 @@ final class LockSurfacesTests: XCTestCase {
         XCTAssertEqual(try Data(contentsOf: other), Data("keep".utf8))
     }
 
-    // MARK: SEC09 — the self-test's folder
+    // MARK: SEC04 — the self-test's folder
 
     func testABareSelfTestGetsItsOwnTemporaryFolder() {
         let bare = Storage.chooseDirectory(environment: [:], selfTest: true)

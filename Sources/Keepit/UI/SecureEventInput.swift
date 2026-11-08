@@ -3,7 +3,7 @@ import Carbon.HIToolbox
 
 /// Secure Event Input for the moments a secret is typed: while it is on, keystrokes go to the
 /// focused app only — other processes' event taps and the input-method machinery do not see them
-/// (3.0.5 security review, SEC04: the password fields and the recovery-phrase box ran without it).
+/// (3.0.5 security review, SEC03: the password fields and the recovery-phrase box ran without it).
 ///
 /// A token per field or dialog: `begin()` turns it on for that holder, `end()` turns it off; both
 /// are idempotent, and `deinit` ends a token its holder forgot. The system state follows a

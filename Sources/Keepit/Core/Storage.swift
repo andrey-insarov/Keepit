@@ -14,7 +14,7 @@ enum Storage {
 
     /// KEEPIT_DATA_DIR when set; otherwise, for `--selftest`, a folder of its own — a bare
     /// `--selftest` used to run on the real data (capture, templates, a vault enabled and disabled
-    /// in it; 3.0.5 security review, SEC09); `SelfTest.run` refuses the default folder as a second
+    /// in it; 3.0.5 security review, SEC04); `SelfTest.run` refuses the default folder as a second
     /// line — otherwise the default folder.
     static func chooseDirectory(environment: [String: String], selfTest: Bool) -> URL {
         if let env = environment["KEEPIT_DATA_DIR"], !env.isEmpty { return URL(fileURLWithPath: env, isDirectory: true) }
@@ -278,7 +278,7 @@ enum Storage {
         }
     }
 
-    // MARK: Set-aside copies and the vault (3.0.5 security review, SEC14)
+    // MARK: Set-aside copies and the vault (3.0.5 security review, SEC02)
 
     /// The `.corrupt-…` copies of the two data files, in the data folder: regular files whose name
     /// is `history.json.corrupt-…` or `templates.json.corrupt-…`. settings.json copies hold no
@@ -325,7 +325,7 @@ enum Storage {
         }
     }
 
-    /// Reset: every `.corrupt-…` copy of every data file goes with the files (SEC14: Reset left them).
+    /// Reset: every `.corrupt-…` copy of every data file goes with the files (SEC02: Reset left them).
     static func removeSetAsideCopies() {
         let fm = FileManager.default
         guard let names = try? fm.contentsOfDirectory(atPath: directory.path) else { return }
