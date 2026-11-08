@@ -180,7 +180,7 @@ enum RestoreCommit {
     /// a restore that creates the vault in the same commit. Otherwise `Storage.writeNow` seals with
     /// the current key.
     static func steps(templatesJSON: Data, historyJSON: Data?, settingsJSON: Data, sealWith key: SecureKey? = nil) throws -> [Step] {
-        func seal(_ d: Data?) throws -> Data? { guard let d else { return nil }; return key.map { try Vault.encrypt(d, key: $0) } ?? d }
+        func seal(_ d: Data?) throws -> Data? { guard let d else { return nil }; return try key.map { try Vault.encrypt(d, key: $0) } ?? d }
         return [Step(name: names[0], url: Storage.templatesURL, data: try seal(templatesJSON), encrypt: key == nil),
                 Step(name: names[1], url: Storage.historyURL, data: try seal(historyJSON), encrypt: key == nil),
                 Step(name: names[2], url: Storage.settingsURL, data: settingsJSON, encrypt: false)]
