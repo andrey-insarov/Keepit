@@ -15,6 +15,21 @@ final class LimitsTests: XCTestCase {
         XCTAssertEqual(s.menuMaxItems, 1)
     }
 
+    /// `ClipItem.serializedEstimate` is exact for Base64 only because the data-file encoder does not
+    /// escape `/`; and it must be a bound for the worst strings and binary.
+    func testTheDataFileEncoderDoesNotEscapeSlashesAndTheEstimateIsABound() throws {
+        XCTAssertTrue(Storage.encoder.outputFormatting.contains(.withoutEscapingSlashes))
+        var binary = ClipItem.text("x"); binary.formats["com.example.opaque"] = Data(repeating: 0xff, count: 3_000)
+        var escaped = ClipItem.text("quotes \" and \\ backslashes \n\t \u{1}")
+        escaped.sourceApp = String(repeating: "\"", count: Limits.bundleIdMaxChars)
+        var unicode = ClipItem.text(String(repeating: "é", count: 2_000)); unicode.sourceApp = "Приложение"
+        for item in [binary, escaped, unicode, ClipItem.text("")] {
+            let real = try Storage.encoder.encode([item]).count
+            XCTAssertGreaterThanOrEqual(item.serializedEstimate, real, "estimate \(item.serializedEstimate) < real \(real)")
+            XCTAssertLessThan(item.serializedEstimate, real * 2 + 4_096, "a bound, not a wild one")
+        }
+    }
+
     func testHistoryTotalBytesCap() {
         var s = Settings()
         s.historyMax = 1000

@@ -58,6 +58,25 @@ struct ClipItem: Codable, Identifiable, Equatable {
     var primaryFormat: String? { orderedFormats.first }
 
     var byteSize: Int { formats.values.reduce(0) { $0 + $1.count } }
+    /// An upper bound on what this item occupies in history.json as `Storage.encoder` writes it —
+    /// never below the real size, by construction rather than by allowance (PR #48 round 4: the
+    /// previous allowance was under by half for binary full of 0xFF and for a long `sourceApp`):
+    /// - every format as Base64, exactly ⌈n/3⌉·4 bytes — exact because `Storage.encoder` does not
+    ///   escape `/` (`.withoutEscapingSlashes`; `LimitsTests` pin that);
+    /// - every string (`sourceApp`, `contentHash`, format keys) at the worst JSON escaping, 6 output
+    ///   bytes per UTF-8 byte (`\u00XX`), plus quotes;
+    /// - the fixed fields and punctuation at their maxima (`id` 38, ISO-8601 `date` ≤ 32, keys,
+    ///   braces, colons, commas, `null`).
+    /// Over by a few hundred bytes per item for ordinary text; that is the price of a bound.
+    var serializedEstimate: Int {
+        func quoted(_ s: String) -> Int { s.utf8.count * 6 + 2 }
+        let fixed = 2 + 14 + 1 + 1 + 6 + 1 + 1 + 9 + 1 + 1 + 4 + 1 + 1 + 11 + 1 + 1   // {} and the five keys with quotes, colons, commas
+        let idAndDate = 38 + 32
+        let hash = quoted(contentHash)
+        let app = sourceApp.map(quoted) ?? 4                                               // null
+        let payloads = formats.reduce(0) { $0 + quoted($1.key) + 1 + ($1.value.count + 2) / 3 * 4 + 2 + 1 }   // "key":"base64",
+        return fixed + idAndDate + hash + app + payloads
+    }
 
     static func hash(of d: Data) -> String {
         SHA256.hash(data: d).map { String(format: "%02x", $0) }.joined()

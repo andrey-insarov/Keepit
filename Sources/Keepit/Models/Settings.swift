@@ -111,7 +111,7 @@ struct Settings: Codable, Equatable {
         s.historyMax = Limits.historyMaxCeiling
         s.historyImageMax = Limits.historyMaxCeiling
         s.historyMaxAge = 0
-        s.maxHistoryBytes = 4 * 1024 * 1024 * 1024
+        s.maxHistoryBytes = Limits.historyBytesCeiling
         s.lockAfterScreenLock = 0
         s.backupEnabled = false
         return s
@@ -183,8 +183,11 @@ struct Settings: Codable, Equatable {
     /// `keepit://` URL commands (Shortcuts, Raycast, Alfred, `open`). Off by default since 2.13: any app
     /// or web page may open a URL, and `add`/`paste` change the clipboard and the front app without asking.
     var allowURLCommands = false
-    /// Bundle ids the user answered "Always Allow" for; browsers and unidentified senders never get in.
-    var trustedURLSenders: [String] = []
+    /// Third-party applications the user answered "Always Allow" for, by code-signing identity
+    /// (identifier + Team ID; SEC07). Browsers, unidentified senders and Apple's script hosts never
+    /// get in. The pre-3.0.7 list of bundle identifiers (`trustedURLSenders`) is not read for trust
+    /// and is written back empty: a bundle identifier is a claim any local app can make.
+    var trustedURLSenderIdentities: [TrustedSender] = []
 
     // Automatic backup (docs/BACKUP.md). Off by default; needs a vault. The bookmark is app-scoped
     // and meaningless on another Mac; sourceID is random per installation; label is off (nil) by default.
@@ -248,7 +251,7 @@ struct Settings: Codable, Equatable {
         case launchAtLogin
         case checkForUpdates
         case allowURLCommands
-        case trustedURLSenders
+        case trustedURLSenders, trustedURLSenderIdentities
         case backupEnabled, backupBookmark, backupKeepCount, backupLabel, backupSourceID
         case lockAfterScreenLockSeconds, lockWithScreen
         case biometricUnlock
@@ -333,7 +336,8 @@ struct Settings: Codable, Equatable {
         launchAtLogin    = try c.decodeIfPresent(Bool.self,   forKey: .launchAtLogin)    ?? d.launchAtLogin
         checkForUpdates  = try c.decodeIfPresent(Bool.self,   forKey: .checkForUpdates)  ?? d.checkForUpdates
         allowURLCommands = try c.decodeIfPresent(Bool.self,   forKey: .allowURLCommands) ?? d.allowURLCommands
-        trustedURLSenders = try c.decodeIfPresent([String].self, forKey: .trustedURLSenders) ?? d.trustedURLSenders
+        trustedURLSenderIdentities = try c.decodeIfPresent([TrustedSender].self, forKey: .trustedURLSenderIdentities) ?? d.trustedURLSenderIdentities
+        // `.trustedURLSenders` (3.0.6 and before): deliberately not decoded — see the property.
         backupEnabled    = try c.decodeIfPresent(Bool.self,   forKey: .backupEnabled)    ?? d.backupEnabled
         backupBookmark   = try c.decodeIfPresent(Data.self,   forKey: .backupBookmark)
         backupKeepCount  = try c.decodeIfPresent(Int.self,    forKey: .backupKeepCount)  ?? d.backupKeepCount
@@ -400,7 +404,8 @@ struct Settings: Codable, Equatable {
         try c.encode(launchAtLogin, forKey: .launchAtLogin)
         try c.encode(checkForUpdates, forKey: .checkForUpdates)
         try c.encode(allowURLCommands, forKey: .allowURLCommands)
-        try c.encode(trustedURLSenders, forKey: .trustedURLSenders)
+        try c.encode(trustedURLSenderIdentities, forKey: .trustedURLSenderIdentities)
+        try c.encode([String](), forKey: .trustedURLSenders)          // the legacy list is emptied on the first save by 3.0.7
         try c.encode(backupEnabled, forKey: .backupEnabled)
         try c.encodeIfPresent(backupBookmark, forKey: .backupBookmark)
         try c.encode(backupKeepCount, forKey: .backupKeepCount)
@@ -445,9 +450,10 @@ struct Settings: Codable, Equatable {
         maxImageBytes = Limits.clamp(maxImageBytes, 64 * 1024, Limits.imageBytesCeiling)
         maxTextBytes = Limits.clamp(maxTextBytes, 1024, Limits.textBytesCeiling)
         maxFileListEntries = Limits.clamp(maxFileListEntries, 1, Limits.fileListEntriesCeiling)
-        maxHistoryBytes = Limits.clamp(maxHistoryBytes, 1024 * 1024, 4 * 1024 * 1024 * 1024)
+        maxHistoryBytes = Limits.clamp(maxHistoryBytes, 1024 * 1024, Limits.historyBytesCeiling)   // the reader's limit, not 4 GiB (3.0.7)
         menuMaxItems = Limits.clamp(menuMaxItems, 1, Limits.menuMaxItemsCeiling)
         backupKeepCount = Limits.clamp(backupKeepCount, 1, 100)
+        trustedURLSenderIdentities = Array(trustedURLSenderIdentities.filter { $0.requirementString != nil }.prefix(Limits.ignoreAppsMaxLines))
         if let l = backupLabel { backupLabel = String(l.prefix(64)) }
         ignoreApps = Array(ignoreApps.prefix(Limits.ignoreAppsMaxLines)).map { String($0.prefix(Limits.bundleIdMaxChars)) }
     }

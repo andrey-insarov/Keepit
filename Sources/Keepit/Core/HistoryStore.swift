@@ -93,6 +93,11 @@ final class HistoryStore {
 
     func add(_ item: ClipItem) {
         guard (try? Backup.validate(item: item)) != nil else { Log.storage.error("history: refused an item that fails validation"); return }
+        // An item that could never be saved — valid per format, but over the file budget on its own
+        // (PR #48 round 3) — is refused *before* it displaces anything: inserted, it would evict the
+        // saved history from memory, be refused by Storage, and the next ordinary copy would then
+        // write the file without the history that was never meant to go.
+        guard Self.fitsAlone(item, settings: settings) else { Log.storage.error("history: refused an item larger than the data file can hold"); return }
         items.removeAll { $0.id == item.id }                 // one holder per id: the newer takes the place
         if settings.overlapCheck {
             items.removeAll { $0.contentHash == item.contentHash }
@@ -120,9 +125,33 @@ final class HistoryStore {
     func replace(_ item: ClipItem) -> Bool {
         guard let idx = items.firstIndex(where: { $0.id == item.id }) else { return false }
         guard (try? Backup.validate(item: item)) != nil else { return false }
-        items[idx] = item
+        // An edit can grow the history past the byte limits (PR #48 round 1: the file budget was
+        // not applied here, the save was refused, and the edit vanished at the next reload). Trim
+        // as every other change does — and refuse the edit if the edited item itself would not fit,
+        // rather than accept it and drop it.
+        // `trimmed` never drops the last item, so an edit too large to fit even alone survives it
+        // with everything else gone (PR #48 round 2): check the result, not the presence.
+        var next = items
+        next[idx] = item
+        next = Self.trimmed(next, settings: settings)
+        guard next.contains(where: { $0.id == item.id }), Self.fitsTheFile(next, settings: settings) else { return false }
+        items = next
         changed()
         return true
+    }
+
+    /// Whether one item is within every byte limit on its own: the raw-byte setting and the file
+    /// budget. `Backup.validate` bounds each format separately, not their sum, so a valid item can
+    /// still be larger than the whole history file may be.
+    static func fitsAlone(_ item: ClipItem, settings: Settings) -> Bool {
+        item.byteSize <= settings.maxHistoryBytes && item.serializedEstimate <= Limits.effectiveHistoryFileBudget
+    }
+
+    /// Whether a list is within every byte limit a save must meet — the raw-byte setting and the
+    /// file budget (`trimmed`'s loops stop at one item, so one oversize item can pass them).
+    static func fitsTheFile(_ items: [ClipItem], settings: Settings) -> Bool {
+        items.reduce(0) { $0 + $1.byteSize } <= settings.maxHistoryBytes
+            && items.reduce(0) { $0 + $1.serializedEstimate } <= Limits.effectiveHistoryFileBudget
     }
 
     /// Insert without dedupe/trim semantics of `add` (used by Viewer "New Item" / drag into history).
@@ -130,6 +159,7 @@ final class HistoryStore {
     @discardableResult
     func insert(_ item: ClipItem, at index: Int) -> Bool {
         guard (try? Backup.validate(item: item)) != nil, !items.contains(where: { $0.id == item.id }) else { return false }
+        guard Self.fitsAlone(item, settings: settings) else { return false }     // see add()
         items.insert(item, at: min(max(0, index), items.count))
         trim()
         changed()
@@ -234,7 +264,11 @@ final class HistoryStore {
     /// The ring rules as a pure function: age, the text and image rings, then the byte budget.
     /// Used by `trim()` and by `RestorePlan`, which must know the outcome before anything changes.
     static func trimmed(_ input: [ClipItem], settings: Settings, now: Date = Date()) -> [ClipItem] {
-        var items = input
+        // The loops below stop at one item, so a single item over a byte limit would survive them —
+        // and could never be saved. Such an item is dropped first, wherever it came from (a merge, a
+        // restore, a replaced list); `add`/`insert`/`replace` refuse it before it gets here.
+        var items = input.filter { fitsAlone($0, settings: settings) }
+        if items.count != input.count { Log.storage.error("history: \(input.count - items.count) item(s) larger than the data file can hold dropped") }
         if settings.historyMaxAge > 0 {
             let cutoff = now.addingTimeInterval(-settings.historyMaxAge)
             items.removeAll { $0.date < cutoff }
@@ -252,6 +286,16 @@ final class HistoryStore {
         var total = items.reduce(0) { $0 + $1.byteSize }
         while total > settings.maxHistoryBytes, items.count > 1 {
             total -= items.removeLast().byteSize
+        }
+        // The file, not the raw bytes: what the reader will accept (Limits.historyFileBudget). The
+        // estimate is computed here, in the store's own context on the main thread, before any
+        // snapshot is encoded — so memory and disk agree, and no store mutation happens off-thread.
+        var estimate = items.reduce(0) { $0 + $1.serializedEstimate }
+        let budget = Limits.effectiveHistoryFileBudget
+        if estimate > budget {
+            let before = items.count
+            while estimate > budget, items.count > 1 { estimate -= items.removeLast().serializedEstimate }
+            Log.storage.error("history trimmed to fit the data-file limit: \(before - items.count) oldest item(s) dropped")
         }
         return items
     }

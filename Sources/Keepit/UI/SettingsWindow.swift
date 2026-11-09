@@ -469,7 +469,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
                                            L("How often Keepit looks at the clipboard. macOS sends no notification when it changes, so every clipboard manager polls; 0.3 s is unnoticeable and cheap."))),
             header(L("Automation")),
             [NSView(), help(check(urlCommands), L("Lets Shortcuts, Raycast, Alfred or a shell `open` drive Keepit through keepit:// URLs — paste item N, paste a template, add text, pause. Off by default: any app or web page can open such a URL. When on, a command that changes something is confirmed in a dialog the first time each app sends one; Always Allow puts the app on the trusted list. A web browser or an unidentified sender is asked every time."))],
-            [NSView(), help(button(trustedReset), L("Removes every app from the trusted list, so the next keepit:// command from each one asks again."))],
+            [NSView(), help(button(trustedReset), L("Removes every app from the trusted list, so the next keepit:// command from each one asks again. Apps are trusted by their code signature (bundle identifier and Team ID, checked by macOS at every command), and allowing an app allows anything it runs. Browsers and Apple's Shortcuts, Automator, Script Editor and Terminal are asked every time."))],
             header(L("Data")),
             [NSView(), button(reveal)],
             header(dangerTitle),
@@ -639,8 +639,8 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         backupLabelOn.state = s.backupLabel == nil ? .off : .on
         backupStateChanged()
         urlCommands.state = s.allowURLCommands ? .on : .off
-        trustedReset.isEnabled = !s.trustedURLSenders.isEmpty
-        trustedReset.title = s.trustedURLSenders.isEmpty ? L("Forget Trusted Apps") : LF("Forget Trusted Apps (%d)", s.trustedURLSenders.count)
+        trustedReset.isEnabled = !s.trustedURLSenderIdentities.isEmpty
+        trustedReset.title = s.trustedURLSenderIdentities.isEmpty ? L("Forget Trusted Apps") : LF("Forget Trusted Apps (%d)", s.trustedURLSenderIdentities.count)
         saveHistory.state = s.historySave ? .on : .off
         pasteAfter.state = s.pasteAfterSelect ? .on : .off
         showAtCaret.state = s.showAtCaret ? .on : .off
@@ -805,7 +805,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
     }
 
     @objc private func forgetTrustedSenders() {
-        apply { s in s.trustedURLSenders = [] }
+        apply { s in s.trustedURLSenderIdentities = [] }
         trustedReset.isEnabled = false
         trustedReset.title = L("Forget Trusted Apps")
     }

@@ -334,7 +334,7 @@ extension Settings {
     func applyingRestorable(from other: Settings) -> Settings {
         var s = other
         s.allowURLCommands = allowURLCommands
-        s.trustedURLSenders = trustedURLSenders
+        s.trustedURLSenderIdentities = trustedURLSenderIdentities
         s.biometricUnlock = biometricUnlock
         s.biometricPasswordChange = biometricPasswordChange
         s.backupEnabled = backupEnabled
@@ -348,7 +348,7 @@ extension Settings {
         let d = Settings()
         var s = self
         s.allowURLCommands = d.allowURLCommands
-        s.trustedURLSenders = d.trustedURLSenders
+        s.trustedURLSenderIdentities = d.trustedURLSenderIdentities
         s.biometricUnlock = d.biometricUnlock
         s.biometricPasswordChange = d.biometricPasswordChange
         s.backupEnabled = d.backupEnabled

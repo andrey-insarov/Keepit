@@ -101,13 +101,13 @@ final class CoreTests: XCTestCase {
 
     func testRestoreNeverTakesTrustSettings() {
         var mine = Settings()
-        mine.allowURLCommands = false; mine.trustedURLSenders = []; mine.biometricUnlock = true; mine.historyMax = 10
+        mine.allowURLCommands = false; mine.trustedURLSenderIdentities = []; mine.biometricUnlock = true; mine.historyMax = 10
         var theirs = Settings()
-        theirs.allowURLCommands = true; theirs.trustedURLSenders = ["com.evil"]; theirs.biometricUnlock = false; theirs.historyMax = 999
+        theirs.allowURLCommands = true; theirs.trustedURLSenderIdentities = [TrustedSender(identifier: "com.evil", teamID: "EVIL000000", displayName: "Evil")]; theirs.biometricUnlock = false; theirs.historyMax = 999
         let merged = mine.applyingRestorable(from: theirs)
         XCTAssertEqual(merged.historyMax, 999)
         XCTAssertFalse(merged.allowURLCommands)
-        XCTAssertEqual(merged.trustedURLSenders, [])
+        XCTAssertEqual(merged.trustedURLSenderIdentities, [])
         XCTAssertTrue(merged.biometricUnlock)
     }
 

@@ -130,7 +130,7 @@ final class ModalLifecycleTests: XCTestCase {
         a.handle(try XCTUnwrap(URL(string: "keepit://pause")))
         XCTAssertFalse(a.isLocked)
         XCTAssertNil(a.pausedUntil, "a command admitted in an earlier generation does not run")
-        XCTAssertTrue(a.settings.trustedURLSenders.isEmpty, "nor does its Always Allow change the trusted list")
+        XCTAssertTrue(a.settings.trustedURLSenderIdentities.isEmpty, "nor does its Always Allow change the trusted list")
     }
 
     func testDeniedCommandStillDoesNothing() throws {

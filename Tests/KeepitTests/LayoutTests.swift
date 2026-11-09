@@ -16,7 +16,7 @@ final class LayoutTests: XCTestCase {
         defer { if let previous { UserDefaults.standard.set(previous, forKey: key) } else { UserDefaults.standard.removeObject(forKey: key) } }
         UserDefaults.standard.set(pane, forKey: key)
         var settings = Settings()
-        settings.trustedURLSenders = (0..<trustedCount).map { "com.audit.app\($0)" }
+        settings.trustedURLSenderIdentities = (0..<trustedCount).map { TrustedSender(identifier: "com.audit.app\($0)", teamID: "AUDIT00000", displayName: "App \($0)") }
         try FileManager.default.createDirectory(at: storage.dir, withIntermediateDirectories: true)
         try Storage.writeNow(JSONEncoder().encode(settings), to: Storage.settingsURL, encrypt: false)
         let app = AppDelegate()

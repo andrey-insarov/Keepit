@@ -21,24 +21,29 @@ extension AppDelegate {
     /// In all those cases the URLs wait in `pendingOpenURLs`; `openPendingURLs()` runs them, in
     /// order, once the app is ready and no restore is in progress — never a restore inside another.
     func application(_ application: NSApplication, open urls: [URL]) {
+        // Who sent these: read now, while this Apple Event is the current one. A URL that waits in
+        // the queue is run later, inside another event's dispatch, and must not be checked as that
+        // event's sender (SEC07).
+        let sender = urls.contains { !$0.isFileURL } ? (urlCommandSenderForTesting ?? URLSender.current()) : nil
         // The queue is bounded: what does not fit is dropped with a beep, never silently kept.
-        let room = max(0, Limits.pendingOpenURLsMax - pendingOpenURLs.count)
+        let room = max(0, Limits.pendingOpenURLsMax - pendingOpens.count)
         if urls.count > room {
             Log.system.notice("open: \(urls.count - room) URL(s) dropped — \(Limits.pendingOpenURLsMax) may wait")
             NSSound.beep()
         }
-        pendingOpenURLs += urls.prefix(room)
+        pendingOpens += urls.prefix(room).map { PendingOpen(url: $0, sender: $0.isFileURL ? nil : sender) }
         openPendingURLs()
     }
 
-    private func open(_ url: URL) {
+    private func open(_ pending: PendingOpen) {
         openInProgress = true                         // covers the unlock dialog too: nothing re-enters meanwhile
         defer { openInProgress = false }
+        let url = pending.url
         if url.isFileURL, url.pathExtension.lowercased() == Backup.fileExtension {
             if isLocked, !unlock() { return }         // a backup opened while locked: ask for the password first
             restore(from: url)
         } else {
-            handle(url)
+            handle(url, from: pending.sender ?? URLSender(app: nil, isBrowser: false))   // no record of the sender → unidentified → asked
         }
     }
 
@@ -46,8 +51,8 @@ extension AppDelegate {
     /// place of the generic "Restore from a backup?" offer and before the password offer — while
     /// everything else that arrived stays queued until the welcome dialogs are over.
     func openPendingBackupFileAtWelcome() {
-        guard let i = pendingOpenURLs.firstIndex(where: { $0.isFileURL && $0.pathExtension.lowercased() == Backup.fileExtension }) else { return }
-        open(pendingOpenURLs.remove(at: i))
+        guard let i = pendingOpens.firstIndex(where: { $0.url.isFileURL && $0.url.pathExtension.lowercased() == Backup.fileExtension }) else { return }
+        open(pendingOpens.remove(at: i))
     }
 
     /// Runs what is queued when nothing stands in the way; a no-op otherwise (called again when
@@ -57,8 +62,8 @@ extension AppDelegate {
         // An unlock prompt on screen is a barrier too: `open` would call `unlock()`, get the busy
         // answer, read it as a cancel and drop the URL. The queue waits; `unlock()` calls back here.
         guard isReadyForOpens, !openInProgress, !restoreInProgress, !unlockInProgress else { return }
-        while !pendingOpenURLs.isEmpty, !openInProgress, !restoreInProgress, !unlockInProgress {
-            open(pendingOpenURLs.removeFirst())
+        while !pendingOpens.isEmpty, !openInProgress, !restoreInProgress, !unlockInProgress {
+            open(pendingOpens.removeFirst())
         }
     }
 
@@ -70,7 +75,13 @@ extension AppDelegate {
     /// the templates, recording, or types into another app — and needs a trusted sender.
     private static let readOnlyCommands: Set<String> = ["history", "templates", "viewer", "settings"]
 
+    /// A URL handled now, as the current Apple Event's sender (tests: `urlCommandSenderForTesting`).
+    /// The queue never calls this: it passes the sender it recorded when the URL arrived.
     func handle(_ url: URL) {
+        handle(url, from: urlCommandSenderForTesting ?? URLSender.current())
+    }
+
+    func handle(_ url: URL, from sender: URLSender) {
         guard url.scheme?.lowercased() == Self.urlScheme else { return }
         guard settings.allowURLCommands else {
             Log.system.notice("keepit:// command ignored: URL commands are off (Settings → Advanced)")
@@ -94,11 +105,11 @@ extension AppDelegate {
         // (Settings → Advanced); anything else gets a dialog. A web browser, or a sender we cannot
         // identify, is asked every time and is never added to the list — a web page could be behind it.
         if !Self.readOnlyCommands.contains(command) {
-            let sender = urlCommandSenderForTesting ?? URLSender.current()
-            // A browser or an unidentified sender is never trusted, even if its bundle id made the list
-            // before the app registered itself as an https:// handler.
-            let trusted = !sender.needsConfirmation
-                && (sender.app?.bundleIdentifier.map { settings.trustedURLSenders.contains($0) } ?? false)
+            // Trust is by code-signing identity (SEC07): one of the stored (identifier, Team ID) pairs
+            // must validate against the live sender through the Security framework. A browser, an
+            // unidentified sender or an Apple script host is never trusted; the legacy bundle-id list
+            // is ignored (and emptied at launch).
+            let trusted = sender.isTrusted(by: settings.trustedURLSenderIdentities)
             if !trusted {
                 let answer = confirmURLCommand(url, from: sender)
                 guard !isLocked, lockCount == generation, settings.allowURLCommands else {
@@ -113,9 +124,9 @@ extension AppDelegate {
                 case .allowOnce:
                     break
                 case .allowAlways:
-                    if let id = sender.app?.bundleIdentifier, !sender.needsConfirmation {
+                    if let entry = sender.trustedEntry, !settings.trustedURLSenderIdentities.contains(entry) {
                         var s = settings
-                        s.trustedURLSenders.append(id)
+                        s.trustedURLSenderIdentities.append(entry)
                         apply(settings: s)
                     }
                 }
@@ -223,35 +234,84 @@ struct URLCommand: Equatable {
 
 /// The process that asked macOS to open a `keepit://` URL, as far as the Apple Event tells us.
 struct URLSender {
+    /// The sending process as Launch Services sees it (name, bundle URL) — for display and for the
+    /// browser check. Looked up by the PID *inside the audit token*, so it is the same process the
+    /// identity was read from.
     let app: NSRunningApplication?
+    /// The sender's code-signing identity, read from the Apple Event's audit token; nil when the
+    /// sender is unsigned, ad-hoc, tampered, gone, or when what Launch Services says about the
+    /// process (its bundle identifier) does not match what it is signed as.
+    let identity: CodeIdentity?
     let isBrowser: Bool
 
-    /// True when the sender is a web browser or could not be identified at all: such a sender is
-    /// asked every time and can never be added to the trusted list.
-    var needsConfirmation: Bool { app == nil || isBrowser }
-    var description: String { app?.bundleIdentifier ?? app?.localizedName ?? "unknown sender" }
-    var displayName: String { app?.localizedName ?? L("an unknown application") }
+    init(app: NSRunningApplication?, identity: CodeIdentity? = nil, isBrowser: Bool) {
+        self.app = app; self.identity = identity; self.isBrowser = isBrowser
+    }
+
+    /// Asked every time, never offered *Always Allow*: a browser (a web page may be behind it), an
+    /// unidentified sender, or an Apple script host (any shortcut or script can speak through it).
+    var needsConfirmation: Bool { identity == nil || isBrowser || identity?.isAppleHost == true }
+    /// *Always Allow* is for a third-party application with a Team ID only.
+    var canBeTrusted: Bool { !needsConfirmation }
+    var isAppleHost: Bool { identity?.isAppleHost == true }
+
+    var description: String {
+        if let i = identity { return i.teamID.map { "\(i.identifier) (\($0))" } ?? i.identifier }
+        return app?.bundleIdentifier ?? app?.localizedName ?? "unknown sender"
+    }
+    var displayName: String {
+        let name = app?.localizedName ?? identity?.identifier ?? L("an unknown application")
+        if let team = identity?.teamID { return "\(name) (Team ID \(team))" }
+        return name
+    }
+
+    /// The entry *Always Allow* stores for this sender, or nil when it cannot be trusted.
+    var trustedEntry: TrustedSender? {
+        guard canBeTrusted, let i = identity, let team = i.teamID else { return nil }
+        let entry = TrustedSender(identifier: i.identifier, teamID: team, displayName: app?.localizedName ?? i.identifier)
+        return entry.requirementString == nil ? nil : entry       // refused syntax → never trusted
+    }
+
+    /// Whether one of the stored entries validates against this live sender — evaluated by the
+    /// Security framework against the code object, not by comparing strings.
+    func isTrusted(by entries: [TrustedSender]) -> Bool {
+        guard canBeTrusted, let i = identity else { return false }
+        return entries.contains { i.validates($0) }
+    }
 
     static func current() -> URLSender {
         guard let event = NSAppleEventManager.shared().currentAppleEvent else {
             return URLSender(app: nil, isBrowser: false)
         }
-        guard let pid = senderPID(of: event), pid > 0, let app = NSRunningApplication(processIdentifier: pid) else {
-            return URLSender(app: nil, isBrowser: false)
+        // The audit token names the process the kernel delivered the event from; its PID field is
+        // what Launch Services is asked about, so both views are of one sender.
+        guard let token = senderAuditToken(of: event) else {
+            return URLSender(app: nil, isBrowser: false)                 // no token → unidentified, asked every time
         }
-        return URLSender(app: app, isBrowser: isWebBrowser(app))
+        let pid = Self.pid(of: token)
+        let app = pid > 0 ? NSRunningApplication(processIdentifier: pid) : nil
+        var identity = CodeIdentity.read(auditToken: token)
+        if let i = identity, let claimed = app?.bundleIdentifier, claimed != i.identifier {
+            Log.system.notice("keepit:// sender's bundle identifier does not match its signing identifier; treated as unidentified")
+            identity = nil
+        }
+        return URLSender(app: app, identity: identity, isBrowser: app.map(isWebBrowser) ?? false)
     }
 
-    /// keySenderPIDAttr is the attribute meant for this; the address attribute is the fallback.
-    private static func senderPID(of event: NSAppleEventDescriptor) -> pid_t? {
-        func pid(_ d: NSAppleEventDescriptor?) -> pid_t? {
-            guard let d else { return nil }
-            let k = d.descriptorType == typeKernelProcessID ? d : d.coerce(toDescriptorType: typeKernelProcessID)
-            guard let k, k.data.count == MemoryLayout<pid_t>.size else { return nil }
-            return k.data.withUnsafeBytes { $0.load(as: pid_t.self) }
+    /// `keySenderAuditTokenAttr`: the kernel-supplied audit token of the sending process.
+    private static func senderAuditToken(of event: NSAppleEventDescriptor) -> Data? {
+        guard let d = event.attributeDescriptor(forKeyword: AEKeyword(keySenderAuditTokenAttr)) else { return nil }
+        let t = d.descriptorType == typeAuditToken ? d : d.coerce(toDescriptorType: typeAuditToken)
+        guard let t, t.data.count == MemoryLayout<audit_token_t>.size else { return nil }
+        return t.data
+    }
+
+    /// The PID field of an audit token (`val[5]`), as `audit_token_to_pid` returns it.
+    static func pid(of token: Data) -> pid_t {
+        token.withUnsafeBytes { raw -> pid_t in
+            let t = raw.load(as: audit_token_t.self)
+            return pid_t(bitPattern: t.val.5)
         }
-        return pid(event.attributeDescriptor(forKeyword: AEKeyword(keySenderPIDAttr)))
-            ?? pid(event.attributeDescriptor(forKeyword: AEKeyword(keyAddressAttr)))
     }
 
     /// A browser is anything registered to open https:// links — asked of Launch Services, so the
@@ -273,14 +333,18 @@ extension AppDelegate {
         if let test = confirmURLCommandForTesting { return test(self) }
         let a = NSAlert()
         a.messageText = LF("“%@” wants Keepit to run a command", sender.displayName)
-        a.informativeText = sender.needsConfirmation
-            ? LF("%@\n\nA web page can open such links. Allow it only if you expect this.", url.absoluteString)
-            : LF("%@\n\nAlways Allow adds this app to the trusted list (Settings → Advanced → Automation).", url.absoluteString)
+        if sender.isAppleHost {
+            a.informativeText = LF("%@\n\nAny shortcut or script can call Keepit through %@, so it is asked each time.", url.absoluteString, sender.displayName)
+        } else if sender.needsConfirmation {
+            a.informativeText = LF("%@\n\nA web page can open such links. Allow it only if you expect this.", url.absoluteString)
+        } else {
+            a.informativeText = LF("%@\n\nAlways Allow adds this app to the trusted list (Settings → Advanced → Automation). Anything it runs — extensions, scripts — will be allowed too.", url.absoluteString)
+        }
         a.alertStyle = .warning
         a.icon = NSImage(systemSymbolName: "link.badge.plus", accessibilityDescription: nil)
         a.addButton(withTitle: L("Allow"))
         a.addButton(withTitle: L("Cancel"))
-        if !sender.needsConfirmation { a.addButton(withTitle: L("Always Allow")) }
+        if sender.canBeTrusted { a.addButton(withTitle: L("Always Allow")) }
         NSApp.activate(ignoringOtherApps: true)
         switch AbortableModal.run(a) {
         case .alertFirstButtonReturn: return .allowOnce

@@ -51,7 +51,7 @@ extension AppDelegate {
 
     func restore(from url: URL) {
         guard !isLocked else { NSSound.beep(); return }
-        guard !restoreInProgress else { pendingOpenURLs.append(url); return }   // one at a time; this one runs after
+        guard !restoreInProgress else { pendingOpens.append(PendingOpen(url: url, sender: nil)); return }   // one at a time; this one runs after
         restoreInProgress = true
         defer { restoreInProgress = false; RunLoop.main.perform { [weak self] in self?.openPendingURLs() } }   // next one, after this frame
         let lockAtStart = lockCount

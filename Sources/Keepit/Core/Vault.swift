@@ -51,6 +51,7 @@ final class SecureKey {
     }
 
     func zero() {
+        provenance = nil                 // a zeroed key proves nothing about any vault.json (3.0.7)
         guard !isZeroed else { return }
         _ = memset_s(ptr, SecureKey.size, 0, SecureKey.size)
         isZeroed = true
@@ -246,7 +247,7 @@ enum Vault {
         // launch replay (SEC01 audit, round 1: Create New… wrote around the holds).
         if Storage.isHeld(metaURL) { throw Storage.Failure.held(metaURL.lastPathComponent) }
         let data = try JSONEncoder().encode(meta)
-        try data.write(to: metaURL, options: .atomic)
+        try Storage.writeAtomically(data, to: metaURL)          // 0600 from the first byte (3.0.7)
     }
 
     /// Create the vault for a new password and return its key. Any existing recovery block is
