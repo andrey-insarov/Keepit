@@ -36,8 +36,12 @@
   "<div class=\"links\"><a href=\"#features\">Возможности</a><a href=\"#privacy\">Приватность</a><a href=\"#install\">Установка</a><a href=\"/guide\">Руководство</a><a href=\"/security\">Безопасность</a><a href=\"/support\">Поддержка</a></div>"
  ],
  [
+  "<div class=\"hero wrap\">",
+  "<div class=\"hero hero-left wrap\">"
+ ],
+ [
   "<h1>Everything you copy, <span style=\"white-space:nowrap\">one <kbd class=\"k\">⌥M</kbd> away.</span></h1>",
-  "<h1>Всё, что вы копируете, доступно <span style=\"white-space:nowrap\">по нажатию <kbd class=\"k\">⌥M</kbd>.</span></h1>"
+  "<h1>История буфера обмена доступна по&nbsp;<span style=\"white-space:nowrap\">нажатию <kbd class=\"k\">⌥M</kbd>.</span></h1>"
  ],
  [
   "<p class=\"lead\">Keepit is a free, open-source clipboard manager for Mac. It keeps a history of everything you copy and pastes any of it back where you are typing. Templates for the text you type every day. Set a password and it is encrypted on disk and unlocked with Touch&nbsp;ID; either way it stays on your Mac — no account, no Keepit cloud. Backups to a folder of yours are an option, off until you switch it on; the update check can be switched off.</p>",

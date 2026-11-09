@@ -73,6 +73,7 @@
   h1 { font-size: clamp(34px, 5.6vw, 64px); line-height: 1.08; letter-spacing: -.035em; font-weight: 750; max-width: 17ch; margin: 0 auto; }
   .lead { font-size: clamp(18px, 2.2vw, 22px); color: var(--ink-2); max-width: 36em; margin: 22px auto 0; }
   .ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
+  .hero-left { text-align: left; } .hero-left h1 { max-width: none; margin: 0; } .hero-left .lead { margin-left: 0; max-width: 40em; } .hero-left .ctas { justify-content: flex-start; }
   .btn { display: inline-flex; align-items: center; gap: 9px; padding: 13px 22px; border-radius: 12px; font-weight: 600; font-size: 17px; line-height: 1; border: 1px solid transparent; cursor: pointer; }
   .btn:hover { text-decoration: none; }
   .btn-primary { background: var(--blue); color: #fff; box-shadow: 0 8px 24px color-mix(in srgb, var(--blue) 35%, transparent); }
@@ -228,8 +229,8 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
 </div></header>
 
 <main>
-  <div class="hero wrap">
-    <h1>Всё, что вы копируете, доступно <span style="white-space:nowrap">по нажатию <kbd class="k">⌥M</kbd>.</span></h1>
+  <div class="hero hero-left wrap">
+    <h1>История буфера обмена доступна по&nbsp;<span style="white-space:nowrap">нажатию <kbd class="k">⌥M</kbd>.</span></h1>
     <p class="lead">Keepit — бесплатный менеджер буфера обмена для Mac с открытым кодом. Он хранит историю всего, что вы копируете, и вставляет любой элемент туда, где вы печатаете. Шаблоны ускоряют работу с текстом, который вы набираете каждый день. Задайте пароль — и данные будут храниться на диске зашифрованными и открываться по Touch&nbsp;ID. В любом случае они остаются на вашем Mac, без аккаунта и облачного хранения. Опционально настраивается резервное копирование в вашу папку, данные тоже будут зашифрованы. Регулярную проверку обновлений можно отключить.</p>
     <div class="ctas">
       <a class="btn btn-primary" id="download" href="https://github.com/andrey-insarov/Keepit/releases/latest">
