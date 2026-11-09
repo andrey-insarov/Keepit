@@ -405,3 +405,63 @@ extension FileLimitAndPermissionTests {
         }
     }
 }
+
+
+// Independent round-5 checks: all Codable fields, array overhead, and the original binary path.
+extension FileLimitAndPermissionTests {
+    func testAuditRoundFiveTheBoundCoversAllFieldsAndArrays() throws {
+        let sources: [String?] = [nil, "", String(repeating: "a", count: 255), String(repeating: "\"", count: 255),
+                                  String(repeating: "😀", count: 255), String(repeating: "\u{0}\n\t\\\"/é", count: 25)]
+        let dates = [Date(timeIntervalSince1970: 0), Date.distantPast, Date.distantFuture]
+        var all: [ClipItem] = []
+        for source in sources {
+            for size in [0, 1, 2, 3, 4, 17, 1_024, 4_096] {
+                for date in dates {
+                    var item = ClipItem.text("primary text")
+                    item.sourceApp = source
+                    item.formats["com.example.\"\\\n\t\u{0}/😀"] = Data(repeating: 0xff, count: size)
+                    item.formats["com.example.second"] = Data(repeating: 0, count: size + 1)
+                    item = ClipItem(id: item.id, date: date, formats: item.formats, sourceApp: item.sourceApp, contentHash: item.contentHash)
+                    XCTAssertNoThrow(try Backup.validate(item: item))
+                    let real = try Storage.encoder.encode([item]).count
+                    XCTAssertGreaterThanOrEqual(item.serializedEstimate, real)
+                    all.append(item)
+                }
+            }
+        }
+        var many = ClipItem.text("many formats")
+        for i in 0 ..< 100 { many.formats["com.example.format-\(i)-\"\\\n/"] = Data(repeating: 0xff, count: i) }
+        XCTAssertNoThrow(try Backup.validate(item: many))
+        all.append(many)
+        XCTAssertGreaterThanOrEqual(many.serializedEstimate, try Storage.encoder.encode([many]).count)
+        XCTAssertGreaterThanOrEqual(all.reduce(0) { $0 + $1.serializedEstimate }, try Storage.encoder.encode(all).count,
+                                    "the sum must also cover the array brackets and separators")
+        print("round-5 bound checked against \(all.count) valid fixtures and the combined array")
+    }
+
+    func testAuditRoundFiveTheOriginalSixThousandByteClipIsPersisted() throws {
+        Limits.historyFileBudgetForTesting = 12_000
+        Storage.fileLimitForTesting = 12_000
+        var s = Settings(); s.overlapCheck = false
+        let store = HistoryStore(settings: s)
+        store.add(.text(String(repeating: "a", count: 3_000)))
+        store.add(.text(String(repeating: "b", count: 3_000)))
+        store.saveNow()
+        var binary = ClipItem.text("x")
+        binary.formats["com.example.opaque"] = Data(repeating: 0xff, count: 6_000)
+        XCTAssertTrue(HistoryStore.fitsAlone(binary, settings: s))
+        XCTAssertLessThanOrEqual(try Storage.encoder.encode([binary]).count, Storage.fileLimit)
+        var refused = 0
+        Storage.onWriteRefused = { _, _ in refused += 1 }
+        store.add(binary)
+        store.saveNow()
+        store.add(.text("ordinary next copy"))
+        store.saveNow()
+        let disk = try Storage.decoder.decode([ClipItem].self, from: Data(contentsOf: Storage.historyURL))
+        XCTAssertEqual(refused, 0)
+        XCTAssertEqual(disk.map(\.id), store.items.map(\.id))
+        XCTAssertEqual(try XCTUnwrap(disk.first { $0.id == binary.id }).formats, binary.formats)
+        store.reload()
+        XCTAssertEqual(store.items.map(\.id), disk.map(\.id))
+    }
+}
