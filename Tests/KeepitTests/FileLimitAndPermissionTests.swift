@@ -377,7 +377,9 @@ extension FileLimitAndPermissionTests {
         store.saveNow()
         XCTAssertEqual(store.items.count, 2, "refused at add, nothing evicted")
         XCTAssertEqual(try Data(contentsOf: Storage.historyURL), original, "the file is untouched")
-        store.add(.text(String(repeating: "normal", count: 500)))
+        // A small next copy: three 3 000-character items (≈4.6 KB each as the bound counts them) do
+        // not fit a 12 000-byte budget, and the oldest would go by the budget's own rule.
+        store.add(.text("ordinary next copy"))
         store.saveNow()
         let disk = try Storage.decoder.decode([ClipItem].self, from: Data(contentsOf: Storage.historyURL))
         XCTAssertEqual(savedIDs.intersection(Set(disk.map(\.id))).count, savedIDs.count, "the new check must not admit an unsaveable clip and let the next ordinary copy erase the older saved entries")
