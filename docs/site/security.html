@@ -2,7 +2,7 @@
 <title>Keepit Security – Encrypted Clipboard Manager for Mac</title><link rel="icon" href="img/icon.png?v=a1519b94"><link rel="apple-touch-icon" href="img/icon.png?v=a1519b94">
 <meta name="description" content="What Keepit stores and where, how the history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download.">
 <link rel="canonical" href="https://keep.it.com/security"><meta property="og:type" content="article"><meta property="og:site_name" content="Keepit"><meta property="og:title" content="Keepit Security – Encrypted Clipboard Manager for Mac"><meta property="og:description" content="What Keepit stores and where, how the history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download."><meta property="og:image" content="https://keep.it.com/img/social-preview.png?v=57583ec3"><meta property="og:url" content="https://keep.it.com/security"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Keepit Security – Encrypted Clipboard Manager for Mac"><meta name="twitter:description" content="What Keepit stores and where, how the history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download."><meta name="twitter:image" content="https://keep.it.com/img/social-preview.png?v=57583ec3"><meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "@id": "https://keep.it.com/security", "url": "https://keep.it.com/security", "name": "Keepit security", "headline": "Keepit security", "description": "What Keepit stores and where, how the history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download.", "inLanguage": "en", "isPartOf": {"@id": "https://keep.it.com/#site"}, "about": {"@id": "https://keep.it.com/#app"}, "author": {"@id": "https://keep.it.com/#org"}, "publisher": {"@id": "https://keep.it.com/#org"}, "image": "https://keep.it.com/img/social-preview.png?v=57583ec3", "dateModified": "2026-11-06"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Keepit", "item": "https://keep.it.com/"}, {"@type": "ListItem", "position": 2, "name": "Security", "item": "https://keep.it.com/security"}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "@id": "https://keep.it.com/security", "url": "https://keep.it.com/security", "name": "Keepit security", "headline": "Keepit security", "description": "What Keepit stores and where, how the history is encrypted (AES-256-GCM, Touch ID), which permissions it needs and why, and how to verify a download.", "inLanguage": "en", "isPartOf": {"@id": "https://keep.it.com/#site"}, "about": {"@id": "https://keep.it.com/#app"}, "author": {"@id": "https://keep.it.com/#org"}, "publisher": {"@id": "https://keep.it.com/#org"}, "image": "https://keep.it.com/img/social-preview.png?v=57583ec3", "dateModified": "2026-11-09"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Keepit", "item": "https://keep.it.com/"}, {"@type": "ListItem", "position": 2, "name": "Security", "item": "https://keep.it.com/security"}]}]}</script>
 <script defer src="https://app.eurometrics.eu/script.js?v=7cfd3b4c27be" data-website-id="0ab7fe20-0c05-4061-b037-c033dc46c1e1" data-domains="keep.it.com" data-do-not-track="true" data-exclude-search="true" data-no-storage="true"></script>
 <style>
 :root{--paper:#fbfbfd;--ink:#0f1222;--ink-2:#4b4f63;--ink-3:#696d84;--blue:#2f4fd1;--blue-deep:#1f3aa6;--blue-tint:#eef2ff;--line:#e3e5ef;--key:#fff;--key-edge:#cfd2de;--win:#fff;--sel:#2f5cf0}
@@ -119,9 +119,22 @@ under <code>~/Library/Containers/com.it.keep/</code>):</p>
 <td>Encryption metadata: KDF name and round count, PBKDF2 salt, a sealed verifier, the wrapped recovery material</td>
 <td>—</td>
 </tr>
+<tr>
+<td><code>restore-journal/</code>, <code>protection-journal/</code></td>
+<td>Only during a restore or a password change: the previous bytes of the files above, so an interrupted commit is undone at the next launch</td>
+<td>As the originals</td>
+</tr>
 </tbody>
 </table></div>
-<p>The history is written when it changes and read on launch. Without a password the JSON is plain
+<p>The data folder is created with mode 0700 and every file Keepit creates (the data files, <code>vault.json</code>,
+the journals, the copies it writes) with 0600, from the first byte — the temporary file of an atomic
+write is created 0600 before anything lands in it. A folder or file that already existed keeps the
+mode it had, and a rename (a <code>.corrupt-…</code> copy set aside) moves the file with its mode: Keepit does
+not change permissions you set. The history is written when it changes and read on launch. With
+<em>Save history on quit, restore on start</em> off, <code>history.json</code> is removed the moment the setting is turned off, and again at every lock
+and at quit; history then lives only in memory until Keepit quits. If the file cannot be removed
+(permissions, a locked flag, a file Keepit could not read and therefore keeps), Keepit says so rather
+than assuming it is gone. Without a password the JSON is plain
 text on disk, protected only by your macOS account and FileVault. <em>Settings → Advanced → Open
 Data Folder</em> shows the folder.</p>
 <p>Keepit also writes to the macOS keychain — only the Touch ID entry described below — and registers
@@ -172,11 +185,29 @@ else: use the pause or the ignore list for such apps, and delete the item from t
   does; otherwise the next lock or sleep starts the count. A Mac waking into another user's
   session is not "back".) A template's fill-in dialog or a <code>keepit://</code>
   confirmation that is open at that moment is closed, and whatever it would have pasted or added
-  is dropped. After that Keepit holds nothing it could decrypt
+  is dropped; so are the history menu and the preview beside it, the Viewer (its tree, views and
+  undo stack), the paste queue's copies and the recovery-phrase sheet. After that Keepit holds nothing it could decrypt
   until you unlock again (the copies Swift and CryptoKit may have made are covered under
   <em>Limitations</em>). With the default <em>Never</em>, locking the Mac does <strong>not</strong> lock Keepit: the key and
   the decrypted data stay in the process for as long as you are away, protected by the Mac's own
   lock and nothing else.</li>
+<li><strong>Turning protection on or off, changing the password</strong>: one transaction. The new <code>vault.json</code>
+  and the data files sealed with the new key (or written plain, when protection goes off) are
+  prepared in memory and written through the same kind of journal a restore uses
+  (<code>protection-journal/</code>, with the previous bytes of <code>vault.json</code>, <code>history.json</code>,
+  <code>templates.json</code> and <code>settings.json</code>): all of them change or none, a crash in between is undone
+  at the next launch before anything is read, and the key in memory changes only once the files
+  have. The recovery phrase is part of the first <code>vault.json</code> ever written; <em>Settings → Security →
+  Show…</em> shows it again after Touch ID or the password. These operations wait while a data file
+  is held as unreadable — re-encrypting around it would destroy the one way left to read it. A lock
+  during any of their dialogs voids the answer.</li>
+<li><strong>Secure Event Input</strong>: while a password field has the focus in a key window of the active app,
+  and while the recovery-phrase box is open, Keepit asks macOS for Secure Event Input — keystrokes
+  go to Keepit only, not to other processes' event taps. It ends with the focus, so a prompt left
+  behind another app does not hold the whole system in secure input.</li>
+<li><strong>Set-aside copies</strong>: a <code>.corrupt-…</code> copy left by <em>Start Fresh</em> or a <em>Replace</em> follows the vault —
+  sealed when protection is turned on, re-sealed on a password change, plain again when protection
+  is turned off, removed by <em>Reset</em>. A plain copy set aside <em>under</em> a vault is left as it is.</li>
 <li><strong>Password strength</strong>: the password dialog shows an entropy estimate and explains it; Keepit does
   not enforce a minimum, because the recovery phrase and Touch ID are the usual way in.</li>
 <li>
@@ -228,7 +259,11 @@ compressed with LZFSE and sealed with AES-256-GCM. Two ways to make one, same fi
 <li><strong>Automatic</strong> (<em>Settings → Backup</em>, needs password protection): Keepit writes a new
   complete copy into the folder you chose about five minutes after the last change (at the latest
   once a day), reads it back and checks it before deleting the oldest of <em>its own</em> copies beyond
-  <em>Keep last</em>. The file key is derived from your vault's data key with HKDF-SHA256 under a fixed
+  <em>Keep last</em>. "Its own" is proven, not looked up: Keepit keeps a registry of the copies it wrote
+  (<code>backup.json</code> in the data folder), and a copy is deleted only if its name is exactly what Keepit
+  would have written for that entry, if it is a regular file (not a link or a folder) of the recorded
+  size, and if its SHA-256 matches the entry — and only copies that pass that check count towards
+  <em>Keep last</em>. Anything else under a name the registry mentions is left where it is. The file key is derived from your vault's data key with HKDF-SHA256 under a fixed
   label — a separate key on purpose: it opens backups, not the vault, so even someone who extracted
   it from a running process could not use it on the data folder. Deriving it requires the data key,
   which is what the Keepit password or the recovery phrase unlocks — on any Mac. Each copy is sealed
@@ -302,7 +337,14 @@ verify once that a copy opens with <em>Restore…</em> from another machine befo
 <p>Keepit does not ask for Full Disk Access, Screen Recording, Input Monitoring, Contacts, Calendars,
 Location or the camera, and does not use any of them. The Accessibility permission is powerful — it
 is the same one window managers and automation tools need — which is why the app is signed and
-notarized and the source is public.</p>
+notarized and the source is public. What Keepit does with it is narrow: one ⌘V (and, for a template
+with <code>{cursor}</code>, a few left arrows) addressed to the process of the app you were in, never to
+"whatever is in front". Immediately before each of those key events Keepit checks that it is still
+unlocked (and was not locked and unlocked in between), that the target app is still running and is
+the one in front, that nothing else has written the clipboard since, and that no modifier key is
+held; if any of that fails, nothing is typed — the item stays on the clipboard for a manual ⌘V.
+Without a known target app (a keepit:// command with no app in front, the Viewer's own copy) no key
+is sent at all.</p>
 <p><strong>Clipboard access as macOS sees it.</strong> Keepit reads the clipboard by polling (macOS sends no
 notification when it changes), so from macOS 15.4 on, <em>System Settings → Privacy &amp; Security</em> lists
 Keepit among the apps that read the pasteboard, and the system log records those reads. That is the
@@ -313,16 +355,33 @@ and switched on in <em>Settings → Advanced → Automation</em>. Any process or
 a URL — browsers do confirm the first time for a custom scheme, scripts do not — and <code>add</code> and
 <code>paste</code> change the clipboard or type into the front application without a prompt. With the option
 off, Keepit ignores such URLs with a beep and logs that it did.</p>
-<p>With it on, Keepit checks the sender. macOS delivers the URL as an Apple Event that names the process
-behind it. A state-changing command runs without asking only if that process is on your list of
-trusted apps; otherwise a dialog shows the full URL with <em>Allow</em>, <em>Always Allow</em> and <em>Cancel</em>, and
-<em>Always Allow</em> adds the app to the list (<em>Settings → Advanced → Forget Trusted Apps</em> clears it).
-A web browser (anything registered with the system to open <code>https://</code> links) or a sender that cannot
-be identified is asked every time and cannot be added — a web page could be behind it. Commands
-that only open Keepit's own windows (<code>history</code>, <code>templates</code>, <code>viewer</code>, <code>settings</code>) never ask. A URL
-with a repeated parameter name is refused. This is a reasonable barrier, not a proof: a local
-process that wanted to impersonate another could, and the sender of a URL opened while Keepit was
-not yet running may be unknown — which is why unknown means "ask".</p>
+<p>With it on, Keepit checks the sender. macOS delivers the URL as an Apple Event that carries the
+kernel's audit token of the process behind it; from that token Keepit reads the process's <strong>code-signing
+identity</strong> — its signing identifier and Team ID — and checks that the running code is valid against
+its own signature. Three kinds of sender:</p>
+<ul>
+<li><strong>A third-party application</strong> (signed with a Developer ID or by the Mac App Store, so it has a
+  Team ID). A state-changing command runs without asking only if your list of trusted apps holds an
+  entry for it; otherwise a dialog shows the full URL with <em>Allow</em>, <em>Always Allow</em> and <em>Cancel</em>.
+  <em>Always Allow</em> stores the pair (identifier, Team ID) — never the bundle identifier the process
+  claims, and never the sender's own signing requirement. At every later command Keepit builds its
+  own requirement from that pair (Apple's chain, that identifier, that Team ID) and lets the Security
+  framework evaluate it against the live process; Keepit compares no names itself. A program that
+  claims a trusted app's bundle identifier under another signature, or none, is asked. Allowing an
+  app always means allowing whatever that app runs — its extensions, workflows and scripts — which
+  the dialog says. <em>Settings → Advanced → Forget Trusted Apps</em> clears the list.</li>
+<li><strong>Apple's own script hosts</strong> — Shortcuts, Automator, Script Editor, <code>osascript</code>, Terminal, <code>open</code>
+  (Apple-signed, no Team ID). Their signature names an interpreter, not the shortcut or script it is
+  running, so they are asked every time and are never offered <em>Always Allow</em>.</li>
+<li><strong>A web browser</strong> (anything registered with the system to open <code>https://</code> links) or a sender
+  that cannot be identified (unsigned, ad-hoc signed, tampered, already gone) is asked every time and
+  cannot be added — a web page could be behind it.</li>
+</ul>
+<p>Commands that only open Keepit's own windows (<code>history</code>, <code>templates</code>, <code>viewer</code>, <code>settings</code>) never
+ask. A URL with a repeated parameter name is refused. The list of trusted apps is this installation's:
+it is not written into backups and a restore never brings one in. Before 3.0.7 the list held bundle
+identifiers, which any local program can claim; that list is ignored and emptied at the first launch
+of 3.0.7, so each trusted app is asked once more.</p>
 <h2 id="system-log">System log</h2>
 <p>Keepit writes to the unified system log (Console.app, <code>log show</code>, sysdiagnose) under the subsystem
 <code>com.it.keep</code>, and only about errors and unexpected states: a file that could not be saved or
