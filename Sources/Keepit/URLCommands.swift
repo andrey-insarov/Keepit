@@ -21,24 +21,29 @@ extension AppDelegate {
     /// In all those cases the URLs wait in `pendingOpenURLs`; `openPendingURLs()` runs them, in
     /// order, once the app is ready and no restore is in progress — never a restore inside another.
     func application(_ application: NSApplication, open urls: [URL]) {
+        // Who sent these: read now, while this Apple Event is the current one. A URL that waits in
+        // the queue is run later, inside another event's dispatch, and must not be checked as that
+        // event's sender (SEC07).
+        let sender = urls.contains { !$0.isFileURL } ? (urlCommandSenderForTesting ?? URLSender.current()) : nil
         // The queue is bounded: what does not fit is dropped with a beep, never silently kept.
-        let room = max(0, Limits.pendingOpenURLsMax - pendingOpenURLs.count)
+        let room = max(0, Limits.pendingOpenURLsMax - pendingOpens.count)
         if urls.count > room {
             Log.system.notice("open: \(urls.count - room) URL(s) dropped — \(Limits.pendingOpenURLsMax) may wait")
             NSSound.beep()
         }
-        pendingOpenURLs += urls.prefix(room)
+        pendingOpens += urls.prefix(room).map { PendingOpen(url: $0, sender: $0.isFileURL ? nil : sender) }
         openPendingURLs()
     }
 
-    private func open(_ url: URL) {
+    private func open(_ pending: PendingOpen) {
         openInProgress = true                         // covers the unlock dialog too: nothing re-enters meanwhile
         defer { openInProgress = false }
+        let url = pending.url
         if url.isFileURL, url.pathExtension.lowercased() == Backup.fileExtension {
             if isLocked, !unlock() { return }         // a backup opened while locked: ask for the password first
             restore(from: url)
         } else {
-            handle(url)
+            handle(url, from: pending.sender ?? URLSender(app: nil, isBrowser: false))   // no record of the sender → unidentified → asked
         }
     }
 
@@ -46,8 +51,8 @@ extension AppDelegate {
     /// place of the generic "Restore from a backup?" offer and before the password offer — while
     /// everything else that arrived stays queued until the welcome dialogs are over.
     func openPendingBackupFileAtWelcome() {
-        guard let i = pendingOpenURLs.firstIndex(where: { $0.isFileURL && $0.pathExtension.lowercased() == Backup.fileExtension }) else { return }
-        open(pendingOpenURLs.remove(at: i))
+        guard let i = pendingOpens.firstIndex(where: { $0.url.isFileURL && $0.url.pathExtension.lowercased() == Backup.fileExtension }) else { return }
+        open(pendingOpens.remove(at: i))
     }
 
     /// Runs what is queued when nothing stands in the way; a no-op otherwise (called again when
@@ -57,8 +62,8 @@ extension AppDelegate {
         // An unlock prompt on screen is a barrier too: `open` would call `unlock()`, get the busy
         // answer, read it as a cancel and drop the URL. The queue waits; `unlock()` calls back here.
         guard isReadyForOpens, !openInProgress, !restoreInProgress, !unlockInProgress else { return }
-        while !pendingOpenURLs.isEmpty, !openInProgress, !restoreInProgress, !unlockInProgress {
-            open(pendingOpenURLs.removeFirst())
+        while !pendingOpens.isEmpty, !openInProgress, !restoreInProgress, !unlockInProgress {
+            open(pendingOpens.removeFirst())
         }
     }
 
@@ -70,7 +75,13 @@ extension AppDelegate {
     /// the templates, recording, or types into another app — and needs a trusted sender.
     private static let readOnlyCommands: Set<String> = ["history", "templates", "viewer", "settings"]
 
+    /// A URL handled now, as the current Apple Event's sender (tests: `urlCommandSenderForTesting`).
+    /// The queue never calls this: it passes the sender it recorded when the URL arrived.
     func handle(_ url: URL) {
+        handle(url, from: urlCommandSenderForTesting ?? URLSender.current())
+    }
+
+    func handle(_ url: URL, from sender: URLSender) {
         guard url.scheme?.lowercased() == Self.urlScheme else { return }
         guard settings.allowURLCommands else {
             Log.system.notice("keepit:// command ignored: URL commands are off (Settings → Advanced)")
@@ -94,7 +105,6 @@ extension AppDelegate {
         // (Settings → Advanced); anything else gets a dialog. A web browser, or a sender we cannot
         // identify, is asked every time and is never added to the list — a web page could be behind it.
         if !Self.readOnlyCommands.contains(command) {
-            let sender = urlCommandSenderForTesting ?? URLSender.current()
             // Trust is by code-signing identity (SEC07): one of the stored (identifier, Team ID) pairs
             // must validate against the live sender through the Security framework. A browser, an
             // unidentified sender or an Apple script host is never trusted; the legacy bundle-id list

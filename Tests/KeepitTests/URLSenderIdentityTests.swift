@@ -211,3 +211,32 @@ final class URLSenderIdentityTests: XCTestCase {
         XCTAssertEqual(URLSender.pid(of: Data(repeating: 0, count: MemoryLayout<audit_token_t>.size)), 0)
     }
 }
+
+
+// Independent audit probe: the sender context changes while an outer URL dialog is running.
+extension URLSenderIdentityTests {
+    func testAuditAQueuedURLCannotBorrowTheOuterEventsNewlyGrantedTrust() throws {
+        installFakeValidation()
+        let a = try app()
+        a.setReadyForOpensForTesting(true)
+        let outerSender = URLSender(app: nil, identity: raycast, isBrowser: false)
+        a.urlCommandSenderForTesting = outerSender
+        let attack = try XCTUnwrap(URL(string: "keepit://add-template?text=attacker&name=unexpected"))
+        a.confirmURLCommandForTesting = { [unowned self] app in
+            self.confirmations += 1
+            if self.confirmations == 1 {
+                // A second sender's Apple Event is dispatched in the confirmation's nested run loop.
+                app.urlCommandSenderForTesting = URLSender(app: nil, identity: nil, isBrowser: false)
+                app.application(NSApplication.shared, open: [attack])
+                XCTAssertEqual(app.pendingOpenURLs, [attack], "outer openInProgress keeps it queued")
+                // Returning from that nested event restores the outer Apple Event's sender context.
+                app.urlCommandSenderForTesting = outerSender
+                return .allowAlways
+            }
+            return .deny
+        }
+        a.application(NSApplication.shared, open: [try XCTUnwrap(URL(string: "keepit://pause"))])
+        XCTAssertEqual(confirmations, 2, "the queued URL came from an unidentified sender, not the approved outer app")
+        XCTAssertFalse(a.templates.allItems().contains { $0.displayName == "unexpected" }, "the attacker must not inherit the outer event's trust")
+    }
+}

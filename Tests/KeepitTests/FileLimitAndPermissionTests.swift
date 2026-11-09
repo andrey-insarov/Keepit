@@ -162,3 +162,66 @@ final class FileLimitAndPermissionTests: XCTestCase {
         XCTAssertNil(key.provenance, "a zeroed key proves nothing about any vault.json")
     }
 }
+
+
+// Independent audit probes for PR #48 (no production changes).
+extension FileLimitAndPermissionTests {
+    func testAuditViewerEditIsTrimmedBeforeSavingTheSnapshot() throws {
+        Limits.historyFileBudgetForTesting = 12_000
+        Storage.fileLimitForTesting = 12_000
+        var s = Settings(); s.overlapCheck = false
+        let store = HistoryStore(settings: s)
+        store.add(.text(String(repeating: "a", count: 3_000)))
+        store.add(.text(String(repeating: "b", count: 3_000)))
+        store.saveNow()
+        var edited = try XCTUnwrap(store.items.first)
+        edited.setText(String(repeating: "c", count: 8_000))
+        XCTAssertTrue(store.replace(edited), "the Viewer commits through replace")
+        store.saveNow()
+        XCTAssertLessThanOrEqual(store.items.reduce(0) { $0 + $1.serializedEstimate }, Limits.effectiveHistoryFileBudget, "drop older items before the snapshot; the edited item fits alone")
+        let disk = try Storage.decoder.decode([ClipItem].self, from: Data(contentsOf: Storage.historyURL))
+        XCTAssertEqual(disk.map(\.contentHash), store.items.map(\.contentHash), "the accepted edit must survive a reload")
+    }
+
+    func testAuditACopiedAsideFromALegacyFileIsCreated0600() throws {
+        try Data("legacy clipboard contents".utf8).write(to: Storage.historyURL)
+        XCTAssertEqual(chmod(Storage.historyURL.path, 0o644), 0)
+        Storage.keepCopy(of: Storage.historyURL)
+        let copy = try XCTUnwrap(Storage.setAsideCopies().first)
+        XCTAssertEqual(try Data(contentsOf: copy), Data("legacy clipboard contents".utf8))
+        XCTAssertEqual(try mode(copy), 0o600, "this is a newly created copy, not a renamed legacy inode")
+    }
+
+    func testAuditSealingAnAsideHonoursTheFinalWriteLimit() throws {
+        let key = try Vault.enable(password: .of("pw"), rounds: 1000)
+        let aside = Storage.historyURL.appendingPathExtension("corrupt-audit")
+        let original = Data(repeating: 0x41, count: 1024)
+        try Storage.writeAtomically(original, to: aside)
+        Storage.fileLimitForTesting = 1024
+        let rewritten = Storage.sealSetAsideCopies(with: key)
+        XCTAssertTrue(rewritten.isEmpty, "the GCM overhead puts the final file over the limit")
+        XCTAssertEqual(try Data(contentsOf: aside), original, "over-limit output must leave the previous file intact")
+    }
+
+    func testAuditLockDuringTheFirstRefusalDefersTheRemainingReports() throws {
+        Storage.key = try Vault.enable(password: .of("pw"), rounds: 1000)
+        let app = AppDelegate()
+        app.loadStoresForTesting()
+        app.createBackupEngine()
+        app.hotKeyFailureForTesting = { _ in }
+        var states: [Bool] = []
+        Vault.errorSinkForTesting = { _ in
+            states.append(app.isLocked)
+            if states.count == 1 { app.lock() }
+        }
+        defer { Vault.errorSinkForTesting = nil }
+        app.refusedWritesToReport = ["history.json", "templates.json"]
+        app.reportRefusedWritesLater()
+        let turn = expectation(description: "report returns")
+        DispatchQueue.main.async { DispatchQueue.main.async { turn.fulfill() } }
+        wait(for: [turn], timeout: 2)
+        XCTAssertTrue(app.isLocked)
+        XCTAssertEqual(states, [false], "no second alert may open after the first one's modal loop allowed a lock")
+        XCTAssertEqual(app.refusedWritesToReport, ["templates.json"], "keep the undisplayed report for unlock")
+    }
+}

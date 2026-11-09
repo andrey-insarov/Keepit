@@ -219,7 +219,15 @@ enum Storage {
     /// about part of it. Best effort; the encrypted bytes are copied as they are.
     static func keepCopy(of url: URL) {
         let bak = url.appendingPathExtension("corrupt-\(Int(Date().timeIntervalSince1970))")
-        try? FileManager.default.copyItem(at: url, to: bak)
+        // A *new* file, so Keepit's mode (0600) from the first byte — `copyItem` gave it the source's
+        // mode, 0644 for a file from before 3.0.7 (PR #48 round 1). Bounded read: the source is ours
+        // but was just found partly invalid.
+        do {
+            let bytes = try BoundedFileReader.read(url, max: fileLimit)
+            try writeAtomically(bytes, to: bak)
+        } catch {
+            Log.storage.error("could not keep a copy of \(url.lastPathComponent): \(error.localizedDescription)")
+        }
     }
 
     // MARK: Held files
@@ -386,8 +394,11 @@ enum Storage {
         ioQueue.sync {
             for url in setAsideCopies() {
                 do {
-                    let bytes = try BoundedFileReader.read(url, max: Limits.dataFileMaxBytes)
+                    let bytes = try BoundedFileReader.read(url, max: fileLimit)
                     guard let out = try transform(bytes) else { continue }
+                    // The final size, after the seal (PR #48 round 1): a copy at the limit plus the GCM
+                    // overhead would be a file no bounded read of ours opens again. Left as it is.
+                    if out.count > fileLimit { throw Failure.tooLarge(url.lastPathComponent) }
                     try writeAtomically(out, to: url)
                     done.append(url)
                 } catch {

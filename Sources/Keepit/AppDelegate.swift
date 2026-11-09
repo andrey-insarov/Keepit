@@ -59,7 +59,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// Set once launch *and* the deferred welcome dialogs are over; file and URL opens before that are
     /// queued (`pendingOpenURLs`) and run after, in order. A restore in progress queues them too.
     private(set) var isReadyForOpens = false
-    var pendingOpenURLs: [URL] = []
+    /// What arrived and who sent it. The sender is read from the Apple Event *when it arrives* —
+    /// `NSAppleEventManager.currentAppleEvent` belongs to the event being dispatched, and a URL
+    /// that waits in this queue runs later, inside some other event's dispatch (SEC07, PR #48 round 1:
+    /// a command queued behind an open confirmation was checked as the outer event's sender).
+    struct PendingOpen: Equatable {
+        let url: URL
+        let sender: URLSender?
+        static func == (a: PendingOpen, b: PendingOpen) -> Bool { a.url == b.url }
+    }
+    var pendingOpens: [PendingOpen] = []
+    var pendingOpenURLs: [URL] { pendingOpens.map(\.url) }
     /// Locking after the Mac has been locked or asleep for a while (Settings → Security).
     private(set) var screenLockPolicy = ScreenLockPolicy(delay: nil)
     private(set) var screenLockTimer: Timer?
@@ -163,12 +173,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func reportRefusedWritesLater() {
         guard !refusedWritesToReport.isEmpty else { return }
         DispatchQueue.main.async { [weak self] in
-            guard let self, !self.isLocked else { return }
-            for name in self.refusedWritesToReport.sorted() {
+            guard let self else { return }
+            // One alert at a time, the lock re-checked before each: a lock can land inside an
+            // alert's modal loop, and what is not shown waits for the next unlock (PR #48 round 1).
+            while !self.isLocked, let name = self.refusedWritesToReport.sorted().first {
+                self.refusedWritesToReport.remove(name)
                 self.refusedWritesReported.insert(name)
                 Vault.error(LF("Keepit could not save %@: the file would be larger than %d MB, the most it can read back. The previous file is kept and nothing is lost in memory; remove some items (or smaller limits in Settings) and it saves again.", name, Limits.dataFileMaxBytes / 1024 / 1024))
             }
-            self.refusedWritesToReport = []
         }
     }
 

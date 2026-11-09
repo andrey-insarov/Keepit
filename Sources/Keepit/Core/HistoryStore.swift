@@ -120,7 +120,15 @@ final class HistoryStore {
     func replace(_ item: ClipItem) -> Bool {
         guard let idx = items.firstIndex(where: { $0.id == item.id }) else { return false }
         guard (try? Backup.validate(item: item)) != nil else { return false }
-        items[idx] = item
+        // An edit can grow the history past the byte limits (PR #48 round 1: the file budget was
+        // not applied here, the save was refused, and the edit vanished at the next reload). Trim
+        // as every other change does — and refuse the edit if the edited item itself would not fit,
+        // rather than accept it and drop it.
+        var next = items
+        next[idx] = item
+        next = Self.trimmed(next, settings: settings)
+        guard next.contains(where: { $0.id == item.id }) else { return false }
+        items = next
         changed()
         return true
     }
