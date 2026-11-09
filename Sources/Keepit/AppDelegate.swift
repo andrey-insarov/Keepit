@@ -179,7 +179,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             while !self.isLocked, let name = self.refusedWritesToReport.sorted().first {
                 self.refusedWritesToReport.remove(name)
                 self.refusedWritesReported.insert(name)
-                Vault.error(LF("Keepit could not save %@: the file would be larger than %d MB, the most it can read back. The previous file is kept and nothing is lost in memory; remove some items (or smaller limits in Settings) and it saves again.", name, Limits.dataFileMaxBytes / 1024 / 1024))
+                Vault.error(LF("Keepit could not save %@: the file would be larger than %d MB, the most it can read back. The previous file is kept, without the latest changes; remove some items (or set smaller limits in Settings) and it saves again.", name, Limits.dataFileMaxBytes / 1024 / 1024))
             }
         }
     }
