@@ -59,6 +59,10 @@ Keepit needs the Accessibility permission to paste for you; without it, chosen i
 ## Keywords (100 chars, comma-separated)
 clipboard,history,paste,copy,snippets,templates,manager,queue,text expander,productivity
 
+## What's new (version 3.0.7)
+• Security fixes from an independent review: apps allowed to send keepit:// commands are recognized by their code signature (identifier and Team ID), not by a name another app could claim — Apple's Shortcuts, Automator and script tools are asked each time; the list of allowed apps is reset once and each app is asked again. A delayed paste checks, right before every key it sends, that Keepit is still unlocked, the target app is still in front and the clipboard still holds the item.
+• Turning Save history off removes the history file at once, at every lock and at quit, and tells you if it could not. Backup rotation removes only files that are provably Keepit's own copies. The history limit is capped at what Keepit can read back; the data folder and its files are created private to your account.
+
 ## What's new (version 3.0.6)
 • Security fixes from an independent review: a data file Keepit cannot read is kept as it is, never written over; turning protection on or off and changing the password are one all-or-nothing step; locking Keepit closes the recovery phrase, the preview and the Viewer and voids any password dialog that was open.
 • Password fields use Secure Event Input; the self-test runs in a temporary data folder of its own by default.
