@@ -93,6 +93,11 @@ final class HistoryStore {
 
     func add(_ item: ClipItem) {
         guard (try? Backup.validate(item: item)) != nil else { Log.storage.error("history: refused an item that fails validation"); return }
+        // An item that could never be saved — valid per format, but over the file budget on its own
+        // (PR #48 round 3) — is refused *before* it displaces anything: inserted, it would evict the
+        // saved history from memory, be refused by Storage, and the next ordinary copy would then
+        // write the file without the history that was never meant to go.
+        guard Self.fitsAlone(item, settings: settings) else { Log.storage.error("history: refused an item larger than the data file can hold"); return }
         items.removeAll { $0.id == item.id }                 // one holder per id: the newer takes the place
         if settings.overlapCheck {
             items.removeAll { $0.contentHash == item.contentHash }
@@ -135,6 +140,13 @@ final class HistoryStore {
         return true
     }
 
+    /// Whether one item is within every byte limit on its own: the raw-byte setting and the file
+    /// budget. `Backup.validate` bounds each format separately, not their sum, so a valid item can
+    /// still be larger than the whole history file may be.
+    static func fitsAlone(_ item: ClipItem, settings: Settings) -> Bool {
+        item.byteSize <= settings.maxHistoryBytes && item.serializedEstimate <= Limits.effectiveHistoryFileBudget
+    }
+
     /// Whether a list is within every byte limit a save must meet — the raw-byte setting and the
     /// file budget (`trimmed`'s loops stop at one item, so one oversize item can pass them).
     static func fitsTheFile(_ items: [ClipItem], settings: Settings) -> Bool {
@@ -147,6 +159,7 @@ final class HistoryStore {
     @discardableResult
     func insert(_ item: ClipItem, at index: Int) -> Bool {
         guard (try? Backup.validate(item: item)) != nil, !items.contains(where: { $0.id == item.id }) else { return false }
+        guard Self.fitsAlone(item, settings: settings) else { return false }     // see add()
         items.insert(item, at: min(max(0, index), items.count))
         trim()
         changed()
@@ -251,7 +264,11 @@ final class HistoryStore {
     /// The ring rules as a pure function: age, the text and image rings, then the byte budget.
     /// Used by `trim()` and by `RestorePlan`, which must know the outcome before anything changes.
     static func trimmed(_ input: [ClipItem], settings: Settings, now: Date = Date()) -> [ClipItem] {
-        var items = input
+        // The loops below stop at one item, so a single item over a byte limit would survive them —
+        // and could never be saved. Such an item is dropped first, wherever it came from (a merge, a
+        // restore, a replaced list); `add`/`insert`/`replace` refuse it before it gets here.
+        var items = input.filter { fitsAlone($0, settings: settings) }
+        if items.count != input.count { Log.storage.error("history: \(input.count - items.count) item(s) larger than the data file can hold dropped") }
         if settings.historyMaxAge > 0 {
             let cutoff = now.addingTimeInterval(-settings.historyMaxAge)
             items.removeAll { $0.date < cutoff }

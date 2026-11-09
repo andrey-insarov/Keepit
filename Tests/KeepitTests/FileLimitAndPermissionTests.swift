@@ -269,3 +269,57 @@ extension FileLimitAndPermissionTests {
         XCTAssertEqual(try Data(contentsOf: firstCopy), firstBytes, "keeping a later original must not replace the earlier recovery copy")
     }
 }
+
+
+// Independent round-3 checks for a refused incoming clip and the no-replace writer.
+extension FileLimitAndPermissionTests {
+    func testAuditRoundThreeARefusedIncomingClipMustNotEraseSavedHistoryOnTheNextCopy() throws {
+        Limits.historyFileBudgetForTesting = 12_000
+        Storage.fileLimitForTesting = 12_000
+        var s = Settings(); s.overlapCheck = false
+        let store = HistoryStore(settings: s)
+        store.add(.text("saved older item"))
+        store.add(.text("saved newer item"))
+        store.saveNow()
+        let savedIDs = Set(store.items.map(\.id))
+        let originalFile = try Data(contentsOf: Storage.historyURL)
+
+        var tooLarge = ClipItem.text("a valid clip carrying several formats")
+        tooLarge.formats["com.example.opaque-one"] = Data(repeating: 0x41, count: 6_000)
+        tooLarge.formats["com.example.opaque-two"] = Data(repeating: 0x42, count: 6_000)
+        XCTAssertNoThrow(try Backup.validate(item: tooLarge), "every format is individually valid")
+        XCTAssertGreaterThan(tooLarge.serializedEstimate, Limits.effectiveHistoryFileBudget)
+        var refused = 0
+        Storage.onWriteRefused = { _, _ in refused += 1 }
+        store.add(tooLarge)
+        store.saveNow()
+        // Auditor's probe asserted `refused == 1` here: the clip reached the write barrier. The fix
+        // refuses it at `add` instead, before it displaces anything, so the barrier is never hit.
+        XCTAssertEqual(refused, 0, "refused at the store, not at the write barrier")
+        XCTAssertEqual(store.items.map(\.id).count, 2, "the oversized clip never entered the history")
+        XCTAssertEqual(try Data(contentsOf: Storage.historyURL), originalFile, "the old file is untouched")
+
+        store.add(.text("ordinary next copy"))
+        store.saveNow()
+        XCTAssertEqual(refused, 0, "the small copy is saved successfully")
+        let disk = try Storage.decoder.decode([ClipItem].self, from: Data(contentsOf: Storage.historyURL))
+        XCTAssertEqual(savedIDs.intersection(Set(disk.map(\.id))).count, savedIDs.count, "a clip that could never be saved must not evict previously saved history at the next ordinary copy")
+    }
+
+    func testAuditRoundThreeNoReplaceWriterProtectsExistingContentsAndCleansTemporaryFiles() throws {
+        let existing = Storage.directory.appendingPathComponent("existing-copy")
+        let first = Data("recover this original".utf8)
+        try Storage.writeAtomically(first, to: existing)
+        XCTAssertThrowsError(try Storage.writeAtomically(Data("replacement".utf8), to: existing, replacing: false)) {
+            let e = $0 as NSError
+            XCTAssertEqual(e.domain, NSPOSIXErrorDomain)
+            XCTAssertEqual(e.code, Int(EEXIST))
+        }
+        XCTAssertEqual(try Data(contentsOf: existing), first)
+        let fresh = Storage.directory.appendingPathComponent("fresh-copy")
+        try Storage.writeAtomically(first, to: fresh, replacing: false)
+        XCTAssertEqual(try Data(contentsOf: fresh), first)
+        XCTAssertEqual(try mode(fresh), 0o600)
+        XCTAssertFalse(try FileManager.default.contentsOfDirectory(atPath: Storage.directory.path).contains { $0.hasSuffix(".tmp") }, "no private temporary remains on either path")
+    }
+}
