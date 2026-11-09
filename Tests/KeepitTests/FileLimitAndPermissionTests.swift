@@ -323,3 +323,83 @@ extension FileLimitAndPermissionTests {
         XCTAssertFalse(try FileManager.default.contentsOfDirectory(atPath: Storage.directory.path).contains { $0.hasSuffix(".tmp") }, "no private temporary remains on either path")
     }
 }
+
+
+import AppKit
+
+// Independent round-4 checks of the estimate and the new filter's restore counts.
+extension FileLimitAndPermissionTests {
+    func testAuditRoundFourEstimateCoversEscapedBinaryMetadataAndPNG() throws {
+        var binary = ClipItem.text("x")
+        binary.formats["com.example.opaque"] = Data(repeating: 0xff, count: 6_000)
+        var metadata = ClipItem.text("x")
+        metadata.sourceApp = String(repeating: "a", count: Limits.bundleIdMaxChars)
+        let bitmap = try XCTUnwrap(NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: 128, pixelsHigh: 128,
+                                                  bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true,
+                                                  isPlanar: false, colorSpaceName: .deviceRGB,
+                                                  bytesPerRow: 0, bitsPerPixel: 0))
+        let pixels = try XCTUnwrap(bitmap.bitmapData)
+        var state: UInt32 = 0x12345678
+        for i in 0 ..< bitmap.bytesPerRow * bitmap.pixelsHigh {
+            state = state &* 1_664_525 &+ 1_013_904_223
+            pixels[i] = i % 4 == 3 ? 255 : UInt8(truncatingIfNeeded: state >> 16)
+        }
+        let png = try XCTUnwrap(bitmap.representation(using: .png, properties: [:]))
+        let image = ClipItem(id: UUID(), date: Date(), formats: [ClipItem.Format.png: png], sourceApp: nil, contentHash: ClipItem.hash(of: png))
+        for (name, item) in [("binary Base64 slash", binary), ("sourceApp metadata", metadata), ("real PNG", image)] {
+            XCTAssertNoThrow(try Backup.validate(item: item), name)
+            let actual = try Storage.encoder.encode([item]).count
+            XCTAssertGreaterThanOrEqual(item.serializedEstimate, actual, "\(name): estimate=\(item.serializedEstimate), JSON=\(actual)")
+        }
+    }
+
+    func testAuditRoundFourAnUnderestimatedClipCannotEvictTheSavedHistory() throws {
+        Limits.historyFileBudgetForTesting = 12_000
+        Storage.fileLimitForTesting = 12_000
+        var s = Settings(); s.overlapCheck = false
+        let store = HistoryStore(settings: s)
+        store.add(.text(String(repeating: "a", count: 3_000)))
+        store.add(.text(String(repeating: "b", count: 3_000)))
+        store.saveNow()
+        let savedIDs = Set(store.items.map(\.id))
+        let original = try Data(contentsOf: Storage.historyURL)
+        // Auditor's probe used 6 000 bytes of 0xFF, whose Base64 the encoder then escaped to twice its
+        // length (8 332 estimated, 16 226 real). With `/` no longer escaped that item fits and is
+        // saved, so the probe's premise is rebuilt with 9 000 bytes: a real size over the budget —
+        // and now the bound says so before the item can evict anything.
+        var binary = ClipItem.text("x")
+        binary.formats["com.example.opaque"] = Data(repeating: 0xff, count: 9_000)
+        XCTAssertNoThrow(try Backup.validate(item: binary))
+        XCTAssertGreaterThan(try Storage.encoder.encode([binary]).count, Storage.fileLimit, "the actual JSON cannot fit")
+        XCTAssertGreaterThanOrEqual(binary.serializedEstimate, try Storage.encoder.encode([binary]).count, "the bound is a bound")
+        XCTAssertFalse(HistoryStore.fitsAlone(binary, settings: s), "and the store knows it before touching the history")
+        store.add(binary)
+        store.saveNow()
+        XCTAssertEqual(store.items.count, 2, "refused at add, nothing evicted")
+        XCTAssertEqual(try Data(contentsOf: Storage.historyURL), original, "the file is untouched")
+        store.add(.text(String(repeating: "normal", count: 500)))
+        store.saveNow()
+        let disk = try Storage.decoder.decode([ClipItem].self, from: Data(contentsOf: Storage.historyURL))
+        XCTAssertEqual(savedIDs.intersection(Set(disk.map(\.id))).count, savedIDs.count, "the new check must not admit an unsaveable clip and let the next ordinary copy erase the older saved entries")
+    }
+
+    func testAuditRoundFourRestoreAndInsertAccountForItemsThatCannotFit() throws {
+        Limits.historyFileBudgetForTesting = 12_000
+        var s = Settings(); s.overlapCheck = false
+        let small = ClipItem.text("fits")
+        let large = ClipItem.text(String(repeating: "x", count: 12_000))
+        let store = HistoryStore(settings: s)
+        store.add(small)
+        XCTAssertFalse(store.insert(large, at: 0))
+        XCTAssertEqual(store.items.map(\.id), [small.id])
+        let root = TemplateNode(name: "Template", children: [])
+        let payload = Backup.Payload(history: [large, small], templates: root, settings: nil)
+        for mode in [RestorePlan.Mode.replace, .merge] {
+            let plan = try RestorePlan.make(mode: mode, payload: payload, currentHistory: [], currentTemplates: root,
+                                            currentSettings: s, restorePreferences: false, folderName: "Imported")
+            XCTAssertEqual(plan.historyAdded, 1)
+            XCTAssertEqual(plan.historyDropped, 1, "the existing Not everything fits dialog will report it")
+            XCTAssertEqual(plan.history.map(\.contentHash), [small.contentHash])
+        }
+    }
+}

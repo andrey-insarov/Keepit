@@ -87,9 +87,13 @@ enum Storage {
 
     /// Data files: compact JSON. History can run to hundreds of megabytes, and pretty-printing
     /// a Base64 blob only makes it bigger and slower to write; nobody reads history.json by hand.
+    /// `.withoutEscapingSlashes`: Base64 is `[A-Za-z0-9+/=]`, and Foundation escapes `/` as `\/` by
+    /// default — binary with many 0xFF bytes nearly doubled on disk, and no size estimate could be a
+    /// bound (PR #48 round 4). Without it a Base64 payload occupies exactly ⌈n/3⌉·4 bytes, which is
+    /// what `ClipItem.serializedEstimate` relies on. Any JSON reader accepts both spellings.
     static let encoder: JSONEncoder = {
         let e = JSONEncoder()
-        e.outputFormatting = [.sortedKeys]
+        e.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
         e.dateEncodingStrategy = .iso8601
         return e
     }()
