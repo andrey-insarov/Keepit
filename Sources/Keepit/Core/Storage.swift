@@ -27,7 +27,9 @@ enum Storage {
     /// Atomic write of a file Keepit owns: a temporary name in the same folder, created `0600`
     /// (`O_CREAT|O_EXCL`) before the first byte lands, then renamed over the destination. Replaces
     /// `Data.write(options: .atomic)`, whose temporary file took the umask's mode (usually 0644).
-    static func writeAtomically(_ data: Data, to url: URL) throws {
+    /// `replacing: false` (a recovery copy): the final step is `link`, which fails with `EEXIST` if the
+    /// destination appeared meanwhile, instead of `rename`, which would replace it.
+    static func writeAtomically(_ data: Data, to url: URL, replacing: Bool = true) throws {
         let dir = url.deletingLastPathComponent()
         let temp = dir.appendingPathComponent(".\(url.lastPathComponent).\(UUID().uuidString.prefix(8)).tmp")
         let fd = temp.withUnsafeFileSystemRepresentation { open($0!, O_WRONLY | O_CREAT | O_EXCL | O_CLOEXEC, fileMode) }
@@ -47,11 +49,13 @@ enum Storage {
             unlink(temp.path)
             throw NSError(domain: NSPOSIXErrorDomain, code: Int(e), userInfo: [NSFilePathErrorKey: url.path])
         }
-        guard rename(temp.path, url.path) == 0 else {
+        let placed = replacing ? rename(temp.path, url.path) == 0 : link(temp.path, url.path) == 0
+        guard placed else {
             let e = errno
             unlink(temp.path)
             throw NSError(domain: NSPOSIXErrorDomain, code: Int(e), userInfo: [NSFilePathErrorKey: url.path])
         }
+        if !replacing { unlink(temp.path) }               // the hard link is the file now; the temporary name goes
     }
 
     /// KEEPIT_DATA_DIR when set; otherwise, for `--selftest`, a folder of its own — a bare
@@ -218,13 +222,24 @@ enum Storage {
     /// `name.corrupt-<unix time>` next to the file: what was on disk before a load changed its mind
     /// about part of it. Best effort; the encrypted bytes are copied as they are.
     static func keepCopy(of url: URL) {
-        let bak = url.appendingPathExtension("corrupt-\(Int(Date().timeIntervalSince1970))")
+        // A free name, never an existing copy's (PR #48 round 2: `writeAtomically` renames over its
+        // destination, where `copyItem` used to refuse — two copies in one second replaced the first).
+        // Same scheme as `setAside`: the stamp, then a counter.
+        let stamp = Int(Date().timeIntervalSince1970)
+        var bak = url.appendingPathExtension("corrupt-\(stamp)")
+        var n = 1
+        while FileManager.default.fileExists(atPath: bak.path) {
+            n += 1
+            bak = url.appendingPathExtension("corrupt-\(stamp)-\(n)")
+        }
         // A *new* file, so Keepit's mode (0600) from the first byte — `copyItem` gave it the source's
         // mode, 0644 for a file from before 3.0.7 (PR #48 round 1). Bounded read: the source is ours
-        // but was just found partly invalid.
+        // but was just found partly invalid. `O_EXCL` on the temporary name and a destination that
+        // was free a moment ago: a copy that appears in between is not overwritten by the rename
+        // only if we check again — so the rename is refused when the name got taken.
         do {
             let bytes = try BoundedFileReader.read(url, max: fileLimit)
-            try writeAtomically(bytes, to: bak)
+            try writeAtomically(bytes, to: bak, replacing: false)
         } catch {
             Log.storage.error("could not keep a copy of \(url.lastPathComponent): \(error.localizedDescription)")
         }

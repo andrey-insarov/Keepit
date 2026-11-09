@@ -124,13 +124,22 @@ final class HistoryStore {
         // not applied here, the save was refused, and the edit vanished at the next reload). Trim
         // as every other change does — and refuse the edit if the edited item itself would not fit,
         // rather than accept it and drop it.
+        // `trimmed` never drops the last item, so an edit too large to fit even alone survives it
+        // with everything else gone (PR #48 round 2): check the result, not the presence.
         var next = items
         next[idx] = item
         next = Self.trimmed(next, settings: settings)
-        guard next.contains(where: { $0.id == item.id }) else { return false }
+        guard next.contains(where: { $0.id == item.id }), Self.fitsTheFile(next, settings: settings) else { return false }
         items = next
         changed()
         return true
+    }
+
+    /// Whether a list is within every byte limit a save must meet — the raw-byte setting and the
+    /// file budget (`trimmed`'s loops stop at one item, so one oversize item can pass them).
+    static func fitsTheFile(_ items: [ClipItem], settings: Settings) -> Bool {
+        items.reduce(0) { $0 + $1.byteSize } <= settings.maxHistoryBytes
+            && items.reduce(0) { $0 + $1.serializedEstimate } <= Limits.effectiveHistoryFileBudget
     }
 
     /// Insert without dedupe/trim semantics of `add` (used by Viewer "New Item" / drag into history).

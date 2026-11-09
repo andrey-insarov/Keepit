@@ -225,3 +225,47 @@ extension FileLimitAndPermissionTests {
         XCTAssertEqual(app.refusedWritesToReport, ["templates.json"], "keep the undisplayed report for unlock")
     }
 }
+
+
+// Independent round-2 probes: the boundary cases around the five fixes.
+extension FileLimitAndPermissionTests {
+    func testAuditRoundTwoRejectsANewestEditThatCannotFitEvenAlone() throws {
+        Limits.historyFileBudgetForTesting = 12_000
+        Storage.fileLimitForTesting = 12_000
+        var s = Settings(); s.overlapCheck = false
+        let store = HistoryStore(settings: s)
+        store.add(.text(String(repeating: "a", count: 3_000)))
+        store.add(.text(String(repeating: "b", count: 3_000)))
+        store.saveNow()
+        let original = store.items
+        var edited = try XCTUnwrap(original.first)
+        edited.setText(String(repeating: "c", count: 12_000))
+        XCTAssertGreaterThan(edited.serializedEstimate, Limits.effectiveHistoryFileBudget)
+        XCTAssertFalse(store.replace(edited), "an edit that cannot fit alone must be refused")
+        XCTAssertEqual(store.items.map(\.contentHash), original.map(\.contentHash), "a refused edit must not drop the other history entries")
+        store.saveNow()
+        let disk = try Storage.decoder.decode([ClipItem].self, from: Data(contentsOf: Storage.historyURL))
+        XCTAssertEqual(disk.map(\.contentHash), store.items.map(\.contentHash), "an accepted edit must be persisted; a rejected edit must leave memory intact")
+    }
+
+    func testAuditRoundTwoRepeatedValidationDoesNotOverwriteAnEarlierAside() throws {
+        // Each load strips a broken secondary RTF and keeps the original file first.
+        // Model two different partly damaged files arriving in the same second.
+        var first = ClipItem.text("first original worth recovering")
+        first.formats[ClipItem.Format.rtf] = Data("broken first RTF".utf8)
+        let firstBytes = try Storage.encoder.encode([first])
+        try Storage.writeAtomically(firstBytes, to: Storage.historyURL)
+        let stamp = Int(Date().timeIntervalSince1970)
+        let store = HistoryStore(settings: Settings())
+        let firstCopy = try XCTUnwrap(Storage.setAsideCopies().first)
+        XCTAssertEqual(try Data(contentsOf: firstCopy), firstBytes)
+
+        var second = ClipItem.text("second original worth recovering")
+        second.formats[ClipItem.Format.rtf] = Data("broken second RTF".utf8)
+        let secondBytes = try Storage.encoder.encode([second])
+        try Storage.writeAtomically(secondBytes, to: Storage.historyURL)
+        store.reload()
+        guard Int(Date().timeIntervalSince1970) == stamp else { throw XCTSkip("crossed a timestamp boundary; rerun this fast probe") }
+        XCTAssertEqual(try Data(contentsOf: firstCopy), firstBytes, "keeping a later original must not replace the earlier recovery copy")
+    }
+}
