@@ -25,8 +25,8 @@
   <div class="cf-turnstile" data-sitekey="__TURNSTILE_SITE_KEY__" data-theme="light" data-language="ru"></div>
   <p class="fb-err" id="fb-err" hidden></p>
   <button type="submit" class="btn">Отправить</button>
-  <p class="hint fb-legal">Отправленное приходит нам по e-mail и используется только для ответа вам — см. <a href="/privacy">политику конфиденциальности</a> (англ.).</p>
-  <div class="fb-ok" id="fb-ok" hidden><b>Спасибо — сообщение отправлено.</b><br>Подтверждение ушло на ваш адрес.</div>
+  <p class="hint fb-legal">Отправленное приходит нам по e-mail и используется только для ответа вам. См. <a href="/privacy">политику конфиденциальности</a> (англ.).</p>
+  <div class="fb-ok" id="fb-ok" hidden><b>Спасибо, сообщение отправлено.</b><br>Подтверждение ушло на ваш адрес.</div>
 </form>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script>
@@ -49,9 +49,9 @@
     show('');
     for(var i=0;i<picker.files.length;i++){
       var file=picker.files[i];
-      if(files.length>=5){show('Не больше 5 снимков — остальные не добавлены.');break;}
+      if(files.length>=5){show('Не больше 5 снимков. Остальные не добавлены.');break;}
       if(file.size>1048576){show('«'+file.name+'» больше 1 МБ и не добавлен.');continue;}
-      if(!/^image\//.test(file.type)){show('«'+file.name+'» — не изображение и не добавлен.');continue;}
+      if(!/^image\//.test(file.type)){show('«'+file.name+'» не является изображением и не добавлен.');continue;}
       files.push(file);
     }
     picker.value='';render();
@@ -82,7 +82,7 @@ E-mail: [admin@keep.it.com](mailto:admin@keep.it.com) · Пошагово: [ру
 
 ## Короткие ответы
 
-**После выбора элемента ничего не вставляется.** Дайте разрешение Универсального доступа: Системные настройки → Конфиденциальность и безопасность → Универсальный доступ → включите Keepit (если он уже в списке, выключите и включите снова). До тех пор нажимайте ⌘V сами — элемент уже в буфере обмена.
+**После выбора элемента ничего не вставляется.** Дайте разрешение Универсального доступа: Системные настройки → Конфиденциальность и безопасность → Универсальный доступ → включите Keepit (если он уже в списке, выключите и включите снова). До тех пор нажимайте ⌘V сами: элемент уже в буфере обмена.
 
 **Я забыл пароль.** Нажмите *Восстановление доступа…* в окне разблокировки или воспользуйтесь Touch ID на том же Mac. Без них данные восстановить нельзя.
 
