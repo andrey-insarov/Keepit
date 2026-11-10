@@ -24,7 +24,7 @@ brew install --cask andrey-insarov/keepit/keepit
 
 ![Образ DMG: перетащите Keepit в Программы](site/img/guide/dmg.png)
 
-При первом открытии macOS уточняет, что приложение загружено из интернета и проверено Apple.
+При первом открытии macOS уточняет, что приложение загружено из Интернета и проверено Apple.
 Нажмите *Открыть*.
 
 ![Подтверждение Gatekeeper в macOS](site/img/guide/gatekeeper.png)

@@ -161,7 +161,7 @@
  ],
  [
   "<h3>Updates itself</h3>\n        <p>Signed with a Developer ID and notarized by Apple. Checks GitHub Releases once a day and installs the update in one click; every update is signature-checked before it runs. The check is optional — switch it off and Keepit makes no network request at all.</p>",
-  "<h3>Обновляется сам</h3>\n        <p>Приложение подписано Developer ID и нотаризовано Apple. Оно раз в день проверяет GitHub Releases и ставит обновление в один клик; подпись каждого обновления проверяется до запуска. Проверку можно выключить, и тогда Keepit не делает ни одного запроса в интернет.</p>"
+  "<h3>Обновляется сам</h3>\n        <p>Приложение подписано Developer ID и нотаризовано Apple. Оно раз в день проверяет GitHub Releases и ставит обновление в один клик; подпись каждого обновления проверяется до запуска. Проверку можно выключить, и тогда Keepit не делает ни одного запроса в Интернет.</p>"
  ],
  [
   "<h2>Private by design, not by promise</h2>",
@@ -313,7 +313,7 @@
  ],
  [
   "<details><summary>Does anything leave my Mac?</summary><p>Not unless you ask it to. Keepit has no server: the only network request is the daily update check against GitHub Releases — and you can switch it off in Settings → General, after which Keepit makes no request at all. The App Store edition does not make even that one. There is no account, no telemetry, no crash reporting. If you switch on automatic backup, encrypted copies are written to a folder you choose; if that folder lives in iCloud Drive or Dropbox, that service syncs them under your account — Keepit itself never talks to it.</p></details>",
-  "<details><summary>Уходит ли что-нибудь с моего Mac?</summary><p>Данные хранятся только локально, на вашем компьютере. У Keepit нет сервера: единственный сетевой запрос — ежедневная проверка обновлений на GitHub Releases, и её можно выключить в Настройки → Основные, после чего Keepit не делает запросов вовсе. Версия из App Store не делает даже его. Нет ни аккаунта, ни телеметрии, ни отчётов о сбоях. Данные попадают в интернет, только если вы включите автоматическое резервное копирование в облачную папку: зашифрованные копии пишутся в выбранную вами папку, и если она в iCloud Drive или Dropbox, этот сервис синхронизирует их под вашим аккаунтом. Сам Keepit с ним не связывается.</p></details>"
+  "<details><summary>Уходит ли что-нибудь с моего Mac?</summary><p>Данные хранятся только локально, на вашем компьютере. У Keepit нет сервера: единственный сетевой запрос — ежедневная проверка обновлений на GitHub Releases, и её можно выключить в Настройки → Основные, после чего Keepit не делает запросов вовсе. Версия из App Store не делает даже его. Нет ни аккаунта, ни телеметрии, ни отчётов о сбоях. Данные попадают в Интернет, только если вы включите автоматическое резервное копирование в облачную папку: зашифрованные копии пишутся в выбранную вами папку, и если она в iCloud Drive или Dropbox, этот сервис синхронизирует их под вашим аккаунтом. Сам Keepit с ним не связывается.</p></details>"
  ],
  [
   "<details><summary>What if I forget the password?</summary><p>Use the 24-word recovery phrase Keepit showed you when you turned protection on, or Touch ID on the same Mac. With neither, the data cannot be recovered — there is no master key, by design.</p></details>",
