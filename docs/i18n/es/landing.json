@@ -1,0 +1,370 @@
+[
+ [
+  "<title>Keepit – Free Clipboard Manager for Mac (Open Source, Encrypted)</title>",
+  "<title>Keepit – gestor de portapapeles gratuito para Mac</title>"
+ ],
+ [
+  "<meta name=\"description\" content=\"Free, open-source clipboard manager for Mac: history at one hot key, templates, optional AES-256 encryption with Touch ID. No account, no Keepit cloud.\">",
+  "<meta name=\"description\" content=\"Gestor de portapapeles gratuito y de código abierto para Mac: historial con un atajo, plantillas, cifrado AES-256 con Touch ID. Sin cuentas, tus datos se quedan en tu Mac.\">"
+ ],
+ [
+  "<meta property=\"og:title\" content=\"Keepit – Free Clipboard Manager for Mac\">",
+  "<meta property=\"og:title\" content=\"Keepit – gestor de portapapeles gratuito para Mac\">"
+ ],
+ [
+  "<meta property=\"og:description\" content=\"Clipboard history one hot key away. Templates, optional AES-256 encryption with Touch ID. Free and open source, no account, no Keepit cloud.\">",
+  "<meta property=\"og:description\" content=\"El historial del portapapeles en un solo atajo de teclado. Plantillas y, si quieres, cifrado AES-256 con Touch ID. Gratis y de código abierto, sin necesidad de crear una cuenta; los datos se guardan en tu ordenador.\">"
+ ],
+ [
+  "<meta name=\"twitter:title\" content=\"Keepit – Free Clipboard Manager for Mac\">",
+  "<meta name=\"twitter:title\" content=\"Keepit – gestor de portapapeles gratuito para Mac\">"
+ ],
+ [
+  "<meta name=\"twitter:description\" content=\"Clipboard history one hot key away. Templates, optional AES-256 encryption with Touch ID. Free and open source, no account, no Keepit cloud.\">",
+  "<meta name=\"twitter:description\" content=\"El historial del portapapeles en un solo atajo de teclado. Plantillas y, si quieres, cifrado AES-256 con Touch ID. Gratis y de código abierto, sin necesidad de crear una cuenta; los datos se guardan en tu ordenador.\">"
+ ],
+ [
+  "<nav><a href=\"#features\">Features</a><a href=\"#privacy\">Privacy</a><a href=\"#install\">Install</a><a href=\"/guide\">Guide</a><a href=\"/security\">Security</a><a href=\"/support\">Support</a>",
+  "<nav><a href=\"#features\">Funciones</a><a href=\"#privacy\">Privacidad</a><a href=\"#install\">Instalación</a><a href=\"/guide\">Guía</a><a href=\"/security\">Seguridad</a><a href=\"/support\">Soporte</a>"
+ ],
+ [
+  "<summary aria-label=\"Menu\">",
+  "<summary aria-label=\"Menú\">"
+ ],
+ [
+  "<div class=\"links\"><a href=\"#features\">Features</a><a href=\"#privacy\">Privacy</a><a href=\"#install\">Install</a><a href=\"/guide\">Guide</a><a href=\"/security\">Security</a><a href=\"/support\">Support</a></div>",
+  "<div class=\"links\"><a href=\"#features\">Funciones</a><a href=\"#privacy\">Privacidad</a><a href=\"#install\">Instalación</a><a href=\"/guide\">Guía</a><a href=\"/security\">Seguridad</a><a href=\"/support\">Soporte</a></div>"
+ ],
+ [
+  "<div class=\"hero wrap\">",
+  "<div class=\"hero hero-left wrap\">"
+ ],
+ [
+  "<h1>Everything you copy, <span style=\"white-space:nowrap\">one <kbd class=\"k\">⌥M</kbd> away.</span></h1>",
+  "<h1>El historial del portapapeles, <span style=\"white-space:nowrap\">a mano con <kbd class=\"k\">⌥M</kbd>.</span></h1>"
+ ],
+ [
+  "<p class=\"lead\">Keepit is a free, open-source clipboard manager for Mac. It keeps a history of everything you copy and pastes any of it back where you are typing. Templates for the text you type every day. Set a password and it is encrypted on disk and unlocked with Touch&nbsp;ID; either way it stays on your Mac — no account, no Keepit cloud. Backups to a folder of yours are an option, off until you switch it on; the update check can be switched off.</p>",
+  "<p class=\"lead\">Keepit es un gestor de portapapeles gratuito y de código abierto para Mac. Guarda el historial de todo lo que copias y pega cualquier elemento allí donde estés escribiendo. Las plantillas agilizan el trabajo con los textos que tecleas a diario. Si defines una contraseña, los datos se guardan cifrados en el disco y se desbloquean con Touch&nbsp;ID. En cualquier caso se quedan en tu Mac, sin cuenta ni almacenamiento en la nube. Si quieres, puedes configurar copias de seguridad en una carpeta tuya, también cifradas. La búsqueda periódica de actualizaciones se puede desactivar.</p>"
+ ],
+ [
+  "Download for macOS <small id=\"ver\"></small>",
+  "Descargar para macOS <small id=\"ver\"></small>"
+ ],
+ [
+  "<a class=\"btn btn-ghost\" href=\"#install\">Homebrew &amp; App Store</a>",
+  "<a class=\"btn btn-ghost\" href=\"#install\">Homebrew y App Store</a>"
+ ],
+ [
+  "<p class=\"fine\">Free and open source (MIT) · macOS 13 or later, Apple silicon and Intel · Notarized by Apple · <a href=\"https://github.com/andrey-insarov/Keepit/releases\">All releases</a></p>",
+  "<p class=\"fine\">Gratis y de código abierto (MIT) · macOS 13 o posterior, chip de Apple e Intel · Certificado por Apple · <a href=\"https://github.com/andrey-insarov/Keepit/releases\">Todas las versiones</a></p>"
+ ],
+ [
+  "aria-label=\"Animated demo: pressing Option-M opens the Keepit history menu at the text cursor and pastes the chosen item\"",
+  "aria-label=\"Animación: al pulsar Opción-M se abre el menú del historial de Keepit junto al cursor de texto y se pega el elemento elegido\""
+ ],
+ [
+  "<div>New Message</div>",
+  "<div>Mensaje nuevo</div>"
+ ],
+ [
+  "<div><span>To:</span><b>Michael Reeve</b></div><div><span>Subject:</span><b>Your order has shipped</b></div>",
+  "<div><span>Para:</span><b>Miguel Reyes</b></div><div><span>Asunto:</span><b>Tu pedido ya está en camino</b></div>"
+ ],
+ [
+  "<div class=\"chip\" id=\"chip\"><span>press</span>",
+  "<div class=\"chip\" id=\"chip\"><span>pulsa</span>"
+ ],
+ [
+  "<div class=\"search\">⌕ Search history…</div>",
+  "<div class=\"search\">⌕ Buscar en el historial…</div>"
+ ],
+ [
+  "<span class=\"t\">Invoice INV-2026-0418.pdf</span>",
+  "<span class=\"t\">Factura INV-2026-0418.pdf</span>"
+ ],
+ [
+  "<span class=\"t\">Template</span>",
+  "<span class=\"t\">Plantillas</span>"
+ ],
+ [
+  "<span class=\"t\">Viewer</span>",
+  "<span class=\"t\">Visor</span>"
+ ],
+ [
+  "<h2>Clipboard history, three keys you'll learn in a minute</h2>",
+  "<h2>Historial del portapapeles: tres teclas que se aprenden en un minuto</h2>"
+ ],
+ [
+  "<p class=\"kicker\">Keepit lives in the menu bar and stays out of the way. Every key below works in any app, and every one of them can be changed.</p>",
+  "<p class=\"kicker\">Keepit vive en la barra de menús y no estorba. Los atajos de abajo funcionan en cualquier app y todos se pueden cambiar.</p>"
+ ],
+ [
+  "<h3>The history menu</h3><p>Opens next to your text cursor. Type to search, hit a number or click — the item is pasted where you were typing. Hold <kbd class=\"k\">⇧</kbd> and every item grows a submenu: plain text, UPPERCASE, add to templates, delete.</p>",
+  "<h3>El menú del historial</h3><p>Se abre junto al cursor de texto. Escribe para buscar, pulsa un número o haz clic, y el elemento se pega donde estaba el cursor. Si mantienes pulsada <kbd class=\"k\">⇧</kbd>, cada elemento muestra un submenú: texto sin formato, MAYÚSCULAS, texto tachado, añadir a plantillas, eliminar y otras funciones.</p>"
+ ],
+ [
+  "<h3>Paste without the menu</h3><p><kbd class=\"k\">⌃⌥1</kbd>…<kbd class=\"k\">⌃⌥0</kbd> paste items 1–10 straight away; <kbd class=\"k\">⌥⇧V</kbd> pastes the one before the current. <kbd class=\"k\">⌃⌥V</kbd> pastes as plain text, <kbd class=\"k\">⌃⌥U</kbd> as UPPERCASE, <kbd class=\"k\">⌃⌥T</kbd> as Title Case.</p>",
+  "<h3>Pegar sin el menú</h3><p><kbd class=\"k\">⌃⌥1</kbd>…<kbd class=\"k\">⌃⌥0</kbd> pegan directamente los elementos 1 a 10 y <kbd class=\"k\">⌥⇧V</kbd> pega el anterior. <kbd class=\"k\">⌃⌥V</kbd> pega como texto sin formato, <kbd class=\"k\">⌃⌥U</kbd> en MAYÚSCULAS y <kbd class=\"k\">⌃⌥T</kbd> con Mayúscula En Cada Palabra.</p>"
+ ],
+ [
+  "<h3>Templates</h3><p>Signatures, addresses, replies you send ten times a day — in folders, with their own hot keys. Placeholders ask for a name, insert today's date or the clipboard, and leave the cursor where you want it.</p>",
+  "<h3>Plantillas</h3><p>Las firmas, direcciones y respuestas que envías varias veces al día se guardan en carpetas y tienen sus propios atajos. Los marcadores piden un nombre, insertan la fecha de hoy o el portapapeles y dejan el cursor donde lo necesitas.</p>"
+ ],
+ [
+  "<h3>Templates that fill themselves in — a snippet manager built in</h3>",
+  "<h3>Plantillas que se rellenan solas: un gestor de fragmentos de texto integrado</h3>"
+ ],
+ [
+  "<p>A template is plain text with placeholders. When you paste it, Keepit asks for the inputs, expands the rest and puts the cursor where <code>{cursor}</code> was.</p>",
+  "<p>Una plantilla es texto normal con marcadores. Al pegarla, Keepit pide los valores necesarios, inserta el resto del texto y coloca el cursor donde estaba <code>{cursor}</code>.</p>"
+ ],
+ [
+  "<div class=\"tpl\">Hi <b>{input:Name}</b>,\n\nThanks for your order — it ships on <b>{date+2d:EEEE, d MMMM}</b>.\nTracking: <b>{clipboard}</b>\n\n<b>{cursor}</b>\nBest, Andrey</div>",
+  "<div class=\"tpl\">Hola, <b>{input:Nombre}</b>:\n\nGracias por tu pedido. Saldrá el <b>{date+2d:EEEE, d 'de' MMMM}</b>.\nNúmero de seguimiento: <b>{clipboard}</b>\n\n<b>{cursor}</b>\nUn saludo, Andrey</div>"
+ ],
+ [
+  "<h3>Text, images, files</h3>\n        <p>Rich text with formatting, screenshots with thumbnails, lists of files from Finder. Duplicates are merged into one entry.</p>",
+  "<h3>Texto, imágenes, archivos</h3> <p>Texto con formato, capturas de pantalla con miniaturas, listas de archivos del Finder. Los duplicados se agrupan en una sola entrada.</p>"
+ ],
+ [
+  "alt=\"History menu with text, image thumbnails and a file\"",
+  "alt=\"Menú del historial con texto, miniaturas de imágenes y un archivo\""
+ ],
+ [
+  "<h3>The Viewer</h3>\n        <p>Search everything at once, edit items in place, drag history into templates, inspect any item — even as a hex dump.</p>",
+  "<h3>El Visor</h3> <p>Busca en todos los elementos a la vez, edítalos ahí mismo y arrastra el historial a las plantillas. La barra de estado muestra la información de cada entrada.</p>"
+ ],
+ [
+  "alt=\"Keepit Viewer with a search highlighting matches\"",
+  "alt=\"Visor de Keepit con una búsqueda y las coincidencias resaltadas\""
+ ],
+ [
+  "<h3>Works with Shortcuts, Raycast and Alfred</h3>\n        <p>A <code>keepit://</code> URL scheme pastes item N or a template by name, adds text to history or templates, pauses recording. No scripting dictionary to learn. Off until you switch it on in Settings → Advanced.</p>",
+  "<h3>Keepit funciona con Atajos, Raycast y Alfred</h3> <p>El esquema de URL <code>keepit://</code> pega el elemento N o una plantilla por su nombre, añade texto al historial o a las plantillas y pausa la grabación. No hay que aprender ningún diccionario de scripts. La opción está desactivada hasta que la actives en Ajustes → Avanzado.</p>"
+ ],
+ [
+  "<h3>Copy five things, paste five things</h3>\n        <p>Press <kbd class=\"k\">⌥N</kbd>, copy as many items as you need — the menu bar counts them — then <kbd class=\"k\">⌥V</kbd> pastes them back one at a time in the same order. <kbd class=\"k\">⌘V</kbd> keeps working as usual.</p>",
+  "<h3>Copiar cinco textos seguidos y pegarlos en el mismo orden</h3> <p>Pulsa <kbd class=\"k\">⌥N</kbd> y copia todo lo que necesites (el contador de la barra de menús lleva la cuenta). Después, <kbd class=\"k\">⌥V</kbd> los pega de uno en uno en el mismo orden. <kbd class=\"k\">⌘V</kbd> sigue funcionando como siempre.</p>"
+ ],
+ [
+  "<h3>Menu bar only</h3>\n        <p>No Dock icon, no windows until you ask for one. Launches at login, uses a few megabytes, polls the clipboard every 0.3 s like every clipboard manager has to.</p>",
+  "<h3>Solo en la barra de menús</h3> <p>Sin icono en el Dock y sin ventanas hasta que abras alguna. Se abre al iniciar sesión, ocupa unos pocos megabytes y consulta el portapapeles cada 0,3 s, como hace cualquier gestor de portapapeles.</p>"
+ ],
+ [
+  "<h3>Backed up to your own cloud</h3>\n        <p>Pick a folder — iCloud Drive, Dropbox, a disk — and Keepit keeps complete, encrypted copies there, a new one a few minutes after each change. They open with your Keepit password or recovery phrase on any Mac; the provider sees the ciphertext and a short header, never the content. No Keepit server, ever — and like the password itself, this is an option you can simply leave off.</p>",
+  "<h3>Copias de seguridad en cualquier carpeta: de red, iCloud, Dropbox, etc. También van cifradas</h3> <p>Elige una carpeta (iCloud Drive, Dropbox, un disco) y Keepit guardará allí copias completas y cifradas. En modo automático se crea una copia unos minutos después de cada cambio. Se abren en cualquier Mac con tu contraseña de Keepit o con la frase de recuperación. El proveedor ve el texto cifrado y una cabecera breve, pero no el contenido. No hay servidor de Keepit ni lo habrá. Igual que la contraseña, esta función puedes dejarla desactivada sin más.</p>"
+ ],
+ [
+  "<h3>Per-app paste keys</h3>\n        <p>Some apps want <kbd class=\"k\">⌘⇧V</kbd> or <kbd class=\"k\">⌃V</kbd> to paste. Tell Keepit once, per app, and it uses the right key there.</p>",
+  "<h3>Una tecla de pegado para cada app</h3> <p>Algunas apps pegan con <kbd class=\"k\">⌘⇧V</kbd> o <kbd class=\"k\">⌃V</kbd>. Díselo a Keepit una vez para esa app y usará allí la tecla correcta.</p>"
+ ],
+ [
+  "<h3>Updates itself</h3>\n        <p>Signed with a Developer ID and notarized by Apple. Checks GitHub Releases once a day and installs the update in one click; every update is signature-checked before it runs. The check is optional — switch it off and Keepit makes no network request at all.</p>",
+  "<h3>Se actualiza solo</h3> <p>La app está firmada con un Developer ID y certificada por Apple. Una vez al día consulta GitHub Releases e instala la actualización con un clic. La firma de cada actualización se comprueba antes de ejecutarla. La búsqueda se puede desactivar, y entonces Keepit no hace ni una sola petición a internet.</p>"
+ ],
+ [
+  "<h2>Private by design, not by promise</h2>",
+  "<h2>Privado por diseño, no por promesas</h2>"
+ ],
+ [
+  "<p class=\"kicker\">A clipboard manager sees passwords, addresses and half-written messages. Keepit is built so that none of it goes anywhere you did not choose.</p>",
+  "<p class=\"kicker\">Un gestor de portapapeles ve contraseñas, direcciones y mensajes a medio escribir. Keepit está hecho para que nada de eso salga hacia ningún sitio al que tú no hayas querido enviarlo.</p>"
+ ],
+ [
+  "<div><strong>0</strong><span>accounts, servers or sync of its own. Nothing to log in to.</span></div>",
+  "<div><strong>Sin</strong><span>cuentas, servidores ni sincronización propia. No hay dónde iniciar sesión.</span></div>"
+ ],
+ [
+  "<div><strong>0</strong><span>analytics, crash reports or trackers in the app — not even anonymous ones. The website only counts page views, without cookies.</span></div>",
+  "<div><strong>Sin</strong><span>analíticas, informes de fallos ni rastreadores en la app, ni siquiera anónimos. El sitio web solo cuenta las visitas a las páginas, sin cookies.</span></div>"
+ ],
+ [
+  "<div><strong>1</strong><span>network request: the daily update check against GitHub. Optional; the App Store edition has no network entitlement at all — <a href=\"/security#network\">verify it</a>.</span></div>",
+  "<div><strong>Una</strong><span>sola petición de red: la búsqueda diaria de actualizaciones en GitHub. Se puede desactivar. La versión del App Store ni siquiera tiene permiso de acceso a la red: <a href=\"/security#network\">compruébalo tú mismo</a> (en inglés).</span></div>"
+ ],
+ [
+  "<div><strong>1</strong><span>folder on your Mac with everything in it — plus the backup folder, if you choose one. Delete them and Keepit is gone.</span></div>",
+  "<div><strong>Una</strong><span>carpeta en tu Mac con todos los datos. Más la carpeta de copias de seguridad, si las haces. Bórralas y no quedará ni rastro de Keepit.</span></div>"
+ ],
+ [
+  "<li>Turn on a password and history and templates are stored with AES-256-GCM; the key is derived with PBKDF2 (200 000 rounds) and wiped from memory whenever Keepit locks.</li>",
+  "<li>Si defines una contraseña, el historial y las plantillas se guardan cifrados con AES-256-GCM. La clave se deriva con PBKDF2 (200 000 iteraciones) y se borra de la memoria cada vez que Keepit se bloquea.</li>"
+ ],
+ [
+  "<li>Unlock with Touch ID. The password stays as a fallback, and a 24-word recovery phrase, shown once, opens your data if you forget it. Type the password on an on-screen keyboard: shuffled keys, no keyboard events for anything to log.</li>",
+  "<li>Desbloqueo con Touch ID. La contraseña queda como alternativa, y una frase de recuperación de 24 palabras, que se muestra una sola vez, abre tus datos si la olvidas. La contraseña se puede escribir en un teclado en pantalla: las teclas están mezcladas y no se generan eventos de teclado que alguien pueda registrar.</li>"
+ ],
+ [
+  "<li>Anything marked concealed by the copying app is not recorded; copies from 1Password, Bitwarden, KeePassXC, Apple Passwords and other password managers are excluded by app (best effort — <a href=\"/security#what-is-not-recorded\">how</a>).</li>",
+  "<li>Para proteger tu privacidad, Keepit no guarda lo que se copia desde 1Password, Bitwarden, KeePassXC, Contraseñas de Apple y otros gestores de contraseñas, ni lo que la app de origen marca como oculto. Las exclusiones se reconocen por la app (en la medida de lo posible; <a href=\"/security#what-is-not-recorded\">aquí se explica cómo</a>, en inglés). Puedes añadir tus propias exclusiones.</li>"
+ ],
+ [
+  "<li>Locks on demand — and, if you choose, after the Mac has been locked or asleep for a delay you set (new installations never lock on their own). Source is open, builds are reproducible from a tagged commit, and the signing keys live in a protected release environment. <a href=\"/security\">Read the security page</a></li>",
+  "<li>Keepit se puede bloquear desde el menú, con un atajo o, si quieres, después de que el Mac haya estado bloqueado o en reposo durante el tiempo que elijas. Esto último viene desactivado y se activa en los ajustes. El código fuente es abierto, las compilaciones se pueden reproducir a partir de un commit etiquetado y las claves de firma se guardan en un almacén protegido. <a href=\"/security\">Página de seguridad</a> (en inglés)</li>"
+ ],
+ [
+  "<h2>Install it your way</h2>",
+  "<h2>Fácil de instalar y cómodo de usar</h2>"
+ ],
+ [
+  "<p class=\"kicker\">Same app, same features in every edition. Move between them any time with an encrypted backup file.</p>",
+  "<p class=\"kicker\">El formato de los datos es el mismo en todas las versiones. Puedes pasar tus datos de un ordenador a otro cuando quieras con un archivo de copia cifrado.</p>"
+ ],
+ [
+  "<h3>Download</h3><p>A signed, notarized disk image. Drag Keepit to Applications and press <kbd class=\"k\">⌥M</kbd>.</p><a class=\"btn btn-primary\" id=\"download2\" href=\"https://github.com/andrey-insarov/Keepit/releases/latest\">Download DMG</a>",
+  "<h3>Descarga</h3><p>Una imagen de disco firmada y certificada. Arrastra Keepit a Aplicaciones y pulsa <kbd class=\"k\">⌥M</kbd>.</p><a class=\"btn btn-primary\" id=\"download2\" href=\"https://github.com/andrey-insarov/Keepit/releases/latest\">Descargar DMG</a>"
+ ],
+ [
+  "<h3>Homebrew</h3><p>From the project's own tap. <code>brew upgrade</code> keeps it current alongside everything else.</p>",
+  "<h3>Homebrew</h3><p>Desde el tap del propio proyecto. <code>brew upgrade</code> lo mantiene al día junto con todo lo demás.</p>"
+ ],
+ [
+  "<button type=\"button\" id=\"copybrew\">Copy</button>",
+  "<button type=\"button\" id=\"copybrew\">Copiar</button>"
+ ],
+ [
+  "<h3>Mac App Store</h3><p>Sandboxed edition with the same features, no update check at all. Keepit is in review; this page will link to it as soon as it is live.</p><a class=\"btn btn-ghost\" id=\"appstore\" href=\"https://github.com/andrey-insarov/Keepit#installation\">Coming soon</a>",
+  "<h3>Mac App Store</h3><p>Versión en sandbox con las mismas funciones y sin búsqueda de actualizaciones. Keepit está en revisión. El enlace aparecerá aquí en cuanto se publique.</p><a class=\"btn btn-ghost\" id=\"appstore\" href=\"https://github.com/andrey-insarov/Keepit#installation\">Próximamente</a>"
+ ],
+ [
+  "<h2>Every default key</h2>",
+  "<h2>Atajos por omisión</h2>"
+ ],
+ [
+  "<p class=\"kicker\">All of them are global and all of them can be changed in Settings → Shortcuts. A key that collides with one you already use stays off until you assign it.</p>",
+  "<p class=\"kicker\">Todos son globales y se cambian en Ajustes → Atajos. Un atajo que coincide con otro que ya está en uso se queda desactivado hasta que lo asignes tú.</p>"
+ ],
+ [
+  "<dd>History menu at the text cursor</dd>",
+  "<dd>Menú del historial junto al cursor</dd>"
+ ],
+ [
+  "<dd>Templates menu</dd>",
+  "<dd>Menú de plantillas</dd>"
+ ],
+ [
+  "<dd>Paste history item 1–10</dd>",
+  "<dd>Pegar el elemento 1 a 10 del historial</dd>"
+ ],
+ [
+  "<dd>Paste the previous item</dd>",
+  "<dd>Pegar el elemento anterior</dd>"
+ ],
+ [
+  "<dd>Paste the clipboard as plain text</dd>",
+  "<dd>Pegar el portapapeles como texto sin formato</dd>"
+ ],
+ [
+  "<dd>Paste as UPPERCASE, lowercase, Title Case, Sentence case</dd>",
+  "<dd>Pegar en MAYÚSCULAS, en minúsculas, con Mayúscula En Cada Palabra o con mayúscula inicial</dd>"
+ ],
+ [
+  "<dd>Paste trimmed, paste on one line</dd>",
+  "<dd>Quitar los espacios de los extremos, pegar en una sola línea</dd>"
+ ],
+ [
+  "<dd>Paste struck through, underlined, wavy underlined; remove decorations</dd>",
+  "<dd>Pegar tachado, subrayado o con subrayado ondulado; quitar decoraciones</dd>"
+ ],
+ [
+  "<dd>Paste queue: start/stop, paste next, paste all remaining</dd>",
+  "<dd>Cola de pegado: iniciar/detener, pegar el siguiente, pegar todo lo restante</dd>"
+ ],
+ [
+  "<dd>Add the clipboard to templates</dd>",
+  "<dd>Añadir el portapapeles a las plantillas</dd>"
+ ],
+ [
+  "<dd>Delete the latest item</dd>",
+  "<dd>Eliminar el último elemento</dd>"
+ ],
+ [
+  "<dd>Open the Viewer</dd>",
+  "<dd>Abrir el Visor</dd>"
+ ],
+ [
+  "<dd>Settings</dd>",
+  "<dd>Ajustes</dd>"
+ ],
+ [
+  "<dd>Pause recording</dd>",
+  "<dd>Pausar la grabación</dd>"
+ ],
+ [
+  "<dd>Lock now</dd>",
+  "<dd>Bloquear ahora</dd>"
+ ],
+ [
+  "<dd>Clear history, quit</dd>",
+  "<dd>Borrar el historial, salir</dd>"
+ ],
+ [
+  "<p class=\"note\">Inside the history menu: type to search, <kbd class=\"k\">1</kbd>–<kbd class=\"k\">0</kbd> to pick, hold <kbd class=\"k\">⇧</kbd> for the per-item submenu, <kbd class=\"k\">⌘</kbd>+number to paste as plain text.</p>",
+  "<p class=\"note\">En el menú del historial: escribe para buscar, <kbd class=\"k\">1</kbd>–<kbd class=\"k\">0</kbd> eligen un elemento, <kbd class=\"k\">⇧</kbd> abre el submenú del elemento y <kbd class=\"k\">⌘</kbd>+número pega como texto sin formato.</p>"
+ ],
+ [
+  "<h2>Questions</h2>",
+  "<h2>Preguntas</h2>"
+ ],
+ [
+  "<details><summary>Why does Keepit ask for the Accessibility permission?</summary><p>For two things: to send ⌘V to the app you were working in after you pick an item, and to find the text cursor so the menu opens next to it. Keepit does not read or monitor other apps. Without the permission it still records history and copies the chosen item to the clipboard — you paste by hand.</p></details>",
+  "<details><summary>¿Para qué pide Keepit el permiso de Accesibilidad?</summary><p>Para dos cosas. La primera, enviar ⌘V a la app en la que estabas trabajando después de elegir un elemento. La segunda, localizar el cursor de texto y abrir el menú a su lado. Keepit no lee otras apps ni las vigila. Si no das el permiso, sigue grabando el historial y deja el elemento elegido en el portapapeles, pero pegas tú.</p></details>"
+ ],
+ [
+  "<details><summary>Does anything leave my Mac?</summary><p>Not unless you ask it to. Keepit has no server: the only network request is the daily update check against GitHub Releases — and you can switch it off in Settings → General, after which Keepit makes no request at all. The App Store edition does not make even that one. There is no account, no telemetry, no crash reporting. If you switch on automatic backup, encrypted copies are written to a folder you choose; if that folder lives in iCloud Drive or Dropbox, that service syncs them under your account — Keepit itself never talks to it.</p></details>",
+  "<details><summary>¿Sale algo de mi Mac?</summary><p>Los datos se guardan solo en local, en tu ordenador. Keepit no tiene servidor. La única petición de red es la búsqueda diaria de actualizaciones en GitHub Releases, y puedes desactivarla en Ajustes → General. A partir de ahí Keepit no hace ninguna petición. La versión del App Store no hace ni siquiera esa. No hay cuenta, ni telemetría, ni informes de fallos. Los datos solo llegan a internet si activas la copia de seguridad automática en una carpeta en la nube: las copias cifradas se escriben en la carpeta que elijas y, si está en iCloud Drive o Dropbox, ese servicio las sincroniza con tu cuenta. Keepit no se comunica con él.</p></details>"
+ ],
+ [
+  "<details><summary>What if I forget the password?</summary><p>Use the 24-word recovery phrase Keepit showed you when you turned protection on, or Touch ID on the same Mac. With neither, the data cannot be recovered — there is no master key, by design.</p></details>",
+  "<details><summary>¿Y si olvido la contraseña?</summary><p>Puedes usar la frase de recuperación de 24 palabras que Keepit te mostró al activar la protección, o Touch ID en el mismo Mac. Sin ninguna de las dos cosas, los datos no se pueden recuperar. Está pensado así.</p></details>"
+ ],
+ [
+  "<details><summary>Is it really free? What's the catch?</summary><p>Free, MIT-licensed, source on <a href=\"https://github.com/andrey-insarov/Keepit\">GitHub</a>. Keepit was built by the founder of the <a href=\"https://it.com\">it.com</a> domain zone to show what can live at a .it.com address — the app is the advertisement. No ads, no in-app purchases, no pro tier, and therefore nothing to gain from your data.</p></details>",
+  "<details><summary>¿De verdad es gratis? ¿Dónde está el truco?</summary><p>Sí, totalmente gratis: la app se publica con licencia MIT y el código está en <a href=\"https://github.com/andrey-insarov/Keepit\">GitHub</a>. El fundador de la zona de dominios <a href=\"https://it.com\">it.com</a> creó Keepit para su propio uso y después pensó que podía ser un buen ejemplo de lo que cabe en una dirección it.com. Por eso aquí no hay publicidad, ni compras dentro de la app, ni versión de pago: el propio uso del programa da a conocer nuestro servicio.</p></details>"
+ ],
+ [
+  "<details><summary>Where does the design come from?</summary><p>Keepit started as a macOS take on the workflow of <a href=\"https://github.com/nakkag/CLCL\">CLCL</a>, a classic Windows clipboard tool, and grew into an app of its own — written from scratch in Swift, with ideas drawn from many clipboard and snippet managers. It is not affiliated with the CLCL author.</p></details>",
+  "<details><summary>¿De dónde salió la idea de hacer una app así?</summary><p>Keepit empezó como una adaptación a macOS de la forma de trabajar de <a href=\"https://github.com/nakkag/CLCL\">CLCL</a>, una utilidad clásica de portapapeles para Windows, y acabó siendo una app independiente, escrita desde cero en Swift y con ideas tomadas de muchos gestores de portapapeles y de fragmentos de texto. El proyecto no tiene relación con el autor de CLCL, pero le agradecemos la inspiración.</p></details>"
+ ],
+ [
+  "<details><summary>How do I move my data to another Mac, or between editions?</summary><p>Switch on <em>Settings → Backup → Back up automatically to a folder</em> and pick iCloud Drive (or any folder): Keepit keeps complete, encrypted <code>.keepit</code> copies there. On the new Mac choose <em>Restore from Backup…</em> at first launch, enter the old Mac's password or recovery phrase, then <em>Replace</em> or <em>Merge</em>. For a one-off file there is <em>Save to Archive…</em> with its own password. Everything is AES-256-GCM encrypted, so a USB stick or a cloud folder is fine, and the same file works in both editions.</p></details>",
+  "<details><summary>¿Cómo paso mis datos a otro Mac o de una versión a otra?</summary><p>Activa <em>Ajustes → Copia de seguridad → Guardar copias automáticamente en una carpeta</em> y elige iCloud Drive (o cualquier carpeta): Keepit guardará allí copias <code>.keepit</code> completas y cifradas. En el Mac nuevo, elige <em>Restaurar desde copia…</em> en el primer arranque, introduce la contraseña del Mac antiguo o la frase de recuperación y pulsa <em>Reemplazar</em> o <em>Combinar</em>. Para una exportación puntual está <em>Guardar archivo…</em>, con su propia contraseña. Todo va cifrado con AES-256-GCM, así que sirve tanto una memoria USB como una carpeta en la nube. El mismo archivo funciona en las dos versiones.</p></details>"
+ ],
+ [
+  "<details><summary>Which Macs are supported?</summary><p>macOS 13 Ventura or later, Apple silicon and Intel. Touch ID unlock needs a Mac with Touch ID.</p></details>",
+  "<details><summary>¿Qué Mac son compatibles?</summary><p>macOS 13 Ventura o posterior, chip de Apple e Intel. Para desbloquear con Touch ID hace falta un Mac con Touch ID.</p></details>"
+ ],
+ [
+  "<div><h3>Made by the team behind it.com</h3><p>Keepit is a free project from the people who run the <strong>it.com</strong> domain zone, the home for IT people, products and companies online. Keepit lives at <strong>keep.it.com</strong>. Your project could live at a name like it too.</p></div>",
+  "<div><h3>Hecho por el equipo de it.com</h3><p>Keepit es un proyecto gratuito del equipo de it.com Domains. La zona de dominios <strong>it.com</strong> puede ser un buen hogar para los profesionales de TI y para cualquier otro producto o empresa en la red. Keepit vive en <strong>keep.it.com</strong>. Tu proyecto también podría vivir bajo un nombre así.</p></div>"
+ ],
+ [
+  "<em>yourname</em>.it.com<small><a href=\"https://it.com\">Find your .it.com domain</a></small>",
+  "<em>tunombre</em>.it.com<small><a href=\"https://it.com\">Encuentra tu dominio .it.com</a></small>"
+ ],
+ [
+  "<span>© 2026 UK Intis Telecom LTD · Keepit is MIT-licensed</span>",
+  "<span>© 2026 UK Intis Telecom LTD · Keepit se distribuye con licencia MIT</span>"
+ ],
+ [
+  "<span>How-tos: <a href=\"/clipboard-history-mac\">Clipboard history on a Mac</a> · <a href=\"/paste-as-plain-text-mac\">Paste as plain text</a> · <a href=\"/clear-clipboard-mac\">Clear the clipboard</a></span>",
+  "<span>Artículos (en inglés): <a href=\"/clipboard-history-mac\">Clipboard history on a Mac</a> · <a href=\"/paste-as-plain-text-mac\">Paste as plain text</a> · <a href=\"/clear-clipboard-mac\">Clear the clipboard</a></span>"
+ ],
+ [
+  "<span><a href=\"/privacy\">Privacy policy</a> · <a href=\"/security\">Security</a> · <a href=\"/support\">Support</a> · <a href=\"https://github.com/andrey-insarov/Keepit/blob/main/CHANGELOG.md\">Changelog</a> · <a href=\"https://it.com\">it.com</a></span>",
+  "<span><a href=\"/privacy\">Política de privacidad</a> (en inglés) · <a href=\"/security\">Seguridad</a> (en inglés) · <a href=\"/support\">Soporte</a> · <a href=\"https://github.com/andrey-insarov/Keepit/blob/main/CHANGELOG.md\">Historial de cambios</a> · <a href=\"https://it.com\">it.com</a></span>"
+ ],
+ [
+  "copy.textContent = 'Copied'; setTimeout(() => copy.textContent = 'Copy', 1600);",
+  "copy.textContent = 'Copiado'; setTimeout(() => copy.textContent = 'Copiar', 1600);"
+ ],
+ [
+  "const before = 'Hi Michael,\\n\\nThanks for your order — it left the warehouse this morning. Tracking number: ';",
+  "const before = 'Hola, Miguel:\\n\\nGracias por tu pedido. Ha salido del almacén esta mañana. Número de seguimiento: ';"
+ ],
+ [
+  "const after = '. Delivery takes two to three days.';",
+  "const after = '. La entrega tarda de dos a tres días.';"
+ ]
+]

@@ -1,0 +1,33 @@
+{
+  "ui": {
+    "features": "Recursos",
+    "privacy": "Privacidade",
+    "install": "Instalação",
+    "guide": "Guia",
+    "security": "Segurança",
+    "support": "Suporte",
+    "menu": "Menu",
+    "copyright": "© 2026 UK Intis Telecom LTD · O Keepit é distribuído sob a licença MIT",
+    "privacy_policy": "Política de privacidade",
+    "changelog": "Histórico de alterações",
+    "on_this_page": "Nesta página",
+    "contents": "Conteúdo",
+    "open_full_size": "Abrir em tamanho real",
+    "full_size_screenshot": "Captura de tela em tamanho real",
+    "language": "Idioma",
+    "in_english": "(em inglês)",
+    "translated_note": "Traduzido do inglês. Original: <a href=\"{en}\">English</a>."
+  },
+  "pages": {
+    "GUIDE.md": {
+      "title": "Guia do Keepit – gerenciador de área de transferência para Mac",
+      "description": "Como usar o Keepit, o gerenciador de área de transferência gratuito para Mac: menu de histórico, atalhos, modelos, Visualizador, criptografia e Touch ID.",
+      "crumb": "Guia"
+    },
+    "SUPPORT.md": {
+      "title": "Suporte do Keepit – ajuda com o gerenciador de área de transferência",
+      "description": "Como obter ajuda com o Keepit, o gerenciador de área de transferência para Mac, e respostas rápidas para as dúvidas mais comuns.",
+      "crumb": "Suporte"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "ui": {
+    "features": "Funciones",
+    "privacy": "Privacidad",
+    "install": "Instalación",
+    "guide": "Guía",
+    "security": "Seguridad",
+    "support": "Soporte",
+    "menu": "Menú",
+    "copyright": "© 2026 UK Intis Telecom LTD · Keepit se distribuye con licencia MIT",
+    "privacy_policy": "Política de privacidad",
+    "changelog": "Historial de cambios",
+    "on_this_page": "En esta página",
+    "contents": "Contenido",
+    "open_full_size": "Abrir a tamaño completo",
+    "full_size_screenshot": "Captura de pantalla a tamaño completo",
+    "language": "Idioma",
+    "in_english": "(en inglés)",
+    "translated_note": "Traducido del inglés. Original: <a href=\"{en}\">English</a>."
+  },
+  "pages": {
+    "GUIDE.md": {
+      "title": "Guía de Keepit – gestor de portapapeles para Mac",
+      "description": "Cómo usar Keepit, el gestor de portapapeles gratuito para Mac: menú del historial, atajos, plantillas, Visor, cifrado y Touch ID.",
+      "crumb": "Guía"
+    },
+    "SUPPORT.md": {
+      "title": "Soporte de Keepit – ayuda con el gestor de portapapeles para Mac",
+      "description": "Cómo obtener ayuda con Keepit, el gestor de portapapeles para Mac, y respuestas rápidas a las preguntas más frecuentes.",
+      "crumb": "Soporte"
+    }
+  }
+}
