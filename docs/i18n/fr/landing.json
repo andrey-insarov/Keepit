@@ -5,7 +5,7 @@
  ],
  [
   "<meta name=\"description\" content=\"Free, open-source clipboard manager for Mac: history at one hot key, templates, optional AES-256 encryption with Touch ID. No account, no Keepit cloud.\">",
-  "<meta name=\"description\" content=\"Gestionnaire de presse-papiers gratuit et open source pour Mac : historique sur un raccourci, modèles, chiffrement AES-256 avec Touch ID. Sans compte, vos données restent sur votre Mac.\">"
+  "<meta name=\"description\" content=\"Gestionnaire de presse-papiers gratuit et open source pour Mac : historique, modèles, chiffrement AES-256, Touch ID. Sans compte, tout reste sur votre Mac.\">"
  ],
  [
   "<meta property=\"og:title\" content=\"Keepit – Free Clipboard Manager for Mac\">",
@@ -165,7 +165,7 @@
  ],
  [
   "<h2>Private by design, not by promise</h2>",
-  "<h2>Privé par conception, pas par promesse</h2>"
+  "<h2>La confidentialité est intégrée dès la conception, pas seulement promise</h2>"
  ],
  [
   "<p class=\"kicker\">A clipboard manager sees passwords, addresses and half-written messages. Keepit is built so that none of it goes anywhere you did not choose.</p>",
@@ -193,7 +193,7 @@
  ],
  [
   "<li>Unlock with Touch ID. The password stays as a fallback, and a 24-word recovery phrase, shown once, opens your data if you forget it. Type the password on an on-screen keyboard: shuffled keys, no keyboard events for anything to log.</li>",
-  "<li>Déverrouillage avec Touch ID. Le mot de passe reste la solution de secours, et une phrase de récupération de 24 mots, affichée une seule fois, ouvre vos données si vous l’oubliez. Le mot de passe peut être saisi sur un clavier à l’écran : les touches sont mélangées et aucun événement clavier ne peut être intercepté.</li>"
+  "<li>Déverrouillage avec Touch ID. Le mot de passe reste la solution de secours, et une phrase de récupération de 24 mots, affichée une seule fois, ouvre vos données si vous l’oubliez. Le mot de passe peut être saisi sur un clavier à l’écran : les touches sont mélangées et la saisie à la souris ne génère pas d’événements clavier.</li>"
  ],
  [
   "<li>Anything marked concealed by the copying app is not recorded; copies from 1Password, Bitwarden, KeePassXC, Apple Passwords and other password managers are excluded by app (best effort — <a href=\"/security#what-is-not-recorded\">how</a>).</li>",
@@ -245,7 +245,7 @@
  ],
  [
   "<dd>Paste history item 1–10</dd>",
-  "<dd>Coller l’élément 1 à 10 de l’historique</dd>"
+  "<dd>Coller l’un des éléments 1 à 10 de l’historique</dd>"
  ],
  [
   "<dd>Paste the previous item</dd>",

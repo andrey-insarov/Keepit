@@ -34,6 +34,8 @@
   var f=document.getElementById('fb'),err=document.getElementById('fb-err'),ok=document.getElementById('fb-ok'),
       msg=f.elements.message,count=document.getElementById('fb-count'),picker=document.getElementById('fb-files'),
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
+  var EM={name:'Вкажіть ім’я.',email:'Вкажіть правильну адресу e-mail.',type:'Виберіть тему повідомлення.',short:'Опишіть, будь ласка, хоча б у 70 символах.',long:'Повідомлення задовге (не більше 5000 символів).',files:'Не більше 5 знімків — решту не додано.',total:'Вкладення завеликі (не більше 5 знімків по 1 МБ).',form:'Не вдалося прочитати форму.',spam:'Пройдіть, будь ласка, перевірку від спаму.',send:'Зараз не вдалося надіслати повідомлення. Напишіть нам, будь ласка, електронною поштою.'};
+  function emsg(r){if(r.code==='toobig')return'«'+(r.file||'')+'» більший за 1 МБ, його не додано.';if(r.code==='notimage')return'«'+(r.file||'')+'» — не зображення, його не додано.';return EM[r.code]||'Щось пішло не так.';}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' КБ':(n/1048576).toFixed(1).replace('.',',')+' МБ';}
   function render(){
@@ -71,7 +73,7 @@
     files.forEach(function(file){fd.append('files',file,file.name);});
     btn.disabled=true;btn.textContent='Надсилання…';
     fetch(f.action,{method:'POST',body:fd}).then(function(r){return r.json().catch(function(){return{error:'Щось пішло не так.'};}).then(function(j){return[r.ok,j];});})
-      .then(function(x){if(x[0]){[].forEach.call(f.querySelectorAll('label,.fb-list,.cf-turnstile,button'),function(el){el.hidden=true;});ok.hidden=false;ok.scrollIntoView({block:'center'});}else{show(x[1].error||'Щось пішло не так.');if(window.turnstile)turnstile.reset();}})
+      .then(function(x){if(x[0]){[].forEach.call(f.querySelectorAll('label,.fb-list,.cf-turnstile,button'),function(el){el.hidden=true;});ok.hidden=false;ok.scrollIntoView({block:'center'});}else{show(emsg(x[1]));if(window.turnstile)turnstile.reset();}})
       .catch(function(){show('Немає з’єднання. Спробуйте ще раз або напишіть на admin@keep.it.com.');})
       .finally(function(){btn.disabled=false;btn.textContent='Надіслати';});
   });

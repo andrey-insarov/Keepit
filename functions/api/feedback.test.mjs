@@ -113,6 +113,7 @@ test("type must be an own key of TYPES — prototype names are refused with a 40
     const r = validate(form({ ...good, type: t }));
     assert.equal(r.ok, false, t);
     assert.match(r.error, /what the message is about/);
+    assert.equal(r.code, "type");
   }
   assert.equal(Object.getPrototypeOf(TYPES), null);
   assert.ok(Object.isFrozen(TYPES));

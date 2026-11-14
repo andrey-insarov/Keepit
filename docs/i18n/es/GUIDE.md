@@ -130,7 +130,7 @@ elemento 1 es el portapapeles:
 
 | Teclas | Qué ocurre |
 |------|--------------|
-| `⌃⌥1` … `⌃⌥9`, `⌃⌥0` | Pegar el elemento 1 a 10 del historial |
+| `⌃⌥1` … `⌃⌥9`, `⌃⌥0` | Pegar uno de los elementos del 1 al 10 del historial |
 | `⌥⇧V` | Pegar el elemento *anterior* (el 2); pulsa otra vez para volver al primero |
 | `⌃⌥V` | Pegar el portapapeles como texto sin formato |
 | `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | Pegar el portapapeles en MAYÚSCULAS / minúsculas / Mayúscula En Cada Palabra / con mayúscula inicial |
@@ -365,8 +365,7 @@ después de que el Mac haya estado un rato bloqueado o en reposo. *Bloqueo autom
 **Nunca** en una instalación nueva (una actualización desde la 3.0.3 conserva lo que había elegido:
 *Inmediatamente* si estaba activado el bloqueo junto con la pantalla). Un gestor de portapapeles que
 pide la contraseña después de cada pausa para el café acaba por no usarse, y `⌥L` está ahí para los
-momentos que importan. *Inmediatamente* bloquea a la vez que la pantalla. *Tras 5 minutos*,
-*15 minutos* o *1 hora* pasan por alto una ausencia corta: Keepit sigue desbloqueado y grabando, y solo
+momentos que importan. *Inmediatamente* bloquea a la vez que la pantalla. *Tras 5 minutos*, *Tras 15 minutos* o *Tras 1 hora* pasan por alto una ausencia corta: Keepit sigue desbloqueado y grabando, y solo
 se bloquea cuando el Mac ha estado ausente todo ese tiempo. Lo mismo vale cuando Keepit arranca con el
 Mac ya bloqueado o con la sesión de otro usuario en primer plano (por ejemplo, al reiniciarse tras una
 actualización): la ausencia cuenta desde el arranque, en la medida en que macOS comunica ese estado a
@@ -607,7 +606,7 @@ escribió una versión más nueva que la que intenta abrirlo.
 |------|--------|
 | `⌥M` | Menú del historial; escribe para buscar |
 | `⌥T` | Menú de plantillas |
-| `⌃⌥1` … `⌃⌥0` | Pegar el elemento 1 a 10 (en el menú y en cualquier sitio) |
+| `⌃⌥1` … `⌃⌥0` | Pegar uno de los elementos del 1 al 10 (en el menú y en cualquier sitio) |
 | `⇧` en el menú | Menú ampliado: todas las acciones de cada elemento |
 | `⌥⇧V` | Pegar el elemento anterior / alternar |
 | `⌃⌥V` | Pegar el portapapeles como texto sin formato |

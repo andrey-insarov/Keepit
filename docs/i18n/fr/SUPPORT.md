@@ -34,6 +34,8 @@ Vous avez trouvé un bug, une erreur de traduction, ou vous avez une question ?
   var f=document.getElementById('fb'),err=document.getElementById('fb-err'),ok=document.getElementById('fb-ok'),
       msg=f.elements.message,count=document.getElementById('fb-count'),picker=document.getElementById('fb-files'),
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
+  var EM={name:'Indiquez votre nom.',email:'Indiquez une adresse e-mail valide.',type:'Choisissez le sujet du message.',short:'Merci de décrire le problème en 70 caractères au moins.',long:'Le message est trop long (5000 caractères au maximum).',files:'5 captures au maximum. Les autres n’ont pas été ajoutées.',total:'Les pièces jointes sont trop volumineuses (5 captures de 1 Mo au maximum).',form:'Le formulaire n’a pas pu être lu.',spam:'Merci de valider la vérification anti-spam.',send:'Le message n’a pas pu être envoyé pour le moment. Écrivez-nous plutôt par e-mail.'};
+  function emsg(r){if(r.code==='toobig')return'« '+(r.file||'')+' » dépasse 1 Mo et n’a pas été ajouté.';if(r.code==='notimage')return'« '+(r.file||'')+' » n’est pas une image et n’a pas été ajouté.';return EM[r.code]||'Une erreur s’est produite.';}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' Ko':(n/1048576).toFixed(1).replace('.',',')+' Mo';}
   function render(){
@@ -71,7 +73,7 @@ Vous avez trouvé un bug, une erreur de traduction, ou vous avez une question ?
     files.forEach(function(file){fd.append('files',file,file.name);});
     btn.disabled=true;btn.textContent='Envoi…';
     fetch(f.action,{method:'POST',body:fd}).then(function(r){return r.json().catch(function(){return{error:'Une erreur s’est produite.'};}).then(function(j){return[r.ok,j];});})
-      .then(function(x){if(x[0]){[].forEach.call(f.querySelectorAll('label,.fb-list,.cf-turnstile,button'),function(el){el.hidden=true;});ok.hidden=false;ok.scrollIntoView({block:'center'});}else{show(x[1].error||'Une erreur s’est produite.');if(window.turnstile)turnstile.reset();}})
+      .then(function(x){if(x[0]){[].forEach.call(f.querySelectorAll('label,.fb-list,.cf-turnstile,button'),function(el){el.hidden=true;});ok.hidden=false;ok.scrollIntoView({block:'center'});}else{show(emsg(x[1]));if(window.turnstile)turnstile.reset();}})
       .catch(function(){show('Pas de connexion. Réessayez ou écrivez à admin@keep.it.com.');})
       .finally(function(){btn.disabled=false;btn.textContent='Envoyer';});
   });

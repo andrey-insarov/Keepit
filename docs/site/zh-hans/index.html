@@ -231,7 +231,7 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
 <main>
   <div class="hero hero-left wrap">
     <h1>剪贴板历史记录，<span style="white-space:nowrap">按 <kbd class="k">⌥M</kbd> 即可调出。</span></h1>
-    <p class="lead">Keepit 是一款免费开源的 Mac 剪贴板管理工具。它会保存你复制过的所有内容，并把其中任意一项粘贴到你正在输入的位置。每天都要输入的文字可以存成模板，用起来更快。设置密码后，数据会加密保存在磁盘上，并可用Touch ID 解锁。无论是否设置密码，数据都留在你的 Mac 上，不需要账户，也不使用云存储。你还可以选择把备份存到自己的文件夹里，备份同样是加密的。定期检查更新的功能可以关闭。</p>
+    <p class="lead">Keepit 是一款免费开源的 Mac 剪贴板管理工具。它会保存你复制过的所有内容，并把其中任意一项粘贴到你正在输入的位置。每天都要输入的文字可以存成模板，用起来更快。设置密码后，数据会加密保存在磁盘上，并可用 Touch ID 解锁。无论是否设置密码，数据都留在你的 Mac 上，不需要账户，也不使用云存储。你还可以选择把备份存到自己的文件夹里，备份同样是加密的。定期检查更新的功能可以关闭。</p>
     <div class="ctas">
       <a class="btn btn-primary" id="download" href="https://github.com/andrey-insarov/Keepit/releases/latest">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
@@ -327,7 +327,7 @@ open "keepit://pause"</div>
     </div>
     <div class="facts"><ul>
       <li>设置密码后，历史记录和模板会用 AES-256-GCM 加密保存。密钥通过 PBKDF2（200,000 轮）派生，每次 Keepit 锁定时都会从内存中清除。</li>
-      <li>可用Touch ID 解锁。密码仍可作为备用方式。恢复短语由 24 个单词组成，只显示一次，忘记密码时可以用它打开数据。密码可以在屏幕键盘上输入：按键位置每次都会打乱，也不会产生可被记录的键盘事件。</li>
+      <li>可用 Touch ID 解锁。密码仍可作为备用方式。恢复短语由 24 个单词组成，只显示一次，忘记密码时可以用它打开数据。密码可以在屏幕键盘上输入：按键位置每次都会打乱，也不会产生可被记录的键盘事件。</li>
       <li>为了保护隐私，从 1Password、Bitwarden、KeePassXC、Apple“密码”等密码管理器复制的内容，以及来源应用标记为隐藏的内容，Keepit 都不会保存。排除是按应用来识别的（尽力而为，<a href="/security#what-is-not-recorded">具体方式见此</a>，英文）。你也可以添加自己的排除项。</li>
       <li>Keepit 可以通过菜单或快捷键锁定，也可以按你的选择，在 Mac 锁定或睡眠超过设定的时间后自动锁定。自动锁定默认关闭，可在设置中打开。源代码是公开的，构建可以从带标签的提交重现，签名密钥保存在受保护的环境中。<a href="/security">安全说明页面</a>（英文）</li>
     </ul></div>
@@ -376,11 +376,11 @@ open "keepit://pause"</div>
     <h2>常见问题</h2>
     <details><summary>Keepit 为什么要请求辅助功能权限？</summary><p>有两个用途。第一，在你选好项目之后，向你刚才使用的应用发送 ⌘V。第二，找到文本光标的位置，把菜单打开在它旁边。Keepit 不会读取或监视其他应用。不给这项权限，它照样会记录历史，并把选中的项目放进剪贴板，只是需要你自己来粘贴。</p></details>
     <details><summary>有什么数据会离开我的 Mac 吗？</summary><p>数据只保存在本地，也就是你自己的电脑上。Keepit 没有服务器。唯一的网络请求是每天到 GitHub Releases 检查一次更新，你可以在“设置”→“通用”中把它关掉，之后 Keepit 就不再发出任何请求。App Store 版本连这个请求也没有。没有账户，没有遥测，也没有崩溃报告。只有当你开启了自动备份，并把备份文件夹选在云端时，数据才会进入互联网：加密的副本会写入你选择的文件夹，如果这个文件夹位于 iCloud 云盘或 Dropbox 中，相应的服务会用你的账户同步它们。Keepit 本身不会与这些服务通信。</p></details>
-    <details><summary>忘记密码怎么办？</summary><p>可以使用开启保护时 Keepit 显示的 24 个单词的恢复短语，或者在同一台 Mac 上使用Touch ID。两者都没有的话，数据无法恢复。这是有意这样设计的。</p></details>
+    <details><summary>忘记密码怎么办？</summary><p>可以使用开启保护时 Keepit 显示的 24 个单词的恢复短语，或者在同一台 Mac 上使用 Touch ID。两者都没有的话，数据无法恢复。这是有意这样设计的。</p></details>
     <details><summary>真的免费吗？有什么附加条件？</summary><p>是的，完全免费。应用以 MIT 许可证发布，代码放在 <a href="https://github.com/andrey-insarov/Keepit">GitHub</a> 上。Keepit 是域名区 <a href="https://it.com">it.com</a> 的创始人为自己使用而开发的，后来他想到，这个应用正好可以作为 it.com 域名用途的一个好例子。所以这里没有广告，没有应用内购买，也没有付费版本：大家使用这个程序，本身就是在向人们介绍我们的服务。</p></details>
     <details><summary>为什么想到做这样一个应用？</summary><p>Keepit 起初是想把 Windows 上的经典剪贴板工具 <a href="https://github.com/nakkag/CLCL">CLCL</a> 的使用方式搬到 macOS 上，后来发展成了一款独立的应用，完全用 Swift 从头编写，并吸收了许多剪贴板管理工具和文本片段管理工具的想法。本项目与 CLCL 的作者没有关联，但我们感谢他带来的启发。</p></details>
     <details><summary>怎样把数据转移到另一台 Mac，或者在不同版本之间转移？</summary><p>打开<em>“设置”→“备份”→“自动备份到文件夹”</em>，并选择 iCloud 云盘（或任意文件夹）。Keepit 会在其中保存完整的加密 <code>.keepit</code> 副本。在新 Mac 上首次启动时选取<em>“从备份恢复…”</em>，输入旧 Mac 的密码或恢复短语，然后选择<em>“替换”</em>或<em>“合并”</em>。如果只想导出一次，可以用<em>“保存为归档…”</em>，并为它单独设置密码。所有内容都用 AES-256-GCM 加密，所以放在 U 盘或云端文件夹里都可以。同一个文件在两个版本中都能使用。</p></details>
-    <details><summary>支持哪些 Mac？</summary><p>支持 macOS 13 Ventura 或更高版本，Apple 芯片和 Intel 均可。使用Touch ID 解锁需要配备Touch ID 的 Mac。</p></details>
+    <details><summary>支持哪些 Mac？</summary><p>支持 macOS 13 Ventura 或更高版本，Apple 芯片和 Intel 均可。使用 Touch ID 解锁需要配备 Touch ID 的 Mac。</p></details>
   </div></section>
 
   <section><div class="wrap"><div class="itcom">

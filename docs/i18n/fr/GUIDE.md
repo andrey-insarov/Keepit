@@ -133,7 +133,7 @@ instant. L’élément 1 est le presse-papiers :
 
 | Touches | Effet |
 |------|--------------|
-| `⌃⌥1` … `⌃⌥9`, `⌃⌥0` | Coller l’élément 1 à 10 de l’historique |
+| `⌃⌥1` … `⌃⌥9`, `⌃⌥0` | Coller l’un des éléments 1 à 10 de l’historique |
 | `⌥⇧V` | Coller l’élément *précédent* (élément 2) ; appuyez de nouveau pour revenir |
 | `⌃⌥V` | Coller le presse-papiers en texte brut, sans mise en forme |
 | `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | Coller le presse-papiers en MAJUSCULES / en minuscules / avec Une Majuscule À Chaque Mot / avec une majuscule en début de phrase |
@@ -377,7 +377,7 @@ temps. *Verrouillage auto de Keepit* vaut **Jamais** sur une nouvelle installati
 depuis la 3.0.3 conserve l’ancien choix, *Immédiatement* si le verrouillage avec l’écran était
 activé). Un gestionnaire de presse-papiers qui réclame son mot de passe après chaque pause café finit
 par ne plus être utilisé, et `⌥L` est là pour les moments qui comptent. *Immédiatement* verrouille en
-même temps que l’écran. *Après 5 minutes*, *15 minutes* ou *1 heure* ne tiennent pas compte d’une
+même temps que l’écran. *Après 5 minutes*, *Après 15 minutes* ou *Après 1 heure* ne tiennent pas compte d’une
 courte absence : Keepit reste déverrouillé et continue d’enregistrer, et ne se verrouille que si le
 Mac est resté absent pendant toute la durée. Il en va de même quand Keepit démarre alors que le Mac
 est déjà verrouillé ou que la session d’un autre utilisateur est au premier plan (un redémarrage après
@@ -635,7 +635,7 @@ Toujours bloqué ? [GitHub Issues](https://github.com/andrey-insarov/Keepit/iss
 |------|--------|
 | `⌥M` | Menu d’historique ; tapez pour rechercher |
 | `⌥T` | Menu des modèles |
-| `⌃⌥1` … `⌃⌥0` | Coller l’élément 1 à 10 (dans le menu et partout) |
+| `⌃⌥1` … `⌃⌥0` | Coller l’un des éléments 1 à 10 (dans le menu et partout) |
 | `⇧` dans le menu | Menu étendu : toutes les actions pour chaque élément |
 | `⌥⇧V` | Coller l’élément précédent / permuter |
 | `⌃⌥V` | Coller le presse-papiers en texte brut |

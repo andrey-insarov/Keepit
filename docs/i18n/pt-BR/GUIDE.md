@@ -128,7 +128,7 @@ item 1 é a área de transferência:
 
 | Teclas | O que acontece |
 |------|--------------|
-| `⌃⌥1` … `⌃⌥9`, `⌃⌥0` | Colar o item 1 a 10 do histórico |
+| `⌃⌥1` … `⌃⌥9`, `⌃⌥0` | Colar um dos itens de 1 a 10 do histórico |
 | `⌥⇧V` | Colar o item *anterior* (item 2); pressione de novo para voltar |
 | `⌃⌥V` | Colar a área de transferência como texto simples, sem formatação |
 | `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | Colar a área de transferência em MAIÚSCULAS / minúsculas / Iniciais Maiúsculas / só a primeira letra maiúscula |
@@ -360,7 +360,7 @@ o Mac fica um tempo bloqueado ou em repouso. *Bloqueio automático do Keepit* ve
 instalação nova (uma atualização a partir da 3.0.3 mantém a escolha anterior: *Imediatamente*, se o
 bloqueio junto com a tela estava ativado). Um gerenciador de área de transferência que pede a senha
 depois de cada pausa para o café acaba deixando de ser usado, e `⌥L` está aí para os momentos que
-importam. *Imediatamente* bloqueia junto com a tela. *Após 5 minutos*, *15 minutos* ou *1 hora*
+importam. *Imediatamente* bloqueia junto com a tela. *Após 5 minutos*, *Após 15 minutos* ou *Após 1 hora*
 ignoram uma ausência curta: o Keepit continua desbloqueado e gravando, e só bloqueia quando o Mac
 ficou ausente durante todo esse tempo. O mesmo vale quando o Keepit abre com o Mac já bloqueado ou com
 a sessão de outro usuário em primeiro plano (uma reabertura depois de uma atualização, por exemplo): a
@@ -425,8 +425,7 @@ uma pasta (o seletor abre no iCloud Drive). O backup automático exige a proteç
 abre com a sua senha do Keepit ou com a sua frase de recuperação, neste Mac ou em qualquer outro, sem
 nenhuma configuração extra. Sem senha, a caixa de seleção fica desativada e informa isso.
 
-**O que acontece depois: a programação.** Cerca de cinco minutos depois da última alteração (e no
-máximo uma vez por dia enquanto o Keepit estiver aberto), o Keepit grava na pasta um arquivo chamado
+**O que acontece depois: a programação.** Cerca de cinco minutos depois da última alteração (e pelo menos uma vez por dia enquanto o Keepit estiver aberto), o Keepit grava na pasta um arquivo chamado
 `Keepit-<date and time>-<installation>-<id>.keepit`, lê o arquivo de volta para conferir e só então
 apaga as mais antigas das suas próprias cópias além de *Manter os últimos* (10 por padrão, de 1 a
 100). Cada cópia é completa por si só, não um incremento, então um único arquivo é tudo de que você
@@ -601,7 +600,7 @@ Ainda com problemas? [GitHub Issues](https://github.com/andrey-insarov/Keepit/is
 |------|--------|
 | `⌥M` | Menu de histórico; digite para buscar |
 | `⌥T` | Menu de modelos |
-| `⌃⌥1` … `⌃⌥0` | Colar o item 1 a 10 (no menu e em qualquer lugar) |
+| `⌃⌥1` … `⌃⌥0` | Colar um dos itens de 1 a 10 (no menu e em qualquer lugar) |
 | `⇧` no menu | Menu estendido: todas as ações de cada item |
 | `⌥⇧V` | Colar o item anterior / alternar |
 | `⌃⌥V` | Colar a área de transferência como texto simples |

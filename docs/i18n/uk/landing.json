@@ -5,7 +5,7 @@
  ],
  [
   "<meta name=\"description\" content=\"Free, open-source clipboard manager for Mac: history at one hot key, templates, optional AES-256 encryption with Touch ID. No account, no Keepit cloud.\">",
-  "<meta name=\"description\" content=\"Безкоштовний менеджер буфера обміну для Mac з відкритим кодом: історія за однією клавішею, шаблони, шифрування AES-256 з Touch ID. Без акаунтів, дані зберігаються на вашому Mac.\">"
+  "<meta name=\"description\" content=\"Безкоштовний менеджер буфера обміну для Mac з відкритим кодом: історія за однією клавішею, шаблони, AES-256 і Touch ID. Без акаунтів, дані на вашому Mac.\">"
  ],
  [
   "<meta property=\"og:title\" content=\"Keepit – Free Clipboard Manager for Mac\">",
@@ -165,7 +165,7 @@
  ],
  [
   "<h2>Private by design, not by promise</h2>",
-  "<h2>Приватність у будові, а не в обіцянках</h2>"
+  "<h2>Приватність забезпечує сама програма, а не обіцянки</h2>"
  ],
  [
   "<p class=\"kicker\">A clipboard manager sees passwords, addresses and half-written messages. Keepit is built so that none of it goes anywhere you did not choose.</p>",
@@ -201,7 +201,7 @@
  ],
  [
   "<li>Locks on demand — and, if you choose, after the Mac has been locked or asleep for a delay you set (new installations never lock on their own). Source is open, builds are reproducible from a tagged commit, and the signing keys live in a protected release environment. <a href=\"/security\">Read the security page</a></li>",
-  "<li>Keepit можна заблокувати через меню, гарячою клавішею або (за бажанням) після того, як Mac був заблокований чи простоював заданий час. Типово це вимкнено і вмикається в налаштуваннях. Вихідний код відкритий, збірки відтворюються з позначеного коміту, ключі підпису зберігаються в захищеному сховищі. <a href=\"/security\">Сторінка про безпеку</a> (англ.)</li>"
+  "<li>Keepit можна заблокувати через меню, гарячою клавішею або (за бажанням) після того, як Mac залишався заблокованим або перебував у режимі сну протягом заданого часу. Типово це вимкнено і вмикається в налаштуваннях. Вихідний код відкритий, збірки відтворюються з позначеного коміту, ключі підпису зберігаються в захищеному сховищі. <a href=\"/security\">Сторінка про безпеку</a> (англ.)</li>"
  ],
  [
   "<h2>Install it your way</h2>",

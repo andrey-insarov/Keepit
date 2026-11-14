@@ -5,7 +5,7 @@
  ],
  [
   "<meta name=\"description\" content=\"Free, open-source clipboard manager for Mac: history at one hot key, templates, optional AES-256 encryption with Touch ID. No account, no Keepit cloud.\">",
-  "<meta name=\"description\" content=\"Kostenloser Open-Source-Clipboard-Manager für den Mac: Verlauf per Tastenkürzel, Vorlagen, AES-256-Verschlüsselung mit Touch ID. Kein Konto, die Daten bleiben auf deinem Mac.\">"
+  "<meta name=\"description\" content=\"Kostenloser Open-Source-Clipboard-Manager für den Mac: Verlauf per Tastenkürzel, Vorlagen, AES-256 mit Touch ID. Kein Konto, die Daten bleiben auf deinem Mac.\">"
  ],
  [
   "<meta property=\"og:title\" content=\"Keepit – Free Clipboard Manager for Mac\">",
@@ -141,7 +141,7 @@
  ],
  [
   "<h3>Works with Shortcuts, Raycast and Alfred</h3>\n        <p>A <code>keepit://</code> URL scheme pastes item N or a template by name, adds text to history or templates, pauses recording. No scripting dictionary to learn. Off until you switch it on in Settings → Advanced.</p>",
-  "<h3>Keepit arbeitet mit Kurzbefehle, Raycast und Alfred zusammen</h3> <p>Über das URL-Schema <code>keepit://</code> lässt sich Eintrag N oder eine Vorlage nach Namen einfügen, Text zum Verlauf oder zu den Vorlagen hinzufügen und die Aufzeichnung pausieren. Ein Skript-Wörterbuch musst du dafür nicht lernen. Die Option ist aus, bis du sie unter Einstellungen → Erweitert einschaltest.</p>"
+  "<h3>Keepit lässt sich mit der App „Kurzbefehle“, Raycast und Alfred verwenden</h3> <p>Über das URL-Schema <code>keepit://</code> lässt sich Eintrag N oder eine Vorlage nach Namen einfügen, Text zum Verlauf oder zu den Vorlagen hinzufügen und die Aufzeichnung pausieren. Ein Skript-Wörterbuch musst du dafür nicht lernen. Die Option ist aus, bis du sie unter Einstellungen → Erweitert einschaltest.</p>"
  ],
  [
   "<h3>Copy five things, paste five things</h3>\n        <p>Press <kbd class=\"k\">⌥N</kbd>, copy as many items as you need — the menu bar counts them — then <kbd class=\"k\">⌥V</kbd> pastes them back one at a time in the same order. <kbd class=\"k\">⌘V</kbd> keeps working as usual.</p>",
@@ -165,7 +165,7 @@
  ],
  [
   "<h2>Private by design, not by promise</h2>",
-  "<h2>Privat durch die Bauweise, nicht durch Versprechen</h2>"
+  "<h2>Datenschutz ist eingebaut, nicht nur versprochen</h2>"
  ],
  [
   "<p class=\"kicker\">A clipboard manager sees passwords, addresses and half-written messages. Keepit is built so that none of it goes anywhere you did not choose.</p>",

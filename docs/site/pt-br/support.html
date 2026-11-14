@@ -110,6 +110,8 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
   var f=document.getElementById('fb'),err=document.getElementById('fb-err'),ok=document.getElementById('fb-ok'),
       msg=f.elements.message,count=document.getElementById('fb-count'),picker=document.getElementById('fb-files'),
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
+  var EM={name:'Informe o seu nome.',email:'Informe um endereço de e-mail válido.',type:'Escolha o assunto da mensagem.',short:'Descreva em pelo menos 70 caracteres.',long:'A mensagem está longa demais (no máximo 5000 caracteres).',files:'No máximo 5 capturas. As demais não foram adicionadas.',total:'Os anexos são grandes demais (no máximo 5 capturas de 1 MB).',form:'Não foi possível ler o formulário.',spam:'Conclua a verificação antispam.',send:'Não foi possível enviar a mensagem agora. Escreva para nós por e-mail.'};
+  function emsg(r){if(r.code==='toobig')return'“'+(r.file||'')+'” tem mais de 1 MB e não foi adicionado.';if(r.code==='notimage')return'“'+(r.file||'')+'” não é uma imagem e não foi adicionado.';return EM[r.code]||'Algo deu errado.';}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' KB':(n/1048576).toFixed(1).replace('.',',')+' MB';}
   function render(){
@@ -147,7 +149,7 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
     files.forEach(function(file){fd.append('files',file,file.name);});
     btn.disabled=true;btn.textContent='Enviando…';
     fetch(f.action,{method:'POST',body:fd}).then(function(r){return r.json().catch(function(){return{error:'Algo deu errado.'};}).then(function(j){return[r.ok,j];});})
-      .then(function(x){if(x[0]){[].forEach.call(f.querySelectorAll('label,.fb-list,.cf-turnstile,button'),function(el){el.hidden=true;});ok.hidden=false;ok.scrollIntoView({block:'center'});}else{show(x[1].error||'Algo deu errado.');if(window.turnstile)turnstile.reset();}})
+      .then(function(x){if(x[0]){[].forEach.call(f.querySelectorAll('label,.fb-list,.cf-turnstile,button'),function(el){el.hidden=true;});ok.hidden=false;ok.scrollIntoView({block:'center'});}else{show(emsg(x[1]));if(window.turnstile)turnstile.reset();}})
       .catch(function(){show('Sem conexão. Tente de novo ou escreva para admin@keep.it.com.');})
       .finally(function(){btn.disabled=false;btn.textContent='Enviar';});
   });

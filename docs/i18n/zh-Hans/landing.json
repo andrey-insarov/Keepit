@@ -45,7 +45,7 @@
  ],
  [
   "<p class=\"lead\">Keepit is a free, open-source clipboard manager for Mac. It keeps a history of everything you copy and pastes any of it back where you are typing. Templates for the text you type every day. Set a password and it is encrypted on disk and unlocked with Touch&nbsp;ID; either way it stays on your Mac — no account, no Keepit cloud. Backups to a folder of yours are an option, off until you switch it on; the update check can be switched off.</p>",
-  "<p class=\"lead\">Keepit 是一款免费开源的 Mac 剪贴板管理工具。它会保存你复制过的所有内容，并把其中任意一项粘贴到你正在输入的位置。每天都要输入的文字可以存成模板，用起来更快。设置密码后，数据会加密保存在磁盘上，并可用Touch ID 解锁。无论是否设置密码，数据都留在你的 Mac 上，不需要账户，也不使用云存储。你还可以选择把备份存到自己的文件夹里，备份同样是加密的。定期检查更新的功能可以关闭。</p>"
+  "<p class=\"lead\">Keepit 是一款免费开源的 Mac 剪贴板管理工具。它会保存你复制过的所有内容，并把其中任意一项粘贴到你正在输入的位置。每天都要输入的文字可以存成模板，用起来更快。设置密码后，数据会加密保存在磁盘上，并可用 Touch ID 解锁。无论是否设置密码，数据都留在你的 Mac 上，不需要账户，也不使用云存储。你还可以选择把备份存到自己的文件夹里，备份同样是加密的。定期检查更新的功能可以关闭。</p>"
  ],
  [
   "Download for macOS <small id=\"ver\"></small>",
@@ -193,7 +193,7 @@
  ],
  [
   "<li>Unlock with Touch ID. The password stays as a fallback, and a 24-word recovery phrase, shown once, opens your data if you forget it. Type the password on an on-screen keyboard: shuffled keys, no keyboard events for anything to log.</li>",
-  "<li>可用Touch ID 解锁。密码仍可作为备用方式。恢复短语由 24 个单词组成，只显示一次，忘记密码时可以用它打开数据。密码可以在屏幕键盘上输入：按键位置每次都会打乱，也不会产生可被记录的键盘事件。</li>"
+  "<li>可用 Touch ID 解锁。密码仍可作为备用方式。恢复短语由 24 个单词组成，只显示一次，忘记密码时可以用它打开数据。密码可以在屏幕键盘上输入：按键位置每次都会打乱，也不会产生可被记录的键盘事件。</li>"
  ],
  [
   "<li>Anything marked concealed by the copying app is not recorded; copies from 1Password, Bitwarden, KeePassXC, Apple Passwords and other password managers are excluded by app (best effort — <a href=\"/security#what-is-not-recorded\">how</a>).</li>",
@@ -317,7 +317,7 @@
  ],
  [
   "<details><summary>What if I forget the password?</summary><p>Use the 24-word recovery phrase Keepit showed you when you turned protection on, or Touch ID on the same Mac. With neither, the data cannot be recovered — there is no master key, by design.</p></details>",
-  "<details><summary>忘记密码怎么办？</summary><p>可以使用开启保护时 Keepit 显示的 24 个单词的恢复短语，或者在同一台 Mac 上使用Touch ID。两者都没有的话，数据无法恢复。这是有意这样设计的。</p></details>"
+  "<details><summary>忘记密码怎么办？</summary><p>可以使用开启保护时 Keepit 显示的 24 个单词的恢复短语，或者在同一台 Mac 上使用 Touch ID。两者都没有的话，数据无法恢复。这是有意这样设计的。</p></details>"
  ],
  [
   "<details><summary>Is it really free? What's the catch?</summary><p>Free, MIT-licensed, source on <a href=\"https://github.com/andrey-insarov/Keepit\">GitHub</a>. Keepit was built by the founder of the <a href=\"https://it.com\">it.com</a> domain zone to show what can live at a .it.com address — the app is the advertisement. No ads, no in-app purchases, no pro tier, and therefore nothing to gain from your data.</p></details>",
@@ -333,7 +333,7 @@
  ],
  [
   "<details><summary>Which Macs are supported?</summary><p>macOS 13 Ventura or later, Apple silicon and Intel. Touch ID unlock needs a Mac with Touch ID.</p></details>",
-  "<details><summary>支持哪些 Mac？</summary><p>支持 macOS 13 Ventura 或更高版本，Apple 芯片和 Intel 均可。使用Touch ID 解锁需要配备Touch ID 的 Mac。</p></details>"
+  "<details><summary>支持哪些 Mac？</summary><p>支持 macOS 13 Ventura 或更高版本，Apple 芯片和 Intel 均可。使用 Touch ID 解锁需要配备 Touch ID 的 Mac。</p></details>"
  ],
  [
   "<div><h3>Made by the team behind it.com</h3><p>Keepit is a free project from the people who run the <strong>it.com</strong> domain zone, the home for IT people, products and companies online. Keepit lives at <strong>keep.it.com</strong>. Your project could live at a name like it too.</p></div>",

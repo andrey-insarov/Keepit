@@ -370,7 +370,7 @@ automatisch sperren* steht bei einer neuen Installation auf **Nie** (ein Update 
 alte Wahl, nämlich *Sofort*, wenn das Sperren zusammen mit dem Bildschirm eingeschaltet war). Ein
 Clipboard-Manager, der nach jeder Kaffeepause sein Passwort verlangt, wird bald nicht mehr benutzt,
 und für die Momente, in denen es darauf ankommt, gibt es `⌥L`. *Sofort* sperrt zusammen mit dem
-Bildschirm. *Nach 5 Minuten*, *15 Minuten* oder *1 Stunde* lassen eine kurze Abwesenheit
+Bildschirm. *Nach 5 Minuten*, *Nach 15 Minuten* oder *Nach 1 Stunde* lassen eine kurze Abwesenheit
 unberücksichtigt: Keepit bleibt entsperrt und zeichnet weiter auf und sperrt erst, wenn der Mac die
 ganze Zeit über weg war. Dasselbe gilt, wenn Keepit startet, während der Mac schon gesperrt ist oder
 die Sitzung eines anderen Benutzers im Vordergrund läuft (etwa bei einem Neustart nach einem Update):

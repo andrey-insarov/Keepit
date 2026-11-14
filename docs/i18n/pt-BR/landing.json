@@ -5,7 +5,7 @@
  ],
  [
   "<meta name=\"description\" content=\"Free, open-source clipboard manager for Mac: history at one hot key, templates, optional AES-256 encryption with Touch ID. No account, no Keepit cloud.\">",
-  "<meta name=\"description\" content=\"Gerenciador de área de transferência gratuito e de código aberto para Mac: histórico em um atalho, modelos, criptografia AES-256 com Touch ID. Sem conta, seus dados ficam no seu Mac.\">"
+  "<meta name=\"description\" content=\"Gerenciador de área de transferência gratuito e de código aberto para Mac: histórico, modelos, AES-256 e Touch ID. Sem conta, os dados ficam no seu Mac.\">"
  ],
  [
   "<meta property=\"og:title\" content=\"Keepit – Free Clipboard Manager for Mac\">",
@@ -165,7 +165,7 @@
  ],
  [
   "<h2>Private by design, not by promise</h2>",
-  "<h2>Privado por construção, não por promessa</h2>"
+  "<h2>Privacidade garantida pelo próprio app, não por promessas</h2>"
  ],
  [
   "<p class=\"kicker\">A clipboard manager sees passwords, addresses and half-written messages. Keepit is built so that none of it goes anywhere you did not choose.</p>",
@@ -245,7 +245,7 @@
  ],
  [
   "<dd>Paste history item 1–10</dd>",
-  "<dd>Colar o item 1 a 10 do histórico</dd>"
+  "<dd>Colar um dos itens de 1 a 10 do histórico</dd>"
  ],
  [
   "<dd>Paste the previous item</dd>",

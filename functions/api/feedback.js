@@ -223,7 +223,8 @@ const json = (status, body) =>
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-/** Validate the submitted fields. Returns { ok, error } or { ok, data }. */
+/** Validate the submitted fields. Returns { ok, error, code } or { ok, data }.
+ *  `code` is a stable key the translated pages map to their own wording; `error` stays English. */
 export function validate(form) {
   const name = (form.get("name") || "").toString().trim();
   const email = (form.get("email") || "").toString().trim();
@@ -231,20 +232,20 @@ export function validate(form) {
   const message = (form.get("message") || "").toString().trim();
   const files = form.getAll("files").filter((f) => f && typeof f === "object" && f.size > 0);
 
-  if (!name || name.length > LIMITS.nameMax) return { ok: false, error: "Please enter your name." };
-  if (!EMAIL.test(email) || email.length > LIMITS.emailMax) return { ok: false, error: "Please enter a valid e-mail address." };
-  if (!Object.hasOwn(TYPES, type)) return { ok: false, error: "Please choose what the message is about." };   // not `in`: "constructor" is in every object
-  if (message.length < LIMITS.messageMin) return { ok: false, error: `Please describe it in at least ${LIMITS.messageMin} characters.` };
-  if (message.length > LIMITS.messageMax) return { ok: false, error: `The message is too long (${LIMITS.messageMax} characters at most).` };
-  if (files.length > LIMITS.files) return { ok: false, error: `At most ${LIMITS.files} screenshots.` };
+  if (!name || name.length > LIMITS.nameMax) return { ok: false, error: "Please enter your name.", code: "name" };
+  if (!EMAIL.test(email) || email.length > LIMITS.emailMax) return { ok: false, error: "Please enter a valid e-mail address.", code: "email" };
+  if (!Object.hasOwn(TYPES, type)) return { ok: false, error: "Please choose what the message is about.", code: "type" };   // not `in`: "constructor" is in every object
+  if (message.length < LIMITS.messageMin) return { ok: false, error: `Please describe it in at least ${LIMITS.messageMin} characters.`, code: "short" };
+  if (message.length > LIMITS.messageMax) return { ok: false, error: `The message is too long (${LIMITS.messageMax} characters at most).`, code: "long" };
+  if (files.length > LIMITS.files) return { ok: false, error: `At most ${LIMITS.files} screenshots.`, code: "files" };
   for (const f of files) {
-    if (f.size > LIMITS.fileBytes) return { ok: false, error: `“${f.name}” is larger than 1 MB.` };
-    if (!LIMITS.types.includes(f.type)) return { ok: false, error: `“${f.name}” is not an image (PNG, JPEG, GIF, WebP or HEIC).` };
+    if (f.size > LIMITS.fileBytes) return { ok: false, error: `“${f.name}” is larger than 1 MB.`, code: "toobig", file: f.name };
+    if (!LIMITS.types.includes(f.type)) return { ok: false, error: `“${f.name}” is not an image (PNG, JPEG, GIF, WebP or HEIC).`, code: "notimage", file: f.name };
   }
   // Actual size of what was parsed, whatever Content-Length said (or did not say).
   let total = files.reduce((n, f) => n + f.size, 0);
   for (const [k, v] of form.entries()) if (typeof v === "string") total += k.length + v.length;
-  if (total > LIMITS.bodyBytes) return { ok: false, error: "The attachments are too large (5 screenshots of 1 MB at most)." };
+  if (total > LIMITS.bodyBytes) return { ok: false, error: "The attachments are too large (5 screenshots of 1 MB at most).", code: "total" };
   return { ok: true, data: { name, email, type, message, files } };
 }
 
@@ -319,34 +320,34 @@ export async function onRequestPost({ request, env }) {
   // Browsers always send Content-Length for a multipart form; a request without one (or with a
   // nonsense value) is not the support form, and parsing it would mean reading an unbounded body.
   const declared = Number(request.headers.get("content-length"));
-  if (!Number.isFinite(declared) || declared <= 0) return json(411, { error: "Could not read the form." });
-  if (declared > LIMITS.bodyBytes) return json(413, { error: "The attachments are too large (5 screenshots of 1 MB at most)." });
+  if (!Number.isFinite(declared) || declared <= 0) return json(411, { error: "Could not read the form.", code: "form" });
+  if (declared > LIMITS.bodyBytes) return json(413, { error: "The attachments are too large (5 screenshots of 1 MB at most).", code: "total" });
   const ctype = request.headers.get("content-type") || "";
-  if (!ctype.startsWith("multipart/form-data")) return json(400, { error: "Could not read the form." });
+  if (!ctype.startsWith("multipart/form-data")) return json(400, { error: "Could not read the form.", code: "form" });
   // Read the body ourselves with a running total and stop at the limit — formData() would buffer
   // the whole stream first, so a lying Content-Length would still cost the memory.
   const body = await readBodyUpTo(request, LIMITS.bodyBytes);
-  if (body === null) return json(413, { error: "The attachments are too large (5 screenshots of 1 MB at most)." });
+  if (body === null) return json(413, { error: "The attachments are too large (5 screenshots of 1 MB at most).", code: "total" });
   let form;
   try {
     form = await new Response(body, { headers: { "content-type": ctype } }).formData();
   } catch {
-    return json(400, { error: "Could not read the form." });
+    return json(400, { error: "Could not read the form.", code: "form" });
   }
 
   const v = validate(form);
-  if (!v.ok) return json(400, { error: v.error });
+  if (!v.ok) return json(400, { error: v.error, code: v.code, file: v.file });
   const { name, email, type, message, files } = v.data;
 
   const ip = request.headers.get("cf-connecting-ip") || "";
   if (!(await turnstileOK(form.get("cf-turnstile-response"), env.TURNSTILE_SECRET, ip, allowedTurnstileHostnames(env)))) {
-    return json(400, { error: "The anti-spam check did not pass. Please try again." });
+    return json(400, { error: "The anti-spam check did not pass. Please try again.", code: "spam" });
   }
 
   const attachments = [];
   for (const f of files) {
     const buf = await f.arrayBuffer();
-    if (sniffImage(buf) === null) return json(400, { error: `“${f.name}” is not an image (PNG, JPEG, GIF, WebP or HEIC).` });
+    if (sniffImage(buf) === null) return json(400, { error: `“${f.name}” is not an image (PNG, JPEG, GIF, WebP or HEIC).`, code: "notimage", file: f.name });
     attachments.push({ filename: f.name.replace(/[^\w.\-]+/g, "_").slice(0, 80) || "screenshot", content: b64(buf) });
   }
 
@@ -359,7 +360,7 @@ export async function onRequestPost({ request, env }) {
     headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, "content-type": "application/json" },
     body: JSON.stringify({ from: env.FEEDBACK_FROM, to: [env.FEEDBACK_TO], reply_to: email, subject, text, html, attachments }),
   });
-  if (!r.ok) return json(502, { error: "The message could not be sent right now. Please e-mail us instead." });
+  if (!r.ok) return json(502, { error: "The message could not be sent right now. Please e-mail us instead.", code: "send" });
 
   // Confirmation to the sender. Best effort: the message itself is already delivered.
   await fetch("https://api.resend.com/emails", {

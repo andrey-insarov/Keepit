@@ -34,6 +34,8 @@
   var f=document.getElementById('fb'),err=document.getElementById('fb-err'),ok=document.getElementById('fb-ok'),
       msg=f.elements.message,count=document.getElementById('fb-count'),picker=document.getElementById('fb-files'),
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
+  var EM={name:'请填写姓名。',email:'请填写有效的电子邮件地址。',type:'请选择问题类型。',short:'请至少用 70 个字符描述问题。',long:'留言太长（最多 5000 个字符）。',files:'最多 5 张截屏，其余的没有添加。',total:'附件太大（最多 5 张截屏，每张不超过 1 MB）。',form:'无法读取表单。',spam:'请完成防垃圾信息验证。',send:'暂时无法发送留言，请改用电子邮件联系我们。'};
+  function emsg(r){if(r.code==='toobig')return'“'+(r.file||'')+'”超过 1 MB，没有添加。';if(r.code==='notimage')return'“'+(r.file||'')+'”不是图片，没有添加。';return EM[r.code]||'出了点问题。';}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' KB':(n/1048576).toFixed(1).replace('.','.')+' MB';}
   function render(){
@@ -71,7 +73,7 @@
     files.forEach(function(file){fd.append('files',file,file.name);});
     btn.disabled=true;btn.textContent='正在发送…';
     fetch(f.action,{method:'POST',body:fd}).then(function(r){return r.json().catch(function(){return{error:'出了点问题。'};}).then(function(j){return[r.ok,j];});})
-      .then(function(x){if(x[0]){[].forEach.call(f.querySelectorAll('label,.fb-list,.cf-turnstile,button'),function(el){el.hidden=true;});ok.hidden=false;ok.scrollIntoView({block:'center'});}else{show(x[1].error||'出了点问题。');if(window.turnstile)turnstile.reset();}})
+      .then(function(x){if(x[0]){[].forEach.call(f.querySelectorAll('label,.fb-list,.cf-turnstile,button'),function(el){el.hidden=true;});ok.hidden=false;ok.scrollIntoView({block:'center'});}else{show(emsg(x[1]));if(window.turnstile)turnstile.reset();}})
       .catch(function(){show('无法连接。请重试，或发邮件到 admin@keep.it.com。');})
       .finally(function(){btn.disabled=false;btn.textContent='发送';});
   });
@@ -84,6 +86,6 @@
 
 **选择项目后没有粘贴任何内容。** 请授予辅助功能权限：打开“系统设置”→“隐私与安全性”→“辅助功能”，把 Keepit 打开（如果它已经在列表中，请先关闭再重新打开）。在此之前请自己按 ⌘V，项目已经在剪贴板里了。
 
-**我忘记了密码。** 在解锁窗口中点按“恢复访问…”，或者在同一台 Mac 上使用Touch ID。两者都没有的话，数据无法恢复。
+**我忘记了密码。** 在解锁窗口中点按“恢复访问…”，或者在同一台 Mac 上使用 Touch ID。两者都没有的话，数据无法恢复。
 
 **我的数据在哪里？** `~/Library/Application Support/Keepit/`（App Store 版本位于 `~/Library/Containers/com.it.keep/` 内）。

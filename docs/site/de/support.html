@@ -110,6 +110,8 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
   var f=document.getElementById('fb'),err=document.getElementById('fb-err'),ok=document.getElementById('fb-ok'),
       msg=f.elements.message,count=document.getElementById('fb-count'),picker=document.getElementById('fb-files'),
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
+  var EM={name:'Bitte gib deinen Namen an.',email:'Bitte gib eine gültige E-Mail-Adresse an.',type:'Bitte wähle aus, worum es geht.',short:'Bitte beschreibe es in mindestens 70 Zeichen.',long:'Die Nachricht ist zu lang (höchstens 5000 Zeichen).',files:'Höchstens 5 Bildschirmfotos. Die übrigen wurden nicht hinzugefügt.',total:'Die Anhänge sind zu groß (höchstens 5 Bildschirmfotos mit je 1 MB).',form:'Das Formular konnte nicht gelesen werden.',spam:'Bitte schließe die Spam-Prüfung ab.',send:'Die Nachricht konnte gerade nicht gesendet werden. Bitte schreib uns eine E-Mail.'};
+  function emsg(r){if(r.code==='toobig')return'„'+(r.file||'')+'“ ist größer als 1 MB und wurde nicht hinzugefügt.';if(r.code==='notimage')return'„'+(r.file||'')+'“ ist kein Bild und wurde nicht hinzugefügt.';return EM[r.code]||'Etwas ist schiefgegangen.';}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' KB':(n/1048576).toFixed(1).replace('.',',')+' MB';}
   function render(){
@@ -147,7 +149,7 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
     files.forEach(function(file){fd.append('files',file,file.name);});
     btn.disabled=true;btn.textContent='Wird gesendet…';
     fetch(f.action,{method:'POST',body:fd}).then(function(r){return r.json().catch(function(){return{error:'Etwas ist schiefgegangen.'};}).then(function(j){return[r.ok,j];});})
-      .then(function(x){if(x[0]){[].forEach.call(f.querySelectorAll('label,.fb-list,.cf-turnstile,button'),function(el){el.hidden=true;});ok.hidden=false;ok.scrollIntoView({block:'center'});}else{show(x[1].error||'Etwas ist schiefgegangen.');if(window.turnstile)turnstile.reset();}})
+      .then(function(x){if(x[0]){[].forEach.call(f.querySelectorAll('label,.fb-list,.cf-turnstile,button'),function(el){el.hidden=true;});ok.hidden=false;ok.scrollIntoView({block:'center'});}else{show(emsg(x[1]));if(window.turnstile)turnstile.reset();}})
       .catch(function(){show('Keine Verbindung. Versuch es noch einmal oder schreib an admin@keep.it.com.');})
       .finally(function(){btn.disabled=false;btn.textContent='Senden';});
   });

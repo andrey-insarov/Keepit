@@ -5,7 +5,7 @@
  ],
  [
   "<meta name=\"description\" content=\"Free, open-source clipboard manager for Mac: history at one hot key, templates, optional AES-256 encryption with Touch ID. No account, no Keepit cloud.\">",
-  "<meta name=\"description\" content=\"Gestor de portapapeles gratuito y de código abierto para Mac: historial con un atajo, plantillas, cifrado AES-256 con Touch ID. Sin cuentas, tus datos se quedan en tu Mac.\">"
+  "<meta name=\"description\" content=\"Gestor de portapapeles gratuito y de código abierto para Mac: historial, plantillas, cifrado AES-256 y Touch ID. Sin cuentas, los datos quedan en tu Mac.\">"
  ],
  [
   "<meta property=\"og:title\" content=\"Keepit – Free Clipboard Manager for Mac\">",
@@ -245,7 +245,7 @@
  ],
  [
   "<dd>Paste history item 1–10</dd>",
-  "<dd>Pegar el elemento 1 a 10 del historial</dd>"
+  "<dd>Pegar uno de los elementos del 1 al 10 del historial</dd>"
  ],
  [
   "<dd>Paste the previous item</dd>",

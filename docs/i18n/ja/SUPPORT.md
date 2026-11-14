@@ -34,6 +34,8 @@
   var f=document.getElementById('fb'),err=document.getElementById('fb-err'),ok=document.getElementById('fb-ok'),
       msg=f.elements.message,count=document.getElementById('fb-count'),picker=document.getElementById('fb-files'),
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
+  var EM={name:'お名前を入力してください。',email:'正しいメールアドレスを入力してください。',type:'お問い合わせの種類を選択してください。',short:'70文字以上でご記入ください。',long:'メッセージが長すぎます（5000文字以内）。',files:'スクリーンショットは5枚までです。残りは追加されませんでした。',total:'添付ファイルが大きすぎます（スクリーンショットは5枚まで、各1 MB以内）。',form:'フォームを読み取れませんでした。',spam:'スパム対策の確認を完了してください。',send:'現在メッセージを送信できません。メールでご連絡ください。'};
+  function emsg(r){if(r.code==='toobig')return'「'+(r.file||'')+'」は1 MBを超えているため追加されませんでした。';if(r.code==='notimage')return'「'+(r.file||'')+'」は画像ではないため追加されませんでした。';return EM[r.code]||'エラーが発生しました。';}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' KB':(n/1048576).toFixed(1).replace('.','.')+' MB';}
   function render(){
@@ -71,7 +73,7 @@
     files.forEach(function(file){fd.append('files',file,file.name);});
     btn.disabled=true;btn.textContent='送信中…';
     fetch(f.action,{method:'POST',body:fd}).then(function(r){return r.json().catch(function(){return{error:'エラーが発生しました。'};}).then(function(j){return[r.ok,j];});})
-      .then(function(x){if(x[0]){[].forEach.call(f.querySelectorAll('label,.fb-list,.cf-turnstile,button'),function(el){el.hidden=true;});ok.hidden=false;ok.scrollIntoView({block:'center'});}else{show(x[1].error||'エラーが発生しました。');if(window.turnstile)turnstile.reset();}})
+      .then(function(x){if(x[0]){[].forEach.call(f.querySelectorAll('label,.fb-list,.cf-turnstile,button'),function(el){el.hidden=true;});ok.hidden=false;ok.scrollIntoView({block:'center'});}else{show(emsg(x[1]));if(window.turnstile)turnstile.reset();}})
       .catch(function(){show('接続できません。もう一度お試しいただくか、admin@keep.it.com までメールでご連絡ください。');})
       .finally(function(){btn.disabled=false;btn.textContent='送信';});
   });
