@@ -101,7 +101,7 @@
  ],
  [
   "<h3>Paste without the menu</h3><p><kbd class=\"k\">⌃⌥1</kbd>…<kbd class=\"k\">⌃⌥0</kbd> paste items 1–10 straight away; <kbd class=\"k\">⌥⇧V</kbd> pastes the one before the current. <kbd class=\"k\">⌃⌥V</kbd> pastes as plain text, <kbd class=\"k\">⌃⌥U</kbd> as UPPERCASE, <kbd class=\"k\">⌃⌥T</kbd> as Title Case.</p>",
-  "<h3>Plakken zonder menu</h3><p><kbd class=\"k\">⌃⌥1</kbd>…<kbd class=\"k\">⌃⌥0</kbd> plakken meteen item 1–10; <kbd class=\"k\">⌥⇧V</kbd> plakt het vorige item. <kbd class=\"k\">⌃⌥V</kbd> plakt als platte tekst, <kbd class=\"k\">⌃⌥U</kbd> in HOOFDLETTERS en <kbd class=\"k\">⌃⌥T</kbd> Met Elk Woord Een Hoofdletter.</p>"
+  "<h3>Plakken zonder menu</h3><p><kbd class=\"k\">⌃⌥1</kbd>…<kbd class=\"k\">⌃⌥0</kbd> plakken meteen item 1–10; <kbd class=\"k\">⌥⇧V</kbd> plakt het vorige item. <kbd class=\"k\">⌃⌥V</kbd> plakt als platte tekst, <kbd class=\"k\">⌃⌥U</kbd> in HOOFDLETTERS en <kbd class=\"k\">⌃⌥T</kbd> als Elk Woord Met Hoofdletter.</p>"
  ],
  [
   "<h3>Templates</h3><p>Signatures, addresses, replies you send ten times a day — in folders, with their own hot keys. Placeholders ask for a name, insert today's date or the clipboard, and leave the cursor where you want it.</p>",
@@ -253,7 +253,7 @@
  ],
  [
   "<dd>Paste as UPPERCASE, lowercase, Title Case, Sentence case</dd>",
-  "<dd>Plakken in HOOFDLETTERS, kleine letters, Met Elk Woord Een Hoofdletter, als zin</dd>"
+  "<dd>Plakken in HOOFDLETTERS, kleine letters, Elk Woord Met Hoofdletter, als een zin</dd>"
  ],
  [
   "<dd>Paste trimmed, paste on one line</dd>",

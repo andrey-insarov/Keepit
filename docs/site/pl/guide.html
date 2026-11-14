@@ -119,7 +119,7 @@ i przeciągnij Keepit do folderu <em>Aplikacje</em>.</p>
 <p>Przy pierwszym otwarciu aplikacji macOS potwierdza, że pochodzi ona z Internetu i została
 sprawdzona przez Apple. Kliknij <em>Otwórz</em>.</p>
 <figure class="shot" style="max-width:336px"><a href="/img/guide/gatekeeper.png?v=d79051e5" class="zoom" title="Otwórz w pełnym rozmiarze"><img src="/img/guide/gatekeeper.png?v=d79051e5" alt="Potwierdzenie Gatekeepera w macOS" width="336" height="336" loading="lazy"></a><figcaption>Potwierdzenie Gatekeepera w macOS</figcaption></figure>
-<p>Keepit jest podpisany i poświadczony notarialnie, aktualizuje się sam i działa natywnie na Macach
+<p>Keepit jest podpisany i poświadczony przez Apple, aktualizuje się sam i działa natywnie na Macach
 z Apple silicon oraz z procesorem Intel, z systemem macOS 13 Ventura lub nowszym.</p>
 <h3 id="first-launch">Pierwsze uruchomienie</h3>
 <p>Keepit jest aplikacją paska menu: nie ma ikony w Docku ani okna, dopóki go nie otworzysz. Po
@@ -197,7 +197,7 @@ z dowolnej aplikacji:</p>
 </tr>
 <tr>
 <td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
-<td>Wkleja schowek WIELKIMI LITERAMI / małymi literami / Każde Słowo Wielką Literą / jak w zdaniu</td>
+<td>Wkleja schowek WIELKIMI LITERAMI / małymi literami / Każde Słowo Wielką / jak w zdaniu</td>
 </tr>
 <tr>
 <td><kbd class="k">⌃⌥W</kbd></td>
@@ -277,7 +277,8 @@ działania bez klawiszy: skrót albo działa wszędzie, albo nie jest pokazywany
 logo, które często wklejasz. Leżą w drzewie z folderami i pojawiają się w podmenu <em>Szablony</em> menu
 historii oraz pod <strong>⌥T</strong>. Świeża instalacja zawiera folder <em>Przykłady</em> (powitanie, dzisiejszą datę,
 cytat ze schowka i podpis), żeby pokazać, co potrafią szablony, zanim napiszesz własne. Możesz je
-dowolnie usuwać i edytować (<em>Resetuj…</em> w Ustawieniach przywraca je).</p>
+dowolnie usuwać i edytować. Przykładowe szablony przywraca <em>Ustawienia → Zaawansowane → Reset
+i odinstalowanie → Resetuj…</em>; to polecenie resetuje jednak także pozostałe dane i ustawienia.</p>
 <figure class="shot" style="max-width:660px"><a href="/img/guide/template-examples.png?v=c143a1d7" class="zoom" title="Otwórz w pełnym rozmiarze"><img src="/img/guide/template-examples.png?v=c143a1d7" alt="Folder Przykłady: po najechaniu na element widać jego tekst" width="660" height="209" loading="lazy"></a><figcaption>Folder Przykłady: po najechaniu na element widać jego tekst</figcaption></figure>
 <figure class="shot" style="max-width:738px"><a href="/img/guide/template-menu-letters.png?v=ea96333e" class="zoom" title="Otwórz w pełnym rozmiarze"><img src="/img/guide/template-menu-letters.png?v=ea96333e" alt="Menu szablonów: foldery otwierają się jako podmenu, litery po znaku &amp; stają się skrótami" width="738" height="715" loading="lazy"></a><figcaption>Menu szablonów: foldery otwierają się jako podmenu, litery po znaku &amp; stają się skrótami</figcaption></figure>
 <h3 id="creating-and-organising">Tworzenie i porządkowanie</h3>
@@ -369,7 +370,7 @@ niezależnie od tego, ile razy występuje; <code>{input:Imię=Domyślne}</code> 
 <p>Na przykład szablon odpowiedzi:</p>
 <pre><code>Dzień dobry, {input:Imię},
 
-dziękuję za wiadomość z {date-1d}. Odezwę się do {date+3d:EEEE}.
+dziękuję za wiadomość z {date-1d}. Odezwę się do {date+3d:d MMMM}.
 {cursor}
 {user}
 </code></pre>
@@ -469,7 +470,7 @@ zachowuje dawny wybór, czyli <em>Natychmiast</em>, jeśli pole blokowania razem
 z menedżera schowka, który prosi o hasło po każdej przerwie na kawę, przestaje się korzystać, a na
 ważne chwile jest <kbd class="k">⌥L</kbd>. <em>Natychmiast</em> blokuje razem z ekranem. Opcje <em>Po 5 minutach</em>,
 <em>Po 15 minutach</em> i <em>Po 1 godzinie</em> nie reagują na krótką nieobecność (Keepit pozostaje odblokowany
-i dalej zapisuje) i blokują dopiero wtedy, gdy Maca nie było przez cały ten czas. To samo dotyczy
+i dalej zapisuje) i blokują dopiero wtedy, gdy Mac przez cały ustawiony czas pozostawał zablokowany lub uśpiony. To samo dotyczy
 sytuacji, gdy Keepit uruchamia się, kiedy Mac jest już zablokowany albo na pierwszym planie jest
 sesja innego użytkownika (na przykład ponowne uruchomienie po aktualizacji): nieobecność liczy się
 od startu, o ile macOS zgłasza ten stan Keepit (zwykle tak; gdy nie może, odliczanie zaczyna się
@@ -521,7 +522,7 @@ raz dziennie, dopóki Keepit działa) Keepit zapisuje w folderze plik o nazwie
 <code>Keepit-&lt;data i godzina&gt;-&lt;instalacja&gt;-&lt;id&gt;.keepit</code>, odczytuje go, żeby go sprawdzić, i dopiero
 potem usuwa najstarsze ze swoich kopii ponad liczbę <em>Zachowaj ostatnie</em> (domyślnie 10, zakres
 1–100). Każda kopia jest kompletna sama w sobie, to nie przyrost, więc zawsze wystarczy jeden plik.
-Kopii zrobionych przez innego Maca ani plików, które sam tam umieścisz, Keepit nigdy nie rusza: dwa
+Kopii zrobionych przez innego Maca ani plików, które tam umieścisz, Keepit nigdy nie rusza: dwa
 Maki korzystające z jednego folderu zapisują dwie niezależne serie. Wiersz stanu obok nagłówka
 <em>Automatyczna kopia zapasowa</em> pokazuje godzinę i rozmiar ostatniej kopii albo powód, dla którego
 ostatnia próba się nie udała. Gdy Keepit jest zablokowany, nic się nie dzieje; <em>Utwórz kopię teraz</em>
@@ -583,7 +584,7 @@ plik i uruchom Keepit ponownie. Szczegóły, w tym budowa formatu pliku od środ
 <hr />
 <h2 id="part-7-advanced">Część 7. Dla zaawansowanych</h2>
 <h3 id="automation-the-keepit-url-scheme">Automatyzacja: schemat URL keepit://</h3>
-<p>Skróty (<em>Otwórz URL</em>), Raycast, Alfred, Keyboard Maestro albo polecenie <code>open</code> w powłoce mogą
+<p>Skróty (<em>Otwórz adresy URL</em>), Raycast, Alfred, Keyboard Maestro albo polecenie <code>open</code> w powłoce mogą
 sterować Keepit, <strong>gdy to włączysz</strong> w <em>Ustawienia → Zaawansowane → Automatyzacja → Zezwalaj na
 polecenia URL keepit://</em>. Domyślnie jest to wyłączone, bo URL może otworzyć dowolna aplikacja albo
 strona internetowa, a <code>add</code> / <code>paste</code> zmieniają schowek i piszą w aplikacji na pierwszym planie;
@@ -636,7 +637,7 @@ własne okna Keepit, nigdy nie pytają.</p>
 ignorowane.</p>
 <h3 id="updates">Aktualizacje</h3>
 <p>Keepit raz dziennie sprawdza GitHub Releases i proponuje aktualizacje w oknie dialogowym; <em>Sprawdź
-uaktualnienia…</em> robi to od razu. Aktualizacje są podpisane (EdDSA) i poświadczone notarialnie.
+uaktualnienia…</em> robi to od razu. Aktualizacje są podpisane (EdDSA) i poświadczone przez Apple.
 W Homebrew to samo robi <code>brew upgrade --cask keepit</code>. Sumy kontrolne wszystkich pobieranych plików
 są w <code>SHA256SUMS</code> na stronie wydania.</p>
 <p>To sprawdzanie jest jedynym zapytaniem sieciowym, jakie wysyła Keepit, i jest opcjonalne:
@@ -718,7 +719,7 @@ otwiera.</p>
 </tr>
 <tr>
 <td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
-<td>WIELKIE LITERY / małe litery / Każde Słowo Wielką Literą / jak w zdaniu</td>
+<td>WIELKIE LITERY / małe litery / Każde Słowo Wielką / jak w zdaniu</td>
 </tr>
 <tr>
 <td><kbd class="k">⌃⌥W</kbd> <kbd class="k">⌃⌥J</kbd></td>

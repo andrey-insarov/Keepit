@@ -120,8 +120,10 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
   var f=document.getElementById('fb'),err=document.getElementById('fb-err'),ok=document.getElementById('fb-ok'),
       msg=f.elements.message,count=document.getElementById('fb-count'),picker=document.getElementById('fb-files'),
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
+  var PF={one:' carattere',other:' caratteri'},PR=window.Intl&&Intl.PluralRules?new Intl.PluralRules('it'):null;
+  function pf(n){var k=PR?PR.select(n):'other';return Object.prototype.hasOwnProperty.call(PF,k)?PF[k]:PF.other;}
   var EM={name:'Inserisci il tuo nome.',email:'Inserisci un indirizzo e-mail valido.',type:'Scegli di cosa si tratta.',short:'Descrivi il problema in almeno 70 caratteri.',long:'Il messaggio è troppo lungo (al massimo 5000 caratteri).',files:'Si possono allegare al massimo 5 schermate. Rimuovi quelle in più e invia di nuovo il modulo.',total:'Gli allegati sono troppo grandi (al massimo 5 schermate da 1 MB ciascuna).',form:'Non è stato possibile leggere il modulo.',spam:'Completa la verifica antispam.',send:'Al momento non è stato possibile inviare il messaggio. Scrivici un’e-mail.'};
-  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'«'+n+'» supera 1 MB. Rimuovi il file o riducilo.';if(c==='notimage')return'«'+n+'» non è stato riconosciuto come immagine supportata. Rimuovi il file o sostituiscilo.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Qualcosa è andato storto.';}
+  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'«'+n+'» supera 1 MB. Rimuovi il file o riducilo. Poi invia di nuovo il modulo.';if(c==='notimage')return'«'+n+'» non è stato riconosciuto come immagine supportata. Rimuovi il file o sostituiscilo. Poi invia di nuovo il modulo.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Qualcosa è andato storto.';}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' KB':(n/1048576).toFixed(1).replace('.',',')+' MB';}
   function render(){
@@ -144,7 +146,7 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
     }
     picker.value='';render();
   });
-  msg.addEventListener('input',function(){var n=msg.value.trim().length;count.textContent=n<70?'ancora '+(70-n)+' caratteri':n+' caratteri';});
+  msg.addEventListener('input',function(){var n=msg.value.trim().length;count.textContent=n<70?'ancora '+(70-n)+pf(70-n):n+pf(n);});
   f.addEventListener('submit',function(ev){
     ev.preventDefault();show('');
     if(!f.elements.name.value.trim())return show('Inserisci il tuo nome.');

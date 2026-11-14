@@ -122,6 +122,8 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
   var EM={name:'Indiquez votre nom.',email:'Indiquez une adresse e-mail valide.',type:'Choisissez le sujet du message.',short:'Merci de décrire le problème en 70 caractères au moins.',long:'Le message est trop long (5000 caractères au maximum).',files:'Vous pouvez joindre 5 captures au maximum. Retirez les captures en trop et renvoyez le formulaire.',total:'Les pièces jointes sont trop volumineuses (5 captures au maximum, de 1 Mo chacune au maximum).',form:'Le formulaire n’a pas pu être lu.',spam:'Merci de valider la vérification anti-spam.',send:'Le message n’a pas pu être envoyé pour le moment. Écrivez-nous plutôt par e-mail.'};
   function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'« '+n+' » dépasse 1 Mo. Retirez ou réduisez le fichier.';if(c==='notimage')return'« '+n+' » n’a pas été reconnu comme une image prise en charge. Retirez ou remplacez le fichier.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Une erreur s’est produite.';}
+  var PF={one:' caractère',other:' caractères'},PR=window.Intl&&Intl.PluralRules?new Intl.PluralRules('fr'):null;
+  function pf(n){var k=PR?PR.select(n):'other';return Object.prototype.hasOwnProperty.call(PF,k)?PF[k]:PF.other;}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' Ko':(n/1048576).toFixed(1).replace('.',',')+' Mo';}
   function render(){
@@ -144,7 +146,7 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
     }
     picker.value='';render();
   });
-  msg.addEventListener('input',function(){var n=msg.value.trim().length;count.textContent=n<70?'encore '+(70-n)+' caractères':n+' caractères';});
+  msg.addEventListener('input',function(){var n=msg.value.trim().length;count.textContent=n<70?'encore '+(70-n)+pf(70-n):n+pf(n);});
   f.addEventListener('submit',function(ev){
     ev.preventDefault();show('');
     if(!f.elements.name.value.trim())return show('Indiquez votre nom.');

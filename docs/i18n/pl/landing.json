@@ -53,7 +53,7 @@
  ],
  [
   "<p class=\"fine\">Free and open source (MIT) · macOS 13 or later, Apple silicon and Intel · Notarized by Apple · <a href=\"https://github.com/andrey-insarov/Keepit/releases\">All releases</a></p>",
-  "<p class=\"fine\">Za darmo i z otwartym kodem (MIT) · macOS 13 lub nowszy, Apple silicon i Intel · Poświadczone notarialnie przez Apple · <a href=\"https://github.com/andrey-insarov/Keepit/releases\">Wszystkie wersje</a></p>"
+  "<p class=\"fine\">Za darmo i z otwartym kodem (MIT) · macOS 13 lub nowszy, Apple silicon i Intel · Poświadczone przez Apple · <a href=\"https://github.com/andrey-insarov/Keepit/releases\">Wszystkie wersje</a></p>"
  ],
  [
   "aria-label=\"Animated demo: pressing Option-M opens the Keepit history menu at the text cursor and pastes the chosen item\"",
@@ -101,7 +101,7 @@
  ],
  [
   "<h3>Paste without the menu</h3><p><kbd class=\"k\">⌃⌥1</kbd>…<kbd class=\"k\">⌃⌥0</kbd> paste items 1–10 straight away; <kbd class=\"k\">⌥⇧V</kbd> pastes the one before the current. <kbd class=\"k\">⌃⌥V</kbd> pastes as plain text, <kbd class=\"k\">⌃⌥U</kbd> as UPPERCASE, <kbd class=\"k\">⌃⌥T</kbd> as Title Case.</p>",
-  "<h3>Wklejanie bez menu</h3><p><kbd class=\"k\">⌃⌥1</kbd>…<kbd class=\"k\">⌃⌥0</kbd> od razu wklejają elementy 1–10; <kbd class=\"k\">⌥⇧V</kbd> wkleja poprzedni. <kbd class=\"k\">⌃⌥V</kbd> wkleja zwykły tekst, <kbd class=\"k\">⌃⌥U</kbd> WIELKIMI LITERAMI, a <kbd class=\"k\">⌃⌥T</kbd> Każde Słowo Wielką Literą.</p>"
+  "<h3>Wklejanie bez menu</h3><p><kbd class=\"k\">⌃⌥1</kbd>…<kbd class=\"k\">⌃⌥0</kbd> od razu wklejają elementy 1–10; <kbd class=\"k\">⌥⇧V</kbd> wkleja poprzedni. <kbd class=\"k\">⌃⌥V</kbd> wkleja zwykły tekst, <kbd class=\"k\">⌃⌥U</kbd> WIELKIMI LITERAMI, a <kbd class=\"k\">⌃⌥T</kbd> Każde Słowo Wielką.</p>"
  ],
  [
   "<h3>Templates</h3><p>Signatures, addresses, replies you send ten times a day — in folders, with their own hot keys. Placeholders ask for a name, insert today's date or the clipboard, and leave the cursor where you want it.</p>",
@@ -117,7 +117,7 @@
  ],
  [
   "<div class=\"tpl\">Hi <b>{input:Name}</b>,\n\nThanks for your order — it ships on <b>{date+2d:EEEE, d MMMM}</b>.\nTracking: <b>{clipboard}</b>\n\n<b>{cursor}</b>\nBest, Andrey</div>",
-  "<div class=\"tpl\">Dzień dobry, <b>{input:Imię}</b>,\n\ndziękujemy za zamówienie. Wyślemy je <b>{date+2d:EEEE, d MMMM}</b>.\nNumer przesyłki: <b>{clipboard}</b>\n\n<b>{cursor}</b>\nPozdrawiam, Andrey</div>"
+  "<div class=\"tpl\">Dzień dobry, <b>{input:Imię}</b>,\n\ndziękujemy za zamówienie. Wyślemy je <b>{date+2d:d MMMM}</b>.\nNumer przesyłki: <b>{clipboard}</b>\n\n<b>{cursor}</b>\nPozdrawiam, Andrey</div>"
  ],
  [
   "<h3>Text, images, files</h3>\n        <p>Rich text with formatting, screenshots with thumbnails, lists of files from Finder. Duplicates are merged into one entry.</p>",
@@ -157,7 +157,7 @@
  ],
  [
   "<h3>Updates itself</h3>\n        <p>Signed with a Developer ID and notarized by Apple. Checks GitHub Releases once a day and installs the update in one click; every update is signature-checked before it runs. The check is optional — switch it off and Keepit makes no network request at all.</p>",
-  "<h3>Aktualizuje się sam</h3>\n        <p>Aplikacja jest podpisana certyfikatem Developer ID i poświadczona notarialnie przez Apple. Raz dziennie sprawdza GitHub Releases i instaluje aktualizację jednym kliknięciem; podpis każdej aktualizacji jest weryfikowany przed uruchomieniem. Sprawdzanie można wyłączyć i wtedy Keepit nie wysyła do Internetu żadnego zapytania.</p>"
+  "<h3>Aktualizuje się sam</h3>\n        <p>Aplikacja jest podpisana certyfikatem Developer ID i poświadczona przez Apple. Raz dziennie sprawdza GitHub Releases i instaluje aktualizację jednym kliknięciem; podpis każdej aktualizacji jest weryfikowany przed uruchomieniem. Sprawdzanie można wyłączyć i wtedy Keepit nie wysyła do Internetu żadnego zapytania.</p>"
  ],
  [
   "<h2>Private by design, not by promise</h2>",
@@ -209,7 +209,7 @@
  ],
  [
   "<h3>Download</h3><p>A signed, notarized disk image. Drag Keepit to Applications and press <kbd class=\"k\">⌥M</kbd>.</p><a class=\"btn btn-primary\" id=\"download2\" href=\"https://github.com/andrey-insarov/Keepit/releases/latest\">Download DMG</a>",
-  "<h3>Pobieranie</h3><p>Podpisany i poświadczony notarialnie obraz dysku. Przeciągnij Keepit do folderu Aplikacje i naciśnij <kbd class=\"k\">⌥M</kbd>.</p><a class=\"btn btn-primary\" id=\"download2\" href=\"https://github.com/andrey-insarov/Keepit/releases/latest\">Pobierz DMG</a>"
+  "<h3>Pobieranie</h3><p>Podpisany i poświadczony przez Apple obraz dysku. Przeciągnij Keepit do folderu Aplikacje i naciśnij <kbd class=\"k\">⌥M</kbd>.</p><a class=\"btn btn-primary\" id=\"download2\" href=\"https://github.com/andrey-insarov/Keepit/releases/latest\">Pobierz DMG</a>"
  ],
  [
   "<h3>Homebrew</h3><p>From the project's own tap. <code>brew upgrade</code> keeps it current alongside everything else.</p>",
@@ -229,7 +229,7 @@
  ],
  [
   "<p class=\"kicker\">All of them are global and all of them can be changed in Settings → Shortcuts. A key that collides with one you already use stays off until you assign it.</p>",
-  "<p class=\"kicker\">Wszystkie są globalne i zmienia się je w Ustawienia → Skróty. Skrót, który pokrywa się z już zajętym, pozostaje wyłączony, dopóki sam go nie przypiszesz.</p>"
+  "<p class=\"kicker\">Wszystkie są globalne i zmienia się je w Ustawienia → Skróty. Skrót, który pokrywa się z już zajętym, pozostaje wyłączony, dopóki go nie przypiszesz.</p>"
  ],
  [
   "<dd>History menu at the text cursor</dd>",
@@ -253,7 +253,7 @@
  ],
  [
   "<dd>Paste as UPPERCASE, lowercase, Title Case, Sentence case</dd>",
-  "<dd>Wklej WIELKIMI LITERAMI, małymi literami, Każde Słowo Wielką Literą, jak w zdaniu</dd>"
+  "<dd>Wklej WIELKIMI LITERAMI, małymi literami, Każde Słowo Wielką, jak w zdaniu</dd>"
  ],
  [
   "<dd>Paste trimmed, paste on one line</dd>",

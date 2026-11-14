@@ -226,3 +226,29 @@ test("translated support pages: an own message for every code, the generic one f
       assert.equal(emsg(r), generic, `${lang}: fallback for ${JSON.stringify(r)}`);
   }
 });
+
+test("translated support pages: the character counter agrees in number", async () => {
+  const { readFileSync } = await import("node:fs");
+  const dir = new URL("../../docs/i18n/", import.meta.url);
+  const counter = (lang) => {
+    const src = readFileSync(new URL(`${lang}/SUPPORT.md`, dir), "utf8");
+    const pf = src.match(/^\s*var PF=\{.*;$/m), fn = src.match(/^\s*function pf\(n\)\{.*\}$/m);
+    assert.ok(pf && fn, `${lang}: PF and pf present`);
+    assert.ok(pf[0].includes(`Intl.PluralRules('${lang}')`), `${lang}: its own plural rules`);
+    assert.ok(/\+pf\(70-n\):n\+pf\(n\);/.test(src), `${lang}: the counter uses pf`);
+    return new Function(`var window={Intl:Intl};${pf[0]}\n${fn[0]}\nreturn pf;`)();
+  };
+  const want = {
+    cs: { 1: " znak", 2: " znaky", 4: " znaky", 5: " znaků", 12: " znaků", 22: " znaků", 70: " znaků" },
+    pl: { 1: " znak", 2: " znaki", 5: " znaków", 12: " znaków", 22: " znaki", 25: " znaków", 70: " znaków" },
+    it: { 1: " carattere", 2: " caratteri", 22: " caratteri" },
+    nl: { 1: " teken", 2: " tekens", 22: " tekens" },
+    fr: { 1: " caractère", 2: " caractères", 69: " caractères" },
+    es: { 1: " carácter", 2: " caracteres" },
+    "pt-BR": { 1: " caractere", 2: " caracteres" },
+  };
+  for (const [lang, cases] of Object.entries(want)) {
+    const pf = counter(lang);
+    for (const [n, unit] of Object.entries(cases)) assert.equal(pf(Number(n)), unit, `${lang} ${n}`);
+  }
+});

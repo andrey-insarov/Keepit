@@ -134,7 +134,7 @@ klembord), vanuit elke app:
 | `⌃⌥1` … `⌃⌥9`, `⌃⌥0` | Plakt geschiedenisitem 1–10 |
 | `⌥⇧V` | Plakt het *vorige* item (item 2); druk nog een keer om terug te wisselen |
 | `⌃⌥V` | Plakt het klembord als platte tekst, zonder opmaak |
-| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | Plakt het klembord in HOOFDLETTERS / kleine letters / Met Elk Woord Een Hoofdletter / als zin |
+| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | Plakt het klembord in HOOFDLETTERS / kleine letters / Elk Woord Met Hoofdletter / als een zin |
 | `⌃⌥W` | Plakt het klembord zonder witruimte aan het begin en het einde |
 | `⌃⌥J` | Plakt het klembord samengevoegd tot één regel |
 | `⌃⌥K` `⌃⌥D` `⌃⌥Y` | Plakt het klembord doorgehaald / onderstreept / met een golvende onderstreping, als platte tekst die er overal hetzelfde uitziet, ook in chats (zie hieronder) |
@@ -213,7 +213,9 @@ stukjes code, een logo dat je vaak plakt. Ze staan in een boom met mappen en ver
 submenu *Sjablonen* van het geschiedenismenu en onder **⌥T**. Een nieuwe installatie bevat een map
 *Voorbeelden* (een begroeting, de datum van vandaag, een citaat van het klembord en een
 handtekening), zodat je kunt zien wat sjablonen kunnen voordat je er zelf een schrijft. Verwijder
-of bewerk ze naar wens (*Herstel…* in de Instellingen brengt ze terug).
+of bewerk ze naar wens. De voorbeeldsjablonen zet je terug via *Instellingen → Geavanceerd →
+Herstellen en verwijderen → Herstel…*; daarmee worden wel ook de overige gegevens en instellingen
+gereset.
 
 ![De map Voorbeelden: als je een item aanwijst, zie je de tekst ervan](site/img/guide/template-examples.png)
 
@@ -373,7 +375,8 @@ vakje voor vergrendelen samen met het scherm aanstond): een klembordmanager die 
 koffiepauze om zijn wachtwoord vraagt, wordt niet meer gebruikt, en voor de momenten die ertoe
 doen is er `⌥L`. *Onmiddellijk* vergrendelt samen met het scherm. *Na 5 minuten*, *Na 15 minuten*
 en *Na 1 uur* laten een korte afwezigheid met rust (Keepit blijft ontgrendeld en legt verder vast)
-en vergrendelen pas wanneer de Mac die hele tijd weg is geweest. Hetzelfde geldt wanneer Keepit
+en vergrendelen pas nadat de Mac de hele ingestelde tijd vergrendeld is geweest of in de
+sluimerstand heeft gestaan. Hetzelfde geldt wanneer Keepit
 start terwijl de Mac al vergrendeld is of de sessie van een andere gebruiker op de voorgrond staat
 (een herstart na een update bijvoorbeeld): de afwezigheid telt vanaf de start, voor zover macOS
 die toestand aan Keepit doorgeeft (normaal gesproken wel; als dat niet kan, begint het tellen bij
@@ -626,7 +629,7 @@ Kom je er niet uit? [GitHub Issues](https://github.com/andrey-insarov/Keepit/iss
 | `⇧` in het menu | Uitgebreid menu: alle acties per item |
 | `⌥⇧V` | Het vorige item plakken / wisselen |
 | `⌃⌥V` | Het klembord als platte tekst plakken |
-| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | HOOFDLETTERS / kleine letters / Elk Woord Een Hoofdletter / als zin |
+| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | HOOFDLETTERS / kleine letters / Elk Woord Met Hoofdletter / als een zin |
 | `⌃⌥W` `⌃⌥J` | Zonder witruimte aan de randen / op één regel |
 | `⌃⌥K` `⌃⌥D` `⌃⌥Y` `⌃⌥X` | Doorhalen / onderstrepen / golvend onderstrepen / versieringen verwijderen |
 | `⌃⌥A` | Het klembord toevoegen aan Sjablonen |

@@ -129,7 +129,7 @@ a to z kterékoli aplikace:
 | `⌃⌥1` … `⌃⌥9`, `⌃⌥0` | Vloží položku historie 1–10 |
 | `⌥⇧V` | Vloží *předchozí* položku (položku 2); dalším stiskem je prohodíte zpět |
 | `⌃⌥V` | Vloží schránku jako prostý text, bez formátování |
-| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | Vloží schránku VELKÝMI PÍSMENY / malými písmeny / S Velkými Počátečními Písmeny / jako větu |
+| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | Vloží schránku VELKÝMI PÍSMENY / malými písmeny / Každé Slovo Velkým / jako věta |
 | `⌃⌥W` | Vloží schránku bez mezer na začátku a na konci |
 | `⌃⌥J` | Vloží schránku spojenou do jednoho řádku |
 | `⌃⌥K` `⌃⌥D` `⌃⌥Y` | Vloží schránku přeškrtnutou / podtrženou / podtrženou vlnovkou, a to jako prostý text, který si vzhled zachová všude, i v chatech (viz níže) |
@@ -203,7 +203,9 @@ zkratka buď funguje všude, nebo se nezobrazuje.
 kódu, logo, které často vkládáte. Jsou uložené ve stromu se složkami a najdete je v podnabídce
 *Šablony* v nabídce historie a pod **⌥T**. Čerstvá instalace obsahuje složku *Příklady* (pozdrav,
 dnešní datum, citace schránky a podpis), abyste viděli, co šablony umějí, ještě než si napíšete
-vlastní. Můžete je libovolně mazat nebo upravovat (*Obnovit…* v Nastavení je vrátí).
+vlastní. Můžete je libovolně mazat nebo upravovat. Ukázkové šablony vrátí *Nastavení → Pokročilé →
+Obnovení a odinstalace → Obnovit…*; tato volba ale vrátí do výchozího stavu i ostatní data
+a nastavení.
 
 ![Složka Příklady: po najetí na položku se zobrazí její text](site/img/guide/template-examples.png)
 
@@ -274,7 +276,7 @@ Například šablona odpovědi:
 ```
 Dobrý den, {input:Jméno},
 
-děkuji za Vaši zprávu z {date-1d}. Ozvu se Vám do {date+3d:EEEE}.
+děkuji za Vaši zprávu z {date-1d}. Ozvu se Vám do {date+3d:d. MMMM}.
 {cursor}
 {user}
 ```
@@ -357,8 +359,8 @@ byl Mac nějakou dobu zamčený nebo uspaný. *Automatický zámek Keepit* je u 
 zamykání s obrazovkou): správce schránky, který chce heslo po každé přestávce na kávu, lidé
 přestanou používat, a pro chvíle, kdy na tom záleží, je tu `⌥L`. *Okamžitě* zamyká spolu
 s obrazovkou. Volby *Po 5 minutách*, *Po 15 minutách* a *Po 1 hodině* krátkou nepřítomnost
-přecházejí (Keepit zůstane odemčený a dál zaznamenává) a zamknou až tehdy, když byl Mac pryč po
-celou tuto dobu. Totéž platí, když se Keepit spustí ve chvíli, kdy je Mac už zamčený nebo je
+přecházejí (Keepit zůstane odemčený a dál zaznamenává) a zamknou až tehdy, když byl Mac po
+celou nastavenou dobu zamčený nebo uspaný. Totéž platí, když se Keepit spustí ve chvíli, kdy je Mac už zamčený nebo je
 v popředí relace jiného uživatele (třeba při opětovném spuštění po aktualizaci): nepřítomnost se
 počítá od startu, pokud macOS tento stav Keepit hlásí (obvykle ano; když to nejde, odpočet začne
 při příštím zamčení nebo uspání). Při zapnutém Touch ID požádá Keepit o dotyk v okamžiku, kdy Mac
@@ -593,7 +595,7 @@ Stále si nevíte rady? [GitHub Issues](https://github.com/andrey-insarov/Keepit
 | `⇧` v nabídce | Rozšířená nabídka: všechny akce pro každou položku |
 | `⌥⇧V` | Vložit předchozí položku / prohodit |
 | `⌃⌥V` | Vložit schránku jako prostý text |
-| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | VELKÁ PÍSMENA / malá písmena / Velká Počáteční Písmena / jako věta |
+| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | VELKÁ PÍSMENA / malá písmena / Každé Slovo Velkým / jako věta |
 | `⌃⌥W` `⌃⌥J` | Bez okrajových mezer / na jeden řádek |
 | `⌃⌥K` `⌃⌥D` `⌃⌥Y` `⌃⌥X` | Přeškrtnutí / podtržení / vlnovka / odstranit zdobení |
 | `⌃⌥A` | Přidat schránku do Šablon |

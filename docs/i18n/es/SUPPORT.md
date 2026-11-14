@@ -36,6 +36,8 @@
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
   var EM={name:'Indica tu nombre.',email:'Indica una dirección de correo válida.',type:'Elige el asunto del mensaje.',short:'Descríbelo con 70 caracteres como mínimo.',long:'El mensaje es demasiado largo (5000 caracteres como máximo).',files:'Puedes adjuntar 5 capturas como máximo. Quita las que sobran y vuelve a enviar el formulario.',total:'Los archivos adjuntos ocupan demasiado (hasta 5 capturas, de un máximo de 1 MB cada una).',form:'No se ha podido leer el formulario.',spam:'Completa la verificación antispam.',send:'Ahora mismo no se ha podido enviar el mensaje. Escríbenos por correo electrónico.'};
   function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'«'+n+'» ocupa más de 1 MB. Quita el archivo o redúcelo.';if(c==='notimage')return'«'+n+'» no se ha reconocido como una imagen compatible. Quita el archivo o sustitúyelo.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Algo ha salido mal.';}
+  var PF={one:' carácter',other:' caracteres'},PR=window.Intl&&Intl.PluralRules?new Intl.PluralRules('es'):null;
+  function pf(n){var k=PR?PR.select(n):'other';return Object.prototype.hasOwnProperty.call(PF,k)?PF[k]:PF.other;}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' KB':(n/1048576).toFixed(1).replace('.',',')+' MB';}
   function render(){
@@ -58,7 +60,7 @@
     }
     picker.value='';render();
   });
-  msg.addEventListener('input',function(){var n=msg.value.trim().length;count.textContent=n<70?'faltan '+(70-n)+' caracteres':n+' caracteres';});
+  msg.addEventListener('input',function(){var n=msg.value.trim().length;count.textContent=n<70?'faltan '+(70-n)+pf(70-n):n+pf(n);});
   f.addEventListener('submit',function(ev){
     ev.preventDefault();show('');
     if(!f.elements.name.value.trim())return show('Indica tu nombre.');

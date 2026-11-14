@@ -134,7 +134,7 @@ appunti), da qualsiasi app:
 | `⌃⌥1` … `⌃⌥9`, `⌃⌥0` | Incolla l’elemento 1–10 della cronologia |
 | `⌥⇧V` | Incolla l’elemento *precedente* (il 2); premendo di nuovo li scambi ancora |
 | `⌃⌥V` | Incolla gli appunti come testo semplice, senza formattazione |
-| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | Incolla gli appunti in MAIUSCOLE / minuscole / Con Le Iniziali Maiuscole / con l’iniziale di frase |
+| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | Incolla gli appunti in MAIUSCOLE / minuscole / Iniziali Maiuscole / come una frase |
 | `⌃⌥W` | Incolla gli appunti senza gli spazi iniziali e finali |
 | `⌃⌥J` | Incolla gli appunti riuniti in una sola riga |
 | `⌃⌥K` `⌃⌥D` `⌃⌥Y` | Incolla gli appunti barrati / sottolineati / con sottolineatura ondulata, come testo semplice che conserva l’aspetto ovunque, chat comprese (vedi sotto) |
@@ -212,8 +212,9 @@ I modelli sono elementi che conservi per sempre: firme, indirizzi, risposte pron
 codice, un logo che incolli spesso. Stanno in un albero con cartelle e compaiono nel sottomenu
 *Modelli* del menu della cronologia e sotto **⌥T**. Una nuova installazione include una cartella
 *Esempi* (un saluto, la data di oggi, una citazione degli appunti e una firma), così puoi vedere
-che cosa sanno fare i modelli prima di scriverne di tuoi. Eliminali o modificali come preferisci
-(*Ripristina…* nelle Impostazioni li riporta).
+che cosa sanno fare i modelli prima di scriverne di tuoi. Eliminali o modificali come preferisci.
+Puoi ripristinare i modelli di esempio da *Impostazioni → Avanzate → Ripristino e disinstallazione
+→ Ripristina…*; questa operazione però reimposta anche gli altri dati e le impostazioni.
 
 ![La cartella Esempi: passando su un elemento se ne vede il testo](site/img/guide/template-examples.png)
 
@@ -373,7 +374,7 @@ automatico di Keepit* è impostato su **Mai** in una nuova installazione (un agg
 allo schermo): un gestore degli appunti che chiede la password dopo ogni pausa caffè smette di
 essere usato, e per i momenti che contano c’è `⌥L`. *Subito* blocca insieme allo schermo. *Dopo
 5 minuti*, *Dopo 15 minuti* e *Dopo 1 ora* ignorano un’assenza breve (Keepit resta sbloccato
-e continua a registrare) e bloccano solo quando il Mac è rimasto assente per tutto quel tempo. Lo
+e continua a registrare) e bloccano solo se il Mac è rimasto bloccato o in stop per tutto l’intervallo impostato. Lo
 stesso vale quando Keepit si avvia mentre il Mac è già bloccato o è in primo piano la sessione di
 un altro utente (un riavvio dopo un aggiornamento, per esempio): l’assenza si conta dall’avvio,
 nella misura in cui macOS comunica quello stato a Keepit (di norma lo fa; quando non può, il
@@ -596,8 +597,8 @@ puntatore.
 
 **Manca qualcosa che ho copiato.** Non viene registrato nulla di ciò che l’app di origine ha
 contrassegnato come nascosto, né una copia fatta mentre era in primo piano un gestore di password
-(elenco integrato) o un’app del tuo elenco di app ignorate, compresa l’app da cui sei uscito un
-attimo prima. Vedi *Impostazioni → Cronologia* e la
+(elenco integrato) o un’app del tuo elenco di app ignorate, compresa l’app che hai appena
+lasciato. Vedi *Impostazioni → Cronologia* e la
 [pagina sulla sicurezza](/security#what-is-not-recorded) (in inglese).
 
 **Touch ID non viene proposto.** Al momento nessun sensore Touch ID è raggiungibile (coperchio
@@ -630,7 +631,7 @@ Non hai risolto? [GitHub Issues](https://github.com/andrey-insarov/Keepit/issues
 | `⇧` nel menu | Menu esteso: tutte le azioni per ogni elemento |
 | `⌥⇧V` | Incolla l’elemento precedente / scambia |
 | `⌃⌥V` | Incolla gli appunti come testo semplice |
-| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | MAIUSCOLE / minuscole / Iniziali Maiuscole / iniziale di frase |
+| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | MAIUSCOLE / minuscole / Iniziali Maiuscole / come una frase |
 | `⌃⌥W` `⌃⌥J` | Senza spazi ai bordi / su una sola riga |
 | `⌃⌥K` `⌃⌥D` `⌃⌥Y` `⌃⌥X` | Barrato / sottolineato / sottolineatura ondulata / rimuovi decorazioni |
 | `⌃⌥A` | Aggiungi gli appunti ai Modelli |

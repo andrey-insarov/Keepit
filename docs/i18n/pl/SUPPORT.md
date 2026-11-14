@@ -34,8 +34,10 @@ Widzisz błąd w aplikacji lub w tłumaczeniu albo masz pytanie? Napisz do nas w
   var f=document.getElementById('fb'),err=document.getElementById('fb-err'),ok=document.getElementById('fb-ok'),
       msg=f.elements.message,count=document.getElementById('fb-count'),picker=document.getElementById('fb-files'),
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
+  var PF={one:' znak',few:' znaki',many:' znaków',other:' znaków'},PR=window.Intl&&Intl.PluralRules?new Intl.PluralRules('pl'):null;
+  function pf(n){var k=PR?PR.select(n):'other';return Object.prototype.hasOwnProperty.call(PF,k)?PF[k]:PF.other;}
   var EM={name:'Podaj swoje imię.',email:'Podaj prawidłowy adres e-mail.',type:'Wybierz, czego dotyczy wiadomość.',short:'Opisz sprawę w co najmniej 70 znakach.',long:'Wiadomość jest za długa (najwyżej 5000 znaków).',files:'Można dołączyć najwyżej 5 zrzutów ekranu. Usuń nadmiarowe i wyślij formularz ponownie.',total:'Załączniki są za duże (najwyżej 5 zrzutów ekranu, każdy do 1 MB).',form:'Nie udało się odczytać formularza.',spam:'Dokończ weryfikację antyspamową.',send:'Nie udało się teraz wysłać wiadomości. Napisz do nas e-mail.'};
-  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'„'+n+'” ma ponad 1 MB. Usuń plik lub go zmniejsz.';if(c==='notimage')return'„'+n+'” nie został rozpoznany jako obsługiwany obraz. Usuń plik lub go zastąp.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Coś poszło nie tak.';}
+  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'„'+n+'” ma ponad 1 MB. Usuń plik lub go zmniejsz. Następnie wyślij formularz ponownie.';if(c==='notimage')return'„'+n+'” nie został rozpoznany jako obsługiwany obraz. Usuń plik lub go zastąp. Następnie wyślij formularz ponownie.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Coś poszło nie tak.';}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' KB':(n/1048576).toFixed(1).replace('.',',')+' MB';}
   function render(){
@@ -58,7 +60,7 @@ Widzisz błąd w aplikacji lub w tłumaczeniu albo masz pytanie? Napisz do nas w
     }
     picker.value='';render();
   });
-  msg.addEventListener('input',function(){var n=msg.value.trim().length;count.textContent=n<70?'jeszcze '+(70-n)+' znaków':n+' znaków';});
+  msg.addEventListener('input',function(){var n=msg.value.trim().length;count.textContent=n<70?'jeszcze '+(70-n)+pf(70-n):n+pf(n);});
   f.addEventListener('submit',function(ev){
     ev.preventDefault();show('');
     if(!f.elements.name.value.trim())return show('Podaj swoje imię.');

@@ -194,7 +194,7 @@ a to z kterékoli aplikace:</p>
 </tr>
 <tr>
 <td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
-<td>Vloží schránku VELKÝMI PÍSMENY / malými písmeny / S Velkými Počátečními Písmeny / jako větu</td>
+<td>Vloží schránku VELKÝMI PÍSMENY / malými písmeny / Každé Slovo Velkým / jako věta</td>
 </tr>
 <tr>
 <td><kbd class="k">⌃⌥W</kbd></td>
@@ -274,7 +274,9 @@ zkratka buď funguje všude, nebo se nezobrazuje.</p>
 kódu, logo, které často vkládáte. Jsou uložené ve stromu se složkami a najdete je v podnabídce
 <em>Šablony</em> v nabídce historie a pod <strong>⌥T</strong>. Čerstvá instalace obsahuje složku <em>Příklady</em> (pozdrav,
 dnešní datum, citace schránky a podpis), abyste viděli, co šablony umějí, ještě než si napíšete
-vlastní. Můžete je libovolně mazat nebo upravovat (<em>Obnovit…</em> v Nastavení je vrátí).</p>
+vlastní. Můžete je libovolně mazat nebo upravovat. Ukázkové šablony vrátí <em>Nastavení → Pokročilé →
+Obnovení a odinstalace → Obnovit…</em>; tato volba ale vrátí do výchozího stavu i ostatní data
+a nastavení.</p>
 <figure class="shot" style="max-width:660px"><a href="/img/guide/template-examples.png?v=c143a1d7" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/template-examples.png?v=c143a1d7" alt="Složka Příklady: po najetí na položku se zobrazí její text" width="660" height="209" loading="lazy"></a><figcaption>Složka Příklady: po najetí na položku se zobrazí její text</figcaption></figure>
 <figure class="shot" style="max-width:738px"><a href="/img/guide/template-menu-letters.png?v=ea96333e" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/template-menu-letters.png?v=ea96333e" alt="Nabídka šablon: složky se otevírají jako podnabídky, písmena za &amp; slouží jako zkratky" width="738" height="715" loading="lazy"></a><figcaption>Nabídka šablon: složky se otevírají jako podnabídky, písmena za &amp; slouží jako zkratky</figcaption></figure>
 <h3 id="creating-and-organising">Vytváření a uspořádání</h3>
@@ -366,7 +368,7 @@ ať se v šabloně objevuje kolikrát chce; <code>{input:Jméno=Výchozí}</code
 <p>Například šablona odpovědi:</p>
 <pre><code>Dobrý den, {input:Jméno},
 
-děkuji za Vaši zprávu z {date-1d}. Ozvu se Vám do {date+3d:EEEE}.
+děkuji za Vaši zprávu z {date-1d}. Ozvu se Vám do {date+3d:d. MMMM}.
 {cursor}
 {user}
 </code></pre>
@@ -464,8 +466,8 @@ byl Mac nějakou dobu zamčený nebo uspaný. <em>Automatický zámek Keepit</em
 zamykání s obrazovkou): správce schránky, který chce heslo po každé přestávce na kávu, lidé
 přestanou používat, a pro chvíle, kdy na tom záleží, je tu <kbd class="k">⌥L</kbd>. <em>Okamžitě</em> zamyká spolu
 s obrazovkou. Volby <em>Po 5 minutách</em>, <em>Po 15 minutách</em> a <em>Po 1 hodině</em> krátkou nepřítomnost
-přecházejí (Keepit zůstane odemčený a dál zaznamenává) a zamknou až tehdy, když byl Mac pryč po
-celou tuto dobu. Totéž platí, když se Keepit spustí ve chvíli, kdy je Mac už zamčený nebo je
+přecházejí (Keepit zůstane odemčený a dál zaznamenává) a zamknou až tehdy, když byl Mac po
+celou nastavenou dobu zamčený nebo uspaný. Totéž platí, když se Keepit spustí ve chvíli, kdy je Mac už zamčený nebo je
 v popředí relace jiného uživatele (třeba při opětovném spuštění po aktualizaci): nepřítomnost se
 počítá od startu, pokud macOS tento stav Keepit hlásí (obvykle ano; když to nejde, odpočet začne
 při příštím zamčení nebo uspání). Při zapnutém Touch ID požádá Keepit o dotyk v okamžiku, kdy Mac
@@ -703,7 +705,7 @@ novější</em> znamená, že soubor zapsala novější verze, než která ho ot
 </tr>
 <tr>
 <td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
-<td>VELKÁ PÍSMENA / malá písmena / Velká Počáteční Písmena / jako věta</td>
+<td>VELKÁ PÍSMENA / malá písmena / Každé Slovo Velkým / jako věta</td>
 </tr>
 <tr>
 <td><kbd class="k">⌃⌥W</kbd> <kbd class="k">⌃⌥J</kbd></td>

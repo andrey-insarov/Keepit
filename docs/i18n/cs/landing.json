@@ -101,7 +101,7 @@
  ],
  [
   "<h3>Paste without the menu</h3><p><kbd class=\"k\">⌃⌥1</kbd>…<kbd class=\"k\">⌃⌥0</kbd> paste items 1–10 straight away; <kbd class=\"k\">⌥⇧V</kbd> pastes the one before the current. <kbd class=\"k\">⌃⌥V</kbd> pastes as plain text, <kbd class=\"k\">⌃⌥U</kbd> as UPPERCASE, <kbd class=\"k\">⌃⌥T</kbd> as Title Case.</p>",
-  "<h3>Vkládání bez nabídky</h3><p><kbd class=\"k\">⌃⌥1</kbd>…<kbd class=\"k\">⌃⌥0</kbd> rovnou vloží položky 1–10; <kbd class=\"k\">⌥⇧V</kbd> vloží tu předchozí. <kbd class=\"k\">⌃⌥V</kbd> vkládá jako prostý text, <kbd class=\"k\">⌃⌥U</kbd> VELKÝMI PÍSMENY a <kbd class=\"k\">⌃⌥T</kbd> S Velkými Počátečními Písmeny.</p>"
+  "<h3>Vkládání bez nabídky</h3><p><kbd class=\"k\">⌃⌥1</kbd>…<kbd class=\"k\">⌃⌥0</kbd> rovnou vloží položky 1–10; <kbd class=\"k\">⌥⇧V</kbd> vloží tu předchozí. <kbd class=\"k\">⌃⌥V</kbd> vkládá jako prostý text, <kbd class=\"k\">⌃⌥U</kbd> VELKÝMI PÍSMENY a <kbd class=\"k\">⌃⌥T</kbd> Každé Slovo Velkým.</p>"
  ],
  [
   "<h3>Templates</h3><p>Signatures, addresses, replies you send ten times a day — in folders, with their own hot keys. Placeholders ask for a name, insert today's date or the clipboard, and leave the cursor where you want it.</p>",
@@ -117,7 +117,7 @@
  ],
  [
   "<div class=\"tpl\">Hi <b>{input:Name}</b>,\n\nThanks for your order — it ships on <b>{date+2d:EEEE, d MMMM}</b>.\nTracking: <b>{clipboard}</b>\n\n<b>{cursor}</b>\nBest, Andrey</div>",
-  "<div class=\"tpl\">Dobrý den, <b>{input:Jméno}</b>,\n\nděkujeme za objednávku, odešleme ji <b>{date+2d:EEEE d. MMMM}</b>.\nČíslo zásilky: <b>{clipboard}</b>\n\n<b>{cursor}</b>\nS pozdravem Andrey</div>"
+  "<div class=\"tpl\">Dobrý den, <b>{input:Jméno}</b>,\n\nděkujeme za objednávku, odešleme ji <b>{date+2d:d. MMMM}</b>.\nČíslo zásilky: <b>{clipboard}</b>\n\n<b>{cursor}</b>\nS pozdravem Andrey</div>"
  ],
  [
   "<h3>Text, images, files</h3>\n        <p>Rich text with formatting, screenshots with thumbnails, lists of files from Finder. Duplicates are merged into one entry.</p>",
@@ -253,7 +253,7 @@
  ],
  [
   "<dd>Paste as UPPERCASE, lowercase, Title Case, Sentence case</dd>",
-  "<dd>Vložit VELKÝMI PÍSMENY, malými písmeny, S Velkými Počátečními Písmeny, jako větu</dd>"
+  "<dd>Vložit VELKÝMI PÍSMENY, malými písmeny, Každé Slovo Velkým, jako věta</dd>"
  ],
  [
   "<dd>Paste trimmed, paste on one line</dd>",

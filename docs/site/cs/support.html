@@ -120,8 +120,10 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
   var f=document.getElementById('fb'),err=document.getElementById('fb-err'),ok=document.getElementById('fb-ok'),
       msg=f.elements.message,count=document.getElementById('fb-count'),picker=document.getElementById('fb-files'),
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
+  var PF={one:' znak',few:' znaky',other:' znaků'},PR=window.Intl&&Intl.PluralRules?new Intl.PluralRules('cs'):null;
+  function pf(n){var k=PR?PR.select(n):'other';return Object.prototype.hasOwnProperty.call(PF,k)?PF[k]:PF.other;}
   var EM={name:'Uveďte prosím své jméno.',email:'Uveďte prosím platnou e-mailovou adresu.',type:'Vyberte prosím, čeho se zpráva týká.',short:'Popište to prosím alespoň 70 znaky.',long:'Zpráva je příliš dlouhá (nejvýše 5000 znaků).',files:'Přiložit lze nejvýše 5 snímků obrazovky. Odeberte přebytečné a odešlete formulář znovu.',total:'Přílohy jsou příliš velké (nejvýše 5 snímků obrazovky, každý do 1 MB).',form:'Formulář se nepodařilo přečíst.',spam:'Dokončete prosím kontrolu proti spamu.',send:'Zprávu se teď nepodařilo odeslat. Napište nám prosím e-mail.'};
-  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'„'+n+'“ je větší než 1 MB. Soubor odeberte nebo zmenšete.';if(c==='notimage')return'„'+n+'“ nebyl rozpoznán jako podporovaný obrázek. Soubor odeberte nebo nahraďte.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Něco se pokazilo.';}
+  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'„'+n+'“ je větší než 1 MB. Soubor odeberte nebo zmenšete. Potom formulář odešlete znovu.';if(c==='notimage')return'„'+n+'“ nebyl rozpoznán jako podporovaný obrázek. Soubor odeberte nebo nahraďte. Potom formulář odešlete znovu.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Něco se pokazilo.';}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' kB':(n/1048576).toFixed(1).replace('.',',')+' MB';}
   function render(){
@@ -144,7 +146,7 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
     }
     picker.value='';render();
   });
-  msg.addEventListener('input',function(){var n=msg.value.trim().length;count.textContent=n<70?'ještě '+(70-n)+' znaků':n+' znaků';});
+  msg.addEventListener('input',function(){var n=msg.value.trim().length;count.textContent=n<70?'ještě '+(70-n)+pf(70-n):n+pf(n);});
   f.addEventListener('submit',function(ev){
     ev.preventDefault();show('');
     if(!f.elements.name.value.trim())return show('Uveďte prosím své jméno.');

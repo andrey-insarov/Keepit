@@ -44,7 +44,7 @@ sprawdzona przez Apple. Kliknij *Otwórz*.
 
 ![Potwierdzenie Gatekeepera w macOS](site/img/guide/gatekeeper.png)
 
-Keepit jest podpisany i poświadczony notarialnie, aktualizuje się sam i działa natywnie na Macach
+Keepit jest podpisany i poświadczony przez Apple, aktualizuje się sam i działa natywnie na Macach
 z Apple silicon oraz z procesorem Intel, z systemem macOS 13 Ventura lub nowszym.
 
 ### Pierwsze uruchomienie
@@ -132,7 +132,7 @@ z dowolnej aplikacji:
 | `⌃⌥1` … `⌃⌥9`, `⌃⌥0` | Wkleja element historii 1–10 |
 | `⌥⇧V` | Wkleja *poprzedni* element (element 2); kolejne naciśnięcie zamienia je z powrotem |
 | `⌃⌥V` | Wkleja schowek jako zwykły tekst, bez formatowania |
-| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | Wkleja schowek WIELKIMI LITERAMI / małymi literami / Każde Słowo Wielką Literą / jak w zdaniu |
+| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | Wkleja schowek WIELKIMI LITERAMI / małymi literami / Każde Słowo Wielką / jak w zdaniu |
 | `⌃⌥W` | Wkleja schowek bez białych znaków na początku i na końcu |
 | `⌃⌥J` | Wkleja schowek połączony w jeden wiersz |
 | `⌃⌥K` `⌃⌥D` `⌃⌥Y` | Wkleja schowek przekreślony / podkreślony / podkreślony wężykiem, jako zwykły tekst, który zachowuje wygląd wszędzie, także w czatach (zobacz niżej) |
@@ -206,7 +206,8 @@ Szablony to elementy, które zostają na stałe: podpisy, adresy, gotowe odpowie
 logo, które często wklejasz. Leżą w drzewie z folderami i pojawiają się w podmenu *Szablony* menu
 historii oraz pod **⌥T**. Świeża instalacja zawiera folder *Przykłady* (powitanie, dzisiejszą datę,
 cytat ze schowka i podpis), żeby pokazać, co potrafią szablony, zanim napiszesz własne. Możesz je
-dowolnie usuwać i edytować (*Resetuj…* w Ustawieniach przywraca je).
+dowolnie usuwać i edytować. Przykładowe szablony przywraca *Ustawienia → Zaawansowane → Reset
+i odinstalowanie → Resetuj…*; to polecenie resetuje jednak także pozostałe dane i ustawienia.
 
 ![Folder Przykłady: po najechaniu na element widać jego tekst](site/img/guide/template-examples.png)
 
@@ -277,7 +278,7 @@ Na przykład szablon odpowiedzi:
 ```
 Dzień dobry, {input:Imię},
 
-dziękuję za wiadomość z {date-1d}. Odezwę się do {date+3d:EEEE}.
+dziękuję za wiadomość z {date-1d}. Odezwę się do {date+3d:d MMMM}.
 {cursor}
 {user}
 ```
@@ -362,7 +363,7 @@ zachowuje dawny wybór, czyli *Natychmiast*, jeśli pole blokowania razem z ekra
 z menedżera schowka, który prosi o hasło po każdej przerwie na kawę, przestaje się korzystać, a na
 ważne chwile jest `⌥L`. *Natychmiast* blokuje razem z ekranem. Opcje *Po 5 minutach*,
 *Po 15 minutach* i *Po 1 godzinie* nie reagują na krótką nieobecność (Keepit pozostaje odblokowany
-i dalej zapisuje) i blokują dopiero wtedy, gdy Maca nie było przez cały ten czas. To samo dotyczy
+i dalej zapisuje) i blokują dopiero wtedy, gdy Mac przez cały ustawiony czas pozostawał zablokowany lub uśpiony. To samo dotyczy
 sytuacji, gdy Keepit uruchamia się, kiedy Mac jest już zablokowany albo na pierwszym planie jest
 sesja innego użytkownika (na przykład ponowne uruchomienie po aktualizacji): nieobecność liczy się
 od startu, o ile macOS zgłasza ten stan Keepit (zwykle tak; gdy nie może, odliczanie zaczyna się
@@ -430,7 +431,7 @@ raz dziennie, dopóki Keepit działa) Keepit zapisuje w folderze plik o nazwie
 `Keepit-<data i godzina>-<instalacja>-<id>.keepit`, odczytuje go, żeby go sprawdzić, i dopiero
 potem usuwa najstarsze ze swoich kopii ponad liczbę *Zachowaj ostatnie* (domyślnie 10, zakres
 1–100). Każda kopia jest kompletna sama w sobie, to nie przyrost, więc zawsze wystarczy jeden plik.
-Kopii zrobionych przez innego Maca ani plików, które sam tam umieścisz, Keepit nigdy nie rusza: dwa
+Kopii zrobionych przez innego Maca ani plików, które tam umieścisz, Keepit nigdy nie rusza: dwa
 Maki korzystające z jednego folderu zapisują dwie niezależne serie. Wiersz stanu obok nagłówka
 *Automatyczna kopia zapasowa* pokazuje godzinę i rozmiar ostatniej kopii albo powód, dla którego
 ostatnia próba się nie udała. Gdy Keepit jest zablokowany, nic się nie dzieje; *Utwórz kopię teraz*
@@ -506,7 +507,7 @@ plik i uruchom Keepit ponownie. Szczegóły, w tym budowa formatu pliku od środ
 
 ### Automatyzacja: schemat URL keepit://
 
-Skróty (*Otwórz URL*), Raycast, Alfred, Keyboard Maestro albo polecenie `open` w powłoce mogą
+Skróty (*Otwórz adresy URL*), Raycast, Alfred, Keyboard Maestro albo polecenie `open` w powłoce mogą
 sterować Keepit, **gdy to włączysz** w *Ustawienia → Zaawansowane → Automatyzacja → Zezwalaj na
 polecenia URL keepit://*. Domyślnie jest to wyłączone, bo URL może otworzyć dowolna aplikacja albo
 strona internetowa, a `add` / `paste` zmieniają schowek i piszą w aplikacji na pierwszym planie;
@@ -534,7 +535,7 @@ ignorowane.
 ### Aktualizacje
 
 Keepit raz dziennie sprawdza GitHub Releases i proponuje aktualizacje w oknie dialogowym; *Sprawdź
-uaktualnienia…* robi to od razu. Aktualizacje są podpisane (EdDSA) i poświadczone notarialnie.
+uaktualnienia…* robi to od razu. Aktualizacje są podpisane (EdDSA) i poświadczone przez Apple.
 W Homebrew to samo robi `brew upgrade --cask keepit`. Sumy kontrolne wszystkich pobieranych plików
 są w `SHA256SUMS` na stronie wydania.
 
@@ -608,7 +609,7 @@ Nadal nie działa? [GitHub Issues](https://github.com/andrey-insarov/Keepit/issu
 | `⇧` w menu | Menu rozszerzone: wszystkie działania dla każdego elementu |
 | `⌥⇧V` | Wklej poprzedni element / zamień |
 | `⌃⌥V` | Wklej schowek jako zwykły tekst |
-| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | WIELKIE LITERY / małe litery / Każde Słowo Wielką Literą / jak w zdaniu |
+| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | WIELKIE LITERY / małe litery / Każde Słowo Wielką / jak w zdaniu |
 | `⌃⌥W` `⌃⌥J` | Bez spacji na brzegach / w jednym wierszu |
 | `⌃⌥K` `⌃⌥D` `⌃⌥Y` `⌃⌥X` | Przekreślenie / podkreślenie / wężyk / usuń ozdobniki |
 | `⌃⌥A` | Dodaj schowek do Szablonów |
