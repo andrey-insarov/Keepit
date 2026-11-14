@@ -131,7 +131,7 @@ def localize_links(fragment: str, lang: str) -> str:
 # so these are the conventional choices; the native name beside it in the list is what identifies it.
 # Drawn as SVG (viewBox 20×14) so they look the same everywhere: Windows has no flag emoji.
 # At 22 px wide they are simplified: no coat of arms for Spain, a plain band for Brazil's motto,
-# strokes standing for the inscription and the sword for Saudi Arabia.
+# Arabic carries the flag of the UAE, which can be drawn exactly at this size.
 def _star(cx: float, cy: float, r: float, rot: float = -90) -> str:
     import math
     pts = []
@@ -156,9 +156,7 @@ FLAG = {
     "ja": '<path fill="#fff" d="M0 0h20v14H0z"/><circle cx="10" cy="7" r="4.2" fill="#bc002d"/>',
     "zh-Hans": '<path fill="#de2910" d="M0 0h20v14H0z"/>' + _star(3.5, 3.6, 2.2) + _star(7, 1.5, .75, -60) + _star(8.4, 2.9, .75, -30)
                + _star(8.4, 5, .75, 0) + _star(7, 6.4, .75, 30),
-    "ar": '<path fill="#006c35" d="M0 0h20v14H0z"/><path fill="none" stroke="#fff" stroke-linecap="round" stroke-width=".9" '
-          'd="M5 4.2h3.2M9.4 4.2h1.4M12 4.2h3M5.6 6.1h2.2M9 6.1h5.6M6.2 8h7.6"/>'
-          '<path fill="none" stroke="#fff" stroke-linecap="round" stroke-width=".8" d="M5.2 10.4h9.2M14.4 10.4l.9-.5M5.2 9.9v1"/>',
+    "ar": '<path fill="#fff" d="M0 0h20v14H0z"/><path fill="#00732f" d="M0 0h20v4.67H0z"/><path d="M0 9.33h20V14H0z"/><path fill="#f00" d="M0 0h5v14H0z"/>',
 }
 
 
