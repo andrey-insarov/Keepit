@@ -1,0 +1,607 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keepit 使用指南 – Mac 剪贴板管理工具</title><link rel="icon" href="/img/icon.png?v=a1519b94"><link rel="apple-touch-icon" href="/img/icon.png?v=a1519b94">
+<meta name="description" content="免费的 Mac 剪贴板管理工具 Keepit 的使用方法：历史记录菜单、快捷键、模板、查看器、加密和 Touch ID。">
+<link rel="canonical" href="https://keep.it.com/zh-hans/guide"><link rel="alternate" hreflang="en" href="https://keep.it.com/guide"><link rel="alternate" hreflang="ru" href="https://keep.it.com/ru/guide"><link rel="alternate" hreflang="uk" href="https://keep.it.com/uk/guide"><link rel="alternate" hreflang="de" href="https://keep.it.com/de/guide"><link rel="alternate" hreflang="fr" href="https://keep.it.com/fr/guide"><link rel="alternate" hreflang="es" href="https://keep.it.com/es/guide"><link rel="alternate" hreflang="pt-BR" href="https://keep.it.com/pt-br/guide"><link rel="alternate" hreflang="ja" href="https://keep.it.com/ja/guide"><link rel="alternate" hreflang="zh-Hans" href="https://keep.it.com/zh-hans/guide"><link rel="alternate" hreflang="ar" href="https://keep.it.com/ar/guide"><link rel="alternate" hreflang="x-default" href="https://keep.it.com/guide"><meta property="og:type" content="article"><meta property="og:site_name" content="Keepit"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="Keepit 使用指南 – Mac 剪贴板管理工具"><meta property="og:description" content="免费的 Mac 剪贴板管理工具 Keepit 的使用方法：历史记录菜单、快捷键、模板、查看器、加密和 Touch ID。"><meta property="og:image" content="https://keep.it.com/img/social-preview.png?v=57583ec3"><meta property="og:url" content="https://keep.it.com/zh-hans/guide"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Keepit 使用指南 – Mac 剪贴板管理工具"><meta name="twitter:description" content="免费的 Mac 剪贴板管理工具 Keepit 的使用方法：历史记录菜单、快捷键、模板、查看器、加密和 Touch ID。"><meta name="twitter:image" content="https://keep.it.com/img/social-preview.png?v=57583ec3"><meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "@id": "https://keep.it.com/zh-hans/guide", "url": "https://keep.it.com/zh-hans/guide", "name": "Keepit 使用指南", "headline": "Keepit 使用指南", "description": "免费的 Mac 剪贴板管理工具 Keepit 的使用方法：历史记录菜单、快捷键、模板、查看器、加密和 Touch ID。", "inLanguage": "zh-Hans", "isPartOf": {"@id": "https://keep.it.com/#site"}, "about": {"@id": "https://keep.it.com/#app"}, "author": {"@id": "https://keep.it.com/#org"}, "publisher": {"@id": "https://keep.it.com/#org"}, "image": "https://keep.it.com/img/social-preview.png?v=57583ec3", "dateModified": "2026-11-14", "translationOfWork": {"@id": "https://keep.it.com/guide"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Keepit", "item": "https://keep.it.com/zh-hans/"}, {"@type": "ListItem", "position": 2, "name": "使用指南", "item": "https://keep.it.com/zh-hans/guide"}]}]}</script>
+<script defer src="https://app.eurometrics.eu/script.js?v=7cfd3b4c27be" data-website-id="0ab7fe20-0c05-4061-b037-c033dc46c1e1" data-domains="keep.it.com" data-do-not-track="true" data-exclude-search="true" data-no-storage="true"></script>
+<style>
+:root{--paper:#fbfbfd;--ink:#0f1222;--ink-2:#4b4f63;--ink-3:#696d84;--blue:#2f4fd1;--blue-deep:#1f3aa6;--blue-tint:#eef2ff;--line:#e3e5ef;--key:#fff;--key-edge:#cfd2de;--win:#fff;--sel:#2f5cf0}
+@media(prefers-color-scheme:dark){:root{--paper:#0c0d14;--ink:#f2f3f8;--ink-2:#b7bacb;--ink-3:#8e92a9;--blue:#7d9bff;--blue-deep:#a9bdff;--blue-tint:#151b35;--line:#23263a;--key:#1b1e2e;--key-edge:#3a3e56;--win:#1a1c28;--sel:#3d6bff}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:72px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;font:17px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+:focus-visible{outline:3px solid var(--sel);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:20;-webkit-backdrop-filter:saturate(180%) blur(18px);backdrop-filter:saturate(180%) blur(18px);background:color-mix(in srgb,var(--paper) 78%,transparent);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:650;color:var(--ink);font-size:20px}.brand img{width:44px;height:44px;border-radius:10px}
+nav{display:flex;gap:24px;align-items:center}nav>a{color:var(--ink-2);font-size:15px}nav>a:hover{color:var(--ink);text-decoration:none}
+.mnav{display:none;position:relative}.mnav summary{list-style:none;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--ink)}
+.mnav summary::-webkit-details-marker{display:none}.mnav summary svg{width:22px;height:22px}.mnav[open] summary{background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.mnav .links{position:absolute;right:0;top:48px;min-width:210px;padding:6px;border-radius:14px;background:var(--win);border:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.18);display:grid}
+.mnav .links a{display:block;padding:11px 14px;border-radius:9px;font-size:16px;color:var(--ink)}.mnav .links a:hover{background:var(--blue-tint);text-decoration:none}
+@media(max-width:700px){nav{gap:10px}nav>a:not(.gh){display:none}.mnav{display:block;margin-right:-8px}}
+main.wrap{display:grid;grid-template-columns:230px minmax(0,1fr);gap:56px;padding-top:48px;padding-bottom:96px}
+main.wrap.narrow{grid-template-columns:minmax(0,1fr);max-width:820px}
+aside{position:sticky;top:76px;align-self:start;max-height:calc(100vh - 96px);overflow:auto;font-size:14px;line-height:1.45;padding-right:8px}
+aside .ttl{font-weight:650;color:var(--ink);margin:0 0 10px;font-size:13px}
+aside ol{list-style:none;margin:0;padding:0}aside li{margin:0}
+aside a{display:block;color:var(--ink-2);padding:4px 0 4px 12px;border-left:2px solid var(--line)}
+aside a:hover{color:var(--ink);text-decoration:none}aside a.on{color:var(--blue);border-left-color:var(--blue)}
+aside ol ol a{padding-left:24px;font-size:13px;color:var(--ink-3)}
+@media(max-width:900px){main.wrap{grid-template-columns:minmax(0,1fr);gap:0;padding-top:32px;padding-bottom:64px}aside{position:static;max-height:none;margin-bottom:32px;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--win)}aside ol ol{display:none}}
+article{max-width:72ch;min-width:0}
+article h1{font-size:clamp(34px,5vw,52px);line-height:1.05;letter-spacing:-.03em;font-weight:750;margin:0 0 .5em}
+article h1+p{font-size:19px;color:var(--ink-2)}
+article h2{font-size:30px;line-height:1.15;letter-spacing:-.02em;font-weight:700;margin:2.2em 0 .6em;padding-top:1em;border-top:1px solid var(--line)}
+article h3{font-size:20px;font-weight:650;margin:1.8em 0 .5em}
+article p,article li{color:var(--ink);}article li{margin:.25em 0}
+article hr{border:0;border-top:1px solid var(--line);margin:2.5em 0}
+code{font:.9em ui-monospace,"SF Mono",Menlo,monospace;background:color-mix(in srgb,var(--ink) 7%,transparent);padding:2px 6px;border-radius:6px;white-space:nowrap}
+@media(max-width:600px){code{white-space:normal;overflow-wrap:anywhere}}
+pre{background:var(--blue-tint);padding:14px 18px;border-radius:12px;overflow:auto;font-size:14px;line-height:1.6;max-width:100%}pre code{background:none;padding:0;white-space:pre-wrap;word-break:break-word}
+kbd.k{display:inline-block;min-width:1.7em;padding:0 .4em;text-align:center;font:600 .82em/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text",Helvetica,Arial,sans-serif;color:var(--ink);background:var(--key);border:1px solid var(--key-edge);border-bottom-width:2px;border-radius:6px;white-space:nowrap;vertical-align:baseline}
+.tbl{overflow-x:auto;margin:1.2em 0}table{border-collapse:collapse;width:100%;font-size:15.5px}th,td{text-align:left;padding:9px 12px 9px 0;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--ink-3);font-weight:600;font-size:14px}td code{display:inline-block;margin:1px 0}
+td:first-child{white-space:nowrap}@media(max-width:600px){td:first-child{white-space:normal}}
+figure.shot{margin:1.6em 0;width:100%}figure.shot a{display:block}figure.shot img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line);box-shadow:0 12px 32px -8px rgba(15,18,34,.25);cursor:zoom-in}
+figure.shot figcaption{font-size:14px;color:var(--ink-3);margin-top:8px}
+.slot{border:2px dashed var(--line);border-radius:12px;padding:28px;text-align:center;color:var(--ink-3);font-size:15px}
+.contents{display:none}
+.fb{margin:1.4em 0 2em;padding:22px 24px;border:1px solid var(--line);border-radius:16px;background:var(--win);display:grid;gap:14px}
+.fb label{display:grid;gap:6px;font-size:14px;font-weight:600;color:var(--ink-2)}.fb .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:600px){.fb .row2{grid-template-columns:1fr}}
+.fb .hint{font-weight:400;color:var(--ink-3)}
+.fb input[type=text],.fb input[type=email],.fb select,.fb textarea{font:16px/1.4 inherit;color:var(--ink);background:var(--win);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;box-sizing:border-box}
+.fb textarea{resize:vertical;min-height:140px}.fb input:focus,.fb select:focus,.fb textarea:focus{outline:2px solid var(--blue);outline-offset:1px;border-color:transparent}
+.fb input[type=file]{font-size:14px;color:var(--ink-2)}
+.fb-list{list-style:none;margin:-6px 0 0;padding:0;display:grid;gap:6px}.fb-list li{font-size:14px;color:var(--ink-2);display:flex;align-items:center;gap:10px}.fb-list button{font:inherit;font-size:13px;color:var(--blue);background:none;border:0;padding:0;cursor:pointer}.fb-list button:hover{text-decoration:underline}
+.fb .btn{justify-self:start;display:inline-flex;align-items:center;padding:12px 22px;border-radius:12px;font-weight:600;font-size:16px;line-height:1;border:0;cursor:pointer;background:var(--blue);color:#fff}
+.fb .btn[disabled]{opacity:.6;cursor:default}.fb-err{color:#c0392b;font-size:14px;margin:0}.fb-legal{font-size:13px;margin:-6px 0 0}.fb-ok{color:var(--ink);margin:0;padding:18px 20px;border-radius:12px;background:var(--blue-tint);line-height:1.5}
+footer{border-top:1px solid var(--line);padding:36px 0 64px;color:var(--ink-3);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}footer a{color:var(--ink-2)}
+#lb{position:fixed;inset:0;background:rgba(5,7,20,.86);display:none;align-items:center;justify-content:center;padding:24px;z-index:30;cursor:zoom-out}
+#lb.on{display:flex}#lb img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+
+.langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
+.tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
+code,kbd,pre{direction:ltr;unicode-bidi:isolate}
+[dir=rtl] .mnav .links{right:auto;left:0}
+@media(max-width:700px){[dir=rtl] .mnav{margin-right:0;margin-left:-8px}}
+[dir=rtl] aside{padding-right:0;padding-left:8px}
+[dir=rtl] aside a{padding:4px 12px 4px 0;border-left:0;border-right:2px solid var(--line)}
+[dir=rtl] aside a.on{border-right-color:var(--blue)}
+[dir=rtl] aside ol ol a{padding-left:0;padding-right:24px}
+[dir=rtl] th,[dir=rtl] td{text-align:right;padding:9px 0 9px 12px}
+[dir=rtl] .fb .btn{justify-self:end}
+</style></head>
+<body><header><div class="wrap">
+  <a class="brand" href="/zh-hans/"><img src="/img/icon.png?v=a1519b94" alt="">Keepit</a>
+  <nav><a href="/zh-hans/#features">功能</a><a href="/zh-hans/guide">使用指南</a><a href="/security">安全</a><a href="/zh-hans/support">支持</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a><details class="mnav"><summary aria-label="菜单"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><div class="links"><a href="/zh-hans/#features">功能</a><a href="/zh-hans/#privacy">隐私</a><a href="/zh-hans/#install">安装</a><a href="/zh-hans/guide">使用指南</a><a href="/security">安全</a><a href="/zh-hans/support">支持</a></div></details></nav>
+</div></header>
+<main class="wrap"><aside aria-label="目录"><p class="ttl">本页内容</p><ol><li><a href="#part-1-getting-started">第 1 部分：入门</a><ol><li><a href="#install">安装</a></li><li><a href="#first-launch">首次启动</a></li></ol></li><li><a href="#part-2-everyday-use">第 2 部分：日常使用</a><ol><li><a href="#the-history-menu">历史记录菜单</a></li><li><a href="#search-and-preview">搜索和预览</a></li><li><a href="#paste-without-the-menu">不打开菜单直接粘贴</a></li><li><a href="#the-paste-queue">粘贴队列</a></li><li><a href="#the-extended-menu">扩展菜单</a></li></ol></li><li><a href="#part-3-templates">第 3 部分：模板</a><ol><li><a href="#creating-and-organising">创建和整理</a></li><li><a href="#placeholders">占位符</a></li><li><a href="#templates-that-ask-questions">会提问的模板</a></li></ol></li><li><a href="#part-4-the-viewer">第 4 部分：查看器</a></li><li><a href="#part-5-settings">第 5 部分：设置</a></li><li><a href="#part-6-security">第 6 部分：安全</a><ol><li><a href="#password-and-encryption">密码和加密</a></li><li><a href="#touch-id">Touch ID</a></li><li><a href="#recovery-phrase">恢复短语</a></li><li><a href="#backup">备份</a></li></ol></li><li><a href="#part-7-advanced">第 7 部分：高级功能</a><ol><li><a href="#automation-the-keepit-url-scheme">自动化：keepit:// URL 方案</a></li><li><a href="#updates">更新</a></li><li><a href="#uninstalling">卸载</a></li></ol></li><li><a href="#reference">参考</a><ol><li><a href="#troubleshooting">故障排除</a></li><li><a href="#keyboard-cheat-sheet">快捷键速查表</a></li><li><a href="#placeholder-cheat-sheet">占位符速查表</a></li></ol></li></ol></aside><article><h1 id="keepit-user-guide">Keepit 使用指南</h1><p class="tr-note">本页译自英文。原文：<a href="/guide">English</a></p>
+<p>Keepit 是一款 macOS 上的剪贴板历史记录和模板管理工具。它常驻菜单栏，记住你复制过的所有内容，并能用快捷键把其中任意一项粘贴回来。下面列出的都是默认快捷键，每一个都可以在“设置”→“快捷键”中更改。本指南介绍的是 Keepit 3。Keepit 2.x 的指南原样保留在 <a href="https://keep.it.com/v2/guide">keep.it.com/v2/guide</a>（英文）。</p>
+<figure class="shot" style="max-width:629px"><a href="/img/guide/menu.png?v=ef1dd207" class="zoom" title="查看原始大小"><img src="/img/guide/menu.png?v=ef1dd207" alt="历史记录菜单" width="629" height="778" loading="lazy"></a><figcaption>历史记录菜单</figcaption></figure>
+<p><strong>目录</strong></p>
+<ul>
+<li><a href="#part-1--getting-started">第 1 部分：入门</a>：<a href="#install">安装</a> · <a href="#first-launch">首次启动</a></li>
+<li><a href="#part-2--everyday-use">第 2 部分：日常使用</a>：<a href="#the-history-menu">历史记录菜单</a> · <a href="#search-and-preview">搜索和预览</a> · <a href="#paste-without-the-menu">不打开菜单直接粘贴</a> · <a href="#the-paste-queue">粘贴队列</a> · <a href="#the-extended-menu">扩展菜单</a></li>
+<li><a href="#part-3--templates">第 3 部分：模板</a>：<a href="#creating-and-organising">创建和整理</a> · <a href="#placeholders">占位符</a> · <a href="#templates-that-ask-questions">会提问的模板</a></li>
+<li><a href="#part-4--the-viewer">第 4 部分：查看器</a></li>
+<li><a href="#part-5--settings">第 5 部分：设置</a></li>
+<li><a href="#part-6-security">第 6 部分：安全</a>：<a href="#password-and-encryption">密码和加密</a> · <a href="#touch-id">Touch ID</a> · <a href="#recovery-phrase">恢复短语</a> · <a href="#backup">备份</a></li>
+<li><a href="#part-7--advanced">第 7 部分：高级功能</a>：<a href="#automation-the-keepit-url-scheme">自动化</a> · <a href="#updates">更新</a> · <a href="#uninstalling">卸载</a></li>
+<li><a href="#reference">参考</a>：<a href="#troubleshooting">故障排除</a> · <a href="#keyboard-cheat-sheet">快捷键速查表</a> · <a href="#placeholder-cheat-sheet">占位符速查表</a></li>
+</ul>
+<hr />
+<h2 id="part-1-getting-started">第 1 部分：入门</h2>
+<h3 id="install">安装</h3>
+<p><strong>Homebrew</strong>（推荐），因为 <code>brew upgrade</code> 可以让应用保持最新：</p>
+<pre><code class="language-bash">brew tap andrey-insarov/keepit https://github.com/andrey-insarov/Keepit
+brew install --cask andrey-insarov/keepit/keepit
+</code></pre>
+<p><strong>DMG</strong>：从<a href="https://github.com/andrey-insarov/Keepit/releases/latest">最新版本</a>页面下载 <code>Keepit-&lt;version&gt;.dmg</code>，打开后把 Keepit 拖到“应用程序”文件夹。</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/dmg.png?v=2115ef2c" class="zoom" title="查看原始大小"><img src="/img/guide/dmg.png?v=2115ef2c" alt="DMG：把 Keepit 拖到“应用程序”" width="636" height="396" loading="lazy"></a><figcaption>DMG：把 Keepit 拖到“应用程序”</figcaption></figure>
+<p>第一次打开应用时，macOS 会确认它是从互联网下载的，并且已经过 Apple 检查。点按“打开”。</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/gatekeeper.png?v=d79051e5" class="zoom" title="查看原始大小"><img src="/img/guide/gatekeeper.png?v=d79051e5" alt="macOS 门禁的确认提示" width="336" height="336" loading="lazy"></a><figcaption>macOS 门禁的确认提示</figcaption></figure>
+<p>Keepit 经过签名和公证，可以自动更新，并能在装有 macOS 13 Ventura 或更高版本的 Apple 芯片和 Intel Mac 上原生运行。</p>
+<h3 id="first-launch">首次启动</h3>
+<p>Keepit 是一款菜单栏应用：程序坞里没有图标，你不打开就没有窗口。首次启动后，菜单栏中会出现 📎 图标，Keepit 会问你三件事。</p>
+<p><strong>1. 要从备份恢复吗？</strong> 如果这是一台新 Mac，而你有 Keepit 的备份（iCloud 云盘或其他文件夹中的自动备份，或者导出的 <code>.keepit</code> 文件），选取“从备份恢复…”可以在进行其他操作之前先把历史记录和模板找回来。文件要用生成它的那台 Mac 的密码或恢复短语来解锁。选取“全新开始”可以跳过这一步。以后也可以在“设置”→“备份”→“恢复…”中进行同样的恢复，在访达中连按 <code>.keepit</code> 文件也能打开它。详情请见<a href="#backup">备份</a>。</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/restore-first-run.png?v=cfa1e73f" class="zoom" title="查看原始大小"><img src="/img/guide/restore-first-run.png?v=cfa1e73f" alt="新 Mac 上的第一个问题：从备份恢复，还是全新开始" width="336" height="408" loading="lazy"></a><figcaption>新 Mac 上的第一个问题：从备份恢复，还是全新开始</figcaption></figure>
+<p><strong>2. 密码（可选）。</strong> Keepit 可以把历史记录和模板加密保存，并用 Touch ID 解锁。你可以现在决定，也可以稍后在“设置”→“安全”中决定。<a href="#part-6-security">第 6 部分</a>说明了它的工作方式。选取“暂不”的话，所有内容都以未加密的形式保存在磁盘上。如果你刚刚用备份的密码恢复了备份，Keepit 会询问是否在这台 Mac 上继续使用这个密码。</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/password-offer.png?v=a377f4be" class="zoom" title="查看原始大小"><img src="/img/guide/password-offer.png?v=a377f4be" alt="首次启动时的密码设置提示" width="336" height="410" loading="lazy"></a><figcaption>首次启动时的密码设置提示</figcaption></figure>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/no-password-notice.png?v=0da3b4f2" class="zoom" title="查看原始大小"><img src="/img/guide/no-password-notice.png?v=0da3b4f2" alt="选取“暂不”时：明确说明这意味着什么，以及在哪里可以更改" width="336" height="342" loading="lazy"></a><figcaption>选取“暂不”时：明确说明这意味着什么，以及在哪里可以更改</figcaption></figure>
+<p><strong>3. 辅助功能权限。</strong> 为了替你粘贴，Keepit 会向你刚才使用的应用发送 ⌘V。macOS 只允许“系统设置”→“隐私与安全性”→“辅助功能”列表中的应用这样做。点按“打开系统设置”，然后把 Keepit 打开。没有这项权限时，Keepit 仍会记录和复制，但 ⌘V 需要你自己按。</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/accessibility-prompt.png?v=53fda070" class="zoom" title="查看原始大小"><img src="/img/guide/accessibility-prompt.png?v=53fda070" alt="Keepit 请求辅助功能权限" width="336" height="462" loading="lazy"></a><figcaption>Keepit 请求辅助功能权限</figcaption></figure>
+<figure class="shot" style="max-width:762px"><a href="/img/guide/accessibility-settings.png?v=3324189c" class="zoom" title="查看原始大小"><img src="/img/guide/accessibility-settings.png?v=3324189c" alt="已在“隐私与安全性”→“辅助功能”中打开 Keepit" width="762" height="598" loading="lazy"></a><figcaption>已在“隐私与安全性”→“辅助功能”中打开 Keepit</figcaption></figure>
+<p>Keepit 默认在登录时启动，可以在“设置”→“通用”中关闭。</p>
+<hr />
+<h2 id="part-2-everyday-use">第 2 部分：日常使用</h2>
+<h3 id="the-history-menu">历史记录菜单</h3>
+<p>在任意应用中按 <strong>⌥M</strong>，或者点按 📎 图标。如果 Keepit 能找到文本光标，菜单就在光标处打开，否则在鼠标指针处打开。</p>
+<p>每一行是一条复制的内容，最新的排在最前面。最新的一条以<strong>粗体</strong>显示，它就是当前剪贴板里的内容。图标表示内容是从哪个应用复制的。标题以 <code>…</code> 结尾，说明这一项的行数比菜单中显示的多。图片显示为缩略图，文件列表显示文件名。</p>
+<figure class="shot" style="max-width:1045px"><a href="/img/guide/menu-preview.png?v=3a4dbc04" class="zoom" title="查看原始大小"><img src="/img/guide/menu-preview.png?v=3a4dbc04" alt="菜单旁边的预览面板完整显示高亮的项目，并附有来源应用、时间和大小" width="1045" height="648" loading="lazy"></a><figcaption>菜单旁边的预览面板完整显示高亮的项目，并附有来源应用、时间和大小</figcaption></figure>
+<figure class="shot" style="max-width:1088px"><a href="/img/guide/menu-image.png?v=d7b4e3af" class="zoom" title="查看原始大小"><img src="/img/guide/menu-image.png?v=d7b4e3af" alt="历史记录中的图片：菜单中是缩略图，预览中是完整图片" width="1088" height="640" loading="lazy"></a><figcaption>历史记录中的图片：菜单中是缩略图，预览中是完整图片</figcaption></figure>
+<p>要粘贴某一项，可以点按它，或者用 ↑ ↓ 移到它上面再按 Return 键，或者按住 <strong>⌃⌥</strong> 再按它的编号：<kbd class="k">⌃⌥3</kbd> 粘贴第 3 项。这个按键在任何地方都能用，不需要打开菜单。</p>
+<p>历史记录下方依次是“模板”子菜单、查看器（⌥E）、设置（⌥S）、“清除历史记录”（⌥C）、“暂停记录 10 分钟”（⌥P，输入不想被记录的内容时使用）、设置了密码时的“锁定 Keepit”（⌥L），以及更新。<strong>⌥T</strong> 单独打开模板菜单。这些按键不打开菜单也都能用。</p>
+<h3 id="search-and-preview">搜索和预览</h3>
+<p><strong>搜索。</strong> 菜单打开时直接输入文字：顶部的搜索栏会按标题和全文过滤列表，所以长内容中间的某一行也能找到。按 Return 键粘贴第一个匹配项，按 Esc 清空搜索栏，再按一次 Esc 关闭菜单。</p>
+<p><strong>预览。</strong> 把指针停在某一项上（或用键盘移到它上面），菜单旁边的面板就会显示完整的图片，或者长文本的开头几行，并附有来源应用、日期和大小。只有一行的短文本没有预览，因为菜单里已经显示了全部内容。</p>
+<figure class="shot" style="max-width:907px"><a href="/img/guide/search-preview.png?v=86998c10" class="zoom" title="查看原始大小"><img src="/img/guide/search-preview.png?v=86998c10" alt="输入文字会过滤菜单，预览面板显示高亮的项目" width="907" height="524" loading="lazy"></a><figcaption>输入文字会过滤菜单，预览面板显示高亮的项目</figcaption></figure>
+<h3 id="paste-without-the-menu">不打开菜单直接粘贴</h3>
+<p>全局快捷键在任何应用中都能使用，它们作用于当前的历史记录。第 1 项就是剪贴板：</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>按键</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><kbd class="k">⌃⌥1</kbd> … <kbd class="k">⌃⌥9</kbd>、<kbd class="k">⌃⌥0</kbd></td>
+<td>粘贴历史记录中的第 1 到第 10 项</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥⇧V</kbd></td>
+<td>粘贴<em>上一项</em>（第 2 项），再按一次换回来</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥V</kbd></td>
+<td>把剪贴板内容以纯文本粘贴，去掉格式</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
+<td>把剪贴板内容转成大写 / 小写 / 每个单词首字母大写 / 句首字母大写后粘贴</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥W</kbd></td>
+<td>去掉剪贴板内容的首尾空白后粘贴</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥J</kbd></td>
+<td>把剪贴板内容合并成一行后粘贴</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥K</kbd> <kbd class="k">⌃⌥D</kbd> <kbd class="k">⌃⌥Y</kbd></td>
+<td>给剪贴板内容加上删除线 / 下划线 / 波浪下划线后粘贴。粘贴的是纯文本，在任何地方（包括聊天软件）都能保持这个样子（见下文）</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥X</kbd></td>
+<td>去掉这些装饰后粘贴剪贴板内容</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥A</kbd></td>
+<td>将剪贴板添加到模板</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥⌫</kbd></td>
+<td>从历史记录中删除最新的一项</td>
+</tr>
+</tbody>
+</table></div>
+<p>这三种装饰并不是格式。Keepit 是在每个字符后面加上一个 Unicode <em>组合用记号</em>（s̶t̶r̶i̶k̶e̶、u̲n̲d̲e̲r̲、w̰a̰v̰y̰），所以文本在聊天软件、网页表单或终端里看起来都一样，而真正的格式在这些地方会丢失。代价是：这样的文本体积是原来的三倍，搜索原来的词找不到它，屏幕阅读器读起来会磕磕绊绊，有些字体画出的线也不均匀。“移除装饰”（<kbd class="k">⌃⌥X</kbd>）可以把这些记号去掉，在别处加了装饰的文本也适用。两种情况下，记号都是按码位移除的，不管它们来自哪里：把同样的记号当作字母使用的音标（U+0330 同时也是国际音标中表示嘎裂声的符号）会失去这些记号，而三种装饰在添加之前也会先移除它们。打开旁白时，<code>⌃⌥</code> 是旁白自己的修饰键，请在“设置”→“快捷键”中给“对最新项的操作”换一个修饰键。</p>
+<p>转换只对文本有效。如果是图片或文件列表，按键只会发出提示音。以上这些都可以在“设置”→“快捷键”中更改或关闭。</p>
+<h3 id="the-paste-queue">粘贴队列</h3>
+<p>有时你想在一个地方复制五样东西，再按顺序粘贴到另一个地方，比如把单元格填进表单，或者把网页上的几行文字贴进文稿。粘贴队列不用打开菜单就能做到：</p>
+<ol>
+<li>按 <strong>⌥N</strong>（或在菜单中选取“开始粘贴队列”）。菜单栏图标上会出现一个红点和一个计数器：<code>📎 ● 0</code></li>
+<li>像平时一样用 ⌘C 复制，次数不限。每复制一次，计数器就加一：1、2、3… 所有内容也会记入历史记录。</li>
+</ol>
+<figure class="shot" style="max-width:350px"><a href="/img/guide/queue-menubar.png?v=808fb52c" class="zoom" title="查看原始大小"><img src="/img/guide/queue-menubar.png?v=808fb52c" alt="队列开启时的菜单栏：红点和计数器" width="350" height="40" loading="lazy"></a><figcaption>队列开启时的菜单栏：红点和计数器</figcaption></figure>
+<ol>
+<li>切换到要放文字的地方，每一项按一次 <strong>⌥V</strong>。最先复制的最先粘贴，计数器随之减少。⌘V 仍然像平时一样粘贴剪贴板内容，所以两种方式可以混着用。</li>
+<li>粘贴完最后一项，或者两分钟内既没有复制也没有粘贴（这个时间可以调整），队列会自动关闭。再按一次 ⌥N 可以提前结束。</li>
+</ol>
+<p><strong>⌥⇧N</strong> 一次性粘贴队列中剩下的所有内容。各项之间可以用换行、制表符、空格连接，或者什么都不加。这在“设置”的“粘贴队列”面板中选择，空闲时间也在那里设置。队列开启时，历史记录菜单会标出队列中的项目：<code>▶</code> 表示下一个要粘贴，<code>○</code> 表示还在排队，<code>✓</code> 表示已经粘贴。</p>
+<figure class="shot" style="max-width:610px"><a href="/img/guide/queue-menu.png?v=a61b1a15" class="zoom" title="查看原始大小"><img src="/img/guide/queue-menu.png?v=a61b1a15" alt="队列开启时的历史记录菜单：○ 排队中，▶ 下一项，✓ 已粘贴；菜单中的那一行显示还剩多少项" width="610" height="772" loading="lazy"></a><figcaption>队列开启时的历史记录菜单：○ 排队中，▶ 下一项，✓ 已粘贴；菜单中的那一行显示还剩多少项</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-queue.png?v=d30c5141" class="zoom" title="查看原始大小"><img src="/img/guide/prefs-queue.png?v=d30c5141" alt="“设置”→“粘贴队列”" width="636" height="453" loading="lazy"></a><figcaption>“设置”→“粘贴队列”</figcaption></figure>
+<h3 id="the-extended-menu">扩展菜单</h3>
+<p>历史记录菜单打开时按住 <strong>⇧</strong>，每一项都会多出一个 <code>▸</code> 子菜单，里面是针对这一项的全部操作：粘贴、以纯文本粘贴、仅复制（只放入剪贴板，不粘贴）、“粘贴为”中的各种转换、添加到模板、在查看器中显示、删除。把指针移到某一项上，或者按 →，即可打开子菜单。打开之后就可以松开 ⇧ 了。</p>
+<figure class="shot" style="max-width:805px"><a href="/img/guide/extended-menu.png?v=8b44e749" class="zoom" title="查看原始大小"><img src="/img/guide/extended-menu.png?v=8b44e749" alt="按住 ⇧：每一项都有一个子菜单；最新的一项的子菜单中会显示全局快捷键" width="805" height="735" loading="lazy"></a><figcaption>按住 ⇧：每一项都有一个子菜单；最新的一项的子菜单中会显示全局快捷键</figcaption></figure>
+<p>对于最新的一项，子菜单中会列出上表中的全局快捷键。操作和按键都是一样的，所以可以在这里熟悉它们。其他项目只显示操作，不显示按键：快捷键要么在任何地方都有效，要么就不显示。</p>
+<figure class="shot" style="max-width:763px"><a href="/img/guide/extended-menu-item2.png?v=014734f0" class="zoom" title="查看原始大小"><img src="/img/guide/extended-menu-item2.png?v=014734f0" alt="其他项目：同样的操作，没有快捷键" width="763" height="665" loading="lazy"></a><figcaption>其他项目：同样的操作，没有快捷键</figcaption></figure>
+<figure class="shot" style="max-width:765px"><a href="/img/guide/extended-menu-image.png?v=8f8e3b22" class="zoom" title="查看原始大小"><img src="/img/guide/extended-menu-image.png?v=8f8e3b22" alt="对于图片，文本相关的操作会变灰，只能使用粘贴、仅复制、添加到模板、在查看器中显示和删除" width="765" height="655" loading="lazy"></a><figcaption>对于图片，文本相关的操作会变灰，只能使用粘贴、仅复制、添加到模板、在查看器中显示和删除</figcaption></figure>
+<hr />
+<h2 id="part-3-templates">第 3 部分：模板</h2>
+<p>模板是你要长期保留的内容：签名、地址、常用回复、代码片段、经常粘贴的徽标。它们保存在带文件夹的树状结构中，出现在历史记录菜单的“模板”子菜单里，也可以用 <strong>⌥T</strong> 调出。全新安装时会自带一个“示例”文件夹，里面有问候语、当天日期、剪贴板引用和签名，让你在动手写自己的模板之前先看看模板能做什么。这些示例可以随意删除或编辑（“设置”中的“重置…”可以把它们找回来）。</p>
+<figure class="shot" style="max-width:660px"><a href="/img/guide/template-examples.png?v=c143a1d7" class="zoom" title="查看原始大小"><img src="/img/guide/template-examples.png?v=c143a1d7" alt="“示例”文件夹：把指针停在某一项上会显示它的文本" width="660" height="209" loading="lazy"></a><figcaption>“示例”文件夹：把指针停在某一项上会显示它的文本</figcaption></figure>
+<figure class="shot" style="max-width:738px"><a href="/img/guide/template-menu-letters.png?v=ea96333e" class="zoom" title="查看原始大小"><img src="/img/guide/template-menu-letters.png?v=ea96333e" alt="模板菜单：文件夹以子菜单的形式打开，&amp; 后面的字母会成为快捷按键" width="738" height="715" loading="lazy"></a><figcaption>模板菜单：文件夹以子菜单的形式打开，&amp; 后面的字母会成为快捷按键</figcaption></figure>
+<h3 id="creating-and-organising">创建和整理</h3>
+<p><strong>添加模板</strong></p>
+<ul>
+<li>在历史记录菜单中：对最新的一项按 <kbd class="k">⌃⌥A</kbd>，或选取菜单底部的“将剪贴板添加到模板”，或者对任意一项按 ⇧ → 该项的子菜单 →“添加到模板”。</li>
+<li>在查看器中：选中一条历史记录，点按“添加到模板”，或者把它拖到模板树上。“新建项”会创建一个空白的文本模板。“从文件新建项…”（上下文菜单）可以用文本文件或图片文件创建模板。</li>
+</ul>
+<p><strong>整理</strong></p>
+<ul>
+<li>“新建文件夹”用来创建文件夹。可以在文件夹之间拖移项目，也可以使用上下文菜单中的“上移”/“下移”。</li>
+<li>名称为 <code>-</code> 的模板在菜单中会变成一条分隔线。</li>
+<li>在名称中的某个字母前加 <code>&amp;</code>（例如 <code>&amp;Signature</code>），这个字母就成为该项在模板菜单中的快捷按键：菜单打开时按 <code>S</code> 即可。</li>
+<li>上下文菜单中的“设置快捷键…”可以给模板指定专属的全局快捷键。</li>
+<li>没有名称的模板会显示它的第一行。“重命名”和“清除名称”在上下文菜单中，也可以直接编辑文本上方的“名称”栏。</li>
+</ul>
+<h3 id="placeholders">占位符</h3>
+<p>文本模板中可以包含 <code>{…}</code> 形式的占位符，它们会在粘贴时被填入实际的值。其余内容原样粘贴。在查看器中，<strong>插入 ▾</strong> 列出了所有占位符，选中的那个会放到光标处，所以什么都不用背。</p>
+<figure class="shot" style="max-width:717px"><a href="/img/guide/template-examples-date.png?v=8b048d0d" class="zoom" title="查看原始大小"><img src="/img/guide/template-examples-date.png?v=8b048d0d" alt="“今天的日期”示例：{date:EEEE, d MMMM yyyy} 在粘贴时会变成当前日期" width="717" height="209" loading="lazy"></a><figcaption>“今天的日期”示例：{date:EEEE, d MMMM yyyy} 在粘贴时会变成当前日期</figcaption></figure>
+<figure class="shot" style="max-width:650px"><a href="/img/guide/insert-menu.png?v=4fa57206" class="zoom" title="查看原始大小"><img src="/img/guide/insert-menu.png?v=4fa57206" alt="查看器中的“插入 ▾”列出了所有占位符" width="650" height="770" loading="lazy"></a><figcaption>查看器中的“插入 ▾”列出了所有占位符</figcaption></figure>
+<p>最常用的几个：</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>占位符</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{date}</code> <code>{time}</code> <code>{datetime}</code></td>
+<td>今天的日期 / 当前时间，采用系统格式</td>
+</tr>
+<tr>
+<td><code>{date:yyyy-MM-dd}</code></td>
+<td>任意格式（<code>yyyy MM dd EEEE HH mm …</code>）</td>
+</tr>
+<tr>
+<td><code>{date:long}</code> <code>{time:short}</code> <code>{datetime:medium}</code></td>
+<td>预设样式：<code>short</code> <code>medium</code> <code>long</code> <code>full</code></td>
+</tr>
+<tr>
+<td><code>{date+7d}</code> <code>{date-1m:MMMM}</code> <code>{time+1h}</code> <code>{date+1y-2d}</code></td>
+<td>偏移：<code>d</code> 天、<code>w</code> 周、<code>m</code> 月、<code>y</code> 年、<code>h</code> 小时。可用于 <code>date</code>、<code>time</code>、<code>datetime</code>，也可以连写多个</td>
+</tr>
+<tr>
+<td><code>{clipboard}</code> <code>{clipboard:2}</code></td>
+<td>剪贴板，或历史记录中的第 N 项</td>
+</tr>
+<tr>
+<td><code>{clipboard\|upper}</code> <code>{clipboard\|trim\|oneline}</code></td>
+<td>过滤器 <code>upper</code> <code>lower</code> <code>title</code> <code>trim</code> <code>oneline</code> <code>url</code>，可以串联使用</td>
+</tr>
+<tr>
+<td><code>{cursor}</code></td>
+<td>粘贴后文本光标所在的位置</td>
+</tr>
+<tr>
+<td><code>{user}</code> <code>{username}</code> <code>{host}</code></td>
+<td>全名、账户名、电脑名称</td>
+</tr>
+<tr>
+<td><code>{uuid}</code> <code>{random:1-100}</code></td>
+<td>一个新的 UUID；一个随机数</td>
+</tr>
+<tr>
+<td><code>{{</code> <code>}}</code></td>
+<td>花括号本身：模板 <code>{{"x":1}}</code> 粘贴出来是 <code>{"x":1}</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>占位符的名称要用小写：<code>{date}</code> 是占位符，而 <code>{Date}</code> 和 <code>{DATE}</code> 只是普通文本，会原样粘贴。样式名称和过滤器（<code>{date:LONG}</code>、<code>{clipboard|UPPER}</code>）大小写均可。</p>
+<p>完整列表见<a href="#placeholder-cheat-sheet">占位符速查表</a>。</p>
+<h3 id="templates-that-ask-questions">会提问的模板</h3>
+<p><code>{input:Name}</code> 和 <code>{choice:Label=A|B|C}</code> 可以把模板变成一个小表单：粘贴时，Keepit 先询问各项的值，然后粘贴填好的文本。同一个名称不管出现多少次都只问一次。<code>{input:Name=Default}</code> 会预先填好输入栏。</p>
+<figure class="shot" style="max-width:484px"><a href="/img/guide/input-dialog.png?v=8f9de78e" class="zoom" title="查看原始大小"><img src="/img/guide/input-dialog.png?v=8f9de78e" alt="粘贴带有 {input:Name} 的模板时，会先询问它的值" width="484" height="320" loading="lazy"></a><figcaption>粘贴带有 {input:Name} 的模板时，会先询问它的值</figcaption></figure>
+<p>例如，一个回复模板：</p>
+<pre><code>{input:姓名}，你好：
+
+感谢你 {date-1d} 的来信。我会在{date+3d:EEEE}之前答复你。
+{cursor}
+{user}
+</code></pre>
+<p>粘贴时它会询问“姓名”，填好日期，用你的全名落款，并把光标留在空行上。</p>
+<hr />
+<h2 id="part-4-the-viewer">第 4 部分：查看器</h2>
+<p>在菜单中选取“查看器…”，或者右键点按 📎 图标，会打开一个包含三棵树的窗口：<strong>剪贴板</strong>（当前剪贴板的内容，只读）、<strong>历史记录</strong>（“文本和文件”与“图片”）和<strong>模板</strong>。</p>
+<figure class="shot" style="max-width:1004px"><a href="/img/guide/viewer.png?v=1c65e776" class="zoom" title="查看原始大小"><img src="/img/guide/viewer.png?v=1c65e776" alt="选中了一个模板的查看器" width="1004" height="637" loading="lazy"></a><figcaption>选中了一个模板的查看器</figcaption></figure>
+<ul>
+<li>选中一项，右侧就会显示它的内容。文本可以就地编辑，离开编辑区时更改生效。图片会缩放到适合面板的大小，上方显示像素尺寸和文件大小。在文件列表中连按可以打开文件。上下文菜单中的“以十六进制转储显示”可以查看原始字节。</li>
+<li>工具栏：“发送到剪贴板”、“粘贴”（粘贴到你来自的那个应用）、“添加到模板”、“新建项”、“新建文件夹”、“删除”、“插入 ▾”（占位符），以及 <strong>?</strong>（也就是本指南）。</li>
+<li><strong>搜索</strong>（<kbd class="k">⌘F</kbd>）：左侧的搜索栏按名称和内容过滤历史记录和模板，并高亮显示匹配的内容。</li>
+<li>把历史记录中的项目拖到模板树上可以保留它们，把模板拖到“历史记录”可以把它们复制回去。通过拖移或“上移”/“下移”可以调整顺序。⌫ 删除选中的项目。</li>
+<li>状态栏显示日期、来源应用、格式和大小。</li>
+</ul>
+<figure class="shot" style="max-width:1025px"><a href="/img/guide/viewer-search.png?v=88476754" class="zoom" title="查看原始大小"><img src="/img/guide/viewer-search.png?v=88476754" alt="在查看器中搜索时，匹配的内容会高亮显示" width="1025" height="682" loading="lazy"></a><figcaption>在查看器中搜索时，匹配的内容会高亮显示</figcaption></figure>
+<hr />
+<h2 id="part-5-settings">第 5 部分：设置</h2>
+<p>在菜单中按 <code>⌘,</code> 或选取“设置…”，或者在任意应用中按 ⌥S。这个窗口的用法和 Mac 上其他设置窗口一样：在工具栏中选一个面板，所做的更改会立即生效。没有“保存”按钮。用 ⌘W 或 Esc 关闭窗口。旁边带有 <strong>?</strong> 的选项都有弹出式说明。</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-general.png?v=09991ffc" class="zoom" title="查看原始大小"><img src="/img/guide/prefs-general.png?v=09991ffc" alt="“设置”→“通用”" width="636" height="463" loading="lazy"></a><figcaption>“设置”→“通用”</figcaption></figure>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>面板</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>通用</strong></td>
+<td>登录时启动 · 退出时保存历史记录，启动时恢复 · 选择后粘贴（关闭＝仅复制） · 粘贴延迟（对于切到前台比较慢的应用，可以调大） · 在文本光标处打开菜单 · 更新：“自动检查更新”（直接下载版本；关闭＝没有任何网络请求） — <a href="#updates">更新</a></td>
+</tr>
+<tr>
+<td><strong>快捷键</strong></td>
+<td>所有全局快捷键都集中在这里，见下文</td>
+</tr>
+<tr>
+<td><strong>粘贴队列</strong></td>
+<td>队列的三个按键、队列自动关闭前的空闲时间，以及“粘贴所有剩余项”时各项之间加什么 — <a href="#the-paste-queue">粘贴队列</a></td>
+</tr>
+<tr>
+<td><strong>历史记录</strong></td>
+<td>保留多少条文本/文件和多少张图片（1000 / 30） · 忘记早于指定时间的项目 · “删除重复项”（再次复制同样的内容会把它移到最前面） · “忽略隐藏的剪贴板数据” · 忽略的应用列表（Bundle 标识符；密码管理器始终会被忽略）</td>
+</tr>
+<tr>
+<td><strong>菜单</strong></td>
+<td>搜索栏 · 编号 · 预览面板 · 工具提示 · 来源应用图标 · 图片缩略图 · 菜单中的项目数（菜单列出最近的多少条，默认 60 条，其余的仍可搜索到） · 标题长度 · 缩略图高度</td>
+</tr>
+<tr>
+<td><strong>安全</strong></td>
+<td>密码、Touch ID、锁定、恢复短语 — <a href="#part-6-security">第 6 部分</a></td>
+</tr>
+<tr>
+<td><strong>备份</strong></td>
+<td>自动备份（标题旁边有状态行）：“自动备份到文件夹”、文件中是否包含 Mac 的名称、文件夹、保留多少份副本 · 手动备份：“立即备份”、“保存为归档…” · 恢复：“恢复…” — <a href="#backup">备份</a></td>
+</tr>
+<tr>
+<td><strong>高级</strong></td>
+<td>剪贴板检查间隔 · 自动化：“允许 keepit:// URL 命令”（默认关闭 — <a href="#automation-the-keepit-url-scheme">自动化</a>） · 数据：“打开文件夹” · 重置与卸载：“重置…”（回到全新安装时的状态，示例模板也会恢复） · “卸载…”（先重置，再移除应用、登录时启动、钥匙串条目和各项权限）</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-history.png?v=e8444027" class="zoom" title="查看原始大小"><img src="/img/guide/prefs-history.png?v=e8444027" alt="“设置”→“历史记录”：数量上限和忽略的应用列表" width="636" height="504" loading="lazy"></a><figcaption>“设置”→“历史记录”：数量上限和忽略的应用列表</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-hotkeys.png?v=2f5f309f" class="zoom" title="查看原始大小"><img src="/img/guide/prefs-hotkeys.png?v=2f5f309f" alt="“设置”→“快捷键”" width="636" height="717" loading="lazy"></a><figcaption>“设置”→“快捷键”</figcaption></figure>
+<p>在<strong>快捷键</strong>面板中，点按一个输入栏，然后按下组合键。⌫ 可以关闭某个按键。已被其他命令占用的组合键不会被接受，原因会显示在输入栏下方。“恢复默认”会把 ⌥+字母这一组（⌥M 历史记录、⌥T 模板、⌥E 查看器、⌥S 设置、⌥C 清除历史记录、⌥P 暂停、⌥L 锁定、⌥Q 退出）以及 ⌥⇧V 和 ⌃⌥ 恢复原样。“按编号粘贴项目”和“对最新项的操作”只接受修饰键，数字或字母由 Keepit 补上。如果某个组合键已经被 macOS 或其他应用占用，Keepit 会在启动时告诉你。“查看器”⌥E、“设置”⌥S、“清除历史记录”⌥C、“暂停记录”⌥P、“锁定 Keepit”⌥L 和“退出 Keepit”⌥Q 在任何应用中都能使用，并显示在菜单中相应命令的旁边。快捷键是按键盘上的按键位置来定义的，所以使用中文输入法时 ⌥M 照样有效。在英文输入状态下，⌥+字母通常会输入特殊字符（⌥S = ß、⌥C = ç 等），如果你需要输入这些字符，请把命令换到别的按键上。</p>
+<hr />
+<h2 id="part-6-security">第 6 部分：安全</h2>
+<h3 id="password-and-encryption">密码和加密</h3>
+<p>打开“设置”→“安全”→“启动时要求输入密码”后，历史记录和模板会用 AES-256-GCM 加密。密钥由你的密码派生（PBKDF2，200,000 轮），只存在于内存中。Keepit 锁定时密钥会被清除。锁定发生在以下几种情况：执行“锁定 Keepit”（<kbd class="k">⌥L</kbd>）时，退出时，以及（可选）Mac 锁定或睡眠了一段时间之后。全新安装时，“自动锁定 Keepit”为<strong>从不</strong>（从 3.0.3 更新上来的会保留原来的选择：如果之前勾选了随屏幕一起锁定，则为“立即”）。每次喝杯咖啡回来都要输密码的剪贴板管理工具，大家很快就不用了，而在真正需要的时候可以按 <kbd class="k">⌥L</kbd>。“立即”表示随屏幕一起锁定。“5 分钟后”、“15 分钟后”或“1 小时后”不理会短暂的离开：Keepit 保持解锁并继续记录，只有 Mac 在整段时间里都处于离开状态时才会锁定。如果 Keepit 启动时 Mac 已经锁定，或者前台是另一位用户的会话（比如更新后重新启动），情况也一样：离开的时间从启动时算起，前提是 macOS 把这个状态告诉了 Keepit（通常会；如果没有，则从下一次锁定或睡眠开始计时）。打开 Touch ID 后，Mac 一解锁，Keepit 就会请你按指纹，这样在你第一次按 <kbd class="k">⌥M</kbd> 之前它就已经准备好了。</p>
+<figure class="shot" style="max-width:800px"><a href="/img/guide/set-password-keyboard.jpg?v=08002f0c" class="zoom" title="查看原始大小"><img src="/img/guide/set-password-keyboard.jpg?v=08002f0c" alt="用屏幕键盘设置密码。这是对着屏幕拍的照片，不是截屏：在作者的 Mac 上，这个场景的截屏里只有对话框" width="800" height="600" loading="lazy"></a><figcaption>用屏幕键盘设置密码。这是对着屏幕拍的照片，不是截屏：在作者的 Mac 上，这个场景的截屏里只有对话框</figcaption></figure>
+<p>密码对话框会显示当前的键盘布局，并在大写锁定打开时给出警告，所以密码被拒绝时一般都能很快找到原因。输入栏旁边的键盘按钮会打开一个<strong>屏幕键盘</strong>，可以用鼠标输入密码：这些点按不会作为按键事件经过系统，按键的位置每次打开都会打乱，并且它会请求 macOS 不要让它出现在截屏和屏幕录制中（在某些配置下它会被排除，但不能保证）。它适合用在你不完全信任的 Mac 上，或者正在共享屏幕的 Mac 上。启动时以及锁定之后，Keepit 会要求输入密码（或使用 Touch ID）。“恢复访问…”则接受 24 个单词的恢复短语，见<a href="#recovery-phrase">恢复短语</a>。</p>
+<figure class="shot" style="max-width:800px"><a href="/img/guide/unlock-keyboard.jpg?v=4c0be394" class="zoom" title="查看原始大小"><img src="/img/guide/unlock-keyboard.jpg?v=4c0be394" alt="启动时解锁：密码、退出，或恢复短语；在输入内容之前，“好”按钮不可用。出于同样的原因，这也是照片" width="800" height="600" loading="lazy"></a><figcaption>启动时解锁：密码、退出，或恢复短语；在输入内容之前，“好”按钮不可用。出于同样的原因，这也是照片</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-security.png?v=7204a4dd" class="zoom" title="查看原始大小"><img src="/img/guide/prefs-security.png?v=7204a4dd" alt="“设置”→“安全”" width="636" height="435" loading="lazy"></a><figcaption>“设置”→“安全”</figcaption></figure>
+<h3 id="touch-id">Touch ID</h3>
+<p>打开“使用 Touch ID 解锁”后，密钥还会保存在安全隔区中，并由你的指纹保护：Keepit 会请你按指纹，而不是输入密码。密码仍然可以作为备用方式使用（提示中的密码按钮）。合上屏幕并使用带 Touch ID 的外接妙控键盘时，Keepit 会在键盘上请求指纹。打开“允许使用 Touch ID 更改密码”后，更改密码时可以用指纹代替旧密码。</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/touch-id.png?v=5e119bff" class="zoom" title="查看原始大小"><img src="/img/guide/touch-id.png?v=5e119bff" alt="使用 Touch ID 解锁；密码仍可作为备用方式" width="336" height="313" loading="lazy"></a><figcaption>使用 Touch ID 解锁；密码仍可作为备用方式</figcaption></figure>
+<h3 id="recovery-phrase">恢复短语</h3>
+<p>设置密码时，Keepit 会显示一次由 24 个单词组成的短语。请把它打印出来，或者存进密码管理器。如果忘记了密码，在解锁对话框中选取“恢复访问…”可以打开数据，并让你设置新密码。“恢复短语”→“新建…”会生成新的短语，并让旧的失效。旁边的“显示…”在通过 Touch ID 或密码验证后，可以再次显示当前的短语。</p>
+<p>如果既没有密码，也没有同一台 Mac 上的 Touch ID，也没有恢复短语，数据就无法恢复：没有服务器，也没有可以重置的东西。</p>
+<figure class="shot" style="max-width:568px"><a href="/img/guide/recovery-phrase.png?v=8aab134d" class="zoom" title="查看原始大小"><img src="/img/guide/recovery-phrase.png?v=8aab134d" alt="24 个单词的恢复短语（这里隐藏了单词）" width="568" height="586" loading="lazy"></a><figcaption>24 个单词的恢复短语（这里隐藏了单词）</figcaption></figure>
+<h3 id="backup">备份</h3>
+<p>Keepit 可以把历史记录和模板的加密副本保存在你选择的文件夹中（iCloud 云盘、Dropbox、Google Drive、外置磁盘、NAS），每当有内容变化时就写入一份新的。Keepit 没有服务器，文件夹是你自己的。文件夹背后的服务商能看到的只有加密的文件、文件的大小，以及一小段未加密的文件头（文件是什么时候、由哪个版本的 Keepit 写入的，密钥的派生方式，一些随机标识符；只有在你打开相应选项时才包含 Mac 的名称）。<a href="/security#backups">安全说明页面</a>（英文）逐个字段列出了文件头的内容。</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-backup.png?v=cba8511b" class="zoom" title="查看原始大小"><img src="/img/guide/prefs-backup.png?v=cba8511b" alt="“设置”→“备份”：自动备份、手动备份、恢复" width="636" height="527" loading="lazy"></a><figcaption>“设置”→“备份”：自动备份、手动备份、恢复</figcaption></figure>
+<p><strong>打开自动备份。</strong> 打开“设置”→“备份”→“自动备份到文件夹”，然后用“选择…”选一个文件夹（选择窗口会在 iCloud 云盘中打开）。自动备份需要先在“设置”→“安全”中开启密码保护：每份副本都用由你的保险库密钥派生的密钥封存，所以在这台 Mac 或其他任何 Mac 上，都可以用你的 Keepit 密码或恢复短语打开，不需要另外设置什么。没有设置密码时，这个复选框不可用，旁边会说明原因。</p>
+<p><strong>之后会发生什么：备份的时间安排。</strong> 最后一次更改之后大约五分钟（Keepit 运行期间最迟每天一次），Keepit 会向文件夹写入一个名为 <code>Keepit-&lt;date and time&gt;-&lt;installation&gt;-&lt;id&gt;.keepit</code> 的文件，再把它读回来核对，然后才删除超出“保留最近”（默认 10 份，可设为 1 到 100）的那些最旧的自己的副本。每份副本本身都是完整的，不是增量，所以任何时候只需要一个文件就够了。其他 Mac 生成的副本，或者你自己放进去的文件，Keepit 都不会动：共用一个文件夹的两台 Mac 会各自写入一个独立的系列。“自动备份”标题旁边的状态行显示最近一份副本的时间和大小，或者上一次尝试失败的原因。Keepit 锁定期间不会进行任何操作。“立即备份”（在“手动备份”下）不会等待那段静止时间。</p>
+<p><strong>“在备份文件中包含本机名称”</strong>（默认关闭）会把电脑的名称写进每个文件未加密的文件头，这样同一个文件夹中的两个系列在访达里就很容易区分。存储服务商能看到这个名称，所以这个选项由你决定是否打开。</p>
+<p><strong>恢复。</strong> “恢复…”可以打开一份备份（本机的、其他 Mac 的，或者导出的文件），但需要先解锁：使用生成它的那台 Mac 的密码，或者那台 Mac 在设置密码时显示的恢复短语（密码对话框中的“恢复访问…”）。预览中会显示文件是什么时候、在哪里生成的，以及其中有多少个项目。接下来有两种选择：</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/restore-preview.png?v=8f48d34e" class="zoom" title="查看原始大小"><img src="/img/guide/restore-preview.png?v=8f48d34e" alt="恢复预览：文件是什么时候、由哪个版本的 Keepit 写入的，里面有什么，合并还是替换" width="636" height="651" loading="lazy"></a><figcaption>恢复预览：文件是什么时候、由哪个版本的 Keepit 写入的，里面有什么，合并还是替换</figcaption></figure>
+<ul>
+<li>“合并”会添加现在还没有的内容：历史记录按内容比对，备份中的模板则放进一个名为“导入 &lt;日期&gt;”的新文件夹，不带它们原来的快捷键。这样你能清楚地看到哪些内容来自备份，并可以移动或删除它们。你现有的内容不会被覆盖。</li>
+<li>“替换”会丢弃当前的历史记录和模板，改用备份中的内容。在此之前，Keepit 会把你现有的内容写成一份副本（<code>Keepit-before-restore-…</code>），存到备份文件夹或你选择的文件夹。如果这份副本无法写入，替换就不会开始。如果 Keepit 还没有设置密码，会像“保存为归档…”一样，请你为这份副本设置一个密码。</li>
+</ul>
+<p>“同时恢复偏好设置”会从备份中恢复快捷键、数量上限和各个选项。那些体现对某台 Mac 的信任的设置（Touch ID、URL 自动化及其受信任的应用、备份文件夹本身）始终保持这台 Mac 上现有的状态。如果备份中的历史记录超出了这台 Mac 的数量上限，Keepit 会在你确认之前告诉你能容纳多少。</p>
+<p>在一台还没有设置密码的 Mac 上用恢复短语恢复了备份？Keepit 会先请你设置密码，这样恢复的数据就不会以未加密的形式落到磁盘上，并且让你选择在这台 Mac 上继续使用这个短语，还是生成一个新的。是用密码恢复的？Keepit 会询问是否把它作为这台 Mac 的密码。两种情况下，自动备份都是每台 Mac 各自的设置：在这台 Mac 上打开它并选择文件夹（用同一个文件夹也可以），这台 Mac 就会在旧 Mac 的系列旁边开始写入自己的系列。</p>
+<p><strong>迁移到新 Mac</strong> 正是这项功能的用途：安装 Keepit，首次启动时选取“从备份恢复…”，在你的文件夹中选最新的文件，输入旧 Mac 的密码，选择“替换”，然后在新 Mac 上打开自动备份。在此之前生成的副本，要用各自写入时有效的密码和短语才能打开：更改密码之后，旧的副本仍然需要旧密码。</p>
+<p><strong>手动备份。</strong> 有两个按钮，用途不同。“立即备份”会马上生成一份和自动备份一样的副本：同样的文件类型，同样的文件夹和系列，用你的 Keepit 密码或恢复短语打开。“保存为归档…”会在你指定的位置写入一个 <code>.keepit</code> <em>归档</em>，并用你专门为它设置的密码锁定。它不需要 Keepit 的密码保护，写入之后 Keepit 也不再跟踪这个文件。它适合用来把数据交给别人，或者在备份文件夹之外另存一份。从建议的文件名就能看出它是什么：归档是 <code>Keepit-archive-&lt;date&gt;-manual.keepit</code>，自动副本是 <code>Keepit-&lt;date and time&gt;-&lt;installation&gt;-&lt;id&gt;.keepit</code>。</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/save-to-archive.png?v=6d252de5" class="zoom" title="查看原始大小"><img src="/img/guide/save-to-archive.png?v=6d252de5" alt="“保存为归档…”：文件名中带有 archive 和 manual" width="636" height="528" loading="lazy"></a><figcaption>“保存为归档…”：文件名中带有 archive 和 manual</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/archive-password.png?v=1b218e7c" class="zoom" title="查看原始大小"><img src="/img/guide/archive-password.png?v=1b218e7c" alt="归档专用的密码，带有强度指示：这个密码不会保存在任何地方" width="636" height="621" loading="lazy"></a><figcaption>归档专用的密码，带有强度指示：这个密码不会保存在任何地方</figcaption></figure>
+<p>“恢复…”两种文件都能打开。归档取代了 2.x 中的“导出…”/“导入…”。这种文件可以在直接下载版本和 App Store 版本之间转移数据，也可以在 Keepit 2.x 和 3.x 之间转移数据。3.0 写入的文件需要 3.0 或更高版本才能打开；3.0 可以读取 2.x 写入的所有内容。</p>
+<p><strong>如果出了问题。</strong> 副本写入失败时，状态行会给出提示，并以逐渐拉长的间隔重试。之前的副本会保留。如果恢复进行到一半时 Keepit 被退出或者 Mac 关机了，下次启动时会悄悄把一切还原到恢复之前的状态。在极少数无法还原的情况下（某个文件无法写入，或者磁盘已满），Keepit 会指出是哪个文件，然后不做任何更改就退出：解决这个文件的问题后，再重新启动即可。更多细节，包括文件格式的内部结构，请见<a href="/security#backups">安全说明页面</a>（英文）。</p>
+<hr />
+<h2 id="part-7-advanced">第 7 部分：高级功能</h2>
+<h3 id="automation-the-keepit-url-scheme">自动化：keepit:// URL 方案</h3>
+<p>快捷指令（“打开 URL”）、Raycast、Alfred、Keyboard Maestro，或者 shell 中的 <code>open</code> 命令，都可以控制 Keepit，<strong>前提是你已经打开了这项功能</strong>：“设置”→“高级”→“自动化”→“允许 keepit:// URL 命令”。它默认关闭，因为任何应用或网页都可以打开 URL，而 <code>add</code> / <code>paste</code> 会更改剪贴板，并向前台应用输入内容。关闭时，Keepit 会忽略这类 URL，并发出提示音。打开后，Keepit 会查看是谁打开了 URL：每个应用发来的第一条会更改内容的命令（<code>paste</code>、<code>copy</code>、<code>template</code>、<code>add</code>、<code>add-template</code>、<code>pause</code>、<code>resume</code>）都会显示在一个对话框中。“允许”只执行这一次，“始终允许”会把这个应用加入受信任列表（可以在同一个面板中用“忘记受信任的应用”清空）。对于网页浏览器，或者 macOS 无法识别的发送方，每次都会询问。只是打开 Keepit 自己窗口的命令从不询问。</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>URL</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>keepit://paste/2</code><br><code>keepit://paste/latest</code><br><code>keepit://paste/previous</code></td>
+<td>把历史记录中的第 N 项（或最新的一项 / 上一项）粘贴到前台应用</td>
+</tr>
+<tr>
+<td><code>keepit://copy/3</code></td>
+<td>把第 N 项放入剪贴板，但不粘贴</td>
+</tr>
+<tr>
+<td><code>keepit://template/Signature</code><br><code>keepit://template/Work/Reply?copy=1</code></td>
+<td>按名称或文件夹路径粘贴（或复制）模板</td>
+</tr>
+<tr>
+<td><code>keepit://add?text=…</code></td>
+<td>把文本添加到历史记录和剪贴板</td>
+</tr>
+<tr>
+<td><code>keepit://add-template?text=…&amp;name=…</code></td>
+<td>创建模板</td>
+</tr>
+<tr>
+<td><code>keepit://history</code><br><code>keepit://templates</code><br><code>keepit://viewer</code><br><code>keepit://settings</code></td>
+<td>打开历史记录菜单、模板菜单、查看器、设置</td>
+</tr>
+<tr>
+<td><code>keepit://pause</code><br><code>keepit://resume</code></td>
+<td>暂停记录 10 分钟 / 恢复记录</td>
+</tr>
+</tbody>
+</table></div>
+<p>文本需要进行百分号编码（空格写作 <code>%20</code>）。Keepit 锁定期间会忽略 URL。</p>
+<h3 id="updates">更新</h3>
+<p>Keepit 每天检查一次 GitHub Releases，有更新时会用对话框提示。选取“检查更新…”可以立即检查。更新经过签名（EdDSA）和公证。如果使用 Homebrew，<code>brew upgrade --cask keepit</code> 可以达到同样的效果。每个下载文件的校验和都在版本发布页面的 <code>SHA256SUMS</code> 中。</p>
+<p>这项检查是 Keepit 发出的唯一网络请求，而且可以关闭：“设置”→“通用”→“更新”→“自动检查更新”。关闭后，Keepit 不会连接任何地方，即使你主动要求也不会，“检查更新…”也会从菜单中消失。这时可以从 <a href="https://keep.it.com">keep.it.com</a> 下载，或者用 Homebrew 来更新。App Store 版本没有更新程序，也没有这个选项，它由 App Store 负责更新。</p>
+<h3 id="uninstalling">卸载</h3>
+<p>“设置”→“高级”→“重置与卸载”→“卸载…”会移除应用、数据文件夹、钥匙串条目（包括 Touch ID 密钥）、登录项和辅助功能中的条目。它会要求你输入密码或使用 Touch ID，键入 <code>DELETE</code>，并再次确认。如果以后可能还需要这些数据，请先导出一份备份。如果是用 Homebrew 安装的，之后请运行 <code>brew uninstall --cask --force keepit</code>，让 Homebrew 也清除这个 cask 的记录。</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-advanced.png?v=9908024a" class="zoom" title="查看原始大小"><img src="/img/guide/prefs-advanced.png?v=9908024a" alt="“设置”→“高级”" width="636" height="515" loading="lazy"></a><figcaption>“设置”→“高级”</figcaption></figure>
+<hr />
+<h2 id="reference">参考</h2>
+<h3 id="troubleshooting">故障排除</h3>
+<p><strong>选择项目后没有粘贴任何内容。</strong> 缺少辅助功能权限：请检查“系统设置”→“隐私与安全性”→“辅助功能”→“Keepit”。如果 Keepit 已经在列表中却仍然不粘贴，请先关闭再重新打开：重新安装应用后，macOS 会忘记之前的授权。</p>
+<p><strong>某个快捷键没有反应。</strong> 它被其他应用或 macOS 占用了，Keepit 在启动时会报告这一点。请在“快捷键”面板中换一个组合键。在一台没有额外配置的 Mac 上，⌃⌥ 加数字和字母的组合是空闲的。</p>
+<p><strong>菜单打开的位置不对。</strong> 你正在使用的应用没有提供文本光标的位置，所以菜单改为在鼠标指针处打开。如果你希望菜单始终在指针处打开，可以关闭“通用”面板中的“尽可能在文本光标处打开菜单”。</p>
+<p><strong>我复制的某些内容不见了。</strong> 来源应用标记为隐藏的内容不会被记录。当前台是密码管理器（内置列表）或你的忽略列表中的应用时所做的复制也不会被记录，包括你刚刚从中切换出来的那个应用。请参阅“设置”→“历史记录”和<a href="/security#what-is-not-recorded">安全说明页面</a>（英文）。</p>
+<p><strong>没有提供 Touch ID 选项。</strong> 目前没有可用的 Touch ID 传感器（屏幕合上了，也没有带 Touch ID 的键盘）。Keepit 会保留这项设置，一旦有传感器可用，就会请求指纹。</p>
+<p><strong>备份状态显示文件夹不可用。</strong> 文件夹被移动、改名、推出，或者（iCloud 云盘）被从本地移除了。把它重新装载或恢复之后，下一份副本就能正常写入。也可以用“选择…”换一个新文件夹：新文件夹会开始一个新的系列，旧文件留在原处。</p>
+<p><strong>备份文件打不开。</strong> “密码错误”表示文件的认证标签不匹配：请确认你使用的是<em>写入</em>这个文件的那台 Mac 的密码（更改密码之后，旧的副本仍然要用旧密码打开），或者它的恢复短语。“此备份需要 Keepit 3.0 或更新版本”表示写入这个文件的版本比现在打开它的版本新。</p>
+<p><strong>Homebrew 拒绝覆盖安装已有的应用。</strong> 请先退出 Keepit，把 <code>/Applications/Keepit.app</code> 移到废纸篓，或者加上 <code>--force</code>。</p>
+<p>还是没有解决？<a href="https://github.com/andrey-insarov/Keepit/issues">GitHub Issues</a> · admin@keep.it.com</p>
+<h3 id="keyboard-cheat-sheet">快捷键速查表</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>按键</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><kbd class="k">⌥M</kbd></td>
+<td>历史记录菜单；输入文字可搜索</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥T</kbd></td>
+<td>模板菜单</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥1</kbd> … <kbd class="k">⌃⌥0</kbd></td>
+<td>粘贴第 1 到第 10 项（在菜单中和任何地方都可用）</td>
+</tr>
+<tr>
+<td>菜单中按 <kbd class="k">⇧</kbd></td>
+<td>扩展菜单：每一项的全部操作</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥⇧V</kbd></td>
+<td>粘贴上一项 / 来回切换</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥V</kbd></td>
+<td>把剪贴板内容以纯文本粘贴</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
+<td>大写 / 小写 / 每个单词首字母大写 / 句首字母大写</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥W</kbd> <kbd class="k">⌃⌥J</kbd></td>
+<td>去掉首尾空白 / 合并成一行</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥K</kbd> <kbd class="k">⌃⌥D</kbd> <kbd class="k">⌃⌥Y</kbd> <kbd class="k">⌃⌥X</kbd></td>
+<td>删除线 / 下划线 / 波浪下划线 / 移除装饰</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥A</kbd></td>
+<td>将剪贴板添加到模板</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥⌫</kbd></td>
+<td>删除最新的一项</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥N</kbd> · <kbd class="k">⌥V</kbd> · <kbd class="k">⌥⇧N</kbd></td>
+<td>粘贴队列：开始 / 停止 · 粘贴下一项 · 粘贴所有剩余项</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥E</kbd> <kbd class="k">⌥S</kbd> <kbd class="k">⌥C</kbd> <kbd class="k">⌥P</kbd> <kbd class="k">⌥L</kbd> <kbd class="k">⌥Q</kbd></td>
+<td>查看器 · 设置 · 清除历史记录 · 暂停记录 · 锁定 · 退出</td>
+</tr>
+<tr>
+<td>查看器中按 <kbd class="k">⌘F</kbd></td>
+<td>搜索</td>
+</tr>
+<tr>
+<td><code>⌘,</code></td>
+<td>设置</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="placeholder-cheat-sheet">占位符速查表</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>占位符</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{date}</code> <code>{time}</code> <code>{datetime}</code></td>
+<td>日期 / 时间 / 日期和时间，采用系统格式</td>
+</tr>
+<tr>
+<td><code>{date:yyyy-MM-dd}</code> <code>{time:HH:mm}</code></td>
+<td>自定义格式（Unicode 日期模式）</td>
+</tr>
+<tr>
+<td><code>{date:long}</code> <code>{time:short}</code> <code>{datetime:full}</code></td>
+<td>预设样式：<code>short</code> <code>medium</code> <code>long</code> <code>full</code></td>
+</tr>
+<tr>
+<td><code>{date+7d}</code> <code>{date-1m:MMMM}</code> <code>{time+1h}</code> <code>{datetime-1d:long}</code> <code>{date+1y-2d}</code></td>
+<td>偏移（<code>d</code> <code>w</code> <code>m</code> <code>y</code> <code>h</code>，最多连写四个）</td>
+</tr>
+<tr>
+<td><code>{weekday}</code> <code>{month}</code> <code>{year}</code></td>
+<td>星期名称、月份名称、年份</td>
+</tr>
+<tr>
+<td><code>{iso}</code> <code>{unix}</code></td>
+<td>ISO 8601 时间戳、Unix 时间</td>
+</tr>
+<tr>
+<td><code>{clipboard}</code> <code>{clipboard:2}</code></td>
+<td>剪贴板（第 1 项）或第 N 项</td>
+</tr>
+<tr>
+<td><code>{clipboard\|upper}</code> <code>\|lower</code> <code>\|title</code> <code>\|trim</code> <code>\|oneline</code> <code>\|url</code></td>
+<td>过滤器，可以串联使用</td>
+</tr>
+<tr>
+<td><code>{input:Name}</code> <code>{input:Name=Default}</code></td>
+<td>粘贴前询问一个值</td>
+</tr>
+<tr>
+<td><code>{choice:Label=A\|B\|C}</code></td>
+<td>让你从选项中选择一个</td>
+</tr>
+<tr>
+<td><code>{cursor}</code></td>
+<td>粘贴后光标的位置</td>
+</tr>
+<tr>
+<td><code>{user}</code> <code>{username}</code> <code>{host}</code></td>
+<td>全名、账户名、电脑名称</td>
+</tr>
+<tr>
+<td><code>{uuid}</code> <code>{random:1-100}</code></td>
+<td>新的 UUID、指定范围内的随机数</td>
+</tr>
+<tr>
+<td><code>{{</code> <code>}}</code></td>
+<td>花括号本身</td>
+</tr>
+</tbody>
+</table></div></article></main>
+<footer><div class="wrap">
+  <span>© 2026 UK Intis Telecom LTD · Keepit 以 MIT 许可证发布</span>
+  <span><a href="/privacy">隐私政策</a><span class="en-only"> （英文）</span> · <a href="/security">安全</a><span class="en-only"> （英文）</span> · <a href="/zh-hans/support">支持</a> · <a href="https://github.com/andrey-insarov/Keepit/blob/main/CHANGELOG.md">更新日志</a> · <a href="https://it.com">it.com</a></span>
+  <span class="langs"><a href="/guide" lang="en" hreflang="en">English</a> · <a href="/ru/guide" lang="ru" hreflang="ru">Русский</a> · <a href="/uk/guide" lang="uk" hreflang="uk">Українська</a> · <a href="/de/guide" lang="de" hreflang="de">Deutsch</a> · <a href="/fr/guide" lang="fr" hreflang="fr">Français</a> · <a href="/es/guide" lang="es" hreflang="es">Español</a> · <a href="/pt-br/guide" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a> · <a href="/ja/guide" lang="ja" hreflang="ja">日本語</a> · <b lang="zh-Hans">简体中文</b> · <a href="/ar/guide" lang="ar" hreflang="ar">العربية</a></span>
+</div></footer>
+<div id="lb" role="dialog" aria-label="原始大小的截屏"><img alt=""></div>
+<script>
+(function(){
+  var mn=document.querySelector('.mnav');if(mn){mn.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){mn.removeAttribute('open');});});document.addEventListener('click',function(e){if(mn.open&&!mn.contains(e.target))mn.removeAttribute('open');});}
+  var lb=document.getElementById('lb'),im=lb.querySelector('img');
+  document.querySelectorAll('a.zoom').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();im.src=a.getAttribute('href');im.alt=a.querySelector('img').alt;lb.classList.add('on');});});
+  function close(){lb.classList.remove('on');im.src='';}
+  lb.addEventListener('click',close);document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+  var links=[].slice.call(document.querySelectorAll('aside a')),heads=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  if(links.length&&'IntersectionObserver' in window){
+    var cur=null;function mark(id){links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+id);});}
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){cur=e.target.id;mark(cur);}});},{rootMargin:'-70px 0px -70% 0px'});
+    heads.forEach(function(h){if(h)io.observe(h);});
+  }
+})();
+</script>
+</body></html>

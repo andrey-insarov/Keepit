@@ -1,0 +1,33 @@
+{
+  "ui": {
+    "features": "Funktionen",
+    "privacy": "Datenschutz",
+    "install": "Installation",
+    "guide": "Handbuch",
+    "security": "Sicherheit",
+    "support": "Support",
+    "menu": "Menü",
+    "copyright": "© 2026 UK Intis Telecom LTD · Keepit steht unter der MIT-Lizenz",
+    "privacy_policy": "Datenschutzerklärung",
+    "changelog": "Änderungsprotokoll",
+    "on_this_page": "Auf dieser Seite",
+    "contents": "Inhalt",
+    "open_full_size": "In voller Größe öffnen",
+    "full_size_screenshot": "Bildschirmfoto in voller Größe",
+    "language": "Sprache",
+    "in_english": "(englisch)",
+    "translated_note": "Aus dem Englischen übersetzt. Original: <a href=\"{en}\">English</a>."
+  },
+  "pages": {
+    "GUIDE.md": {
+      "title": "Keepit-Handbuch – Clipboard-Manager für den Mac",
+      "description": "So nutzt du Keepit, den kostenlosen Clipboard-Manager für den Mac: Verlaufsmenü, Tastenkürzel, Vorlagen, Viewer, Verschlüsselung und Touch ID.",
+      "crumb": "Handbuch"
+    },
+    "SUPPORT.md": {
+      "title": "Keepit-Support – Hilfe zum Clipboard-Manager für den Mac",
+      "description": "So bekommst du Hilfe zu Keepit, dem Clipboard-Manager für den Mac, dazu kurze Antworten auf häufige Fragen.",
+      "crumb": "Support"
+    }
+  }
+}

@@ -8,23 +8,67 @@ Every screenshot is a 2× Retina capture; it is shown at half its pixel width so
 physical scale, and a click opens the full-size file in a lightbox. Pages with more than a few
 headings get a sticky table of contents in a side column. Inline code that is only a key
 combination (`⌃⌥1`, `⌥M`, `⌘V`) is rendered as a keycap.
+
+Translations (docs/i18n/<lang>/): the landing, the guide and support exist in the languages listed
+in LANGS; privacy, security and the how-tos stay English. For each language:
+
+  site.json     the shell's words (navigation, footer, "On this page"…), and the <title>,
+                description and breadcrumb of the translated pages
+  landing.json  [English fragment, translation] pairs applied to docs/site/index.html in order;
+                a fragment that is no longer in the English page is reported and left English
+  GUIDE.md,     the translated Markdown; its first line names the English file's blob it was
+  SUPPORT.md    translated from (<!-- source: GUIDE.md <git blob sha> -->) and the build warns
+                when the English file has changed since. Headings keep the English page's ids
+                (by position), so /ru/guide#backup and /guide#backup are the same section.
+
+Output: docs/site/<slug>/index.html, guide.html, support.html → keep.it.com/<slug>/, /<slug>/guide…
+A screenshot img/guide/<slug>/x.png, if present, replaces img/guide/x.png on that language's pages.
 """
-import re, pathlib, html, markdown
+import re, pathlib, html, json, markdown
+import markdown.extensions.toc
 from PIL import Image
 
 import datetime, subprocess
 root = pathlib.Path(__file__).resolve().parent.parent
 site = root / "docs/site"
+i18n = root / "docs/i18n"
 DATE = datetime.date.today().isoformat()
 
 SITE = "https://keep.it.com/"
 
+# Languages of the site, in switcher order. slug = URL folder (lowercase); hreflang = BCP 47 tag.
+LANGS = [
+    # code      slug       hreflang   native name            og:locale  direction
+    ("en",      "",        "en",      "English",             "en_US",   "ltr"),
+    ("ru",      "ru",      "ru",      "Русский",             "ru_RU",   "ltr"),
+    ("uk",      "uk",      "uk",      "Українська",          "uk_UA",   "ltr"),
+    ("de",      "de",      "de",      "Deutsch",             "de_DE",   "ltr"),
+    ("fr",      "fr",      "fr",      "Français",            "fr_FR",   "ltr"),
+    ("es",      "es",      "es",      "Español",             "es_ES",   "ltr"),
+    ("pt-BR",   "pt-br",   "pt-BR",   "Português (Brasil)",  "pt_BR",   "ltr"),
+    ("ja",      "ja",      "ja",      "日本語",               "ja_JP",   "ltr"),
+    ("zh-Hans", "zh-hans", "zh-Hans", "简体中文",             "zh_CN",   "ltr"),
+    ("ar",      "ar",      "ar",      "العربية",              "ar_AR",   "rtl"),
+]
+LANG = {l[0]: dict(code=l[0], slug=l[1], hreflang=l[2], name=l[3], og=l[4], dir=l[5]) for l in LANGS}
+TRANSLATED = {"GUIDE.md": "guide.html", "SUPPORT.md": "support.html"}   # + the landing
 
-def page_url(out_name: str) -> str:
+
+def active_langs() -> list:
+    """English plus every language that has a site.json."""
+    return ["en"] + [c for c, *_ in LANGS[1:] if (i18n / c / "site.json").exists()]
+
+
+def prefix(lang: str) -> str:
+    return "/" + LANG[lang]["slug"] if lang != "en" else ""
+
+
+def page_url(out_name: str, lang: str = "en") -> str:
     """Public URL of a rendered page. Cloudflare Pages serves guide.html at /guide and redirects
     /guide.html there (308), so canonical, sitemap, JSON-LD and every internal link use the
     extensionless form; the files on disk keep their .html names."""
-    return SITE + out_name.removesuffix(".html")
+    name = "" if out_name == "index.html" else out_name.removesuffix(".html")
+    return SITE + (LANG[lang]["slug"] + "/" if lang != "en" else "") + name
 
 # (source, output, <title>, meta description, sidebar TOC?, schema.org type, breadcrumb label)
 PAGES = [
@@ -44,15 +88,86 @@ PAGES = [
      "Three things to clear on a Mac: the system clipboard (pbcopy in Terminal), Spotlight's clipboard history in macOS 26, and a clipboard manager's history.", False, "HowTo", "Clear the clipboard on a Mac"),
 ]
 
-HEADER = """<header><div class="wrap">
-  <a class="brand" href="/"><img src="img/icon.png?v=a1519b94" alt="">Keepit</a>
-  <nav><a href="/#features">Features</a><a href="/guide">Guide</a><a href="/security">Security</a><a href="/support">Support</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a><details class="mnav"><summary aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><div class="links"><a href="/#features">Features</a><a href="/#privacy">Privacy</a><a href="/#install">Install</a><a href="/guide">Guide</a><a href="/security">Security</a><a href="/support">Support</a></div></details></nav>
-</div></header>"""
+# The shell's words in English; a language's site.json "ui" overrides them key by key.
+UI_EN = {
+    "features": "Features", "privacy": "Privacy", "install": "Install", "guide": "Guide",
+    "security": "Security", "support": "Support", "menu": "Menu",
+    "copyright": "© 2026 UK Intis Telecom LTD · Keepit is MIT-licensed",
+    "privacy_policy": "Privacy policy", "changelog": "Changelog",
+    "on_this_page": "On this page", "contents": "Contents",
+    "open_full_size": "Open full size", "full_size_screenshot": "Full-size screenshot",
+    "language": "Language", "in_english": "",
+    "translated_note": "",   # e.g. "Translated from English. <a href=\"{en}\">Original</a>."
+}
 
-FOOTER = """<footer><div class="wrap">
-  <span>© 2026 UK Intis Telecom LTD · Keepit is MIT-licensed</span>
-  <span><a href="/privacy">Privacy policy</a> · <a href="/security">Security</a> · <a href="/support">Support</a> · <a href="https://github.com/andrey-insarov/Keepit/blob/main/CHANGELOG.md">Changelog</a> · <a href="https://it.com">it.com</a></span>
-</div></footer>"""
+
+def load_site(lang: str) -> dict:
+    if lang == "en":
+        return {"ui": dict(UI_EN), "pages": {}}
+    data = json.loads((i18n / lang / "site.json").read_text(encoding="utf-8"))
+    ui = dict(UI_EN)
+    ui.update(data.get("ui", {}))
+    data["ui"] = ui
+    return data
+
+
+def en_only(ui: dict) -> str:
+    """Marker after a link to a page that exists only in English (" (in English)")."""
+    return f'<span class="en-only"> {ui["in_english"]}</span>' if ui["in_english"] else ""
+
+
+def localize_links(fragment: str, lang: str) -> str:
+    """Links to the landing, the guide and support point to this language's copies; everything
+    else (security, privacy, how-tos, v2, external) stays as it is."""
+    if lang == "en":
+        return fragment
+    p = prefix(lang)
+    fragment = re.sub(r'href="/(guide|support)(#[^"]*)?"', lambda m: f'href="{p}/{m.group(1)}{m.group(2) or ""}"', fragment)
+    fragment = re.sub(r'href="/(#[^"]*)?"', lambda m: f'href="{p}/{m.group(1) or ""}"', fragment)
+    return fragment
+
+
+def header_html(lang: str, ui: dict) -> str:
+    h = f"""<header><div class="wrap">
+  <a class="brand" href="/"><img src="/img/icon.png?v=a1519b94" alt="">Keepit</a>
+  <nav><a href="/#features">{ui['features']}</a><a href="/guide">{ui['guide']}</a><a href="/security">{ui['security']}</a><a href="/support">{ui['support']}</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a><details class="mnav"><summary aria-label="{ui['menu']}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><div class="links"><a href="/#features">{ui['features']}</a><a href="/#privacy">{ui['privacy']}</a><a href="/#install">{ui['install']}</a><a href="/guide">{ui['guide']}</a><a href="/security">{ui['security']}</a><a href="/support">{ui['support']}</a></div></details></nav>
+</div></header>"""
+    return localize_links(h, lang)
+
+
+def switcher_html(lang: str, page: str) -> str:
+    """Language links to the same page in every active language (page: index.html, guide.html…)."""
+    items = []
+    for code in active_langs():
+        name = LANG[code]["name"]
+        if code == lang:
+            items.append(f'<b lang="{LANG[code]["hreflang"]}">{name}</b>')
+        else:
+            href = page_url(page, code).removeprefix(SITE.rstrip("/"))
+            items.append(f'<a href="{href}" lang="{LANG[code]["hreflang"]}" hreflang="{LANG[code]["hreflang"]}">{name}</a>')
+    return '<span class="langs">' + " · ".join(items) + "</span>" if len(items) > 1 else ""
+
+
+def footer_html(lang: str, ui: dict, page: str | None) -> str:
+    eo = en_only(ui)
+    langs = switcher_html(lang, page) if page else ""
+    f = f"""<footer><div class="wrap">
+  <span>{ui['copyright']}</span>
+  <span><a href="/privacy">{ui['privacy_policy']}</a>{eo} · <a href="/security">{ui['security']}</a>{eo} · <a href="/support">{ui['support']}</a> · <a href="https://github.com/andrey-insarov/Keepit/blob/main/CHANGELOG.md">{ui['changelog']}</a> · <a href="https://it.com">it.com</a></span>
+__LANGS__</div></footer>"""
+    # the language links go in after localize_links: they point at other languages on purpose
+    return localize_links(f, lang).replace("__LANGS__", "  " + langs + "\n" if langs else "")
+
+
+def alternates_html(page: str) -> str:
+    """hreflang links for a page that exists in several languages; x-default is English."""
+    langs = active_langs()
+    if len(langs) < 2:
+        return ""
+    links = [f'<link rel="alternate" hreflang="{LANG[c]["hreflang"]}" href="{page_url(page, c)}">' for c in langs]
+    links.append(f'<link rel="alternate" hreflang="x-default" href="{page_url(page, "en")}">')
+    return "".join(links)
+
 
 CSS = """
 :root{--paper:#fbfbfd;--ink:#0f1222;--ink-2:#4b4f63;--ink-3:#696d84;--blue:#2f4fd1;--blue-deep:#1f3aa6;--blue-tint:#eef2ff;--line:#e3e5ef;--key:#fff;--key-edge:#cfd2de;--win:#fff;--sel:#2f5cf0}
@@ -112,6 +227,22 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
 #lb.on{display:flex}#lb img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
 """
 
+# Only on translated pages: the language line, the "translated from English" note, and the
+# right-to-left mirror of every rule above that has a side in it (Arabic).
+CSS_I18N = """
+.langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
+.tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
+code,kbd,pre{direction:ltr;unicode-bidi:isolate}
+[dir=rtl] .mnav .links{right:auto;left:0}
+@media(max-width:700px){[dir=rtl] .mnav{margin-right:0;margin-left:-8px}}
+[dir=rtl] aside{padding-right:0;padding-left:8px}
+[dir=rtl] aside a{padding:4px 12px 4px 0;border-left:0;border-right:2px solid var(--line)}
+[dir=rtl] aside a.on{border-right-color:var(--blue)}
+[dir=rtl] aside ol ol a{padding-left:0;padding-right:24px}
+[dir=rtl] th,[dir=rtl] td{text-align:right;padding:9px 0 9px 12px}
+[dir=rtl] .fb .btn{justify-self:end}
+"""
+
 JS = """
 (function(){
   var mn=document.querySelector('.mnav');if(mn){mn.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){mn.removeAttribute('open');});});document.addEventListener('click',function(e){if(mn.open&&!mn.contains(e.target))mn.removeAttribute('open');});}
@@ -139,16 +270,20 @@ def file_hash(p) -> str:
         return "0"
 
 
-def figure(src: str, alt: str) -> str:
+def figure(src: str, alt: str, lang: str = "en", ui: dict = UI_EN) -> str:
     path = src.replace("site/", "", 1)                # docs/*.md links are relative to docs/
+    if lang != "en":                                  # a screenshot of this language, when there is one
+        own = re.sub(r"^img/guide/", f"img/guide/{LANG[lang]['slug']}/", path)
+        if own != path and (site / own).exists():
+            path = own
     try:
         w, h = Image.open(site / path).size
     except OSError:
         w, h = 1200, 800
     css_w, css_h = w // 2, h // 2
-    url = path + "?v=" + file_hash(site / path)      # content hash: a changed picture gets a new URL
+    url = "/" + path + "?v=" + file_hash(site / path)  # absolute: the same file from /guide and /ru/guide; content hash: a changed picture gets a new URL
     return (f'<figure class="shot" style="max-width:{css_w}px">'
-            f'<a href="{url}" class="zoom" title="Open full size">'
+            f'<a href="{url}" class="zoom" title="{ui["open_full_size"]}">'
             f'<img src="{url}" alt="{alt}" width="{css_w}" height="{css_h}" loading="lazy"></a>'
             f'<figcaption>{alt}</figcaption></figure>')
 
@@ -168,26 +303,31 @@ def toc_html(tokens, depth=0) -> str:
     return f"<ol>{items}</ol>" if items else ""
 
 
-def json_ld(out_name: str, title: str, description: str, kind: str, crumb: str, headline: str) -> str:
-    url = page_url(out_name)
+def json_ld(out_name: str, title: str, description: str, kind: str, crumb: str, headline: str, lang: str = "en") -> str:
+    url = page_url(out_name, lang)
     crumbs = {"@type": "BreadcrumbList", "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": "Keepit", "item": SITE},
+        {"@type": "ListItem", "position": 1, "name": "Keepit", "item": page_url("index.html", lang)},
         {"@type": "ListItem", "position": 2, "name": crumb, "item": url}]}
     page = {"@type": kind, "@id": url, "url": url, "name": headline, "headline": headline, "description": description,
-            "inLanguage": "en", "isPartOf": {"@id": SITE + "#site"}, "about": {"@id": SITE + "#app"},
+            "inLanguage": LANG[lang]["hreflang"], "isPartOf": {"@id": SITE + "#site"}, "about": {"@id": SITE + "#app"},
             "author": {"@id": SITE + "#org"}, "publisher": {"@id": SITE + "#org"},
             "image": SITE + "img/social-preview.png?v=57583ec3", "dateModified": DATE}
-    import json
+    if lang != "en":
+        page["translationOfWork"] = {"@id": page_url(out_name, "en")}
     return '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@graph": [page, crumbs]}, ensure_ascii=False) + '</script>'
 
 
-def modified(src_name: str) -> str:
-    """Last commit date of the source file (today for files not committed yet)."""
+def modified(src_path: str) -> str:
+    """Last commit date of a file under docs/ (today for files not committed yet)."""
     try:
-        out = subprocess.run(["git", "log", "-1", "--format=%cs", "--", f"docs/{src_name}"], cwd=root, capture_output=True, text=True).stdout.strip()
+        out = subprocess.run(["git", "log", "-1", "--format=%cs", "--", f"docs/{src_path}"], cwd=root, capture_output=True, text=True).stdout.strip()
         return out or DATE
     except OSError:
         return DATE
+
+
+def blob(path: pathlib.Path) -> str:
+    return subprocess.run(["git", "hash-object", str(path)], cwd=root, capture_output=True, text=True).stdout.strip()
 
 
 TURNSTILE_SITE_KEY = "0x4AAAAAAFxKO-1Iq_maRhEF"   # public Turnstile site key for keep.it.com
@@ -198,54 +338,186 @@ EUROMETRICS_WEBSITE_ID = "0ab7fe20-0c05-4061-b037-c033dc46c1e1"   # keep.it.com 
 ANALYTICS = ('<script defer src="https://app.eurometrics.eu/script.js?v=7cfd3b4c27be" data-website-id="' + EUROMETRICS_WEBSITE_ID +
              '" data-domains="keep.it.com" data-do-not-track="true" data-exclude-search="true" data-no-storage="true"></script>')
 
+WARNINGS: list[str] = []
 
-def render(src_name: str, out_name: str, title: str, description: str, with_toc: bool, kind: str, crumb: str) -> None:
-    global DATE
-    DATE = modified(src_name)
-    md_text = (root / "docs" / src_name).read_text(encoding="utf-8")
+
+def english_ids(src_name: str) -> list:
+    """(level, id) of every heading of the English page, in order."""
     md = markdown.Markdown(extensions=["tables", "fenced_code", "toc"])
+    md.convert((root / "docs" / src_name).read_text(encoding="utf-8"))
+    out = []
+    def walk(tokens):
+        for t in tokens:
+            out.append((t["level"], t["id"]))
+            walk(t["children"])
+    walk(md.toc_tokens)
+    return out
+
+
+def translated_source(src_name: str, lang: str) -> str:
+    """The translated Markdown, after checking it was made from the current English file."""
+    path = i18n / lang / src_name
+    text = path.read_text(encoding="utf-8")
+    m = re.match(r"<!-- source: (\S+) ([0-9a-f]{40}) -->\n", text)
+    if not m or m.group(1) != src_name:
+        raise SystemExit(f"{path}: the first line must be <!-- source: {src_name} <git blob sha of docs/{src_name}> -->")
+    if m.group(2) != blob(root / "docs" / src_name):
+        WARNINGS.append(f"{lang}/{src_name}: docs/{src_name} has changed since this translation (blob {m.group(2)[:8]}); update it")
+    return text[m.end():]
+
+
+def render(src_name: str, out_name: str, title: str, description: str, with_toc: bool, kind: str, crumb: str, lang: str = "en") -> None:
+    global DATE
+    data = load_site(lang)
+    ui = data["ui"]
+    ids = None
+    if lang == "en":
+        DATE = modified(src_name)
+        md_text = (root / "docs" / src_name).read_text(encoding="utf-8")
+    else:
+        DATE = modified(f"i18n/{lang}/{src_name}")
+        meta = data["pages"][src_name]
+        title, description, crumb = meta["title"], meta["description"], meta["crumb"]
+        md_text = translated_source(src_name, lang)
+        ids = english_ids(src_name)
+    queue = list(ids or [])
+    def slugify(value, separator):                     # translated headings take the English ids, in order
+        if ids is None:
+            return markdown.extensions.toc.slugify(value, separator)
+        return queue.pop(0)[1] if queue else markdown.extensions.toc.slugify(value, separator)
+    md = markdown.Markdown(extensions=["tables", "fenced_code", "toc"], extension_configs={"toc": {"slugify": slugify}})
     md_text = md_text.replace('__TURNSTILE_SITE_KEY__', TURNSTILE_SITE_KEY)
     body = md.convert(md_text)
-    body = re.sub(r'<p><img alt="([^"]*)" src="([^"]+)"\s*/?></p>', lambda m: figure(m.group(2), m.group(1)), body)
+    if ids is not None:
+        got = []
+        def walk(tokens):
+            for t in tokens:
+                got.append(t["level"]); walk(t["children"])
+        walk(md.toc_tokens)
+        if got != [lv for lv, _ in ids]:
+            WARNINGS.append(f"{lang}/{src_name}: headings differ from the English page ({len(got)} vs {len(ids)}); anchors may not match")
+    body = re.sub(r'<p><img alt="([^"]*)" src="([^"]+)"\s*/?></p>', lambda m: figure(m.group(2), m.group(1), lang, ui), body)
     body = re.sub(r"<!-- screenshot: (.*?) -->", r'<p class="slot">Screenshot: \1</p>', body)
     body = re.sub(r"<p><strong>Contents</strong></p>\s*<ul>.*?</ul>\s*<hr\s*/?>", "", body, count=1, flags=re.S)
     body = keycaps(body)
     body = body.replace('<table>', '<div class="tbl"><table>').replace('</table>', '</table></div>')
-    headline = tokens0 = (md.toc_tokens[0]["name"] if md.toc_tokens and md.toc_tokens[0]["level"] == 1 else title)
+    body = localize_links(body, lang)
+    if lang != "en" and ui["translated_note"]:     # under the page's h1
+        note = '<p class="tr-note">' + ui["translated_note"].replace("{en}", page_url(out_name, "en").removeprefix(SITE.rstrip("/"))) + "</p>"
+        body = re.sub(r"(</h1>)", r"\1" + note.replace("\\", "\\\\"), body, count=1)
+    headline = (md.toc_tokens[0]["name"] if md.toc_tokens and md.toc_tokens[0]["level"] == 1 else title)
     tokens = [t for t in md.toc_tokens if t["level"] == 1]
     sections = tokens[0]["children"] if tokens else md.toc_tokens
     toc = toc_html(sections) if with_toc else ""
-    aside = f'<aside aria-label="Contents"><p class="ttl">On this page</p>{toc}</aside>' if toc else ""
+    aside = f'<aside aria-label="{ui["contents"]}"><p class="ttl">{ui["on_this_page"]}</p>{toc}</aside>' if toc else ""
     main_cls = "wrap" if toc else "wrap narrow"
-    page = (f'<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">'
+    multi = src_name in TRANSLATED
+    L = LANG[lang]
+    dir_attr = ' dir="rtl"' if L["dir"] == "rtl" else ""
+    url = page_url(out_name, lang)
+    page = (f'<!DOCTYPE html><html lang="{L["hreflang"]}"{dir_attr}><head><meta charset="utf-8">'
             f'<meta name="viewport" content="width=device-width, initial-scale=1">\n'
-            f'<title>{title}</title><link rel="icon" href="img/icon.png?v=a1519b94"><link rel="apple-touch-icon" href="img/icon.png?v=a1519b94">\n'
+            f'<title>{title}</title><link rel="icon" href="/img/icon.png?v=a1519b94"><link rel="apple-touch-icon" href="/img/icon.png?v=a1519b94">\n'
             f'<meta name="description" content="{description}">\n'
-            f'<link rel="canonical" href="{page_url(out_name)}">'
-            f'<meta property="og:type" content="article"><meta property="og:site_name" content="Keepit">'
+            f'<link rel="canonical" href="{url}">'
+            + (alternates_html(out_name) if multi else "") +
+            f'<meta property="og:type" content="article"><meta property="og:site_name" content="Keepit"><meta property="og:locale" content="{L["og"]}">'
             f'<meta property="og:title" content="{title}"><meta property="og:description" content="{description}">'
-            f'<meta property="og:image" content="{SITE}img/social-preview.png?v=57583ec3"><meta property="og:url" content="{page_url(out_name)}">'
+            f'<meta property="og:image" content="{SITE}img/social-preview.png?v=57583ec3"><meta property="og:url" content="{url}">'
             f'<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{title}"><meta name="twitter:description" content="{description}"><meta name="twitter:image" content="{SITE}img/social-preview.png?v=57583ec3">'
             f'<meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">\n'
-            f'{json_ld(out_name, title, description, kind, crumb, headline)}\n'
-            f'{ANALYTICS}\n<style>{CSS}</style></head>\n<body>{HEADER}\n<main class="{main_cls}">{aside}<article>{body}</article></main>\n{FOOTER}\n'
-            f'<div id="lb" role="dialog" aria-label="Full-size screenshot"><img alt=""></div>\n'
+            f'{json_ld(out_name, title, description, kind, crumb, headline, lang)}\n'
+            f'{ANALYTICS}\n<style>{CSS}{CSS_I18N if len(active_langs()) > 1 else ""}</style></head>\n<body>{header_html(lang, ui)}\n<main class="{main_cls}">{aside}<article>{body}</article></main>\n{footer_html(lang, ui, out_name if multi else None)}\n'
+            f'<div id="lb" role="dialog" aria-label="{ui["full_size_screenshot"]}"><img alt=""></div>\n'
             f'<script>{JS}</script>\n</body></html>')
-    stray = re.findall(r'href="(?:\.\./|/)?[a-z0-9-]+\.html[^"]*"', page)
+    stray = re.findall(r'href="(?:\.\./|/)?[a-z0-9/-]+\.html[^"]*"', page)
     if stray:
         raise SystemExit(f"{out_name}: internal links must not end in .html (Cloudflare Pages redirects them): {sorted(set(stray))}")
-    (site / out_name).write_text(page, encoding="utf-8")
-    print(out_name, len(page), "bytes;", body.count('class="shot"'), "figures;", body.count('<kbd'), "keycaps")
+    out = site / (L["slug"] + "/" if lang != "en" else "") / out_name
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(page, encoding="utf-8")
+    print(out.relative_to(site), len(page), "bytes;", body.count('class="shot"'), "figures;", body.count('<kbd'), "keycaps")
+
+
+# ---- the landing ------------------------------------------------------------------------------
+
+def fill_marker(page: str, name: str, content: str) -> str:
+    """Replace what is between <!--i18n:name--> and <!--/i18n:name--> in a hand-written page."""
+    pat = re.compile(rf"(<!--i18n:{name}-->).*?(<!--/i18n:{name}-->)", re.S)
+    if not pat.search(page):
+        raise SystemExit(f"index.html: marker <!--i18n:{name}--> … <!--/i18n:{name}--> not found")
+    return pat.sub(lambda m: m.group(1) + content + m.group(2), page, count=1)
+
+
+def landing_for(lang: str, english: str) -> str:
+    """The English landing with this language's alternates/switcher, then its translation."""
+    page = fill_marker(english, "alternates", alternates_html("index.html"))
+    css = f"<style>{CSS_I18N}</style>" if len(active_langs()) > 1 else ""
+    page = fill_marker(page, "css", css)
+    if lang == "en":
+        return fill_marker(page, "switcher", switcher_html(lang, "index.html"))
+    L = LANG[lang]
+    pairs = json.loads((i18n / lang / "landing.json").read_text(encoding="utf-8"))
+    for en, tr in pairs:
+        if en not in page:
+            WARNINGS.append(f"{lang}/landing.json: no longer in index.html, left in English: {en[:70]!r}")
+            continue
+        page = page.replace(en, tr)
+    url = page_url("index.html", lang)
+    page = page.replace('<html lang="en">', f'<html lang="{L["hreflang"]}"' + (' dir="rtl"' if L["dir"] == "rtl" else "") + '>', 1)
+    page = page.replace('<link rel="canonical" href="https://keep.it.com/">', f'<link rel="canonical" href="{url}">', 1)
+    page = page.replace('<meta property="og:url" content="https://keep.it.com/">', f'<meta property="og:url" content="{url}"><meta property="og:locale" content="{L["og"]}">', 1)
+    page = re.sub(r'(src|href)="img/', r'\1="/img/', page)                 # the page lives one folder down
+    page = page.replace('<a class="brand" href="#">', '<a class="brand" href="/">', 1)
+    page = re.sub(r',\s*\{"@type":"FAQPage".*?\]\}\s*\n', "\n", page, count=1, flags=re.S)   # the FAQ answers stay in the English page's data
+    page = page.replace('"url":"https://keep.it.com/","name":"Keepit","publisher"', f'"url":"https://keep.it.com/","name":"Keepit","inLanguage":["en"{"".join(", " + json.dumps(LANG[c]["hreflang"]) for c in active_langs()[1:])}],"publisher"', 1)
+    page = localize_links(page, lang)
+    return fill_marker(page, "switcher", switcher_html(lang, "index.html"))   # after localize_links: other languages on purpose
+
+
+def write_landings() -> None:
+    src = site / "index.html"
+    english = src.read_text(encoding="utf-8")
+    english = landing_for("en", english)
+    src.write_text(english, encoding="utf-8")
+    for lang in active_langs()[1:]:
+        out = site / LANG[lang]["slug"] / "index.html"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        page = landing_for(lang, english)
+        stray = re.findall(r'href="(?:\.\./|/)?[a-z0-9/-]+\.html[^"]*"', page)
+        if stray:
+            raise SystemExit(f"{out}: internal links must not end in .html: {sorted(set(stray))}")
+        out.write_text(page, encoding="utf-8")
+        print(out.relative_to(site), len(page), "bytes")
 
 
 def write_sitemap() -> None:
-    urls = [("", "1.0", "weekly", modified("../docs/site/index.html"))] + [(p[1].removesuffix(".html"), "0.8" if p[5] != "WebPage" else "0.3", "monthly", modified(p[0])) for p in PAGES]
-    body = "".join(f"<url><loc>{SITE}{u}</loc><lastmod>{d}</lastmod><changefreq>{f}</changefreq><priority>{pr}</priority></url>" for u, pr, f, d in urls)
-    (site / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{body}</urlset>\n', encoding="utf-8")
+    urls = [("index.html", "1.0", "weekly", modified("site/index.html"), "en")]
+    urls += [(p[1], "0.8" if p[5] != "WebPage" else "0.3", "monthly", modified(p[0]), "en") for p in PAGES]
+    for lang in active_langs()[1:]:
+        urls.append(("index.html", "0.9", "weekly", modified(f"i18n/{lang}/landing.json"), lang))
+        for src, out in TRANSLATED.items():
+            urls.append((out, "0.7" if out == "guide.html" else "0.3", "monthly", modified(f"i18n/{lang}/{src}"), lang))
+    multi = {"index.html"} | set(TRANSLATED.values())
+    def alts(page):
+        if page not in multi or len(active_langs()) < 2:
+            return ""
+        return "".join(f'<xhtml:link rel="alternate" hreflang="{LANG[c]["hreflang"]}" href="{page_url(page, c)}"/>' for c in active_langs()) + \
+               f'<xhtml:link rel="alternate" hreflang="x-default" href="{page_url(page, "en")}"/>'
+    body = "".join(f"<url><loc>{page_url(p, l)}</loc>{alts(p)}<lastmod>{d}</lastmod><changefreq>{f}</changefreq><priority>{pr}</priority></url>" for p, pr, f, d, l in urls)
+    ns = ' xmlns:xhtml="http://www.w3.org/1999/xhtml"' if len(active_langs()) > 1 else ""
+    (site / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"{ns}>{body}</urlset>\n', encoding="utf-8")
     (site / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE}sitemap.xml\n", encoding="utf-8")
 
 
 for p in PAGES:
     render(*p)
+for lang in active_langs()[1:]:
+    for p in PAGES:
+        if p[0] in TRANSLATED:
+            render(*p, lang=lang)
+write_landings()
 write_sitemap()
 print("sitemap.xml, robots.txt")
+for w in WARNINGS:
+    print("WARNING:", w)

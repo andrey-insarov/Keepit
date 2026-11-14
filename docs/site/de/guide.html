@@ -1,0 +1,856 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keepit-Handbuch – Clipboard-Manager für den Mac</title><link rel="icon" href="/img/icon.png?v=a1519b94"><link rel="apple-touch-icon" href="/img/icon.png?v=a1519b94">
+<meta name="description" content="So nutzt du Keepit, den kostenlosen Clipboard-Manager für den Mac: Verlaufsmenü, Tastenkürzel, Vorlagen, Viewer, Verschlüsselung und Touch ID.">
+<link rel="canonical" href="https://keep.it.com/de/guide"><link rel="alternate" hreflang="en" href="https://keep.it.com/guide"><link rel="alternate" hreflang="ru" href="https://keep.it.com/ru/guide"><link rel="alternate" hreflang="uk" href="https://keep.it.com/uk/guide"><link rel="alternate" hreflang="de" href="https://keep.it.com/de/guide"><link rel="alternate" hreflang="fr" href="https://keep.it.com/fr/guide"><link rel="alternate" hreflang="es" href="https://keep.it.com/es/guide"><link rel="alternate" hreflang="pt-BR" href="https://keep.it.com/pt-br/guide"><link rel="alternate" hreflang="ja" href="https://keep.it.com/ja/guide"><link rel="alternate" hreflang="zh-Hans" href="https://keep.it.com/zh-hans/guide"><link rel="alternate" hreflang="ar" href="https://keep.it.com/ar/guide"><link rel="alternate" hreflang="x-default" href="https://keep.it.com/guide"><meta property="og:type" content="article"><meta property="og:site_name" content="Keepit"><meta property="og:locale" content="de_DE"><meta property="og:title" content="Keepit-Handbuch – Clipboard-Manager für den Mac"><meta property="og:description" content="So nutzt du Keepit, den kostenlosen Clipboard-Manager für den Mac: Verlaufsmenü, Tastenkürzel, Vorlagen, Viewer, Verschlüsselung und Touch ID."><meta property="og:image" content="https://keep.it.com/img/social-preview.png?v=57583ec3"><meta property="og:url" content="https://keep.it.com/de/guide"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Keepit-Handbuch – Clipboard-Manager für den Mac"><meta name="twitter:description" content="So nutzt du Keepit, den kostenlosen Clipboard-Manager für den Mac: Verlaufsmenü, Tastenkürzel, Vorlagen, Viewer, Verschlüsselung und Touch ID."><meta name="twitter:image" content="https://keep.it.com/img/social-preview.png?v=57583ec3"><meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "@id": "https://keep.it.com/de/guide", "url": "https://keep.it.com/de/guide", "name": "Keepit-Handbuch", "headline": "Keepit-Handbuch", "description": "So nutzt du Keepit, den kostenlosen Clipboard-Manager für den Mac: Verlaufsmenü, Tastenkürzel, Vorlagen, Viewer, Verschlüsselung und Touch ID.", "inLanguage": "de", "isPartOf": {"@id": "https://keep.it.com/#site"}, "about": {"@id": "https://keep.it.com/#app"}, "author": {"@id": "https://keep.it.com/#org"}, "publisher": {"@id": "https://keep.it.com/#org"}, "image": "https://keep.it.com/img/social-preview.png?v=57583ec3", "dateModified": "2026-11-14", "translationOfWork": {"@id": "https://keep.it.com/guide"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Keepit", "item": "https://keep.it.com/de/"}, {"@type": "ListItem", "position": 2, "name": "Handbuch", "item": "https://keep.it.com/de/guide"}]}]}</script>
+<script defer src="https://app.eurometrics.eu/script.js?v=7cfd3b4c27be" data-website-id="0ab7fe20-0c05-4061-b037-c033dc46c1e1" data-domains="keep.it.com" data-do-not-track="true" data-exclude-search="true" data-no-storage="true"></script>
+<style>
+:root{--paper:#fbfbfd;--ink:#0f1222;--ink-2:#4b4f63;--ink-3:#696d84;--blue:#2f4fd1;--blue-deep:#1f3aa6;--blue-tint:#eef2ff;--line:#e3e5ef;--key:#fff;--key-edge:#cfd2de;--win:#fff;--sel:#2f5cf0}
+@media(prefers-color-scheme:dark){:root{--paper:#0c0d14;--ink:#f2f3f8;--ink-2:#b7bacb;--ink-3:#8e92a9;--blue:#7d9bff;--blue-deep:#a9bdff;--blue-tint:#151b35;--line:#23263a;--key:#1b1e2e;--key-edge:#3a3e56;--win:#1a1c28;--sel:#3d6bff}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:72px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;font:17px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+:focus-visible{outline:3px solid var(--sel);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:20;-webkit-backdrop-filter:saturate(180%) blur(18px);backdrop-filter:saturate(180%) blur(18px);background:color-mix(in srgb,var(--paper) 78%,transparent);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:650;color:var(--ink);font-size:20px}.brand img{width:44px;height:44px;border-radius:10px}
+nav{display:flex;gap:24px;align-items:center}nav>a{color:var(--ink-2);font-size:15px}nav>a:hover{color:var(--ink);text-decoration:none}
+.mnav{display:none;position:relative}.mnav summary{list-style:none;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--ink)}
+.mnav summary::-webkit-details-marker{display:none}.mnav summary svg{width:22px;height:22px}.mnav[open] summary{background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.mnav .links{position:absolute;right:0;top:48px;min-width:210px;padding:6px;border-radius:14px;background:var(--win);border:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.18);display:grid}
+.mnav .links a{display:block;padding:11px 14px;border-radius:9px;font-size:16px;color:var(--ink)}.mnav .links a:hover{background:var(--blue-tint);text-decoration:none}
+@media(max-width:700px){nav{gap:10px}nav>a:not(.gh){display:none}.mnav{display:block;margin-right:-8px}}
+main.wrap{display:grid;grid-template-columns:230px minmax(0,1fr);gap:56px;padding-top:48px;padding-bottom:96px}
+main.wrap.narrow{grid-template-columns:minmax(0,1fr);max-width:820px}
+aside{position:sticky;top:76px;align-self:start;max-height:calc(100vh - 96px);overflow:auto;font-size:14px;line-height:1.45;padding-right:8px}
+aside .ttl{font-weight:650;color:var(--ink);margin:0 0 10px;font-size:13px}
+aside ol{list-style:none;margin:0;padding:0}aside li{margin:0}
+aside a{display:block;color:var(--ink-2);padding:4px 0 4px 12px;border-left:2px solid var(--line)}
+aside a:hover{color:var(--ink);text-decoration:none}aside a.on{color:var(--blue);border-left-color:var(--blue)}
+aside ol ol a{padding-left:24px;font-size:13px;color:var(--ink-3)}
+@media(max-width:900px){main.wrap{grid-template-columns:minmax(0,1fr);gap:0;padding-top:32px;padding-bottom:64px}aside{position:static;max-height:none;margin-bottom:32px;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--win)}aside ol ol{display:none}}
+article{max-width:72ch;min-width:0}
+article h1{font-size:clamp(34px,5vw,52px);line-height:1.05;letter-spacing:-.03em;font-weight:750;margin:0 0 .5em}
+article h1+p{font-size:19px;color:var(--ink-2)}
+article h2{font-size:30px;line-height:1.15;letter-spacing:-.02em;font-weight:700;margin:2.2em 0 .6em;padding-top:1em;border-top:1px solid var(--line)}
+article h3{font-size:20px;font-weight:650;margin:1.8em 0 .5em}
+article p,article li{color:var(--ink);}article li{margin:.25em 0}
+article hr{border:0;border-top:1px solid var(--line);margin:2.5em 0}
+code{font:.9em ui-monospace,"SF Mono",Menlo,monospace;background:color-mix(in srgb,var(--ink) 7%,transparent);padding:2px 6px;border-radius:6px;white-space:nowrap}
+@media(max-width:600px){code{white-space:normal;overflow-wrap:anywhere}}
+pre{background:var(--blue-tint);padding:14px 18px;border-radius:12px;overflow:auto;font-size:14px;line-height:1.6;max-width:100%}pre code{background:none;padding:0;white-space:pre-wrap;word-break:break-word}
+kbd.k{display:inline-block;min-width:1.7em;padding:0 .4em;text-align:center;font:600 .82em/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text",Helvetica,Arial,sans-serif;color:var(--ink);background:var(--key);border:1px solid var(--key-edge);border-bottom-width:2px;border-radius:6px;white-space:nowrap;vertical-align:baseline}
+.tbl{overflow-x:auto;margin:1.2em 0}table{border-collapse:collapse;width:100%;font-size:15.5px}th,td{text-align:left;padding:9px 12px 9px 0;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--ink-3);font-weight:600;font-size:14px}td code{display:inline-block;margin:1px 0}
+td:first-child{white-space:nowrap}@media(max-width:600px){td:first-child{white-space:normal}}
+figure.shot{margin:1.6em 0;width:100%}figure.shot a{display:block}figure.shot img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line);box-shadow:0 12px 32px -8px rgba(15,18,34,.25);cursor:zoom-in}
+figure.shot figcaption{font-size:14px;color:var(--ink-3);margin-top:8px}
+.slot{border:2px dashed var(--line);border-radius:12px;padding:28px;text-align:center;color:var(--ink-3);font-size:15px}
+.contents{display:none}
+.fb{margin:1.4em 0 2em;padding:22px 24px;border:1px solid var(--line);border-radius:16px;background:var(--win);display:grid;gap:14px}
+.fb label{display:grid;gap:6px;font-size:14px;font-weight:600;color:var(--ink-2)}.fb .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:600px){.fb .row2{grid-template-columns:1fr}}
+.fb .hint{font-weight:400;color:var(--ink-3)}
+.fb input[type=text],.fb input[type=email],.fb select,.fb textarea{font:16px/1.4 inherit;color:var(--ink);background:var(--win);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;box-sizing:border-box}
+.fb textarea{resize:vertical;min-height:140px}.fb input:focus,.fb select:focus,.fb textarea:focus{outline:2px solid var(--blue);outline-offset:1px;border-color:transparent}
+.fb input[type=file]{font-size:14px;color:var(--ink-2)}
+.fb-list{list-style:none;margin:-6px 0 0;padding:0;display:grid;gap:6px}.fb-list li{font-size:14px;color:var(--ink-2);display:flex;align-items:center;gap:10px}.fb-list button{font:inherit;font-size:13px;color:var(--blue);background:none;border:0;padding:0;cursor:pointer}.fb-list button:hover{text-decoration:underline}
+.fb .btn{justify-self:start;display:inline-flex;align-items:center;padding:12px 22px;border-radius:12px;font-weight:600;font-size:16px;line-height:1;border:0;cursor:pointer;background:var(--blue);color:#fff}
+.fb .btn[disabled]{opacity:.6;cursor:default}.fb-err{color:#c0392b;font-size:14px;margin:0}.fb-legal{font-size:13px;margin:-6px 0 0}.fb-ok{color:var(--ink);margin:0;padding:18px 20px;border-radius:12px;background:var(--blue-tint);line-height:1.5}
+footer{border-top:1px solid var(--line);padding:36px 0 64px;color:var(--ink-3);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}footer a{color:var(--ink-2)}
+#lb{position:fixed;inset:0;background:rgba(5,7,20,.86);display:none;align-items:center;justify-content:center;padding:24px;z-index:30;cursor:zoom-out}
+#lb.on{display:flex}#lb img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+
+.langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
+.tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
+code,kbd,pre{direction:ltr;unicode-bidi:isolate}
+[dir=rtl] .mnav .links{right:auto;left:0}
+@media(max-width:700px){[dir=rtl] .mnav{margin-right:0;margin-left:-8px}}
+[dir=rtl] aside{padding-right:0;padding-left:8px}
+[dir=rtl] aside a{padding:4px 12px 4px 0;border-left:0;border-right:2px solid var(--line)}
+[dir=rtl] aside a.on{border-right-color:var(--blue)}
+[dir=rtl] aside ol ol a{padding-left:0;padding-right:24px}
+[dir=rtl] th,[dir=rtl] td{text-align:right;padding:9px 0 9px 12px}
+[dir=rtl] .fb .btn{justify-self:end}
+</style></head>
+<body><header><div class="wrap">
+  <a class="brand" href="/de/"><img src="/img/icon.png?v=a1519b94" alt="">Keepit</a>
+  <nav><a href="/de/#features">Funktionen</a><a href="/de/guide">Handbuch</a><a href="/security">Sicherheit</a><a href="/de/support">Support</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a><details class="mnav"><summary aria-label="Menü"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><div class="links"><a href="/de/#features">Funktionen</a><a href="/de/#privacy">Datenschutz</a><a href="/de/#install">Installation</a><a href="/de/guide">Handbuch</a><a href="/security">Sicherheit</a><a href="/de/support">Support</a></div></details></nav>
+</div></header>
+<main class="wrap"><aside aria-label="Inhalt"><p class="ttl">Auf dieser Seite</p><ol><li><a href="#part-1-getting-started">Teil 1: Erste Schritte</a><ol><li><a href="#install">Installation</a></li><li><a href="#first-launch">Erster Start</a></li></ol></li><li><a href="#part-2-everyday-use">Teil 2: Im Alltag</a><ol><li><a href="#the-history-menu">Das Verlaufsmenü</a></li><li><a href="#search-and-preview">Suche und Vorschau</a></li><li><a href="#paste-without-the-menu">Einfügen ohne Menü</a></li><li><a href="#the-paste-queue">Die Einfügewarteschlange</a></li><li><a href="#the-extended-menu">Das erweiterte Menü</a></li></ol></li><li><a href="#part-3-templates">Teil 3: Vorlagen</a><ol><li><a href="#creating-and-organising">Anlegen und ordnen</a></li><li><a href="#placeholders">Platzhalter</a></li><li><a href="#templates-that-ask-questions">Vorlagen, die Fragen stellen</a></li></ol></li><li><a href="#part-4-the-viewer">Teil 4: Der Viewer</a></li><li><a href="#part-5-settings">Teil 5: Einstellungen</a></li><li><a href="#part-6-security">Teil 6: Sicherheit</a><ol><li><a href="#password-and-encryption">Passwort und Verschlüsselung</a></li><li><a href="#touch-id">Touch ID</a></li><li><a href="#recovery-phrase">Wiederherstellungsphrase</a></li><li><a href="#backup">Backup</a></li></ol></li><li><a href="#part-7-advanced">Teil 7: Für Fortgeschrittene</a><ol><li><a href="#automation-the-keepit-url-scheme">Automatisierung: das URL-Schema keepit://</a></li><li><a href="#updates">Updates</a></li><li><a href="#uninstalling">Deinstallieren</a></li></ol></li><li><a href="#reference">Referenz</a><ol><li><a href="#troubleshooting">Fehlerbehebung</a></li><li><a href="#keyboard-cheat-sheet">Tastenkürzel im Überblick</a></li><li><a href="#placeholder-cheat-sheet">Platzhalter im Überblick</a></li></ol></li></ol></aside><article><h1 id="keepit-user-guide">Keepit-Handbuch</h1><p class="tr-note">Aus dem Englischen übersetzt. Original: <a href="/guide">English</a>.</p>
+<p>Keepit verwaltet den Verlauf der Zwischenablage und Vorlagen unter macOS. Es sitzt in der Menüleiste,
+merkt sich alles, was du kopierst, und fügt jeden Eintrag per Tastenkürzel wieder ein. Alle Kürzel
+unten sind die Standardbelegung, jedes lässt sich unter <em>Einstellungen → Kurzbefehle</em> ändern. Dieses
+Handbuch beschreibt Keepit 3. Das Handbuch für Keepit 2.x bleibt unverändert unter
+<a href="https://keep.it.com/v2/guide">keep.it.com/v2/guide</a> (englisch) erhalten.</p>
+<figure class="shot" style="max-width:629px"><a href="/img/guide/menu.png?v=ef1dd207" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/menu.png?v=ef1dd207" alt="Das Verlaufsmenü" width="629" height="778" loading="lazy"></a><figcaption>Das Verlaufsmenü</figcaption></figure>
+<p><strong>Inhalt</strong></p>
+<ul>
+<li><a href="#part-1--getting-started">Teil 1: Erste Schritte</a>: <a href="#install">Installation</a> · <a href="#first-launch">Erster Start</a></li>
+<li><a href="#part-2--everyday-use">Teil 2: Im Alltag</a>: <a href="#the-history-menu">Das Verlaufsmenü</a> · <a href="#search-and-preview">Suche und Vorschau</a> · <a href="#paste-without-the-menu">Einfügen ohne Menü</a> · <a href="#the-paste-queue">Die Einfügewarteschlange</a> · <a href="#the-extended-menu">Das erweiterte Menü</a></li>
+<li><a href="#part-3--templates">Teil 3: Vorlagen</a>: <a href="#creating-and-organising">Anlegen und ordnen</a> · <a href="#placeholders">Platzhalter</a> · <a href="#templates-that-ask-questions">Vorlagen, die Fragen stellen</a></li>
+<li><a href="#part-4--the-viewer">Teil 4: Der Viewer</a></li>
+<li><a href="#part-5--settings">Teil 5: Einstellungen</a></li>
+<li><a href="#part-6-security">Teil 6: Sicherheit</a>: <a href="#password-and-encryption">Passwort und Verschlüsselung</a> · <a href="#touch-id">Touch ID</a> · <a href="#recovery-phrase">Wiederherstellungsphrase</a> · <a href="#backup">Backup</a></li>
+<li><a href="#part-7--advanced">Teil 7: Für Fortgeschrittene</a>: <a href="#automation-the-keepit-url-scheme">Automatisierung</a> · <a href="#updates">Updates</a> · <a href="#uninstalling">Deinstallieren</a></li>
+<li><a href="#reference">Referenz</a>: <a href="#troubleshooting">Fehlerbehebung</a> · <a href="#keyboard-cheat-sheet">Tastenkürzel im Überblick</a> · <a href="#placeholder-cheat-sheet">Platzhalter im Überblick</a></li>
+</ul>
+<hr />
+<h2 id="part-1-getting-started">Teil 1: Erste Schritte</h2>
+<h3 id="install">Installation</h3>
+<p><strong>Homebrew</strong> ist der empfohlene Weg, weil <code>brew upgrade</code> die App aktuell hält:</p>
+<pre><code class="language-bash">brew tap andrey-insarov/keepit https://github.com/andrey-insarov/Keepit
+brew install --cask andrey-insarov/keepit/keepit
+</code></pre>
+<p><strong>DMG:</strong> Lade <code>Keepit-&lt;version&gt;.dmg</code> von der Seite der
+<a href="https://github.com/andrey-insarov/Keepit/releases/latest">neuesten Version</a>, öffne die Datei und zieh Keepit
+in den Ordner <em>Programme</em>.</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/dmg.png?v=2115ef2c" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/dmg.png?v=2115ef2c" alt="Das DMG: Keepit in den Ordner „Programme“ ziehen" width="636" height="396" loading="lazy"></a><figcaption>Das DMG: Keepit in den Ordner „Programme“ ziehen</figcaption></figure>
+<p>Beim ersten Öffnen bestätigt macOS, dass die App aus dem Internet stammt und von Apple geprüft wurde.
+Klicke auf <em>Öffnen</em>.</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/gatekeeper.png?v=d79051e5" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/gatekeeper.png?v=d79051e5" alt="Gatekeeper-Bestätigung von macOS" width="336" height="336" loading="lazy"></a><figcaption>Gatekeeper-Bestätigung von macOS</figcaption></figure>
+<p>Keepit ist signiert und notarisiert, aktualisiert sich selbst und läuft nativ auf Macs mit Apple
+Silicon und Intel ab macOS 13 Ventura.</p>
+<h3 id="first-launch">Erster Start</h3>
+<p>Keepit ist eine Menüleisten-App: Es gibt kein Dock-Symbol und kein Fenster, solange du keins öffnest.
+Nach dem ersten Start erscheint das Symbol 📎 in der Menüleiste, und Keepit stellt drei Fragen.</p>
+<p><strong>1. Aus einem Backup wiederherstellen?</strong> Wenn das ein neuer Mac ist und du ein Keepit-Backup hast
+(ein automatisches in iCloud Drive oder einem anderen Ordner oder eine exportierte <code>.keepit</code>-Datei),
+holt <em>Aus Backup wiederherstellen …</em> Verlauf und Vorlagen zurück, bevor irgendetwas anderes passiert.
+Die Datei entsperrst du mit dem Passwort des Mac, von dem sie stammt, oder mit dessen
+Wiederherstellungsphrase. <em>Neu beginnen</em> überspringt den Schritt. Dieselbe Wiederherstellung findest du
+später unter <em>Einstellungen → Backup → Wiederherstellen …</em>, und auch ein Doppelklick auf eine
+<code>.keepit</code>-Datei im Finder öffnet sie. Die Einzelheiten stehen unter <a href="#backup">Backup</a>.</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/restore-first-run.png?v=cfa1e73f" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/restore-first-run.png?v=cfa1e73f" alt="Die erste Frage auf einem neuen Mac: aus einem Backup wiederherstellen oder neu beginnen" width="336" height="408" loading="lazy"></a><figcaption>Die erste Frage auf einem neuen Mac: aus einem Backup wiederherstellen oder neu beginnen</figcaption></figure>
+<p><strong>2. Ein Passwort (optional).</strong> Keepit kann Verlauf und Vorlagen verschlüsselt speichern und per
+Touch ID entsperren. Entscheiden kannst du jetzt oder später unter <em>Einstellungen → Sicherheit</em>;
+<a href="#part-6-security">Teil 6</a> erklärt, wie das funktioniert. Mit <em>Nicht jetzt</em> bleibt alles
+unverschlüsselt auf der Festplatte. Hast du gerade ein Backup mit seinem Passwort wiederhergestellt,
+bietet Keepit an, dieses Passwort für diesen Mac zu übernehmen.</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/password-offer.png?v=a377f4be" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/password-offer.png?v=a377f4be" alt="Das Passwort-Angebot beim ersten Start" width="336" height="410" loading="lazy"></a><figcaption>Das Passwort-Angebot beim ersten Start</figcaption></figure>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/no-password-notice.png?v=0da3b4f2" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/no-password-notice.png?v=0da3b4f2" alt="„Nicht jetzt“ gewählt: eine klare Aussage, was das bedeutet und wo es sich ändern lässt" width="336" height="342" loading="lazy"></a><figcaption>„Nicht jetzt“ gewählt: eine klare Aussage, was das bedeutet und wo es sich ändern lässt</figcaption></figure>
+<p><strong>3. Die Berechtigung für Bedienungshilfen.</strong> Um für dich einzufügen, sendet Keepit ⌘V an die App, in
+der du gearbeitet hast. macOS erlaubt das nur Apps, die unter <em>Systemeinstellungen → Datenschutz &amp;
+Sicherheit → Bedienungshilfen</em> aufgeführt sind. Klicke auf <em>Systemeinstellungen öffnen</em> und schalte
+Keepit ein. Ohne die Berechtigung zeichnet Keepit weiter auf und kopiert, aber ⌘V drückst du selbst.</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/accessibility-prompt.png?v=53fda070" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/accessibility-prompt.png?v=53fda070" alt="Keepit bittet um die Berechtigung für Bedienungshilfen" width="336" height="462" loading="lazy"></a><figcaption>Keepit bittet um die Berechtigung für Bedienungshilfen</figcaption></figure>
+<figure class="shot" style="max-width:762px"><a href="/img/guide/accessibility-settings.png?v=3324189c" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/accessibility-settings.png?v=3324189c" alt="Keepit ist unter Datenschutz &amp; Sicherheit → Bedienungshilfen eingeschaltet" width="762" height="598" loading="lazy"></a><figcaption>Keepit ist unter Datenschutz &amp; Sicherheit → Bedienungshilfen eingeschaltet</figcaption></figure>
+<p>Keepit startet standardmäßig bei der Anmeldung. Unter <em>Einstellungen → Allgemein</em> lässt sich das
+abschalten.</p>
+<hr />
+<h2 id="part-2-everyday-use">Teil 2: Im Alltag</h2>
+<h3 id="the-history-menu">Das Verlaufsmenü</h3>
+<p>Drücke <strong>⌥M</strong> in einer beliebigen App oder klicke auf das Symbol 📎. Das Menü öffnet sich am
+Textcursor, wenn Keepit ihn findet, sonst am Mauszeiger.</p>
+<p>Jede Zeile ist ein kopierter Eintrag, der neueste steht oben. Er ist <strong>fett</strong> dargestellt, denn er
+liegt gerade in der Zwischenablage. Das Symbol zeigt die App, aus der du kopiert hast. Endet ein Titel
+auf <code>…</code>, hat der Eintrag mehr Zeilen, als das Menü zeigt. Bilder erscheinen als Miniatur, Dateilisten
+mit den Dateinamen.</p>
+<figure class="shot" style="max-width:1045px"><a href="/img/guide/menu-preview.png?v=3a4dbc04" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/menu-preview.png?v=3a4dbc04" alt="Das Vorschaufenster neben dem Menü zeigt den markierten Eintrag vollständig, mit Quell-App, Zeit und Größe" width="1045" height="648" loading="lazy"></a><figcaption>Das Vorschaufenster neben dem Menü zeigt den markierten Eintrag vollständig, mit Quell-App, Zeit und Größe</figcaption></figure>
+<figure class="shot" style="max-width:1088px"><a href="/img/guide/menu-image.png?v=d7b4e3af" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/menu-image.png?v=d7b4e3af" alt="Ein Bild im Verlauf: Miniatur im Menü, das ganze Bild in der Vorschau" width="1088" height="640" loading="lazy"></a><figcaption>Ein Bild im Verlauf: Miniatur im Menü, das ganze Bild in der Vorschau</figcaption></figure>
+<p>Um einen Eintrag einzufügen, klicke ihn an, oder gehe mit ↑ ↓ zu ihm und drücke den Zeilenschalter,
+oder drücke seine Nummer zusammen mit <strong>⌃⌥</strong>: <kbd class="k">⌃⌥3</kbd> fügt Eintrag 3 ein. Dieselbe Taste funktioniert
+überall, auch ohne das Menü zu öffnen.</p>
+<p>Unter dem Verlauf stehen das Untermenü <em>Vorlagen</em>, der Viewer (⌥E), die Einstellungen (⌥S), <em>Verlauf
+löschen</em> (⌥C), <em>Aufzeichnung 10 Minuten pausieren</em> (⌥P, wenn du etwas tippst, das nicht aufgezeichnet
+werden soll), <em>Keepit sperren</em> (⌥L), sofern ein Passwort gesetzt ist, und die Update-Funktion. <strong>⌥T</strong>
+öffnet das Vorlagenmenü allein. Alle diese Tasten funktionieren auch ohne das Menü.</p>
+<h3 id="search-and-preview">Suche und Vorschau</h3>
+<p><strong>Suche.</strong> Tippe einfach los, während das Menü offen ist: Das Feld oben filtert die Liste nach Titel
+und nach dem vollen Text, also wird auch eine Zeile mitten in einem langen Eintrag gefunden. Der
+Zeilenschalter fügt den ersten Treffer ein, Esc leert das Feld, ein zweites Esc schließt das Menü.</p>
+<p><strong>Vorschau.</strong> Zeig mit der Maus auf einen Eintrag (oder geh mit der Tastatur zu ihm), und ein Fenster
+neben dem Menü zeigt das ganze Bild oder die ersten Zeilen eines langen Textes, dazu Quell-App, Datum
+und Größe. Kurze einzeilige Texte haben keine Vorschau, weil die Menüzeile sie schon vollständig zeigt.</p>
+<figure class="shot" style="max-width:907px"><a href="/img/guide/search-preview.png?v=86998c10" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/search-preview.png?v=86998c10" alt="Tippen filtert das Menü; das Vorschaufenster zeigt den markierten Eintrag" width="907" height="524" loading="lazy"></a><figcaption>Tippen filtert das Menü; das Vorschaufenster zeigt den markierten Eintrag</figcaption></figure>
+<h3 id="paste-without-the-menu">Einfügen ohne Menü</h3>
+<p>Systemweite Tastenkürzel arbeiten aus jeder App heraus mit dem Verlauf in seinem aktuellen Zustand.
+Eintrag 1 ist dabei die Zwischenablage:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Tasten</th>
+<th>Was passiert</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><kbd class="k">⌃⌥1</kbd> … <kbd class="k">⌃⌥9</kbd>, <kbd class="k">⌃⌥0</kbd></td>
+<td>Verlaufseintrag 1–10 einfügen</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥⇧V</kbd></td>
+<td>Den <em>vorherigen</em> Eintrag (Eintrag 2) einfügen; noch einmal drücken, um zurückzutauschen</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥V</kbd></td>
+<td>Zwischenablage als reinen Text einfügen, ohne Formatierung</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
+<td>Zwischenablage in GROSSBUCHSTABEN / kleinbuchstaben / Mit Großen Wortanfängen / mit großem Satzanfang einfügen</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥W</kbd></td>
+<td>Zwischenablage ohne Leerraum am Anfang und Ende einfügen</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥J</kbd></td>
+<td>Zwischenablage zu einer Zeile zusammengefasst einfügen</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥K</kbd> <kbd class="k">⌃⌥D</kbd> <kbd class="k">⌃⌥Y</kbd></td>
+<td>Zwischenablage durchgestrichen / unterstrichen / mit Wellenlinie einfügen, als reiner Text, der überall gleich aussieht, auch in Chats (siehe unten)</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥X</kbd></td>
+<td>Zwischenablage ohne diese Verzierungen einfügen</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥A</kbd></td>
+<td>Zwischenablage zu Vorlagen hinzufügen</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥⌫</kbd></td>
+<td>Den neuesten Eintrag aus dem Verlauf löschen</td>
+</tr>
+</tbody>
+</table></div>
+<p>Die drei Verzierungen sind keine Formatierung: Keepit setzt hinter jedes Zeichen ein
+<em>kombinierendes Zeichen</em> aus Unicode (d̶u̶r̶c̶h̶g̶e̶s̶t̶r̶i̶c̶h̶e̶n̶, u̲n̲t̲e̲r̲s̲t̲r̲i̲c̲h̲e̲n̲, W̰ḛl̰l̰ḛ), deshalb sieht der Text im Messenger,
+im Webformular und im Terminal gleich aus, wo echte Formatierung verloren ginge. Der Preis dafür:
+Solcher Text ist dreimal so groß, die Suche nach dem normalen Wort findet ihn nicht, Screenreader
+stolpern darüber, und manche Schriften zeichnen die Linie ungleichmäßig. <em>Verzierungen entfernen</em>
+(<kbd class="k">⌃⌥X</kbd>) nimmt die Zeichen wieder heraus, auch aus Text, der anderswo verziert wurde. In beiden
+Richtungen werden die Zeichen nach Codepunkt entfernt, egal woher sie stammen: Eine Lautschrift, die
+dieselben Zeichen als Buchstaben verwendet (U+0330 ist auch das IPA-Zeichen für Knarrstimme), verliert
+sie, und auch die drei Verzierungen entfernen sie zuerst. Bei eingeschaltetem VoiceOver ist <code>⌃⌥</code>
+dessen eigene Sondertaste: Gib <em>Aktionen für den neuesten Eintrag</em> unter Einstellungen → Kurzbefehle
+eine andere.</p>
+<p>Umwandlungen gelten für Text. Bei einem Bild oder einer Dateiliste ertönt nur ein Signalton. Alles
+lässt sich unter <em>Einstellungen → Kurzbefehle</em> ändern oder abschalten.</p>
+<h3 id="the-paste-queue">Die Einfügewarteschlange</h3>
+<p>Manchmal willst du an einer Stelle fünf Dinge kopieren und sie woanders der Reihe nach einfügen:
+Zellen in ein Formular, Zeilen von einer Seite in ein Dokument. Die Einfügewarteschlange erledigt das
+ohne Menü:</p>
+<ol>
+<li>Drücke <strong>⌥N</strong> (oder wähle <em>Einfügewarteschlange starten</em> im Menü). Das Symbol in der Menüleiste
+   zeigt einen roten Punkt und einen Zähler: <code>📎 ● 0</code>.</li>
+<li>Kopiere wie gewohnt mit ⌘C, so oft du willst. Der Zähler steigt mit jeder Kopie: 1, 2, 3… Alles
+   landet auch im Verlauf.</li>
+</ol>
+<figure class="shot" style="max-width:350px"><a href="/img/guide/queue-menubar.png?v=808fb52c" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/queue-menubar.png?v=808fb52c" alt="Die Menüleiste bei laufender Warteschlange: roter Punkt und Zähler" width="350" height="40" loading="lazy"></a><figcaption>Die Menüleiste bei laufender Warteschlange: roter Punkt und Zähler</figcaption></figure>
+<ol>
+<li>Wechsle dorthin, wo der Text hin soll, und drücke für jeden Eintrag <strong>⌥V</strong>. Was du zuerst kopiert
+   hast, wird zuerst eingefügt, der Zähler sinkt. ⌘V fügt weiterhin wie gewohnt die Zwischenablage
+   ein, du kannst also beides mischen.</li>
+<li>Die Warteschlange schaltet sich ab, wenn der letzte Eintrag eingefügt ist oder wenn zwei Minuten
+   lang nichts kopiert oder eingefügt wurde (die Zeit ist einstellbar). Ein weiteres ⌥N beendet sie
+   vorzeitig.</li>
+</ol>
+<p><strong>⌥⇧N</strong> fügt alles, was noch in der Warteschlange ist, auf einmal ein. Die Einträge werden mit einem
+Zeilenumbruch, einem Tabulator, einem Leerzeichen oder gar nicht verbunden. Das wählst du im Bereich
+<em>Einfügewarteschlange</em> der Einstellungen, wo auch die Wartezeit steht. Solange die Warteschlange
+läuft, markiert das Verlaufsmenü ihre Einträge: <code>▶</code> ist als Nächstes dran, <code>○</code> wartet noch, <code>✓</code> ist
+schon eingefügt.</p>
+<figure class="shot" style="max-width:610px"><a href="/img/guide/queue-menu.png?v=a61b1a15" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/queue-menu.png?v=a61b1a15" alt="Das Verlaufsmenü bei laufender Warteschlange: ○ wartet, ▶ als Nächstes, ✓ eingefügt; die Menüzeile zeigt, wie viele übrig sind" width="610" height="772" loading="lazy"></a><figcaption>Das Verlaufsmenü bei laufender Warteschlange: ○ wartet, ▶ als Nächstes, ✓ eingefügt; die Menüzeile zeigt, wie viele übrig sind</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-queue.png?v=d30c5141" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/prefs-queue.png?v=d30c5141" alt="Einstellungen → Einfügewarteschlange" width="636" height="453" loading="lazy"></a><figcaption>Einstellungen → Einfügewarteschlange</figcaption></figure>
+<h3 id="the-extended-menu">Das erweiterte Menü</h3>
+<p>Halte <strong>⇧</strong> gedrückt, während das Verlaufsmenü offen ist, und jeder Eintrag bekommt ein Untermenü <code>▸</code>
+mit allen Aktionen für diesen Eintrag: Einfügen, Als reinen Text einfügen, Nur kopieren (in die
+Zwischenablage, ohne Einfügen), die Umwandlungen unter <em>Einfügen als</em>, Zu Vorlagen hinzufügen, Im
+Viewer anzeigen, Löschen. Zeig auf einen Eintrag oder drücke →, um es zu öffnen. Sobald es offen ist,
+kannst du ⇧ loslassen.</p>
+<figure class="shot" style="max-width:805px"><a href="/img/guide/extended-menu.png?v=8b44e749" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/extended-menu.png?v=8b44e749" alt="⇧ gedrückt halten: Jeder Eintrag bekommt ein Untermenü; beim neuesten Eintrag zeigt es die systemweiten Tastenkürzel" width="805" height="735" loading="lazy"></a><figcaption>⇧ gedrückt halten: Jeder Eintrag bekommt ein Untermenü; beim neuesten Eintrag zeigt es die systemweiten Tastenkürzel</figcaption></figure>
+<p>Beim neuesten Eintrag führt das Untermenü die systemweiten Tastenkürzel aus der Tabelle oben auf. Es
+sind dieselben Aktionen mit denselben Tasten, du kannst sie also hier lernen. Andere Einträge zeigen
+die Aktionen ohne Tasten: Ein Kürzel funktioniert entweder überall oder wird nicht angezeigt.</p>
+<figure class="shot" style="max-width:763px"><a href="/img/guide/extended-menu-item2.png?v=014734f0" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/extended-menu-item2.png?v=014734f0" alt="Bei anderen Einträgen: dieselben Aktionen, keine Tastenkürzel" width="763" height="665" loading="lazy"></a><figcaption>Bei anderen Einträgen: dieselben Aktionen, keine Tastenkürzel</figcaption></figure>
+<figure class="shot" style="max-width:765px"><a href="/img/guide/extended-menu-image.png?v=8f8e3b22" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/extended-menu-image.png?v=8f8e3b22" alt="Bei einem Bild sind die Textaktionen ausgegraut; es gelten nur Einfügen, Nur kopieren, Zu Vorlagen hinzufügen, Im Viewer anzeigen und Löschen" width="765" height="655" loading="lazy"></a><figcaption>Bei einem Bild sind die Textaktionen ausgegraut; es gelten nur Einfügen, Nur kopieren, Zu Vorlagen hinzufügen, Im Viewer anzeigen und Löschen</figcaption></figure>
+<hr />
+<h2 id="part-3-templates">Teil 3: Vorlagen</h2>
+<p>Vorlagen sind Einträge, die du dauerhaft behältst: Signaturen, Adressen, Standardantworten,
+Code-Schnipsel, ein Logo, das du oft einfügst. Sie liegen in einem Baum mit Ordnern und erscheinen im
+Untermenü <em>Vorlagen</em> des Verlaufsmenüs und unter <strong>⌥T</strong>. Eine frische Installation bringt einen
+Ordner <em>Beispiele</em> mit (eine Begrüßung, das heutige Datum, ein Zitat der Zwischenablage und eine
+Signatur), damit du siehst, was Vorlagen können, bevor du eigene schreibst. Lösche oder bearbeite sie
+nach Belieben (<em>Zurücksetzen …</em> in den Einstellungen bringt sie zurück).</p>
+<figure class="shot" style="max-width:660px"><a href="/img/guide/template-examples.png?v=c143a1d7" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/template-examples.png?v=c143a1d7" alt="Der Ordner Beispiele: Beim Zeigen auf einen Eintrag erscheint sein Text" width="660" height="209" loading="lazy"></a><figcaption>Der Ordner Beispiele: Beim Zeigen auf einen Eintrag erscheint sein Text</figcaption></figure>
+<figure class="shot" style="max-width:738px"><a href="/img/guide/template-menu-letters.png?v=ea96333e" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/template-menu-letters.png?v=ea96333e" alt="Das Vorlagenmenü: Ordner öffnen sich als Untermenüs, Buchstaben nach &amp; werden zu Kurztasten" width="738" height="715" loading="lazy"></a><figcaption>Das Vorlagenmenü: Ordner öffnen sich als Untermenüs, Buchstaben nach &amp; werden zu Kurztasten</figcaption></figure>
+<h3 id="creating-and-organising">Anlegen und ordnen</h3>
+<p><strong>Eine Vorlage hinzufügen</strong></p>
+<ul>
+<li>Aus dem Verlaufsmenü: <kbd class="k">⌃⌥A</kbd> für den neuesten Eintrag, <em>Zwischenablage zu Vorlagen hinzufügen</em> ganz
+  unten oder ⇧ → Untermenü des Eintrags → <em>Zu Vorlagen hinzufügen</em> für jeden beliebigen Eintrag.</li>
+<li>Im Viewer: Wähle einen Verlaufseintrag und klicke auf <em>Zu Vorlagen hinzufügen</em>, oder zieh ihn auf den
+  Vorlagenbaum. <em>Neuer Eintrag</em> legt eine leere Textvorlage an; <em>Neuer Eintrag aus Datei …</em>
+  (Kontextmenü) erstellt eine aus einer Text- oder Bilddatei.</li>
+</ul>
+<p><strong>Ordnen</strong></p>
+<ul>
+<li><em>Neuer Ordner</em> legt einen Ordner an. Zieh Einträge zwischen Ordnern hin und her oder nutze <em>Nach
+  oben</em> / <em>Nach unten</em> im Kontextmenü.</li>
+<li>Eine Vorlage mit dem Namen <code>-</code> wird im Menü zur Trennlinie.</li>
+<li>Ein <code>&amp;</code> vor einem Buchstaben im Namen (etwa <code>&amp;Signatur</code>) macht diesen Buchstaben zur Kurztaste im
+  Vorlagenmenü: Drücke <code>S</code>, während das Menü offen ist.</li>
+<li><em>Tastenkürzel festlegen …</em> im Kontextmenü gibt einer Vorlage ein eigenes systemweites Kürzel.</li>
+<li>Eine Vorlage ohne Namen zeigt ihre erste Zeile. <em>Umbenennen</em> und <em>Namen löschen</em> stehen im
+  Kontextmenü, oder du bearbeitest das Feld <em>Name</em> über dem Text.</li>
+</ul>
+<h3 id="placeholders">Platzhalter</h3>
+<p>Textvorlagen können Platzhalter der Form <code>{…}</code> enthalten, die beim Einfügen ausgefüllt werden. Alles
+andere wird unverändert eingefügt. Im Viewer listet <strong>Einfügen ▾</strong> alle Platzhalter auf und setzt den
+gewählten an die Cursorposition, du musst dir also nichts merken.</p>
+<figure class="shot" style="max-width:717px"><a href="/img/guide/template-examples-date.png?v=8b048d0d" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/template-examples-date.png?v=8b048d0d" alt="Das Beispiel „Heutiges Datum“: {date:EEEE, d MMMM yyyy} wird beim Einfügen zum aktuellen Datum" width="717" height="209" loading="lazy"></a><figcaption>Das Beispiel „Heutiges Datum“: {date:EEEE, d MMMM yyyy} wird beim Einfügen zum aktuellen Datum</figcaption></figure>
+<figure class="shot" style="max-width:650px"><a href="/img/guide/insert-menu.png?v=4fa57206" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/insert-menu.png?v=4fa57206" alt="Einfügen ▾ im Viewer listet alle Platzhalter auf" width="650" height="770" loading="lazy"></a><figcaption>Einfügen ▾ im Viewer listet alle Platzhalter auf</figcaption></figure>
+<p>Die nützlichsten:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Platzhalter</th>
+<th>Ergebnis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{date}</code> <code>{time}</code> <code>{datetime}</code></td>
+<td>Heutiges Datum / aktuelle Uhrzeit im Systemformat</td>
+</tr>
+<tr>
+<td><code>{date:yyyy-MM-dd}</code></td>
+<td>Beliebiges Format (<code>yyyy MM dd EEEE HH mm …</code>)</td>
+</tr>
+<tr>
+<td><code>{date:long}</code> <code>{time:short}</code> <code>{datetime:medium}</code></td>
+<td>Ein benannter Stil: <code>short</code> <code>medium</code> <code>long</code> <code>full</code></td>
+</tr>
+<tr>
+<td><code>{date+7d}</code> <code>{date-1m:MMMM}</code> <code>{time+1h}</code> <code>{date+1y-2d}</code></td>
+<td>Verschoben: <code>d</code> Tage, <code>w</code> Wochen, <code>m</code> Monate, <code>y</code> Jahre, <code>h</code> Stunden; für <code>date</code>, <code>time</code>, <code>datetime</code>, auch mehrere hintereinander</td>
+</tr>
+<tr>
+<td><code>{clipboard}</code> <code>{clipboard:2}</code></td>
+<td>Die Zwischenablage oder Verlaufseintrag N</td>
+</tr>
+<tr>
+<td><code>{clipboard\|upper}</code> <code>{clipboard\|trim\|oneline}</code></td>
+<td>Filter <code>upper</code> <code>lower</code> <code>title</code> <code>trim</code> <code>oneline</code> <code>url</code>, verkettbar</td>
+</tr>
+<tr>
+<td><code>{cursor}</code></td>
+<td>Wo der Textcursor nach dem Einfügen steht</td>
+</tr>
+<tr>
+<td><code>{user}</code> <code>{username}</code> <code>{host}</code></td>
+<td>Voller Name, Accountname, Computername</td>
+</tr>
+<tr>
+<td><code>{uuid}</code> <code>{random:1-100}</code></td>
+<td>Eine neue UUID; eine Zufallszahl</td>
+</tr>
+<tr>
+<td><code>{{</code> <code>}}</code></td>
+<td>Wörtliche geschweifte Klammern: Die Vorlage <code>{{"x":1}}</code> fügt <code>{"x":1}</code> ein</td>
+</tr>
+</tbody>
+</table></div>
+<p>Platzhalternamen werden kleingeschrieben: <code>{date}</code> ist ein Platzhalter, <code>{Date}</code> und <code>{DATE}</code> sind
+Text und werden unverändert eingefügt. Stilnamen und Filter (<code>{date:LONG}</code>, <code>{clipboard|UPPER}</code>)
+dürfen beliebig geschrieben werden.</p>
+<p>Die vollständige Liste steht unter <a href="#placeholder-cheat-sheet">Platzhalter im Überblick</a>.</p>
+<h3 id="templates-that-ask-questions">Vorlagen, die Fragen stellen</h3>
+<p><code>{input:Name}</code> und <code>{choice:Label=A|B|C}</code> machen aus einer Vorlage ein kleines Formular: Beim
+Einfügen fragt Keepit zuerst die Werte ab und fügt dann den fertigen Text ein. Derselbe Name wird nur
+einmal abgefragt, egal wie oft er vorkommt. <code>{input:Name=Default}</code> füllt das Feld vor.</p>
+<figure class="shot" style="max-width:484px"><a href="/img/guide/input-dialog.png?v=8f9de78e" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/input-dialog.png?v=8f9de78e" alt="Beim Einfügen einer Vorlage mit {input:Name} wird zuerst der Wert abgefragt" width="484" height="320" loading="lazy"></a><figcaption>Beim Einfügen einer Vorlage mit {input:Name} wird zuerst der Wert abgefragt</figcaption></figure>
+<p>Zum Beispiel eine Antwortvorlage:</p>
+<pre><code>Hallo {input:Name},
+
+danke für deine Nachricht vom {date-1d}. Ich melde mich bis {date+3d:EEEE}.
+{cursor}
+{user}
+</code></pre>
+<p>Beim Einfügen fragt sie nach <em>Name</em>, setzt die Daten ein, unterschreibt mit deinem vollen Namen und
+lässt den Cursor in der leeren Zeile stehen.</p>
+<hr />
+<h2 id="part-4-the-viewer">Teil 4: Der Viewer</h2>
+<p><em>Viewer …</em> im Menü oder ein Rechtsklick auf das Symbol 📎 öffnet ein Fenster mit drei Bäumen:
+<strong>Zwischenablage</strong> (der aktuelle Inhalt, nur lesbar), <strong>Verlauf</strong> (<em>Text &amp; Dateien</em> und <em>Bilder</em>) und
+<strong>Vorlagen</strong>.</p>
+<figure class="shot" style="max-width:1004px"><a href="/img/guide/viewer.png?v=1c65e776" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/viewer.png?v=1c65e776" alt="Der Viewer mit einer ausgewählten Vorlage" width="1004" height="637" loading="lazy"></a><figcaption>Der Viewer mit einer ausgewählten Vorlage</figcaption></figure>
+<ul>
+<li>Wähle einen Eintrag, um ihn rechts zu sehen. Text lässt sich an Ort und Stelle bearbeiten, die
+  Änderungen gelten, sobald du den Editor verlässt. Ein Bild wird an den Bereich angepasst angezeigt,
+  darüber stehen Pixelmaße und Dateigröße. In Dateilisten öffnet ein Doppelklick die Datei. <em>Als
+  Hexdump anzeigen</em> im Kontextmenü zeigt die rohen Bytes.</li>
+<li>Die Symbolleiste: <em>In die Zwischenablage legen</em>, <em>Einfügen</em> (in die App, aus der du kommst), <em>Zu
+  Vorlagen hinzufügen</em>, <em>Neuer Eintrag</em>, <em>Neuer Ordner</em>, <em>Löschen</em>, <em>Einfügen ▾</em> (Platzhalter) und
+  <strong>?</strong>, also dieses Handbuch.</li>
+<li><strong>Suchen</strong> (<kbd class="k">⌘F</kbd>): Das Feld links filtert Verlauf und Vorlagen nach Name und Inhalt und hebt den
+  Treffer hervor.</li>
+<li>Zieh Verlaufseinträge in den Vorlagenbaum, um sie zu behalten, und Vorlagen in den Verlauf, um sie
+  zurückzukopieren. Die Reihenfolge änderst du durch Ziehen oder mit <em>Nach oben</em> / <em>Nach unten</em>. ⌫
+  löscht den ausgewählten Eintrag.</li>
+<li>Die Statusleiste zeigt Datum, Quell-App, Format und Größe.</li>
+</ul>
+<figure class="shot" style="max-width:1025px"><a href="/img/guide/viewer-search.png?v=88476754" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/viewer-search.png?v=88476754" alt="Die Suche im Viewer hebt Treffer hervor" width="1025" height="682" loading="lazy"></a><figcaption>Die Suche im Viewer hebt Treffer hervor</figcaption></figure>
+<hr />
+<h2 id="part-5-settings">Teil 5: Einstellungen</h2>
+<p><code>⌘,</code> im Menü, <em>Einstellungen …</em> oder ⌥S aus jeder App. Das Fenster funktioniert so, wie
+Einstellungsfenster auf dem Mac funktionieren: Wähle einen Bereich in der Symbolleiste, und jede
+Änderung gilt sofort. Einen Sichern-Knopf gibt es nicht. Schließen kannst du das Fenster mit ⌘W oder
+Esc. Jede Option mit einem <strong>?</strong> daneben hat ein Popover mit einer Erklärung.</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-general.png?v=09991ffc" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/prefs-general.png?v=09991ffc" alt="Einstellungen → Allgemein" width="636" height="463" loading="lazy"></a><figcaption>Einstellungen → Allgemein</figcaption></figure>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Bereich</th>
+<th>Was dort steht</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Allgemein</strong></td>
+<td>Beim Anmelden starten · Verlauf beim Beenden sichern, beim Start wiederherstellen · nach der Auswahl einfügen (aus = nur kopieren) · Einfügeverzögerung (erhöhe sie für Apps, die langsam in den Vordergrund kommen) · Menü am Textcursor öffnen · Updates: <em>Automatisch nach Updates suchen</em> (Version zum direkten Download; aus = überhaupt keine Netzwerkanfrage) — <a href="#updates">Updates</a></td>
+</tr>
+<tr>
+<td><strong>Kurzbefehle</strong></td>
+<td>Alle systemweiten Tastenkürzel an einem Ort, siehe unten</td>
+</tr>
+<tr>
+<td><strong>Einfügewarteschlange</strong></td>
+<td>Die drei Tasten der Warteschlange, die Wartezeit, nach der sie sich abschaltet, und was bei <em>Alle verbleibenden einfügen</em> zwischen die Einträge kommt — <a href="#the-paste-queue">Die Einfügewarteschlange</a></td>
+</tr>
+<tr>
+<td><strong>Verlauf</strong></td>
+<td>Wie viele Text-/Dateieinträge und Bilder behalten werden (1000 / 30) · Einträge vergessen, die älter sind als … · <em>Duplikate entfernen</em> (erneutes Kopieren derselben Sache holt sie nach oben) · <em>Vertrauliche Zwischenablage-Daten ignorieren</em> · die Liste ignorierter Apps (Bundle-IDs; Passwortmanager werden immer ignoriert)</td>
+</tr>
+<tr>
+<td><strong>Menü</strong></td>
+<td>Suchfeld · Nummerierung · Vorschaufenster · Tooltips · Symbole der Quell-Apps · Bildminiaturen · Einträge im Menü (wie viele der neuesten Einträge das Menü auflistet, standardmäßig 60; die übrigen bleiben durchsuchbar) · Titellänge · Höhe der Miniaturen</td>
+</tr>
+<tr>
+<td><strong>Sicherheit</strong></td>
+<td>Passwort, Touch ID, Sperren, Wiederherstellungsphrase — <a href="#part-6-security">Teil 6</a></td>
+</tr>
+<tr>
+<td><strong>Backup</strong></td>
+<td>Automatisches Backup (Statuszeile neben der Überschrift): <em>Automatisch in einen Ordner sichern</em>, der Name des Mac in den Dateien, der Ordner, wie viele Kopien behalten werden · Manuelles Backup: <em>Jetzt sichern</em>, <em>In Archiv sichern …</em> · Wiederherstellen: <em>Wiederherstellen …</em> — <a href="#backup">Backup</a></td>
+</tr>
+<tr>
+<td><strong>Erweitert</strong></td>
+<td>Abfrageintervall der Zwischenablage · Automatisierung: <em>keepit://-URL-Befehle erlauben</em> (standardmäßig aus — <a href="#automation-the-keepit-url-scheme">Automatisierung</a>) · Daten: <em>Ordner öffnen</em> · Zurücksetzen und deinstallieren: <em>Zurücksetzen …</em> (zurück zum Zustand nach der Installation, die Beispielvorlagen kommen wieder) · <em>Deinstallieren …</em> (zurücksetzen, dann App, Anmeldeobjekt, Schlüsselbundeintrag und Berechtigungen entfernen)</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-history.png?v=e8444027" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/prefs-history.png?v=e8444027" alt="Einstellungen → Verlauf: Limits und die Liste ignorierter Apps" width="636" height="504" loading="lazy"></a><figcaption>Einstellungen → Verlauf: Limits und die Liste ignorierter Apps</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-hotkeys.png?v=2f5f309f" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/prefs-hotkeys.png?v=2f5f309f" alt="Einstellungen → Kurzbefehle" width="636" height="717" loading="lazy"></a><figcaption>Einstellungen → Kurzbefehle</figcaption></figure>
+<p>Im Bereich <strong>Kurzbefehle</strong> klickst du in ein Feld und drückst eine Kombination. ⌫ schaltet eine Taste
+ab. Eine Kombination, die schon ein anderer Befehl verwendet, wird abgelehnt, der Grund steht unter
+den Feldern. <em>Auf Standard zurücksetzen</em> stellt den Satz aus ⌥ und Buchstabe wieder her (⌥M Verlauf,
+⌥T Vorlagen, ⌥E Viewer, ⌥S Einstellungen, ⌥C Verlauf löschen, ⌥P Pause, ⌥L Sperren, ⌥Q Beenden),
+dazu ⌥⇧V und ⌃⌥. <em>Eintrag nach Nummer einfügen</em> und <em>Aktionen für den neuesten Eintrag</em> nehmen nur
+Sondertasten an, die Ziffer oder den Buchstaben ergänzt Keepit. Gehört eine Kombination bereits macOS
+oder einer anderen App, meldet Keepit das beim Start. <em>Viewer</em> ⌥E, <em>Einstellungen</em> ⌥S, <em>Verlauf
+löschen</em> ⌥C, <em>Aufzeichnung pausieren</em> ⌥P, <em>Keepit sperren</em> ⌥L und <em>Keepit beenden</em> ⌥Q funktionieren
+aus jeder App und stehen im Menü neben ihren Befehlen. Auf der Mac-Tastatur schreibt ⌥ mit einem
+Buchstaben normalerweise ein Sonderzeichen (auf der deutschen Belegung etwa ⌥L = @, ⌥E = €). Wenn du
+eines davon brauchst, leg den Befehl auf eine andere Taste.</p>
+<hr />
+<h2 id="part-6-security">Teil 6: Sicherheit</h2>
+<h3 id="password-and-encryption">Passwort und Verschlüsselung</h3>
+<p><em>Einstellungen → Sicherheit → Passwort beim Start verlangen</em> verschlüsselt Verlauf und Vorlagen mit
+AES-256-GCM. Der Schlüssel wird aus deinem Passwort abgeleitet (PBKDF2, 200 000 Runden) und existiert
+nur im Arbeitsspeicher. Er wird gelöscht, wenn Keepit sperrt: bei <em>Keepit sperren</em> (<kbd class="k">⌥L</kbd>), beim
+Beenden und auf Wunsch, nachdem der Mac eine Weile gesperrt oder im Ruhezustand war. <em>Keepit
+automatisch sperren</em> steht bei einer neuen Installation auf <strong>Nie</strong> (ein Update von 3.0.3 behält die
+alte Wahl, nämlich <em>Sofort</em>, wenn das Sperren zusammen mit dem Bildschirm eingeschaltet war). Ein
+Clipboard-Manager, der nach jeder Kaffeepause sein Passwort verlangt, wird bald nicht mehr benutzt,
+und für die Momente, in denen es darauf ankommt, gibt es <kbd class="k">⌥L</kbd>. <em>Sofort</em> sperrt zusammen mit dem
+Bildschirm. <em>Nach 5 Minuten</em>, <em>Nach 15 Minuten</em> oder <em>Nach 1 Stunde</em> lassen eine kurze Abwesenheit
+unberücksichtigt: Keepit bleibt entsperrt und zeichnet weiter auf und sperrt erst, wenn der Mac die
+ganze Zeit über weg war. Dasselbe gilt, wenn Keepit startet, während der Mac schon gesperrt ist oder
+die Sitzung eines anderen Benutzers im Vordergrund läuft (etwa bei einem Neustart nach einem Update):
+Die Abwesenheit zählt ab dem Start, soweit macOS diesen Zustand an Keepit meldet (normalerweise tut es
+das; wenn nicht, beginnt die Zählung mit der nächsten Sperre oder dem nächsten Ruhezustand). Mit
+Touch ID bittet Keepit in dem Moment um eine Berührung, in dem der Mac entsperrt wird, und ist so vor
+dem ersten <kbd class="k">⌥M</kbd> bereit.</p>
+<figure class="shot" style="max-width:800px"><a href="/img/guide/set-password-keyboard.jpg?v=08002f0c" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/set-password-keyboard.jpg?v=08002f0c" alt="Passwort festlegen mit der Bildschirmtastatur. Ein Foto des Bildschirms, kein Bildschirmfoto: Auf dem Mac des Autors zeigt ein Bildschirmfoto dieser Szene nur den Dialog" width="800" height="600" loading="lazy"></a><figcaption>Passwort festlegen mit der Bildschirmtastatur. Ein Foto des Bildschirms, kein Bildschirmfoto: Auf dem Mac des Autors zeigt ein Bildschirmfoto dieser Szene nur den Dialog</figcaption></figure>
+<p>Die Passwortdialoge zeigen die aktuelle Tastaturbelegung und warnen bei aktiver Feststelltaste, ein
+abgelehntes Passwort ist also selten ein Rätsel. Die Tastaturtaste neben dem Feld öffnet eine
+<strong>Bildschirmtastatur</strong>, mit der du das Passwort per Maus eingibst: Die Klicks laufen nie als
+Tastendrücke durch das System, die Tasten werden bei jedem Öffnen neu gemischt, und die Tastatur
+bittet macOS, sie aus Bildschirmfotos und Bildschirmaufnahmen herauszuhalten (bei manchen
+Konfigurationen wird sie ausgeschlossen, garantiert ist das nicht). Gedacht ist sie für einen Mac, dem
+du nicht ganz traust, oder für einen, dessen Bildschirm gerade geteilt wird. Beim Start und nach
+einer Sperre fragt Keepit nach dem Passwort (oder Touch ID). <em>Zugang wiederherstellen…</em> nimmt
+stattdessen die Phrase aus 24 Wörtern entgegen, siehe <a href="#recovery-phrase">Wiederherstellungsphrase</a>.</p>
+<figure class="shot" style="max-width:800px"><a href="/img/guide/unlock-keyboard.jpg?v=4c0be394" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/unlock-keyboard.jpg?v=4c0be394" alt="Entsperren beim Start: Passwort, Beenden oder die Wiederherstellungsphrase; OK bleibt deaktiviert, bis etwas eingegeben ist. Aus demselben Grund fotografiert" width="800" height="600" loading="lazy"></a><figcaption>Entsperren beim Start: Passwort, Beenden oder die Wiederherstellungsphrase; OK bleibt deaktiviert, bis etwas eingegeben ist. Aus demselben Grund fotografiert</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-security.png?v=7204a4dd" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/prefs-security.png?v=7204a4dd" alt="Einstellungen → Sicherheit" width="636" height="435" loading="lazy"></a><figcaption>Einstellungen → Sicherheit</figcaption></figure>
+<h3 id="touch-id">Touch ID</h3>
+<p>Mit <em>Mit Touch ID entsperren</em> liegt der Schlüssel zusätzlich in der Secure Enclave, geschützt durch
+deinen Fingerabdruck: Keepit bittet um eine Berührung statt um das Passwort. Das Passwort
+funktioniert weiterhin als Ausweg (die Passwort-Taste im Dialog). Ist der Deckel geschlossen und ein
+externes Magic Keyboard mit Touch ID angeschlossen, fragt Keepit dort. Mit <em>Passwortänderung per
+Touch ID erlauben</em> kann ein Fingerabdruck beim Ändern des Passworts das alte Passwort ersetzen.</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/touch-id.png?v=5e119bff" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/touch-id.png?v=5e119bff" alt="Entsperren per Touch ID; das Passwort bleibt als Ausweg" width="336" height="313" loading="lazy"></a><figcaption>Entsperren per Touch ID; das Passwort bleibt als Ausweg</figcaption></figure>
+<h3 id="recovery-phrase">Wiederherstellungsphrase</h3>
+<p>Wenn du ein Passwort festlegst, zeigt Keepit einmal eine Phrase aus 24 Wörtern. Druck sie aus oder
+leg sie in einem Passwortmanager ab. Hast du das Passwort vergessen, öffnet <em>Zugang
+wiederherstellen…</em> im Entsperrdialog die Daten und lässt dich ein neues festlegen.
+<em>Wiederherstellungsphrase → Neu erstellen …</em> gibt eine neue Phrase aus und macht die alte ungültig.
+<em>Anzeigen …</em> daneben zeigt die aktuelle Phrase nach Touch ID oder Passwort noch einmal.</p>
+<p>Ohne das Passwort, Touch ID auf demselben Mac oder die Phrase lassen sich die Daten nicht
+wiederherstellen: Es gibt keinen Server und nichts, was sich zurücksetzen ließe.</p>
+<figure class="shot" style="max-width:568px"><a href="/img/guide/recovery-phrase.png?v=8aab134d" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/recovery-phrase.png?v=8aab134d" alt="Die Wiederherstellungsphrase aus 24 Wörtern (die Wörter sind hier verdeckt)" width="568" height="586" loading="lazy"></a><figcaption>Die Wiederherstellungsphrase aus 24 Wörtern (die Wörter sind hier verdeckt)</figcaption></figure>
+<h3 id="backup">Backup</h3>
+<p>Keepit kann eine verschlüsselte Kopie von Verlauf und Vorlagen in einem Ordner deiner Wahl ablegen
+(iCloud Drive, Dropbox, Google Drive, eine externe Festplatte, ein NAS) und immer dann eine neue
+schreiben, wenn sich etwas geändert hat. Einen Keepit-Server gibt es nicht, der Ordner gehört dir.
+Der Anbieter dahinter sieht die verschlüsselte Datei, ihre Größe und einen kleinen unverschlüsselten
+Header (wann und von welcher Keepit-Version sie geschrieben wurde, wie der Schlüssel abgeleitet wird,
+zufällige Kennungen und den Namen deines Mac nur dann, wenn du das einschaltest). Die
+<a href="/security#backups">Sicherheitsseite</a> (englisch) führt ihn Feld für Feld auf.</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-backup.png?v=cba8511b" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/prefs-backup.png?v=cba8511b" alt="Einstellungen → Backup: automatisches Backup, manuelles Backup, Wiederherstellen" width="636" height="527" loading="lazy"></a><figcaption>Einstellungen → Backup: automatisches Backup, manuelles Backup, Wiederherstellen</figcaption></figure>
+<p><strong>Einschalten.</strong> <em>Einstellungen → Backup → Automatisch in einen Ordner sichern</em>, dann mit
+<em>Auswählen …</em> einen Ordner bestimmen (der Dialog öffnet sich in iCloud Drive). Das automatische Backup
+setzt den Passwortschutz aus <em>Einstellungen → Sicherheit</em> voraus: Jede Kopie wird mit einem Schlüssel
+versiegelt, der aus dem Schlüssel deines Tresors abgeleitet ist. Sie lässt sich deshalb auf diesem
+oder jedem anderen Mac mit deinem Keepit-Passwort oder deiner Wiederherstellungsphrase öffnen, und
+dafür muss nichts eingerichtet werden. Ohne Passwort ist das Markierungsfeld deaktiviert und sagt das
+auch.</p>
+<p><strong>Was dann passiert: der Zeitplan.</strong> Etwa fünf Minuten nach der letzten Änderung (und spätestens
+einmal am Tag, solange Keepit läuft) schreibt Keepit eine Datei namens
+<code>Keepit-&lt;date and time&gt;-&lt;installation&gt;-&lt;id&gt;.keepit</code> in den Ordner, liest sie zur Kontrolle wieder
+ein und löscht erst dann die ältesten eigenen Kopien, die über <em>Behalten</em> hinausgehen (standardmäßig
+10, möglich sind 1–100). Jede Kopie ist für sich vollständig und kein Inkrement, eine einzige Datei
+reicht also immer. Kopien eines anderen Mac und Dateien, die du selbst dort ablegst, werden nie
+angerührt: Zwei Macs, die sich einen Ordner teilen, schreiben zwei unabhängige Serien. Die Statuszeile
+neben der Überschrift <em>Automatisches Backup</em> zeigt Zeit und Größe der letzten Kopie oder den Grund,
+warum der letzte Versuch fehlschlug. Solange Keepit gesperrt ist, passiert nichts. <em>Jetzt sichern</em>
+(unter <em>Manuelles Backup</em>) wartet die Ruhephase nicht ab.</p>
+<p><strong>Namen dieses Mac in die Backup-Dateien aufnehmen</strong> (standardmäßig aus) schreibt den Namen des
+Computers in den unverschlüsselten Header jeder Datei, damit sich zwei Serien in einem Ordner im
+Finder leicht unterscheiden lassen. Der Speicheranbieter kann diesen Namen sehen, deshalb ist die
+Option freiwillig.</p>
+<p><strong>Wiederherstellen.</strong> <em>Wiederherstellen …</em> öffnet ein Backup (von diesem Mac, von einem anderen Mac
+oder eine exportierte Datei), nachdem du es entsperrt hast: mit dem Passwort des Mac, auf dem es
+entstanden ist, oder mit der Wiederherstellungsphrase, die jener Mac beim Festlegen seines Passworts
+gezeigt hat (<em>Zugang wiederherstellen…</em> im Passwortdialog). Eine Vorschau zeigt, wann und wo die Datei
+entstanden ist und wie viele Einträge sie enthält. Danach hast du die Wahl:</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/restore-preview.png?v=8f48d34e" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/restore-preview.png?v=8f48d34e" alt="Die Vorschau der Wiederherstellung: wann und von welcher Keepit-Version die Datei geschrieben wurde, was sie enthält, Zusammenführen oder Ersetzen" width="636" height="651" loading="lazy"></a><figcaption>Die Vorschau der Wiederherstellung: wann und von welcher Keepit-Version die Datei geschrieben wurde, was sie enthält, Zusammenführen oder Ersetzen</figcaption></figure>
+<ul>
+<li><em>Zusammenführen</em> ergänzt, was noch nicht da ist: Verlaufseinträge nach Inhalt und die Vorlagen des
+  Backups als einen neuen Ordner <em>Import <Datum></em>, ohne ihre Tastenkürzel. So siehst du genau, was
+  aus dem Backup stammt, und kannst es verschieben oder löschen. Von deinen Daten wird nichts
+  überschrieben.</li>
+<li><em>Ersetzen</em> verwirft den aktuellen Verlauf und die Vorlagen und übernimmt stattdessen die des
+  Backups. Vorher schreibt Keepit eine Kopie deines jetzigen Stands (<code>Keepit-before-restore-…</code>) in den
+  Backup-Ordner oder in einen Ordner, den du auswählst. Lässt sich diese Kopie nicht schreiben, startet
+  das Ersetzen nicht. Hat Keepit noch kein Passwort, wirst du für diese Kopie nach einem gefragt, wie
+  bei <em>In Archiv sichern …</em>.</li>
+</ul>
+<p><em>Auch Einstellungen wiederherstellen</em> übernimmt Tastenkürzel, Limits und Optionen aus dem Backup. Die
+Einstellungen, die Vertrauen in einen bestimmten Mac ausdrücken (Touch ID, die URL-Automatisierung und
+ihre vertrauenswürdigen Apps, der Backup-Ordner selbst), bleiben immer so, wie sie hier sind. Ist der
+Verlauf des Backups größer, als die Limits dieses Mac erlauben, sagt Keepit vor dem Bestätigen, wie
+viel hineinpasst.</p>
+<p>Du hast ein Backup mit seiner Wiederherstellungsphrase auf einem Mac wiederhergestellt, der noch kein
+Passwort hat? Keepit bittet dich, zuerst eines festzulegen, damit die wiederhergestellten Daten nie
+unverschlüsselt auf der Platte landen, und lässt dich die Phrase für diesen Mac behalten oder eine
+neue erzeugen. Mit dem Passwort wiederhergestellt? Keepit bietet an, es als Passwort dieses Mac zu
+übernehmen. In beiden Fällen ist das automatische Backup eine Einstellung pro Mac: Schalte es hier
+ein und wähle den Ordner (derselbe ist in Ordnung), und dieser Mac beginnt neben der Serie des alten
+Mac seine eigene.</p>
+<p><strong>Der Umzug auf einen neuen Mac</strong> ist der eigentliche Zweck: Installiere Keepit, wähle beim ersten
+Start <em>Aus Backup wiederherstellen …</em>, nimm die neueste Datei in deinem Ordner, gib das Passwort des
+alten Mac ein und klicke auf <em>Ersetzen</em>. Schalte danach das automatische Backup für den neuen Mac ein.
+Bisherige Kopien lassen sich mit dem Passwort und der Phrase öffnen, die beim Schreiben der jeweiligen
+Kopie galten: Nach einer Passwortänderung brauchen die alten weiterhin das alte Passwort.</p>
+<p><strong>Manuelles Backup.</strong> Zwei Knöpfe, zwei verschiedene Dinge. <em>Jetzt sichern</em> erstellt sofort eine
+Kopie wie die automatischen: dieselbe Art Datei, derselbe Ordner und dieselbe Serie, zu öffnen mit
+deinem Keepit-Passwort oder der Phrase. <em>In Archiv sichern …</em> schreibt ein einzelnes
+<code>.keepit</code>-<em>Archiv</em> an einen Ort deiner Wahl, gesperrt mit einem Passwort, das du dafür aussuchst. Es
+braucht den Passwortschutz von Keepit nicht, und Keepit behält die Datei danach nicht im Blick. Das
+eignet sich zum Weitergeben von Daten oder für eine Kopie außerhalb des Backup-Ordners. Der
+vorgeschlagene Name sagt, was es ist: <code>Keepit-archive-&lt;date&gt;-manual.keepit</code>, im Unterschied zu den
+automatischen Kopien <code>Keepit-&lt;date and time&gt;-&lt;installation&gt;-&lt;id&gt;.keepit</code>.</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/save-to-archive.png?v=6d252de5" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/save-to-archive.png?v=6d252de5" alt="In Archiv sichern …: Der Dateiname enthält archive und manual" width="636" height="528" loading="lazy"></a><figcaption>In Archiv sichern …: Der Dateiname enthält archive und manual</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/archive-password.png?v=1b218e7c" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/archive-password.png?v=1b218e7c" alt="Das eigene Passwort des Archivs mit einer Stärkeanzeige: Es wird nirgends gespeichert" width="636" height="621" loading="lazy"></a><figcaption>Das eigene Passwort des Archivs mit einer Stärkeanzeige: Es wird nirgends gespeichert</figcaption></figure>
+<p><em>Wiederherstellen …</em> öffnet beide Arten. Das Archiv ersetzt <em>Exportieren …</em> / <em>Importieren …</em> aus
+2.x. Die Datei überträgt Daten zwischen der Version zum direkten Download und der App-Store-Version
+sowie zwischen Keepit 2.x und 3.x. Eine von 3.0 geschriebene Datei braucht zum Öffnen 3.0 oder neuer;
+3.0 liest alles, was 2.x geschrieben hat.</p>
+<p><strong>Wenn etwas schiefgeht.</strong> Eine fehlgeschlagene Kopie wird in der Statuszeile gemeldet und mit
+wachsenden Pausen erneut versucht. Die bisherigen Kopien bleiben erhalten. Wurde Keepit mitten in
+einer Wiederherstellung beendet oder ist der Mac abgestürzt, stellt der nächste Start stillschweigend
+alles so wieder her, wie es vor der Wiederherstellung war. Im seltenen Fall, dass das nicht geht (eine
+Datei, die sich nicht schreiben lässt, eine volle Festplatte), nennt Keepit die Datei und beendet
+sich, ohne etwas zu ändern: Behebe das Problem mit der Datei und starte erneut. Einzelheiten, auch zum
+inneren Aufbau des Dateiformats, stehen auf der <a href="/security#backups">Sicherheitsseite</a> (englisch).</p>
+<hr />
+<h2 id="part-7-advanced">Teil 7: Für Fortgeschrittene</h2>
+<h3 id="automation-the-keepit-url-scheme">Automatisierung: das URL-Schema keepit://</h3>
+<p>Kurzbefehle (<em>URL öffnen</em>), Raycast, Alfred, Keyboard Maestro oder <code>open</code> in einer Shell können Keepit
+steuern, <strong>sobald du das einschaltest</strong>, und zwar unter <em>Einstellungen → Erweitert → Automatisierung →
+keepit://-URL-Befehle erlauben</em>. Standardmäßig ist es aus, weil jede App und jede Webseite eine URL
+öffnen kann und <code>add</code> / <code>paste</code> die Zwischenablage ändern und in die vorderste App tippen. Ist es aus,
+ignoriert Keepit solche URLs mit einem Signalton. Ist es an, prüft Keepit, wer die URL geöffnet hat:
+Der erste Befehl jeder App, der etwas ändert (<code>paste</code>, <code>copy</code>, <code>template</code>, <code>add</code>, <code>add-template</code>,
+<code>pause</code>, <code>resume</code>), wird in einem Dialog angezeigt. <em>Erlauben</em> führt ihn einmal aus, <em>Immer erlauben</em>
+setzt die App auf die Liste der vertrauenswürdigen Apps (sie lässt sich mit <em>Vertrauenswürdige Apps
+vergessen</em> im selben Bereich leeren). Bei einem Webbrowser oder einem Absender, den macOS nicht
+benennen kann, wird jedes Mal gefragt. Befehle, die nur Keepits eigene Fenster öffnen, fragen nie.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>URL</th>
+<th>Wirkung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>keepit://paste/2</code><br><code>keepit://paste/latest</code><br><code>keepit://paste/previous</code></td>
+<td>Verlaufseintrag N (oder den neuesten / den vorherigen) in die vorderste App einfügen</td>
+</tr>
+<tr>
+<td><code>keepit://copy/3</code></td>
+<td>Eintrag N in die Zwischenablage legen, ohne einzufügen</td>
+</tr>
+<tr>
+<td><code>keepit://template/Signature</code><br><code>keepit://template/Work/Reply?copy=1</code></td>
+<td>Eine Vorlage nach Name oder Ordnerpfad einfügen (oder kopieren)</td>
+</tr>
+<tr>
+<td><code>keepit://add?text=…</code></td>
+<td>Text zum Verlauf und zur Zwischenablage hinzufügen</td>
+</tr>
+<tr>
+<td><code>keepit://add-template?text=…&amp;name=…</code></td>
+<td>Eine Vorlage anlegen</td>
+</tr>
+<tr>
+<td><code>keepit://history</code><br><code>keepit://templates</code><br><code>keepit://viewer</code><br><code>keepit://settings</code></td>
+<td>Verlaufsmenü, Vorlagenmenü, Viewer oder Einstellungen öffnen</td>
+</tr>
+<tr>
+<td><code>keepit://pause</code><br><code>keepit://resume</code></td>
+<td>Aufzeichnung 10 Minuten pausieren / fortsetzen</td>
+</tr>
+</tbody>
+</table></div>
+<p>Kodiere den Text mit Prozentkodierung (<code>%20</code> für ein Leerzeichen). Solange Keepit gesperrt ist, werden
+URLs ignoriert.</p>
+<h3 id="updates">Updates</h3>
+<p>Keepit sieht einmal am Tag bei GitHub Releases nach und bietet Updates in einem Dialog an. <em>Nach
+Updates suchen …</em> erledigt das sofort. Updates sind signiert (EdDSA) und notarisiert. Mit Homebrew
+macht <code>brew upgrade --cask keepit</code> dasselbe. Die Prüfsummen aller Downloads stehen in <code>SHA256SUMS</code> auf
+der Release-Seite.</p>
+<p>Diese Suche ist die einzige Netzwerkanfrage, die Keepit stellt, und sie ist freiwillig: <em>Einstellungen
+→ Allgemein → Updates → Automatisch nach Updates suchen</em>. Ist sie aus, nimmt Keepit zu nichts Kontakt
+auf, auch nicht auf deinen Wunsch, und <em>Nach Updates suchen …</em> verschwindet aus den Menüs. Du
+aktualisierst dann per Download von <a href="https://keep.it.com">keep.it.com</a> oder mit Homebrew. Die
+App-Store-Version hat weder eine Update-Funktion noch diese Option, sie wird vom App Store
+aktualisiert.</p>
+<h3 id="uninstalling">Deinstallieren</h3>
+<p><em>Einstellungen → Erweitert → Zurücksetzen und deinstallieren → Deinstallieren …</em> entfernt die App, den
+Datenordner, die Schlüsselbundeinträge (einschließlich des Touch-ID-Schlüssels), das Anmeldeobjekt und
+den Eintrag unter Bedienungshilfen. Keepit verlangt dein Passwort oder Touch ID, das eingetippte Wort
+<code>DELETE</code> und eine Bestätigung. Exportiere vorher ein Backup, falls du die Daten noch einmal brauchen
+könntest. Mit Homebrew führst du anschließend <code>brew uninstall --cask --force keepit</code> aus, damit
+Homebrew den Cask vergisst.</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-advanced.png?v=9908024a" class="zoom" title="In voller Größe öffnen"><img src="/img/guide/prefs-advanced.png?v=9908024a" alt="Einstellungen → Erweitert" width="636" height="515" loading="lazy"></a><figcaption>Einstellungen → Erweitert</figcaption></figure>
+<hr />
+<h2 id="reference">Referenz</h2>
+<h3 id="troubleshooting">Fehlerbehebung</h3>
+<p><strong>Nach der Auswahl eines Eintrags wird nichts eingefügt.</strong> Die Berechtigung für Bedienungshilfen
+fehlt: <em>Systemeinstellungen → Datenschutz &amp; Sicherheit → Bedienungshilfen → Keepit</em>. Steht Keepit in
+der Liste und fügt trotzdem nicht ein, schalte es aus und wieder ein: macOS vergisst die Freigabe,
+wenn die App neu installiert wird.</p>
+<p><strong>Ein Tastenkürzel tut nichts.</strong> Es gehört einer anderen App oder macOS. Keepit meldet das beim
+Start. Wähle im Bereich <em>Kurzbefehle</em> eine andere Kombination. ⌃⌥ mit Ziffern und Buchstaben ist auf
+einem Mac im Auslieferungszustand frei.</p>
+<p><strong>Das Menü öffnet sich an der falschen Stelle.</strong> Die App, in der du arbeitest, gibt ihren Textcursor
+nicht preis, deshalb weicht das Menü auf den Mauszeiger aus. <em>Menü nach Möglichkeit am Textcursor
+öffnen</em> im Bereich Allgemein schaltet die Suche nach dem Cursor ab, falls dir der Mauszeiger immer
+lieber ist.</p>
+<p><strong>Etwas, das ich kopiert habe, fehlt.</strong> Was die kopierende App als vertraulich markiert, wird nicht
+aufgezeichnet. Dasselbe gilt für Kopien, die entstehen, während ein Passwortmanager (eingebaute Liste)
+oder eine App von deiner Ignorierliste im Vordergrund war, auch die App, aus der du gerade erst
+gewechselt hast. Siehe <em>Einstellungen → Verlauf</em> und die
+<a href="/security#what-is-not-recorded">Sicherheitsseite</a> (englisch).</p>
+<p><strong>Touch ID wird nicht angeboten.</strong> Im Moment ist kein Touch-ID-Sensor erreichbar (Deckel geschlossen,
+keine Tastatur mit Touch ID). Keepit behält die Einstellung und fragt nach dem Fingerabdruck, sobald
+ein Sensor verfügbar ist.</p>
+<p><strong>Der Backup-Status meldet, dass der Ordner nicht verfügbar ist.</strong> Der Ordner wurde verschoben,
+umbenannt, ausgeworfen oder (iCloud Drive) vom Gerät entfernt. Aktiviere ihn oder stell ihn wieder
+her, dann läuft die nächste Kopie durch. Oder bestimme mit <em>Auswählen …</em> einen neuen Ordner: Ein neuer
+Ordner beginnt eine neue Serie, die alten Dateien bleiben, wo sie sind.</p>
+<p><strong>Eine Backup-Datei lässt sich nicht öffnen.</strong> <em>Falsches Passwort</em> bedeutet, dass das
+Authentifizierungs-Tag der Datei nicht passte: Achte darauf, das Passwort des Mac zu verwenden, der
+die Datei <em>geschrieben</em> hat (nach einer Passwortänderung öffnen sich alte Kopien weiterhin mit dem
+alten Passwort), oder dessen Wiederherstellungsphrase. <em>Dieses Backup benötigt Keepit 3.0 oder neuer</em>
+bedeutet, dass die Datei von einer neueren Version geschrieben wurde als der, die sie öffnet.</p>
+<p><strong>Homebrew weigert sich, über eine vorhandene App zu installieren.</strong> Beende Keepit und leg
+<code>/Applications/Keepit.app</code> zuerst in den Papierkorb, oder ergänze <code>--force</code>.</p>
+<p>Kommst du nicht weiter? <a href="https://github.com/andrey-insarov/Keepit/issues">GitHub Issues</a> · admin@keep.it.com</p>
+<h3 id="keyboard-cheat-sheet">Tastenkürzel im Überblick</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Tasten</th>
+<th>Aktion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><kbd class="k">⌥M</kbd></td>
+<td>Verlaufsmenü; tippen, um zu suchen</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥T</kbd></td>
+<td>Vorlagenmenü</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥1</kbd> … <kbd class="k">⌃⌥0</kbd></td>
+<td>Eintrag 1–10 einfügen (im Menü und überall)</td>
+</tr>
+<tr>
+<td><kbd class="k">⇧</kbd> im Menü</td>
+<td>Erweitertes Menü: alle Aktionen pro Eintrag</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥⇧V</kbd></td>
+<td>Vorherigen Eintrag einfügen / tauschen</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥V</kbd></td>
+<td>Zwischenablage als reinen Text einfügen</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
+<td>GROSSBUCHSTABEN / kleinbuchstaben / Große Wortanfänge / großer Satzanfang</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥W</kbd> <kbd class="k">⌃⌥J</kbd></td>
+<td>Ohne Leerraum am Rand / in einer Zeile</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥K</kbd> <kbd class="k">⌃⌥D</kbd> <kbd class="k">⌃⌥Y</kbd> <kbd class="k">⌃⌥X</kbd></td>
+<td>Durchgestrichen / unterstrichen / Wellenlinie / Verzierungen entfernen</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥A</kbd></td>
+<td>Zwischenablage zu Vorlagen hinzufügen</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥⌫</kbd></td>
+<td>Den neuesten Eintrag löschen</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥N</kbd> · <kbd class="k">⌥V</kbd> · <kbd class="k">⌥⇧N</kbd></td>
+<td>Einfügewarteschlange: starten / stoppen · nächsten einfügen · alle verbleibenden einfügen</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥E</kbd> <kbd class="k">⌥S</kbd> <kbd class="k">⌥C</kbd> <kbd class="k">⌥P</kbd> <kbd class="k">⌥L</kbd> <kbd class="k">⌥Q</kbd></td>
+<td>Viewer · Einstellungen · Verlauf löschen · Aufzeichnung pausieren · Sperren · Beenden</td>
+</tr>
+<tr>
+<td><kbd class="k">⌘F</kbd> im Viewer</td>
+<td>Suchen</td>
+</tr>
+<tr>
+<td><code>⌘,</code></td>
+<td>Einstellungen</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="placeholder-cheat-sheet">Platzhalter im Überblick</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Platzhalter</th>
+<th>Ergebnis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{date}</code> <code>{time}</code> <code>{datetime}</code></td>
+<td>Datum / Uhrzeit / beides im Systemformat</td>
+</tr>
+<tr>
+<td><code>{date:yyyy-MM-dd}</code> <code>{time:HH:mm}</code></td>
+<td>Eigenes Format (Unicode-Datumsmuster)</td>
+</tr>
+<tr>
+<td><code>{date:long}</code> <code>{time:short}</code> <code>{datetime:full}</code></td>
+<td>Benannter Stil: <code>short</code> <code>medium</code> <code>long</code> <code>full</code></td>
+</tr>
+<tr>
+<td><code>{date+7d}</code> <code>{date-1m:MMMM}</code> <code>{time+1h}</code> <code>{datetime-1d:long}</code> <code>{date+1y-2d}</code></td>
+<td>Verschoben (<code>d</code> <code>w</code> <code>m</code> <code>y</code> <code>h</code>; bis zu vier Verschiebungen hintereinander)</td>
+</tr>
+<tr>
+<td><code>{weekday}</code> <code>{month}</code> <code>{year}</code></td>
+<td>Wochentag, Monatsname, Jahr</td>
+</tr>
+<tr>
+<td><code>{iso}</code> <code>{unix}</code></td>
+<td>Zeitstempel nach ISO 8601, Unix-Zeit</td>
+</tr>
+<tr>
+<td><code>{clipboard}</code> <code>{clipboard:2}</code></td>
+<td>Die Zwischenablage (Eintrag 1) oder Eintrag N</td>
+</tr>
+<tr>
+<td><code>{clipboard\|upper}</code> <code>\|lower</code> <code>\|title</code> <code>\|trim</code> <code>\|oneline</code> <code>\|url</code></td>
+<td>Filter, verkettbar</td>
+</tr>
+<tr>
+<td><code>{input:Name}</code> <code>{input:Name=Default}</code></td>
+<td>Vor dem Einfügen einen Wert abfragen</td>
+</tr>
+<tr>
+<td><code>{choice:Label=A\|B\|C}</code></td>
+<td>Eine Option zur Auswahl anbieten</td>
+</tr>
+<tr>
+<td><code>{cursor}</code></td>
+<td>Cursorposition nach dem Einfügen</td>
+</tr>
+<tr>
+<td><code>{user}</code> <code>{username}</code> <code>{host}</code></td>
+<td>Voller Name, Accountname, Computername</td>
+</tr>
+<tr>
+<td><code>{uuid}</code> <code>{random:1-100}</code></td>
+<td>Neue UUID, Zufallszahl aus einem Bereich</td>
+</tr>
+<tr>
+<td><code>{{</code> <code>}}</code></td>
+<td>Wörtliche geschweifte Klammern</td>
+</tr>
+</tbody>
+</table></div></article></main>
+<footer><div class="wrap">
+  <span>© 2026 UK Intis Telecom LTD · Keepit steht unter der MIT-Lizenz</span>
+  <span><a href="/privacy">Datenschutzerklärung</a><span class="en-only"> (englisch)</span> · <a href="/security">Sicherheit</a><span class="en-only"> (englisch)</span> · <a href="/de/support">Support</a> · <a href="https://github.com/andrey-insarov/Keepit/blob/main/CHANGELOG.md">Änderungsprotokoll</a> · <a href="https://it.com">it.com</a></span>
+  <span class="langs"><a href="/guide" lang="en" hreflang="en">English</a> · <a href="/ru/guide" lang="ru" hreflang="ru">Русский</a> · <a href="/uk/guide" lang="uk" hreflang="uk">Українська</a> · <b lang="de">Deutsch</b> · <a href="/fr/guide" lang="fr" hreflang="fr">Français</a> · <a href="/es/guide" lang="es" hreflang="es">Español</a> · <a href="/pt-br/guide" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a> · <a href="/ja/guide" lang="ja" hreflang="ja">日本語</a> · <a href="/zh-hans/guide" lang="zh-Hans" hreflang="zh-Hans">简体中文</a> · <a href="/ar/guide" lang="ar" hreflang="ar">العربية</a></span>
+</div></footer>
+<div id="lb" role="dialog" aria-label="Bildschirmfoto in voller Größe"><img alt=""></div>
+<script>
+(function(){
+  var mn=document.querySelector('.mnav');if(mn){mn.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){mn.removeAttribute('open');});});document.addEventListener('click',function(e){if(mn.open&&!mn.contains(e.target))mn.removeAttribute('open');});}
+  var lb=document.getElementById('lb'),im=lb.querySelector('img');
+  document.querySelectorAll('a.zoom').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();im.src=a.getAttribute('href');im.alt=a.querySelector('img').alt;lb.classList.add('on');});});
+  function close(){lb.classList.remove('on');im.src='';}
+  lb.addEventListener('click',close);document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+  var links=[].slice.call(document.querySelectorAll('aside a')),heads=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  if(links.length&&'IntersectionObserver' in window){
+    var cur=null;function mark(id){links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+id);});}
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){cur=e.target.id;mark(cur);}});},{rootMargin:'-70px 0px -70% 0px'});
+    heads.forEach(function(h){if(h)io.observe(h);});
+  }
+})();
+</script>
+</body></html>

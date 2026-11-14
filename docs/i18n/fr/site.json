@@ -1,0 +1,33 @@
+{
+  "ui": {
+    "features": "Fonctionnalités",
+    "privacy": "Confidentialité",
+    "install": "Installation",
+    "guide": "Guide",
+    "security": "Sécurité",
+    "support": "Assistance",
+    "menu": "Menu",
+    "copyright": "© 2026 UK Intis Telecom LTD · Keepit est distribué sous licence MIT",
+    "privacy_policy": "Politique de confidentialité",
+    "changelog": "Historique des versions",
+    "on_this_page": "Sur cette page",
+    "contents": "Sommaire",
+    "open_full_size": "Ouvrir en taille réelle",
+    "full_size_screenshot": "Capture d’écran en taille réelle",
+    "language": "Langue",
+    "in_english": "(en anglais)",
+    "translated_note": "Traduit de l’anglais. Original : <a href=\"{en}\">English</a>."
+  },
+  "pages": {
+    "GUIDE.md": {
+      "title": "Guide de Keepit – gestionnaire de presse-papiers pour Mac",
+      "description": "Comment utiliser Keepit, le gestionnaire de presse-papiers gratuit pour Mac : menu d’historique, raccourcis, modèles, Visionneuse, chiffrement et Touch ID.",
+      "crumb": "Guide"
+    },
+    "SUPPORT.md": {
+      "title": "Assistance Keepit – aide pour le gestionnaire de presse-papiers Mac",
+      "description": "Comment obtenir de l’aide pour Keepit, le gestionnaire de presse-papiers pour Mac, et des réponses rapides aux questions fréquentes.",
+      "crumb": "Assistance"
+    }
+  }
+}

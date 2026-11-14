@@ -1,0 +1,607 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keepitユーザガイド – Mac用クリップボードマネージャ</title><link rel="icon" href="/img/icon.png?v=a1519b94"><link rel="apple-touch-icon" href="/img/icon.png?v=a1519b94">
+<meta name="description" content="Mac用の無料クリップボードマネージャKeepitの使い方。履歴メニュー、ショートカット、テンプレート、ビューア、暗号化、Touch IDについて説明します。">
+<link rel="canonical" href="https://keep.it.com/ja/guide"><link rel="alternate" hreflang="en" href="https://keep.it.com/guide"><link rel="alternate" hreflang="ru" href="https://keep.it.com/ru/guide"><link rel="alternate" hreflang="uk" href="https://keep.it.com/uk/guide"><link rel="alternate" hreflang="de" href="https://keep.it.com/de/guide"><link rel="alternate" hreflang="fr" href="https://keep.it.com/fr/guide"><link rel="alternate" hreflang="es" href="https://keep.it.com/es/guide"><link rel="alternate" hreflang="pt-BR" href="https://keep.it.com/pt-br/guide"><link rel="alternate" hreflang="ja" href="https://keep.it.com/ja/guide"><link rel="alternate" hreflang="zh-Hans" href="https://keep.it.com/zh-hans/guide"><link rel="alternate" hreflang="ar" href="https://keep.it.com/ar/guide"><link rel="alternate" hreflang="x-default" href="https://keep.it.com/guide"><meta property="og:type" content="article"><meta property="og:site_name" content="Keepit"><meta property="og:locale" content="ja_JP"><meta property="og:title" content="Keepitユーザガイド – Mac用クリップボードマネージャ"><meta property="og:description" content="Mac用の無料クリップボードマネージャKeepitの使い方。履歴メニュー、ショートカット、テンプレート、ビューア、暗号化、Touch IDについて説明します。"><meta property="og:image" content="https://keep.it.com/img/social-preview.png?v=57583ec3"><meta property="og:url" content="https://keep.it.com/ja/guide"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Keepitユーザガイド – Mac用クリップボードマネージャ"><meta name="twitter:description" content="Mac用の無料クリップボードマネージャKeepitの使い方。履歴メニュー、ショートカット、テンプレート、ビューア、暗号化、Touch IDについて説明します。"><meta name="twitter:image" content="https://keep.it.com/img/social-preview.png?v=57583ec3"><meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "@id": "https://keep.it.com/ja/guide", "url": "https://keep.it.com/ja/guide", "name": "Keepitユーザガイド", "headline": "Keepitユーザガイド", "description": "Mac用の無料クリップボードマネージャKeepitの使い方。履歴メニュー、ショートカット、テンプレート、ビューア、暗号化、Touch IDについて説明します。", "inLanguage": "ja", "isPartOf": {"@id": "https://keep.it.com/#site"}, "about": {"@id": "https://keep.it.com/#app"}, "author": {"@id": "https://keep.it.com/#org"}, "publisher": {"@id": "https://keep.it.com/#org"}, "image": "https://keep.it.com/img/social-preview.png?v=57583ec3", "dateModified": "2026-11-14", "translationOfWork": {"@id": "https://keep.it.com/guide"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Keepit", "item": "https://keep.it.com/ja/"}, {"@type": "ListItem", "position": 2, "name": "ガイド", "item": "https://keep.it.com/ja/guide"}]}]}</script>
+<script defer src="https://app.eurometrics.eu/script.js?v=7cfd3b4c27be" data-website-id="0ab7fe20-0c05-4061-b037-c033dc46c1e1" data-domains="keep.it.com" data-do-not-track="true" data-exclude-search="true" data-no-storage="true"></script>
+<style>
+:root{--paper:#fbfbfd;--ink:#0f1222;--ink-2:#4b4f63;--ink-3:#696d84;--blue:#2f4fd1;--blue-deep:#1f3aa6;--blue-tint:#eef2ff;--line:#e3e5ef;--key:#fff;--key-edge:#cfd2de;--win:#fff;--sel:#2f5cf0}
+@media(prefers-color-scheme:dark){:root{--paper:#0c0d14;--ink:#f2f3f8;--ink-2:#b7bacb;--ink-3:#8e92a9;--blue:#7d9bff;--blue-deep:#a9bdff;--blue-tint:#151b35;--line:#23263a;--key:#1b1e2e;--key-edge:#3a3e56;--win:#1a1c28;--sel:#3d6bff}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:72px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;font:17px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+:focus-visible{outline:3px solid var(--sel);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:20;-webkit-backdrop-filter:saturate(180%) blur(18px);backdrop-filter:saturate(180%) blur(18px);background:color-mix(in srgb,var(--paper) 78%,transparent);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:650;color:var(--ink);font-size:20px}.brand img{width:44px;height:44px;border-radius:10px}
+nav{display:flex;gap:24px;align-items:center}nav>a{color:var(--ink-2);font-size:15px}nav>a:hover{color:var(--ink);text-decoration:none}
+.mnav{display:none;position:relative}.mnav summary{list-style:none;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--ink)}
+.mnav summary::-webkit-details-marker{display:none}.mnav summary svg{width:22px;height:22px}.mnav[open] summary{background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.mnav .links{position:absolute;right:0;top:48px;min-width:210px;padding:6px;border-radius:14px;background:var(--win);border:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.18);display:grid}
+.mnav .links a{display:block;padding:11px 14px;border-radius:9px;font-size:16px;color:var(--ink)}.mnav .links a:hover{background:var(--blue-tint);text-decoration:none}
+@media(max-width:700px){nav{gap:10px}nav>a:not(.gh){display:none}.mnav{display:block;margin-right:-8px}}
+main.wrap{display:grid;grid-template-columns:230px minmax(0,1fr);gap:56px;padding-top:48px;padding-bottom:96px}
+main.wrap.narrow{grid-template-columns:minmax(0,1fr);max-width:820px}
+aside{position:sticky;top:76px;align-self:start;max-height:calc(100vh - 96px);overflow:auto;font-size:14px;line-height:1.45;padding-right:8px}
+aside .ttl{font-weight:650;color:var(--ink);margin:0 0 10px;font-size:13px}
+aside ol{list-style:none;margin:0;padding:0}aside li{margin:0}
+aside a{display:block;color:var(--ink-2);padding:4px 0 4px 12px;border-left:2px solid var(--line)}
+aside a:hover{color:var(--ink);text-decoration:none}aside a.on{color:var(--blue);border-left-color:var(--blue)}
+aside ol ol a{padding-left:24px;font-size:13px;color:var(--ink-3)}
+@media(max-width:900px){main.wrap{grid-template-columns:minmax(0,1fr);gap:0;padding-top:32px;padding-bottom:64px}aside{position:static;max-height:none;margin-bottom:32px;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--win)}aside ol ol{display:none}}
+article{max-width:72ch;min-width:0}
+article h1{font-size:clamp(34px,5vw,52px);line-height:1.05;letter-spacing:-.03em;font-weight:750;margin:0 0 .5em}
+article h1+p{font-size:19px;color:var(--ink-2)}
+article h2{font-size:30px;line-height:1.15;letter-spacing:-.02em;font-weight:700;margin:2.2em 0 .6em;padding-top:1em;border-top:1px solid var(--line)}
+article h3{font-size:20px;font-weight:650;margin:1.8em 0 .5em}
+article p,article li{color:var(--ink);}article li{margin:.25em 0}
+article hr{border:0;border-top:1px solid var(--line);margin:2.5em 0}
+code{font:.9em ui-monospace,"SF Mono",Menlo,monospace;background:color-mix(in srgb,var(--ink) 7%,transparent);padding:2px 6px;border-radius:6px;white-space:nowrap}
+@media(max-width:600px){code{white-space:normal;overflow-wrap:anywhere}}
+pre{background:var(--blue-tint);padding:14px 18px;border-radius:12px;overflow:auto;font-size:14px;line-height:1.6;max-width:100%}pre code{background:none;padding:0;white-space:pre-wrap;word-break:break-word}
+kbd.k{display:inline-block;min-width:1.7em;padding:0 .4em;text-align:center;font:600 .82em/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text",Helvetica,Arial,sans-serif;color:var(--ink);background:var(--key);border:1px solid var(--key-edge);border-bottom-width:2px;border-radius:6px;white-space:nowrap;vertical-align:baseline}
+.tbl{overflow-x:auto;margin:1.2em 0}table{border-collapse:collapse;width:100%;font-size:15.5px}th,td{text-align:left;padding:9px 12px 9px 0;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--ink-3);font-weight:600;font-size:14px}td code{display:inline-block;margin:1px 0}
+td:first-child{white-space:nowrap}@media(max-width:600px){td:first-child{white-space:normal}}
+figure.shot{margin:1.6em 0;width:100%}figure.shot a{display:block}figure.shot img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line);box-shadow:0 12px 32px -8px rgba(15,18,34,.25);cursor:zoom-in}
+figure.shot figcaption{font-size:14px;color:var(--ink-3);margin-top:8px}
+.slot{border:2px dashed var(--line);border-radius:12px;padding:28px;text-align:center;color:var(--ink-3);font-size:15px}
+.contents{display:none}
+.fb{margin:1.4em 0 2em;padding:22px 24px;border:1px solid var(--line);border-radius:16px;background:var(--win);display:grid;gap:14px}
+.fb label{display:grid;gap:6px;font-size:14px;font-weight:600;color:var(--ink-2)}.fb .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:600px){.fb .row2{grid-template-columns:1fr}}
+.fb .hint{font-weight:400;color:var(--ink-3)}
+.fb input[type=text],.fb input[type=email],.fb select,.fb textarea{font:16px/1.4 inherit;color:var(--ink);background:var(--win);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;box-sizing:border-box}
+.fb textarea{resize:vertical;min-height:140px}.fb input:focus,.fb select:focus,.fb textarea:focus{outline:2px solid var(--blue);outline-offset:1px;border-color:transparent}
+.fb input[type=file]{font-size:14px;color:var(--ink-2)}
+.fb-list{list-style:none;margin:-6px 0 0;padding:0;display:grid;gap:6px}.fb-list li{font-size:14px;color:var(--ink-2);display:flex;align-items:center;gap:10px}.fb-list button{font:inherit;font-size:13px;color:var(--blue);background:none;border:0;padding:0;cursor:pointer}.fb-list button:hover{text-decoration:underline}
+.fb .btn{justify-self:start;display:inline-flex;align-items:center;padding:12px 22px;border-radius:12px;font-weight:600;font-size:16px;line-height:1;border:0;cursor:pointer;background:var(--blue);color:#fff}
+.fb .btn[disabled]{opacity:.6;cursor:default}.fb-err{color:#c0392b;font-size:14px;margin:0}.fb-legal{font-size:13px;margin:-6px 0 0}.fb-ok{color:var(--ink);margin:0;padding:18px 20px;border-radius:12px;background:var(--blue-tint);line-height:1.5}
+footer{border-top:1px solid var(--line);padding:36px 0 64px;color:var(--ink-3);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}footer a{color:var(--ink-2)}
+#lb{position:fixed;inset:0;background:rgba(5,7,20,.86);display:none;align-items:center;justify-content:center;padding:24px;z-index:30;cursor:zoom-out}
+#lb.on{display:flex}#lb img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+
+.langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
+.tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
+code,kbd,pre{direction:ltr;unicode-bidi:isolate}
+[dir=rtl] .mnav .links{right:auto;left:0}
+@media(max-width:700px){[dir=rtl] .mnav{margin-right:0;margin-left:-8px}}
+[dir=rtl] aside{padding-right:0;padding-left:8px}
+[dir=rtl] aside a{padding:4px 12px 4px 0;border-left:0;border-right:2px solid var(--line)}
+[dir=rtl] aside a.on{border-right-color:var(--blue)}
+[dir=rtl] aside ol ol a{padding-left:0;padding-right:24px}
+[dir=rtl] th,[dir=rtl] td{text-align:right;padding:9px 0 9px 12px}
+[dir=rtl] .fb .btn{justify-self:end}
+</style></head>
+<body><header><div class="wrap">
+  <a class="brand" href="/ja/"><img src="/img/icon.png?v=a1519b94" alt="">Keepit</a>
+  <nav><a href="/ja/#features">機能</a><a href="/ja/guide">ガイド</a><a href="/security">セキュリティ</a><a href="/ja/support">サポート</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a><details class="mnav"><summary aria-label="メニュー"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><div class="links"><a href="/ja/#features">機能</a><a href="/ja/#privacy">プライバシー</a><a href="/ja/#install">インストール</a><a href="/ja/guide">ガイド</a><a href="/security">セキュリティ</a><a href="/ja/support">サポート</a></div></details></nav>
+</div></header>
+<main class="wrap"><aside aria-label="目次"><p class="ttl">このページの内容</p><ol><li><a href="#part-1-getting-started">パート1：はじめに</a><ol><li><a href="#install">インストール</a></li><li><a href="#first-launch">初回起動</a></li></ol></li><li><a href="#part-2-everyday-use">パート2：日常の使い方</a><ol><li><a href="#the-history-menu">履歴メニュー</a></li><li><a href="#search-and-preview">検索とプレビュー</a></li><li><a href="#paste-without-the-menu">メニューを開かずにペースト</a></li><li><a href="#the-paste-queue">貼り付けキュー</a></li><li><a href="#the-extended-menu">拡張メニュー</a></li></ol></li><li><a href="#part-3-templates">パート3：テンプレート</a><ol><li><a href="#creating-and-organising">作成と整理</a></li><li><a href="#placeholders">プレースホルダ</a></li><li><a href="#templates-that-ask-questions">質問するテンプレート</a></li></ol></li><li><a href="#part-4-the-viewer">パート4：ビューア</a></li><li><a href="#part-5-settings">パート5：設定</a></li><li><a href="#part-6-security">パート6：セキュリティ</a><ol><li><a href="#password-and-encryption">パスワードと暗号化</a></li><li><a href="#touch-id">Touch ID</a></li><li><a href="#recovery-phrase">リカバリーフレーズ</a></li><li><a href="#backup">バックアップ</a></li></ol></li><li><a href="#part-7-advanced">パート7：高度な機能</a><ol><li><a href="#automation-the-keepit-url-scheme">自動化：keepit:// URLスキーム</a></li><li><a href="#updates">アップデート</a></li><li><a href="#uninstalling">アンインストール</a></li></ol></li><li><a href="#reference">リファレンス</a><ol><li><a href="#troubleshooting">トラブルシューティング</a></li><li><a href="#keyboard-cheat-sheet">ショートカット早見表</a></li><li><a href="#placeholder-cheat-sheet">プレースホルダ早見表</a></li></ol></li></ol></aside><article><h1 id="keepit-user-guide">Keepitユーザガイド</h1><p class="tr-note">英語からの翻訳です。原文：<a href="/guide">English</a></p>
+<p>KeepitはmacOS用の、クリップボード履歴とテンプレートを管理するアプリです。メニューバーに常駐し、コピーしたものをすべて覚えておいて、ショートカットでどの項目でもペーストできます。以下のショートカットはすべてデフォルトのもので、「設定」→「ショートカット」で変更できます。このガイドはKeepit 3について説明しています。Keepit 2.xのガイドは <a href="https://keep.it.com/v2/guide">keep.it.com/v2/guide</a>（英語）にそのまま残してあります。</p>
+<figure class="shot" style="max-width:629px"><a href="/img/guide/menu.png?v=ef1dd207" class="zoom" title="原寸大で開く"><img src="/img/guide/menu.png?v=ef1dd207" alt="履歴メニュー" width="629" height="778" loading="lazy"></a><figcaption>履歴メニュー</figcaption></figure>
+<p><strong>目次</strong></p>
+<ul>
+<li><a href="#part-1--getting-started">パート1：はじめに</a>：<a href="#install">インストール</a> · <a href="#first-launch">初回起動</a></li>
+<li><a href="#part-2--everyday-use">パート2：日常の使い方</a>：<a href="#the-history-menu">履歴メニュー</a> · <a href="#search-and-preview">検索とプレビュー</a> · <a href="#paste-without-the-menu">メニューを開かずにペースト</a> · <a href="#the-paste-queue">貼り付けキュー</a> · <a href="#the-extended-menu">拡張メニュー</a></li>
+<li><a href="#part-3--templates">パート3：テンプレート</a>：<a href="#creating-and-organising">作成と整理</a> · <a href="#placeholders">プレースホルダ</a> · <a href="#templates-that-ask-questions">質問するテンプレート</a></li>
+<li><a href="#part-4--the-viewer">パート4：ビューア</a></li>
+<li><a href="#part-5--settings">パート5：設定</a></li>
+<li><a href="#part-6-security">パート6：セキュリティ</a>：<a href="#password-and-encryption">パスワードと暗号化</a> · <a href="#touch-id">Touch ID</a> · <a href="#recovery-phrase">リカバリーフレーズ</a> · <a href="#backup">バックアップ</a></li>
+<li><a href="#part-7--advanced">パート7：高度な機能</a>：<a href="#automation-the-keepit-url-scheme">自動化</a> · <a href="#updates">アップデート</a> · <a href="#uninstalling">アンインストール</a></li>
+<li><a href="#reference">リファレンス</a>：<a href="#troubleshooting">トラブルシューティング</a> · <a href="#keyboard-cheat-sheet">ショートカット早見表</a> · <a href="#placeholder-cheat-sheet">プレースホルダ早見表</a></li>
+</ul>
+<hr />
+<h2 id="part-1-getting-started">パート1：はじめに</h2>
+<h3 id="install">インストール</h3>
+<p><strong>Homebrew</strong>（おすすめ）。<code>brew upgrade</code> で常に最新の状態に保てます。</p>
+<pre><code class="language-bash">brew tap andrey-insarov/keepit https://github.com/andrey-insarov/Keepit
+brew install --cask andrey-insarov/keepit/keepit
+</code></pre>
+<p><strong>DMG</strong>。<a href="https://github.com/andrey-insarov/Keepit/releases/latest">最新リリース</a>のページから <code>Keepit-&lt;version&gt;.dmg</code> をダウンロードして開き、Keepitを「アプリケーション」にドラッグします。</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/dmg.png?v=2115ef2c" class="zoom" title="原寸大で開く"><img src="/img/guide/dmg.png?v=2115ef2c" alt="DMG：Keepitを「アプリケーション」にドラッグ" width="636" height="396" loading="lazy"></a><figcaption>DMG：Keepitを「アプリケーション」にドラッグ</figcaption></figure>
+<p>はじめてアプリを開くと、インターネットからダウンロードされたアプリであり、Appleによるチェックが済んでいることをmacOSが確認します。「開く」をクリックしてください。</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/gatekeeper.png?v=d79051e5" class="zoom" title="原寸大で開く"><img src="/img/guide/gatekeeper.png?v=d79051e5" alt="macOSのGatekeeperによる確認" width="336" height="336" loading="lazy"></a><figcaption>macOSのGatekeeperによる確認</figcaption></figure>
+<p>Keepitは署名と公証を受けており、自動でアップデートされます。macOS 13 Ventura以降を搭載したAppleシリコンとIntelのMacでネイティブに動作します。</p>
+<h3 id="first-launch">初回起動</h3>
+<p>Keepitはメニューバーアプリです。Dockにアイコンは表示されず、自分で開くまでウインドウもありません。初回起動後、メニューバーに 📎 アイコンが現れ、Keepitが3つのことを尋ねます。</p>
+<p><strong>1. バックアップから復元しますか？</strong> 新しいMacで、Keepitのバックアップ（iCloud Driveなどのフォルダにある自動バックアップ、または書き出した <code>.keepit</code> ファイル）がある場合は、「バックアップから復元…」を選ぶと、ほかの設定より先に履歴とテンプレートが戻ります。ファイルのロックは、そのファイルを作ったMacのパスワードかリカバリーフレーズで解除します。「新規に開始」を選ぶとこの手順を飛ばせます。同じ復元はあとから「設定」→「バックアップ」→「復元…」でも行えます。Finderで <code>.keepit</code> ファイルをダブルクリックしても開けます。詳しくは<a href="#backup">バックアップ</a>をご覧ください。</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/restore-first-run.png?v=cfa1e73f" class="zoom" title="原寸大で開く"><img src="/img/guide/restore-first-run.png?v=cfa1e73f" alt="新しいMacでの最初の質問：バックアップから復元するか、新規に開始するか" width="336" height="408" loading="lazy"></a><figcaption>新しいMacでの最初の質問：バックアップから復元するか、新規に開始するか</figcaption></figure>
+<p><strong>2. パスワード（任意）。</strong> Keepitは履歴とテンプレートを暗号化して保存し、Touch IDでロックを解除できます。今決めても、あとから「設定」→「セキュリティ」で決めてもかまいません。仕組みは<a href="#part-6-security">パート6</a>で説明します。「後で」を選ぶと、すべて暗号化されないままディスクに保存されます。直前にバックアップをそのパスワードで復元した場合は、そのパスワードをこのMacでも使うかどうかをKeepitが尋ねます。</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/password-offer.png?v=a377f4be" class="zoom" title="原寸大で開く"><img src="/img/guide/password-offer.png?v=a377f4be" alt="初回起動時のパスワード設定の案内" width="336" height="410" loading="lazy"></a><figcaption>初回起動時のパスワード設定の案内</figcaption></figure>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/no-password-notice.png?v=0da3b4f2" class="zoom" title="原寸大で開く"><img src="/img/guide/no-password-notice.png?v=0da3b4f2" alt="「後で」を選んだ場合：それが何を意味し、どこで変更できるかをはっきり表示します" width="336" height="342" loading="lazy"></a><figcaption>「後で」を選んだ場合：それが何を意味し、どこで変更できるかをはっきり表示します</figcaption></figure>
+<p><strong>3. アクセシビリティの許可。</strong> 代わりにペーストするために、Keepitは作業中だったアプリに ⌘V を送ります。macOSがこれを許すのは、「システム設定」→「プライバシーとセキュリティ」→「アクセシビリティ」のリストにあるアプリだけです。「システム設定を開く」をクリックして、Keepitをオンにしてください。許可がなくても記録とコピーは行われますが、⌘V は自分で押すことになります。</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/accessibility-prompt.png?v=53fda070" class="zoom" title="原寸大で開く"><img src="/img/guide/accessibility-prompt.png?v=53fda070" alt="Keepitがアクセシビリティの許可を求める画面" width="336" height="462" loading="lazy"></a><figcaption>Keepitがアクセシビリティの許可を求める画面</figcaption></figure>
+<figure class="shot" style="max-width:762px"><a href="/img/guide/accessibility-settings.png?v=3324189c" class="zoom" title="原寸大で開く"><img src="/img/guide/accessibility-settings.png?v=3324189c" alt="「プライバシーとセキュリティ」→「アクセシビリティ」でKeepitをオンにしたところ" width="762" height="598" loading="lazy"></a><figcaption>「プライバシーとセキュリティ」→「アクセシビリティ」でKeepitをオンにしたところ</figcaption></figure>
+<p>Keepitはデフォルトでログイン時に起動します。「設定」→「一般」でオフにできます。</p>
+<hr />
+<h2 id="part-2-everyday-use">パート2：日常の使い方</h2>
+<h3 id="the-history-menu">履歴メニュー</h3>
+<p>どのアプリでも <strong>⌥M</strong> を押すか、📎 アイコンをクリックします。メニューは、Keepitがテキストカーソルの位置を取得できればその位置に、できなければマウスポインタの位置に開きます。</p>
+<p>1行が1つのコピー項目で、新しいものが上に並びます。いちばん新しい項目は<strong>太字</strong>で、今クリップボードに入っている内容です。アイコンはコピー元のアプリを示します。タイトルの末尾が <code>…</code> の項目には、メニューに表示されている以上の行があります。画像はサムネイルで、ファイルリストはファイル名で表示されます。</p>
+<figure class="shot" style="max-width:1045px"><a href="/img/guide/menu-preview.png?v=3a4dbc04" class="zoom" title="原寸大で開く"><img src="/img/guide/menu-preview.png?v=3a4dbc04" alt="メニューの横のプレビューパネルに、選択中の項目の全体と、コピー元のアプリ、時刻、サイズが表示されます" width="1045" height="648" loading="lazy"></a><figcaption>メニューの横のプレビューパネルに、選択中の項目の全体と、コピー元のアプリ、時刻、サイズが表示されます</figcaption></figure>
+<figure class="shot" style="max-width:1088px"><a href="/img/guide/menu-image.png?v=d7b4e3af" class="zoom" title="原寸大で開く"><img src="/img/guide/menu-image.png?v=d7b4e3af" alt="履歴の中の画像：メニューにはサムネイル、プレビューには画像全体" width="1088" height="640" loading="lazy"></a><figcaption>履歴の中の画像：メニューにはサムネイル、プレビューには画像全体</figcaption></figure>
+<p>項目をペーストするには、クリックするか、↑ ↓ で移動してReturnを押すか、<strong>⌃⌥</strong> と一緒に番号を押します。<kbd class="k">⌃⌥3</kbd> で3番目の項目がペーストされます。同じキーは、メニューを開かなくてもどこからでも使えます。</p>
+<p>履歴の下には、「テンプレート」サブメニュー、ビューア（⌥E）、設定（⌥S）、「履歴を消去」（⌥C）、「記録を 10 分間一時停止」（⌥P、記録したくないものを入力するときに使います）、パスワード設定時の「Keepit をロック」（⌥L）、アップデートが並びます。<strong>⌥T</strong> はテンプレートメニューだけを開きます。これらのキーはどれも、メニューを開かなくても使えます。</p>
+<h3 id="search-and-preview">検索とプレビュー</h3>
+<p><strong>検索。</strong> メニューが開いている状態で文字を入力し始めると、上部のフィールドがタイトルと全文でリストを絞り込みます。長い項目の途中の行も見つかります。Returnで最初の一致をペーストし、Escでフィールドを消去し、もう一度Escを押すとメニューが閉じます。</p>
+<p><strong>プレビュー。</strong> 項目にポインタを合わせる（またはキーボードで移動する）と、メニューの横のパネルに画像全体、または長いテキストの最初の数行が、コピー元のアプリ、日付、サイズとともに表示されます。1行の短いテキストは、メニューの行に全体が表示されているのでプレビューはありません。</p>
+<figure class="shot" style="max-width:907px"><a href="/img/guide/search-preview.png?v=86998c10" class="zoom" title="原寸大で開く"><img src="/img/guide/search-preview.png?v=86998c10" alt="入力するとメニューが絞り込まれ、プレビューパネルに選択中の項目が表示されます" width="907" height="524" loading="lazy"></a><figcaption>入力するとメニューが絞り込まれ、プレビューパネルに選択中の項目が表示されます</figcaption></figure>
+<h3 id="paste-without-the-menu">メニューを開かずにペースト</h3>
+<p>グローバルショートカットは、どのアプリからでも、その時点の履歴に対して働きます。1番目の項目がクリップボードです。</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>キー</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><kbd class="k">⌃⌥1</kbd> … <kbd class="k">⌃⌥9</kbd>、<kbd class="k">⌃⌥0</kbd></td>
+<td>履歴の1〜10番目の項目をペースト</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥⇧V</kbd></td>
+<td><em>ひとつ前</em>の項目（2番目）をペースト。もう一度押すと元に戻ります</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥V</kbd></td>
+<td>クリップボードを書式なしテキストとしてペースト</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
+<td>クリップボードを大文字 / 小文字 / 単語の先頭を大文字 / 文頭を大文字にしてペースト</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥W</kbd></td>
+<td>クリップボードの前後の空白を取り除いてペースト</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥J</kbd></td>
+<td>クリップボードを1行にまとめてペースト</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥K</kbd> <kbd class="k">⌃⌥D</kbd> <kbd class="k">⌃⌥Y</kbd></td>
+<td>クリップボードを取り消し線 / 下線 / 波線付きでペースト。チャットを含め、どこでも見た目が保たれる標準テキストです（下記参照）</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥X</kbd></td>
+<td>これらの装飾を取り除いてクリップボードをペースト</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥A</kbd></td>
+<td>クリップボードをテンプレートに追加</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥⌫</kbd></td>
+<td>履歴からいちばん新しい項目を削除</td>
+</tr>
+</tbody>
+</table></div>
+<p>この3種類の装飾は書式ではありません。KeepitはUnicodeの<em>結合文字</em>を1文字ごとに付け加えます（s̶t̶r̶i̶k̶e̶、u̲n̲d̲e̲r̲、w̰a̰v̰y̰）。そのため、本来の書式が失われるメッセンジャーやWebフォーム、ターミナルでも同じ見た目になります。代わりに、テキストのサイズは3倍になり、元の単語で検索しても見つからず、スクリーンリーダーは読み上げにつまずき、フォントによっては線が不ぞろいに描かれます。「装飾を取り除く」（<kbd class="k">⌃⌥X</kbd>）でこれらの記号を外せます。ほかの場所で装飾されたテキストにも使えます。どちらの場合も、記号は由来に関係なくコードポイントで取り除かれます。同じ記号を文字として使う発音表記（U+0330はIPAのきしみ声の記号でもあります）からも失われ、3種類の装飾も、付ける前にまずこれらを取り除きます。VoiceOverがオンのときは <code>⌃⌥</code> がVoiceOver自身の修飾キーになるので、「設定」→「ショートカット」で「最新の項目への操作」に別の修飾キーを割り当ててください。</p>
+<p>変換はテキストに適用されます。画像やファイルリストの場合は警告音が鳴ります。これらはすべて「設定」→「ショートカット」で変更したりオフにしたりできます。</p>
+<h3 id="the-paste-queue">貼り付けキュー</h3>
+<p>ある場所で5つのものをコピーして、別の場所に順番どおりペーストしたいことがあります。フォームへのセルの転記や、ページから書類への行の転記などです。貼り付けキューを使えば、メニューを開かずにできます。</p>
+<ol>
+<li><strong>⌥N</strong> を押します（またはメニューで「貼り付けキューを開始」を選びます）。メニューバーのアイコンに赤い点とカウンタが表示されます：<code>📎 ● 0</code></li>
+<li>いつもどおり ⌘C で、好きなだけコピーします。コピーするたびにカウンタが 1、2、3… と増えます。すべて履歴にも記録されます。</li>
+</ol>
+<figure class="shot" style="max-width:350px"><a href="/img/guide/queue-menubar.png?v=808fb52c" class="zoom" title="原寸大で開く"><img src="/img/guide/queue-menubar.png?v=808fb52c" alt="キューがオンのときのメニューバー：赤い点とカウンタ" width="350" height="40" loading="lazy"></a><figcaption>キューがオンのときのメニューバー：赤い点とカウンタ</figcaption></figure>
+<ol>
+<li>テキストを入れたい場所に切り替えて、項目ごとに <strong>⌥V</strong> を押します。最初にコピーしたものが最初にペーストされ、カウンタが減っていきます。⌘V はいつもどおりクリップボードをペーストするので、両方を組み合わせて使えます。</li>
+<li>最後の項目をペーストするか、コピーもペーストもしないまま2分たつと、キューは自動的にオフになります（時間は調整できます）。もう一度 ⌥N を押すと途中で止められます。</li>
+</ol>
+<p><strong>⌥⇧N</strong> は、キューに残っているものをまとめてペーストします。項目の区切りは改行、タブ、スペース、なしから選べます。設定の「貼り付けキュー」パネルで選び、待ち時間もそこで設定します。キューがオンの間、履歴メニューにはキューの項目に印が付きます。<code>▶</code> は次にペーストされる項目、<code>○</code> は待機中、<code>✓</code> はペースト済みです。</p>
+<figure class="shot" style="max-width:610px"><a href="/img/guide/queue-menu.png?v=a61b1a15" class="zoom" title="原寸大で開く"><img src="/img/guide/queue-menu.png?v=a61b1a15" alt="キューがオンのときの履歴メニュー：○ 待機中、▶ 次、✓ ペースト済み。メニューの行に残りの数が表示されます" width="610" height="772" loading="lazy"></a><figcaption>キューがオンのときの履歴メニュー：○ 待機中、▶ 次、✓ ペースト済み。メニューの行に残りの数が表示されます</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-queue.png?v=d30c5141" class="zoom" title="原寸大で開く"><img src="/img/guide/prefs-queue.png?v=d30c5141" alt="「設定」→「貼り付けキュー」" width="636" height="453" loading="lazy"></a><figcaption>「設定」→「貼り付けキュー」</figcaption></figure>
+<h3 id="the-extended-menu">拡張メニュー</h3>
+<p>履歴メニューが開いている状態で <strong>⇧</strong> を押したままにすると、各項目に <code>▸</code> サブメニューが付き、その項目に対するすべての操作が並びます。ペースト、書式なしテキストとしてペースト、コピーのみ（クリップボードに入れるだけでペーストしない）、「変換してペースト」の各種変換、テンプレートに追加、ビューアで表示、削除です。項目にポインタを合わせるか → を押すと開きます。開いたあとは ⇧ を離してかまいません。</p>
+<figure class="shot" style="max-width:805px"><a href="/img/guide/extended-menu.png?v=8b44e749" class="zoom" title="原寸大で開く"><img src="/img/guide/extended-menu.png?v=8b44e749" alt="⇧ を押したままにすると各項目にサブメニューが付きます。いちばん新しい項目ではグローバルショートカットが表示されます" width="805" height="735" loading="lazy"></a><figcaption>⇧ を押したままにすると各項目にサブメニューが付きます。いちばん新しい項目ではグローバルショートカットが表示されます</figcaption></figure>
+<p>いちばん新しい項目のサブメニューには、上の表のグローバルショートカットが表示されます。同じ操作に同じキーが割り当てられているので、ここで覚えられます。ほかの項目では、操作だけがキーなしで表示されます。ショートカットは、どこでも使えるものだけを表示しています。</p>
+<figure class="shot" style="max-width:763px"><a href="/img/guide/extended-menu-item2.png?v=014734f0" class="zoom" title="原寸大で開く"><img src="/img/guide/extended-menu-item2.png?v=014734f0" alt="ほかの項目では、同じ操作がショートカットなしで表示されます" width="763" height="665" loading="lazy"></a><figcaption>ほかの項目では、同じ操作がショートカットなしで表示されます</figcaption></figure>
+<figure class="shot" style="max-width:765px"><a href="/img/guide/extended-menu-image.png?v=8f8e3b22" class="zoom" title="原寸大で開く"><img src="/img/guide/extended-menu-image.png?v=8f8e3b22" alt="画像の場合、テキスト用の操作はグレー表示になります。使えるのはペースト、コピーのみ、テンプレートに追加、ビューアで表示、削除だけです" width="765" height="655" loading="lazy"></a><figcaption>画像の場合、テキスト用の操作はグレー表示になります。使えるのはペースト、コピーのみ、テンプレートに追加、ビューアで表示、削除だけです</figcaption></figure>
+<hr />
+<h2 id="part-3-templates">パート3：テンプレート</h2>
+<p>テンプレートは、ずっと残しておく項目です。署名、住所、定型の返信、コードのスニペット、よくペーストするロゴなどに使います。フォルダのあるツリーに保存され、履歴メニューの「テンプレート」サブメニューと <strong>⌥T</strong> に表示されます。インストール直後には「例」フォルダがあり、あいさつ文、今日の日付、クリップボードの引用、署名が入っています。自分で書く前に、テンプレートで何ができるかを確かめられます。削除しても編集してもかまいません（設定の「リセット…」で元に戻せます）。</p>
+<figure class="shot" style="max-width:660px"><a href="/img/guide/template-examples.png?v=c143a1d7" class="zoom" title="原寸大で開く"><img src="/img/guide/template-examples.png?v=c143a1d7" alt="「例」フォルダ：項目にポインタを合わせるとテキストが表示されます" width="660" height="209" loading="lazy"></a><figcaption>「例」フォルダ：項目にポインタを合わせるとテキストが表示されます</figcaption></figure>
+<figure class="shot" style="max-width:738px"><a href="/img/guide/template-menu-letters.png?v=ea96333e" class="zoom" title="原寸大で開く"><img src="/img/guide/template-menu-letters.png?v=ea96333e" alt="テンプレートメニュー：フォルダはサブメニューとして開き、&amp; の後ろの文字がショートカットキーになります" width="738" height="715" loading="lazy"></a><figcaption>テンプレートメニュー：フォルダはサブメニューとして開き、&amp; の後ろの文字がショートカットキーになります</figcaption></figure>
+<h3 id="creating-and-organising">作成と整理</h3>
+<p><strong>テンプレートを追加する</strong></p>
+<ul>
+<li>履歴メニューから：いちばん新しい項目には <kbd class="k">⌃⌥A</kbd>、メニュー下部の「クリップボードをテンプレートに追加」、または任意の項目について ⇧ → 項目のサブメニュー →「テンプレートに追加」。</li>
+<li>ビューアで：履歴の項目を選んで「テンプレートに追加」をクリックするか、テンプレートのツリーにドラッグします。「新規項目」は空のテキストテンプレートを作ります。「ファイルから新規項目…」（コンテキストメニュー）は、テキストファイルや画像ファイルからテンプレートを作ります。</li>
+</ul>
+<p><strong>整理する</strong></p>
+<ul>
+<li>「新規フォルダ」でフォルダを作ります。項目はフォルダ間でドラッグするか、コンテキストメニューの「上へ」/「下へ」で移動します。</li>
+<li>名前が <code>-</code> のテンプレートは、メニューの区切り線になります。</li>
+<li>名前の中で文字の前に <code>&amp;</code> を付けると（たとえば <code>&amp;Signature</code>）、その文字がテンプレートメニューでのショートカットキーになります。メニューが開いているときに <code>S</code> を押してください。</li>
+<li>コンテキストメニューの「ホットキーを設定…」で、テンプレートに専用のグローバルショートカットを割り当てられます。</li>
+<li>名前のないテンプレートは最初の行が表示されます。「名前を変更」と「名前を消去」はコンテキストメニューにあります。テキストの上の「名前」フィールドでも編集できます。</li>
+</ul>
+<h3 id="placeholders">プレースホルダ</h3>
+<p>テキストテンプレートには <code>{…}</code> 形式のプレースホルダを入れられ、ペーストするときに値が埋め込まれます。それ以外の部分はそのままペーストされます。ビューアの <strong>挿入 ▾</strong> にはすべてのプレースホルダが並んでいて、選んだものがカーソル位置に入るので、覚える必要はありません。</p>
+<figure class="shot" style="max-width:717px"><a href="/img/guide/template-examples-date.png?v=8b048d0d" class="zoom" title="原寸大で開く"><img src="/img/guide/template-examples-date.png?v=8b048d0d" alt="「今日の日付」の例：{date:EEEE, d MMMM yyyy} はペースト時に現在の日付になります" width="717" height="209" loading="lazy"></a><figcaption>「今日の日付」の例：{date:EEEE, d MMMM yyyy} はペースト時に現在の日付になります</figcaption></figure>
+<figure class="shot" style="max-width:650px"><a href="/img/guide/insert-menu.png?v=4fa57206" class="zoom" title="原寸大で開く"><img src="/img/guide/insert-menu.png?v=4fa57206" alt="ビューアの「挿入 ▾」にはすべてのプレースホルダが並びます" width="650" height="770" loading="lazy"></a><figcaption>ビューアの「挿入 ▾」にはすべてのプレースホルダが並びます</figcaption></figure>
+<p>特に便利なもの：</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>プレースホルダ</th>
+<th>結果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{date}</code> <code>{time}</code> <code>{datetime}</code></td>
+<td>今日の日付 / 現在の時刻（システムの書式）</td>
+</tr>
+<tr>
+<td><code>{date:yyyy-MM-dd}</code></td>
+<td>任意の書式（<code>yyyy MM dd EEEE HH mm …</code>）</td>
+</tr>
+<tr>
+<td><code>{date:long}</code> <code>{time:short}</code> <code>{datetime:medium}</code></td>
+<td>名前付きのスタイル：<code>short</code> <code>medium</code> <code>long</code> <code>full</code></td>
+</tr>
+<tr>
+<td><code>{date+7d}</code> <code>{date-1m:MMMM}</code> <code>{time+1h}</code> <code>{date+1y-2d}</code></td>
+<td>ずらした日時：<code>d</code> 日、<code>w</code> 週、<code>m</code> 月、<code>y</code> 年、<code>h</code> 時間。<code>date</code>、<code>time</code>、<code>datetime</code> で使え、複数を続けて書けます</td>
+</tr>
+<tr>
+<td><code>{clipboard}</code> <code>{clipboard:2}</code></td>
+<td>クリップボード、または履歴のN番目の項目</td>
+</tr>
+<tr>
+<td><code>{clipboard\|upper}</code> <code>{clipboard\|trim\|oneline}</code></td>
+<td>フィルタ <code>upper</code> <code>lower</code> <code>title</code> <code>trim</code> <code>oneline</code> <code>url</code>。つなげて使えます</td>
+</tr>
+<tr>
+<td><code>{cursor}</code></td>
+<td>ペースト後にテキストカーソルが置かれる位置</td>
+</tr>
+<tr>
+<td><code>{user}</code> <code>{username}</code> <code>{host}</code></td>
+<td>フルネーム、アカウント名、コンピュータ名</td>
+</tr>
+<tr>
+<td><code>{uuid}</code> <code>{random:1-100}</code></td>
+<td>新しいUUID、乱数</td>
+</tr>
+<tr>
+<td><code>{{</code> <code>}}</code></td>
+<td>波かっこそのもの。テンプレート <code>{{"x":1}}</code> は <code>{"x":1}</code> としてペーストされます</td>
+</tr>
+</tbody>
+</table></div>
+<p>プレースホルダ名は小文字で書きます。<code>{date}</code> はプレースホルダですが、<code>{Date}</code> と <code>{DATE}</code> はただのテキストで、そのままペーストされます。スタイル名とフィルタ名（<code>{date:LONG}</code>、<code>{clipboard|UPPER}</code>）は大文字でも小文字でもかまいません。</p>
+<p>完全な一覧は<a href="#placeholder-cheat-sheet">プレースホルダ早見表</a>にあります。</p>
+<h3 id="templates-that-ask-questions">質問するテンプレート</h3>
+<p><code>{input:Name}</code> と <code>{choice:Label=A|B|C}</code> を使うと、テンプレートが小さなフォームになります。ペーストするとKeepitがまず値を尋ね、それから完成したテキストをペーストします。同じ名前は、何度出てきても尋ねられるのは1回だけです。<code>{input:Name=Default}</code> と書くと、フィールドにあらかじめ値が入ります。</p>
+<figure class="shot" style="max-width:484px"><a href="/img/guide/input-dialog.png?v=8f9de78e" class="zoom" title="原寸大で開く"><img src="/img/guide/input-dialog.png?v=8f9de78e" alt="{input:Name} を含むテンプレートをペーストすると、まず値を尋ねられます" width="484" height="320" loading="lazy"></a><figcaption>{input:Name} を含むテンプレートをペーストすると、まず値を尋ねられます</figcaption></figure>
+<p>たとえば、返信用のテンプレート：</p>
+<pre><code>{input:お名前} 様
+
+{date-1d}付のメッセージをありがとうございます。{date+3d:EEEE}までにお返事いたします。
+{cursor}
+{user}
+</code></pre>
+<p>ペーストすると「お名前」を尋ね、日付を埋め、フルネームで署名し、空の行にカーソルを残します。</p>
+<hr />
+<h2 id="part-4-the-viewer">パート4：ビューア</h2>
+<p>メニューの「ビューア…」を選ぶか、📎 アイコンを右クリックすると、3つのツリーがあるウインドウが開きます。<strong>クリップボード</strong>（現在のクリップボードの内容、読み出し専用）、<strong>履歴</strong>（「テキストとファイル」と「画像」）、<strong>テンプレート</strong>です。</p>
+<figure class="shot" style="max-width:1004px"><a href="/img/guide/viewer.png?v=1c65e776" class="zoom" title="原寸大で開く"><img src="/img/guide/viewer.png?v=1c65e776" alt="テンプレートを選択した状態のビューア" width="1004" height="637" loading="lazy"></a><figcaption>テンプレートを選択した状態のビューア</figcaption></figure>
+<ul>
+<li>項目を選ぶと右側に内容が表示されます。テキストはその場で編集でき、エディタを離れると変更が反映されます。画像はパネルに合わせて表示され、上にピクセルサイズとファイルサイズが出ます。ファイルリストはダブルクリックでファイルを開きます。コンテキストメニューの「16 進ダンプで表示」で生のバイト列を確認できます。</li>
+<li>ツールバー：「クリップボードへ送る」、「ペースト」（元のアプリへ）、「テンプレートに追加」、「新規項目」、「新規フォルダ」、「削除」、「挿入 ▾」（プレースホルダ）、そして <strong>?</strong>（このガイド）。</li>
+<li><strong>検索</strong>（<kbd class="k">⌘F</kbd>）：左側のフィールドが履歴とテンプレートを名前と内容で絞り込み、一致した部分をハイライトします。</li>
+<li>履歴の項目をテンプレートのツリーにドラッグすると保存でき、テンプレートを履歴にドラッグするとコピーして戻せます。並び順はドラッグか「上へ」/「下へ」で変えられます。⌫ で選択中の項目を削除します。</li>
+<li>ステータスバーには日付、コピー元のアプリ、形式、サイズが表示されます。</li>
+</ul>
+<figure class="shot" style="max-width:1025px"><a href="/img/guide/viewer-search.png?v=88476754" class="zoom" title="原寸大で開く"><img src="/img/guide/viewer-search.png?v=88476754" alt="ビューアで検索すると一致した部分がハイライトされます" width="1025" height="682" loading="lazy"></a><figcaption>ビューアで検索すると一致した部分がハイライトされます</figcaption></figure>
+<hr />
+<h2 id="part-5-settings">パート5：設定</h2>
+<p>メニューで <code>⌘,</code> を押すか「設定…」を選ぶか、どのアプリからでも ⌥S を押します。ウインドウの使い方はMacの一般的な設定ウインドウと同じです。ツールバーでパネルを選ぶと、変更はその場で反映されます。保存ボタンはありません。ウインドウは ⌘W かEscで閉じます。<strong>?</strong> が付いているオプションには、説明のポップオーバーがあります。</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-general.png?v=09991ffc" class="zoom" title="原寸大で開く"><img src="/img/guide/prefs-general.png?v=09991ffc" alt="「設定」→「一般」" width="636" height="463" loading="lazy"></a><figcaption>「設定」→「一般」</figcaption></figure>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>パネル</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>一般</strong></td>
+<td>ログイン時に起動 · 終了時に履歴を保存し、起動時に復元 · 選択後にペースト（オフ＝コピーのみ） · ペーストの遅延（前面に出るのが遅いアプリでは長くします） · テキストカーソル位置にメニューを開く · アップデート：「アップデートを自動的に確認」（直接ダウンロード版。オフ＝ネットワーク通信なし） — <a href="#updates">アップデート</a></td>
+</tr>
+<tr>
+<td><strong>ショートカット</strong></td>
+<td>すべてのグローバルショートカットを1か所にまとめています（下記参照）</td>
+</tr>
+<tr>
+<td><strong>貼り付けキュー</strong></td>
+<td>キューの3つのキー、キューがオフになるまでの待ち時間、「残りをすべて貼り付け」で項目の間に入れるもの — <a href="#the-paste-queue">貼り付けキュー</a></td>
+</tr>
+<tr>
+<td><strong>履歴</strong></td>
+<td>保持するテキスト/ファイル項目と画像の数（1000 / 30） · 指定より古い項目を忘れる · 「重複を削除」（同じものをもう一度コピーすると先頭に移動します） · 「秘匿されたクリップボードデータを無視」 · 無視するアプリのリスト（バンドルID。パスワードマネージャは常に無視されます）</td>
+</tr>
+<tr>
+<td><strong>メニュー</strong></td>
+<td>検索フィールド · 番号表示 · プレビューパネル · ツールチップ · コピー元アプリのアイコン · 画像のサムネイル · メニューの項目数（最新の項目をいくつ表示するか。デフォルトは60で、残りも検索できます） · タイトルの長さ · サムネイルの高さ</td>
+</tr>
+<tr>
+<td><strong>セキュリティ</strong></td>
+<td>パスワード、Touch ID、ロック、リカバリーフレーズ — <a href="#part-6-security">パート6</a></td>
+</tr>
+<tr>
+<td><strong>バックアップ</strong></td>
+<td>自動バックアップ（見出しの横にステータス行）：「フォルダに自動的にバックアップ」、ファイルに入れるMacの名前、フォルダ、保持するコピーの数 · 手動バックアップ：「今すぐバックアップ」、「アーカイブに保存…」 · 復元：「復元…」 — <a href="#backup">バックアップ</a></td>
+</tr>
+<tr>
+<td><strong>詳細</strong></td>
+<td>クリップボードの確認間隔 · 自動化：「keepit:// URL コマンドを許可」（デフォルトはオフ — <a href="#automation-the-keepit-url-scheme">自動化</a>） · データ：「フォルダを開く」 · リセットとアンインストール：「リセット…」（インストール直後の状態に戻し、例のテンプレートも復活します） · 「アンインストール…」（リセットしたうえで、アプリ、ログイン時の起動、キーチェーンの項目、各種の許可を削除します）</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-history.png?v=e8444027" class="zoom" title="原寸大で開く"><img src="/img/guide/prefs-history.png?v=e8444027" alt="「設定」→「履歴」：上限と、無視するアプリのリスト" width="636" height="504" loading="lazy"></a><figcaption>「設定」→「履歴」：上限と、無視するアプリのリスト</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-hotkeys.png?v=2f5f309f" class="zoom" title="原寸大で開く"><img src="/img/guide/prefs-hotkeys.png?v=2f5f309f" alt="「設定」→「ショートカット」" width="636" height="717" loading="lazy"></a><figcaption>「設定」→「ショートカット」</figcaption></figure>
+<p><strong>ショートカット</strong>パネルでは、フィールドをクリックしてキーの組み合わせを押します。⌫ でキーをオフにできます。ほかのコマンドがすでに使っている組み合わせは受け付けられず、理由がフィールドの下に表示されます。「デフォルトに戻す」を押すと、⌥+文字のセット（⌥M 履歴、⌥T テンプレート、⌥E ビューア、⌥S 設定、⌥C 履歴を消去、⌥P 一時停止、⌥L ロック、⌥Q 終了）と ⌥⇧V、⌃⌥ が元に戻ります。「番号で項目をペースト」と「最新の項目への操作」は修飾キーだけを受け付け、数字や文字はKeepitが付け加えます。macOSやほかのアプリがすでに使っている組み合わせがあれば、Keepitが起動時に知らせます。「ビューア」⌥E、「設定」⌥S、「履歴を消去」⌥C、「記録を一時停止」⌥P、「Keepit をロック」⌥L、「Keepit を終了」⌥Q はどのアプリからでも使え、メニューの各コマンドの横に表示されます。ショートカットはキーボード上のキーの位置で決まるので、日本語入力中でも ⌥M はそのまま使えます。英字入力では ⌥+文字で特殊文字が入力されることがあります（⌥S = ß、⌥C = ç など）。それらの文字が必要な場合は、コマンドを別のキーに移してください。</p>
+<hr />
+<h2 id="part-6-security">パート6：セキュリティ</h2>
+<h3 id="password-and-encryption">パスワードと暗号化</h3>
+<p>「設定」→「セキュリティ」→「起動時にパスワードを要求」をオンにすると、履歴とテンプレートがAES-256-GCMで暗号化されます。鍵はパスワードから導出され（PBKDF2、200,000回）、メモリ上にだけ存在します。Keepitがロックされると鍵は消去されます。ロックされるのは、「Keepit をロック」（<kbd class="k">⌥L</kbd>）を実行したとき、終了したとき、そして設定によっては、Macがしばらくロックまたはスリープしていたときです。「Keepit の自動ロック」は、新規インストールでは<strong>しない</strong>になっています（3.0.3からのアップデートでは以前の選択が引き継がれ、画面と一緒にロックする設定がオンだった場合は「すぐに」になります）。休憩のたびにパスワードを求めるクリップボードマネージャは使われなくなってしまいますし、大事な場面では <kbd class="k">⌥L</kbd> が使えます。「すぐに」は画面と同時にロックします。「5分後」「15分後」「1時間後」は短い離席では何もしません。Keepitはロックされずに記録を続け、その時間ずっとMacを離れていた場合にだけロックします。Macがすでにロックされている状態や、別のユーザのセッションが前面にある状態でKeepitが起動した場合（アップデート後の再起動など）も同じで、離席の時間は起動時から数えます。ただしこれは、macOSがその状態をKeepitに伝える範囲での動作です（通常は伝えられます。伝えられない場合は、次のロックかスリープから数え始めます）。Touch IDがオンなら、Macのロックが解除された時点でKeepitがタッチを求めるので、最初の <kbd class="k">⌥M</kbd> の前に準備が整います。</p>
+<figure class="shot" style="max-width:800px"><a href="/img/guide/set-password-keyboard.jpg?v=08002f0c" class="zoom" title="原寸大で開く"><img src="/img/guide/set-password-keyboard.jpg?v=08002f0c" alt="オンスクリーンキーボードでパスワードを設定しているところ。これはスクリーンショットではなく画面を撮影した写真です。作者のMacでは、この場面のスクリーンショットにはダイアログしか写りません" width="800" height="600" loading="lazy"></a><figcaption>オンスクリーンキーボードでパスワードを設定しているところ。これはスクリーンショットではなく画面を撮影した写真です。作者のMacでは、この場面のスクリーンショットにはダイアログしか写りません</figcaption></figure>
+<p>パスワードのダイアログには現在のキーボード配列が表示され、Caps Lockがオンのときは警告が出るので、パスワードが通らない理由はたいていすぐわかります。フィールドの横のキーボードボタンを押すと、マウスでパスワードを入力するための<strong>オンスクリーンキーボード</strong>が開きます。クリックがキー入力としてシステムを通ることはなく、キーの配置は開くたびに入れ替わります。また、スクリーンショットや画面収録に写らないようmacOSに要求します（構成によっては除外されますが、保証はされません）。完全には信頼できないMacや、画面を共有しているMacで役に立ちます。起動時とロック後に、Keepitはパスワード（またはTouch ID）を求めます。「アクセスを復旧…」を選ぶと、代わりに24語のフレーズを入力できます。<a href="#recovery-phrase">リカバリーフレーズ</a>をご覧ください。</p>
+<figure class="shot" style="max-width:800px"><a href="/img/guide/unlock-keyboard.jpg?v=4c0be394" class="zoom" title="原寸大で開く"><img src="/img/guide/unlock-keyboard.jpg?v=4c0be394" alt="起動時のロック解除：パスワード、終了、またはリカバリーフレーズ。何か入力するまでOKは押せません。上と同じ理由で写真です" width="800" height="600" loading="lazy"></a><figcaption>起動時のロック解除：パスワード、終了、またはリカバリーフレーズ。何か入力するまでOKは押せません。上と同じ理由で写真です</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-security.png?v=7204a4dd" class="zoom" title="原寸大で開く"><img src="/img/guide/prefs-security.png?v=7204a4dd" alt="「設定」→「セキュリティ」" width="636" height="435" loading="lazy"></a><figcaption>「設定」→「セキュリティ」</figcaption></figure>
+<h3 id="touch-id">Touch ID</h3>
+<p>「Touch ID でロック解除」をオンにすると、鍵は指紋で保護されたSecure Enclaveにも保存され、Keepitはパスワードの代わりにタッチを求めます。パスワードは予備の手段として引き続き使えます（確認画面のパスワードボタン）。ノートブックを閉じた状態で、Touch ID付きの外付けMagic Keyboardを使っている場合は、キーボード側で求められます。「Touch ID でのパスワード変更を許可」をオンにすると、パスワードを変更するときに、古いパスワードの代わりに指紋を使えます。</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/touch-id.png?v=5e119bff" class="zoom" title="原寸大で開く"><img src="/img/guide/touch-id.png?v=5e119bff" alt="Touch IDでのロック解除。パスワードは予備の手段として残ります" width="336" height="313" loading="lazy"></a><figcaption>Touch IDでのロック解除。パスワードは予備の手段として残ります</figcaption></figure>
+<h3 id="recovery-phrase">リカバリーフレーズ</h3>
+<p>パスワードを設定すると、Keepitは24語のフレーズを一度だけ表示します。印刷するか、パスワードマネージャに保管してください。パスワードを忘れた場合は、ロック解除のダイアログで「アクセスを復旧…」を選ぶとデータが開き、新しいパスワードを設定できます。「リカバリーフレーズ」→「新規作成…」で新しいフレーズが発行され、古いものは無効になります。その横の「表示…」を押すと、Touch IDかパスワードで確認したあと、現在のフレーズをもう一度表示できます。</p>
+<p>パスワード、同じMacのTouch ID、フレーズのどれもない場合、データは復元できません。サーバはなく、リセットできるものもないからです。</p>
+<figure class="shot" style="max-width:568px"><a href="/img/guide/recovery-phrase.png?v=8aab134d" class="zoom" title="原寸大で開く"><img src="/img/guide/recovery-phrase.png?v=8aab134d" alt="24語のリカバリーフレーズ（ここでは単語を隠しています）" width="568" height="586" loading="lazy"></a><figcaption>24語のリカバリーフレーズ（ここでは単語を隠しています）</figcaption></figure>
+<h3 id="backup">バックアップ</h3>
+<p>Keepitは、履歴とテンプレートの暗号化したコピーを好きなフォルダ（iCloud Drive、Dropbox、Google Drive、外付けディスク、NASなど）に保存し、何か変更があるたびに新しいコピーを書き込めます。Keepitのサーバはありません。フォルダはあなたのものです。そのフォルダを提供している事業者に見えるのは、暗号化されたファイルとそのサイズ、そして暗号化されていない小さなヘッダです（いつ、どのバージョンのKeepitが書き込んだか、鍵の導出方法、ランダムな識別子。Macの名前は、オンにした場合だけ含まれます）。<a href="/security#backups">セキュリティのページ</a>（英語）に、ヘッダの内容を項目ごとに載せています。</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-backup.png?v=cba8511b" class="zoom" title="原寸大で開く"><img src="/img/guide/prefs-backup.png?v=cba8511b" alt="「設定」→「バックアップ」：自動バックアップ、手動バックアップ、復元" width="636" height="527" loading="lazy"></a><figcaption>「設定」→「バックアップ」：自動バックアップ、手動バックアップ、復元</figcaption></figure>
+<p><strong>オンにする。</strong> 「設定」→「バックアップ」→「フォルダに自動的にバックアップ」をオンにして、「選択…」でフォルダを選びます（選択画面はiCloud Driveで開きます）。自動バックアップには、「設定」→「セキュリティ」のパスワード保護が必要です。各コピーは保管庫の鍵から導出した鍵で封印されるので、このMacでもほかのMacでも、Keepitのパスワードかリカバリーフレーズで開けます。そのための設定は何も要りません。パスワードが設定されていない場合、チェックボックスは無効になり、その旨が表示されます。</p>
+<p><strong>そのあとの動作：スケジュール。</strong> 最後の変更から約5分後（Keepitが動いている間は遅くとも1日に1回）、Keepitは <code>Keepit-&lt;date and time&gt;-&lt;installation&gt;-&lt;id&gt;.keepit</code> という名前のファイルをフォルダに書き込み、読み戻して確認します。そのあとではじめて、「保持する数」（デフォルトは10、1〜100）を超えた自分の古いコピーを削除します。各コピーはそれだけで完結していて、差分ではないので、必要なファイルは常に1つだけです。ほかのMacが作ったコピーや、自分で置いたファイルには手を付けません。1つのフォルダを共有する2台のMacは、それぞれ独立した系列を書き込みます。「自動バックアップ」の見出しの横のステータス行には、最後のコピーの時刻とサイズ、または直前の試行が失敗した理由が表示されます。Keepitがロックされている間は何も行われません。「今すぐバックアップ」（「手動バックアップ」の下）は、変更後の待ち時間を待たずに実行します。</p>
+<p><strong>「この Mac の名前をバックアップファイルに含める」</strong>（デフォルトはオフ）をオンにすると、各ファイルの暗号化されていないヘッダにコンピュータの名前が入り、1つのフォルダにある2つの系列をFinderで見分けやすくなります。ストレージの提供元からもその名前が見えるため、任意の設定にしています。</p>
+<p><strong>復元。</strong> 「復元…」は、ロックを解除したあとでバックアップ（このMacのもの、ほかのMacのもの、書き出したファイル）を開きます。解除には、そのバックアップを作ったMacのパスワードか、そのMacでパスワードを設定したときに表示されたリカバリーフレーズを使います（パスワードのダイアログの「アクセスを復旧…」）。プレビューに、ファイルがいつどこで作られたか、いくつの項目が入っているかが表示され、次のどちらかを選びます。</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/restore-preview.png?v=8f48d34e" class="zoom" title="原寸大で開く"><img src="/img/guide/restore-preview.png?v=8f48d34e" alt="復元のプレビュー：ファイルがいつ、どのバージョンのKeepitで書き込まれたか、何が入っているか、「結合」か「置き換え」か" width="636" height="651" loading="lazy"></a><figcaption>復元のプレビュー：ファイルがいつ、どのバージョンのKeepitで書き込まれたか、何が入っているか、「結合」か「置き換え」か</figcaption></figure>
+<ul>
+<li>「結合」は、まだないものを追加します。履歴の項目は内容で照合し、バックアップのテンプレートは「読み込み &lt;日付&gt;」という名前の新しいフォルダにまとめて入ります（ホットキーは引き継がれません）。バックアップから来たものがひと目でわかり、移動や削除ができます。今あるものは上書きされません。</li>
+<li>「置き換え」は、現在の履歴とテンプレートを破棄し、バックアップのものに入れ替えます。その前にKeepitは、現在の内容のコピー（<code>Keepit-before-restore-…</code>）をバックアップフォルダか、選んだフォルダに書き込みます。このコピーを書き込めない場合、置き換えは始まりません。Keepitにまだパスワードがない場合は、「アーカイブに保存…」と同じように、このコピー用のパスワードを尋ねられます。</li>
+</ul>
+<p>「環境設定も復元する」を選ぶと、ホットキー、上限、オプションがバックアップから戻ります。特定のMacへの信頼を表す設定（Touch ID、URLによる自動化とその信頼済みアプリ、バックアップフォルダ自体）は、常にこのMacの現在の設定のままです。バックアップの履歴がこのMacの上限より大きい場合は、確定する前に、どれだけ収まるかをKeepitが知らせます。</p>
+<p>まだパスワードのないMacで、リカバリーフレーズを使ってバックアップを復元した場合、Keepitは先にパスワードを設定するよう求めます。復元したデータが暗号化されないまま保存されるのを防ぐためです。そのフレーズをこのMacでも使い続けるか、新しいフレーズを作るかを選べます。パスワードで復元した場合は、それをこのMacのパスワードとして使うかどうかをKeepitが尋ねます。どちらの場合も、自動バックアップはMacごとの設定です。このMacでオンにしてフォルダを選べば（同じフォルダでかまいません）、古いMacの系列の隣に、このMac独自の系列が作られ始めます。</p>
+<p><strong>新しいMacへの移行</strong>こそが、この機能の目的です。Keepitをインストールし、初回起動時に「バックアップから復元…」を選び、フォルダの中のいちばん新しいファイルを選んで、古いMacのパスワードを入力し、「置き換え」を選びます。そのあと、新しいMacで自動バックアップをオンにします。それまでに作られたコピーは、それぞれが書き込まれた時点で有効だったパスワードとフレーズで開きます。パスワードを変更したあとも、古いコピーには古いパスワードが必要です。</p>
+<p><strong>手動バックアップ。</strong> ボタンは2つあり、役割が違います。「今すぐバックアップ」は、自動バックアップと同じ形式のコピーをすぐに作ります。ファイルの種類も、フォルダも、系列も同じで、Keepitのパスワードかフレーズで開きます。「アーカイブに保存…」は、1つの <code>.keepit</code> <em>アーカイブ</em>を好きな場所に書き出し、そのために選んだパスワードでロックします。Keepitのパスワード保護は必要なく、書き出したあとのファイルをKeepitは管理しません。データを人に渡すときや、バックアップフォルダの外にコピーを置きたいときに使います。提案されるファイル名を見れば種類がわかります。アーカイブは <code>Keepit-archive-&lt;date&gt;-manual.keepit</code>、自動コピーは <code>Keepit-&lt;date and time&gt;-&lt;installation&gt;-&lt;id&gt;.keepit</code> です。</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/save-to-archive.png?v=6d252de5" class="zoom" title="原寸大で開く"><img src="/img/guide/save-to-archive.png?v=6d252de5" alt="「アーカイブに保存…」：ファイル名に archive と manual が入ります" width="636" height="528" loading="lazy"></a><figcaption>「アーカイブに保存…」：ファイル名に archive と manual が入ります</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/archive-password.png?v=1b218e7c" class="zoom" title="原寸大で開く"><img src="/img/guide/archive-password.png?v=1b218e7c" alt="アーカイブ専用のパスワードと強度メーター。このパスワードはどこにも保存されません" width="636" height="621" loading="lazy"></a><figcaption>アーカイブ専用のパスワードと強度メーター。このパスワードはどこにも保存されません</figcaption></figure>
+<p>「復元…」はどちらの種類も開けます。アーカイブは、2.xの「書き出す…」/「読み込む…」に代わるものです。このファイルで、直接ダウンロード版とApp Store版の間、またKeepit 2.xと3.xの間でデータを移せます。3.0で書き込んだファイルを開くには3.0以降が必要です。3.0は2.xが書き込んだものをすべて読めます。</p>
+<p><strong>うまくいかないとき。</strong> コピーに失敗するとステータス行に表示され、間隔を少しずつ空けながら再試行されます。以前のコピーは残ります。復元の途中でKeepitが終了したり、Macが落ちたりした場合は、次の起動時に、復元前の状態へ自動的に戻します。まれにそれができない場合（書き込めないファイルがある、ディスクがいっぱいなど）は、そのファイルの名前を表示し、何も変更せずに終了します。ファイルの問題を解消してから、もう一度起動してください。ファイル形式の内部構造を含む詳細は、<a href="/security#backups">セキュリティのページ</a>（英語）にあります。</p>
+<hr />
+<h2 id="part-7-advanced">パート7：高度な機能</h2>
+<h3 id="automation-the-keepit-url-scheme">自動化：keepit:// URLスキーム</h3>
+<p>ショートカット（「URLを開く」）、Raycast、Alfred、Keyboard Maestro、またはシェルの <code>open</code> からKeepitを操作できます。ただし、「設定」→「詳細」→「自動化」→「keepit:// URL コマンドを許可」で<strong>オンにした場合だけ</strong>です。デフォルトでオフにしているのは、どのアプリやWebページでもURLを開くことができ、<code>add</code> や <code>paste</code> はクリップボードを書き換えて前面のアプリに入力するからです。オフの間、KeepitはこうしたURLを警告音とともに無視します。オンにすると、KeepitはだれがURLを開いたかを確認します。何かを変更するコマンド（<code>paste</code>、<code>copy</code>、<code>template</code>、<code>add</code>、<code>add-template</code>、<code>pause</code>、<code>resume</code>）がアプリから最初に届いたときは、ダイアログで確認します。「許可」は1回だけ実行し、「常に許可」はそのアプリを信頼済みリストに加えます（同じパネルの「信頼済みアプリを忘れる」で消去できます）。Webブラウザや、macOSが特定できない送信元の場合は、毎回確認します。Keepit自身のウインドウを開くだけのコマンドは、確認なしで実行されます。</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>URL</th>
+<th>効果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>keepit://paste/2</code><br><code>keepit://paste/latest</code><br><code>keepit://paste/previous</code></td>
+<td>履歴のN番目（または最新 / ひとつ前）の項目を前面のアプリにペースト</td>
+</tr>
+<tr>
+<td><code>keepit://copy/3</code></td>
+<td>N番目の項目を、ペーストせずにクリップボードに入れる</td>
+</tr>
+<tr>
+<td><code>keepit://template/Signature</code><br><code>keepit://template/Work/Reply?copy=1</code></td>
+<td>名前またはフォルダのパスで指定したテンプレートをペースト（またはコピー）</td>
+</tr>
+<tr>
+<td><code>keepit://add?text=…</code></td>
+<td>テキストを履歴とクリップボードに追加</td>
+</tr>
+<tr>
+<td><code>keepit://add-template?text=…&amp;name=…</code></td>
+<td>テンプレートを作成</td>
+</tr>
+<tr>
+<td><code>keepit://history</code><br><code>keepit://templates</code><br><code>keepit://viewer</code><br><code>keepit://settings</code></td>
+<td>履歴メニュー、テンプレートメニュー、ビューア、設定を開く</td>
+</tr>
+<tr>
+<td><code>keepit://pause</code><br><code>keepit://resume</code></td>
+<td>記録を10分間一時停止 / 再開</td>
+</tr>
+</tbody>
+</table></div>
+<p>テキストはパーセントエンコードしてください（スペースは <code>%20</code>）。Keepitがロックされている間、URLは無視されます。</p>
+<h3 id="updates">アップデート</h3>
+<p>Keepitは1日に1回GitHub Releasesを確認し、アップデートがあればダイアログで知らせます。「アップデートを確認…」を選ぶと、すぐに確認します。アップデートは署名（EdDSA）と公証を受けています。Homebrewを使っている場合は、<code>brew upgrade --cask keepit</code> で同じことができます。各ダウンロードのチェックサムは、リリースページの <code>SHA256SUMS</code> にあります。</p>
+<p>この確認がKeepitの行う唯一のネットワーク通信で、オフにもできます。「設定」→「一般」→「アップデート」→「アップデートを自動的に確認」です。オフにすると、Keepitはどこにも接続しなくなります。手動で確認することもできなくなり、「アップデートを確認…」はメニューから消えます。その場合は、<a href="https://keep.it.com">keep.it.com</a> からダウンロードするか、Homebrewでアップデートしてください。App Store版にはアップデート機能もこのオプションもなく、App Storeがアップデートします。</p>
+<h3 id="uninstalling">アンインストール</h3>
+<p>「設定」→「詳細」→「リセットとアンインストール」→「アンインストール…」を選ぶと、アプリ、データフォルダ、キーチェーンの項目（Touch IDの鍵を含む）、ログイン項目、アクセシビリティの登録が削除されます。パスワードまたはTouch ID、<code>DELETE</code> の入力、最終確認が求められます。あとでデータが必要になるかもしれない場合は、先にバックアップを書き出してください。Homebrewで入れた場合は、そのあと <code>brew uninstall --cask --force keepit</code> を実行して、Homebrew側の登録も消してください。</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-advanced.png?v=9908024a" class="zoom" title="原寸大で開く"><img src="/img/guide/prefs-advanced.png?v=9908024a" alt="「設定」→「詳細」" width="636" height="515" loading="lazy"></a><figcaption>「設定」→「詳細」</figcaption></figure>
+<hr />
+<h2 id="reference">リファレンス</h2>
+<h3 id="troubleshooting">トラブルシューティング</h3>
+<p><strong>項目を選んでも何もペーストされません。</strong> アクセシビリティの許可がありません。「システム設定」→「プライバシーとセキュリティ」→「アクセシビリティ」→「Keepit」を確認してください。Keepitがリストにあるのにペーストされない場合は、いったんオフにしてからオンに戻してください。アプリを再インストールすると、macOSは許可を忘れます。</p>
+<p><strong>ショートカットを押しても何も起きません。</strong> ほかのアプリかmacOSがそのキーを使っています。Keepitは起動時にそのことを知らせます。「ショートカット」パネルで別の組み合わせを選んでください。初期状態のMacでは、⌃⌥ と数字・文字の組み合わせは空いています。</p>
+<p><strong>メニューが違う場所に開きます。</strong> 使用中のアプリがテキストカーソルの位置を公開していないため、メニューはマウスポインタの位置に開きます。常にポインタの位置に開きたい場合は、「一般」パネルの「可能ならテキストカーソル位置にメニューを開く」をオフにしてください。</p>
+<p><strong>コピーしたはずのものが見つかりません。</strong> コピー元のアプリが秘匿扱いにしたものは記録されません。パスワードマネージャ（内蔵のリスト）や、無視リストに入れたアプリが前面にあったときのコピーも記録されません。直前まで使っていて切り替えたばかりのアプリも対象です。「設定」→「履歴」と<a href="/security#what-is-not-recorded">セキュリティのページ</a>（英語）をご覧ください。</p>
+<p><strong>Touch IDが表示されません。</strong> 現在使えるTouch IDセンサーがありません（ノートブックを閉じている、Touch ID付きのキーボードがないなど）。Keepitは設定を保持し、センサーが使えるようになり次第、指紋を求めます。</p>
+<p><strong>バックアップのステータスに、フォルダを利用できないと表示されます。</strong> フォルダが移動、名称変更、マウント解除されたか、（iCloud Driveの場合）ローカルから取り除かれています。マウントするか元に戻せば、次のコピーは成功します。「選択…」で新しいフォルダを選ぶこともできます。新しいフォルダでは新しい系列が始まり、古いファイルは元の場所に残ります。</p>
+<p><strong>バックアップファイルが開きません。</strong> 「パスワードが違います」は、ファイルの認証タグが一致しなかったという意味です。そのファイルを<em>書き込んだ</em>Macのパスワード（パスワードを変更したあとも、古いコピーは古いパスワードで開きます）か、そのMacのリカバリーフレーズを使っているか確認してください。「このバックアップには Keepit 3.0 以降が必要です」は、開こうとしているバージョンより新しいバージョンでファイルが書き込まれたという意味です。</p>
+<p><strong>Homebrewが既存のアプリへの上書きインストールを拒否します。</strong> Keepitを終了し、先に <code>/Applications/Keepit.app</code> をゴミ箱に入れるか、<code>--force</code> を付けてください。</p>
+<p>解決しない場合は：<a href="https://github.com/andrey-insarov/Keepit/issues">GitHub Issues</a> · admin@keep.it.com</p>
+<h3 id="keyboard-cheat-sheet">ショートカット早見表</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>キー</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><kbd class="k">⌥M</kbd></td>
+<td>履歴メニュー。入力して検索</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥T</kbd></td>
+<td>テンプレートメニュー</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥1</kbd> … <kbd class="k">⌃⌥0</kbd></td>
+<td>1〜10番目の項目をペースト（メニュー内でもどこからでも）</td>
+</tr>
+<tr>
+<td>メニュー内で <kbd class="k">⇧</kbd></td>
+<td>拡張メニュー：項目ごとのすべての操作</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥⇧V</kbd></td>
+<td>ひとつ前の項目をペースト / 入れ替え</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥V</kbd></td>
+<td>クリップボードを書式なしテキストとしてペースト</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
+<td>大文字 / 小文字 / 単語の先頭を大文字 / 文頭を大文字</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥W</kbd> <kbd class="k">⌃⌥J</kbd></td>
+<td>前後の空白を除去 / 1行にまとめる</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥K</kbd> <kbd class="k">⌃⌥D</kbd> <kbd class="k">⌃⌥Y</kbd> <kbd class="k">⌃⌥X</kbd></td>
+<td>取り消し線 / 下線 / 波線 / 装飾を取り除く</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥A</kbd></td>
+<td>クリップボードをテンプレートに追加</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥⌫</kbd></td>
+<td>いちばん新しい項目を削除</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥N</kbd> · <kbd class="k">⌥V</kbd> · <kbd class="k">⌥⇧N</kbd></td>
+<td>貼り付けキュー：開始 / 停止 · 次をペースト · 残りをすべてペースト</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥E</kbd> <kbd class="k">⌥S</kbd> <kbd class="k">⌥C</kbd> <kbd class="k">⌥P</kbd> <kbd class="k">⌥L</kbd> <kbd class="k">⌥Q</kbd></td>
+<td>ビューア · 設定 · 履歴を消去 · 記録を一時停止 · ロック · 終了</td>
+</tr>
+<tr>
+<td>ビューアで <kbd class="k">⌘F</kbd></td>
+<td>検索</td>
+</tr>
+<tr>
+<td><code>⌘,</code></td>
+<td>設定</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="placeholder-cheat-sheet">プレースホルダ早見表</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>プレースホルダ</th>
+<th>結果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{date}</code> <code>{time}</code> <code>{datetime}</code></td>
+<td>日付 / 時刻 / 両方（システムの書式）</td>
+</tr>
+<tr>
+<td><code>{date:yyyy-MM-dd}</code> <code>{time:HH:mm}</code></td>
+<td>カスタム書式（Unicodeの日付パターン）</td>
+</tr>
+<tr>
+<td><code>{date:long}</code> <code>{time:short}</code> <code>{datetime:full}</code></td>
+<td>名前付きのスタイル：<code>short</code> <code>medium</code> <code>long</code> <code>full</code></td>
+</tr>
+<tr>
+<td><code>{date+7d}</code> <code>{date-1m:MMMM}</code> <code>{time+1h}</code> <code>{datetime-1d:long}</code> <code>{date+1y-2d}</code></td>
+<td>ずらした日時（<code>d</code> <code>w</code> <code>m</code> <code>y</code> <code>h</code>。4つまで続けて書けます）</td>
+</tr>
+<tr>
+<td><code>{weekday}</code> <code>{month}</code> <code>{year}</code></td>
+<td>曜日名、月名、年</td>
+</tr>
+<tr>
+<td><code>{iso}</code> <code>{unix}</code></td>
+<td>ISO 8601形式のタイムスタンプ、Unix時間</td>
+</tr>
+<tr>
+<td><code>{clipboard}</code> <code>{clipboard:2}</code></td>
+<td>クリップボード（1番目の項目）、またはN番目の項目</td>
+</tr>
+<tr>
+<td><code>{clipboard\|upper}</code> <code>\|lower</code> <code>\|title</code> <code>\|trim</code> <code>\|oneline</code> <code>\|url</code></td>
+<td>フィルタ。つなげて使えます</td>
+</tr>
+<tr>
+<td><code>{input:Name}</code> <code>{input:Name=Default}</code></td>
+<td>ペーストの前に値を尋ねる</td>
+</tr>
+<tr>
+<td><code>{choice:Label=A\|B\|C}</code></td>
+<td>選択肢から選ばせる</td>
+</tr>
+<tr>
+<td><code>{cursor}</code></td>
+<td>ペースト後のカーソル位置</td>
+</tr>
+<tr>
+<td><code>{user}</code> <code>{username}</code> <code>{host}</code></td>
+<td>フルネーム、アカウント名、コンピュータ名</td>
+</tr>
+<tr>
+<td><code>{uuid}</code> <code>{random:1-100}</code></td>
+<td>新しいUUID、範囲内の乱数</td>
+</tr>
+<tr>
+<td><code>{{</code> <code>}}</code></td>
+<td>波かっこそのもの</td>
+</tr>
+</tbody>
+</table></div></article></main>
+<footer><div class="wrap">
+  <span>© 2026 UK Intis Telecom LTD · KeepitはMITライセンスで配布されています</span>
+  <span><a href="/privacy">プライバシーポリシー</a><span class="en-only"> （英語）</span> · <a href="/security">セキュリティ</a><span class="en-only"> （英語）</span> · <a href="/ja/support">サポート</a> · <a href="https://github.com/andrey-insarov/Keepit/blob/main/CHANGELOG.md">更新履歴</a> · <a href="https://it.com">it.com</a></span>
+  <span class="langs"><a href="/guide" lang="en" hreflang="en">English</a> · <a href="/ru/guide" lang="ru" hreflang="ru">Русский</a> · <a href="/uk/guide" lang="uk" hreflang="uk">Українська</a> · <a href="/de/guide" lang="de" hreflang="de">Deutsch</a> · <a href="/fr/guide" lang="fr" hreflang="fr">Français</a> · <a href="/es/guide" lang="es" hreflang="es">Español</a> · <a href="/pt-br/guide" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a> · <b lang="ja">日本語</b> · <a href="/zh-hans/guide" lang="zh-Hans" hreflang="zh-Hans">简体中文</a> · <a href="/ar/guide" lang="ar" hreflang="ar">العربية</a></span>
+</div></footer>
+<div id="lb" role="dialog" aria-label="原寸大のスクリーンショット"><img alt=""></div>
+<script>
+(function(){
+  var mn=document.querySelector('.mnav');if(mn){mn.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){mn.removeAttribute('open');});});document.addEventListener('click',function(e){if(mn.open&&!mn.contains(e.target))mn.removeAttribute('open');});}
+  var lb=document.getElementById('lb'),im=lb.querySelector('img');
+  document.querySelectorAll('a.zoom').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();im.src=a.getAttribute('href');im.alt=a.querySelector('img').alt;lb.classList.add('on');});});
+  function close(){lb.classList.remove('on');im.src='';}
+  lb.addEventListener('click',close);document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+  var links=[].slice.call(document.querySelectorAll('aside a')),heads=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  if(links.length&&'IntersectionObserver' in window){
+    var cur=null;function mark(id){links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+id);});}
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){cur=e.target.id;mark(cur);}});},{rootMargin:'-70px 0px -70% 0px'});
+    heads.forEach(function(h){if(h)io.observe(h);});
+  }
+})();
+</script>
+</body></html>

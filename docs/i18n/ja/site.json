@@ -1,0 +1,33 @@
+{
+  "ui": {
+    "features": "機能",
+    "privacy": "プライバシー",
+    "install": "インストール",
+    "guide": "ガイド",
+    "security": "セキュリティ",
+    "support": "サポート",
+    "menu": "メニュー",
+    "copyright": "© 2026 UK Intis Telecom LTD · KeepitはMITライセンスで配布されています",
+    "privacy_policy": "プライバシーポリシー",
+    "changelog": "更新履歴",
+    "on_this_page": "このページの内容",
+    "contents": "目次",
+    "open_full_size": "原寸大で開く",
+    "full_size_screenshot": "原寸大のスクリーンショット",
+    "language": "言語",
+    "in_english": "（英語）",
+    "translated_note": "英語からの翻訳です。原文：<a href=\"{en}\">English</a>"
+  },
+  "pages": {
+    "GUIDE.md": {
+      "title": "Keepitユーザガイド – Mac用クリップボードマネージャ",
+      "description": "Mac用の無料クリップボードマネージャKeepitの使い方。履歴メニュー、ショートカット、テンプレート、ビューア、暗号化、Touch IDについて説明します。",
+      "crumb": "ガイド"
+    },
+    "SUPPORT.md": {
+      "title": "Keepitサポート – Mac用クリップボードマネージャのヘルプ",
+      "description": "Mac用クリップボードマネージャKeepitについてのお問い合わせ方法と、よくある質問への短い回答。",
+      "crumb": "サポート"
+    }
+  }
+}

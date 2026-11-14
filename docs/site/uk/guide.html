@@ -1,0 +1,823 @@
+<!DOCTYPE html><html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Посібник Keepit – менеджер буфера обміну для Mac</title><link rel="icon" href="/img/icon.png?v=a1519b94"><link rel="apple-touch-icon" href="/img/icon.png?v=a1519b94">
+<meta name="description" content="Як користуватися Keepit, безкоштовним менеджером буфера обміну для Mac: меню історії, гарячі клавіші, шаблони, Перегляд, шифрування і Touch ID.">
+<link rel="canonical" href="https://keep.it.com/uk/guide"><link rel="alternate" hreflang="en" href="https://keep.it.com/guide"><link rel="alternate" hreflang="ru" href="https://keep.it.com/ru/guide"><link rel="alternate" hreflang="uk" href="https://keep.it.com/uk/guide"><link rel="alternate" hreflang="de" href="https://keep.it.com/de/guide"><link rel="alternate" hreflang="fr" href="https://keep.it.com/fr/guide"><link rel="alternate" hreflang="es" href="https://keep.it.com/es/guide"><link rel="alternate" hreflang="pt-BR" href="https://keep.it.com/pt-br/guide"><link rel="alternate" hreflang="ja" href="https://keep.it.com/ja/guide"><link rel="alternate" hreflang="zh-Hans" href="https://keep.it.com/zh-hans/guide"><link rel="alternate" hreflang="ar" href="https://keep.it.com/ar/guide"><link rel="alternate" hreflang="x-default" href="https://keep.it.com/guide"><meta property="og:type" content="article"><meta property="og:site_name" content="Keepit"><meta property="og:locale" content="uk_UA"><meta property="og:title" content="Посібник Keepit – менеджер буфера обміну для Mac"><meta property="og:description" content="Як користуватися Keepit, безкоштовним менеджером буфера обміну для Mac: меню історії, гарячі клавіші, шаблони, Перегляд, шифрування і Touch ID."><meta property="og:image" content="https://keep.it.com/img/social-preview.png?v=57583ec3"><meta property="og:url" content="https://keep.it.com/uk/guide"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Посібник Keepit – менеджер буфера обміну для Mac"><meta name="twitter:description" content="Як користуватися Keepit, безкоштовним менеджером буфера обміну для Mac: меню історії, гарячі клавіші, шаблони, Перегляд, шифрування і Touch ID."><meta name="twitter:image" content="https://keep.it.com/img/social-preview.png?v=57583ec3"><meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "@id": "https://keep.it.com/uk/guide", "url": "https://keep.it.com/uk/guide", "name": "Посібник Keepit", "headline": "Посібник Keepit", "description": "Як користуватися Keepit, безкоштовним менеджером буфера обміну для Mac: меню історії, гарячі клавіші, шаблони, Перегляд, шифрування і Touch ID.", "inLanguage": "uk", "isPartOf": {"@id": "https://keep.it.com/#site"}, "about": {"@id": "https://keep.it.com/#app"}, "author": {"@id": "https://keep.it.com/#org"}, "publisher": {"@id": "https://keep.it.com/#org"}, "image": "https://keep.it.com/img/social-preview.png?v=57583ec3", "dateModified": "2026-11-14", "translationOfWork": {"@id": "https://keep.it.com/guide"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Keepit", "item": "https://keep.it.com/uk/"}, {"@type": "ListItem", "position": 2, "name": "Посібник", "item": "https://keep.it.com/uk/guide"}]}]}</script>
+<script defer src="https://app.eurometrics.eu/script.js?v=7cfd3b4c27be" data-website-id="0ab7fe20-0c05-4061-b037-c033dc46c1e1" data-domains="keep.it.com" data-do-not-track="true" data-exclude-search="true" data-no-storage="true"></script>
+<style>
+:root{--paper:#fbfbfd;--ink:#0f1222;--ink-2:#4b4f63;--ink-3:#696d84;--blue:#2f4fd1;--blue-deep:#1f3aa6;--blue-tint:#eef2ff;--line:#e3e5ef;--key:#fff;--key-edge:#cfd2de;--win:#fff;--sel:#2f5cf0}
+@media(prefers-color-scheme:dark){:root{--paper:#0c0d14;--ink:#f2f3f8;--ink-2:#b7bacb;--ink-3:#8e92a9;--blue:#7d9bff;--blue-deep:#a9bdff;--blue-tint:#151b35;--line:#23263a;--key:#1b1e2e;--key-edge:#3a3e56;--win:#1a1c28;--sel:#3d6bff}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:72px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;font:17px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+:focus-visible{outline:3px solid var(--sel);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:20;-webkit-backdrop-filter:saturate(180%) blur(18px);backdrop-filter:saturate(180%) blur(18px);background:color-mix(in srgb,var(--paper) 78%,transparent);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:650;color:var(--ink);font-size:20px}.brand img{width:44px;height:44px;border-radius:10px}
+nav{display:flex;gap:24px;align-items:center}nav>a{color:var(--ink-2);font-size:15px}nav>a:hover{color:var(--ink);text-decoration:none}
+.mnav{display:none;position:relative}.mnav summary{list-style:none;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--ink)}
+.mnav summary::-webkit-details-marker{display:none}.mnav summary svg{width:22px;height:22px}.mnav[open] summary{background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.mnav .links{position:absolute;right:0;top:48px;min-width:210px;padding:6px;border-radius:14px;background:var(--win);border:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.18);display:grid}
+.mnav .links a{display:block;padding:11px 14px;border-radius:9px;font-size:16px;color:var(--ink)}.mnav .links a:hover{background:var(--blue-tint);text-decoration:none}
+@media(max-width:700px){nav{gap:10px}nav>a:not(.gh){display:none}.mnav{display:block;margin-right:-8px}}
+main.wrap{display:grid;grid-template-columns:230px minmax(0,1fr);gap:56px;padding-top:48px;padding-bottom:96px}
+main.wrap.narrow{grid-template-columns:minmax(0,1fr);max-width:820px}
+aside{position:sticky;top:76px;align-self:start;max-height:calc(100vh - 96px);overflow:auto;font-size:14px;line-height:1.45;padding-right:8px}
+aside .ttl{font-weight:650;color:var(--ink);margin:0 0 10px;font-size:13px}
+aside ol{list-style:none;margin:0;padding:0}aside li{margin:0}
+aside a{display:block;color:var(--ink-2);padding:4px 0 4px 12px;border-left:2px solid var(--line)}
+aside a:hover{color:var(--ink);text-decoration:none}aside a.on{color:var(--blue);border-left-color:var(--blue)}
+aside ol ol a{padding-left:24px;font-size:13px;color:var(--ink-3)}
+@media(max-width:900px){main.wrap{grid-template-columns:minmax(0,1fr);gap:0;padding-top:32px;padding-bottom:64px}aside{position:static;max-height:none;margin-bottom:32px;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--win)}aside ol ol{display:none}}
+article{max-width:72ch;min-width:0}
+article h1{font-size:clamp(34px,5vw,52px);line-height:1.05;letter-spacing:-.03em;font-weight:750;margin:0 0 .5em}
+article h1+p{font-size:19px;color:var(--ink-2)}
+article h2{font-size:30px;line-height:1.15;letter-spacing:-.02em;font-weight:700;margin:2.2em 0 .6em;padding-top:1em;border-top:1px solid var(--line)}
+article h3{font-size:20px;font-weight:650;margin:1.8em 0 .5em}
+article p,article li{color:var(--ink);}article li{margin:.25em 0}
+article hr{border:0;border-top:1px solid var(--line);margin:2.5em 0}
+code{font:.9em ui-monospace,"SF Mono",Menlo,monospace;background:color-mix(in srgb,var(--ink) 7%,transparent);padding:2px 6px;border-radius:6px;white-space:nowrap}
+@media(max-width:600px){code{white-space:normal;overflow-wrap:anywhere}}
+pre{background:var(--blue-tint);padding:14px 18px;border-radius:12px;overflow:auto;font-size:14px;line-height:1.6;max-width:100%}pre code{background:none;padding:0;white-space:pre-wrap;word-break:break-word}
+kbd.k{display:inline-block;min-width:1.7em;padding:0 .4em;text-align:center;font:600 .82em/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text",Helvetica,Arial,sans-serif;color:var(--ink);background:var(--key);border:1px solid var(--key-edge);border-bottom-width:2px;border-radius:6px;white-space:nowrap;vertical-align:baseline}
+.tbl{overflow-x:auto;margin:1.2em 0}table{border-collapse:collapse;width:100%;font-size:15.5px}th,td{text-align:left;padding:9px 12px 9px 0;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--ink-3);font-weight:600;font-size:14px}td code{display:inline-block;margin:1px 0}
+td:first-child{white-space:nowrap}@media(max-width:600px){td:first-child{white-space:normal}}
+figure.shot{margin:1.6em 0;width:100%}figure.shot a{display:block}figure.shot img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line);box-shadow:0 12px 32px -8px rgba(15,18,34,.25);cursor:zoom-in}
+figure.shot figcaption{font-size:14px;color:var(--ink-3);margin-top:8px}
+.slot{border:2px dashed var(--line);border-radius:12px;padding:28px;text-align:center;color:var(--ink-3);font-size:15px}
+.contents{display:none}
+.fb{margin:1.4em 0 2em;padding:22px 24px;border:1px solid var(--line);border-radius:16px;background:var(--win);display:grid;gap:14px}
+.fb label{display:grid;gap:6px;font-size:14px;font-weight:600;color:var(--ink-2)}.fb .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:600px){.fb .row2{grid-template-columns:1fr}}
+.fb .hint{font-weight:400;color:var(--ink-3)}
+.fb input[type=text],.fb input[type=email],.fb select,.fb textarea{font:16px/1.4 inherit;color:var(--ink);background:var(--win);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;box-sizing:border-box}
+.fb textarea{resize:vertical;min-height:140px}.fb input:focus,.fb select:focus,.fb textarea:focus{outline:2px solid var(--blue);outline-offset:1px;border-color:transparent}
+.fb input[type=file]{font-size:14px;color:var(--ink-2)}
+.fb-list{list-style:none;margin:-6px 0 0;padding:0;display:grid;gap:6px}.fb-list li{font-size:14px;color:var(--ink-2);display:flex;align-items:center;gap:10px}.fb-list button{font:inherit;font-size:13px;color:var(--blue);background:none;border:0;padding:0;cursor:pointer}.fb-list button:hover{text-decoration:underline}
+.fb .btn{justify-self:start;display:inline-flex;align-items:center;padding:12px 22px;border-radius:12px;font-weight:600;font-size:16px;line-height:1;border:0;cursor:pointer;background:var(--blue);color:#fff}
+.fb .btn[disabled]{opacity:.6;cursor:default}.fb-err{color:#c0392b;font-size:14px;margin:0}.fb-legal{font-size:13px;margin:-6px 0 0}.fb-ok{color:var(--ink);margin:0;padding:18px 20px;border-radius:12px;background:var(--blue-tint);line-height:1.5}
+footer{border-top:1px solid var(--line);padding:36px 0 64px;color:var(--ink-3);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}footer a{color:var(--ink-2)}
+#lb{position:fixed;inset:0;background:rgba(5,7,20,.86);display:none;align-items:center;justify-content:center;padding:24px;z-index:30;cursor:zoom-out}
+#lb.on{display:flex}#lb img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+
+.langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
+.tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
+code,kbd,pre{direction:ltr;unicode-bidi:isolate}
+[dir=rtl] .mnav .links{right:auto;left:0}
+@media(max-width:700px){[dir=rtl] .mnav{margin-right:0;margin-left:-8px}}
+[dir=rtl] aside{padding-right:0;padding-left:8px}
+[dir=rtl] aside a{padding:4px 12px 4px 0;border-left:0;border-right:2px solid var(--line)}
+[dir=rtl] aside a.on{border-right-color:var(--blue)}
+[dir=rtl] aside ol ol a{padding-left:0;padding-right:24px}
+[dir=rtl] th,[dir=rtl] td{text-align:right;padding:9px 0 9px 12px}
+[dir=rtl] .fb .btn{justify-self:end}
+</style></head>
+<body><header><div class="wrap">
+  <a class="brand" href="/uk/"><img src="/img/icon.png?v=a1519b94" alt="">Keepit</a>
+  <nav><a href="/uk/#features">Можливості</a><a href="/uk/guide">Посібник</a><a href="/security">Безпека</a><a href="/uk/support">Підтримка</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a><details class="mnav"><summary aria-label="Меню"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><div class="links"><a href="/uk/#features">Можливості</a><a href="/uk/#privacy">Приватність</a><a href="/uk/#install">Встановлення</a><a href="/uk/guide">Посібник</a><a href="/security">Безпека</a><a href="/uk/support">Підтримка</a></div></details></nav>
+</div></header>
+<main class="wrap"><aside aria-label="Зміст"><p class="ttl">На цій сторінці</p><ol><li><a href="#part-1-getting-started">Частина 1. Початок роботи</a><ol><li><a href="#install">Встановлення</a></li><li><a href="#first-launch">Перший запуск</a></li></ol></li><li><a href="#part-2-everyday-use">Частина 2. Щоденна робота</a><ol><li><a href="#the-history-menu">Меню історії</a></li><li><a href="#search-and-preview">Пошук і попередній перегляд</a></li><li><a href="#paste-without-the-menu">Вставлення без меню</a></li><li><a href="#the-paste-queue">Черга вставлення</a></li><li><a href="#the-extended-menu">Розширене меню</a></li></ol></li><li><a href="#part-3-templates">Частина 3. Шаблони</a><ol><li><a href="#creating-and-organising">Створення і впорядкування</a></li><li><a href="#placeholders">Підстановки</a></li><li><a href="#templates-that-ask-questions">Шаблони, які ставлять запитання</a></li></ol></li><li><a href="#part-4-the-viewer">Частина 4. Перегляд</a></li><li><a href="#part-5-settings">Частина 5. Налаштування</a></li><li><a href="#part-6-security">Частина 6. Безпека</a><ol><li><a href="#password-and-encryption">Пароль і шифрування</a></li><li><a href="#touch-id">Touch ID</a></li><li><a href="#recovery-phrase">Фраза відновлення</a></li><li><a href="#backup">Резервна копія</a></li></ol></li><li><a href="#part-7-advanced">Частина 7. Додатково</a><ol><li><a href="#automation-the-keepit-url-scheme">Автоматизація: схема keepit:// за URL</a></li><li><a href="#updates">Оновлення</a></li><li><a href="#uninstalling">Видалення</a></li></ol></li><li><a href="#reference">Довідка</a><ol><li><a href="#troubleshooting">Розв’язання проблем</a></li><li><a href="#keyboard-cheat-sheet">Шпаргалка з клавіш</a></li><li><a href="#placeholder-cheat-sheet">Шпаргалка з підстановок</a></li></ol></li></ol></aside><article><h1 id="keepit-user-guide">Посібник Keepit</h1><p class="tr-note">Переклад з англійської. Оригінал: <a href="/guide">English</a>.</p>
+<p>Keepit — це менеджер історії буфера обміну і шаблонів для macOS. Він живе в рядку меню, запам’ятовує
+все, що ви копіюєте, і вставляє будь-який елемент назад за гарячою клавішею. Усі сполучення нижче
+стандартні, і кожне можна змінити в <em>Налаштування → Сполучення клавіш</em>. Цей посібник описує
+Keepit 3; посібник для Keepit 2.x збережено без змін на <a href="https://keep.it.com/v2/guide">keep.it.com/v2/guide</a> (англ.).</p>
+<figure class="shot" style="max-width:629px"><a href="/img/guide/menu.png?v=ef1dd207" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/menu.png?v=ef1dd207" alt="Меню історії" width="629" height="778" loading="lazy"></a><figcaption>Меню історії</figcaption></figure>
+<p><strong>Зміст</strong></p>
+<ul>
+<li><a href="#part-1--getting-started">Частина 1. Початок роботи</a>: <a href="#install">Встановлення</a> · <a href="#first-launch">Перший запуск</a></li>
+<li><a href="#part-2--everyday-use">Частина 2. Щоденна робота</a>: <a href="#the-history-menu">Меню історії</a> · <a href="#search-and-preview">Пошук і попередній перегляд</a> · <a href="#paste-without-the-menu">Вставлення без меню</a> · <a href="#the-paste-queue">Черга вставлення</a> · <a href="#the-extended-menu">Розширене меню</a></li>
+<li><a href="#part-3--templates">Частина 3. Шаблони</a>: <a href="#creating-and-organising">Створення і впорядкування</a> · <a href="#placeholders">Підстановки</a> · <a href="#templates-that-ask-questions">Шаблони, які ставлять запитання</a></li>
+<li><a href="#part-4--the-viewer">Частина 4. Перегляд</a></li>
+<li><a href="#part-5--settings">Частина 5. Налаштування</a></li>
+<li><a href="#part-6-security">Частина 6. Безпека</a>: <a href="#password-and-encryption">Пароль і шифрування</a> · <a href="#touch-id">Touch ID</a> · <a href="#recovery-phrase">Фраза відновлення</a> · <a href="#backup">Резервна копія</a></li>
+<li><a href="#part-7--advanced">Частина 7. Додатково</a>: <a href="#automation-the-keepit-url-scheme">Автоматизація</a> · <a href="#updates">Оновлення</a> · <a href="#uninstalling">Видалення</a></li>
+<li><a href="#reference">Довідка</a>: <a href="#troubleshooting">Розв’язання проблем</a> · <a href="#keyboard-cheat-sheet">Шпаргалка з клавіш</a> · <a href="#placeholder-cheat-sheet">Шпаргалка з підстановок</a></li>
+</ul>
+<hr />
+<h2 id="part-1-getting-started">Частина 1. Початок роботи</h2>
+<h3 id="install">Встановлення</h3>
+<p><strong>Homebrew.</strong> Це рекомендований спосіб, бо <code>brew upgrade</code> підтримує програму в актуальному стані:</p>
+<pre><code class="language-bash">brew tap andrey-insarov/keepit https://github.com/andrey-insarov/Keepit
+brew install --cask andrey-insarov/keepit/keepit
+</code></pre>
+<p><strong>DMG.</strong> Завантажте <code>Keepit-&lt;version&gt;.dmg</code> зі сторінки
+<a href="https://github.com/andrey-insarov/Keepit/releases/latest">останнього випуску</a>, відкрийте його і перетягніть Keepit
+у <em>Програми</em>.</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/dmg.png?v=2115ef2c" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/dmg.png?v=2115ef2c" alt="DMG: перетягніть Keepit у Програми" width="636" height="396" loading="lazy"></a><figcaption>DMG: перетягніть Keepit у Програми</figcaption></figure>
+<p>Під час першого відкриття macOS уточнює, що програму завантажено з інтернету і перевірено Apple.
+Натисніть <em>Відкрити</em>.</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/gatekeeper.png?v=d79051e5" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/gatekeeper.png?v=d79051e5" alt="Підтвердження Gatekeeper у macOS" width="336" height="336" loading="lazy"></a><figcaption>Підтвердження Gatekeeper у macOS</figcaption></figure>
+<p>Keepit підписано і нотаризовано. Він оновлюється сам і працює нативно на Mac з Apple silicon та Intel
+із macOS 13 Ventura або новішою.</p>
+<h3 id="first-launch">Перший запуск</h3>
+<p>Keepit працює в рядку меню: у нього немає ні значка в Dock, ні вікна, доки ви його не відкриєте. Після
+першого запуску в рядку меню з’являється значок 📎, і Keepit ставить три запитання.</p>
+<p><strong>1. Відновити з копії?</strong> Якщо це новий Mac і у вас є резервна копія Keepit (автоматична в iCloud Drive
+чи іншій теці або експортований файл <code>.keepit</code>), <em>Відновити з копії…</em> поверне історію і шаблони
+ще до того, як відбудеться щось інше. Файл відкривається паролем того Mac, з якого він прийшов, або
+його фразою відновлення. <em>Почати з чистого аркуша</em> пропускає цей крок. Те саме відновлення доступне
+пізніше в <em>Налаштування → Резервна копія → Відновити…</em>, а подвійне клацання на файлі <code>.keepit</code> у Finder
+також його відкриває. Подробиці є в розділі <a href="#backup">Резервна копія</a>.</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/restore-first-run.png?v=cfa1e73f" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/restore-first-run.png?v=cfa1e73f" alt="Перше запитання на новому Mac: відновити з копії чи почати з чистого аркуша" width="336" height="408" loading="lazy"></a><figcaption>Перше запитання на новому Mac: відновити з копії чи почати з чистого аркуша</figcaption></figure>
+<p><strong>2. Пароль (необов’язково).</strong> Keepit може зберігати історію і шаблони зашифрованими та відкривати їх
+через Touch ID. Вирішити можна зараз або пізніше в <em>Налаштування → Безпека</em>; як це працює, пояснює
+<a href="#part-6-security">Частина 6</a>. Якщо вибрати <em>Не зараз</em>, усе зберігатиметься на диску без шифрування.
+Якщо ви щойно відновили копію з її паролем, Keepit запропонує залишити цей пароль для цього Mac.</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/password-offer.png?v=a377f4be" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/password-offer.png?v=a377f4be" alt="Пропозиція задати пароль під час першого запуску" width="336" height="410" loading="lazy"></a><figcaption>Пропозиція задати пароль під час першого запуску</figcaption></figure>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/no-password-notice.png?v=0da3b4f2" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/no-password-notice.png?v=0da3b4f2" alt="Вибрано «Не зараз»: прямо сказано, що це означає і де це змінити" width="336" height="342" loading="lazy"></a><figcaption>Вибрано «Не зараз»: прямо сказано, що це означає і де це змінити</figcaption></figure>
+<p><strong>3. Дозвіл Доступності.</strong> Щоб вставляти текст за вас, Keepit надсилає ⌘V у програму, де ви
+працювали. macOS дозволяє це лише програмам зі списку <em>Системні параметри → Приватність і безпека →
+Доступність</em>. Натисніть <em>Відкрити Системні параметри</em> і ввімкніть Keepit. Без цього дозволу Keepit так
+само записує і копіює, але ⌘V ви натискаєте самі.</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/accessibility-prompt.png?v=53fda070" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/accessibility-prompt.png?v=53fda070" alt="Keepit просить дозвіл Доступності" width="336" height="462" loading="lazy"></a><figcaption>Keepit просить дозвіл Доступності</figcaption></figure>
+<figure class="shot" style="max-width:762px"><a href="/img/guide/accessibility-settings.png?v=3324189c" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/accessibility-settings.png?v=3324189c" alt="Keepit увімкнено в розділі Приватність і безпека → Доступність" width="762" height="598" loading="lazy"></a><figcaption>Keepit увімкнено в розділі Приватність і безпека → Доступність</figcaption></figure>
+<p>Типово Keepit запускається під час входу в систему. Це вимикається в <em>Налаштування → Загальні</em>.</p>
+<hr />
+<h2 id="part-2-everyday-use">Частина 2. Щоденна робота</h2>
+<h3 id="the-history-menu">Меню історії</h3>
+<p>Натисніть <strong>⌥M</strong> у будь-якій програмі або клацніть значок 📎. Меню відкривається біля текстового
+курсора, якщо Keepit може його знайти, інакше біля вказівника миші.</p>
+<p>Кожен рядок відповідає одному скопійованому елементу, найновіші йдуть першими. Найновіший виділено
+<strong>жирним</strong>: саме він зараз лежить у буфері обміну. Значок показує програму, з якої ви копіювали.
+Назва, що закінчується на <code>…</code>, означає, що в елементі більше рядків, ніж показує меню. Для зображень
+показано мініатюру, для списків файлів — імена файлів.</p>
+<figure class="shot" style="max-width:1045px"><a href="/img/guide/menu-preview.png?v=3a4dbc04" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/menu-preview.png?v=3a4dbc04" alt="Панель попереднього перегляду поруч із меню показує виділений елемент повністю, з програмою-джерелом, часом і розміром" width="1045" height="648" loading="lazy"></a><figcaption>Панель попереднього перегляду поруч із меню показує виділений елемент повністю, з програмою-джерелом, часом і розміром</figcaption></figure>
+<figure class="shot" style="max-width:1088px"><a href="/img/guide/menu-image.png?v=d7b4e3af" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/menu-image.png?v=d7b4e3af" alt="Зображення в історії: мініатюра в меню, повна картинка в попередньому перегляді" width="1088" height="640" loading="lazy"></a><figcaption>Зображення в історії: мініатюра в меню, повна картинка в попередньому перегляді</figcaption></figure>
+<p>Щоб вставити елемент, клацніть його, або перейдіть до нього клавішами ↑ ↓ і натисніть Return, або
+натисніть його номер разом із <strong>⌃⌥</strong>: <kbd class="k">⌃⌥3</kbd> вставляє елемент 3. Та сама клавіша працює звідусіль,
+без відкривання меню.</p>
+<p>Під історією розташовані підменю <em>Шаблони</em>, Перегляд (⌥E), Налаштування (⌥S), <em>Очистити історію</em> (⌥C),
+<em>Призупинити запис на 10 хвилин</em> (⌥P, коли треба надрукувати щось, що не має потрапити в історію),
+<em>Заблокувати Keepit</em> (⌥L), якщо задано пароль, і оновлення. <strong>⌥T</strong> відкриває меню шаблонів окремо.
+Кожна з цих клавіш працює і без меню.</p>
+<h3 id="search-and-preview">Пошук і попередній перегляд</h3>
+<p><strong>Пошук.</strong> Почніть друкувати, коли меню відкрите: поле вгорі фільтрує список за назвою і за повним
+текстом, тож знайдеться і рядок із середини довгого елемента. Return вставляє перший збіг, Esc
+очищає поле, а другий Esc закриває меню.</p>
+<p><strong>Попередній перегляд.</strong> Наведіть вказівник на елемент (або перейдіть до нього з клавіатури), і панель
+поруч із меню покаже зображення повністю або перші рядки довгого тексту, а також програму-джерело,
+дату і розмір. Короткі однорядкові тексти попереднього перегляду не мають, бо рядок меню й так
+показує їх цілком.</p>
+<figure class="shot" style="max-width:907px"><a href="/img/guide/search-preview.png?v=86998c10" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/search-preview.png?v=86998c10" alt="Набраний текст фільтрує меню; панель попереднього перегляду показує виділений елемент" width="907" height="524" loading="lazy"></a><figcaption>Набраний текст фільтрує меню; панель попереднього перегляду показує виділений елемент</figcaption></figure>
+<h3 id="paste-without-the-menu">Вставлення без меню</h3>
+<p>Глобальні гарячі клавіші працюють з історією в її поточному стані (елемент 1 — це буфер обміну)
+з будь-якої програми:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Клавіші</th>
+<th>Що відбувається</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><kbd class="k">⌃⌥1</kbd> … <kbd class="k">⌃⌥9</kbd>, <kbd class="k">⌃⌥0</kbd></td>
+<td>Вставити елемент історії 1–10</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥⇧V</kbd></td>
+<td>Вставити <em>попередній</em> елемент (елемент 2); натисніть ще раз, щоб повернутися</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥V</kbd></td>
+<td>Вставити буфер обміну як простий текст, без форматування</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
+<td>Вставити буфер обміну ВЕРХНІМ РЕГІСТРОМ / нижнім регістром / Кожне Слово З Великої / як у реченні</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥W</kbd></td>
+<td>Вставити буфер обміну без пробілів на початку і в кінці</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥J</kbd></td>
+<td>Вставити буфер обміну одним рядком</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥K</kbd> <kbd class="k">⌃⌥D</kbd> <kbd class="k">⌃⌥Y</kbd></td>
+<td>Вставити буфер обміну закресленим / підкресленим / із хвилястим підкресленням. Це простий текст, який зберігає вигляд будь-де, зокрема в чатах (див. нижче)</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥X</kbd></td>
+<td>Вставити буфер обміну без цього оформлення</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥A</kbd></td>
+<td>Додати буфер обміну до Шаблонів</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥⌫</kbd></td>
+<td>Видалити найновіший елемент з історії</td>
+</tr>
+</tbody>
+</table></div>
+<p>Ці три види оформлення не є форматуванням: Keepit додає після кожного символу <em>комбінувальний знак</em>
+Unicode (з̶а̶к̶р̶е̶с̶л̶е̶н̶н̶я̶, п̲і̲д̲к̲р̲е̲с̲л̲е̲н̲н̲я̲, х̰в̰и̰л̰я̰), тому текст має однаковий вигляд у месенджері,
+вебформі чи терміналі, де справжнє форматування зникло б. Ціна така: текст стає втричі більшим, пошук
+звичайного слова його не знайде, програми читання з екрана на ньому спотикаються, а деякі шрифти
+малюють лінію нерівно. <em>Прибрати оформлення</em> (<kbd class="k">⌃⌥X</kbd>) знімає ці знаки, зокрема з тексту, оформленого
+деінде. В обох випадках знаки прибираються за кодом символу, хоч звідки вони взялися: фонетична
+транскрипція, яка використовує ті самі знаки як літери (U+0330 — це ще й знак МФА для скрипучого
+голосу), їх втратить, і три види оформлення теж спершу їх прибирають. Коли ввімкнено VoiceOver,
+<code>⌃⌥</code> є його власним модифікатором: призначте для <em>Дії з останнім елементом</em> інший у
+Налаштування → Сполучення клавіш.</p>
+<p>Перетворення застосовуються до тексту; для зображення чи списку файлів клавіша подає звуковий сигнал.
+Усе це можна змінити або вимкнути в <em>Налаштування → Сполучення клавіш</em>.</p>
+<h3 id="the-paste-queue">Черга вставлення</h3>
+<p>Іноді треба скопіювати п’ять речей в одному місці і вставити їх по порядку в іншому: клітинки у форму,
+рядки зі сторінки в документ. Черга вставлення робить це без меню:</p>
+<ol>
+<li>Натисніть <strong>⌥N</strong> (або <em>Увімкнути чергу вставлення</em> в меню). Значок у рядку меню покаже червону
+   крапку і лічильник: <code>📎 ● 0</code>.</li>
+<li>Копіюйте як зазвичай через ⌘C, скільки завгодно разів. Лічильник зростає з кожною копією: 1, 2, 3…
+   Усе записується і в історію.</li>
+</ol>
+<figure class="shot" style="max-width:350px"><a href="/img/guide/queue-menubar.png?v=808fb52c" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/queue-menubar.png?v=808fb52c" alt="Рядок меню, коли чергу ввімкнено: червона крапка і лічильник" width="350" height="40" loading="lazy"></a><figcaption>Рядок меню, коли чергу ввімкнено: червона крапка і лічильник</figcaption></figure>
+<ol>
+<li>Перейдіть туди, куди потрібно вставити текст, і натискайте <strong>⌥V</strong> для кожного елемента. Першим
+   вставляється те, що ви скопіювали першим, лічильник зменшується. ⌘V і далі вставляє буфер обміну
+   як зазвичай, тож обидва способи можна поєднувати.</li>
+<li>Черга вимикається сама після вставлення останнього елемента або через дві хвилини без копіювання
+   чи вставлення (цей час налаштовується). Повторне ⌥N зупиняє її раніше.</li>
+</ol>
+<p><strong>⌥⇧N</strong> вставляє все, що ще залишилося в черзі, за один раз. Елементи з’єднуються розривом рядка,
+табуляцією, пробілом або нічим: це вибирається на панелі <em>Черга вставлення</em> в Налаштуваннях, де
+задається і час бездіяльності. Поки чергу ввімкнено, меню історії позначає її елементи: <code>▶</code> вставиться
+наступним, <code>○</code> ще в черзі, <code>✓</code> уже вставлено.</p>
+<figure class="shot" style="max-width:610px"><a href="/img/guide/queue-menu.png?v=a61b1a15" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/queue-menu.png?v=a61b1a15" alt="Меню історії з увімкненою чергою: ○ у черзі, ▶ наступний, ✓ вставлено; рядок меню показує, скільки залишилось" width="610" height="772" loading="lazy"></a><figcaption>Меню історії з увімкненою чергою: ○ у черзі, ▶ наступний, ✓ вставлено; рядок меню показує, скільки залишилось</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-queue.png?v=d30c5141" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/prefs-queue.png?v=d30c5141" alt="Налаштування → Черга вставлення" width="636" height="453" loading="lazy"></a><figcaption>Налаштування → Черга вставлення</figcaption></figure>
+<h3 id="the-extended-menu">Розширене меню</h3>
+<p>Утримуйте <strong>⇧</strong>, коли меню історії відкрите, і кожен елемент отримає підменю <code>▸</code> з усіма діями для
+нього: Вставити, Вставити як простий текст, Лише скопіювати (у буфер обміну, без вставлення),
+перетворення <em>Вставити як</em>, Додати до Шаблонів, Показати в Перегляді, Видалити. Наведіть вказівник на
+елемент або натисніть →, щоб відкрити підменю. Коли воно відкрите, ⇧ можна відпустити.</p>
+<figure class="shot" style="max-width:805px"><a href="/img/guide/extended-menu.png?v=8b44e749" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/extended-menu.png?v=8b44e749" alt="Утримуйте ⇧: кожен елемент отримує підменю; для найновішого елемента воно показує глобальні гарячі клавіші" width="805" height="735" loading="lazy"></a><figcaption>Утримуйте ⇧: кожен елемент отримує підменю; для найновішого елемента воно показує глобальні гарячі клавіші</figcaption></figure>
+<p>Для найновішого елемента підменю показує глобальні гарячі клавіші з таблиці вище. Це ті самі дії з
+тими самими клавішами, тож тут їх зручно вивчити. Для інших елементів дії показано без клавіш:
+сполучення або працює всюди, або не показується.</p>
+<figure class="shot" style="max-width:763px"><a href="/img/guide/extended-menu-item2.png?v=014734f0" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/extended-menu-item2.png?v=014734f0" alt="Для інших елементів: ті самі дії, без сполучень клавіш" width="763" height="665" loading="lazy"></a><figcaption>Для інших елементів: ті самі дії, без сполучень клавіш</figcaption></figure>
+<figure class="shot" style="max-width:765px"><a href="/img/guide/extended-menu-image.png?v=8f8e3b22" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/extended-menu-image.png?v=8f8e3b22" alt="Для зображення текстові дії неактивні: доступні лише Вставити, Лише скопіювати, Додати до Шаблонів, Показати в Перегляді та Видалити" width="765" height="655" loading="lazy"></a><figcaption>Для зображення текстові дії неактивні: доступні лише Вставити, Лише скопіювати, Додати до Шаблонів, Показати в Перегляді та Видалити</figcaption></figure>
+<hr />
+<h2 id="part-3-templates">Частина 3. Шаблони</h2>
+<p>Шаблони — це елементи, які ви зберігаєте назавжди: підписи, адреси, готові відповіді, фрагменти коду,
+логотип, який часто вставляєте. Вони лежать у дереві з теками і з’являються в підменю <em>Шаблони</em> меню
+історії та за <strong>⌥T</strong>. У свіжовстановленій програмі є тека <em>Приклади</em> (привітання, сьогоднішня дата,
+цитата з буфера обміну і підпис), щоб ви побачили, що вміють шаблони, перш ніж писати свої. Їх можна
+видаляти і редагувати як завгодно (<em>Скинути…</em> в Налаштуваннях повертає їх).</p>
+<figure class="shot" style="max-width:660px"><a href="/img/guide/template-examples.png?v=c143a1d7" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/template-examples.png?v=c143a1d7" alt="Тека Приклади: наведення на елемент показує його текст" width="660" height="209" loading="lazy"></a><figcaption>Тека Приклади: наведення на елемент показує його текст</figcaption></figure>
+<figure class="shot" style="max-width:738px"><a href="/img/guide/template-menu-letters.png?v=ea96333e" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/template-menu-letters.png?v=ea96333e" alt="Меню шаблонів: теки відкриваються як підменю, літери після &amp; стають клавішами швидкого вибору" width="738" height="715" loading="lazy"></a><figcaption>Меню шаблонів: теки відкриваються як підменю, літери після &amp; стають клавішами швидкого вибору</figcaption></figure>
+<h3 id="creating-and-organising">Створення і впорядкування</h3>
+<p><strong>Додати шаблон</strong></p>
+<ul>
+<li>З меню історії: <kbd class="k">⌃⌥A</kbd> для найновішого елемента, <em>Додати буфер обміну до шаблонів</em> унизу або
+  ⇧ → підменю елемента → <em>Додати до Шаблонів</em> для будь-якого елемента.</li>
+<li>У Перегляді: виберіть елемент історії і натисніть <em>Додати до шаблонів</em> або перетягніть його на
+  дерево шаблонів. <em>Новий елемент</em> створює порожній текстовий шаблон; <em>Новий елемент із файлу…</em>
+  (контекстне меню) створює шаблон із текстового файлу чи зображення.</li>
+</ul>
+<p><strong>Упорядкувати</strong></p>
+<ul>
+<li><em>Нова тека</em> створює теку; перетягуйте елементи між теками або користуйтеся <em>Вгору</em> / <em>Вниз</em> у
+  контекстному меню.</li>
+<li>Шаблон із назвою <code>-</code> стає в меню лінією-розділювачем.</li>
+<li><code>&amp;</code> перед літерою в назві (наприклад, <code>&amp;Signature</code>) робить цю літеру клавішею швидкого вибору в
+  меню шаблонів: натисніть <code>S</code>, коли меню відкрите.</li>
+<li><em>Задати гарячу клавішу…</em> в контекстному меню дає шаблону власну глобальну гарячу клавішу.</li>
+<li>Шаблон без назви показує свій перший рядок. <em>Перейменувати</em> і <em>Очистити назву</em> є в контекстному
+  меню, або відредагуйте поле <em>Назва</em> над текстом.</li>
+</ul>
+<h3 id="placeholders">Підстановки</h3>
+<p>Текстові шаблони можуть містити підстановки <code>{…}</code>, які заповнюються в момент вставлення. Усе інше
+вставляється без змін. У Перегляді кнопка <strong>Вставити ▾</strong> показує всі підстановки і ставить вибрану
+на місце курсора, тож нічого запам’ятовувати не треба.</p>
+<figure class="shot" style="max-width:717px"><a href="/img/guide/template-examples-date.png?v=8b048d0d" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/template-examples-date.png?v=8b048d0d" alt="Приклад «Сьогоднішня дата»: {date:EEEE, d MMMM yyyy} під час вставлення стає поточною датою" width="717" height="209" loading="lazy"></a><figcaption>Приклад «Сьогоднішня дата»: {date:EEEE, d MMMM yyyy} під час вставлення стає поточною датою</figcaption></figure>
+<figure class="shot" style="max-width:650px"><a href="/img/guide/insert-menu.png?v=4fa57206" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/insert-menu.png?v=4fa57206" alt="Вставити ▾ у Перегляді показує всі підстановки" width="650" height="770" loading="lazy"></a><figcaption>Вставити ▾ у Перегляді показує всі підстановки</figcaption></figure>
+<p>Найкорисніші:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Підстановка</th>
+<th>Результат</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{date}</code> <code>{time}</code> <code>{datetime}</code></td>
+<td>Сьогоднішня дата / поточний час, системний формат</td>
+</tr>
+<tr>
+<td><code>{date:yyyy-MM-dd}</code></td>
+<td>Будь-який формат (<code>yyyy MM dd EEEE HH mm …</code>)</td>
+</tr>
+<tr>
+<td><code>{date:long}</code> <code>{time:short}</code> <code>{datetime:medium}</code></td>
+<td>Іменований стиль: <code>short</code> <code>medium</code> <code>long</code> <code>full</code></td>
+</tr>
+<tr>
+<td><code>{date+7d}</code> <code>{date-1m:MMMM}</code> <code>{time+1h}</code> <code>{date+1y-2d}</code></td>
+<td>Зсув: <code>d</code> дні, <code>w</code> тижні, <code>m</code> місяці, <code>y</code> роки, <code>h</code> години; для <code>date</code>, <code>time</code>, <code>datetime</code>, можна кілька поспіль</td>
+</tr>
+<tr>
+<td><code>{clipboard}</code> <code>{clipboard:2}</code></td>
+<td>Буфер обміну або елемент історії N</td>
+</tr>
+<tr>
+<td><code>{clipboard\|upper}</code> <code>{clipboard\|trim\|oneline}</code></td>
+<td>Фільтри <code>upper</code> <code>lower</code> <code>title</code> <code>trim</code> <code>oneline</code> <code>url</code>, їх можна поєднувати</td>
+</tr>
+<tr>
+<td><code>{cursor}</code></td>
+<td>Де опиниться текстовий курсор після вставлення</td>
+</tr>
+<tr>
+<td><code>{user}</code> <code>{username}</code> <code>{host}</code></td>
+<td>Повне ім’я, ім’я облікового запису, ім’я комп’ютера</td>
+</tr>
+<tr>
+<td><code>{uuid}</code> <code>{random:1-100}</code></td>
+<td>Новий UUID; випадкове число</td>
+</tr>
+<tr>
+<td><code>{{</code> <code>}}</code></td>
+<td>Буквальні фігурні дужки: шаблон <code>{{"x":1}}</code> вставляє <code>{"x":1}</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Назви підстановок пишуться малими літерами: <code>{date}</code> є підстановкою, а <code>{Date}</code> і <code>{DATE}</code> — це текст,
+який вставляється як є. Назви стилів і фільтрів (<code>{date:LONG}</code>, <code>{clipboard|UPPER}</code>) можна писати в
+будь-якому регістрі.</p>
+<p>Повний список є в <a href="#placeholder-cheat-sheet">шпаргалці з підстановок</a>.</p>
+<h3 id="templates-that-ask-questions">Шаблони, які ставлять запитання</h3>
+<p><code>{input:Name}</code> і <code>{choice:Label=A|B|C}</code> перетворюють шаблон на невелику форму: під час вставлення
+Keepit спершу запитує значення, а потім вставляє готовий текст. Одна й та сама назва запитується лише
+раз, хоч скільки разів вона трапляється. <code>{input:Name=Default}</code> заповнює поле заздалегідь.</p>
+<figure class="shot" style="max-width:484px"><a href="/img/guide/input-dialog.png?v=8f9de78e" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/input-dialog.png?v=8f9de78e" alt="Вставлення шаблону з {input:Name} спершу запитує значення" width="484" height="320" loading="lazy"></a><figcaption>Вставлення шаблону з {input:Name} спершу запитує значення</figcaption></figure>
+<p>Наприклад, шаблон відповіді:</p>
+<pre><code>Добрий день, {input:Ім’я}!
+
+Дякую за ваш лист від {date-1d}. Я відповім до {date+3d:EEEE}.
+{cursor}
+{user}
+</code></pre>
+<p>Під час вставлення він запитує <em>Ім’я</em>, підставляє дати, підписує вашим повним ім’ям і залишає курсор
+на порожньому рядку.</p>
+<hr />
+<h2 id="part-4-the-viewer">Частина 4. Перегляд</h2>
+<p><em>Перегляд…</em> у меню або клацання правою кнопкою на значку 📎 відкриває вікно з трьома деревами:
+<strong>Буфер обміну</strong> (те, що в буфері зараз, лише для читання), <strong>Історія</strong> (<em>Текст і файли</em> та
+<em>Зображення</em>) і <strong>Шаблони</strong>.</p>
+<figure class="shot" style="max-width:1004px"><a href="/img/guide/viewer.png?v=1c65e776" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/viewer.png?v=1c65e776" alt="Перегляд із вибраним шаблоном" width="1004" height="637" loading="lazy"></a><figcaption>Перегляд із вибраним шаблоном</figcaption></figure>
+<ul>
+<li>Виберіть елемент, щоб побачити його праворуч. Текст редагується на місці, зміни застосовуються, коли
+  ви виходите з редактора. Зображення показано в масштабі панелі, над ним зазначено розмір у пікселях
+  і розмір файлу. У списках файлів файл відкривається подвійним клацанням. <em>Показати як hex-дамп</em> у
+  контекстному меню показує сирі байти.</li>
+<li>Панель інструментів: <em>Надіслати в буфер обміну</em>, <em>Вставити</em> (у програму, з якої ви прийшли),
+  <em>Додати до шаблонів</em>, <em>Новий елемент</em>, <em>Нова тека</em>, <em>Видалити</em>, <em>Вставити ▾</em> (підстановки) і <strong>?</strong>,
+  тобто цей посібник.</li>
+<li><strong>Пошук</strong> (<kbd class="k">⌘F</kbd>): поле ліворуч фільтрує історію і шаблони за назвою та вмістом і підсвічує збіг.</li>
+<li>Перетягуйте елементи історії в дерево шаблонів, щоб зберегти їх, а шаблони в Історію, щоб скопіювати
+  їх назад. Порядок змінюється перетягуванням або командами <em>Вгору</em> / <em>Вниз</em>. ⌫ видаляє вибраний
+  елемент.</li>
+<li>Рядок стану показує дату, програму-джерело, формат і розмір.</li>
+</ul>
+<figure class="shot" style="max-width:1025px"><a href="/img/guide/viewer-search.png?v=88476754" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/viewer-search.png?v=88476754" alt="Пошук у Перегляді підсвічує збіги" width="1025" height="682" loading="lazy"></a><figcaption>Пошук у Перегляді підсвічує збіги</figcaption></figure>
+<hr />
+<h2 id="part-5-settings">Частина 5. Налаштування</h2>
+<p><code>⌘,</code> в меню, <em>Налаштування…</em> або ⌥S з будь-якої програми. Вікно працює так, як вікна налаштувань на
+Mac: виберіть панель на панелі інструментів, і кожна зміна застосовується одразу. Кнопки «Зберегти»
+немає; вікно закривається через ⌘W або Esc. Кожна опція зі значком <strong>?</strong> має спливну підказку з
+поясненням.</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-general.png?v=09991ffc" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/prefs-general.png?v=09991ffc" alt="Налаштування → Загальні" width="636" height="463" loading="lazy"></a><figcaption>Налаштування → Загальні</figcaption></figure>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Панель</th>
+<th>Що там є</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Загальні</strong></td>
+<td>Запуск під час входу · збереження історії під час виходу і відновлення під час запуску · вставлення після вибору (вимкнено = лише копіювати) · затримка вставлення (збільште її для програм, які повільно виходять на передній план) · відкривання меню біля текстового курсора · Оновлення: <em>Перевіряти оновлення автоматично</em> (версія для прямого завантаження; вимкнено = жодного мережевого запиту) — <a href="#updates">Оновлення</a></td>
+</tr>
+<tr>
+<td><strong>Сполучення клавіш</strong></td>
+<td>Усі глобальні сполучення в одному місці, див. нижче</td>
+</tr>
+<tr>
+<td><strong>Черга вставлення</strong></td>
+<td>Три клавіші черги, час бездіяльності, після якого черга вимикається, і що ставити між елементами для <em>Вставити все, що залишилось</em> — <a href="#the-paste-queue">Черга вставлення</a></td>
+</tr>
+<tr>
+<td><strong>Історія</strong></td>
+<td>Скільки текстових/файлових елементів і зображень зберігати (1000 / 30) · забувати елементи, старші за … · <em>Видаляти дублікати</em> (повторне копіювання того самого піднімає його нагору) · <em>Ігнорувати приховані дані буфера</em> · список ігнорованих програм (ідентифікатори пакетів; менеджери паролів ігноруються завжди)</td>
+</tr>
+<tr>
+<td><strong>Меню</strong></td>
+<td>Поле пошуку · нумерація · панель попереднього перегляду · підказки · значки програм-джерел · мініатюри зображень · елементів у меню (скільки останніх записів показує меню, типово 60; решта доступна через пошук) · довжина назви · висота мініатюри</td>
+</tr>
+<tr>
+<td><strong>Безпека</strong></td>
+<td>Пароль, Touch ID, блокування, фраза відновлення — <a href="#part-6-security">Частина 6</a></td>
+</tr>
+<tr>
+<td><strong>Резервна копія</strong></td>
+<td>Автоматичне резервне копіювання (рядок стану поруч із заголовком): <em>Автоматично зберігати копії в теку</em>, ім’я Mac у файлах, тека, скільки копій зберігати · Ручне копіювання: <em>Створити копію зараз</em>, <em>Зберегти в архів…</em> · Відновлення: <em>Відновити…</em> — <a href="#backup">Резервна копія</a></td>
+</tr>
+<tr>
+<td><strong>Додатково</strong></td>
+<td>Інтервал опитування буфера обміну · Автоматизація: <em>Дозволити команди keepit:// за URL</em> (типово вимкнено — <a href="#automation-the-keepit-url-scheme">Автоматизація</a>) · Дані: <em>Відкрити теку</em> · Скидання і видалення: <em>Скинути…</em> (повернення до стану після встановлення, приклади шаблонів повертаються) · <em>Видалити програму…</em> (скидання, а потім видалення програми, запуску під час входу, запису у В’язці ключів і дозволів)</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-history.png?v=e8444027" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/prefs-history.png?v=e8444027" alt="Налаштування → Історія: ліміти і список ігнорованих програм" width="636" height="504" loading="lazy"></a><figcaption>Налаштування → Історія: ліміти і список ігнорованих програм</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-hotkeys.png?v=2f5f309f" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/prefs-hotkeys.png?v=2f5f309f" alt="Налаштування → Сполучення клавіш" width="636" height="717" loading="lazy"></a><figcaption>Налаштування → Сполучення клавіш</figcaption></figure>
+<p>На панелі <strong>Сполучення клавіш</strong> клацніть поле і натисніть комбінацію. ⌫ вимикає клавішу. Комбінація,
+яку вже використовує інша команда, відхиляється, а причину показано під полями. <em>Скинути до типових</em>
+повертає набір ⌥+літера (⌥M історія, ⌥T шаблони, ⌥E Перегляд, ⌥S Налаштування, ⌥C Очистити історію,
+⌥P пауза, ⌥L блокування, ⌥Q вихід), ⌥⇧V і ⌃⌥. <em>Вставити елемент за номером</em> і <em>Дії з останнім
+елементом</em> приймають лише модифікатори, а цифру чи літеру додає Keepit. Якщо якесь сполучення вже
+зайняте macOS чи іншою програмою, Keepit повідомляє про це під час запуску. <em>Перегляд</em> ⌥E,
+<em>Налаштування</em> ⌥S, <em>Очистити історію</em> ⌥C, <em>Призупинити запис</em> ⌥P, <em>Заблокувати Keepit</em> ⌥L і
+<em>Завершити Keepit</em> ⌥Q працюють з будь-якої програми і показані біля своїх команд у меню.
+Клавіші задаються за розташуванням на клавіатурі, тому ⌥M працює і в українській розкладці. В
+англійській розкладці ⌥+літера зазвичай друкує спеціальний символ (⌥S = ß, ⌥C = ç …); якщо він вам
+потрібен, призначте команді іншу клавішу.</p>
+<hr />
+<h2 id="part-6-security">Частина 6. Безпека</h2>
+<h3 id="password-and-encryption">Пароль і шифрування</h3>
+<p><em>Налаштування → Безпека → Вимагати пароль під час запуску</em> шифрує історію і шаблони за алгоритмом
+AES-256-GCM. Ключ виводиться з вашого пароля (PBKDF2, 200 000 раундів) і живе лише в пам’яті. Він
+стирається, коли Keepit блокується: за командою <em>Заблокувати Keepit</em> (<kbd class="k">⌥L</kbd>), під час виходу і, за
+бажанням, після того як Mac певний час був заблокований чи спав. <em>Автоблокування Keepit</em> у новому
+встановленні має значення <strong>Ніколи</strong> (оновлення з 3.0.3 зберігає попередній вибір: <em>Одразу</em>, якщо було
+ввімкнено блокування разом з екраном). Менеджером буфера обміну, який просить пароль після кожної
+перерви на каву, перестають користуватися, а для важливих моментів є <kbd class="k">⌥L</kbd>. <em>Одразу</em> блокує разом з
+екраном. <em>Через 5 хвилин</em>, <em>Через 15 хвилин</em> чи <em>Через 1 годину</em> не зважають на коротку відсутність: Keepit
+залишається розблокованим і продовжує записувати, а блокується лише тоді, коли Mac був недоступний
+увесь цей час. Те саме стосується випадку, коли Keepit запускається на вже заблокованому Mac або коли
+на передньому плані сеанс іншого користувача (наприклад, перезапуск після оновлення): відсутність
+рахується від запуску, наскільки macOS повідомляє Keepit про цей стан (зазвичай повідомляє; якщо ні,
+відлік почнеться з наступного блокування чи сну). Коли ввімкнено Touch ID, Keepit просить дотик у
+момент розблокування Mac, тож він готовий ще до першого <kbd class="k">⌥M</kbd>.</p>
+<figure class="shot" style="max-width:800px"><a href="/img/guide/set-password-keyboard.jpg?v=08002f0c" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/set-password-keyboard.jpg?v=08002f0c" alt="Задавання пароля з екранної клавіатури. Це фотографія екрана, а не знімок: на Mac автора знімок цієї сцени показує лише діалог" width="800" height="600" loading="lazy"></a><figcaption>Задавання пароля з екранної клавіатури. Це фотографія екрана, а не знімок: на Mac автора знімок цієї сцени показує лише діалог</figcaption></figure>
+<p>Вікна введення пароля показують поточну розкладку клавіатури і попереджають про Caps Lock, тож
+відхилений пароль рідко стає загадкою. Кнопка з клавіатурою біля поля відкриває <strong>екранну клавіатуру</strong>
+для введення пароля мишею: клацання не проходять через систему як натискання клавіш, клавіші
+перемішуються під час кожного відкриття, і клавіатура просить macOS не показувати її на знімках і
+записах екрана (на деяких конфігураціях її виключено, але це не гарантовано). Вона стане в пригоді
+на Mac, якому ви не цілком довіряєте, або під час показу екрана. Під час запуску і після блокування
+Keepit просить пароль (або Touch ID); <em>Відновлення доступу…</em> приймає натомість фразу з 24 слів, див.
+<a href="#recovery-phrase">Фраза відновлення</a>.</p>
+<figure class="shot" style="max-width:800px"><a href="/img/guide/unlock-keyboard.jpg?v=4c0be394" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/unlock-keyboard.jpg?v=4c0be394" alt="Розблокування під час запуску: пароль, Вийти або фраза відновлення; OK неактивна, доки нічого не введено. Сфотографовано з тієї самої причини" width="800" height="600" loading="lazy"></a><figcaption>Розблокування під час запуску: пароль, Вийти або фраза відновлення; OK неактивна, доки нічого не введено. Сфотографовано з тієї самої причини</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-security.png?v=7204a4dd" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/prefs-security.png?v=7204a4dd" alt="Налаштування → Безпека" width="636" height="435" loading="lazy"></a><figcaption>Налаштування → Безпека</figcaption></figure>
+<h3 id="touch-id">Touch ID</h3>
+<p>Якщо ввімкнено <em>Розблоковувати через Touch ID</em>, ключ зберігається ще й у Secure Enclave під захистом
+вашого відбитка: Keepit просить дотик замість пароля. Пароль і далі працює як запасний варіант
+(кнопка використання пароля в запиті). Якщо кришку закрито і підключено зовнішню Magic Keyboard з
+Touch ID, Keepit запитує на клавіатурі. <em>Дозволити зміну пароля через Touch ID</em> дає змогу підтвердити
+зміну пароля відбитком замість старого пароля.</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/touch-id.png?v=5e119bff" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/touch-id.png?v=5e119bff" alt="Розблокування через Touch ID; пароль залишається запасним варіантом" width="336" height="313" loading="lazy"></a><figcaption>Розблокування через Touch ID; пароль залишається запасним варіантом</figcaption></figure>
+<h3 id="recovery-phrase">Фраза відновлення</h3>
+<p>Коли ви задаєте пароль, Keepit один раз показує фразу з 24 слів. Роздрукуйте її або збережіть у
+менеджері паролів. Якщо ви забудете пароль, <em>Відновлення доступу…</em> у вікні розблокування відкриє дані
+і дасть задати новий. <em>Фраза відновлення → Створити нову…</em> видає нову фразу і скасовує стару;
+<em>Показати…</em> поруч знову показує поточну фразу після Touch ID або пароля.</p>
+<p>Без пароля, Touch ID на тому самому Mac або фрази дані відновити неможливо: сервера немає, і скидати
+нічого.</p>
+<figure class="shot" style="max-width:568px"><a href="/img/guide/recovery-phrase.png?v=8aab134d" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/recovery-phrase.png?v=8aab134d" alt="Фраза відновлення з 24 слів (слова тут приховано)" width="568" height="586" loading="lazy"></a><figcaption>Фраза відновлення з 24 слів (слова тут приховано)</figcaption></figure>
+<h3 id="backup">Резервна копія</h3>
+<p>Keepit може зберігати зашифровану копію історії і шаблонів у вибраній вами теці (iCloud Drive,
+Dropbox, Google Drive, зовнішній диск, NAS) і записувати нову щоразу, коли щось змінилося. Сервера
+Keepit не існує: тека ваша. Провайдер, якому вона належить, бачить зашифрований файл, його розмір і
+невеликий незашифрований заголовок (коли і якою версією Keepit його записано, як виводиться ключ,
+випадкові ідентифікатори, а також ім’я вашого Mac, але тільки якщо ви це ввімкнете). На
+<a href="/security#backups">сторінці про безпеку</a> (англ.) заголовок розібрано поле за полем.</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-backup.png?v=cba8511b" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/prefs-backup.png?v=cba8511b" alt="Налаштування → Резервна копія: автоматичне копіювання, ручне копіювання, відновлення" width="636" height="527" loading="lazy"></a><figcaption>Налаштування → Резервна копія: автоматичне копіювання, ручне копіювання, відновлення</figcaption></figure>
+<p><strong>Увімкнення.</strong> <em>Налаштування → Резервна копія → Автоматично зберігати копії в теку</em>, потім
+<em>Вибрати…</em> теку (вікно вибору відкривається в iCloud Drive). Автоматичне копіювання потребує захисту
+паролем із <em>Налаштування → Безпека</em>: кожну копію запечатано ключем, виведеним із ключа вашого сховища,
+тому вона відкривається вашим паролем Keepit або фразою відновлення на цьому чи будь-якому іншому
+Mac, і нічого окремо налаштовувати не треба. Без пароля прапорець неактивний, і про це сказано поруч.</p>
+<p><strong>Що відбувається далі: розклад.</strong> Приблизно через п’ять хвилин після останньої зміни (і щонайменше
+раз на добу, поки Keepit працює) Keepit записує в теку файл із назвою
+<code>Keepit-&lt;date and time&gt;-&lt;installation&gt;-&lt;id&gt;.keepit</code>, читає його назад для перевірки і лише тоді
+видаляє найстаріші зі своїх копій понад <em>Зберігати останні</em> (типово 10, від 1 до 100). Кожна копія
+повна сама по собі, а не інкрементна, тож вам завжди достатньо одного файлу. Копії, зроблені іншим
+Mac, і файли, які ви поклали туди самі, Keepit не чіпає: два Mac зі спільною текою пишуть дві
+незалежні серії. Рядок стану біля заголовка <em>Автоматичне резервне копіювання</em> показує час і розмір
+останньої копії або причину, з якої остання спроба не вдалася. Поки Keepit заблоковано, нічого не
+відбувається; <em>Створити копію зараз</em> (у розділі <em>Ручне копіювання</em>) не чекає періоду тиші.</p>
+<p><strong>Додавати ім’я цього Mac до файлів копій</strong> (типово вимкнено) записує ім’я комп’ютера в
+незашифрований заголовок кожного файлу, щоб дві серії в одній теці було легко розрізнити у Finder.
+Провайдер сховища бачить це ім’я, тому опція необов’язкова.</p>
+<p><strong>Відновлення.</strong> <em>Відновити…</em> відкриває копію (цього Mac, іншого Mac або експортований файл) після
+того, як ви її розблокуєте: паролем Mac, на якому її створено, або фразою відновлення, яку той Mac
+показав, коли на ньому задавали пароль (<em>Відновлення доступу…</em> у вікні пароля). Попередній перегляд
+показує, коли і де створено файл і скільки в ньому елементів, а далі є два варіанти:</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/restore-preview.png?v=8f48d34e" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/restore-preview.png?v=8f48d34e" alt="Попередній перегляд відновлення: коли і якою версією Keepit записано файл, що в ньому, Об’єднати чи Замінити" width="636" height="651" loading="lazy"></a><figcaption>Попередній перегляд відновлення: коли і якою версією Keepit записано файл, що в ньому, Об’єднати чи Замінити</figcaption></figure>
+<ul>
+<li><em>Об’єднати</em> додає те, чого ще немає: елементи історії за вмістом, а шаблони з копії однією новою
+  текою <em>Імпорт &lt;дата&gt;</em>, без їхніх гарячих клавіш. Так ви точно бачите, що прийшло з копії, і можете
+  це перемістити чи видалити. Нічого з вашого не перезаписується.</li>
+<li><em>Замінити</em> відкидає поточну історію і шаблони та бере натомість ті, що в копії. Перед цим Keepit
+  записує копію того, що у вас є зараз (<code>Keepit-before-restore-…</code>), у теку резервних копій або в теку,
+  яку ви виберете. Якщо цю копію записати не вдається, заміна не починається. Якщо в Keepit ще немає
+  пароля, для цієї копії вас попросять його задати, як і для <em>Зберегти в архів…</em>.</li>
+</ul>
+<p><em>Також відновити налаштування</em> переносить із копії гарячі клавіші, ліміти й опції. Налаштування, які
+виражають довіру до конкретного Mac (Touch ID, автоматизація через URL і її довірені програми, сама
+тека резервних копій), завжди залишаються такими, як тут. Якщо історія в копії більша, ніж дозволяють
+ліміти цього Mac, Keepit скаже, скільки поміститься, ще до підтвердження.</p>
+<p>Відновили копію за фразою відновлення на Mac, де ще немає пароля? Keepit попросить спершу задати
+пароль, щоб відновлені дані не опинилися на диску незашифрованими, і дасть залишити цю фразу для
+цього Mac або отримати нову. Відновили за паролем? Keepit запропонує залишити його як пароль цього
+Mac. В обох випадках автоматичне копіювання налаштовується для кожного Mac окремо: увімкніть його тут
+і виберіть теку (можна ту саму), і цей Mac почне власну серію файлів поруч із серією старого Mac.</p>
+<p><strong>Переїзд на новий Mac</strong> і є головною метою: встановіть Keepit, виберіть <em>Відновити з копії…</em> під час
+першого запуску, виберіть найновіший файл у своїй теці, введіть пароль старого Mac, натисніть
+<em>Замінити</em>, а потім увімкніть автоматичне копіювання на новому Mac. Зроблені досі копії відкриваються
+паролем і фразою, які діяли на момент запису кожної з них: після зміни пароля старим копіям і далі
+потрібен старий пароль.</p>
+<p><strong>Ручне копіювання.</strong> Дві кнопки, дві різні речі. <em>Створити копію зараз</em> одразу робить таку саму
+копію, як автоматична: той самий тип файлу, та сама тека і серія, відкривається вашим паролем Keepit
+або фразою. <em>Зберегти в архів…</em> записує один <em>архів</em> <code>.keepit</code> туди, куди ви скажете, і закриває його
+паролем, який ви для нього виберете. Архів не потребує захисту Keepit паролем, і Keepit надалі не
+стежить за цим файлом. Він годиться, щоб передати дані комусь або мати копію поза текою резервних
+копій. Запропонована назва каже, що це: <code>Keepit-archive-&lt;date&gt;-manual.keepit</code>, на відміну від
+автоматичних копій <code>Keepit-&lt;date and time&gt;-&lt;installation&gt;-&lt;id&gt;.keepit</code>.</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/save-to-archive.png?v=6d252de5" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/save-to-archive.png?v=6d252de5" alt="Зберегти в архів…: назва файлу містить archive і manual" width="636" height="528" loading="lazy"></a><figcaption>Зберегти в архів…: назва файлу містить archive і manual</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/archive-password.png?v=1b218e7c" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/archive-password.png?v=1b218e7c" alt="Власний пароль архіву з індикатором надійності: він ніде не зберігається" width="636" height="621" loading="lazy"></a><figcaption>Власний пароль архіву з індикатором надійності: він ніде не зберігається</figcaption></figure>
+<p><em>Відновити…</em> відкриває обидва види файлів. Архів замінює <em>Експортувати…</em> / <em>Імпортувати…</em> з 2.x.
+Файл переносить дані між версією для прямого завантаження і версією з App Store, а також між
+Keepit 2.x і 3.x. Файл, записаний у 3.0, відкривається лише в 3.0 або новішій; 3.0 читає все, що
+записала 2.x.</p>
+<p><strong>Якщо щось пішло не так.</strong> Про невдалу копію повідомляє рядок стану, і спроба повторюється зі
+щораз довшими паузами; попередні копії залишаються. Якщо Keepit завершили або Mac вимкнувся посеред
+відновлення, наступний запуск тихо поверне все як було до відновлення. У рідкісному випадку, коли це
+неможливо (файл, який не вдається записати, або заповнений диск), Keepit називає файл і завершує
+роботу, нічого не змінюючи: виправте проблему з файлом і запустіть знову. Подробиці, зокрема про
+внутрішню будову формату файлу, є на <a href="/security#backups">сторінці про безпеку</a> (англ.).</p>
+<hr />
+<h2 id="part-7-advanced">Частина 7. Додатково</h2>
+<h3 id="automation-the-keepit-url-scheme">Автоматизація: схема keepit:// за URL</h3>
+<p>Швидкі команди (<em>Відкрити URL</em>), Raycast, Alfred, Keyboard Maestro або <code>open</code> у терміналі можуть
+керувати Keepit, <strong>коли ви це ввімкнете</strong> в <em>Налаштування → Додатково → Автоматизація → Дозволити
+команди keepit:// за URL</em>. Типово це вимкнено, бо URL може відкрити будь-яка програма чи вебсторінка,
+а <code>add</code> / <code>paste</code> змінюють буфер обміну і друкують в активній програмі. Коли опцію вимкнено, Keepit
+ігнорує такі URL зі звуковим сигналом. Коли ввімкнено, Keepit дивиться, хто відкрив URL: першу
+команду, яка щось змінює (<code>paste</code>, <code>copy</code>, <code>template</code>, <code>add</code>, <code>add-template</code>, <code>pause</code>, <code>resume</code>), від
+кожної програми показано в діалозі. <em>Дозволити</em> виконує її один раз, <em>Завжди дозволяти</em> додає
+програму до списку довірених (він очищається кнопкою <em>Забути довірені застосунки</em> на тій самій
+панелі). Браузер або відправника, якого macOS не може назвати, запитують щоразу. Команди, які лише
+відкривають власні вікна Keepit, ніколи не запитують.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>URL</th>
+<th>Дія</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>keepit://paste/2</code><br><code>keepit://paste/latest</code><br><code>keepit://paste/previous</code></td>
+<td>Вставити елемент історії N (або останній / попередній) в активну програму</td>
+</tr>
+<tr>
+<td><code>keepit://copy/3</code></td>
+<td>Покласти елемент N у буфер обміну без вставлення</td>
+</tr>
+<tr>
+<td><code>keepit://template/Signature</code><br><code>keepit://template/Work/Reply?copy=1</code></td>
+<td>Вставити (або скопіювати) шаблон за назвою чи шляхом до теки</td>
+</tr>
+<tr>
+<td><code>keepit://add?text=…</code></td>
+<td>Додати текст до історії і в буфер обміну</td>
+</tr>
+<tr>
+<td><code>keepit://add-template?text=…&amp;name=…</code></td>
+<td>Створити шаблон</td>
+</tr>
+<tr>
+<td><code>keepit://history</code><br><code>keepit://templates</code><br><code>keepit://viewer</code><br><code>keepit://settings</code></td>
+<td>Відкрити меню історії, меню шаблонів, Перегляд, Налаштування</td>
+</tr>
+<tr>
+<td><code>keepit://pause</code><br><code>keepit://resume</code></td>
+<td>Призупинити запис на 10 хвилин / відновити</td>
+</tr>
+</tbody>
+</table></div>
+<p>Текст кодуйте відсотковим кодуванням (<code>%20</code> для пробілу). Поки Keepit заблоковано, URL ігноруються.</p>
+<h3 id="updates">Оновлення</h3>
+<p>Keepit раз на добу перевіряє GitHub Releases і пропонує оновлення в діалозі; <em>Перевірити оновлення…</em>
+робить це одразу. Оновлення підписано (EdDSA) і нотаризовано. Якщо ви користуєтеся Homebrew, те саме
+робить <code>brew upgrade --cask keepit</code>. Контрольні суми кожного завантаження є у файлі <code>SHA256SUMS</code> на
+сторінці випуску.</p>
+<p>Ця перевірка є єдиним мережевим запитом Keepit, і вона необов’язкова: <em>Налаштування → Загальні →
+Оновлення → Перевіряти оновлення автоматично</em>. Якщо її вимкнути, Keepit ні до чого не звертається,
+навіть на ваше прохання, а <em>Перевірити оновлення…</em> зникає з меню. Тоді оновлюватися можна,
+завантаживши програму з <a href="https://keep.it.com">keep.it.com</a> або через Homebrew. У версії з App Store
+немає ні засобу оновлення, ні такої опції: її оновлює App Store.</p>
+<h3 id="uninstalling">Видалення</h3>
+<p><em>Налаштування → Додатково → Скидання і видалення → Видалити програму…</em> прибирає програму, теку з
+даними, записи у В’язці ключів (зокрема ключ Touch ID), елемент входу і запис у Доступності. Keepit
+попросить пароль або Touch ID, введене слово <code>DELETE</code> і підтвердження. Якщо дані можуть ще знадобитися,
+спершу зробіть резервну копію. Якщо програму встановлено через Homebrew, виконайте потім
+<code>brew uninstall --cask --force keepit</code>, щоб Homebrew забув про cask.</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-advanced.png?v=9908024a" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/prefs-advanced.png?v=9908024a" alt="Налаштування → Додатково" width="636" height="515" loading="lazy"></a><figcaption>Налаштування → Додатково</figcaption></figure>
+<hr />
+<h2 id="reference">Довідка</h2>
+<h3 id="troubleshooting">Розв’язання проблем</h3>
+<p><strong>Після вибору елемента нічого не вставляється.</strong> Бракує дозволу Доступності: <em>Системні параметри →
+Приватність і безпека → Доступність → Keepit</em>. Якщо Keepit є у списку, але однаково не вставляє,
+вимкніть його і ввімкніть знову: macOS забуває дозвіл після перевстановлення програми.</p>
+<p><strong>Гаряча клавіша нічого не робить.</strong> Її зайняла інша програма або macOS; Keepit повідомляє про це під
+час запуску. Виберіть іншу комбінацію на панелі <em>Сполучення клавіш</em>. На Mac зі стандартними
+налаштуваннями ⌃⌥ із цифрами і літерами вільні.</p>
+<p><strong>Меню відкривається не там.</strong> Програма, в якій ви працюєте, не повідомляє положення текстового
+курсора, тому меню відкривається біля вказівника миші. Опція <em>Відкривати меню біля текстового курсора,
+коли можливо</em> на панелі Загальні вимикає пошук курсора, якщо вам зручніше, щоб меню завжди було біля
+вказівника.</p>
+<p><strong>Бракує чогось, що я копіював.</strong> Те, що програма, з якої копіюють, позначила як приховане, не
+записується. Не записується і копія, зроблена, коли на передньому плані був менеджер паролів
+(вбудований список) або програма з вашого списку ігнорованих, зокрема програма, з якої ви щойно
+перемкнулися. Див. <em>Налаштування → Історія</em> і
+<a href="/security#what-is-not-recorded">сторінку про безпеку</a> (англ.).</p>
+<p><strong>Touch ID не пропонується.</strong> Зараз жоден сенсор Touch ID недоступний (кришку закрито, клавіатури з
+Touch ID немає). Keepit зберігає налаштування і попросить відбиток, щойно сенсор стане доступним.</p>
+<p><strong>У стані резервного копіювання сказано, що тека недоступна.</strong> Теку перемістили, перейменували,
+відмонтували або (iCloud Drive) вивантажили з диска. Підключіть чи поверніть її, і наступна копія
+запишеться. Або натисніть <em>Вибрати…</em> і вкажіть нову теку: нова тека починає нову серію, а старі файли
+залишаються на місці.</p>
+<p><strong>Файл резервної копії не відкривається.</strong> <em>Неправильний пароль</em> означає, що тег автентифікації файлу
+не збігся: переконайтеся, що вводите пароль того Mac, який <em>записав</em> файл (після зміни пароля старі
+копії й далі відкриваються старим паролем), або його фразу відновлення. <em>Для цієї резервної копії
+потрібен Keepit 3.0 або новіший</em> означає, що файл записано новішою версією, ніж та, що його відкриває.</p>
+<p><strong>Homebrew відмовляється встановлювати поверх наявної програми.</strong> Спершу завершіть Keepit і
+перемістіть <code>/Applications/Keepit.app</code> у Смітник або додайте <code>--force</code>.</p>
+<p>Не вдалося розібратися? <a href="https://github.com/andrey-insarov/Keepit/issues">GitHub Issues</a> · admin@keep.it.com</p>
+<h3 id="keyboard-cheat-sheet">Шпаргалка з клавіш</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Клавіші</th>
+<th>Дія</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><kbd class="k">⌥M</kbd></td>
+<td>Меню історії; друкуйте для пошуку</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥T</kbd></td>
+<td>Меню шаблонів</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥1</kbd> … <kbd class="k">⌃⌥0</kbd></td>
+<td>Вставити елемент 1–10 (у меню і будь-де)</td>
+</tr>
+<tr>
+<td><kbd class="k">⇧</kbd> у меню</td>
+<td>Розширене меню: усі дії для елемента</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥⇧V</kbd></td>
+<td>Вставити попередній елемент / поміняти місцями</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥V</kbd></td>
+<td>Вставити буфер обміну як простий текст</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
+<td>ВЕРХНІЙ РЕГІСТР / нижній регістр / Кожне Слово З Великої / як у реченні</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥W</kbd> <kbd class="k">⌃⌥J</kbd></td>
+<td>Без пробілів по краях / одним рядком</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥K</kbd> <kbd class="k">⌃⌥D</kbd> <kbd class="k">⌃⌥Y</kbd> <kbd class="k">⌃⌥X</kbd></td>
+<td>Закреслення / підкреслення / хвилясте підкреслення / прибрати оформлення</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥A</kbd></td>
+<td>Додати буфер обміну до Шаблонів</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥⌫</kbd></td>
+<td>Видалити найновіший елемент</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥N</kbd> · <kbd class="k">⌥V</kbd> · <kbd class="k">⌥⇧N</kbd></td>
+<td>Черга вставлення: увімкнути / вимкнути · вставити наступний · вставити все, що залишилось</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥E</kbd> <kbd class="k">⌥S</kbd> <kbd class="k">⌥C</kbd> <kbd class="k">⌥P</kbd> <kbd class="k">⌥L</kbd> <kbd class="k">⌥Q</kbd></td>
+<td>Перегляд · Налаштування · Очистити історію · Призупинити запис · Заблокувати · Завершити</td>
+</tr>
+<tr>
+<td><kbd class="k">⌘F</kbd> у Перегляді</td>
+<td>Пошук</td>
+</tr>
+<tr>
+<td><code>⌘,</code></td>
+<td>Налаштування</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="placeholder-cheat-sheet">Шпаргалка з підстановок</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Підстановка</th>
+<th>Результат</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{date}</code> <code>{time}</code> <code>{datetime}</code></td>
+<td>Дата / час / обидва, системний формат</td>
+</tr>
+<tr>
+<td><code>{date:yyyy-MM-dd}</code> <code>{time:HH:mm}</code></td>
+<td>Власний формат (шаблони дат Unicode)</td>
+</tr>
+<tr>
+<td><code>{date:long}</code> <code>{time:short}</code> <code>{datetime:full}</code></td>
+<td>Іменований стиль: <code>short</code> <code>medium</code> <code>long</code> <code>full</code></td>
+</tr>
+<tr>
+<td><code>{date+7d}</code> <code>{date-1m:MMMM}</code> <code>{time+1h}</code> <code>{datetime-1d:long}</code> <code>{date+1y-2d}</code></td>
+<td>Зсув (<code>d</code> <code>w</code> <code>m</code> <code>y</code> <code>h</code>; до чотирьох зсувів поспіль)</td>
+</tr>
+<tr>
+<td><code>{weekday}</code> <code>{month}</code> <code>{year}</code></td>
+<td>Назва дня, назва місяця, рік</td>
+</tr>
+<tr>
+<td><code>{iso}</code> <code>{unix}</code></td>
+<td>Мітка часу ISO 8601, час Unix</td>
+</tr>
+<tr>
+<td><code>{clipboard}</code> <code>{clipboard:2}</code></td>
+<td>Буфер обміну (елемент 1) або елемент N</td>
+</tr>
+<tr>
+<td><code>{clipboard\|upper}</code> <code>\|lower</code> <code>\|title</code> <code>\|trim</code> <code>\|oneline</code> <code>\|url</code></td>
+<td>Фільтри, їх можна поєднувати</td>
+</tr>
+<tr>
+<td><code>{input:Name}</code> <code>{input:Name=Default}</code></td>
+<td>Запитати значення перед вставленням</td>
+</tr>
+<tr>
+<td><code>{choice:Label=A\|B\|C}</code></td>
+<td>Запропонувати вибір варіанта</td>
+</tr>
+<tr>
+<td><code>{cursor}</code></td>
+<td>Положення курсора після вставлення</td>
+</tr>
+<tr>
+<td><code>{user}</code> <code>{username}</code> <code>{host}</code></td>
+<td>Повне ім’я, ім’я облікового запису, ім’я комп’ютера</td>
+</tr>
+<tr>
+<td><code>{uuid}</code> <code>{random:1-100}</code></td>
+<td>Новий UUID, випадкове число з діапазону</td>
+</tr>
+<tr>
+<td><code>{{</code> <code>}}</code></td>
+<td>Буквальні фігурні дужки</td>
+</tr>
+</tbody>
+</table></div></article></main>
+<footer><div class="wrap">
+  <span>© 2026 UK Intis Telecom LTD · Keepit поширюється за ліцензією MIT</span>
+  <span><a href="/privacy">Політика конфіденційності</a><span class="en-only"> (англ.)</span> · <a href="/security">Безпека</a><span class="en-only"> (англ.)</span> · <a href="/uk/support">Підтримка</a> · <a href="https://github.com/andrey-insarov/Keepit/blob/main/CHANGELOG.md">Історія змін</a> · <a href="https://it.com">it.com</a></span>
+  <span class="langs"><a href="/guide" lang="en" hreflang="en">English</a> · <a href="/ru/guide" lang="ru" hreflang="ru">Русский</a> · <b lang="uk">Українська</b> · <a href="/de/guide" lang="de" hreflang="de">Deutsch</a> · <a href="/fr/guide" lang="fr" hreflang="fr">Français</a> · <a href="/es/guide" lang="es" hreflang="es">Español</a> · <a href="/pt-br/guide" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a> · <a href="/ja/guide" lang="ja" hreflang="ja">日本語</a> · <a href="/zh-hans/guide" lang="zh-Hans" hreflang="zh-Hans">简体中文</a> · <a href="/ar/guide" lang="ar" hreflang="ar">العربية</a></span>
+</div></footer>
+<div id="lb" role="dialog" aria-label="Знімок екрана в повному розмірі"><img alt=""></div>
+<script>
+(function(){
+  var mn=document.querySelector('.mnav');if(mn){mn.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){mn.removeAttribute('open');});});document.addEventListener('click',function(e){if(mn.open&&!mn.contains(e.target))mn.removeAttribute('open');});}
+  var lb=document.getElementById('lb'),im=lb.querySelector('img');
+  document.querySelectorAll('a.zoom').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();im.src=a.getAttribute('href');im.alt=a.querySelector('img').alt;lb.classList.add('on');});});
+  function close(){lb.classList.remove('on');im.src='';}
+  lb.addEventListener('click',close);document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+  var links=[].slice.call(document.querySelectorAll('aside a')),heads=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  if(links.length&&'IntersectionObserver' in window){
+    var cur=null;function mark(id){links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+id);});}
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){cur=e.target.id;mark(cur);}});},{rootMargin:'-70px 0px -70% 0px'});
+    heads.forEach(function(h){if(h)io.observe(h);});
+  }
+})();
+</script>
+</body></html>

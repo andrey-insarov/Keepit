@@ -1,0 +1,33 @@
+{
+  "ui": {
+    "features": "المزايا",
+    "privacy": "الخصوصية",
+    "install": "التثبيت",
+    "guide": "الدليل",
+    "security": "الأمن",
+    "support": "الدعم",
+    "menu": "القائمة",
+    "copyright": "© 2026 UK Intis Telecom LTD · يُوزَّع Keepit برخصة MIT",
+    "privacy_policy": "سياسة الخصوصية",
+    "changelog": "سجل التغييرات",
+    "on_this_page": "في هذه الصفحة",
+    "contents": "المحتويات",
+    "open_full_size": "فتح بالحجم الكامل",
+    "full_size_screenshot": "لقطة شاشة بالحجم الكامل",
+    "language": "اللغة",
+    "in_english": "(بالإنجليزية)",
+    "translated_note": "مترجم عن الإنجليزية. الأصل: <a href=\"{en}\">English</a>."
+  },
+  "pages": {
+    "GUIDE.md": {
+      "title": "دليل Keepit – مدير الحافظة لنظام Mac",
+      "description": "كيف تستخدم Keepit، مدير الحافظة المجاني لنظام Mac: قائمة السجل، الاختصارات، القوالب، العارض، التشفير و Touch ID.",
+      "crumb": "الدليل"
+    },
+    "SUPPORT.md": {
+      "title": "دعم Keepit – مساعدة في مدير الحافظة لنظام Mac",
+      "description": "كيف تحصل على مساعدة في Keepit، مدير الحافظة لنظام Mac، مع إجابات سريعة عن الأسئلة الشائعة.",
+      "crumb": "الدعم"
+    }
+  }
+}
