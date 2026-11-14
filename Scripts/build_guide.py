@@ -130,7 +130,7 @@ def localize_links(fragment: str, lang: str) -> str:
 # One flag per language for the picker in the header. A flag stands for a country, not a language,
 # so these are the conventional choices; the native name beside it in the list is what identifies it.
 # Drawn as SVG (viewBox 20×14) so they look the same everywhere: Windows has no flag emoji.
-# At 22 px wide they are simplified: no coat of arms for Spain, a plain band for Brazil's motto,
+# English carries the US flag (16 dots stand for the stars). At 22 px wide they are simplified: no coat of arms for Spain, a plain band for Brazil's motto,
 # Arabic carries the flag of the UAE, which can be drawn exactly at this size.
 def _star(cx: float, cy: float, r: float, rot: float = -90) -> str:
     import math
@@ -143,9 +143,8 @@ def _star(cx: float, cy: float, r: float, rot: float = -90) -> str:
 
 
 FLAG = {
-    "en": '<path fill="#012169" d="M0 0h20v14H0z"/><path stroke="#fff" stroke-width="2.8" d="m0 0 20 14M20 0 0 14"/>'
-          '<path stroke="#c8102e" stroke-width="1" d="m0 0 20 14M20 0 0 14"/><path stroke="#fff" stroke-width="4.6" d="M10 0v14M0 7h20"/>'
-          '<path stroke="#c8102e" stroke-width="2.6" d="M10 0v14M0 7h20"/>',
+    "en": '<path fill="#b22234" d="M0 0h20v14H0z"/><path fill="#fff" d="M0 1.08h20v1.08H0z"/><path fill="#fff" d="M0 3.23h20v1.08H0z"/><path fill="#fff" d="M0 5.38h20v1.08H0z"/><path fill="#fff" d="M0 7.54h20v1.08H0z"/><path fill="#fff" d="M0 9.69h20v1.08H0z"/><path fill="#fff" d="M0 11.85h20v1.08H0z"/>'
+          '<path fill="#3c3b6e" d="M0 0h8.2v7.54H0z"/><circle cx="1.3" cy="1.30" r=".42" fill="#fff"/><circle cx="3.1" cy="1.30" r=".42" fill="#fff"/><circle cx="4.9" cy="1.30" r=".42" fill="#fff"/><circle cx="6.7" cy="1.30" r=".42" fill="#fff"/><circle cx="1.3" cy="2.95" r=".42" fill="#fff"/><circle cx="3.1" cy="2.95" r=".42" fill="#fff"/><circle cx="4.9" cy="2.95" r=".42" fill="#fff"/><circle cx="6.7" cy="2.95" r=".42" fill="#fff"/><circle cx="1.3" cy="4.60" r=".42" fill="#fff"/><circle cx="3.1" cy="4.60" r=".42" fill="#fff"/><circle cx="4.9" cy="4.60" r=".42" fill="#fff"/><circle cx="6.7" cy="4.60" r=".42" fill="#fff"/><circle cx="1.3" cy="6.25" r=".42" fill="#fff"/><circle cx="3.1" cy="6.25" r=".42" fill="#fff"/><circle cx="4.9" cy="6.25" r=".42" fill="#fff"/><circle cx="6.7" cy="6.25" r=".42" fill="#fff"/>',
     "ru": '<path fill="#fff" d="M0 0h20v14H0z"/><path fill="#0039a6" d="M0 4.67h20V14H0z"/><path fill="#d52b1e" d="M0 9.33h20V14H0z"/>',
     "uk": '<path fill="#0057b7" d="M0 0h20v14H0z"/><path fill="#ffd700" d="M0 7h20v7H0z"/>',
     "de": '<path d="M0 0h20v14H0z"/><path fill="#d00" d="M0 4.67h20V14H0z"/><path fill="#ffce00" d="M0 9.33h20V14H0z"/>',
