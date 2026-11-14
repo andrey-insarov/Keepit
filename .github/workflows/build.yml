@@ -76,7 +76,7 @@ jobs:
     runs-on: macos-15
     environment: release
     permissions:
-      contents: write           # upload release assets, push the cask bump to main
+      contents: write           # upload release assets (the cask bump on main goes through the deploy key below)
     env:
       SPARKLE_PUBLIC_KEY: ${{ vars.SPARKLE_PUBLIC_KEY }}
     steps:
@@ -164,8 +164,19 @@ jobs:
             appcast.xml
           generate_release_notes: true
 
+      # main accepts changes only through pull requests with a green `build` (ruleset "Main").
+      # A pull request from here would never get that check — pushes made with GITHUB_TOKEN do not
+      # start workflows — so the bump is pushed directly with a write deploy key that is on the
+      # ruleset's bypass list. The key lives in the `release` environment, behind the same tag
+      # restriction and approval as the signing secrets, and can write to nothing but this repository.
       - name: Update Homebrew cask (version + sha256) on main
+        env:
+          CASK_BUMP_DEPLOY_KEY: ${{ secrets.CASK_BUMP_DEPLOY_KEY }}
         run: |
+          if [ -z "$CASK_BUMP_DEPLOY_KEY" ]; then
+            echo "::error::CASK_BUMP_DEPLOY_KEY is not set in the release environment — the release is published, but Casks/keepit.rb and the site's softwareVersion still say the previous version. See RELEASING.md → Cask bump key."
+            exit 1
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin main
@@ -173,8 +184,14 @@ jobs:
           make cask VERSION=$(cat VERSION)
           sed -i '' "s/\"softwareVersion\":\"[^\"]*\"/\"softwareVersion\":\"$(cat VERSION)\"/" docs/site/index.html
           git add Casks/keepit.rb docs/site/index.html
-          git diff --cached --quiet || git commit -m "cask + site version: Keepit $(cat VERSION)"
-          git push origin main
+          if git diff --cached --quiet; then echo "cask and site already at $(cat VERSION)"; exit 0; fi
+          git commit -m "cask + site version: Keepit $(cat VERSION)"
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          echo "$CASK_BUMP_DEPLOY_KEY" > ~/.ssh/cask_bump && chmod 600 ~/.ssh/cask_bump
+          ssh-keyscan -t ed25519 github.com >> ~/.ssh/known_hosts 2>/dev/null
+          GIT_SSH_COMMAND="ssh -i ~/.ssh/cask_bump -o IdentitiesOnly=yes" \
+            git push git@github.com:${GITHUB_REPOSITORY}.git HEAD:refs/heads/main
+          rm -f ~/.ssh/cask_bump
 
   # Off-site backup: push every branch and tag to the Codeberg mirror after each push to main or a tag.
   # Needs secret CODEBERG_DEPLOY_KEY: an SSH private key whose public half is a write-enabled
