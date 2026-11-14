@@ -188,6 +188,14 @@ final class LayoutProbeTests: XCTestCase {
         XCTAssertEqual(probe(l).check(keyCode: kL, modifiers: OPT).verdict, .needed(layout: "Multi", types: "ł"))
     }
 
+    func testLowercaseLetterIsNotCoveredByAnUnrelatedCapital() {
+        // Dotless ı uppercases to I; that does not make it a French letter (the first run flagged ⌥⇧N on French).
+        var l = FakeLayout.latinBase()
+        l.id = "fr"; l.name = "French"; l.languages = ["fr"]
+        l.set(kN, mods: OPT | SHIFT, .characters("ı"))
+        XCTAssertEqual(probe(l).check(keyCode: kN, modifiers: OPT | SHIFT).verdict, .notNeeded)
+    }
+
     func testLoneCombiningMarkIsNotNeeded() {
         var l = FakeLayout.latinBase()
         l.id = "ext"; l.name = "Extended"; l.languages = ["en"]
@@ -242,7 +250,7 @@ final class LayoutProbeTests: XCTestCase {
 
     func testExemplarLettersComeFromTheLocale() {
         let de = LetterSet.exemplar(["de"])
-        XCTAssertTrue(de.contains("ä")); XCTAssertTrue(de.contains("Ä")); XCTAssertTrue(de.contains("ß"))
+        XCTAssertTrue(de.contains("ä")); XCTAssertTrue(de.contains("Ä")); XCTAssertTrue(de.contains("ß")); XCTAssertFalse(de.contains("ı"))
         XCTAssertFalse(de.contains("ł")); XCTAssertFalse(de.contains("@"))
         XCTAssertTrue(LetterSet.exemplar(["de", "pl"]).contains("ł"))
         XCTAssertTrue(LetterSet.exemplar([]).contains("z")); XCTAssertFalse(LetterSet.exemplar([]).contains("ä"))

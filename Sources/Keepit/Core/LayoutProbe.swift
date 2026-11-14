@@ -78,8 +78,9 @@ struct LetterSet {
 
     init(characterSet: CharacterSet) {
         contains = { s in
-            // One scalar after NFC; either case counts as the letter.
-            for variant in [s, s.lowercased(), s.uppercased()] {
+            // One scalar after NFC. A capital counts through its lowercase (É through é), but never
+            // the other way round: ı uppercases to I, and that does not make it an English letter.
+            for variant in [s, s.lowercased()] {
                 let scalars = variant.unicodeScalars
                 if scalars.count == 1, characterSet.contains(scalars.first!) { return true }
             }
