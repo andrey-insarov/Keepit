@@ -43,7 +43,7 @@ brew install --cask andrey-insarov/keepit/keepit
 
 ![Підтвердження Gatekeeper у macOS](site/img/guide/gatekeeper.png)
 
-Keepit підписано і нотаризовано. Він оновлюється сам і працює нативно на Mac з Apple silicon та Intel
+Keepit підписано і завірено Apple. Він оновлюється сам і працює нативно на Mac з Apple silicon та Intel
 із macOS 13 Ventura або новішою.
 
 ### Перший запуск
@@ -522,7 +522,7 @@ Keepit 2.x і 3.x. Файл, записаний у 3.0, відкриваєтьс
 ### Оновлення
 
 Keepit раз на добу перевіряє GitHub Releases і пропонує оновлення в діалозі; *Перевірити оновлення…*
-робить це одразу. Оновлення підписано (EdDSA) і нотаризовано. Якщо ви користуєтеся Homebrew, те саме
+робить це одразу. Оновлення підписано (EdDSA) і завірено Apple. Якщо ви користуєтеся Homebrew, те саме
 робить `brew upgrade --cask keepit`. Контрольні суми кожного завантаження є у файлі `SHA256SUMS` на
 сторінці випуску.
 

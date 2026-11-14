@@ -53,7 +53,7 @@
  ],
  [
   "<p class=\"fine\">Free and open source (MIT) · macOS 13 or later, Apple silicon and Intel · Notarized by Apple · <a href=\"https://github.com/andrey-insarov/Keepit/releases\">All releases</a></p>",
-  "<p class=\"fine\">Безкоштовно і з відкритим кодом (MIT) · macOS 13 і новіші, Apple silicon та Intel · Нотаризовано Apple · <a href=\"https://github.com/andrey-insarov/Keepit/releases\">Усі версії</a></p>"
+  "<p class=\"fine\">Безкоштовно і з відкритим кодом (MIT) · macOS 13 і новіші, Apple silicon та Intel · Завірено Apple · <a href=\"https://github.com/andrey-insarov/Keepit/releases\">Усі версії</a></p>"
  ],
  [
   "aria-label=\"Animated demo: pressing Option-M opens the Keepit history menu at the text cursor and pastes the chosen item\"",
@@ -157,7 +157,7 @@
  ],
  [
   "<h3>Updates itself</h3>\n        <p>Signed with a Developer ID and notarized by Apple. Checks GitHub Releases once a day and installs the update in one click; every update is signature-checked before it runs. The check is optional — switch it off and Keepit makes no network request at all.</p>",
-  "<h3>Оновлюється сам</h3> <p>Програму підписано Developer ID і нотаризовано Apple. Вона раз на день перевіряє GitHub Releases і встановлює оновлення одним клацанням; підпис кожного оновлення перевіряється до запуску. Перевірку можна вимкнути, і тоді Keepit не робить жодного запиту в інтернет.</p>"
+  "<h3>Оновлюється сам</h3> <p>Програму підписано Developer ID і завірено Apple. Вона раз на день перевіряє GitHub Releases і встановлює оновлення одним клацанням; підпис кожного оновлення перевіряється до запуску. Перевірку можна вимкнути, і тоді Keepit не робить жодного запиту в інтернет.</p>"
  ],
  [
   "<h2>Private by design, not by promise</h2>",
@@ -209,7 +209,7 @@
  ],
  [
   "<h3>Download</h3><p>A signed, notarized disk image. Drag Keepit to Applications and press <kbd class=\"k\">⌥M</kbd>.</p><a class=\"btn btn-primary\" id=\"download2\" href=\"https://github.com/andrey-insarov/Keepit/releases/latest\">Download DMG</a>",
-  "<h3>Завантажити</h3><p>Підписаний і нотаризований образ диска. Перетягніть Keepit у Програми і натисніть <kbd class=\"k\">⌥M</kbd>.</p><a class=\"btn btn-primary\" id=\"download2\" href=\"https://github.com/andrey-insarov/Keepit/releases/latest\">Завантажити DMG</a>"
+  "<h3>Завантажити</h3><p>Підписаний і завірений Apple образ диска. Перетягніть Keepit у Програми і натисніть <kbd class=\"k\">⌥M</kbd>.</p><a class=\"btn btn-primary\" id=\"download2\" href=\"https://github.com/andrey-insarov/Keepit/releases/latest\">Завантажити DMG</a>"
  ],
  [
   "<h3>Homebrew</h3><p>From the project's own tap. <code>brew upgrade</code> keeps it current alongside everything else.</p>",
