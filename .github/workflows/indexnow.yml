@@ -1,0 +1,71 @@
+name: IndexNow
+
+# Tells the search engines behind IndexNow (Bing, Yandex, Naver, Seznam, Yep) which keep.it.com
+# pages changed, once Cloudflare Pages has deployed the commit. No secrets: the key is the public
+# docs/site/<key>.txt file. A manual run submits every URL in the sitemap.
+on:
+  push:
+    branches: [main]
+    paths: ["docs/site/**"]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Only print the URLs, send nothing"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  checks: read          # the "Cloudflare Pages" check run of the commit
+
+# One submission at a time, in push order; a queued run is not cancelled, so no change is skipped.
+concurrency:
+  group: indexnow
+  cancel-in-progress: false
+
+jobs:
+  submit:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0            # the commit before the push is needed for the diff
+          persist-credentials: false
+
+      - name: Pages to submit
+        id: pages
+        env:
+          BEFORE: ${{ github.event.before }}
+        run: |
+          set -o pipefail           # a failing script must fail the step, not hide behind tee
+          if [ "$GITHUB_EVENT_NAME" = push ]; then set -- --since "$BEFORE"; else set -- --all; fi
+          python3 Scripts/indexnow.py "$@" --dry-run | tee urls.txt
+          echo "count=$(grep -c '^https://' urls.txt || true)" >> "$GITHUB_OUTPUT"
+
+      # The engines fetch a page as soon as they hear about it, so wait until this commit is live.
+      - name: Wait for the Cloudflare Pages deployment
+        if: steps.pages.outputs.count != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for i in $(seq 1 60); do
+            state=$(gh api "repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/check-runs?check_name=Cloudflare%20Pages" \
+                      --jq '.check_runs[0] | "\(.status) \(.conclusion)"' || true)
+            case "$state" in
+              "completed success") echo "Cloudflare Pages deployed $GITHUB_SHA"; exit 0 ;;
+              completed*) echo "::error::Cloudflare Pages deployment ended with: $state"; exit 1 ;;
+            esac
+            sleep 15
+          done
+          echo "::error::no finished Cloudflare Pages deployment for $GITHUB_SHA after 15 minutes"
+          exit 1
+
+      - name: Submit
+        if: steps.pages.outputs.count != '0' && inputs.dry_run != true
+        env:
+          BEFORE: ${{ github.event.before }}
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = push ]; then set -- --since "$BEFORE"; else set -- --all; fi
+          python3 Scripts/indexnow.py "$@"

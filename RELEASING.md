@@ -299,10 +299,15 @@ link use the extensionless form (`build_guide.py` refuses to write a page that l
 
 `docs/site/cb6b9005336571eeb8c71481e479129a.txt` is the IndexNow key (indexnow.org): the file
 name and its content are the key, and it is public by design — search engines fetch it to check
-that a submission of keep.it.com URLs comes from the site. After pages are added or changed,
-POST the URLs from `sitemap.xml` to `https://api.indexnow.org/indexnow` with `host`, `key` and
-`urlList`. Cloudflare's Crawler Hints (Caching → Configuration) is on, but it only reports
-cached responses and the HTML here is served uncached, so the submission is done by hand.
+that a submission of keep.it.com URLs comes from the site. The `IndexNow` workflow
+(`.github/workflows/indexnow.yml`) runs on every push to `main` that touches `docs/site`: it
+waits for the commit's Cloudflare Pages deployment and then has `Scripts/indexnow.py` submit the
+pages whose HTML changed (only URLs the sitemap lists, so not `404.html` or `/v2/`; a deleted
+page goes out too). Run by hand (Actions → IndexNow → Run workflow) it submits the whole
+sitemap; locally the same is `python3 Scripts/indexnow.py --all`, and `--dry-run` only prints
+the URLs. HTTP 200 or 202 means the request was accepted, not that a page is indexed.
+Cloudflare's Crawler Hints (Caching → Configuration) is on as well, but it only reports cached
+responses and the HTML here is served uncached, which is why the workflow exists.
 
 Response headers for the static site are in `docs/site/_headers`. The Content-Security-Policy
 there allows `'unsafe-inline'` for scripts and styles because the pages still carry inline
