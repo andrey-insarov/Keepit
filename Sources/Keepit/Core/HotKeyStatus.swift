@@ -6,6 +6,7 @@
 // equivalent only for `.registered`; Settings reads both fields for its notes; the "Hot key
 // unavailable" alert reads `.failed` only.
 
+import Carbon.HIToolbox
 import Foundation
 
 /// Every shortcut Keepit registers, by name. The raw values are stored in `Settings.chosenHotKeys`.
@@ -30,21 +31,36 @@ struct HotKeyStatus: Equatable {
         case needed(layout: String, types: String)
         /// No readable layout needs it, but these could not be read (or a call failed).
         case unchecked(failed: [String])
+        /// Not a question the layouts can answer: the combination holds Control or Command, and
+        /// UCKeyTranslate ignores Control (the stage-1 run: ⌃⌥V "types" √ on German, a text field
+        /// inserts nothing). Neither "needed" nor "proven harmless".
+        case notApplicable
     }
     enum Registration: Equatable {
         case off          // stored nil
         case skipped      // default left free for a layout (H-2)
         case registered
-        case failed       // RegisterEventHotKey refused it: another app or macOS holds it
+        /// RegisterEventHotKey refused it: another app or macOS holds it. For a family (⌃⌥ numbers,
+        /// latest-item actions): at least one member was refused; the others are registered and work,
+        /// but the menu shows the family's keys only when all of them do.
+        case failed
         case suspended    // locked: unregistered by lock(), back on unlock()
     }
     var layout: Layout
     /// Dead-key chains the layout analysis did not follow; a measure of what was not seen, never evidence.
     var incomplete: Int
+    /// UCKeyTranslate calls that failed while the layouts were read for this combination. A `.needed`
+    /// verdict with errors stands (skipping is the smaller loss), but an alternative route to the
+    /// character may have been missed; registerHotKeys() logs it whatever the verdict.
+    var errors: Int
     var registration: Registration
 
-    static let off = HotKeyStatus(layout: .notNeeded, incomplete: 0, registration: .off)
-    static let registered = HotKeyStatus(layout: .notNeeded, incomplete: 0, registration: .registered)
+    init(layout: Layout, incomplete: Int = 0, errors: Int = 0, registration: Registration) {
+        self.layout = layout; self.incomplete = incomplete; self.errors = errors; self.registration = registration
+    }
+
+    static let off = HotKeyStatus(layout: .notNeeded, registration: .off)
+    static let registered = HotKeyStatus(layout: .notNeeded, registration: .registered)
 
     /// The shortcut is live: Carbon holds it and a menu may show it.
     var isActive: Bool { registration == .registered }
@@ -82,14 +98,20 @@ extension HotKeyStatus {
     /// enabled layout needs it. A required default that a layout needs is never skipped; its verdict is
     /// kept so Settings can say so. Pure: no Carbon, no UI.
     static func decide(_ settings: Settings, probe: LayoutProbe) -> [HotKeyID: Decision] {
+        var out: [HotKeyID: Decision] = [:]
         var ids: [HotKeyID] = [], combos: [(keyCode: UInt16, modifiers: UInt32)] = []
         for id in HotKeyID.checked {
             guard let hk = settings.hotKey(id) else { continue }
+            if hk.modifiers & (UInt32(controlKey) | UInt32(cmdKey)) != 0 {
+                // A user's ⌃⌥E or ⌘⌥E: the layout table would answer € for it, but that is not what the
+                // keys type. Not asked. (No factory default holds Control or Command.)
+                out[id] = Decision(layout: .notApplicable, incomplete: 0, errors: 0, skip: false)
+                continue
+            }
             ids.append(id)
             combos.append((UInt16(truncatingIfNeeded: hk.keyCode), hk.modifiers))
         }
         let checks = probe.checkAll(combos)
-        var out: [HotKeyID: Decision] = [:]
         for (i, id) in ids.enumerated() {
             let check = checks[i]
             let layout: Layout
@@ -103,7 +125,7 @@ extension HotKeyStatus {
                settings.hotKey(id) == Settings.defaultHotKey(id), !settings.isChosen(id) {
                 skip = true
             }
-            out[id] = Decision(layout: layout, incomplete: check.incomplete, skip: skip)
+            out[id] = Decision(layout: layout, incomplete: check.incomplete, errors: check.errors, skip: skip)
         }
         return out
     }
@@ -111,6 +133,7 @@ extension HotKeyStatus {
     struct Decision: Equatable {
         var layout: Layout
         var incomplete: Int
+        var errors: Int
         var skip: Bool
     }
 }

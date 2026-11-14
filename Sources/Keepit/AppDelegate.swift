@@ -1308,8 +1308,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         /// Registers one single shortcut and records its status.
         func single(_ id: HotKeyID, immediate: Bool = false, _ handler: @escaping () -> Void) {
             guard let hk = settings.hotKey(id) else { statuses[id] = .off; return }
-            let d = decisions[id] ?? HotKeyStatus.Decision(layout: .notNeeded, incomplete: 0, skip: false)
-            var st = HotKeyStatus(layout: d.layout, incomplete: d.incomplete, registration: .skipped)
+            let d = decisions[id] ?? HotKeyStatus.Decision(layout: .notNeeded, incomplete: 0, errors: 0, skip: false)
+            var st = HotKeyStatus(layout: d.layout, incomplete: d.incomplete, errors: d.errors, registration: .skipped)
             if d.skip {
                 Log.system.info("hot key \(hk.displayString) left free: \(String(describing: d.layout))")
             } else if hotKeys.register(hk, immediate: immediate, handler: handler) {
@@ -1322,6 +1322,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 Log.system.info("hot key \(hk.displayString): layouts not checked: \(layouts.joined(separator: ", "))")
             }
             if d.incomplete > 0 { Log.system.debug("hot key \(hk.displayString): \(d.incomplete) dead-key chains not followed") }
+            // Whatever the verdict: a failed read may have hidden another route to the character (H-1).
+            if d.errors > 0 { Log.system.error("hot key \(hk.displayString): \(d.errors) layout reads failed; verdict \(String(describing: d.layout)) stands") }
             statuses[id] = st
         }
         /// Registers a family (modifiers + several keys): registered only when every member is.
@@ -1332,7 +1334,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 ok = false
                 failed.append(hk.displayString)
             }
-            statuses[id] = HotKeyStatus(layout: .notNeeded, incomplete: 0, registration: ok ? .registered : .failed)
+            // Control families are never a layout question (H-1): the verdict is not applicable, not "harmless".
+            statuses[id] = HotKeyStatus(layout: .notApplicable, registration: ok ? .registered : .failed)
         }
 
         single(.history) { [weak self] in self?.showHistoryPopup() }

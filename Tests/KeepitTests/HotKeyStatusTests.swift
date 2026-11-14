@@ -81,16 +81,16 @@ final class HotKeyStatusTests: XCTestCase {
         let probe = LayoutProbe(reader: german())
         var s = Settings()
         var d = HotKeyStatus.decide(s, probe: probe)
-        XCTAssertEqual(d[.lock], .init(layout: .needed(layout: "German", types: "@"), incomplete: 0, skip: true))
+        XCTAssertEqual(d[.lock], .init(layout: .needed(layout: "German", types: "@"), incomplete: 0, errors: 0, skip: true))
         XCTAssertEqual(d[.viewer]?.skip, true)      // ⌥E = €
         XCTAssertEqual(d[.queue]?.skip, true)       // ⌥N = dead ~
-        XCTAssertEqual(d[.pause], .init(layout: .notNeeded, incomplete: 0, skip: false))
+        XCTAssertEqual(d[.pause], .init(layout: .notNeeded, incomplete: 0, errors: 0, skip: false))
         XCTAssertEqual(d[.history]?.skip, false)
         XCTAssertNil(d[.numbers]); XCTAssertNil(d[.latest])   // families are not checked
 
         s.chosenHotKeys = ["lock"]                                     // recorded, even though equal to the default
         d = HotKeyStatus.decide(s, probe: probe)
-        XCTAssertEqual(d[.lock], .init(layout: .needed(layout: "German", types: "@"), incomplete: 0, skip: false))
+        XCTAssertEqual(d[.lock], .init(layout: .needed(layout: "German", types: "@"), incomplete: 0, errors: 0, skip: false))
 
         s = Settings(); s.lockHotKey = HotKey.option(kVK_ANSI_E)       // the user's own value happens to type €
         d = HotKeyStatus.decide(s, probe: probe)
@@ -103,13 +103,45 @@ final class HotKeyStatusTests: XCTestCase {
 
     func testRequiredDefaultIsNeverSkippedButItsVerdictIsKept() {
         let d = HotKeyStatus.decide(Settings(), probe: LayoutProbe(reader: russian()))
-        XCTAssertEqual(d[.history], .init(layout: .needed(layout: "Russian", types: "~"), incomplete: 0, skip: false))
+        XCTAssertEqual(d[.history], .init(layout: .needed(layout: "Russian", types: "~"), incomplete: 0, errors: 0, skip: false))
         XCTAssertEqual(d[.template]?.skip, false)
     }
 
     func testUncheckedLayoutDoesNotSkip() {
         let d = HotKeyStatus.decide(Settings(), probe: LayoutProbe(reader: Unreadable()))
-        XCTAssertEqual(d[.lock], .init(layout: .unchecked(failed: ["x"]), incomplete: 0, skip: false))
+        XCTAssertEqual(d[.lock], .init(layout: .unchecked(failed: ["x"]), incomplete: 0, errors: 0, skip: false))
+    }
+
+    func testControlOrCommandCombinationsAreNotALayoutQuestion() throws {
+        // German ⌥E types €; the user's ⌃⌥E or ⌘⌥E do not, whatever the layout table says for them.
+        var f = german()
+        f.set(kVK_ANSI_E, mods: OPT | UInt32(controlKey), .characters("€"))      // what UCKeyTranslate would answer
+        f.set(kVK_ANSI_E, mods: OPT | UInt32(cmdKey), .characters("€"))
+        var s = Settings()
+        XCTAssertEqual(HotKeyStatus.decide(s, probe: LayoutProbe(reader: f))[.viewer]?.layout, .needed(layout: "German", types: "€"))
+        s.viewerHotKey = HotKey(keyCode: UInt32(kVK_ANSI_E), modifiers: OPT | UInt32(controlKey))
+        XCTAssertEqual(HotKeyStatus.decide(s, probe: LayoutProbe(reader: f))[.viewer], .init(layout: .notApplicable, incomplete: 0, errors: 0, skip: false))
+        s.viewerHotKey = HotKey(keyCode: UInt32(kVK_ANSI_E), modifiers: OPT | UInt32(cmdKey))
+        XCTAssertEqual(HotKeyStatus.decide(s, probe: LayoutProbe(reader: f))[.viewer]?.layout, .notApplicable)
+        let a = makeApp(f)
+        a.apply(settings: s)
+        a.registerHotKeys()
+        XCTAssertEqual(try status(a, .viewer), HotKeyStatus(layout: .notApplicable, registration: .registered))
+        XCTAssertEqual(try status(a, .numbers).layout, .notApplicable)
+    }
+
+    func testAFailedLayoutReadIsKeptNextToTheVerdict() throws {
+        // One plain key could not be read, and ⌥L still types @: the default is skipped and the error travels
+        // with the status, so the log can say the verdict may have missed an alternative route.
+        var f = german()
+        f.set(kVK_ANSI_X, .error)
+        let d = HotKeyStatus.decide(Settings(), probe: LayoutProbe(reader: f))
+        XCTAssertEqual(d[.lock], .init(layout: .needed(layout: "German", types: "@"), incomplete: 0, errors: 1, skip: true))
+        XCTAssertEqual(d[.pause], .init(layout: .unchecked(failed: ["de"]), incomplete: 0, errors: 1, skip: false))
+        let a = makeApp(f)
+        a.registerHotKeys()
+        XCTAssertEqual(try status(a, .lock), HotKeyStatus(layout: .needed(layout: "German", types: "@"), errors: 1, registration: .skipped))
+        XCTAssertEqual(try status(a, .pause), HotKeyStatus(layout: .unchecked(failed: ["de"]), errors: 1, registration: .registered))
     }
     private struct Unreadable: LayoutReading {
         func enabledLayouts() -> [LayoutInfo] { [LayoutInfo(id: "x", name: "Broken", languages: ["en"], translate: nil)] }
@@ -139,13 +171,13 @@ final class HotKeyStatusTests: XCTestCase {
     func testStatusesAfterRegistrationOnGerman() throws {
         let a = makeApp(german())
         a.registerHotKeys()
-        XCTAssertEqual(try status(a, .lock), HotKeyStatus(layout: .needed(layout: "German", types: "@"), incomplete: 0, registration: .skipped))
+        XCTAssertEqual(try status(a, .lock), HotKeyStatus(layout: .needed(layout: "German", types: "@"), registration: .skipped))
         XCTAssertEqual(try status(a, .viewer).registration, .skipped)
         XCTAssertEqual(try status(a, .queue).registration, .skipped)
         XCTAssertEqual(try status(a, .history), .registered)
         XCTAssertEqual(try status(a, .pause), .registered)
-        XCTAssertEqual(try status(a, .numbers), .registered)
-        XCTAssertEqual(try status(a, .latest), .registered)
+        XCTAssertEqual(try status(a, .numbers), HotKeyStatus(layout: .notApplicable, registration: .registered))
+        XCTAssertEqual(try status(a, .latest), HotKeyStatus(layout: .notApplicable, registration: .registered))
         XCTAssertNil(a.activeHotKey(.lock), "a skipped shortcut shows in no menu")
         XCTAssertEqual(a.activeHotKey(.pause), HotKey.option(kVK_ANSI_P))
         XCTAssertEqual(a.activeModifiers(.numbers), HotKey.controlOption)
@@ -158,7 +190,7 @@ final class HotKeyStatusTests: XCTestCase {
         var s = a.settings
         s.chosenHotKeys.insert("lock")          // what hotKeyChanged does after the conflict check; no other field moves
         a.apply(settings: s)
-        XCTAssertEqual(try status(a, .lock), HotKeyStatus(layout: .needed(layout: "German", types: "@"), incomplete: 0, registration: .registered))
+        XCTAssertEqual(try status(a, .lock), HotKeyStatus(layout: .needed(layout: "German", types: "@"), registration: .registered))
         XCTAssertEqual(a.activeHotKey(.lock), HotKey.option(kVK_ANSI_L))
         s.chosenHotKeys.remove("lock")
         a.apply(settings: s)
@@ -176,7 +208,7 @@ final class HotKeyStatusTests: XCTestCase {
         XCTAssertEqual(try status(a, .viewer), .registered)
         a = makeApp(russian())
         a.registerHotKeys()
-        XCTAssertEqual(try status(a, .history), HotKeyStatus(layout: .needed(layout: "Russian", types: "~"), incomplete: 0, registration: .registered))
+        XCTAssertEqual(try status(a, .history), HotKeyStatus(layout: .needed(layout: "Russian", types: "~"), registration: .registered))
         XCTAssertEqual(a.activeHotKey(.history), HotKey.optionM)
     }
 
@@ -185,7 +217,7 @@ final class HotKeyStatusTests: XCTestCase {
         let a = makeApp(us()) { $0 != HotKey.option(kVK_ANSI_P) && $0 != HotKey(keyCode: UInt32(kVK_ANSI_1), modifiers: HotKey.controlOption) }
         a.hotKeyFailureForTesting = { failed = $0 }
         a.registerHotKeys()
-        XCTAssertEqual(try status(a, .pause), HotKeyStatus(layout: .notNeeded, incomplete: 0, registration: .failed))
+        XCTAssertEqual(try status(a, .pause), HotKeyStatus(layout: .notNeeded, registration: .failed))
         XCTAssertNil(a.activeHotKey(.pause))
         XCTAssertEqual(try status(a, .numbers).registration, .failed, "a family is live only when every member is")
         XCTAssertNil(a.activeModifiers(.numbers))
@@ -198,6 +230,7 @@ final class HotKeyStatusTests: XCTestCase {
         let a = makeApp(us())
         a.registerHotKeys()
         for id in HotKeyID.checked { XCTAssertEqual(try status(a, id), .registered, "\(id)") }
+        XCTAssertEqual(try status(a, .numbers).registration, .registered)
     }
 
     // MARK: Lock and the observer
