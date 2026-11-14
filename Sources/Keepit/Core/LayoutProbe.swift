@@ -23,16 +23,33 @@
 import Carbon
 import Foundation
 
+/// A pending dead key as UCKeyTranslate reports it. `token` is the function's opaque state and is
+/// handed back to it unchanged; `id` is what the probe compares. The two differ because of an
+/// observation, not a documented contract: on macOS 27.2.1, after a completed composition the
+/// function returns the terminated state in the high 16 bits (German ^ then a → â with 1 << 16),
+/// and a pending dead key is the low 16 bits. A different macOS could change that; the probe would
+/// then over-count chains (the run before this rule) but never pass the function a value it did
+/// not produce.
+struct DeadKeyState: Hashable, ExpressibleByIntegerLiteral {
+    let token: UInt32
+    init(token: UInt32) { self.token = token }
+    init(integerLiteral value: UInt32) { token = value }
+    /// Whether a composition is still pending (observed rule, see above).
+    static func isPending(_ token: UInt32) -> Bool { token & 0xFFFF != 0 }
+    /// The state for comparison: same low bits, same pending dead key.
+    var id: UInt32 { token & 0xFFFF }
+}
+
 /// What a key with modifiers (and an incoming dead-key state) produces on a layout.
 enum KeyOutput: Equatable {
     case nothing
     /// Printable output. The probe NFC-normalises it; readers need not.
     case characters(String)
     /// A dead key: the state to pass to the next key.
-    case deadKey(UInt32)
+    case deadKey(DeadKeyState)
     /// Printable output and a dead-key state at once: UCKeyTranslate allows a transition that
     /// both emits text and leaves the layout in a new state.
-    case charactersThenDeadKey(String, UInt32)
+    case charactersThenDeadKey(String, DeadKeyState)
     /// The layout could not answer (a UCKeyTranslate error). Not "nothing": the probe counts it.
     case error
 }
@@ -42,7 +59,8 @@ struct LayoutInfo {
     let id: String
     let name: String
     let languages: [String]
-    /// keyCode, Carbon modifier bits (optionKey, shiftKey, …), incoming dead-key state → output.
+    /// keyCode, Carbon modifier bits (optionKey, shiftKey, …), incoming dead-key token (0 for none,
+    /// otherwise exactly what an earlier output carried) → output.
     /// nil when the layout has no readable key data: the probe reports it as unchecked.
     let translate: ((UInt16, UInt32, UInt32) -> KeyOutput)?
 }
@@ -155,8 +173,8 @@ struct LayoutProbe {
         /// expand, and calls that failed while building it. Both make every verdict on this layout less certain, so check() reports them.
         let plainIncomplete: Int
         let plainErrors: Int
-        /// The dead-key states a plain key or Shift + key enters. A transition into one of these is not a
-        /// chain the analysis fails to follow: plain(L) expands every one of them.
+        /// The dead-key states a plain key or Shift + key enters, by id. A transition into one of these is
+        /// not a chain the analysis fails to follow: plain(L) expands every one of them.
         let plainDeadStates: Set<UInt32>
 
         init?(_ layout: LayoutInfo, letters: LetterSet) {
@@ -165,26 +183,27 @@ struct LayoutProbe {
             translate = t
             self.letters = letters
             var plain = Set<String>()
-            var deadStates = Set<UInt32>()
+            var deadStates: [UInt32: DeadKeyState] = [:]   // id → the first token seen for it
             var incomplete = 0, errors = 0
             for code in Prepared.keyCodes {
                 for mods in Prepared.plainModifiers {
                     switch t(code, mods, 0) {
                     case .characters(let c): plain.insert(c)
-                    case .deadKey(let state): deadStates.insert(state)
-                    case .charactersThenDeadKey(let c, let state): plain.insert(c); deadStates.insert(state)
+                    case .deadKey(let state): if deadStates[state.id] == nil { deadStates[state.id] = state }
+                    case .charactersThenDeadKey(let c, let state): plain.insert(c); if deadStates[state.id] == nil { deadStates[state.id] = state }
                     case .error: errors += 1
                     case .nothing: break
                     }
                 }
             }
-            for state in deadStates {
+            let ids = Set(deadStates.keys)
+            for state in deadStates.values {
                 for code in Prepared.keyCodes {
                     for mods in Prepared.plainModifiers {
-                        switch t(code, mods, state) {
+                        switch t(code, mods, state.token) {   // the full token, as the function returned it
                         case .characters(let c): plain.insert(c)
-                        case .charactersThenDeadKey(let c, let next): plain.insert(c); if !deadStates.contains(next) { incomplete += 1 }
-                        case .deadKey(let next): if !deadStates.contains(next) { incomplete += 1 }
+                        case .charactersThenDeadKey(let c, let next): plain.insert(c); if !ids.contains(next.id) { incomplete += 1 }
+                        case .deadKey(let next): if !ids.contains(next.id) { incomplete += 1 }
                         case .error: errors += 1
                         case .nothing: break
                         }
@@ -192,7 +211,7 @@ struct LayoutProbe {
                 }
             }
             self.plain = plain
-            plainDeadStates = deadStates
+            plainDeadStates = ids
             plainIncomplete = incomplete
             plainErrors = errors
         }
@@ -214,12 +233,12 @@ struct LayoutProbe {
         }
 
         /// A state the analysis does not follow: not the one we are in, and not one plain(L) expands.
-        func isChain(_ next: UInt32, from state: UInt32) -> Bool { next != state && !plainDeadStates.contains(next) }
+        func isChain(_ next: DeadKeyState, from state: DeadKeyState) -> Bool { next.id != state.id && !plainDeadStates.contains(next.id) }
 
         func check(keyCode: UInt16, modifiers: UInt32) -> (needed: String?, incomplete: Int, errors: Int) {
             var incomplete = plainIncomplete, errors = plainErrors
             var found: String?
-            var state: UInt32?
+            var state: DeadKeyState?
             switch translate(keyCode, modifiers, 0) {
             case .nothing:
                 break
@@ -240,7 +259,7 @@ struct LayoutProbe {
                 var composed: String?
                 for code in Prepared.keyCodes {
                     for mods in Prepared.plainModifiers {
-                        switch translate(code, mods, state) {
+                        switch translate(code, mods, state.token) {
                         case .characters(let c): if composed == nil, needs(c) { composed = c }
                         case .charactersThenDeadKey(let c, let next): if composed == nil, needs(c) { composed = c }; if isChain(next, from: state) { incomplete += 1 }
                         case .deadKey(let next): if isChain(next, from: state) { incomplete += 1 }
@@ -249,7 +268,7 @@ struct LayoutProbe {
                         }
                     }
                 }
-                switch translate(Prepared.spaceKey, 0, state) {
+                switch translate(Prepared.spaceKey, 0, state.token) {
                 case .characters(let rest) where needs(rest): composed = rest
                 case .charactersThenDeadKey(let rest, _) where needs(rest): composed = rest
                 case .error: errors += 1
@@ -264,6 +283,20 @@ struct LayoutProbe {
 
 /// The layouts macOS knows, through Text Input Sources and UCKeyTranslate. Read-only.
 struct TISLayoutReader: LayoutReading {
+    /// What one UCKeyTranslate answer means. The full `dead` token travels on in the output, so the
+    /// next call gets exactly what the function returned; only the pending test looks at its bits.
+    static func output(status: OSStatus, text: String, dead: UInt32) -> KeyOutput {
+        guard status == noErr else { return .error }
+        let pending = DeadKeyState.isPending(dead) ? DeadKeyState(token: dead) : nil
+        guard !text.isEmpty else { return pending.map { .deadKey($0) } ?? .nothing }
+        let s = text.precomposedStringWithCanonicalMapping
+        // Control characters and the like are not something a user types.
+        guard let scalar = s.unicodeScalars.first, scalar.value >= 0x20, scalar.value != 0x7F else {
+            return pending.map { .deadKey($0) } ?? .nothing
+        }
+        return pending.map { .charactersThenDeadKey(s, $0) } ?? .characters(s)
+    }
+
     /// false: the layouts the user has enabled (the app). true: every installed layout (the harness).
     var allInstalled = false
 
@@ -296,18 +329,7 @@ struct TISLayoutReader: LayoutReading {
                 var chars = [UniChar](repeating: 0, count: 255)   // the API's maximum; 8 risked kUCOutputBufferTooSmall
                 let status = UCKeyTranslate(layout, keyCode, UInt16(kUCKeyActionDown), (carbonModifiers >> 8) & 0xFF,
                                             keyboardType, 0, &dead, chars.count, &length, &chars)
-                guard status == noErr else { return .error }
-                // After a completed composition the state is not 0: the high 16 bits hold the state just
-                // terminated (German ^ then a → â with 1 << 16; observed on macOS 27.2 for every layout
-                // with dead keys). Only the low 16 bits are a pending dead key.
-                let pending = dead & 0xFFFF
-                if length == 0 { return pending != 0 ? .deadKey(pending) : .nothing }
-                let s = String(utf16CodeUnits: chars, count: length).precomposedStringWithCanonicalMapping
-                // Control characters and the like are not something a user types.
-                guard let scalar = s.unicodeScalars.first, scalar.value >= 0x20, scalar.value != 0x7F else {
-                    return pending != 0 ? .deadKey(pending) : .nothing
-                }
-                return pending != 0 ? .charactersThenDeadKey(s, pending) : .characters(s)
+                return Self.output(status: status, text: String(utf16CodeUnits: chars, count: length), dead: dead)
             }
         }
     }

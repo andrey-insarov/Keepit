@@ -277,6 +277,27 @@ final class LayoutProbeTests: XCTestCase {
         XCTAssertEqual(r.incomplete, 1)
     }
 
+    func testProbePassesTheFullTokenBackNotJustItsId() {
+        // UCKeyTranslate's token can carry more than the pending id (observed: the terminated state in the
+        // high bits). The layout is keyed by the full token here, so a probe that truncated it would miss.
+        var l = us()
+        let token: UInt32 = 0x0007_0001            // id 1 with high bits set
+        l.set(kN, mods: OPT, .deadKey(DeadKeyState(token: token)))
+        l.set(kA, mods: 0, dead: token, .characters("@"))   // reachable only with the exact token
+        XCTAssertEqual(probe(l).check(keyCode: kN, modifiers: OPT).verdict, .needed(layout: "U.S.", types: "@"))
+        // The same for a plain dead key: plain(L) must expand it with its full token.
+        var m = FakeLayout.latinBase()
+        m.id = "fr"; m.name = "French"; m.languages = ["fr"]
+        m.set(kLeftBracket, mods: 0, .deadKey(DeadKeyState(token: 0x0003_0007)))
+        m.set(kE, mods: 0, dead: 0x0003_0007, .characters("ê"))
+        m.set(kE, mods: OPT, .characters("ê"))
+        XCTAssertEqual(probe(m).check(keyCode: kE, modifiers: OPT).verdict, .notNeeded)
+        // And two tokens with the same id are the same state for the chain rule.
+        var n = us()
+        n.set(kX, mods: 0, dead: 1, .deadKey(DeadKeyState(token: 0x0002_0001)))
+        XCTAssertEqual(probe(n).check(keyCode: kN, modifiers: OPT).incomplete, 0)
+    }
+
     // MARK: Several layouts
 
     func testFirstLayoutThatNeedsItIsNamed() {
@@ -309,6 +330,22 @@ final class LayoutProbeTests: XCTestCase {
 
     func testNoLayoutsMeansNothingNeeded() {
         XCTAssertEqual(probe().check(keyCode: kL, modifiers: OPT), LayoutCheck(verdict: .notNeeded, incomplete: 0, errors: 0))
+    }
+
+    // MARK: The reader's reading of UCKeyTranslate
+
+    func testReaderDecidesPendingByTheLowBitsAndKeepsTheWholeToken() {
+        // Observed on macOS 27.2.1: a completed composition returns the terminated state << 16.
+        XCTAssertEqual(TISLayoutReader.output(status: noErr, text: "â", dead: 1 << 16), .characters("â"))
+        XCTAssertEqual(TISLayoutReader.output(status: noErr, text: "", dead: 1 << 16), .nothing)
+        XCTAssertEqual(TISLayoutReader.output(status: noErr, text: "", dead: 2), .deadKey(DeadKeyState(token: 2)))
+        // Text and a new pending state at once: the whole token goes on, the id is the low bits.
+        let out = TISLayoutReader.output(status: noErr, text: "^", dead: (1 << 16) | 2)
+        XCTAssertEqual(out, .charactersThenDeadKey("^", DeadKeyState(token: (1 << 16) | 2)))
+        if case .charactersThenDeadKey(_, let state) = out { XCTAssertEqual(state.id, 2) } else { XCTFail() }
+        XCTAssertEqual(TISLayoutReader.output(status: noErr, text: "e\u{0301}", dead: 0), .characters("é"))
+        XCTAssertEqual(TISLayoutReader.output(status: noErr, text: "\u{1B}", dead: 0), .nothing)      // a control character
+        XCTAssertEqual(TISLayoutReader.output(status: -25340, text: "", dead: 0), .error)   // kUCOutputBufferTooSmall
     }
 
     // MARK: The system's own data
