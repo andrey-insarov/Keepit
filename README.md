@@ -278,7 +278,8 @@ The historical map from CLCL's C sources to these files is in [docs/ORIGINS.md](
   (Paste, Pastebot, PastePal) are left alone. History: Maccy (SQLite), Alfred (`clipboard.alfdb`),
   Flycut (plist), CLCL (`history.dat`). Snippets → templates, with placeholder conversion: Alfred
   (`.alfredsnippets`), Raycast (JSON export), Clipy/ClipMenu (XML), TextExpander / aText / Espanso,
-  CLCL (`regist.dat`). *Viewer → Import…* detects what is installed and offers it in one click.
+  CLCL (`regist.dat`). *Settings → Import* shows what is installed and imports it in one click; the
+  design, with the exact placeholder subset and what is left literal, is in `docs/IMPORT.md`.
 - **Reference CLI** for the `.keepit` format (read, write, inspect) so other tools on any platform
   can import or export Keepit data; template export to Espanso, so snippets travel to Windows and
   Linux without a Keepit port.
