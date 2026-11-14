@@ -1,0 +1,366 @@
+[
+ [
+  "<title>Keepit – Free Clipboard Manager for Mac (Open Source, Encrypted)</title>",
+  "<title>Keepit – Mac 上的免費剪貼板管理工具</title>"
+ ],
+ [
+  "<meta name=\"description\" content=\"Free, open-source clipboard manager for Mac: history at one hot key, templates, optional AES-256 encryption with Touch ID. No account, no Keepit cloud.\">",
+  "<meta name=\"description\" content=\"Mac 上免費、開放原始碼的剪貼板管理工具：一個快速鍵叫出歷史記錄，還有範本、AES-256 加密與 Touch ID。不需要帳號，資料只留在你的 Mac 上。\">"
+ ],
+ [
+  "<meta property=\"og:title\" content=\"Keepit – Free Clipboard Manager for Mac\">",
+  "<meta property=\"og:title\" content=\"Keepit – Mac 上的免費剪貼板管理工具\">"
+ ],
+ [
+  "<meta property=\"og:description\" content=\"Clipboard history one hot key away. Templates, optional AES-256 encryption with Touch ID. Free and open source, no account, no Keepit cloud.\">",
+  "<meta property=\"og:description\" content=\"一個快速鍵就能叫出剪貼板歷史記錄。範本、可選的 AES-256 加密與 Touch ID。免費且開放原始碼，不必註冊帳號，資料儲存在你自己的電腦上。\">"
+ ],
+ [
+  "<meta name=\"twitter:title\" content=\"Keepit – Free Clipboard Manager for Mac\">",
+  "<meta name=\"twitter:title\" content=\"Keepit – Mac 上的免費剪貼板管理工具\">"
+ ],
+ [
+  "<meta name=\"twitter:description\" content=\"Clipboard history one hot key away. Templates, optional AES-256 encryption with Touch ID. Free and open source, no account, no Keepit cloud.\">",
+  "<meta name=\"twitter:description\" content=\"一個快速鍵就能叫出剪貼板歷史記錄。範本、可選的 AES-256 加密與 Touch ID。免費且開放原始碼，不必註冊帳號，資料儲存在你自己的電腦上。\">"
+ ],
+ [
+  "<nav><a href=\"#features\">Features</a><a href=\"#privacy\">Privacy</a><a href=\"#install\">Install</a><a href=\"/guide\">Guide</a><a href=\"/security\">Security</a><a href=\"/support\">Support</a>",
+  "<nav><a href=\"#features\">功能</a><a href=\"#privacy\">隱私</a><a href=\"#install\">安裝</a><a href=\"/guide\">使用手冊</a><a href=\"/security\">安全性</a><a href=\"/support\">支援</a>"
+ ],
+ [
+  "<summary aria-label=\"Menu\">",
+  "<summary aria-label=\"選單\">"
+ ],
+ [
+  "<div class=\"links\"><a href=\"#features\">Features</a><a href=\"#privacy\">Privacy</a><a href=\"#install\">Install</a><a href=\"/guide\">Guide</a><a href=\"/security\">Security</a><a href=\"/support\">Support</a></div>",
+  "<div class=\"links\"><a href=\"#features\">功能</a><a href=\"#privacy\">隱私</a><a href=\"#install\">安裝</a><a href=\"/guide\">使用手冊</a><a href=\"/security\">安全性</a><a href=\"/support\">支援</a></div>"
+ ],
+ [
+  "<h1>Everything you copy, <span style=\"white-space:nowrap\">one <kbd class=\"k\">⌥M</kbd> away.</span></h1>",
+  "<h1>剪貼板歷史記錄隨手可得，<span style=\"white-space:nowrap\">按下 <kbd class=\"k\">⌥M</kbd> 就行。</span></h1>"
+ ],
+ [
+  "<p class=\"lead\">Keepit is a free, open-source clipboard manager for Mac. It keeps a history of everything you copy and pastes any of it back where you are typing. Templates for the text you type every day. Set a password and it is encrypted on disk and unlocked with Touch&nbsp;ID; either way it stays on your Mac — no account, no Keepit cloud. Backups to a folder of yours are an option, off until you switch it on; the update check can be switched off.</p>",
+  "<p class=\"lead\">Keepit 是 Mac 上免費、開放原始碼的剪貼板管理工具。它會保存你拷貝過的所有內容，並把任何一個項目貼到你正在輸入的位置。範本能加快你每天重複輸入的文字工作。設定密碼後，資料會以加密形式儲存在磁碟上，並可用 Touch&nbsp;ID 解鎖。無論如何，資料都留在你的 Mac 上，不需要帳號，也不使用雲端儲存。你也可以選擇備份到自己的資料夾，這些備份同樣經過加密。定期檢查更新的功能可以關閉。</p>"
+ ],
+ [
+  "Download for macOS <small id=\"ver\"></small>",
+  "下載 macOS 版 <small id=\"ver\"></small>"
+ ],
+ [
+  "<a class=\"btn btn-ghost\" href=\"#install\">Homebrew &amp; App Store</a>",
+  "<a class=\"btn btn-ghost\" href=\"#install\">Homebrew 與 App Store</a>"
+ ],
+ [
+  "<p class=\"fine\">Free and open source (MIT) · macOS 13 or later, Apple silicon and Intel · Notarized by Apple · <a href=\"https://github.com/andrey-insarov/Keepit/releases\">All releases</a></p>",
+  "<p class=\"fine\">免費且開放原始碼（MIT）· macOS 13 或以上版本，Apple 晶片與 Intel · 已通過 Apple 公證 · <a href=\"https://github.com/andrey-insarov/Keepit/releases\">所有版本</a></p>"
+ ],
+ [
+  "aria-label=\"Animated demo: pressing Option-M opens the Keepit history menu at the text cursor and pastes the chosen item\"",
+  "aria-label=\"動畫：按下 Option-M 會在文字游標旁打開 Keepit 歷史記錄選單，並貼上所選的項目\""
+ ],
+ [
+  "<div>New Message</div>",
+  "<div>新增郵件</div>"
+ ],
+ [
+  "<div><span>To:</span><b>Michael Reeve</b></div><div><span>Subject:</span><b>Your order has shipped</b></div>",
+  "<div><span>收件人：</span><b>陳志明</b></div><div><span>標題：</span><b>你的訂單已出貨</b></div>"
+ ],
+ [
+  "<div class=\"chip\" id=\"chip\"><span>press</span>",
+  "<div class=\"chip\" id=\"chip\"><span>按下</span>"
+ ],
+ [
+  "<div class=\"search\">⌕ Search history…</div>",
+  "<div class=\"search\">⌕ 搜尋歷史記錄…</div>"
+ ],
+ [
+  "<span class=\"t\">Invoice INV-2026-0418.pdf</span>",
+  "<span class=\"t\">發票 INV-2026-0418.pdf</span>"
+ ],
+ [
+  "<span class=\"t\">Template</span>",
+  "<span class=\"t\">範本</span>"
+ ],
+ [
+  "<span class=\"t\">Viewer</span>",
+  "<span class=\"t\">檢視器</span>"
+ ],
+ [
+  "<h2>Clipboard history, three keys you'll learn in a minute</h2>",
+  "<h2>剪貼板歷史記錄：三個一分鐘就能記住的快速鍵</h2>"
+ ],
+ [
+  "<p class=\"kicker\">Keepit lives in the menu bar and stays out of the way. Every key below works in any app, and every one of them can be changed.</p>",
+  "<p class=\"kicker\">Keepit 常駐在選單列，不會打擾你。下面的快速鍵在任何 App 裡都能用，而且每一個都可以更改。</p>"
+ ],
+ [
+  "<h3>The history menu</h3><p>Opens next to your text cursor. Type to search, hit a number or click — the item is pasted where you were typing. Hold <kbd class=\"k\">⇧</kbd> and every item grows a submenu: plain text, UPPERCASE, add to templates, delete.</p>",
+  "<h3>歷史記錄選單</h3><p>選單會在文字游標旁打開。直接輸入即可搜尋，按數字鍵或按一下，項目就會貼到游標所在的位置。按住 <kbd class=\"k\">⇧</kbd>，每個項目都會出現子選單：純文字、大寫、刪除線文字、加入範本、刪除，以及其他功能。</p>"
+ ],
+ [
+  "<h3>Paste without the menu</h3><p><kbd class=\"k\">⌃⌥1</kbd>…<kbd class=\"k\">⌃⌥0</kbd> paste items 1–10 straight away; <kbd class=\"k\">⌥⇧V</kbd> pastes the one before the current. <kbd class=\"k\">⌃⌥V</kbd> pastes as plain text, <kbd class=\"k\">⌃⌥U</kbd> as UPPERCASE, <kbd class=\"k\">⌃⌥T</kbd> as Title Case.</p>",
+  "<h3>不開選單直接貼上</h3><p><kbd class=\"k\">⌃⌥1</kbd>…<kbd class=\"k\">⌃⌥0</kbd> 會立即貼上第 1–10 個項目；<kbd class=\"k\">⌥⇧V</kbd> 會貼上前一個項目。<kbd class=\"k\">⌃⌥V</kbd> 以純文字貼上，<kbd class=\"k\">⌃⌥U</kbd> 以大寫貼上，<kbd class=\"k\">⌃⌥T</kbd> 則讓每個單字首字母大寫。</p>"
+ ],
+ [
+  "<h3>Templates</h3><p>Signatures, addresses, replies you send ten times a day — in folders, with their own hot keys. Placeholders ask for a name, insert today's date or the clipboard, and leave the cursor where you want it.</p>",
+  "<h3>範本</h3><p>你一天要寄出許多次的簽名、地址和回覆都放在檔案夾裡，各有自己的快速鍵。佔位符會詢問姓名、插入今天的日期或剪貼板內容，並把游標留在你需要的位置。</p>"
+ ],
+ [
+  "<h3>Templates that fill themselves in — a snippet manager built in</h3>",
+  "<h3>會自動填寫的範本，也就是內建的文字片段管理工具</h3>"
+ ],
+ [
+  "<p>A template is plain text with placeholders. When you paste it, Keepit asks for the inputs, expands the rest and puts the cursor where <code>{cursor}</code> was.</p>",
+  "<p>範本就是帶有佔位符的普通文字。貼上時，Keepit 會詢問需要的值、補上其餘文字，並把游標放在原本 <code>{cursor}</code> 所在的位置。</p>"
+ ],
+ [
+  "<div class=\"tpl\">Hi <b>{input:Name}</b>,\n\nThanks for your order — it ships on <b>{date+2d:EEEE, d MMMM}</b>.\nTracking: <b>{clipboard}</b>\n\n<b>{cursor}</b>\nBest, Andrey</div>",
+  "<div class=\"tpl\"><b>{input:姓名}</b>，你好：\n\n感謝你的訂購，商品將於 <b>{date+2d:M月d日 EEEE}</b>出貨。\n追蹤編號：<b>{clipboard}</b>\n\n<b>{cursor}</b>\nAndrey 敬上</div>"
+ ],
+ [
+  "<h3>Text, images, files</h3>\n        <p>Rich text with formatting, screenshots with thumbnails, lists of files from Finder. Duplicates are merged into one entry.</p>",
+  "<h3>文字、影像、檔案</h3>\n        <p>帶格式的文字、附縮圖的截圖、來自 Finder 的檔案列表。重複的內容會合併成一筆記錄。</p>"
+ ],
+ [
+  "alt=\"History menu with text, image thumbnails and a file\"",
+  "alt=\"包含文字、影像縮圖和一個檔案的歷史記錄選單\""
+ ],
+ [
+  "<h3>The Viewer</h3>\n        <p>Search everything at once, edit items in place, drag history into templates, inspect any item — even as a hex dump.</p>",
+  "<h3>檢視器</h3>\n        <p>一次搜尋所有項目、直接就地編輯，還能把歷史記錄拖到範本裡。狀態列會顯示每筆記錄的資訊。</p>"
+ ],
+ [
+  "alt=\"Keepit Viewer with a search highlighting matches\"",
+  "alt=\"Keepit 檢視器視窗，搜尋結果中符合的內容已反白標示\""
+ ],
+ [
+  "<h3>Works with Shortcuts, Raycast and Alfred</h3>\n        <p>A <code>keepit://</code> URL scheme pastes item N or a template by name, adds text to history or templates, pauses recording. No scripting dictionary to learn. Off until you switch it on in Settings → Advanced.</p>",
+  "<h3>Keepit 可搭配「捷徑」、Raycast 與 Alfred 使用</h3>\n        <p><code>keepit://</code> URL 架構可以貼上第 N 個項目或依名稱貼上範本、把文字加入歷史記錄或範本，以及暫停記錄。不需要學習任何工序指令字典。這個選項預設為關閉，要到「設定」→「進階」中開啟後才會生效。</p>"
+ ],
+ [
+  "<h3>Copy five things, paste five things</h3>\n        <p>Press <kbd class=\"k\">⌥N</kbd>, copy as many items as you need — the menu bar counts them — then <kbd class=\"k\">⌥V</kbd> pastes them back one at a time in the same order. <kbd class=\"k\">⌘V</kbd> keeps working as usual.</p>",
+  "<h3>連續拷貝五段文字，再按同樣的順序貼上</h3>\n        <p>按下 <kbd class=\"k\">⌥N</kbd>，需要多少就拷貝多少（選單列上的計數器會幫你計數）。接著每按一次 <kbd class=\"k\">⌥V</kbd>，就會按相同順序貼上一個。<kbd class=\"k\">⌘V</kbd> 照常運作。</p>"
+ ],
+ [
+  "<h3>Menu bar only</h3>\n        <p>No Dock icon, no windows until you ask for one. Launches at login, uses a few megabytes, polls the clipboard every 0.3 s like every clipboard manager has to.</p>",
+  "<h3>只在選單列</h3>\n        <p>在你主動打開之前，沒有 Dock 圖像，也沒有視窗。Keepit 會在登入時啟動，只佔用幾 MB，並且每 0.3 秒查詢一次剪貼板，所有剪貼板管理工具都是這樣運作的。</p>"
+ ],
+ [
+  "<h3>Backed up to your own cloud</h3>\n        <p>Pick a folder — iCloud Drive, Dropbox, a disk — and Keepit keeps complete, encrypted copies there, a new one a few minutes after each change. They open with your Keepit password or recovery phrase on any Mac; the provider sees the ciphertext and a short header, never the content. No Keepit server, ever — and like the password itself, this is an option you can simply leave off.</p>",
+  "<h3>備份到任何資料夾：網路資料夾、iCloud、Dropbox 等等。這些資料同樣經過加密</h3>\n        <p>選擇一個資料夾（iCloud 雲碟、Dropbox、磁碟），Keepit 就會在那裡保存完整的加密副本；在自動模式下，每次變更後幾分鐘就會製作一份副本。在任何一部 Mac 上都能用你的 Keepit 密碼或復原短語打開它們。儲存服務供應商看得到密文和一小段標頭，但看不到內容。Keepit 沒有伺服器，以後也不會有。和密碼一樣，這項功能你完全可以不開啟。</p>"
+ ],
+ [
+  "<h3>Per-app paste keys</h3>\n        <p>Some apps want <kbd class=\"k\">⌘⇧V</kbd> or <kbd class=\"k\">⌃V</kbd> to paste. Tell Keepit once, per app, and it uses the right key there.</p>",
+  "<h3>為個別 App 指定貼上按鍵</h3>\n        <p>有些 App 用 <kbd class=\"k\">⌘⇧V</kbd> 或 <kbd class=\"k\">⌃V</kbd> 貼上。只要針對該 App 告訴 Keepit 一次，它就會在那裡使用正確的按鍵。</p>"
+ ],
+ [
+  "<h3>Updates itself</h3>\n        <p>Signed with a Developer ID and notarized by Apple. Checks GitHub Releases once a day and installs the update in one click; every update is signature-checked before it runs. The check is optional — switch it off and Keepit makes no network request at all.</p>",
+  "<h3>自動更新</h3>\n        <p>App 以 Developer ID 簽署，並通過 Apple 公證。它每天檢查一次 GitHub Releases，按一下就能安裝更新；每個更新在執行前都會驗證簽名。檢查功能可以關閉，關閉後 Keepit 不會向網際網路發出任何請求。</p>"
+ ],
+ [
+  "<h2>Private by design, not by promise</h2>",
+  "<h2>隱私來自設計，而不是承諾</h2>"
+ ],
+ [
+  "<p class=\"kicker\">A clipboard manager sees passwords, addresses and half-written messages. Keepit is built so that none of it goes anywhere you did not choose.</p>",
+  "<p class=\"kicker\">剪貼板管理工具看得到密碼、地址和寫到一半的訊息。Keepit 的設計確保這些內容不會流向任何你沒有主動選擇的地方。</p>"
+ ],
+ [
+  "<div><strong>0</strong><span>accounts, servers or sync of its own. Nothing to log in to.</span></div>",
+  "<div><strong>沒有</strong><span>帳號、伺服器或自己的同步服務。沒有任何地方需要登入。</span></div>"
+ ],
+ [
+  "<div><strong>0</strong><span>analytics, crash reports or trackers in the app — not even anonymous ones. The website only counts page views, without cookies.</span></div>",
+  "<div><strong>沒有</strong><span>App 內的分析、當機報告或追蹤器，連匿名的也沒有。網站只統計頁面瀏覽次數，不使用 Cookie。</span></div>"
+ ],
+ [
+  "<div><strong>1</strong><span>network request: the daily update check against GitHub. Optional; the App Store edition has no network entitlement at all — <a href=\"/security#network\">verify it</a>.</span></div>",
+  "<div><strong>一個</strong><span>網路請求：每天到 GitHub 檢查更新。這項檢查可以關閉；App Store 版本甚至沒有網路存取權限。<a href=\"/security#network\">你可以自行驗證</a>（英文）。</span></div>"
+ ],
+ [
+  "<div><strong>1</strong><span>folder on your Mac with everything in it — plus the backup folder, if you choose one. Delete them and Keepit is gone.</span></div>",
+  "<div><strong>一個</strong><span>位於你 Mac 上的資料夾，所有資料都在裡面。如果你有備份，還會多一個備份資料夾。把它們刪除，Keepit 就不留任何痕跡。</span></div>"
+ ],
+ [
+  "<li>Turn on a password and history and templates are stored with AES-256-GCM; the key is derived with PBKDF2 (200 000 rounds) and wiped from memory whenever Keepit locks.</li>",
+  "<li>設定密碼後，歷史記錄和範本會以 AES-256-GCM 加密儲存；密鑰透過 PBKDF2（200 000 次迭代）衍生，並在每次 Keepit 鎖定時從記憶體中清除。</li>"
+ ],
+ [
+  "<li>Unlock with Touch ID. The password stays as a fallback, and a 24-word recovery phrase, shown once, opens your data if you forget it. Type the password on an on-screen keyboard: shuffled keys, no keyboard events for anything to log.</li>",
+  "<li>使用 Touch ID 解鎖。密碼仍可作為備用方式；只顯示一次的 24 個單字復原短語，能在你忘記密碼時打開資料。密碼可以在螢幕鍵盤上輸入：按鍵位置會打亂，而且不會產生可被記錄的鍵盤事件。</li>"
+ ],
+ [
+  "<li>Anything marked concealed by the copying app is not recorded; copies from 1Password, Bitwarden, KeePassXC, Apple Passwords and other password managers are excluded by app (best effort — <a href=\"/security#what-is-not-recorded\">how</a>).</li>",
+  "<li>為了保護隱私，Keepit 不會保存從 1Password、Bitwarden、KeePassXC、Apple「密碼」及其他密碼管理工具拷貝的內容，也不會保存來源 App 標示為隱藏的內容。排除的對象依 App 辨識（盡力而為，<a href=\"/security#what-is-not-recorded\">詳情</a>為英文）。你也可以加入自己的排除項目。</li>"
+ ],
+ [
+  "<li>Locks on demand — and, if you choose, after the Mac has been locked or asleep for a delay you set (new installations never lock on their own). Source is open, builds are reproducible from a tagged commit, and the signing keys live in a protected release environment. <a href=\"/security\">Read the security page</a></li>",
+  "<li>Keepit 可以透過選單或快速鍵鎖定，也可以選擇在 Mac 持續鎖定或睡眠達到設定的時間後鎖定。這個選項預設為關閉，可在設定中開啟。原始碼公開，可從帶標籤的提交重現建置，簽署密鑰保存在受保護的儲存環境中。<a href=\"/security\">安全性頁面</a>（英文）</li>"
+ ],
+ [
+  "<h2>Install it your way</h2>",
+  "<h2>安裝簡單，使用方便</h2>"
+ ],
+ [
+  "<p class=\"kicker\">Same app, same features in every edition. Move between them any time with an encrypted backup file.</p>",
+  "<p class=\"kicker\">所有版本的資料格式都相同。你隨時可以透過加密的備份檔案，在電腦之間搬移資料。</p>"
+ ],
+ [
+  "<h3>Download</h3><p>A signed, notarized disk image. Drag Keepit to Applications and press <kbd class=\"k\">⌥M</kbd>.</p><a class=\"btn btn-primary\" id=\"download2\" href=\"https://github.com/andrey-insarov/Keepit/releases/latest\">Download DMG</a>",
+  "<h3>下載</h3><p>經過簽署和公證的磁碟映像檔。把 Keepit 拖到「應用程式」，然後按下 <kbd class=\"k\">⌥M</kbd>。</p><a class=\"btn btn-primary\" id=\"download2\" href=\"https://github.com/andrey-insarov/Keepit/releases/latest\">下載 DMG</a>"
+ ],
+ [
+  "<h3>Homebrew</h3><p>From the project's own tap. <code>brew upgrade</code> keeps it current alongside everything else.</p>",
+  "<h3>Homebrew</h3><p>來自專案自己的 tap。<code>brew upgrade</code> 會連同其他軟體一起更新它。</p>"
+ ],
+ [
+  "<button type=\"button\" id=\"copybrew\">Copy</button>",
+  "<button type=\"button\" id=\"copybrew\">拷貝</button>"
+ ],
+ [
+  "<h3>Mac App Store</h3><p>Sandboxed edition with the same features, no update check at all. Keepit is in review; this page will link to it as soon as it is live.</p><a class=\"btn btn-ghost\" id=\"appstore\" href=\"https://github.com/andrey-insarov/Keepit#installation\">Coming soon</a>",
+  "<h3>Mac App Store</h3><p>功能相同的沙盒版本，完全沒有更新檢查。Keepit 目前正在審核中；一上架，連結就會出現在這裡。</p><a class=\"btn btn-ghost\" id=\"appstore\" href=\"https://github.com/andrey-insarov/Keepit#installation\">即將推出</a>"
+ ],
+ [
+  "<h2>Every default key</h2>",
+  "<h2>預設快速鍵</h2>"
+ ],
+ [
+  "<p class=\"kicker\">All of them are global and all of them can be changed in Settings → Shortcuts. A key that collides with one you already use stays off until you assign it.</p>",
+  "<p class=\"kicker\">它們全都是全域快速鍵，可在「設定」→「快速鍵」中更改。與已被佔用的按鍵衝突的快速鍵會保持停用，直到你親自指定為止。</p>"
+ ],
+ [
+  "<dd>History menu at the text cursor</dd>",
+  "<dd>在文字游標旁打開歷史記錄選單</dd>"
+ ],
+ [
+  "<dd>Templates menu</dd>",
+  "<dd>範本選單</dd>"
+ ],
+ [
+  "<dd>Paste history item 1–10</dd>",
+  "<dd>貼上歷史記錄的第 1–10 個項目</dd>"
+ ],
+ [
+  "<dd>Paste the previous item</dd>",
+  "<dd>貼上前一個項目</dd>"
+ ],
+ [
+  "<dd>Paste the clipboard as plain text</dd>",
+  "<dd>以不帶格式的純文字貼上剪貼板內容</dd>"
+ ],
+ [
+  "<dd>Paste as UPPERCASE, lowercase, Title Case, Sentence case</dd>",
+  "<dd>以大寫、小寫、每個單字首字母大寫、句首字母大寫貼上</dd>"
+ ],
+ [
+  "<dd>Paste trimmed, paste on one line</dd>",
+  "<dd>去除首尾空白、貼成單行</dd>"
+ ],
+ [
+  "<dd>Paste struck through, underlined, wavy underlined; remove decorations</dd>",
+  "<dd>以刪除線、底線、波浪底線貼上，以及移除裝飾</dd>"
+ ],
+ [
+  "<dd>Paste queue: start/stop, paste next, paste all remaining</dd>",
+  "<dd>貼上佇列：開始/停止、貼上下一個、貼上所有剩餘項</dd>"
+ ],
+ [
+  "<dd>Add the clipboard to templates</dd>",
+  "<dd>將剪貼板加入範本</dd>"
+ ],
+ [
+  "<dd>Delete the latest item</dd>",
+  "<dd>刪除最新的項目</dd>"
+ ],
+ [
+  "<dd>Open the Viewer</dd>",
+  "<dd>打開檢視器</dd>"
+ ],
+ [
+  "<dd>Settings</dd>",
+  "<dd>設定</dd>"
+ ],
+ [
+  "<dd>Pause recording</dd>",
+  "<dd>暫停記錄</dd>"
+ ],
+ [
+  "<dd>Lock now</dd>",
+  "<dd>立即鎖定</dd>"
+ ],
+ [
+  "<dd>Clear history, quit</dd>",
+  "<dd>清除歷史記錄、結束</dd>"
+ ],
+ [
+  "<p class=\"note\">Inside the history menu: type to search, <kbd class=\"k\">1</kbd>–<kbd class=\"k\">0</kbd> to pick, hold <kbd class=\"k\">⇧</kbd> for the per-item submenu, <kbd class=\"k\">⌘</kbd>+number to paste as plain text.</p>",
+  "<p class=\"note\">在歷史記錄選單中：輸入文字即可搜尋，按 <kbd class=\"k\">1</kbd>–<kbd class=\"k\">0</kbd> 選擇，按住 <kbd class=\"k\">⇧</kbd> 顯示項目的子選單，<kbd class=\"k\">⌘</kbd>+數字以純文字貼上。</p>"
+ ],
+ [
+  "<h2>Questions</h2>",
+  "<h2>常見問題</h2>"
+ ],
+ [
+  "<details><summary>Why does Keepit ask for the Accessibility permission?</summary><p>For two things: to send ⌘V to the app you were working in after you pick an item, and to find the text cursor so the menu opens next to it. Keepit does not read or monitor other apps. Without the permission it still records history and copies the chosen item to the clipboard — you paste by hand.</p></details>",
+  "<details><summary>Keepit 為什麼需要「輔助使用」權限？</summary><p>有兩個用途。第一，在你選擇項目後，把 ⌘V 傳送到你原本使用的 App。第二，找出文字游標的位置，好讓選單在它旁邊打開。Keepit 不會讀取或監視其他 App。如果不授予權限，它仍會記錄歷史記錄，並把所選項目放到剪貼板上，只是需要你自己貼上。</p></details>"
+ ],
+ [
+  "<details><summary>Does anything leave my Mac?</summary><p>Not unless you ask it to. Keepit has no server: the only network request is the daily update check against GitHub Releases — and you can switch it off in Settings → General, after which Keepit makes no request at all. The App Store edition does not make even that one. There is no account, no telemetry, no crash reporting. If you switch on automatic backup, encrypted copies are written to a folder you choose; if that folder lives in iCloud Drive or Dropbox, that service syncs them under your account — Keepit itself never talks to it.</p></details>",
+  "<details><summary>會有任何東西離開我的 Mac 嗎？</summary><p>資料只儲存在本機，也就是你自己的電腦上。Keepit 沒有伺服器。唯一的網路請求是每天到 GitHub Releases 檢查更新，你可以在「設定」→「一般」中把它關閉，之後 Keepit 就不會發出任何請求。App Store 版本連這個請求也不會發出。沒有帳號、沒有遙測，也沒有當機報告。只有在你開啟自動備份到雲端資料夾時，資料才會進入網際網路：加密的副本會寫入你選擇的資料夾，如果該資料夾位於 iCloud 雲碟或 Dropbox 中，就由該服務以你的帳號進行同步。Keepit 本身不會與它連線。</p></details>"
+ ],
+ [
+  "<details><summary>What if I forget the password?</summary><p>Use the 24-word recovery phrase Keepit showed you when you turned protection on, or Touch ID on the same Mac. With neither, the data cannot be recovered — there is no master key, by design.</p></details>",
+  "<details><summary>忘記密碼怎麼辦？</summary><p>你可以使用開啟保護時 Keepit 顯示的 24 個單字復原短語，或在同一部 Mac 上使用 Touch ID。兩者都沒有的話，資料就無法復原。這是刻意的設計。</p></details>"
+ ],
+ [
+  "<details><summary>Is it really free? What's the catch?</summary><p>Free, MIT-licensed, source on <a href=\"https://github.com/andrey-insarov/Keepit\">GitHub</a>. Keepit was built by the founder of the <a href=\"https://it.com\">it.com</a> domain zone to show what can live at a .it.com address — the app is the advertisement. No ads, no in-app purchases, no pro tier, and therefore nothing to gain from your data.</p></details>",
+  "<details><summary>真的免費嗎？有什麼附帶條件？</summary><p>是的，完全免費：App 以 MIT 授權條款釋出，程式碼放在 <a href=\"https://github.com/andrey-insarov/Keepit\">GitHub</a> 上。Keepit 是 <a href=\"https://it.com\">it.com</a> 網域區的創辦人為了自己使用而製作的，後來才想到它可以成為展示 it.com 用途的好例子。所以這裡沒有廣告、沒有 App 內購買，也沒有付費版本：使用這個程式本身就是在向大家介紹我們的服務。</p></details>"
+ ],
+ [
+  "<details><summary>Where does the design come from?</summary><p>Keepit started as a macOS take on the workflow of <a href=\"https://github.com/nakkag/CLCL\">CLCL</a>, a classic Windows clipboard tool, and grew into an app of its own — written from scratch in Swift, with ideas drawn from many clipboard and snippet managers. It is not affiliated with the CLCL author.</p></details>",
+  "<details><summary>怎麼會想到要做這樣一款 App？</summary><p>Keepit 最初是想把 Windows 經典剪貼板工具 <a href=\"https://github.com/nakkag/CLCL\">CLCL</a> 的工作方式搬到 macOS 上，後來成長為一款獨立的 App。它以 Swift 從零寫成，並吸收了許多剪貼板與文字片段管理工具的想法。本專案與 CLCL 的作者沒有關聯，但我們感謝他帶來的靈感。</p></details>"
+ ],
+ [
+  "<details><summary>How do I move my data to another Mac, or between editions?</summary><p>Switch on <em>Settings → Backup → Back up automatically to a folder</em> and pick iCloud Drive (or any folder): Keepit keeps complete, encrypted <code>.keepit</code> copies there. On the new Mac choose <em>Restore from Backup…</em> at first launch, enter the old Mac's password or recovery phrase, then <em>Replace</em> or <em>Merge</em>. For a one-off file there is <em>Save to Archive…</em> with its own password. Everything is AES-256-GCM encrypted, so a USB stick or a cloud folder is fine, and the same file works in both editions.</p></details>",
+  "<details><summary>如何把資料轉移到另一部 Mac，或在不同版本之間轉移？</summary><p>開啟<em>「設定」→「備份」→「自動備份到資料夾」</em>，然後選擇 iCloud 雲碟（或任何資料夾）：Keepit 會在那裡保存完整的加密 <code>.keepit</code> 副本。在新的 Mac 上首次啟動時選擇<em>「從備份還原…」</em>，輸入舊 Mac 的密碼或復原短語，再選擇<em>「取代」</em>或<em>「合併」</em>。如果只是匯出一次，可以使用<em>「儲存為封存檔…」</em>，它有自己的密碼。所有內容都以 AES-256-GCM 加密，所以 USB 隨身碟或雲端資料夾都適用。同一個檔案在兩種版本中都能使用。</p></details>"
+ ],
+ [
+  "<details><summary>Which Macs are supported?</summary><p>macOS 13 Ventura or later, Apple silicon and Intel. Touch ID unlock needs a Mac with Touch ID.</p></details>",
+  "<details><summary>支援哪些 Mac？</summary><p>macOS 13 Ventura 或以上版本，Apple 晶片與 Intel。使用 Touch ID 解鎖需要配備 Touch ID 的 Mac。</p></details>"
+ ],
+ [
+  "<div><h3>Made by the team behind it.com</h3><p>Keepit is a free project from the people who run the <strong>it.com</strong> domain zone, the home for IT people, products and companies online. Keepit lives at <strong>keep.it.com</strong>. Your project could live at a name like it too.</p></div>",
+  "<div><h3>由 it.com 團隊打造</h3><p>Keepit 是 it.com Domains 團隊的免費專案。<strong>it.com</strong> 網域區可以成為 IT 專業人士的好歸宿，也適合網路上任何其他產品和公司。Keepit 的網址是 <strong>keep.it.com</strong>。你的專案也可以擁有這樣的名稱。</p></div>"
+ ],
+ [
+  "<em>yourname</em>.it.com<small><a href=\"https://it.com\">Find your .it.com domain</a></small>",
+  "<em>yourname</em>.it.com<small><a href=\"https://it.com\">尋找你的 .it.com 網域</a></small>"
+ ],
+ [
+  "<span>© 2026 UK Intis Telecom LTD · Keepit is MIT-licensed</span>",
+  "<span>© 2026 UK Intis Telecom LTD · Keepit 以 MIT 授權條款釋出</span>"
+ ],
+ [
+  "<span>How-tos: <a href=\"/clipboard-history-mac\">Clipboard history on a Mac</a> · <a href=\"/paste-as-plain-text-mac\">Paste as plain text</a> · <a href=\"/clear-clipboard-mac\">Clear the clipboard</a></span>",
+  "<span>教學文章（英文）：<a href=\"/clipboard-history-mac\">Clipboard history on a Mac</a> · <a href=\"/paste-as-plain-text-mac\">Paste as plain text</a> · <a href=\"/clear-clipboard-mac\">Clear the clipboard</a></span>"
+ ],
+ [
+  "<span><a href=\"/privacy\">Privacy policy</a> · <a href=\"/security\">Security</a> · <a href=\"/support\">Support</a> · <a href=\"https://github.com/andrey-insarov/Keepit/blob/main/CHANGELOG.md\">Changelog</a> · <a href=\"https://it.com\">it.com</a></span>",
+  "<span><a href=\"/privacy\">隱私權政策</a>（英文）· <a href=\"/security\">安全性</a>（英文）· <a href=\"/support\">支援</a> · <a href=\"https://github.com/andrey-insarov/Keepit/blob/main/CHANGELOG.md\">更新記錄</a> · <a href=\"https://it.com\">it.com</a></span>"
+ ],
+ [
+  "copy.textContent = 'Copied'; setTimeout(() => copy.textContent = 'Copy', 1600);",
+  "copy.textContent = '已拷貝'; setTimeout(() => copy.textContent = '拷貝', 1600);"
+ ],
+ [
+  "const before = 'Hi Michael,\\n\\nThanks for your order — it left the warehouse this morning. Tracking number: ';",
+  "const before = '陳先生，你好：\\n\\n感謝你的訂購，商品已於今天早上出倉。追蹤編號：';"
+ ],
+ [
+  "const after = '. Delivery takes two to three days.';",
+  "const after = '。配送需要兩到三天。';"
+ ]
+]

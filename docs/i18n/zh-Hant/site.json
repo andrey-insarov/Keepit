@@ -1,0 +1,33 @@
+{
+  "ui": {
+    "features": "功能",
+    "privacy": "隱私",
+    "install": "安裝",
+    "guide": "使用手冊",
+    "security": "安全性",
+    "support": "支援",
+    "menu": "選單",
+    "copyright": "© 2026 UK Intis Telecom LTD · Keepit 以 MIT 授權條款釋出",
+    "privacy_policy": "隱私權政策",
+    "changelog": "更新記錄",
+    "on_this_page": "本頁內容",
+    "contents": "目錄",
+    "open_full_size": "以原始大小打開",
+    "full_size_screenshot": "原始大小的截圖",
+    "language": "語言",
+    "in_english": "（英文）",
+    "translated_note": "本頁譯自英文。原文：<a href=\"{en}\">English</a>。"
+  },
+  "pages": {
+    "GUIDE.md": {
+      "title": "Keepit 使用手冊 – Mac 剪貼板管理工具",
+      "description": "如何使用 Mac 上的免費剪貼板管理工具 Keepit：歷史記錄選單、快速鍵、範本、檢視器、加密與 Touch ID。",
+      "crumb": "使用手冊"
+    },
+    "SUPPORT.md": {
+      "title": "Keepit 支援 – Mac 剪貼板管理工具的協助",
+      "description": "如何取得 Mac 剪貼板管理工具 Keepit 的協助，以及常見問題的簡短解答。",
+      "crumb": "支援"
+    }
+  }
+}
