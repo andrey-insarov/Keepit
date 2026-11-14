@@ -127,12 +127,70 @@ def localize_links(fragment: str, lang: str) -> str:
     return fragment
 
 
-def header_html(lang: str, ui: dict) -> str:
+# One flag per language for the picker in the header. A flag stands for a country, not a language,
+# so these are the conventional choices; the native name beside it in the list is what identifies it.
+# Drawn as SVG (viewBox 20×14) so they look the same everywhere: Windows has no flag emoji.
+# At 22 px wide they are simplified: no coat of arms for Spain, a plain band for Brazil's motto,
+# Arabic carries the flag of the UAE, which can be drawn exactly at this size.
+def _star(cx: float, cy: float, r: float, rot: float = -90) -> str:
+    import math
+    pts = []
+    for i in range(10):
+        a = math.radians(rot + i * 36)
+        rr = r if i % 2 == 0 else r * 0.382
+        pts.append(f"{cx + rr * math.cos(a):.2f},{cy + rr * math.sin(a):.2f}")
+    return f'<polygon fill="#ffde00" points="{" ".join(pts)}"/>'
+
+
+FLAG = {
+    "en": '<path fill="#012169" d="M0 0h20v14H0z"/><path stroke="#fff" stroke-width="2.8" d="m0 0 20 14M20 0 0 14"/>'
+          '<path stroke="#c8102e" stroke-width="1" d="m0 0 20 14M20 0 0 14"/><path stroke="#fff" stroke-width="4.6" d="M10 0v14M0 7h20"/>'
+          '<path stroke="#c8102e" stroke-width="2.6" d="M10 0v14M0 7h20"/>',
+    "ru": '<path fill="#fff" d="M0 0h20v14H0z"/><path fill="#0039a6" d="M0 4.67h20V14H0z"/><path fill="#d52b1e" d="M0 9.33h20V14H0z"/>',
+    "uk": '<path fill="#0057b7" d="M0 0h20v14H0z"/><path fill="#ffd700" d="M0 7h20v7H0z"/>',
+    "de": '<path d="M0 0h20v14H0z"/><path fill="#d00" d="M0 4.67h20V14H0z"/><path fill="#ffce00" d="M0 9.33h20V14H0z"/>',
+    "fr": '<path fill="#fff" d="M0 0h20v14H0z"/><path fill="#0055a4" d="M0 0h6.67v14H0z"/><path fill="#ef4135" d="M13.33 0H20v14h-6.67z"/>',
+    "es": '<path fill="#aa151b" d="M0 0h20v14H0z"/><path fill="#f1bf00" d="M0 3.5h20v7H0z"/>',
+    "pt-BR": '<path fill="#009c3b" d="M0 0h20v14H0z"/><path fill="#ffdf00" d="M10 1.6 18 7l-8 5.4L2 7z"/><circle cx="10" cy="7" r="3.1" fill="#002776"/>'
+             '<path fill="none" stroke="#fff" stroke-width=".7" d="M7.1 6.2c2-.5 4.3.1 5.8 1.6"/>',
+    "ja": '<path fill="#fff" d="M0 0h20v14H0z"/><circle cx="10" cy="7" r="4.2" fill="#bc002d"/>',
+    "zh-Hans": '<path fill="#de2910" d="M0 0h20v14H0z"/>' + _star(3.5, 3.6, 2.2) + _star(7, 1.5, .75, -60) + _star(8.4, 2.9, .75, -30)
+               + _star(8.4, 5, .75, 0) + _star(7, 6.4, .75, 30),
+    "ar": '<path fill="#fff" d="M0 0h20v14H0z"/><path fill="#00732f" d="M0 0h20v4.67H0z"/><path d="M0 9.33h20V14H0z"/><path fill="#f00" d="M0 0h5v14H0z"/>',
+}
+
+
+def flag_svg(code: str) -> str:
+    return f'<svg class="fl" viewBox="0 0 20 14" aria-hidden="true">{FLAG.get(code, "")}</svg>'
+
+
+def langpick_html(lang: str, ui: dict, page: str | None) -> str:
+    """The language picker in the header: the current flag, and a list of flag + native name
+    linking to the same page in every active language. Empty for pages that exist in English only."""
+    if not page or len(active_langs()) < 2:
+        return ""
+    items = []
+    for code in active_langs():
+        h, name = LANG[code]["hreflang"], LANG[code]["name"]
+        label = f'{flag_svg(code)}<span lang="{h}">{name}</span>'
+        if code == lang:
+            items.append(f'<b aria-current="true">{label}</b>')
+        else:
+            href = page_url(page, code).removeprefix(SITE.rstrip("/"))
+            items.append(f'<a href="{href}" hreflang="{h}">{label}</a>')
+    return (f'<details class="lpick"><summary aria-label="{ui["language"]}: {LANG[lang]["name"]}">'
+            f'{flag_svg(lang)}'
+            '<svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg>'
+            f'</summary><div class="links" dir="ltr">{"".join(items)}</div></details>')
+
+
+def header_html(lang: str, ui: dict, page: str | None = None) -> str:
     h = f"""<header><div class="wrap">
   <a class="brand" href="/"><img src="/img/icon.png?v=a1519b94" alt="">Keepit</a>
-  <nav><a href="/#features">{ui['features']}</a><a href="/guide">{ui['guide']}</a><a href="/security">{ui['security']}</a><a href="/support">{ui['support']}</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a><details class="mnav"><summary aria-label="{ui['menu']}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><div class="links"><a href="/#features">{ui['features']}</a><a href="/#privacy">{ui['privacy']}</a><a href="/#install">{ui['install']}</a><a href="/guide">{ui['guide']}</a><a href="/security">{ui['security']}</a><a href="/support">{ui['support']}</a></div></details></nav>
+  <nav><a href="/#features">{ui['features']}</a><a href="/guide">{ui['guide']}</a><a href="/security">{ui['security']}</a><a href="/support">{ui['support']}</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a>__LPICK__<details class="mnav"><summary aria-label="{ui['menu']}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><div class="links"><a href="/#features">{ui['features']}</a><a href="/#privacy">{ui['privacy']}</a><a href="/#install">{ui['install']}</a><a href="/guide">{ui['guide']}</a><a href="/security">{ui['security']}</a><a href="/support">{ui['support']}</a></div></details></nav>
 </div></header>"""
-    return localize_links(h, lang)
+    # the picker goes in after localize_links: its links point at other languages on purpose
+    return localize_links(h, lang).replace("__LPICK__", langpick_html(lang, ui, page))
 
 
 def switcher_html(lang: str, page: str) -> str:
@@ -233,6 +291,15 @@ CSS_I18N = """
 .langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
 .tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
 code,kbd,pre{direction:ltr;unicode-bidi:isolate}
+.lpick{position:relative}.lpick summary{list-style:none;cursor:pointer;height:40px;padding:0 8px;display:flex;align-items:center;gap:5px;border-radius:10px;color:var(--ink-2,var(--ink))}
+.lpick summary::-webkit-details-marker{display:none}.lpick summary .chev{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.lpick .fl{flex:none;width:23px;height:16px;border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
+.lpick .links{position:absolute;right:0;top:48px;z-index:30;min-width:220px;padding:6px;border-radius:14px;background:var(--win);border:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.18);display:grid}
+.lpick .links a,.lpick .links b{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;font-size:15px;font-weight:400;color:var(--ink);white-space:nowrap}
+.lpick .links a:hover{background:var(--blue-tint);text-decoration:none}.lpick .links b{font-weight:600;background:color-mix(in srgb,var(--ink) 6%,transparent)}
+@media(max-width:700px){.lpick .links{right:-48px;max-height:70vh;overflow:auto}.lpick .links a,.lpick .links b{padding:11px 12px;font-size:16px}}
+[dir=rtl] .lpick .links{right:auto;left:0}
+@media(max-width:700px){[dir=rtl] .lpick .links{left:-48px}}
 [dir=rtl] .mnav .links{right:auto;left:0}
 @media(max-width:700px){[dir=rtl] .mnav{margin-right:0;margin-left:-8px}}
 [dir=rtl] aside{padding-right:0;padding-left:8px}
@@ -245,7 +312,7 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
 
 JS = """
 (function(){
-  var mn=document.querySelector('.mnav');if(mn){mn.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){mn.removeAttribute('open');});});document.addEventListener('click',function(e){if(mn.open&&!mn.contains(e.target))mn.removeAttribute('open');});}
+  document.querySelectorAll('.mnav,.lpick').forEach(function(mn){mn.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){mn.removeAttribute('open');});});document.addEventListener('click',function(e){if(mn.open&&!mn.contains(e.target))mn.removeAttribute('open');});mn.addEventListener('toggle',function(){if(mn.open)document.querySelectorAll('.mnav,.lpick').forEach(function(o){if(o!==mn)o.removeAttribute('open');});});});
   var lb=document.getElementById('lb'),im=lb.querySelector('img');
   document.querySelectorAll('a.zoom').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();im.src=a.getAttribute('href');im.alt=a.querySelector('img').alt;lb.classList.add('on');});});
   function close(){lb.classList.remove('on');im.src='';}
@@ -427,7 +494,7 @@ def render(src_name: str, out_name: str, title: str, description: str, with_toc:
             f'<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{title}"><meta name="twitter:description" content="{description}"><meta name="twitter:image" content="{SITE}img/social-preview.png?v=57583ec3">'
             f'<meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">\n'
             f'{json_ld(out_name, title, description, kind, crumb, headline, lang)}\n'
-            f'{ANALYTICS}\n<style>{CSS}{CSS_I18N if len(active_langs()) > 1 else ""}</style></head>\n<body>{header_html(lang, ui)}\n<main class="{main_cls}">{aside}<article>{body}</article></main>\n{footer_html(lang, ui, out_name if multi else None)}\n'
+            f'{ANALYTICS}\n<style>{CSS}{CSS_I18N if len(active_langs()) > 1 else ""}</style></head>\n<body>{header_html(lang, ui, out_name if multi else None)}\n<main class="{main_cls}">{aside}<article>{body}</article></main>\n{footer_html(lang, ui, out_name if multi else None)}\n'
             f'<div id="lb" role="dialog" aria-label="{ui["full_size_screenshot"]}"><img alt=""></div>\n'
             f'<script>{JS}</script>\n</body></html>')
     stray = re.findall(r'href="(?:\.\./|/)?[a-z0-9/-]+\.html[^"]*"', page)
@@ -455,6 +522,7 @@ def landing_for(lang: str, english: str) -> str:
     css = f"<style>{CSS_I18N}</style>" if len(active_langs()) > 1 else ""
     page = fill_marker(page, "css", css)
     if lang == "en":
+        page = fill_marker(page, "lpick", langpick_html(lang, UI_EN, "index.html"))
         return fill_marker(page, "switcher", switcher_html(lang, "index.html"))
     L = LANG[lang]
     pairs = json.loads((i18n / lang / "landing.json").read_text(encoding="utf-8"))
@@ -472,6 +540,7 @@ def landing_for(lang: str, english: str) -> str:
     page = re.sub(r',\s*\{"@type":"FAQPage".*?\]\}\s*\n', "\n", page, count=1, flags=re.S)   # the FAQ answers stay in the English page's data
     page = page.replace('"url":"https://keep.it.com/","name":"Keepit","publisher"', f'"url":"https://keep.it.com/","name":"Keepit","inLanguage":["en"{"".join(", " + json.dumps(LANG[c]["hreflang"]) for c in active_langs()[1:])}],"publisher"', 1)
     page = localize_links(page, lang)
+    page = fill_marker(page, "lpick", langpick_html(lang, load_site(lang)["ui"], "index.html"))
     return fill_marker(page, "switcher", switcher_html(lang, "index.html"))   # after localize_links: other languages on purpose
 
 
