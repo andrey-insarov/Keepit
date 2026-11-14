@@ -253,14 +253,19 @@ final class LayoutProbeTests: XCTestCase {
         XCTAssertEqual(probe(l).check(keyCode: kN, modifiers: OPT).verdict, .needed(layout: "U.S.", types: "@"))
     }
 
-    func testKeyThatKeepsTheDeadStateIsNotAChain() {
-        // Under a pending dead key, modifiers and unmapped keys answer "same state, no text" — 50 of them per
-        // layout in the real run. That is not a chain the analysis failed to follow.
+    func testTransitionIntoAStateTheAnalysisFollowsIsNotAChain() {
+        // German: ^ then ´ types ^ and enters the ´ state; Vietnamese: a under a tone state types Ă and
+        // enters a's own state. plain(L) expands those states anyway, so nothing is missed.
         var l = us()
-        l.set(kX, mods: 0, dead: 1, .deadKey(1))
+        l.set(kX, mods: 0, dead: 1, .deadKey(1))                        // the same state: the key did nothing
         XCTAssertEqual(probe(l).check(keyCode: kN, modifiers: OPT).incomplete, 0)
-        l.set(kX, mods: 0, dead: 1, .deadKey(2))
+        l.set(kGrave, mods: 0, .deadKey(5))                              // a plain dead key
+        l.set(kX, mods: 0, dead: 1, .charactersThenDeadKey("~", 5))      // ⌥N then x: text, then the plain state
+        XCTAssertEqual(probe(l).check(keyCode: kN, modifiers: OPT).incomplete, 0)
+        l.set(kX, mods: 0, dead: 1, .deadKey(9))                         // a state nothing else reaches
         XCTAssertEqual(probe(l).check(keyCode: kN, modifiers: OPT).incomplete, 1)
+        l.set(kX, mods: 0, dead: 5, .charactersThenDeadKey("`", 1))      // plain ` then x: into the ⌥N state, not plain
+        XCTAssertEqual(probe(l).check(keyCode: kN, modifiers: OPT).incomplete, 2)
     }
 
     func testIncompleteChainsInPlainAreReportedEvenForDirectOutput() {

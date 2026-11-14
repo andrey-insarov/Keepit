@@ -151,11 +151,13 @@ struct LayoutProbe {
         let translate: (UInt16, UInt32, UInt32) -> KeyOutput
         let letters: LetterSet
         let plain: Set<String>
-        /// Dead-key chains in plain(L) that went past the second key (a key that leaves the state as it
-        /// was did nothing — modifiers and unmapped keys do that for every state), and calls that failed
-        /// while building it. Both make every verdict on this layout less certain, so check() reports them.
+        /// Dead-key chains in plain(L) that went past the second key into a state plain(L) does not
+        /// expand, and calls that failed while building it. Both make every verdict on this layout less certain, so check() reports them.
         let plainIncomplete: Int
         let plainErrors: Int
+        /// The dead-key states a plain key or Shift + key enters. A transition into one of these is not a
+        /// chain the analysis fails to follow: plain(L) expands every one of them.
+        let plainDeadStates: Set<UInt32>
 
         init?(_ layout: LayoutInfo, letters: LetterSet) {
             guard let raw = layout.translate else { return nil }
@@ -181,8 +183,8 @@ struct LayoutProbe {
                     for mods in Prepared.plainModifiers {
                         switch t(code, mods, state) {
                         case .characters(let c): plain.insert(c)
-                        case .charactersThenDeadKey(let c, _): plain.insert(c); incomplete += 1
-                        case .deadKey(let next): if next != state { incomplete += 1 }   // same state: the key did nothing
+                        case .charactersThenDeadKey(let c, let next): plain.insert(c); if !deadStates.contains(next) { incomplete += 1 }
+                        case .deadKey(let next): if !deadStates.contains(next) { incomplete += 1 }
                         case .error: errors += 1
                         case .nothing: break
                         }
@@ -190,6 +192,7 @@ struct LayoutProbe {
                 }
             }
             self.plain = plain
+            plainDeadStates = deadStates
             plainIncomplete = incomplete
             plainErrors = errors
         }
@@ -209,6 +212,9 @@ struct LayoutProbe {
                 || first.properties.generalCategory == .enclosingMark { return false }
             return (letters.contains(c) || LayoutProbe.protectedSymbols.contains(c)) && !plain.contains(c)
         }
+
+        /// A state the analysis does not follow: not the one we are in, and not one plain(L) expands.
+        func isChain(_ next: UInt32, from state: UInt32) -> Bool { next != state && !plainDeadStates.contains(next) }
 
         func check(keyCode: UInt16, modifiers: UInt32) -> (needed: String?, incomplete: Int, errors: Int) {
             var incomplete = plainIncomplete, errors = plainErrors
@@ -236,8 +242,8 @@ struct LayoutProbe {
                     for mods in Prepared.plainModifiers {
                         switch translate(code, mods, state) {
                         case .characters(let c): if composed == nil, needs(c) { composed = c }
-                        case .charactersThenDeadKey(let c, _): if composed == nil, needs(c) { composed = c }; incomplete += 1
-                        case .deadKey(let next): if next != state { incomplete += 1 }   // same state: the key did nothing
+                        case .charactersThenDeadKey(let c, let next): if composed == nil, needs(c) { composed = c }; if isChain(next, from: state) { incomplete += 1 }
+                        case .deadKey(let next): if isChain(next, from: state) { incomplete += 1 }
                         case .error: errors += 1
                         case .nothing: break
                         }
@@ -291,13 +297,17 @@ struct TISLayoutReader: LayoutReading {
                 let status = UCKeyTranslate(layout, keyCode, UInt16(kUCKeyActionDown), (carbonModifiers >> 8) & 0xFF,
                                             keyboardType, 0, &dead, chars.count, &length, &chars)
                 guard status == noErr else { return .error }
-                if length == 0 { return dead != 0 ? .deadKey(dead) : .nothing }
+                // After a completed composition the state is not 0: the high 16 bits hold the state just
+                // terminated (German ^ then a → â with 1 << 16; observed on macOS 27.2 for every layout
+                // with dead keys). Only the low 16 bits are a pending dead key.
+                let pending = dead & 0xFFFF
+                if length == 0 { return pending != 0 ? .deadKey(pending) : .nothing }
                 let s = String(utf16CodeUnits: chars, count: length).precomposedStringWithCanonicalMapping
                 // Control characters and the like are not something a user types.
                 guard let scalar = s.unicodeScalars.first, scalar.value >= 0x20, scalar.value != 0x7F else {
-                    return dead != 0 ? .deadKey(dead) : .nothing
+                    return pending != 0 ? .deadKey(pending) : .nothing
                 }
-                return dead != 0 ? .charactersThenDeadKey(s, dead) : .characters(s)
+                return pending != 0 ? .charactersThenDeadKey(s, pending) : .characters(s)
             }
         }
     }
