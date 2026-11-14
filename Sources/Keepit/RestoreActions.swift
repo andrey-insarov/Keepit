@@ -53,7 +53,11 @@ extension AppDelegate {
         guard !isLocked else { NSSound.beep(); return }
         guard !restoreInProgress else { pendingOpens.append(PendingOpen(url: url, sender: nil)); return }   // one at a time; this one runs after
         restoreInProgress = true
-        defer { restoreInProgress = false; RunLoop.main.perform { [weak self] in self?.openPendingURLs() } }   // next one, after this frame
+        defer {
+            restoreInProgress = false
+            recheckLayoutsIfChanged()      // a layout change the observer held back during the restore (H-4)
+            RunLoop.main.perform { [weak self] in self?.openPendingURLs() }   // next one, after this frame
+        }
         let lockAtStart = lockCount
         // 1–2. Read the whole file and inspect it: limits and minReader before any key work.
         let accessing = url.startAccessingSecurityScopedResource()

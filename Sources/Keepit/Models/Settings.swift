@@ -160,6 +160,11 @@ struct Settings: Codable, Equatable {
     var queueHotKey: HotKey? = HotKey.option(kVK_ANSI_N)         // start / stop the paste queue ("Numbers")
     var queuePasteHotKey: HotKey? = HotKey.option(kVK_ANSI_V)    // paste the next queued item
     var queuePasteAllHotKey: HotKey? = HotKey.optionShift(kVK_ANSI_N) // paste everything left, joined
+    /// The shortcuts the user recorded in Settings → Shortcuts (`HotKeyID.rawValue`). A default an enabled
+    /// keyboard layout needs (German ⌥L types @) is left free at registration unless it is in this set —
+    /// recording the default again is a choice too. Absent in older files → empty, so a user who never
+    /// opened Settings gets the layout rule; one who recorded ⌥L on German before 3.0.8 records it once more.
+    var chosenHotKeys: Set<String> = []
     var queueTimeout: Double = 120 // seconds without a copy or a paste before the queue switches off (0 = never)
     var queueSeparator = "\n"      // between items for "paste all"
 
@@ -242,6 +247,7 @@ struct Settings: Codable, Equatable {
         case queueHotKey
         case queuePasteHotKey
         case queuePasteAllHotKey
+        case chosenHotKeys
         case queueTimeout
         case queueSeparator
         case pasteDelay
@@ -337,6 +343,7 @@ struct Settings: Codable, Equatable {
         checkForUpdates  = try c.decodeIfPresent(Bool.self,   forKey: .checkForUpdates)  ?? d.checkForUpdates
         allowURLCommands = try c.decodeIfPresent(Bool.self,   forKey: .allowURLCommands) ?? d.allowURLCommands
         trustedURLSenderIdentities = try c.decodeIfPresent([TrustedSender].self, forKey: .trustedURLSenderIdentities) ?? d.trustedURLSenderIdentities
+        chosenHotKeys    = try c.decodeIfPresent(Set<String>.self, forKey: .chosenHotKeys) ?? d.chosenHotKeys
         // `.trustedURLSenders` (3.0.6 and before): deliberately not decoded — see the property.
         backupEnabled    = try c.decodeIfPresent(Bool.self,   forKey: .backupEnabled)    ?? d.backupEnabled
         backupBookmark   = try c.decodeIfPresent(Data.self,   forKey: .backupBookmark)
@@ -405,6 +412,7 @@ struct Settings: Codable, Equatable {
         try c.encode(checkForUpdates, forKey: .checkForUpdates)
         try c.encode(allowURLCommands, forKey: .allowURLCommands)
         try c.encode(trustedURLSenderIdentities, forKey: .trustedURLSenderIdentities)
+        try c.encode(chosenHotKeys.sorted(), forKey: .chosenHotKeys)
         try c.encode([String](), forKey: .trustedURLSenders)          // the legacy list is emptied on the first save by 3.0.7
         try c.encode(backupEnabled, forKey: .backupEnabled)
         try c.encodeIfPresent(backupBookmark, forKey: .backupBookmark)
@@ -455,6 +463,7 @@ struct Settings: Codable, Equatable {
         backupKeepCount = Limits.clamp(backupKeepCount, 1, 100)
         trustedURLSenderIdentities = Array(trustedURLSenderIdentities.filter { $0.requirementString != nil }.prefix(Limits.ignoreAppsMaxLines))
         if let l = backupLabel { backupLabel = String(l.prefix(64)) }
+        chosenHotKeys = chosenHotKeys.filter { HotKeyID(rawValue: $0) != nil }
         ignoreApps = Array(ignoreApps.prefix(Limits.ignoreAppsMaxLines)).map { String($0.prefix(Limits.bundleIdMaxChars)) }
     }
 

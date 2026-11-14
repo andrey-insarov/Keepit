@@ -773,25 +773,45 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
 
     // MARK: Shortcuts
 
-    private func hotKeyChanged(_ r: HotKeyRecorderView, _ hk: HotKey?) {
-        guard !loading else { return }
-        var s = app.settings
+    /// Which shortcut a recorder edits.
+    private func hotKeyID(of r: HotKeyRecorderView) -> HotKeyID? {
         switch r {
-        case historyHK:  if let hk { s.historyHotKey = hk }
-        case templateHK: if let hk { s.templateHotKey = hk }
-        case previousHK: s.previousHotKey = hk
-        case numbersHK:  s.numberPasteModifiers = hk?.modifiers
-        case latestHK:   s.latestActionModifiers = hk?.modifiers
-        case viewerHK:   s.viewerHotKey = hk
-        case prefsHK:    s.preferencesHotKey = hk
-        case clearHK:    s.clearHistoryHotKey = hk
-        case pauseHK:    s.pauseHotKey = hk
-        case lockHK:     s.lockHotKey = hk
-        case quitHK:     s.quitHotKey = hk
-        case queueHK:    s.queueHotKey = hk
-        case queuePasteHK: s.queuePasteHotKey = hk
-        case queueAllHK: s.queuePasteAllHotKey = hk
-        default: return
+        case historyHK: return .history
+        case templateHK: return .template
+        case previousHK: return .previous
+        case numbersHK: return .numbers
+        case latestHK: return .latest
+        case viewerHK: return .viewer
+        case prefsHK: return .preferences
+        case clearHK: return .clearHistory
+        case pauseHK: return .pause
+        case lockHK: return .lock
+        case quitHK: return .quit
+        case queueHK: return .queue
+        case queuePasteHK: return .queuePaste
+        case queueAllHK: return .queuePasteAll
+        default: return nil
+        }
+    }
+
+    private func hotKeyChanged(_ r: HotKeyRecorderView, _ hk: HotKey?) {
+        guard !loading, let id = hotKeyID(of: r) else { return }
+        var s = app.settings
+        switch id {
+        case .history:  if let hk { s.historyHotKey = hk }
+        case .template: if let hk { s.templateHotKey = hk }
+        case .previous: s.previousHotKey = hk
+        case .numbers:  s.numberPasteModifiers = hk?.modifiers
+        case .latest:   s.latestActionModifiers = hk?.modifiers
+        case .viewer:   s.viewerHotKey = hk
+        case .preferences: s.preferencesHotKey = hk
+        case .clearHistory: s.clearHistoryHotKey = hk
+        case .pause:    s.pauseHotKey = hk
+        case .lock:     s.lockHotKey = hk
+        case .quit:     s.quitHotKey = hk
+        case .queue:    s.queueHotKey = hk
+        case .queuePaste: s.queuePasteHotKey = hk
+        case .queuePasteAll: s.queuePasteAllHotKey = hk
         }
         let statusField = [queueHK, queuePasteHK, queueAllHK].contains(r) ? queueStatus : shortcutStatus
         if let conflict = conflict(in: s) {
@@ -800,6 +820,9 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             setStatus(statusField, conflict)
             return
         }
+        // Only an accepted recording is a choice (H-3): a combination the user pressed, the default
+        // included, is theirs and is never left free for a layout; ⌫ (off) removes the choice.
+        if hk != nil { s.chosenHotKeys.insert(id.rawValue) } else { s.chosenHotKeys.remove(id.rawValue) }
         setStatus(statusField, "")
         app.apply(settings: s)
     }
@@ -820,6 +843,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             s.clearHistoryHotKey = d.clearHistoryHotKey; s.pauseHotKey = d.pauseHotKey
             s.lockHotKey = d.lockHotKey; s.quitHotKey = d.quitHotKey
             s.queueHotKey = d.queueHotKey; s.queuePasteHotKey = d.queuePasteHotKey; s.queuePasteAllHotKey = d.queuePasteAllHotKey
+            s.chosenHotKeys = d.chosenHotKeys          // back to "never recorded": the layout rule applies again (H-3)
         }
         load()
     }
