@@ -281,6 +281,95 @@ final class HotKeyStatusTests: XCTestCase {
         XCTAssertFalse(a.layoutsChangedWhileBusy, "an uninstall tears everything down; nothing is remembered")
     }
 
+    // MARK: Settings → Shortcuts (stage 3)
+
+    func testNotesSayWhyAShortcutIsLeftFreeOrWhatItTakes() throws {
+        let a = makeApp(german())
+        a.registerHotKeys()
+        let w = SettingsWindowController(app: a)
+        defer { w.window?.close() }
+        let lock = w.hotKeyNoteText(.lock)
+        XCTAssertTrue(lock.contains("@") && lock.contains("German") && lock.contains(HotKey.option(kVK_ANSI_L).displayString), lock)
+        XCTAssertTrue(lock.contains("leaves it free"), lock)
+        XCTAssertEqual(w.hotKeyNoteText(.pause), "", "nothing to say about ⌥P")
+        XCTAssertEqual(w.hotKeyNoteText(.numbers), "")
+        var s = a.settings; s.chosenHotKeys.insert("lock")
+        a.apply(settings: s)
+        XCTAssertTrue(w.hotKeyNoteText(.lock).contains("While Keepit runs"), w.hotKeyNoteText(.lock))
+        let r = makeApp(russian())
+        r.registerHotKeys()
+        let rw = SettingsWindowController(app: r)
+        defer { rw.window?.close() }
+        XCTAssertTrue(rw.hotKeyNoteText(.history).contains("Keepit needs this shortcut"), rw.hotKeyNoteText(.history))
+        let u = makeApp(us())
+        u.registerHotKeys()
+        let uw = SettingsWindowController(app: u)
+        defer { uw.window?.close() }
+        for id in HotKeyID.allCases { XCTAssertEqual(uw.hotKeyNoteText(id), "", "\(id)") }
+    }
+
+    func testShortcutsPaneWithNotesStaysInsideTheWindow() throws {
+        let a = makeApp(german())
+        a.registerHotKeys()
+        let w = SettingsWindowController(app: a)
+        let window = try XCTUnwrap(w.window)
+        defer { window.close() }
+        w.showPaneForTesting("shortcuts")
+        let content = try XCTUnwrap(window.contentView)
+        window.layoutIfNeeded(); content.layoutSubtreeIfNeeded()
+        var shownNotes = 0
+        for f in Self.descendants(content).compactMap({ $0 as? NSTextField }) where !f.isHidden && f.window != nil {
+            let r = content.convert(f.bounds, from: f)
+            XCTAssertLessThanOrEqual(r.maxX, content.bounds.maxX + 1, "\(f.stringValue.prefix(40)) \(r)")
+            if f.stringValue.contains("leaves it free") { shownNotes += 1 }
+        }
+        XCTAssertEqual(shownNotes, 2, "⌥L and ⌥E on German; ⌥N is on the Paste Queue pane")
+        // The layout goes away: the notes with it, and the rows collapse.
+        a.layoutReaderForTesting = us()
+        a.applyLayoutChange()
+        XCTAssertEqual(Self.descendants(content).compactMap({ $0 as? NSTextField }).filter { !$0.isHidden && $0.stringValue.contains("leaves it free") }.count, 0)
+    }
+
+    func testALongerNoteGrowsTheWindow() throws {
+        // A note that changes text without appearing or vanishing can wrap onto more lines: the pane must re-fit.
+        let a = makeApp(german())
+        a.registerHotKeys()
+        let w = SettingsWindowController(app: a)
+        let window = try XCTUnwrap(w.window)
+        defer { window.close() }
+        w.showPaneForTesting("shortcuts")
+        let content = try XCTUnwrap(window.contentView)
+        window.layoutIfNeeded(); content.layoutSubtreeIfNeeded()
+        let before = window.frame.height
+        func notes() -> [NSTextField] { Self.descendants(content).compactMap { $0 as? NSTextField }.filter { !$0.isHidden && $0.stringValue.contains("Used to type") } }
+        XCTAssertEqual(notes().count, 2)
+        var long = german()
+        long.name = "Deutsch – Standard (erweiterte Tastaturbelegung mit einem sehr, sehr langen Namen, damit die Zeile umbricht)"
+        a.layoutReaderForTesting = long
+        a.applyLayoutChange()
+        window.layoutIfNeeded(); content.layoutSubtreeIfNeeded()
+        XCTAssertGreaterThan(window.frame.height, before, "two notes each gained lines")
+        for f in notes() {
+            let r = content.convert(f.bounds, from: f)
+            XCTAssertGreaterThanOrEqual(r.minY, -1, "\(f.stringValue.prefix(30)) \(r) in \(content.bounds)")
+            XCTAssertLessThanOrEqual(r.maxY, content.bounds.maxY + 1, "\(f.stringValue.prefix(30)) \(r) in \(content.bounds)")
+            XCTAssertTrue(f.stringValue.contains(long.name))
+        }
+        // And back: the window shrinks again.
+        a.layoutReaderForTesting = german()
+        a.applyLayoutChange()
+        window.layoutIfNeeded()
+        XCTAssertEqual(window.frame.height, before, accuracy: 1)
+    }
+
+    static func descendants(_ v: NSView) -> [NSView] { v.subviews + v.subviews.flatMap(descendants) }
+
+    func testLatestActionsHintNamesTheKeys() {
+        let hint = SettingsWindowController.latestActionsHint()
+        XCTAssertTrue(hint.contains("V plain text") && hint.contains("A add to Templates"), hint)
+        XCTAssertFalse(hint.contains("%@"))
+    }
+
     func testRemovingTheLayoutBringsTheDefaultBack() throws {
         let a = makeApp(german())
         a.registerHotKeys()

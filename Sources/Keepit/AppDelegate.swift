@@ -99,6 +99,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// What became of each shortcut at the last `registerHotKeys()`: the layouts' verdict and Carbon's
     /// answer (claude/keepit-hotkey-layouts-design.md H-4). Menus show a key only for `.registered`.
     private(set) var hotKeyStatuses: [HotKeyID: HotKeyStatus] = [:]
+    /// Posted after every registerHotKeys(); the Settings window refreshes its notes.
+    static let hotKeysDidChange = Notification.Name("KeepitHotKeysDidChange")
     /// The enabled layouts changed while a lock or a restore had the hot keys in hand; re-registered
     /// when that flow is over (the restore's `defer`, or `unlock()`'s own call).
     var layoutsChangedWhileBusy = false
@@ -1360,6 +1362,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             if let until = self.pausedUntil, until > Date() { self.resumeRecording() } else { self.pauseRecording() }
         }
         hotKeyStatuses = statuses
+        NotificationCenter.default.post(name: Self.hotKeysDidChange, object: self)
         // Per-template hot keys: paste the item directly, no menu ("Set Hot Key" on a template item).
         // Always the user's own choice, so never filtered (H-2).
         for t in templates.allItems().filter({ $0.hotKey != nil }).prefix(Limits.templateHotKeysMax) {
