@@ -321,6 +321,9 @@ final class HotKeySettingsTests: XCTestCase {
 }
 
 final class MenuKeyEquivalentTests: XCTestCase {
+    override func setUp() { KeyCodes.currentLayoutForTesting = { KeyCodes.usTable }; KeyCodes.invalidateLayoutCache() }   // not the runner's layout
+    override func tearDown() { KeyCodes.currentLayoutForTesting = nil; KeyCodes.invalidateLayoutCache() }
+
     func testHotKeyMapsToMenuKeyEquivalent() {
         let hk = HotKey(keyCode: UInt32(kVK_ANSI_V), modifiers: UInt32(controlKey | optionKey))
         let eq = hk.menuKeyEquivalent

@@ -1411,6 +1411,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         DistributedNotificationCenter.default().addObserver(
             forName: NSNotification.Name(kTISNotifyEnabledKeyboardInputSourcesChanged as String), object: nil, queue: .main
         ) { [weak self] _ in self?.layoutsDidChange() }
+        // The selected layout changed: the names of the keys change with it (H-6). A menu of ours that
+        // is open carries the old layout's key equivalents; it is closed rather than left to miss presses,
+        // and comes back rebuilt when opened again.
+        DistributedNotificationCenter.default().addObserver(
+            forName: NSNotification.Name(kTISNotifySelectedKeyboardInputSourceChanged as String), object: nil, queue: .main
+        ) { [weak self] _ in self?.selectedLayoutDidChange() }
+    }
+
+    func selectedLayoutDidChange() {
+        KeyCodes.invalidateLayoutCache()
+        cancelOpenMenus()
+        updateStatusIcon()
+        NotificationCenter.default.post(name: KeyCodes.layoutDidChange, object: self)
     }
 
     func layoutsDidChange() {
@@ -1732,6 +1745,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             if let eq = hotKey?.menuKeyEquivalent {
                 mi.keyEquivalent = eq.key
                 mi.keyEquivalentModifierMask = eq.mask
+                mi.allowsAutomaticKeyEquivalentLocalization = false   // already the layout's character (H-6)
             }
             return mi
         }

@@ -73,6 +73,7 @@ final class MenuBuilder {
             for extra in [NSEvent.ModifierFlags(), [.shift]] {
                 let mi = NSMenuItem(title: title, action: sel, keyEquivalent: keyChar)
                 mi.keyEquivalentModifierMask = (mask ?? []).union(extra)
+                mi.allowsAutomaticKeyEquivalentLocalization = false   // already the layout's character; AppKit must not move it again
                 mi.isHidden = extra == [.shift]
                 mi.isEnabled = enabled
                 mi.target = target
@@ -131,6 +132,12 @@ final class MenuBuilder {
             if settings.numberItems, i < accels.count {
                 let ch = accels[i]
                 mi.keyEquivalent = String(ch).lowercased()
+                if global, i < HotKey.digitKeyCodes.count {
+                    // The global ⌃⌥1–0 fire on the physical digit keys; the menu must answer to the same
+                    // keys, which type something else on AZERTY (& é " …). The prefix stays the index.
+                    mi.keyEquivalent = KeyCodes.menuCharacter(for: UInt16(HotKey.digitKeyCodes[i])) ?? mi.keyEquivalent
+                    mi.allowsAutomaticKeyEquivalentLocalization = false
+                }
                 mi.keyEquivalentModifierMask = mask
                 mi.title = "\(ch)  " + title     // visible prefix "1  text"
             }

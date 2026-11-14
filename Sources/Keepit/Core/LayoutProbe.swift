@@ -313,6 +313,20 @@ struct TISLayoutReader: LayoutReading {
         }
     }
 
+    /// The layout the labels follow: the selected keyboard layout when it is ASCII-capable, otherwise
+    /// the ASCII-capable layout macOS pairs with it (on Russian, the Latin layout its menus show).
+    static func currentASCIICapableLayout() -> LayoutInfo? {
+        var source = TISCopyCurrentKeyboardLayoutInputSource()?.takeRetainedValue()
+        if let s = source, (property(s, kTISPropertyInputSourceIsASCIICapable) as? Bool) != true {
+            source = TISCopyCurrentASCIICapableKeyboardLayoutInputSource()?.takeRetainedValue()
+        }
+        guard let s = source, let id = property(s, kTISPropertyInputSourceID) as? String else { return nil }
+        let name = property(s, kTISPropertyLocalizedName) as? String ?? id
+        let languages = property(s, kTISPropertyInputSourceLanguages) as? [String] ?? []
+        let data = property(s, kTISPropertyUnicodeKeyLayoutData) as? Data
+        return LayoutInfo(id: id, name: name, languages: languages, translate: data.map(translator))
+    }
+
     private static func property(_ source: TISInputSource, _ key: CFString) -> AnyObject? {
         guard let p = TISGetInputSourceProperty(source, key) else { return nil }
         return Unmanaged<AnyObject>.fromOpaque(p).takeUnretainedValue()

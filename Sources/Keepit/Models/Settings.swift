@@ -16,7 +16,9 @@ struct HotKey: Codable, Equatable {
     /// Letters of the "actions on the latest item" hot keys (<mods> + letter), shared by the menu and the registry.
     enum LatestAction: CaseIterable {
         case plain, upper, lower, title, sentence, trim, singleLine, strikethrough, underline, wavy, undecorate, addToTemplates, delete
-        var keyChar: String {
+        /// The menu key equivalent: the key's character on the current layout (US letter as fallback).
+        var keyChar: String { KeyCodes.menuCharacter(for: UInt16(keyCode)) ?? usKeyChar }
+        var usKeyChar: String {
             switch self {
             case .plain: return "v"; case .upper: return "u"; case .lower: return "l"; case .title: return "t"
             case .sentence: return "s"; case .trim: return "w"; case .singleLine: return "j"
@@ -473,8 +475,50 @@ struct Settings: Codable, Equatable {
     }
 }
 
-/// Human-readable names for virtual key codes (US layout; good enough for display).
+/// Names for virtual key codes. A character key is named by what it types on the current keyboard
+/// layout (the ASCII-capable one macOS falls back to for a Cyrillic or other non-Latin layout, as the
+/// system's own menus do), so ⌥M on AZERTY reads "⌥,"; and the same character is the menu key
+/// equivalent, so a menu and the Carbon hot key name the same physical key. Keys without a character
+/// (arrows, Space, F-keys) and anything the layout cannot answer fall back to the US table
+/// (claude/keepit-hotkey-layouts-design.md H-6, stage 4).
 enum KeyCodes {
+    /// Tests: the layout the names follow instead of the system's current one. A layout with no
+    /// `translate` (`KeyCodes.usTable`) makes every name come from the US table.
+    static var currentLayoutForTesting: (() -> LayoutInfo?)?
+    static let usTable = LayoutInfo(id: "us-table", name: "U.S. table", languages: [], translate: nil)
+    /// Posted by the app when the selected layout changed and the names with it.
+    static let layoutDidChange = Notification.Name("KeepitKeyboardLayoutDidChange")
+
+    /// What each character key types on one layout: "" when the layout gave nothing usable.
+    private static var cache: (id: String, characters: [UInt16: String])?
+    static func invalidateLayoutCache() { cache = nil }
+
+    /// The character the key types on the current layout with no modifiers (a dead key: the character it
+    /// types before Space), when it is one grapheme and not a space. Only for keys the US table names
+    /// with one character: Space, arrows, F-keys and ⌫ keep their names on every layout.
+    private static func layoutCharacter(_ keyCode: UInt16) -> String? {
+        guard let us = names[keyCode], us.count == 1 else { return nil }
+        guard let layout = currentLayoutForTesting?() ?? TISLayoutReader.currentASCIICapableLayout(),
+              let translate = layout.translate else { return nil }
+        if cache?.id != layout.id { cache = (layout.id, [:]) }
+        if let known = cache?.characters[keyCode] { return known.isEmpty ? nil : known }
+        var out: String?
+        switch translate(keyCode, 0, 0) {
+        case .characters(let c), .charactersThenDeadKey(let c, _):
+            out = c
+        case .deadKey(let state):
+            switch translate(UInt16(kVK_Space), 0, state.token) {
+            case .characters(let rest), .charactersThenDeadKey(let rest, _): out = rest
+            default: break
+            }
+        case .nothing, .error:
+            break
+        }
+        if let o = out, o.count != 1 || o == " " || o.unicodeScalars.contains(where: { $0.value < 0x20 || $0.value == 0x7F }) { out = nil }
+        cache?.characters[keyCode] = out ?? ""
+        return out
+    }
+
     private static let names: [UInt16: String] = [
         UInt16(kVK_ANSI_A): "A", UInt16(kVK_ANSI_B): "B", UInt16(kVK_ANSI_C): "C", UInt16(kVK_ANSI_D): "D",
         UInt16(kVK_ANSI_E): "E", UInt16(kVK_ANSI_F): "F", UInt16(kVK_ANSI_G): "G", UInt16(kVK_ANSI_H): "H",
@@ -499,8 +543,13 @@ enum KeyCodes {
         UInt16(kVK_ANSI_Slash): "/", UInt16(kVK_ANSI_Grave): "`",
     ]
 
+    /// The label: the layout's character in uppercase when that is still one character (l → L, ß stays ß).
     static func name(for keyCode: UInt16) -> String {
-        names[keyCode] ?? "key\(keyCode)"
+        if let c = layoutCharacter(keyCode) {
+            let upper = c.uppercased()
+            return upper.count == 1 ? upper : c
+        }
+        return names[keyCode] ?? "key\(keyCode)"
     }
 
     /// Character for NSMenuItem.keyEquivalent, or nil if AppKit has no representation.
@@ -520,6 +569,12 @@ enum KeyCodes {
             UInt16(kVK_F11): String(UnicodeScalar(NSF11FunctionKey)!), UInt16(kVK_F12): String(UnicodeScalar(NSF12FunctionKey)!),
         ]
         if let s = special[keyCode] { return s }
+        // AppKit matches a key equivalent against charactersIgnoringModifiers, the current layout's
+        // character for the key pressed — so the layout's character, lowercase, as AppKit expects.
+        if let c = layoutCharacter(keyCode) {
+            let lower = c.lowercased()
+            return lower.count == 1 ? lower : c
+        }
         if let n = names[keyCode], n.count == 1 { return n.lowercased() }
         return nil
     }
