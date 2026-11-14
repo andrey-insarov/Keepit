@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keepit – Mac용 무료 클립보드 관리자</title>
+<meta name="description" content="Mac용 무료 오픈 소스 클립보드 관리자. 단축키 하나로 여는 기록, 템플릿, AES-256 암호화, Touch ID. 계정이 필요 없고 데이터는 내 Mac에만 저장됩니다.">
+<link rel="canonical" href="https://keep.it.com/ko/">
+<!--i18n:alternates--><link rel="alternate" hreflang="en" href="https://keep.it.com/"><link rel="alternate" hreflang="ru" href="https://keep.it.com/ru/"><link rel="alternate" hreflang="uk" href="https://keep.it.com/uk/"><link rel="alternate" hreflang="de" href="https://keep.it.com/de/"><link rel="alternate" hreflang="fr" href="https://keep.it.com/fr/"><link rel="alternate" hreflang="es" href="https://keep.it.com/es/"><link rel="alternate" hreflang="pt-BR" href="https://keep.it.com/pt-br/"><link rel="alternate" hreflang="ja" href="https://keep.it.com/ja/"><link rel="alternate" hreflang="zh-Hans" href="https://keep.it.com/zh-hans/"><link rel="alternate" hreflang="ar" href="https://keep.it.com/ar/"><link rel="alternate" hreflang="cs" href="https://keep.it.com/cs/"><link rel="alternate" hreflang="pl" href="https://keep.it.com/pl/"><link rel="alternate" hreflang="it" href="https://keep.it.com/it/"><link rel="alternate" hreflang="nl" href="https://keep.it.com/nl/"><link rel="alternate" hreflang="tr" href="https://keep.it.com/tr/"><link rel="alternate" hreflang="ko" href="https://keep.it.com/ko/"><link rel="alternate" hreflang="zh-Hant" href="https://keep.it.com/zh-hant/"><link rel="alternate" hreflang="he" href="https://keep.it.com/he/"><link rel="alternate" hreflang="x-default" href="https://keep.it.com/"><!--/i18n:alternates-->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Keepit">
+<meta property="og:title" content="Keepit – Mac용 무료 클립보드 관리자">
+<meta property="og:description" content="단축키 하나로 여는 클립보드 기록. 템플릿, 선택 사항인 AES-256 암호화와 Touch ID. 무료 오픈 소스이며 계정을 만들 필요가 없고 데이터는 내 컴퓨터에 저장됩니다.">
+<meta property="og:image" content="https://keep.it.com/img/social-preview.png?v=57583ec3">
+<meta property="og:image:width" content="1280"><meta property="og:image:height" content="640">
+<meta property="og:url" content="https://keep.it.com/ko/"><meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Keepit – Mac용 무료 클립보드 관리자">
+<meta name="twitter:description" content="단축키 하나로 여는 클립보드 기록. 템플릿, 선택 사항인 AES-256 암호화와 Touch ID. 무료 오픈 소스이며 계정을 만들 필요가 없고 데이터는 내 컴퓨터에 저장됩니다.">
+<meta name="twitter:image" content="https://keep.it.com/img/social-preview.png?v=57583ec3">
+<meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/img/icon.png?v=a1519b94">
+<link rel="apple-touch-icon" href="/img/icon.png?v=a1519b94">
+<style>
+  :root {
+    --paper: #fbfbfd; --ink: #0f1222; --ink-2: #4b4f63; --ink-3: #696d84;
+    --blue: #2f4fd1; --blue-deep: #1f3aa6; --blue-tint: #eef2ff; --line: #e3e5ef;
+    --key: #ffffff; --key-edge: #cfd2de; --win: #ffffff; --win-bar: #ececf1; --sel: #2f5cf0;
+    --navy: #0b1340; --navy-2: #121c5c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #0c0d14; --ink: #f2f3f8; --ink-2: #b7bacb; --ink-3: #8e92a9;
+      --blue: #7d9bff; --blue-deep: #a9bdff; --blue-tint: #151b35; --line: #23263a;
+      --key: #1b1e2e; --key-edge: #3a3e56; --win: #1a1c28; --win-bar: #262939; --sel: #3d6bff;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--paper); color: var(--ink); -webkit-font-smoothing: antialiased;
+         font: 17px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  a { color: var(--blue); text-decoration: none; } @media (hover: hover) { a:hover { text-decoration: underline; } }
+  :focus-visible { outline: 3px solid var(--sel); outline-offset: 3px; border-radius: 6px; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  h1, h2, h3 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif; margin: 0; }
+  h2 { font-size: clamp(30px, 4.2vw, 44px); line-height: 1.08; letter-spacing: -.02em; font-weight: 700; }
+  h3 { font-size: 20px; line-height: 1.3; font-weight: 650; }
+  p { margin: 0; }
+  .muted { color: var(--ink-2); }
+  code, kbd { font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+
+  /* keycaps */
+  kbd.k { display: inline-block; min-width: 1.9em; padding: .1em .45em; text-align: center; font-size: .88em; font-weight: 600; line-height: 1.5;
+          color: var(--ink); background: var(--key); border: 1px solid var(--key-edge); border-bottom-width: 3px; border-radius: 7px; vertical-align: baseline; white-space: nowrap; }
+  h1 kbd.k { font-size: .78em; line-height: 1.18; padding: 0 .35em; border-radius: .16em; border-bottom-width: .07em; vertical-align: .04em; }
+
+  header { position: sticky; top: 0; z-index: 20; -webkit-backdrop-filter: saturate(180%) blur(18px); backdrop-filter: saturate(180%) blur(18px); background: color-mix(in srgb, var(--paper) 78%, transparent); border-bottom: 1px solid var(--line); }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  .brand { display: flex; align-items: center; gap: 12px; font-weight: 650; color: var(--ink); font-size: 20px; }
+  .brand img { width: 44px; height: 44px; border-radius: 10px; }
+  nav { display: flex; gap: 24px; align-items: center; } nav > a { color: var(--ink-2); font-size: 15px; } nav > a:hover { color: var(--ink); text-decoration: none; }
+  .mnav { display: none; position: relative; }
+  .mnav summary { list-style: none; cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 10px; color: var(--ink); }
+  .mnav summary::-webkit-details-marker { display: none; } .mnav summary svg { width: 22px; height: 22px; }
+  .mnav[open] summary { background: color-mix(in srgb, var(--ink) 8%, transparent); }
+  .mnav .links { position: absolute; right: 0; top: 48px; min-width: 210px; padding: 6px; border-radius: 14px; background: var(--win); border: 1px solid var(--line); box-shadow: 0 20px 50px rgba(0,0,0,.18); display: grid; }
+  .mnav .links a { display: block; padding: 11px 14px; border-radius: 9px; font-size: 16px; color: var(--ink); } .mnav .links a:hover { background: var(--blue-tint); text-decoration: none; }
+  @media (max-width: 700px) { nav { gap: 10px; } nav > a:not(.gh) { display: none; } .mnav { display: block; margin-right: -8px; } }
+
+  /* hero */
+  .hero { padding: 76px 24px 24px; text-align: center; }
+  h1 { font-size: clamp(34px, 5.6vw, 64px); line-height: 1.08; letter-spacing: -.035em; font-weight: 750; max-width: 17ch; margin: 0 auto; }
+  .lead { font-size: clamp(18px, 2.2vw, 22px); color: var(--ink-2); max-width: 36em; margin: 22px auto 0; }
+  .ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
+  .hero-left { text-align: start; } .hero-left h1 { max-width: none; margin: 0; } .hero-left .lead { margin-inline: 0 auto; max-width: 40em; } .hero-left .ctas { justify-content: flex-start; }
+  .btn { display: inline-flex; align-items: center; gap: 9px; padding: 13px 22px; border-radius: 12px; font-weight: 600; font-size: 17px; line-height: 1; border: 1px solid transparent; cursor: pointer; }
+  .btn:hover { text-decoration: none; }
+  .btn-primary { background: var(--blue); color: #fff; box-shadow: 0 8px 24px color-mix(in srgb, var(--blue) 35%, transparent); }
+  @media (hover: hover) { .btn-primary:hover { background: var(--blue-deep); } .btn-ghost:hover { border-color: var(--ink-3); } }
+  .btn-primary small { font-weight: 500; opacity: .8; font-size: 14px; }
+  .btn-ghost { background: var(--key); color: var(--ink); border-color: var(--key-edge); }
+  .fine { margin-top: 16px; font-size: 14px; color: var(--ink-3); }
+  .fine a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+
+  /* demo window */
+  .demo { margin: 52px auto 0; max-width: 880px; text-align: left; position: relative; }
+  .win { background: var(--win); border-radius: 14px; border: 1px solid var(--line); box-shadow: 0 30px 80px -20px rgba(15,18,34,.35), 0 2px 6px rgba(15,18,34,.08); overflow: visible; }
+  .bar { height: 44px; background: var(--win-bar); border-radius: 14px 14px 0 0; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 14px; font-size: 13px; color: var(--ink-2); }
+  .dots { display: flex; gap: 8px; } .dots i { width: 12px; height: 12px; border-radius: 50%; display: block; }
+  .dots i:nth-child(1){background:#ff5f57} .dots i:nth-child(2){background:#febc2e} .dots i:nth-child(3){background:#28c840}
+  .fields { padding: 14px 22px 0; font-size: 15px; color: var(--ink-2); }
+  .fields div { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line); } .fields span { width: 64px; color: var(--ink-3); } .fields b { font-weight: 500; color: var(--ink); }
+  .body { padding: 18px 22px 30px; min-height: 395px; font-size: 17px; line-height: 1.6; position: relative; white-space: pre-wrap; }
+  .caret { display: inline-block; width: 2px; height: 1.15em; background: var(--ink); vertical-align: -.2em; margin-left: 1px; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .pasted { background: color-mix(in srgb, var(--sel) 22%, transparent); border-radius: 3px; transition: background 1.2s ease 1.4s; }
+  .pasted.settle { background: transparent; }
+  .chip { position: absolute; top: 14px; right: 18px; display: flex; gap: 6px; align-items: center; font-size: 13px; color: var(--ink-3); opacity: 0; transform: translateY(4px); transition: opacity .25s, transform .25s; }
+  .chip.on { opacity: 1; transform: none; }
+  .chip kbd.k { font-size: 13px; }
+  .chip kbd.k.pressed { background: var(--sel); color: #fff; border-color: var(--sel); transform: translateY(2px); border-bottom-width: 1px; }
+
+  .menu { position: absolute; left: 0; top: 0; width: 420px; max-width: calc(100vw - 48px); padding: 6px; border-radius: 12px;
+          background: color-mix(in srgb, var(--win) 86%, transparent); backdrop-filter: blur(30px) saturate(180%);
+          border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent); box-shadow: 0 20px 50px rgba(0,0,0,.28), 0 0 0 .5px rgba(0,0,0,.08);
+          font-size: 14px; color: var(--ink); opacity: 0; transform: scale(.97) translateY(-4px); transform-origin: top left; pointer-events: none; transition: opacity .12s, transform .12s; z-index: 5; }
+  .menu.on { opacity: 1; transform: none; }
+  .menu .search { display: flex; align-items: center; gap: 8px; margin: 2px 4px 6px; padding: 6px 10px; border-radius: 8px; background: color-mix(in srgb, var(--ink) 6%, transparent); color: var(--ink-3); font-size: 13px; }
+  .menu .row { display: grid; grid-template-columns: 22px 16px 1fr auto; gap: 8px; align-items: center; padding: 5px 10px; border-radius: 7px; white-space: nowrap; overflow: hidden; }
+  .menu .row .n { color: var(--ink-3); font-variant-numeric: tabular-nums; } .menu .row .t { overflow: hidden; text-overflow: ellipsis; } .menu .row .hk { color: var(--ink-3); font-size: 12px; }
+  .menu .row .app { width: 16px; height: 16px; border-radius: 4px; display: inline-block; }
+  .menu .row.latest .t { font-weight: 650; }
+  .menu .row.hi { background: var(--sel); color: #fff; } .menu .row.hi .n, .menu .row.hi .hk { color: rgba(255,255,255,.75); }
+  .menu .sep { height: 1px; background: color-mix(in srgb, var(--ink) 10%, transparent); margin: 5px 10px; }
+  .menu .row img { width: 26px; height: 18px; object-fit: cover; border-radius: 3px; display: block; }
+  @media (prefers-reduced-motion: reduce) { .caret { animation: none; } }
+
+  /* three keys */
+  section { padding: 84px 0; }
+  @media (max-width: 760px) { section { padding: 52px 0; } .hero { padding-top: 44px; } .demo { margin-top: 36px; } .body { min-height: 300px; } }
+  .kicker { font-size: 18px; color: var(--ink-2); max-width: 38em; margin-top: 14px; }
+  .keys3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 44px; }
+  .key3 { border-top: 2px solid var(--ink); padding-top: 18px; }
+  .key3 .big { display: inline-flex; gap: 6px; margin-bottom: 14px; } .key3 .big kbd.k { font-size: 26px; padding: .12em .5em; border-radius: 10px; }
+  .key3 p { color: var(--ink-2); font-size: 16px; margin-top: 6px; } .key3 p kbd.k { font-size: .8em; min-width: 0; }
+  @media (max-width: 760px) { .keys3 { grid-template-columns: 1fr; } }
+
+  /* bento */
+  .bento { display: grid; grid-template-columns: repeat(6, 1fr); grid-auto-rows: minmax(200px, auto); gap: 16px; margin-top: 44px; }
+  .cell { background: var(--win); border: 1px solid var(--line); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; gap: 8px; overflow: hidden; position: relative; }
+  .cell p { color: var(--ink-2); font-size: 15.5px; }
+  .cell.c4 { grid-column: span 4; } .cell.c3 { grid-column: span 3; } .cell.c2 { grid-column: span 2; } .cell.c6 { grid-column: span 6; }
+  .cell img { display: block; width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--line); margin-top: 8px; }
+  .cell.shot { padding-bottom: 0; } .cell.shot img { border-radius: 10px 10px 0 0; border-bottom: 0; margin-top: auto; max-height: 250px; object-fit: cover; object-position: top left; }
+  .cell.shot.soft { padding-bottom: 12px; } .cell.shot.soft img { border: 0; border-radius: 0; max-height: none; object-fit: contain; margin: auto -8px 0; width: calc(100% + 16px); }
+  .tpl { margin-top: 10px; font: 14px/1.7 ui-monospace, "SF Mono", Menlo, monospace; background: var(--blue-tint); border-radius: 10px; padding: 14px 16px; color: var(--ink); white-space: pre-wrap; overflow-wrap: anywhere; }
+  .tpl b { font-weight: 600; color: var(--blue); }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .tags span { font-size: 13px; padding: 3px 9px; border-radius: 99px; background: var(--blue-tint); color: var(--blue); }
+  .tags span.off { background: color-mix(in srgb, var(--ink) 6%, transparent); color: var(--ink-2); }
+  @media (max-width: 900px) { .bento { grid-template-columns: 1fr 1fr; } .cell.c4, .cell.c3, .cell.c2, .cell.c6 { grid-column: span 2; } }
+  @media (max-width: 560px) { .bento { grid-template-columns: 1fr; grid-auto-rows: auto; gap: 12px; margin-top: 36px; } .cell.c4, .cell.c3, .cell.c2, .cell.c6 { grid-column: span 1; } }
+
+  /* privacy band */
+  .band { background: var(--navy); color: #e9ecff; }
+  .band h2 { color: #fff; } .band .kicker { color: #b9c1f3; }
+  .band a { color: #c9d3ff; text-decoration: underline; text-underline-offset: 3px; }
+  .ledger { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 44px; border-top: 1px solid rgba(255,255,255,.18); }
+  .ledger div { padding: 22px 20px 22px 0; border-right: 1px solid rgba(255,255,255,.14); padding-left: 20px; }
+  .ledger div:first-child { padding-left: 0; } .ledger div:last-child { border-right: 0; }
+  .ledger strong { display: block; font-size: 40px; letter-spacing: -.02em; line-height: 1; color: #fff; font-weight: 700; }
+  .ledger span { display: block; margin-top: 10px; color: #b9c1f3; font-size: 15px; line-height: 1.4; }
+  .band .facts { margin-top: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 40px; font-size: 16px; line-height: 1.5; color: #d8ddff; }
+  .band .facts li { list-style: none; padding-left: 22px; position: relative; }
+  .band .facts li::before { content: ""; position: absolute; left: 0; top: .55em; width: 10px; height: 10px; border-radius: 50%; background: #7d9bff; }
+  .band .facts ul { margin: 0; padding: 0; display: contents; }
+  @media (max-width: 760px) { .ledger { grid-template-columns: 1fr 1fr; } .ledger div:nth-child(2) { border-right: 0; } .ledger div:nth-child(n+3) { border-top: 1px solid rgba(255,255,255,.14); } .ledger div:nth-child(odd) { padding-left: 0; } .ledger div:nth-child(even) { padding-right: 0; } .band .facts { grid-template-columns: 1fr; } }
+
+  /* install */
+  .ways { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; }
+  .way { min-width: 0; border: 1px solid var(--line); border-radius: 18px; padding: 24px; background: var(--win); display: flex; flex-direction: column; gap: 10px; }
+  .way p { color: var(--ink-2); font-size: 15px; flex: 1; }
+  .way .btn { align-self: flex-start; }
+  .brew { min-width: 0; display: flex; align-items: stretch; gap: 0; border: 1px solid var(--key-edge); border-radius: 10px; overflow: hidden; background: var(--paper); }
+  .brew code { flex: 1; min-width: 0; font-size: 12.5px; padding: 10px 12px; overflow-x: auto; white-space: nowrap; color: var(--ink); }
+  .brew button { border: 0; border-left: 1px solid var(--key-edge); background: var(--key); color: var(--ink); font: 600 13px -apple-system, sans-serif; padding: 0 14px; cursor: pointer; }
+  .brew button:hover { background: var(--blue-tint); }
+  @media (max-width: 760px) { .ways { grid-template-columns: 1fr; } .brew code { white-space: pre-wrap; overflow-wrap: anywhere; } }
+
+  /* cheat sheet */
+  .sheet { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; }
+  .sheet dl { margin: 0; } .sheet dt, .sheet dd { margin: 0; }
+  .sheet .r { display: grid; grid-template-columns: 150px 1fr; gap: 16px; align-items: baseline; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 15.5px; }
+  .sheet .r dt { white-space: nowrap; } .sheet .r dd { color: var(--ink-2); }
+  .sheet .r kbd.k { font-size: 13px; margin-right: 2px; }
+  .sheet .note { grid-column: 1 / -1; margin-top: 18px; font-size: 14px; color: var(--ink-3); }
+  @media (max-width: 760px) { .sheet { grid-template-columns: 1fr; } .sheet .r { grid-template-columns: 1fr; gap: 6px; padding: 12px 0; } }
+
+  /* faq */
+  .faq details, .faq h2 { max-width: 760px; }
+  .faq details { border-bottom: 1px solid var(--line); }
+  .faq details:first-of-type { border-top: 1px solid var(--line); margin-top: 32px; }
+  .faq summary { cursor: pointer; font-weight: 600; font-size: 17.5px; padding: 18px 36px 18px 0; list-style: none; position: relative; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: ""; position: absolute; right: 6px; top: 50%; width: 10px; height: 10px; border-right: 2px solid var(--ink-3); border-bottom: 2px solid var(--ink-3); transform: translateY(-70%) rotate(45deg); transition: transform .2s; }
+  .faq details[open] summary::after { transform: translateY(-30%) rotate(225deg); }
+  .faq p { color: var(--ink-2); padding: 0 0 20px; max-width: 64ch; }
+
+  /* it.com */
+  .itcom { border: 1px solid var(--line); border-radius: 22px; padding: 40px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: center; background: var(--win); }
+  .itcom p { color: var(--ink-2); margin-top: 10px; }
+  .itcom .dom { font-size: clamp(22px, 3vw, 30px); font-weight: 700; letter-spacing: -.02em; text-align: center; }
+  .itcom .dom small { display: block; font-size: 14px; color: var(--ink-3); font-weight: 500; margin-top: 10px; letter-spacing: 0; }
+  .itcom .dom em { font-style: normal; color: var(--blue); }
+  @media (max-width: 760px) { .itcom { grid-template-columns: 1fr; } }
+
+  footer { border-top: 1px solid var(--line); padding: 36px 0 64px; color: var(--ink-3); font-size: 14px; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; }
+  footer a { color: var(--ink-2); }
+</style>
+<!--i18n:css--><style>
+.langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
+.tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
+code,kbd,pre{direction:ltr;unicode-bidi:isolate}
+.lpick{position:relative}.lpick summary{list-style:none;cursor:pointer;height:40px;padding:0 8px;display:flex;align-items:center;gap:5px;border-radius:10px;color:var(--ink-2,var(--ink))}
+.lpick summary::-webkit-details-marker{display:none}.lpick summary .chev{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.lpick .fl{flex:none;width:23px;height:16px;border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
+.lpick .links{position:absolute;right:0;top:48px;z-index:30;min-width:220px;padding:6px;border-radius:14px;background:var(--win);border:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.18);display:grid}
+.lpick .links a,.lpick .links b{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;font-size:15px;font-weight:400;color:var(--ink);white-space:nowrap}
+.lpick .links a:hover{background:var(--blue-tint);text-decoration:none}.lpick .links b{font-weight:600;background:color-mix(in srgb,var(--ink) 6%,transparent)}
+@media(min-width:701px){.lpick .links{max-height:calc(100vh - 64px);overflow:auto}.lpick .links.cols{display:block;column-count:2;column-gap:4px;min-width:430px}.lpick .links.cols a,.lpick .links.cols b{break-inside:avoid}}
+@media(max-width:700px){.lpick .links{right:-48px;max-height:70vh;overflow:auto}.lpick .links a,.lpick .links b{padding:11px 12px;font-size:16px}}
+[dir=rtl] .lpick .links{right:auto;left:0}
+@media(max-width:700px){[dir=rtl] .lpick .links{left:-48px}}
+[dir=rtl] .mnav .links{right:auto;left:0}
+@media(max-width:700px){[dir=rtl] .mnav{margin-right:0;margin-left:-8px}}
+[dir=rtl] aside{padding-right:0;padding-left:8px}
+[dir=rtl] aside a{padding:4px 12px 4px 0;border-left:0;border-right:2px solid var(--line)}
+[dir=rtl] aside a.on{border-right-color:var(--blue)}
+[dir=rtl] aside ol ol a{padding-left:0;padding-right:24px}
+[dir=rtl] th,[dir=rtl] td{text-align:right;padding:9px 0 9px 12px}
+[dir=rtl] .fb .btn{justify-self:end}
+</style><!--/i18n:css-->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"SoftwareApplication","@id":"https://keep.it.com/#app","name":"Keepit – Clipboard Manager","alternateName":"Keepit","applicationCategory":"UtilitiesApplication","applicationSubCategory":"Clipboard manager","operatingSystem":"macOS 13 or later","url":"https://keep.it.com/","downloadUrl":"https://github.com/andrey-insarov/Keepit/releases/latest","installUrl":"https://keep.it.com/#install","softwareVersion":"3.0.7","license":"https://opensource.org/license/mit","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"image":"https://keep.it.com/img/social-preview.png?v=57583ec3","screenshot":["https://keep.it.com/img/guide/menu.png","https://keep.it.com/img/viewer.png"],"featureList":["Clipboard history with search and preview","Paste by hot key or number from any app","Templates with placeholders (date, clipboard, input, choice, cursor)","AES-256-GCM encryption and Touch ID unlock","Automatic encrypted backup to iCloud Drive, Dropbox or any folder","No account, no Keepit cloud, no analytics","keepit:// URL scheme for Shortcuts, Raycast and Alfred"],"author":{"@id":"https://keep.it.com/#org"},"publisher":{"@id":"https://keep.it.com/#org"},"description":"Free, open-source clipboard manager for Mac: clipboard history at one hot key, templates with placeholders, AES-256 encryption and Touch ID."},
+{"@type":"Organization","@id":"https://keep.it.com/#org","name":"UK Intis Telecom LTD","url":"https://it.com","logo":"https://keep.it.com/img/icon.png?v=a1519b94","sameAs":["https://github.com/andrey-insarov/Keepit"]},
+{"@type":"WebSite","@id":"https://keep.it.com/#site","url":"https://keep.it.com/","name":"Keepit","inLanguage":["en", "ru", "uk", "de", "fr", "es", "pt-BR", "ja", "zh-Hans", "ar", "cs", "pl", "it", "nl", "tr", "ko", "zh-Hant", "he"],"publisher":{"@id":"https://keep.it.com/#org"}}
+]}
+</script>
+<script defer src="https://app.eurometrics.eu/script.js?v=7cfd3b4c27be" data-website-id="0ab7fe20-0c05-4061-b037-c033dc46c1e1" data-domains="keep.it.com" data-do-not-track="true" data-exclude-search="true" data-no-storage="true"></script>
+</head>
+<body>
+
+<header><div class="wrap">
+  <a class="brand" href="/ko/"><img src="/img/icon.png?v=a1519b94" alt="">Keepit</a>
+  <nav><a href="#features">기능</a><a href="#privacy">개인정보 보호</a><a href="#install">설치</a><a href="/ko/guide">사용 설명서</a><a href="/security">보안</a><a href="/ko/support">지원</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a><!--i18n:lpick--><details class="lpick"><summary aria-label="언어: 한국어"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><g transform="rotate(-34 10 7)"><path fill="#cd2e3a" d="M6.8 7a3.2 3.2 0 0 1 6.4 0z"/><path fill="#0047a0" d="M6.8 7a3.2 3.2 0 0 0 6.4 0z"/><circle cx="8.4" cy="7" r="1.6" fill="#cd2e3a"/><circle cx="11.6" cy="7" r="1.6" fill="#0047a0"/></g><path stroke="#000" stroke-width=".7" d="m3 3.6 2-1.5M3.5 4.3l2-1.5M14.5 2.1l2 1.5M15 1.4l2 1.5M3 10.4l2 1.5M3.5 9.7l2 1.5M14.5 11.9l2-1.5M15 12.6l2-1.5"/></svg><svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></summary><div class="links cols" dir="ltr"><a href="/" hreflang="en"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#b22234" d="M0 0h20v14H0z"/><path fill="#fff" d="M0 1.08h20v1.08H0z"/><path fill="#fff" d="M0 3.23h20v1.08H0z"/><path fill="#fff" d="M0 5.38h20v1.08H0z"/><path fill="#fff" d="M0 7.54h20v1.08H0z"/><path fill="#fff" d="M0 9.69h20v1.08H0z"/><path fill="#fff" d="M0 11.85h20v1.08H0z"/><path fill="#3c3b6e" d="M0 0h8.2v7.54H0z"/><circle cx="1.3" cy="1.30" r=".42" fill="#fff"/><circle cx="3.1" cy="1.30" r=".42" fill="#fff"/><circle cx="4.9" cy="1.30" r=".42" fill="#fff"/><circle cx="6.7" cy="1.30" r=".42" fill="#fff"/><circle cx="1.3" cy="2.95" r=".42" fill="#fff"/><circle cx="3.1" cy="2.95" r=".42" fill="#fff"/><circle cx="4.9" cy="2.95" r=".42" fill="#fff"/><circle cx="6.7" cy="2.95" r=".42" fill="#fff"/><circle cx="1.3" cy="4.60" r=".42" fill="#fff"/><circle cx="3.1" cy="4.60" r=".42" fill="#fff"/><circle cx="4.9" cy="4.60" r=".42" fill="#fff"/><circle cx="6.7" cy="4.60" r=".42" fill="#fff"/><circle cx="1.3" cy="6.25" r=".42" fill="#fff"/><circle cx="3.1" cy="6.25" r=".42" fill="#fff"/><circle cx="4.9" cy="6.25" r=".42" fill="#fff"/><circle cx="6.7" cy="6.25" r=".42" fill="#fff"/></svg><span lang="en">English</span></a><a href="/ru/" hreflang="ru"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#0039a6" d="M0 4.67h20V14H0z"/><path fill="#d52b1e" d="M0 9.33h20V14H0z"/></svg><span lang="ru">Русский</span></a><a href="/uk/" hreflang="uk"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#0057b7" d="M0 0h20v14H0z"/><path fill="#ffd700" d="M0 7h20v7H0z"/></svg><span lang="uk">Українська</span></a><a href="/de/" hreflang="de"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path d="M0 0h20v14H0z"/><path fill="#d00" d="M0 4.67h20V14H0z"/><path fill="#ffce00" d="M0 9.33h20V14H0z"/></svg><span lang="de">Deutsch</span></a><a href="/fr/" hreflang="fr"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#0055a4" d="M0 0h6.67v14H0z"/><path fill="#ef4135" d="M13.33 0H20v14h-6.67z"/></svg><span lang="fr">Français</span></a><a href="/es/" hreflang="es"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#aa151b" d="M0 0h20v14H0z"/><path fill="#f1bf00" d="M0 3.5h20v7H0z"/></svg><span lang="es">Español</span></a><a href="/pt-br/" hreflang="pt-BR"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#009c3b" d="M0 0h20v14H0z"/><path fill="#ffdf00" d="M10 1.6 18 7l-8 5.4L2 7z"/><circle cx="10" cy="7" r="3.1" fill="#002776"/><path fill="none" stroke="#fff" stroke-width=".7" d="M7.1 6.2c2-.5 4.3.1 5.8 1.6"/></svg><span lang="pt-BR">Português (Brasil)</span></a><a href="/ja/" hreflang="ja"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><circle cx="10" cy="7" r="4.2" fill="#bc002d"/></svg><span lang="ja">日本語</span></a><a href="/zh-hans/" hreflang="zh-Hans"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#de2910" d="M0 0h20v14H0z"/><polygon fill="#ffde00" points="3.50,1.40 3.99,2.92 5.59,2.92 4.30,3.86 4.79,5.38 3.50,4.44 2.21,5.38 2.70,3.86 1.41,2.92 3.01,2.92"/><polygon fill="#ffde00" points="7.38,0.85 7.26,1.38 7.73,1.66 7.19,1.71 7.08,2.25 6.86,1.75 6.31,1.81 6.72,1.44 6.50,0.94 6.97,1.22"/><polygon fill="#ffde00" points="9.05,2.52 8.68,2.93 8.96,3.40 8.46,3.18 8.09,3.59 8.15,3.04 7.65,2.82 8.19,2.71 8.24,2.17 8.52,2.64"/><polygon fill="#ffde00" points="9.15,5.00 8.63,5.17 8.63,5.71 8.31,5.27 7.79,5.44 8.11,5.00 7.79,4.56 8.31,4.73 8.63,4.29 8.63,4.83"/><polygon fill="#ffde00" points="7.65,6.78 7.12,6.66 6.84,7.13 6.79,6.59 6.25,6.48 6.75,6.26 6.69,5.71 7.06,6.12 7.56,5.90 7.28,6.37"/></svg><span lang="zh-Hans">简体中文</span></a><a href="/ar/" hreflang="ar"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#00732f" d="M0 0h20v4.67H0z"/><path d="M0 9.33h20V14H0z"/><path fill="#f00" d="M0 0h5v14H0z"/></svg><span lang="ar">العربية</span></a><a href="/cs/" hreflang="cs"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#d7141a" d="M0 7h20v7H0z"/><path fill="#11457e" d="m0 0 10 7-10 7z"/></svg><span lang="cs">Čeština</span></a><a href="/pl/" hreflang="pl"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#dc143c" d="M0 7h20v7H0z"/></svg><span lang="pl">Polski</span></a><a href="/it/" hreflang="it"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#009246" d="M0 0h6.67v14H0z"/><path fill="#ce2b37" d="M13.33 0H20v14h-6.67z"/></svg><span lang="it">Italiano</span></a><a href="/nl/" hreflang="nl"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#ae1c28" d="M0 0h20v4.67H0z"/><path fill="#21468b" d="M0 9.33h20V14H0z"/></svg><span lang="nl">Nederlands</span></a><a href="/tr/" hreflang="tr"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#e30a17" d="M0 0h20v14H0z"/><circle cx="7.4" cy="7" r="3.5" fill="#fff"/><circle cx="8.3" cy="7" r="2.8" fill="#e30a17"/><polygon fill="#fff" points="13.22,6.47 12.22,7.20 12.60,8.38 11.60,7.65 10.60,8.38 10.98,7.20 9.98,6.47 11.22,6.47 11.60,5.30 11.98,6.47"/></svg><span lang="tr">Türkçe</span></a><b aria-current="true"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><g transform="rotate(-34 10 7)"><path fill="#cd2e3a" d="M6.8 7a3.2 3.2 0 0 1 6.4 0z"/><path fill="#0047a0" d="M6.8 7a3.2 3.2 0 0 0 6.4 0z"/><circle cx="8.4" cy="7" r="1.6" fill="#cd2e3a"/><circle cx="11.6" cy="7" r="1.6" fill="#0047a0"/></g><path stroke="#000" stroke-width=".7" d="m3 3.6 2-1.5M3.5 4.3l2-1.5M14.5 2.1l2 1.5M15 1.4l2 1.5M3 10.4l2 1.5M3.5 9.7l2 1.5M14.5 11.9l2-1.5M15 12.6l2-1.5"/></svg><span lang="ko">한국어</span></b><a href="/zh-hant/" hreflang="zh-Hant"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#de2910" d="M0 0h20v14H0z"/><ellipse cx="10" cy="4.4" rx="1.35" ry="2.4" fill="#fff" transform="rotate(0 10 7)"/><ellipse cx="10" cy="4.4" rx="1.35" ry="2.4" fill="#fff" transform="rotate(72 10 7)"/><ellipse cx="10" cy="4.4" rx="1.35" ry="2.4" fill="#fff" transform="rotate(144 10 7)"/><ellipse cx="10" cy="4.4" rx="1.35" ry="2.4" fill="#fff" transform="rotate(216 10 7)"/><ellipse cx="10" cy="4.4" rx="1.35" ry="2.4" fill="#fff" transform="rotate(288 10 7)"/></svg><span lang="zh-Hant">繁體中文</span></a><a href="/he/" hreflang="he"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#0038b8" d="M0 1.6h20v1.7H0zM0 10.7h20v1.7H0z"/><path fill="none" stroke="#0038b8" stroke-width=".6" d="m10 4.6 2.1 3.6H7.9zM10 9.4 7.9 5.8h4.2z"/></svg><span lang="he">עברית</span></a></div></details><!--/i18n:lpick--><details class="mnav"><summary aria-label="메뉴"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><div class="links"><a href="#features">기능</a><a href="#privacy">개인정보 보호</a><a href="#install">설치</a><a href="/ko/guide">사용 설명서</a><a href="/security">보안</a><a href="/ko/support">지원</a></div></details></nav>
+</div></header>
+
+<main>
+  <div class="hero hero-left wrap">
+    <h1>클립보드 기록을 언제든 꺼내 쓰세요. <span style="white-space:nowrap"><kbd class="k">⌥M</kbd>만 누르면 됩니다.</span></h1>
+    <p class="lead">Keepit은 Mac용 무료 오픈 소스 클립보드 관리자입니다. 복사한 모든 것의 기록을 보관하고, 원하는 항목을 지금 입력하고 있는 곳에 붙여넣습니다. 템플릿은 매일 입력하는 텍스트 작업을 빠르게 해 줍니다. 암호를 설정하면 데이터가 디스크에 암호화되어 저장되고 Touch&nbsp;ID로 잠금을 해제합니다. 어떤 경우에도 데이터는 계정이나 클라우드 저장 없이 내 Mac에 남습니다. 원하면 내 폴더로 백업하도록 설정할 수 있고, 백업 데이터도 암호화됩니다. 정기적인 업데이트 확인은 끌 수 있습니다.</p>
+    <div class="ctas">
+      <a class="btn btn-primary" id="download" href="https://github.com/andrey-insarov/Keepit/releases/latest">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+        macOS용 다운로드 <small id="ver"></small>
+      </a>
+      <a class="btn btn-ghost" href="#install">Homebrew 및 App Store</a>
+    </div>
+    <p class="fine">무료 오픈 소스(MIT) · macOS 13 이상, Apple Silicon 및 Intel · Apple 공증 완료 · <a href="https://github.com/andrey-insarov/Keepit/releases">모든 버전</a></p>
+
+    <div class="demo" aria-label="애니메이션: Option-M을 누르면 텍스트 커서 옆에 Keepit 기록 메뉴가 열리고 선택한 항목이 붙여넣어집니다">
+      <div class="win">
+        <div class="bar"><div class="dots"><i></i><i></i><i></i></div><div>새로운 메시지</div><div></div></div>
+        <div class="fields"><div><span>받는 사람:</span><b>김민준</b></div><div><span>제목:</span><b>주문하신 상품이 발송되었습니다</b></div></div>
+        <div class="body" id="body"><span id="typed"></span><span class="caret" id="caret"></span></div>
+        <div class="chip" id="chip"><span>누르기</span><kbd class="k" id="key">⌥M</kbd></div>
+      </div>
+      <div class="menu" id="menu" role="presentation">
+        <div class="search">⌕ 기록 검색…</div>
+        <div class="row latest" data-i="1"><span class="n">1</span><span class="app" style="background:#4f8ef7"></span><span class="t">1Z 999 AA1 01 2345 6784</span><span class="hk">⌃⌥1</span></div>
+        <div class="row" data-i="2"><span class="n">2</span><span class="app" style="background:#e5533d"></span><span class="t">청구서 INV-2026-0418.pdf</span><span class="hk">⌃⌥2</span></div>
+        <div class="row" data-i="3"><span class="n">3</span><span class="app" style="background:#4f8ef7"></span><span class="t">https://keep.it.com/guide.html</span><span class="hk">⌃⌥3</span></div>
+        <div class="row" data-i="4"><span class="n">4</span><span class="app" style="background:#5a5f73"></span><span class="t">git tag -a v2.11.1 -m "Keepit 2.11.1"</span><span class="hk">⌃⌥4</span></div>
+        <div class="row" data-i="5"><span class="n">5</span><span class="app" style="background:#34c759"></span><span class="t"><img src="/img/menu.png?v=ab806788" alt=""></span><span class="hk">⌃⌥5</span></div>
+        <div class="sep"></div>
+        <div class="row"><span class="n"></span><span></span><span class="t">템플릿</span><span class="hk">▸</span></div>
+        <div class="row"><span class="n"></span><span></span><span class="t">뷰어</span><span class="hk">⌥E</span></div>
+      </div>
+    </div>
+  </div>
+
+  <section id="features"><div class="wrap">
+    <h2>클립보드 기록: 1분이면 익히는 단축키 세 개</h2>
+    <p class="kicker">Keepit은 메뉴 막대에 자리하며 작업을 방해하지 않습니다. 아래 단축키는 모든 앱에서 작동하고, 하나하나 바꿀 수 있습니다.</p>
+    <div class="keys3">
+      <div class="key3"><div class="big"><kbd class="k">⌥M</kbd></div><h3>기록 메뉴</h3><p>텍스트 커서 옆에 열립니다. 입력해서 검색하거나 숫자를 누르거나 클릭하면 항목이 커서 위치에 붙여넣어집니다. <kbd class="k">⇧</kbd>를 누르고 있으면 항목마다 하위 메뉴가 나타납니다. 서식 없는 텍스트, 대문자, 취소선 텍스트, 템플릿에 추가, 삭제 등의 기능이 있습니다.</p></div>
+      <div class="key3"><div class="big"><kbd class="k">⌃⌥</kbd><kbd class="k">1</kbd></div><h3>메뉴 없이 붙여넣기</h3><p><kbd class="k">⌃⌥1</kbd>…<kbd class="k">⌃⌥0</kbd>은 1–10번 항목을 바로 붙여넣고, <kbd class="k">⌥⇧V</kbd>는 이전 항목을 붙여넣습니다. <kbd class="k">⌃⌥V</kbd>는 서식 없는 텍스트로, <kbd class="k">⌃⌥U</kbd>는 대문자로, <kbd class="k">⌃⌥T</kbd>는 단어 첫 글자 대문자로 붙여넣습니다.</p></div>
+      <div class="key3"><div class="big"><kbd class="k">⌥T</kbd></div><h3>템플릿</h3><p>하루에도 여러 번 보내는 서명, 주소, 답장을 폴더에 넣어 두고 전용 단축키로 불러옵니다. 자리표시자는 이름을 묻고, 오늘 날짜나 클립보드 내용을 넣고, 커서를 원하는 위치에 둡니다.</p></div>
+    </div>
+
+    <div class="bento">
+      <div class="cell c4">
+        <h3>스스로 채워지는 템플릿, 곧 내장 스니펫 관리자</h3>
+        <p>템플릿은 자리표시자가 들어 있는 일반 텍스트입니다. 붙여넣을 때 Keepit이 필요한 값을 묻고 나머지 텍스트를 채운 다음 <code>{cursor}</code>가 있던 자리에 커서를 둡니다.</p>
+        <div class="tpl"><b>{input:이름}</b>님, 안녕하세요.
+
+주문해 주셔서 감사합니다. 상품은 <b>{date+2d:M월 d일 EEEE}</b>에 발송됩니다.
+운송장 번호: <b>{clipboard}</b>
+
+<b>{cursor}</b>
+감사합니다. Andrey 드림</div>
+        <div class="tags"><span>{date}</span><span>{time}</span><span>{clipboard}</span><span>{input:…}</span><span>{choice:a|b}</span><span>{cursor}</span><span>|upper</span><span>|trim</span><span>|url</span></div>
+      </div>
+      <div class="cell c2 shot soft">
+        <h3>텍스트, 이미지, 파일</h3>
+        <p>서식 있는 텍스트, 축소판이 있는 스크린샷, Finder의 파일 목록. 중복 항목은 하나로 합쳐집니다.</p>
+        <img src="/img/menu.png?v=ab806788" alt="텍스트, 이미지 축소판, 파일이 있는 기록 메뉴" width="583" height="478" loading="lazy">
+      </div>
+      <div class="cell c3 shot soft">
+        <h3>뷰어</h3>
+        <p>모든 항목을 한 번에 검색하고, 그 자리에서 편집하고, 기록을 템플릿으로 드래그하세요. 상태 막대에 각 항목의 정보가 표시됩니다.</p>
+        <img src="/img/viewer.png?v=7d245ca7" alt="검색 결과가 강조 표시된 Keepit 뷰어 윈도우" width="1017" height="433" loading="lazy">
+      </div>
+      <div class="cell c3">
+        <h3>Keepit은 단축어, Raycast, Alfred와 함께 작동합니다</h3>
+        <p><code>keepit://</code> URL 체계로 N번 항목이나 이름으로 지정한 템플릿을 붙여넣고, 기록이나 템플릿에 텍스트를 추가하고, 기록을 일시 정지할 수 있습니다. 스크립팅 사전을 배울 필요가 없습니다. 이 옵션은 설정 → 고급에서 켜기 전까지 꺼져 있습니다.</p>
+        <div class="tpl">open "keepit://template/<b>Signature</b>"
+open "keepit://add?text=<b>…</b>"
+open "keepit://pause"</div>
+      </div>
+      <div class="cell c2">
+        <h3>텍스트 다섯 개를 연달아 복사하고 같은 순서로 붙여넣기</h3>
+        <p><kbd class="k">⌥N</kbd>을 누르고 필요한 만큼 복사하세요(메뉴 막대의 카운터가 개수를 셉니다). 그런 다음 <kbd class="k">⌥V</kbd>를 누를 때마다 같은 순서로 하나씩 붙여넣어집니다. <kbd class="k">⌘V</kbd>는 평소처럼 작동합니다.</p>
+      </div>
+      <div class="cell c2">
+        <h3>메뉴 막대에만</h3>
+        <p>직접 열기 전에는 Dock 아이콘도 윈도우도 없습니다. 로그인할 때 실행되고, 몇 메가바이트만 차지하며, 다른 모든 클립보드 관리자처럼 0.3초마다 클립보드를 확인합니다.</p>
+      </div>
+      <div class="cell c2">
+        <h3>네트워크 폴더, iCloud, Dropbox 등 원하는 폴더로 백업. 백업 데이터도 암호화됩니다</h3>
+        <p>폴더(iCloud Drive, Dropbox, 디스크)를 선택하면 Keepit이 그곳에 암호화된 전체 사본을 보관합니다. 자동 모드에서는 변경이 있을 때마다 몇 분 뒤에 사본이 만들어집니다. 사본은 어느 Mac에서든 Keepit 암호나 복구 문구로 열 수 있습니다. 저장소 제공업체는 암호문과 짧은 헤더만 볼 수 있고 내용은 볼 수 없습니다. Keepit 서버는 없으며 앞으로도 없을 것입니다. 암호와 마찬가지로 이 기능도 켜지 않고 그냥 둘 수 있습니다.</p>
+      </div>
+      <div class="cell c2">
+        <h3>앱마다 다른 붙여넣기 키</h3>
+        <p>어떤 앱은 <kbd class="k">⌘⇧V</kbd>나 <kbd class="k">⌃V</kbd>로 붙여넣습니다. 앱별로 한 번만 지정해 두면 Keepit이 그 앱에서 알맞은 키를 사용합니다.</p>
+      </div>
+      <div class="cell c2">
+        <h3>스스로 업데이트</h3>
+        <p>앱은 Developer ID로 서명되고 Apple의 공증을 받았습니다. 하루에 한 번 GitHub Releases를 확인하고 클릭 한 번으로 업데이트를 설치하며, 모든 업데이트는 실행 전에 서명을 검증합니다. 확인 기능은 끌 수 있고, 끄면 Keepit은 인터넷으로 어떤 요청도 보내지 않습니다.</p>
+      </div>
+    </div>
+  </div></section>
+
+  <section id="privacy" class="band"><div class="wrap">
+    <h2>약속이 아니라 설계로 지키는 개인정보</h2>
+    <p class="kicker">클립보드 관리자는 암호, 주소, 쓰다 만 메시지를 봅니다. Keepit은 그중 어느 것도 사용자가 직접 보내려 하지 않은 곳으로 나가지 않도록 만들어졌습니다.</p>
+    <div class="ledger">
+      <div><strong>없음</strong><span>계정, 서버, 자체 동기화가 없습니다. 로그인할 곳이 없습니다.</span></div>
+      <div><strong>없음</strong><span>앱에는 분석, 충돌 보고서, 추적기가 없습니다. 익명으로도 수집하지 않습니다. 웹사이트는 쿠키 없이 페이지 조회수만 셉니다.</span></div>
+      <div><strong>1개</strong><span>네트워크 요청은 하나뿐입니다. 하루에 한 번 GitHub에서 업데이트를 확인하는 요청입니다. 끌 수 있으며, App Store 버전에는 네트워크 권한 자체가 없습니다. <a href="/security#network">직접 확인해 보세요</a>(영어).</span></div>
+      <div><strong>1개</strong><span>모든 데이터는 Mac의 폴더 하나에 들어 있습니다. 백업을 만든다면 백업 폴더가 하나 더 있습니다. 이 폴더들을 삭제하면 Keepit의 흔적은 남지 않습니다.</span></div>
+    </div>
+    <div class="facts"><ul>
+      <li>암호를 설정하면 기록과 템플릿이 AES-256-GCM으로 암호화되어 저장됩니다. 키는 PBKDF2(200 000회 반복)로 파생되며 Keepit이 잠길 때마다 메모리에서 지워집니다.</li>
+      <li>Touch ID로 잠금 해제. 암호는 대체 수단으로 남아 있고, 한 번만 표시되는 24단어 복구 문구는 암호를 잊었을 때 데이터를 열어 줍니다. 암호는 화면 키보드로 입력할 수 있습니다. 키 배열이 섞여 있고, 기록될 수 있는 키보드 이벤트가 발생하지 않습니다.</li>
+      <li>개인정보 보호를 위해 Keepit은 1Password, Bitwarden, KeePassXC, Apple 암호 앱 등 암호 관리자에서 복사한 내용과, 복사한 앱이 숨김으로 표시한 내용을 저장하지 않습니다. 예외 대상은 앱을 기준으로 인식합니다(가능한 범위 내에서, <a href="/security#what-is-not-recorded">자세한 내용</a>은 영어). 직접 예외를 추가할 수도 있습니다.</li>
+      <li>Keepit은 메뉴나 단축키로 잠글 수 있고, 원하면 Mac이 지정한 시간 동안 잠겨 있거나 잠자기 상태였을 때 잠기게 할 수도 있습니다. 이 옵션은 기본적으로 꺼져 있으며 설정에서 켭니다. 소스 코드는 공개되어 있고, 빌드는 태그가 지정된 커밋에서 재현할 수 있으며, 서명 키는 보호된 저장소에 보관됩니다. <a href="/security">보안 페이지</a>(영어)</li>
+    </ul></div>
+  </div></section>
+
+  <section id="install"><div class="wrap">
+    <h2>쉽게 설치하고 편하게 사용하세요</h2>
+    <p class="kicker">데이터 형식은 모든 에디션에서 같습니다. 암호화된 백업 파일로 언제든지 컴퓨터 간에 데이터를 옮길 수 있습니다.</p>
+    <div class="ways">
+      <div class="way"><h3>다운로드</h3><p>서명과 공증을 마친 디스크 이미지입니다. Keepit을 응용 프로그램 폴더로 드래그하고 <kbd class="k">⌥M</kbd>을 누르세요.</p><a class="btn btn-primary" id="download2" href="https://github.com/andrey-insarov/Keepit/releases/latest">DMG 다운로드</a></div>
+      <div class="way"><h3>Homebrew</h3><p>프로젝트 자체 tap에서 설치합니다. <code>brew upgrade</code>가 다른 모든 것과 함께 업데이트해 줍니다.</p>
+        <div class="brew"><code id="brewcmd">brew tap andrey-insarov/keepit https://github.com/andrey-insarov/Keepit &amp;&amp; brew install --cask andrey-insarov/keepit/keepit</code><button type="button" id="copybrew">복사</button></div></div>
+      <div class="way"><h3>Mac App Store</h3><p>기능은 같고 업데이트 확인이 아예 없는 샌드박스 에디션입니다. Keepit은 현재 심사 중이며, 게시되는 대로 이곳에 링크가 표시됩니다.</p><a class="btn btn-ghost" id="appstore" href="https://github.com/andrey-insarov/Keepit#installation">출시 예정</a></div>
+    </div>
+  </div></section>
+
+  <section><div class="wrap">
+    <h2>기본 단축키</h2>
+    <p class="kicker">모두 전역 단축키이며 설정 → 단축키에서 바꿀 수 있습니다. 이미 사용 중인 키와 겹치는 단축키는 직접 지정하기 전까지 꺼진 상태로 있습니다.</p>
+    <div class="sheet">
+      <dl>
+        <div class="r"><dt><kbd class="k">⌥M</kbd></dt><dd>텍스트 커서 옆에 기록 메뉴 열기</dd></div>
+        <div class="r"><dt><kbd class="k">⌥T</kbd></dt><dd>템플릿 메뉴</dd></div>
+        <div class="r"><dt><kbd class="k">⌃⌥1</kbd>–<kbd class="k">0</kbd></dt><dd>기록의 1–10번 항목 붙여넣기</dd></div>
+        <div class="r"><dt><kbd class="k">⌥⇧V</kbd></dt><dd>이전 항목 붙여넣기</dd></div>
+        <div class="r"><dt><kbd class="k">⌃⌥V</kbd></dt><dd>클립보드를 서식 없는 텍스트로 붙여넣기</dd></div>
+        <div class="r"><dt><kbd class="k">⌃⌥U</kbd> <kbd class="k">L</kbd> <kbd class="k">T</kbd> <kbd class="k">S</kbd></dt><dd>대문자, 소문자, 단어 첫 글자 대문자, 문장 첫 글자 대문자로 붙여넣기</dd></div>
+        <div class="r"><dt><kbd class="k">⌃⌥W</kbd> <kbd class="k">J</kbd></dt><dd>앞뒤 공백 제거, 한 줄로 붙여넣기</dd></div>
+        <div class="r"><dt><kbd class="k">⌃⌥K</kbd> <kbd class="k">D</kbd> <kbd class="k">Y</kbd> <kbd class="k">X</kbd></dt><dd>취소선, 밑줄, 물결 밑줄로 붙여넣기 및 장식 제거</dd></div>
+        <div class="r"><dt><kbd class="k">⌥N</kbd> <kbd class="k">⌥V</kbd> <kbd class="k">⌥⇧N</kbd></dt><dd>붙여넣기 대기열: 시작/중지, 다음 항목 붙여넣기, 남은 항목 모두 붙여넣기</dd></div>
+      </dl>
+      <dl>
+        <div class="r"><dt><kbd class="k">⌃⌥A</kbd></dt><dd>클립보드를 템플릿에 추가</dd></div>
+        <div class="r"><dt><kbd class="k">⌃⌥⌫</kbd></dt><dd>최신 항목 삭제</dd></div>
+        <div class="r"><dt><kbd class="k">⌥E</kbd></dt><dd>뷰어 열기</dd></div>
+        <div class="r"><dt><kbd class="k">⌥S</kbd></dt><dd>설정</dd></div>
+        <div class="r"><dt><kbd class="k">⌥P</kbd></dt><dd>기록 일시 정지</dd></div>
+        <div class="r"><dt><kbd class="k">⌥L</kbd></dt><dd>지금 잠그기</dd></div>
+        <div class="r"><dt><kbd class="k">⌥C</kbd> <kbd class="k">⌥Q</kbd></dt><dd>기록 지우기, 종료</dd></div>
+      </dl>
+      <p class="note">기록 메뉴에서: 입력하면 검색, <kbd class="k">1</kbd>–<kbd class="k">0</kbd>으로 선택, <kbd class="k">⇧</kbd>를 누르고 있으면 항목의 하위 메뉴, <kbd class="k">⌘</kbd>+숫자는 서식 없는 텍스트로 붙여넣기입니다.</p>
+    </div>
+  </div></section>
+
+  <section id="faq"><div class="wrap faq">
+    <h2>질문</h2>
+    <details><summary>Keepit에 손쉬운 사용 권한이 왜 필요한가요?</summary><p>두 가지 일에 필요합니다. 첫째, 항목을 선택한 뒤 작업 중이던 앱으로 ⌘V를 보내기 위해서입니다. 둘째, 텍스트 커서를 찾아 그 옆에 메뉴를 열기 위해서입니다. Keepit은 다른 앱을 읽거나 감시하지 않습니다. 권한이 없어도 기록은 계속 남기고 선택한 항목을 클립보드에 넣지만, 붙여넣기는 직접 해야 합니다.</p></details>
+    <details><summary>내 Mac 밖으로 나가는 것이 있나요?</summary><p>데이터는 내 컴퓨터에만 로컬로 저장됩니다. Keepit에는 서버가 없습니다. 유일한 네트워크 요청은 하루에 한 번 GitHub Releases에서 업데이트를 확인하는 것이며, 설정 → 일반에서 끌 수 있습니다. 끄고 나면 Keepit은 어떤 요청도 보내지 않습니다. App Store 버전은 그 요청조차 보내지 않습니다. 계정도, 원격 측정도, 충돌 보고서도 없습니다. 데이터가 인터넷으로 나가는 경우는 클라우드 폴더로 자동 백업을 켰을 때뿐입니다. 암호화된 사본이 선택한 폴더에 기록되고, 그 폴더가 iCloud Drive나 Dropbox에 있으면 해당 서비스가 사용자 계정으로 사본을 동기화합니다. Keepit이 그 서비스에 직접 연결하지는 않습니다.</p></details>
+    <details><summary>암호를 잊어버리면 어떻게 되나요?</summary><p>보호 기능을 켤 때 Keepit이 보여 준 24단어 복구 문구나 같은 Mac의 Touch ID를 사용할 수 있습니다. 둘 다 없으면 데이터를 복구할 수 없습니다. 의도된 설계입니다.</p></details>
+    <details><summary>정말 무료인가요? 숨은 조건이 있나요?</summary><p>네, 완전히 무료입니다. 앱은 MIT 라이선스로 공개되어 있고 코드는 <a href="https://github.com/andrey-insarov/Keepit">GitHub</a>에 있습니다. Keepit은 <a href="https://it.com">it.com</a> 도메인 영역의 설립자가 직접 쓰려고 만들었고, it.com의 좋은 활용 사례가 될 수 있겠다는 생각은 그 뒤에 나왔습니다. 그래서 광고도, 앱 내 구입도, 유료 버전도 없습니다. 프로그램을 쓰는 것 자체가 사람들에게 저희 서비스를 알려 줍니다.</p></details>
+    <details><summary>이런 앱을 만들 생각은 어떻게 하게 되었나요?</summary><p>Keepit은 Windows의 고전적인 클립보드 유틸리티 <a href="https://github.com/nakkag/CLCL">CLCL</a>의 작업 방식을 macOS로 옮기는 것에서 시작해 독립적인 앱으로 자랐습니다. Swift로 처음부터 작성했고 여러 클립보드 관리자와 스니펫 관리자의 아이디어를 담았습니다. 이 프로젝트는 CLCL의 제작자와 관련이 없지만, 영감을 준 데 대해 감사하고 있습니다.</p></details>
+    <details><summary>데이터를 다른 Mac이나 다른 에디션으로 옮기려면 어떻게 하나요?</summary><p><em>설정 → 백업 → 폴더에 자동으로 백업</em>을 켜고 iCloud Drive(또는 아무 폴더)를 선택하세요. Keepit이 그곳에 암호화된 전체 <code>.keepit</code> 사본을 보관합니다. 새 Mac에서는 처음 실행할 때 <em>백업에서 복원…</em>을 선택하고 이전 Mac의 암호나 복구 문구를 입력한 다음 <em>대치</em> 또는 <em>병합</em>을 선택합니다. 일회성 내보내기에는 별도의 암호를 쓰는 <em>아카이브로 저장…</em>이 있습니다. 모든 것이 AES-256-GCM으로 암호화되므로 USB 메모리든 클라우드 폴더든 괜찮습니다. 같은 파일이 두 에디션 모두에서 작동합니다.</p></details>
+    <details><summary>어떤 Mac을 지원하나요?</summary><p>macOS 13 Ventura 이상, Apple Silicon 및 Intel. Touch ID로 잠금을 해제하려면 Touch ID가 있는 Mac이 필요합니다.</p></details>
+  </div></section>
+
+  <section><div class="wrap"><div class="itcom">
+    <div><h3>it.com 팀이 만들었습니다</h3><p>Keepit은 it.com Domains 팀의 무료 프로젝트입니다. <strong>it.com</strong> 도메인 영역은 IT 전문가는 물론 온라인의 다른 모든 제품과 회사에도 좋은 보금자리가 될 수 있습니다. Keepit의 주소는 <strong>keep.it.com</strong>입니다. 여러분의 프로젝트도 이런 이름으로 자리 잡을 수 있습니다.</p></div>
+    <div class="dom"><em>yourname</em>.it.com<small><a href="https://it.com">나만의 .it.com 도메인 찾기</a></small></div>
+  </div></div></section>
+</main>
+
+<footer><div class="wrap">
+  <span>© 2026 UK Intis Telecom LTD · Keepit은 MIT 라이선스로 배포됩니다</span>
+  <span>도움말 글(영어): <a href="/clipboard-history-mac">Clipboard history on a Mac</a> · <a href="/paste-as-plain-text-mac">Paste as plain text</a> · <a href="/clear-clipboard-mac">Clear the clipboard</a></span>
+  <span><a href="/privacy">개인정보 처리방침</a>(영어) · <a href="/security">보안</a>(영어) · <a href="/ko/support">지원</a> · <a href="https://github.com/andrey-insarov/Keepit/blob/main/CHANGELOG.md">변경 내역</a> · <a href="https://it.com">it.com</a></span>
+  <!--i18n:switcher--><span class="langs"><a href="/" lang="en" hreflang="en">English</a> · <a href="/ru/" lang="ru" hreflang="ru">Русский</a> · <a href="/uk/" lang="uk" hreflang="uk">Українська</a> · <a href="/de/" lang="de" hreflang="de">Deutsch</a> · <a href="/fr/" lang="fr" hreflang="fr">Français</a> · <a href="/es/" lang="es" hreflang="es">Español</a> · <a href="/pt-br/" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a> · <a href="/ja/" lang="ja" hreflang="ja">日本語</a> · <a href="/zh-hans/" lang="zh-Hans" hreflang="zh-Hans">简体中文</a> · <a href="/ar/" lang="ar" hreflang="ar">العربية</a> · <a href="/cs/" lang="cs" hreflang="cs">Čeština</a> · <a href="/pl/" lang="pl" hreflang="pl">Polski</a> · <a href="/it/" lang="it" hreflang="it">Italiano</a> · <a href="/nl/" lang="nl" hreflang="nl">Nederlands</a> · <a href="/tr/" lang="tr" hreflang="tr">Türkçe</a> · <b lang="ko">한국어</b> · <a href="/zh-hant/" lang="zh-Hant" hreflang="zh-Hant">繁體中文</a> · <a href="/he/" lang="he" hreflang="he">עברית</a></span><!--/i18n:switcher-->
+</div></footer>
+
+<script>
+(() => {
+  // Latest version + direct DMG link; the buttons work without JS too.
+  fetch('https://api.github.com/repos/andrey-insarov/Keepit/releases/latest')
+    .then(r => r.ok ? r.json() : null)
+    .then(rel => {
+      if (!rel) return;
+      const dmg = (rel.assets || []).find(a => a.name.endsWith('.dmg'));
+      if (dmg) for (const id of ['download', 'download2']) document.getElementById(id).href = dmg.browser_download_url;
+      document.getElementById('ver').textContent = rel.tag_name.replace(/^v/, '');
+    }).catch(() => {});
+
+  const menus = document.querySelectorAll('.mnav,.lpick');
+  menus.forEach(mn => {
+    mn.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mn.removeAttribute('open')));
+    document.addEventListener('click', e => { if (mn.open && !mn.contains(e.target)) mn.removeAttribute('open'); });
+    mn.addEventListener('toggle', () => { if (mn.open) menus.forEach(o => { if (o !== mn) o.removeAttribute('open'); }); });
+  });
+
+  const copy = document.getElementById('copybrew');
+  copy.addEventListener('click', () => {
+    navigator.clipboard.writeText(document.getElementById('brewcmd').textContent).then(() => {
+      copy.textContent = '복사됨'; setTimeout(() => copy.textContent = '복사', 1600);
+    });
+  });
+
+  // Hero demo: type → ⌥M → menu at the caret → pick 1 → pasted.
+  const typed = document.getElementById('typed'), caret = document.getElementById('caret'),
+        menu = document.getElementById('menu'), chip = document.getElementById('chip'), key = document.getElementById('key'),
+        body = document.getElementById('body'), demo = document.querySelector('.demo');
+  const before = '김민준 님, 안녕하세요.\n\n주문해 주셔서 감사합니다. 상품이 오늘 아침 창고에서 출고되었습니다. 운송장 번호: ';
+  const paste = '1Z 999 AA1 01 2345 6784';
+  const after = '. 배송에는 2–3일이 걸립니다.';
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const rows = [...menu.querySelectorAll('.row[data-i]')];
+
+  function placeMenu() {
+    const c = caret.getBoundingClientRect(), d = demo.getBoundingClientRect();
+    let left = c.left - d.left - 8, top = c.bottom - d.top + 6;
+    const max = demo.clientWidth - menu.offsetWidth - 4; if (left > max) left = Math.max(4, max);
+    menu.style.left = left + 'px'; menu.style.top = top + 'px';
+  }
+  async function type(text, speed) { for (const ch of text) { typed.append(ch); await wait(speed + Math.random() * speed); } }
+
+  async function run() {
+    if (reduced) {
+      typed.textContent = before; placeMenu(); menu.classList.add('on'); rows[0].classList.add('hi'); return;
+    }
+    for (;;) {
+      typed.textContent = ''; rows.forEach(r => r.classList.remove('hi')); menu.classList.remove('on'); chip.classList.remove('on'); key.classList.remove('pressed');
+      await wait(900);
+      await type(before, 28);
+      await wait(500);
+      chip.classList.add('on'); await wait(600);
+      key.classList.add('pressed'); await wait(140);
+      placeMenu(); menu.classList.add('on');
+      await wait(200); key.classList.remove('pressed');
+      await wait(700); rows[0].classList.add('hi');
+      await wait(900); rows[0].classList.remove('hi'); await wait(80); rows[0].classList.add('hi'); await wait(80);
+      menu.classList.remove('on'); chip.classList.remove('on');
+      const span = document.createElement('span'); span.className = 'pasted'; span.textContent = paste; typed.append(span);
+      requestAnimationFrame(() => span.classList.add('settle'));
+      await wait(700);
+      await type(after, 28);
+      await wait(4200);
+    }
+  }
+  if ('IntersectionObserver' in window && !reduced) {
+    let started = false;
+    new IntersectionObserver(es => { if (!started && es.some(e => e.isIntersecting)) { started = true; run(); } }, { threshold: .3 }).observe(demo);
+  } else run();
+  addEventListener('resize', () => { if (menu.classList.contains('on')) placeMenu(); });
+})();
+</script>
+</body>
+</html>

@@ -246,6 +246,7 @@ test("translated support pages: the character counter agrees in number", async (
     fr: { 1: " caractère", 2: " caractères", 69: " caractères" },
     es: { 1: " carácter", 2: " caracteres" },
     "pt-BR": { 1: " caractere", 2: " caracteres" },
+    he: { 1: " תו", 2: " תווים", 5: " תווים", 22: " תווים" },
   };
   for (const [lang, cases] of Object.entries(want)) {
     const pf = counter(lang);

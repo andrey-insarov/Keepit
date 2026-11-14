@@ -1,0 +1,33 @@
+{
+  "ui": {
+    "features": "기능",
+    "privacy": "개인정보 보호",
+    "install": "설치",
+    "guide": "사용 설명서",
+    "security": "보안",
+    "support": "지원",
+    "menu": "메뉴",
+    "copyright": "© 2026 UK Intis Telecom LTD · Keepit은 MIT 라이선스로 배포됩니다",
+    "privacy_policy": "개인정보 처리방침",
+    "changelog": "변경 내역",
+    "on_this_page": "이 페이지의 내용",
+    "contents": "목차",
+    "open_full_size": "원본 크기로 열기",
+    "full_size_screenshot": "원본 크기 스크린샷",
+    "language": "언어",
+    "in_english": "(영어)",
+    "translated_note": "영어 원문을 번역한 페이지입니다. 원문: <a href=\"{en}\">English</a>."
+  },
+  "pages": {
+    "GUIDE.md": {
+      "title": "Keepit 사용 설명서 – Mac용 클립보드 관리자",
+      "description": "Mac용 무료 클립보드 관리자 Keepit 사용법: 기록 메뉴, 단축키, 템플릿, 뷰어, 암호화, Touch ID.",
+      "crumb": "사용 설명서"
+    },
+    "SUPPORT.md": {
+      "title": "Keepit 지원 – Mac용 클립보드 관리자 도움말",
+      "description": "Mac용 클립보드 관리자 Keepit에 대한 도움을 받는 방법과 자주 묻는 질문에 대한 짧은 답변.",
+      "crumb": "지원"
+    }
+  }
+}

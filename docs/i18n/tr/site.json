@@ -1,0 +1,33 @@
+{
+  "ui": {
+    "features": "Özellikler",
+    "privacy": "Gizlilik",
+    "install": "Kurulum",
+    "guide": "Kılavuz",
+    "security": "Güvenlik",
+    "support": "Destek",
+    "menu": "Menü",
+    "copyright": "© 2026 UK Intis Telecom LTD · Keepit, MIT lisansıyla dağıtılır",
+    "privacy_policy": "Gizlilik politikası",
+    "changelog": "Değişiklik günlüğü",
+    "on_this_page": "Bu sayfada",
+    "contents": "İçindekiler",
+    "open_full_size": "Tam boyutta aç",
+    "full_size_screenshot": "Tam boyutlu ekran görüntüsü",
+    "language": "Dil",
+    "in_english": "(İngilizce)",
+    "translated_note": "İngilizceden çevrilmiştir. Özgün metin: <a href=\"{en}\">English</a>."
+  },
+  "pages": {
+    "GUIDE.md": {
+      "title": "Keepit kılavuzu – Mac için pano yöneticisi",
+      "description": "Mac için ücretsiz pano yöneticisi Keepit nasıl kullanılır: geçmiş menüsü, kısayol tuşları, şablonlar, Görüntüleyici, şifreleme ve Touch ID.",
+      "crumb": "Kılavuz"
+    },
+    "SUPPORT.md": {
+      "title": "Keepit desteği – Mac için pano yöneticisiyle ilgili yardım",
+      "description": "Mac için pano yöneticisi Keepit ile ilgili nasıl yardım alınır ve sık sorulan sorulara kısa yanıtlar.",
+      "crumb": "Destek"
+    }
+  }
+}

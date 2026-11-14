@@ -1,0 +1,366 @@
+[
+ [
+  "<title>Keepit – Free Clipboard Manager for Mac (Open Source, Encrypted)</title>",
+  "<title>Keepit – Mac için ücretsiz pano yöneticisi</title>"
+ ],
+ [
+  "<meta name=\"description\" content=\"Free, open-source clipboard manager for Mac: history at one hot key, templates, optional AES-256 encryption with Touch ID. No account, no Keepit cloud.\">",
+  "<meta name=\"description\" content=\"Mac için ücretsiz, açık kaynaklı pano yöneticisi: tek tuşla geçmiş, şablonlar, AES-256 şifreleme, Touch ID. Hesap yok, veriler Mac’inizde kalır.\">"
+ ],
+ [
+  "<meta property=\"og:title\" content=\"Keepit – Free Clipboard Manager for Mac\">",
+  "<meta property=\"og:title\" content=\"Keepit – Mac için ücretsiz pano yöneticisi\">"
+ ],
+ [
+  "<meta property=\"og:description\" content=\"Clipboard history one hot key away. Templates, optional AES-256 encryption with Touch ID. Free and open source, no account, no Keepit cloud.\">",
+  "<meta property=\"og:description\" content=\"Pano geçmişi tek bir kısayol tuşunda. Şablonlar, isteğe bağlı AES-256 şifreleme ve Touch ID. Ücretsiz ve açık kaynaklı, hesap açmak gerekmez, veriler bilgisayarınızda kalır.\">"
+ ],
+ [
+  "<meta name=\"twitter:title\" content=\"Keepit – Free Clipboard Manager for Mac\">",
+  "<meta name=\"twitter:title\" content=\"Keepit – Mac için ücretsiz pano yöneticisi\">"
+ ],
+ [
+  "<meta name=\"twitter:description\" content=\"Clipboard history one hot key away. Templates, optional AES-256 encryption with Touch ID. Free and open source, no account, no Keepit cloud.\">",
+  "<meta name=\"twitter:description\" content=\"Pano geçmişi tek bir kısayol tuşunda. Şablonlar, isteğe bağlı AES-256 şifreleme ve Touch ID. Ücretsiz ve açık kaynaklı, hesap açmak gerekmez, veriler bilgisayarınızda kalır.\">"
+ ],
+ [
+  "<nav><a href=\"#features\">Features</a><a href=\"#privacy\">Privacy</a><a href=\"#install\">Install</a><a href=\"/guide\">Guide</a><a href=\"/security\">Security</a><a href=\"/support\">Support</a>",
+  "<nav><a href=\"#features\">Özellikler</a><a href=\"#privacy\">Gizlilik</a><a href=\"#install\">Kurulum</a><a href=\"/guide\">Kılavuz</a><a href=\"/security\">Güvenlik</a><a href=\"/support\">Destek</a>"
+ ],
+ [
+  "<summary aria-label=\"Menu\">",
+  "<summary aria-label=\"Menü\">"
+ ],
+ [
+  "<div class=\"links\"><a href=\"#features\">Features</a><a href=\"#privacy\">Privacy</a><a href=\"#install\">Install</a><a href=\"/guide\">Guide</a><a href=\"/security\">Security</a><a href=\"/support\">Support</a></div>",
+  "<div class=\"links\"><a href=\"#features\">Özellikler</a><a href=\"#privacy\">Gizlilik</a><a href=\"#install\">Kurulum</a><a href=\"/guide\">Kılavuz</a><a href=\"/security\">Güvenlik</a><a href=\"/support\">Destek</a></div>"
+ ],
+ [
+  "<h1>Everything you copy, <span style=\"white-space:nowrap\">one <kbd class=\"k\">⌥M</kbd> away.</span></h1>",
+  "<h1>Pano geçmişiniz elinizin altında: <span style=\"white-space:nowrap\"><kbd class=\"k\">⌥M</kbd> tuşlarına basın.</span></h1>"
+ ],
+ [
+  "<p class=\"lead\">Keepit is a free, open-source clipboard manager for Mac. It keeps a history of everything you copy and pastes any of it back where you are typing. Templates for the text you type every day. Set a password and it is encrypted on disk and unlocked with Touch&nbsp;ID; either way it stays on your Mac — no account, no Keepit cloud. Backups to a folder of yours are an option, off until you switch it on; the update check can be switched off.</p>",
+  "<p class=\"lead\">Keepit, Mac için ücretsiz ve açık kaynaklı bir pano yöneticisidir. Kopyaladığınız her şeyin geçmişini tutar ve istediğiniz öğeyi yazı yazdığınız yere yapıştırır. Şablonlar, her gün yazdığınız metinlerle çalışmayı hızlandırır. Bir parola belirlerseniz veriler diskte şifreli saklanır ve Touch&nbsp;ID ile açılır. Her durumda Mac’inizde kalırlar; hesap da bulut depolama da yoktur. İsterseniz kendi klasörünüze yedekleme ayarlayabilirsiniz, bu yedekler de şifrelidir. Düzenli güncelleme denetimi kapatılabilir.</p>"
+ ],
+ [
+  "Download for macOS <small id=\"ver\"></small>",
+  "macOS için indir <small id=\"ver\"></small>"
+ ],
+ [
+  "<a class=\"btn btn-ghost\" href=\"#install\">Homebrew &amp; App Store</a>",
+  "<a class=\"btn btn-ghost\" href=\"#install\">Homebrew ve App Store</a>"
+ ],
+ [
+  "<p class=\"fine\">Free and open source (MIT) · macOS 13 or later, Apple silicon and Intel · Notarized by Apple · <a href=\"https://github.com/andrey-insarov/Keepit/releases\">All releases</a></p>",
+  "<p class=\"fine\">Ücretsiz ve açık kaynaklı (MIT) · macOS 13 veya sonrası, Apple silicon ve Intel · Apple tarafından noter onaylı · <a href=\"https://github.com/andrey-insarov/Keepit/releases\">Tüm sürümler</a></p>"
+ ],
+ [
+  "aria-label=\"Animated demo: pressing Option-M opens the Keepit history menu at the text cursor and pastes the chosen item\"",
+  "aria-label=\"Animasyon: Option-M tuşlarına basınca Keepit geçmiş menüsü metin imlecinin yanında açılır ve seçilen öğe yapıştırılır\""
+ ],
+ [
+  "<div>New Message</div>",
+  "<div>Yeni İleti</div>"
+ ],
+ [
+  "<div><span>To:</span><b>Michael Reeve</b></div><div><span>Subject:</span><b>Your order has shipped</b></div>",
+  "<div><span>Kime:</span><b>Mehmet Yılmaz</b></div><div><span>Konu:</span><b>Siparişiniz kargoya verildi</b></div>"
+ ],
+ [
+  "<div class=\"chip\" id=\"chip\"><span>press</span>",
+  "<div class=\"chip\" id=\"chip\"><span>basın</span>"
+ ],
+ [
+  "<div class=\"search\">⌕ Search history…</div>",
+  "<div class=\"search\">⌕ Geçmişte ara…</div>"
+ ],
+ [
+  "<span class=\"t\">Invoice INV-2026-0418.pdf</span>",
+  "<span class=\"t\">Fatura INV-2026-0418.pdf</span>"
+ ],
+ [
+  "<span class=\"t\">Template</span>",
+  "<span class=\"t\">Şablonlar</span>"
+ ],
+ [
+  "<span class=\"t\">Viewer</span>",
+  "<span class=\"t\">Görüntüleyici</span>"
+ ],
+ [
+  "<h2>Clipboard history, three keys you'll learn in a minute</h2>",
+  "<h2>Pano geçmişi: bir dakikada öğreneceğiniz üç kısayol</h2>"
+ ],
+ [
+  "<p class=\"kicker\">Keepit lives in the menu bar and stays out of the way. Every key below works in any app, and every one of them can be changed.</p>",
+  "<p class=\"kicker\">Keepit menü çubuğunda durur ve ayak altında dolaşmaz. Aşağıdaki kısayol tuşları her uygulamada çalışır ve her biri değiştirilebilir.</p>"
+ ],
+ [
+  "<h3>The history menu</h3><p>Opens next to your text cursor. Type to search, hit a number or click — the item is pasted where you were typing. Hold <kbd class=\"k\">⇧</kbd> and every item grows a submenu: plain text, UPPERCASE, add to templates, delete.</p>",
+  "<h3>Geçmiş menüsü</h3><p>Metin imlecinin yanında açılır. Aramak için yazmaya başlayın, bir rakama basın ya da tıklayın; öğe imlecin olduğu yere yapıştırılır. <kbd class=\"k\">⇧</kbd> tuşunu basılı tutun, her öğede bir alt menü belirir: düz metin, BÜYÜK HARF, üstü çizili metin, şablonlara ekleme, silme ve başka işlevler.</p>"
+ ],
+ [
+  "<h3>Paste without the menu</h3><p><kbd class=\"k\">⌃⌥1</kbd>…<kbd class=\"k\">⌃⌥0</kbd> paste items 1–10 straight away; <kbd class=\"k\">⌥⇧V</kbd> pastes the one before the current. <kbd class=\"k\">⌃⌥V</kbd> pastes as plain text, <kbd class=\"k\">⌃⌥U</kbd> as UPPERCASE, <kbd class=\"k\">⌃⌥T</kbd> as Title Case.</p>",
+  "<h3>Menüsüz yapıştırma</h3><p><kbd class=\"k\">⌃⌥1</kbd>…<kbd class=\"k\">⌃⌥0</kbd> 1–10 numaralı öğeleri hemen yapıştırır; <kbd class=\"k\">⌥⇧V</kbd> bir öncekini yapıştırır. <kbd class=\"k\">⌃⌥V</kbd> düz metin olarak, <kbd class=\"k\">⌃⌥U</kbd> BÜYÜK HARFLE, <kbd class=\"k\">⌃⌥T</kbd> ise Her Kelime Büyük olacak şekilde yapıştırır.</p>"
+ ],
+ [
+  "<h3>Templates</h3><p>Signatures, addresses, replies you send ten times a day — in folders, with their own hot keys. Placeholders ask for a name, insert today's date or the clipboard, and leave the cursor where you want it.</p>",
+  "<h3>Şablonlar</h3><p>Günde defalarca gönderdiğiniz imzalar, adresler ve yanıtlar klasörlerde durur ve kendi kısayol tuşlarıyla çağrılır. Yer tutucular bir ad sorar, bugünün tarihini ya da panoyu ekler ve imleci istediğiniz yerde bırakır.</p>"
+ ],
+ [
+  "<h3>Templates that fill themselves in — a snippet manager built in</h3>",
+  "<h3>Kendi kendini dolduran şablonlar, yani yerleşik bir snippet yöneticisi</h3>"
+ ],
+ [
+  "<p>A template is plain text with placeholders. When you paste it, Keepit asks for the inputs, expands the rest and puts the cursor where <code>{cursor}</code> was.</p>",
+  "<p>Şablon, yer tutucular içeren sıradan bir metindir. Yapıştırdığınızda Keepit gereken değerleri sorar, metnin kalanını tamamlar ve imleci <code>{cursor}</code> ifadesinin bulunduğu yere koyar.</p>"
+ ],
+ [
+  "<div class=\"tpl\">Hi <b>{input:Name}</b>,\n\nThanks for your order — it ships on <b>{date+2d:EEEE, d MMMM}</b>.\nTracking: <b>{clipboard}</b>\n\n<b>{cursor}</b>\nBest, Andrey</div>",
+  "<div class=\"tpl\">Merhaba <b>{input:Ad}</b>,\n\nSiparişiniz için teşekkürler. Kargoya verileceği gün: <b>{date+2d:d MMMM EEEE}</b>.\nTakip numarası: <b>{clipboard}</b>\n\n<b>{cursor}</b>\nSaygılarımla, Andrey</div>"
+ ],
+ [
+  "<h3>Text, images, files</h3>\n        <p>Rich text with formatting, screenshots with thumbnails, lists of files from Finder. Duplicates are merged into one entry.</p>",
+  "<h3>Metin, görüntüler, dosyalar</h3>\n        <p>Biçimlendirilmiş metin, küçük resimli ekran görüntüleri, Finder’dan dosya listeleri. Yinelenenler tek bir kayıtta birleştirilir.</p>"
+ ],
+ [
+  "alt=\"History menu with text, image thumbnails and a file\"",
+  "alt=\"Metin, görüntü küçük resimleri ve bir dosya içeren geçmiş menüsü\""
+ ],
+ [
+  "<h3>The Viewer</h3>\n        <p>Search everything at once, edit items in place, drag history into templates, inspect any item — even as a hex dump.</p>",
+  "<h3>Görüntüleyici</h3>\n        <p>Tüm öğelerde aynı anda arayın, öğeleri yerinde düzenleyin, geçmişi şablonlara sürükleyin. Durum çubuğu her kayıtla ilgili bilgileri gösterir.</p>"
+ ],
+ [
+  "alt=\"Keepit Viewer with a search highlighting matches\"",
+  "alt=\"Arama yapılmış ve eşleşmeleri vurgulanmış Keepit Görüntüleyici penceresi\""
+ ],
+ [
+  "<h3>Works with Shortcuts, Raycast and Alfred</h3>\n        <p>A <code>keepit://</code> URL scheme pastes item N or a template by name, adds text to history or templates, pauses recording. No scripting dictionary to learn. Off until you switch it on in Settings → Advanced.</p>",
+  "<h3>Keepit; Kestirmeler, Raycast ve Alfred ile çalışır</h3>\n        <p><code>keepit://</code> şeması N numaralı öğeyi ya da adıyla bir şablonu yapıştırır, geçmişe veya şablonlara metin ekler, kaydı duraklatır. Öğrenmeniz gereken bir betik sözlüğü yoktur. Bu seçenek, siz Ayarlar → Gelişmiş bölümünde açana kadar kapalıdır.</p>"
+ ],
+ [
+  "<h3>Copy five things, paste five things</h3>\n        <p>Press <kbd class=\"k\">⌥N</kbd>, copy as many items as you need — the menu bar counts them — then <kbd class=\"k\">⌥V</kbd> pastes them back one at a time in the same order. <kbd class=\"k\">⌘V</kbd> keeps working as usual.</p>",
+  "<h3>Art arda beş metin kopyalayın ve aynı sırayla yapıştırın</h3>\n        <p><kbd class=\"k\">⌥N</kbd> tuşlarına basın ve gerektiği kadar öğe kopyalayın (menü çubuğundaki sayaç onları sayar). Ardından <kbd class=\"k\">⌥V</kbd> bunları aynı sırayla birer birer yapıştırır. <kbd class=\"k\">⌘V</kbd> her zamanki gibi çalışır.</p>"
+ ],
+ [
+  "<h3>Menu bar only</h3>\n        <p>No Dock icon, no windows until you ask for one. Launches at login, uses a few megabytes, polls the clipboard every 0.3 s like every clipboard manager has to.</p>",
+  "<h3>Yalnızca menü çubuğu</h3>\n        <p>Siz açana kadar ne Dock simgesi ne de pencere vardır. Keepit oturum açılırken başlar, birkaç megabayt yer kaplar ve her pano yöneticisinin yaptığı gibi panoyu 0,3 saniyede bir yoklar.</p>"
+ ],
+ [
+  "<h3>Backed up to your own cloud</h3>\n        <p>Pick a folder — iCloud Drive, Dropbox, a disk — and Keepit keeps complete, encrypted copies there, a new one a few minutes after each change. They open with your Keepit password or recovery phrase on any Mac; the provider sees the ciphertext and a short header, never the content. No Keepit server, ever — and like the password itself, this is an option you can simply leave off.</p>",
+  "<h3>İstediğiniz klasöre yedekleme: ağ klasörü, iCloud, Dropbox ve başkaları. Bu veriler de şifrelidir</h3>\n        <p>Bir klasör seçin (iCloud Drive, Dropbox, bir disk); Keepit orada eksiksiz ve şifreli kopyalar saklar. Otomatik modda her değişiklikten birkaç dakika sonra bir kopya alınır. Kopyalar herhangi bir Mac’te Keepit parolanızla ya da kurtarma ifadenizle açılır. Sağlayıcı şifreli metni ve kısa bir başlığı görür, içeriği göremez. Keepit’in sunucusu yoktur ve olmayacaktır. Parola gibi bu da hiç açmayabileceğiniz bir özelliktir.</p>"
+ ],
+ [
+  "<h3>Per-app paste keys</h3>\n        <p>Some apps want <kbd class=\"k\">⌘⇧V</kbd> or <kbd class=\"k\">⌃V</kbd> to paste. Tell Keepit once, per app, and it uses the right key there.</p>",
+  "<h3>Her uygulama için ayrı yapıştırma tuşu</h3>\n        <p>Bazı uygulamalar <kbd class=\"k\">⌘⇧V</kbd> ya da <kbd class=\"k\">⌃V</kbd> ile yapıştırır. Bunu Keepit’e o uygulama için bir kez belirtin; orada doğru tuşu kullanır.</p>"
+ ],
+ [
+  "<h3>Updates itself</h3>\n        <p>Signed with a Developer ID and notarized by Apple. Checks GitHub Releases once a day and installs the update in one click; every update is signature-checked before it runs. The check is optional — switch it off and Keepit makes no network request at all.</p>",
+  "<h3>Kendi kendini günceller</h3>\n        <p>Uygulama Developer ID ile imzalanmış ve Apple tarafından noter onayından geçirilmiştir. Günde bir kez GitHub Releases sayfasını denetler ve güncellemeyi tek tıklamayla kurar; her güncellemenin imzası çalıştırılmadan önce doğrulanır. Denetim kapatılabilir; o zaman Keepit internete tek bir istek bile göndermez.</p>"
+ ],
+ [
+  "<h2>Private by design, not by promise</h2>",
+  "<h2>Gizlilik vaatte değil, tasarımın kendisinde</h2>"
+ ],
+ [
+  "<p class=\"kicker\">A clipboard manager sees passwords, addresses and half-written messages. Keepit is built so that none of it goes anywhere you did not choose.</p>",
+  "<p class=\"kicker\">Bir pano yöneticisi parolaları, adresleri ve yarım kalmış mesajları görür. Keepit, bunların hiçbiri sizin göndermek istemediğiniz bir yere gitmeyecek şekilde tasarlandı.</p>"
+ ],
+ [
+  "<div><strong>0</strong><span>accounts, servers or sync of its own. Nothing to log in to.</span></div>",
+  "<div><strong>Sıfır</strong><span>hesap, sunucu ya da kendine ait eşzamanlama. Giriş yapılacak bir yer yok.</span></div>"
+ ],
+ [
+  "<div><strong>0</strong><span>analytics, crash reports or trackers in the app — not even anonymous ones. The website only counts page views, without cookies.</span></div>",
+  "<div><strong>Sıfır</strong><span>analiz, çökme raporu ya da izleyici; uygulamada anonim olanı bile yok. Web sitesi yalnızca sayfa görüntülemelerini sayar, çerez kullanmaz.</span></div>"
+ ],
+ [
+  "<div><strong>1</strong><span>network request: the daily update check against GitHub. Optional; the App Store edition has no network entitlement at all — <a href=\"/security#network\">verify it</a>.</span></div>",
+  "<div><strong>Bir</strong><span>ağ isteği: GitHub’da günlük güncelleme denetimi. Kapatılabilir; App Store sürümünün ağa erişim yetkisi bile yoktur. <a href=\"/security#network\">Kendiniz doğrulayın</a> (İngilizce).</span></div>"
+ ],
+ [
+  "<div><strong>1</strong><span>folder on your Mac with everything in it — plus the backup folder, if you choose one. Delete them and Keepit is gone.</span></div>",
+  "<div><strong>Bir</strong><span>klasör: tüm veriler Mac’inizde bu klasörde durur. Yedek alıyorsanız bir de yedek klasörü vardır. Bunları silin, Keepit’ten geriye iz kalmaz.</span></div>"
+ ],
+ [
+  "<li>Turn on a password and history and templates are stored with AES-256-GCM; the key is derived with PBKDF2 (200 000 rounds) and wiped from memory whenever Keepit locks.</li>",
+  "<li>Parola belirlerseniz geçmiş ve şablonlar AES-256-GCM ile şifrelenmiş olarak saklanır. Anahtar PBKDF2 (200 000 tur) ile türetilir ve Keepit her kilitlendiğinde bellekten silinir.</li>"
+ ],
+ [
+  "<li>Unlock with Touch ID. The password stays as a fallback, and a 24-word recovery phrase, shown once, opens your data if you forget it. Type the password on an on-screen keyboard: shuffled keys, no keyboard events for anything to log.</li>",
+  "<li>Touch ID ile kilit açma. Parola yedek yöntem olarak kalır; yalnızca bir kez gösterilen 24 kelimelik kurtarma ifadesi de parolayı unutursanız verilerinizi açar. Parola ekran klavyesinde yazılabilir: tuşlar karıştırılır ve kaydedilebilecek klavye olayları oluşmaz.</li>"
+ ],
+ [
+  "<li>Anything marked concealed by the copying app is not recorded; copies from 1Password, Bitwarden, KeePassXC, Apple Passwords and other password managers are excluded by app (best effort — <a href=\"/security#what-is-not-recorded\">how</a>).</li>",
+  "<li>Gizliliği korumak için Keepit; 1Password, Bitwarden, KeePassXC, Apple Parolalar ve diğer parola yöneticilerinden kopyalananları ve kopyalayan uygulamanın gizli olarak işaretlediklerini kaydetmez. İstisnalar uygulamaya göre tanınır (elden geldiğince; <a href=\"/security#what-is-not-recorded\">ayrıntılar</a> İngilizce). Kendi istisnalarınızı da ekleyebilirsiniz.</li>"
+ ],
+ [
+  "<li>Locks on demand — and, if you choose, after the Mac has been locked or asleep for a delay you set (new installations never lock on their own). Source is open, builds are reproducible from a tagged commit, and the signing keys live in a protected release environment. <a href=\"/security\">Read the security page</a></li>",
+  "<li>Keepit menüden, bir kısayol tuşuyla ya da (isterseniz) Mac belirlediğiniz süre boyunca kilitli veya uykuda kaldıktan sonra kilitlenebilir. Bu seçenek varsayılan olarak kapalıdır ve ayarlardan açılır. Kaynak kodu açıktır, derlemeler etiketlenmiş bir commit’ten yeniden üretilebilir ve imzalama anahtarları korumalı bir depoda tutulur. <a href=\"/security\">Güvenlik sayfası</a> (İngilizce)</li>"
+ ],
+ [
+  "<h2>Install it your way</h2>",
+  "<h2>Kurması kolay, kullanması rahat</h2>"
+ ],
+ [
+  "<p class=\"kicker\">Same app, same features in every edition. Move between them any time with an encrypted backup file.</p>",
+  "<p class=\"kicker\">Veri biçimi tüm sürümlerde aynıdır. Verilerinizi istediğiniz an şifreli bir yedek dosyasıyla bilgisayarlar arasında taşıyabilirsiniz.</p>"
+ ],
+ [
+  "<h3>Download</h3><p>A signed, notarized disk image. Drag Keepit to Applications and press <kbd class=\"k\">⌥M</kbd>.</p><a class=\"btn btn-primary\" id=\"download2\" href=\"https://github.com/andrey-insarov/Keepit/releases/latest\">Download DMG</a>",
+  "<h3>İndirme</h3><p>İmzalı ve noter onaylı bir disk görüntüsü. Keepit’i Uygulamalar klasörüne sürükleyin ve <kbd class=\"k\">⌥M</kbd> tuşlarına basın.</p><a class=\"btn btn-primary\" id=\"download2\" href=\"https://github.com/andrey-insarov/Keepit/releases/latest\">DMG’yi indir</a>"
+ ],
+ [
+  "<h3>Homebrew</h3><p>From the project's own tap. <code>brew upgrade</code> keeps it current alongside everything else.</p>",
+  "<h3>Homebrew</h3><p>Projenin kendi tap’inden. <code>brew upgrade</code> onu diğer her şeyle birlikte günceller.</p>"
+ ],
+ [
+  "<button type=\"button\" id=\"copybrew\">Copy</button>",
+  "<button type=\"button\" id=\"copybrew\">Kopyala</button>"
+ ],
+ [
+  "<h3>Mac App Store</h3><p>Sandboxed edition with the same features, no update check at all. Keepit is in review; this page will link to it as soon as it is live.</p><a class=\"btn btn-ghost\" id=\"appstore\" href=\"https://github.com/andrey-insarov/Keepit#installation\">Coming soon</a>",
+  "<h3>Mac App Store</h3><p>Aynı özelliklere sahip, güncelleme denetimi hiç olmayan sandbox sürümü. Keepit şu anda incelemede; yayımlanır yayımlanmaz bağlantı burada görünecek.</p><a class=\"btn btn-ghost\" id=\"appstore\" href=\"https://github.com/andrey-insarov/Keepit#installation\">Yakında</a>"
+ ],
+ [
+  "<h2>Every default key</h2>",
+  "<h2>Varsayılan kısayol tuşları</h2>"
+ ],
+ [
+  "<p class=\"kicker\">All of them are global and all of them can be changed in Settings → Shortcuts. A key that collides with one you already use stays off until you assign it.</p>",
+  "<p class=\"kicker\">Hepsi geneldir ve Ayarlar → Kısayollar bölümünden değiştirilir. Kullanımda olan bir tuşla çakışan kısayol, siz özellikle atayana kadar kapalı kalır.</p>"
+ ],
+ [
+  "<dd>History menu at the text cursor</dd>",
+  "<dd>Metin imlecinin yanında geçmiş menüsü</dd>"
+ ],
+ [
+  "<dd>Templates menu</dd>",
+  "<dd>Şablonlar menüsü</dd>"
+ ],
+ [
+  "<dd>Paste history item 1–10</dd>",
+  "<dd>1–10 numaralı geçmiş öğesini yapıştır</dd>"
+ ],
+ [
+  "<dd>Paste the previous item</dd>",
+  "<dd>Önceki öğeyi yapıştır</dd>"
+ ],
+ [
+  "<dd>Paste the clipboard as plain text</dd>",
+  "<dd>Panoyu biçimlendirmesiz düz metin olarak yapıştır</dd>"
+ ],
+ [
+  "<dd>Paste as UPPERCASE, lowercase, Title Case, Sentence case</dd>",
+  "<dd>BÜYÜK HARF, küçük harf, Her Kelime Büyük ya da cümle düzeninde yapıştır</dd>"
+ ],
+ [
+  "<dd>Paste trimmed, paste on one line</dd>",
+  "<dd>Baştaki ve sondaki boşlukları kırp, tek satır olarak yapıştır</dd>"
+ ],
+ [
+  "<dd>Paste struck through, underlined, wavy underlined; remove decorations</dd>",
+  "<dd>Üstü çizili, altı çizili, dalgalı altı çizili yapıştır veya süslemeleri kaldır</dd>"
+ ],
+ [
+  "<dd>Paste queue: start/stop, paste next, paste all remaining</dd>",
+  "<dd>Yapıştırma kuyruğu: başlat/durdur, sıradakini yapıştır, kalanların tümünü yapıştır</dd>"
+ ],
+ [
+  "<dd>Add the clipboard to templates</dd>",
+  "<dd>Panoyu şablonlara ekle</dd>"
+ ],
+ [
+  "<dd>Delete the latest item</dd>",
+  "<dd>En son öğeyi sil</dd>"
+ ],
+ [
+  "<dd>Open the Viewer</dd>",
+  "<dd>Görüntüleyici’yi aç</dd>"
+ ],
+ [
+  "<dd>Settings</dd>",
+  "<dd>Ayarlar</dd>"
+ ],
+ [
+  "<dd>Pause recording</dd>",
+  "<dd>Kaydı duraklat</dd>"
+ ],
+ [
+  "<dd>Lock now</dd>",
+  "<dd>Şimdi kilitle</dd>"
+ ],
+ [
+  "<dd>Clear history, quit</dd>",
+  "<dd>Geçmişi temizle, çık</dd>"
+ ],
+ [
+  "<p class=\"note\">Inside the history menu: type to search, <kbd class=\"k\">1</kbd>–<kbd class=\"k\">0</kbd> to pick, hold <kbd class=\"k\">⇧</kbd> for the per-item submenu, <kbd class=\"k\">⌘</kbd>+number to paste as plain text.</p>",
+  "<p class=\"note\">Geçmiş menüsünde: aramak için yazın, <kbd class=\"k\">1</kbd>–<kbd class=\"k\">0</kbd> ile seçin, öğenin alt menüsü için <kbd class=\"k\">⇧</kbd> tuşunu basılı tutun, <kbd class=\"k\">⌘</kbd>+rakam düz metin olarak yapıştırır.</p>"
+ ],
+ [
+  "<h2>Questions</h2>",
+  "<h2>Sorular</h2>"
+ ],
+ [
+  "<details><summary>Why does Keepit ask for the Accessibility permission?</summary><p>For two things: to send ⌘V to the app you were working in after you pick an item, and to find the text cursor so the menu opens next to it. Keepit does not read or monitor other apps. Without the permission it still records history and copies the chosen item to the clipboard — you paste by hand.</p></details>",
+  "<details><summary>Keepit neden Erişilebilirlik izni istiyor?</summary><p>İki şey için gerekir. Birincisi, bir öğe seçtikten sonra çalıştığınız uygulamaya ⌘V göndermek. İkincisi, metin imlecini bulup menüyü onun yanında açmak. Keepit başka uygulamaları okumaz ve izlemez. İzin verilmezse geçmişi kaydetmeyi ve seçilen öğeyi panoya koymayı sürdürür, ama yapıştırmayı siz yaparsınız.</p></details>"
+ ],
+ [
+  "<details><summary>Does anything leave my Mac?</summary><p>Not unless you ask it to. Keepit has no server: the only network request is the daily update check against GitHub Releases — and you can switch it off in Settings → General, after which Keepit makes no request at all. The App Store edition does not make even that one. There is no account, no telemetry, no crash reporting. If you switch on automatic backup, encrypted copies are written to a folder you choose; if that folder lives in iCloud Drive or Dropbox, that service syncs them under your account — Keepit itself never talks to it.</p></details>",
+  "<details><summary>Mac’imden dışarı bir şey çıkıyor mu?</summary><p>Veriler yalnızca yerel olarak, bilgisayarınızda saklanır. Keepit’in sunucusu yoktur. Tek ağ isteği GitHub Releases üzerindeki günlük güncelleme denetimidir ve Ayarlar → Genel bölümünden kapatılabilir; bundan sonra Keepit hiçbir istek göndermez. App Store sürümü bu isteği bile göndermez. Hesap, telemetri ya da çökme raporu yoktur. Veriler ancak bir bulut klasörüne otomatik yedeklemeyi açarsanız internete çıkar: şifreli kopyalar seçtiğiniz klasöre yazılır ve klasör iCloud Drive ya da Dropbox içindeyse onları kendi hesabınız altında o hizmet eşzamanlar. Keepit bu hizmetle kendisi bağlantı kurmaz.</p></details>"
+ ],
+ [
+  "<details><summary>What if I forget the password?</summary><p>Use the 24-word recovery phrase Keepit showed you when you turned protection on, or Touch ID on the same Mac. With neither, the data cannot be recovered — there is no master key, by design.</p></details>",
+  "<details><summary>Parolayı unutursam ne olur?</summary><p>Korumayı açarken Keepit’in gösterdiği 24 kelimelik kurtarma ifadesini ya da aynı Mac’te Touch ID’yi kullanabilirsiniz. Bunlar olmadan veriler kurtarılamaz. Bu bilinçli bir tasarım kararıdır.</p></details>"
+ ],
+ [
+  "<details><summary>Is it really free? What's the catch?</summary><p>Free, MIT-licensed, source on <a href=\"https://github.com/andrey-insarov/Keepit\">GitHub</a>. Keepit was built by the founder of the <a href=\"https://it.com\">it.com</a> domain zone to show what can live at a .it.com address — the app is the advertisement. No ads, no in-app purchases, no pro tier, and therefore nothing to gain from your data.</p></details>",
+  "<details><summary>Gerçekten ücretsiz mi? Bir bit yeniği var mı?</summary><p>Evet, tamamen ücretsiz: uygulama MIT lisansıyla yayımlanır ve kodu <a href=\"https://github.com/andrey-insarov/Keepit\">GitHub</a>’dadır. Keepit’i <a href=\"https://it.com\">it.com</a> alan adı bölgesinin kurucusu kendi kullanımı için yaptı; bunun it.com’un neye yaradığını gösteren iyi bir örnek olabileceği fikri sonradan geldi. Bu yüzden reklam, uygulama içi satın alma ya da ücretli sürüm yoktur: programın kullanılması insanlara hizmetimizi kendiliğinden anlatır.</p></details>"
+ ],
+ [
+  "<details><summary>Where does the design come from?</summary><p>Keepit started as a macOS take on the workflow of <a href=\"https://github.com/nakkag/CLCL\">CLCL</a>, a classic Windows clipboard tool, and grew into an app of its own — written from scratch in Swift, with ideas drawn from many clipboard and snippet managers. It is not affiliated with the CLCL author.</p></details>",
+  "<details><summary>Tam da böyle bir uygulama yapma fikri nereden çıktı?</summary><p>Keepit, Windows’un klasik pano aracı <a href=\"https://github.com/nakkag/CLCL\">CLCL</a> ile çalışma biçimini macOS’e taşıma denemesi olarak başladı ve bağımsız bir uygulamaya dönüştü. Swift ile sıfırdan yazıldı ve birçok pano ve snippet yöneticisinden fikirler aldı. Projenin CLCL’nin yazarıyla bir bağı yoktur, ama ilham için kendisine minnettarız.</p></details>"
+ ],
+ [
+  "<details><summary>How do I move my data to another Mac, or between editions?</summary><p>Switch on <em>Settings → Backup → Back up automatically to a folder</em> and pick iCloud Drive (or any folder): Keepit keeps complete, encrypted <code>.keepit</code> copies there. On the new Mac choose <em>Restore from Backup…</em> at first launch, enter the old Mac's password or recovery phrase, then <em>Replace</em> or <em>Merge</em>. For a one-off file there is <em>Save to Archive…</em> with its own password. Everything is AES-256-GCM encrypted, so a USB stick or a cloud folder is fine, and the same file works in both editions.</p></details>",
+  "<details><summary>Verilerimi başka bir Mac’e ya da sürümler arasında nasıl taşırım?</summary><p><em>Ayarlar → Yedekleme → Bir klasöre otomatik yedekle</em> seçeneğini açın ve iCloud Drive’ı (ya da herhangi bir klasörü) seçin: Keepit orada eksiksiz ve şifreli <code>.keepit</code> kopyaları saklar. Yeni Mac’te ilk açılışta <em>Yedekten Geri Yükle…</em> seçeneğini seçin, eski Mac’in parolasını ya da kurtarma ifadesini girin, sonra <em>Değiştir</em> veya <em>Birleştir</em> seçeneğini kullanın. Tek seferlik dışa aktarma için kendi parolası olan <em>Arşive Kaydet…</em> vardır. Her şey AES-256-GCM ile şifrelidir; bu yüzden USB bellek de bulut klasörü de uygundur. Aynı dosya her iki sürümde çalışır.</p></details>"
+ ],
+ [
+  "<details><summary>Which Macs are supported?</summary><p>macOS 13 Ventura or later, Apple silicon and Intel. Touch ID unlock needs a Mac with Touch ID.</p></details>",
+  "<details><summary>Hangi Mac’ler destekleniyor?</summary><p>macOS 13 Ventura veya sonrası, Apple silicon ve Intel. Touch ID ile kilit açmak için Touch ID’li bir Mac gerekir.</p></details>"
+ ],
+ [
+  "<div><h3>Made by the team behind it.com</h3><p>Keepit is a free project from the people who run the <strong>it.com</strong> domain zone, the home for IT people, products and companies online. Keepit lives at <strong>keep.it.com</strong>. Your project could live at a name like it too.</p></div>",
+  "<div><h3>it.com ekibi tarafından yapıldı</h3><p>Keepit, it.com Domains ekibinin ücretsiz bir projesidir. <strong>it.com</strong> alan adı bölgesi, BT uzmanları için olduğu kadar internetteki başka her türlü ürün ve şirket için de iyi bir ev olabilir. Keepit, <strong>keep.it.com</strong> adresinde yaşıyor. Sizin projeniz de böyle bir adla yaşayabilir.</p></div>"
+ ],
+ [
+  "<em>yourname</em>.it.com<small><a href=\"https://it.com\">Find your .it.com domain</a></small>",
+  "<em>adınız</em>.it.com<small><a href=\"https://it.com\">.it.com alan adınızı bulun</a></small>"
+ ],
+ [
+  "<span>© 2026 UK Intis Telecom LTD · Keepit is MIT-licensed</span>",
+  "<span>© 2026 UK Intis Telecom LTD · Keepit, MIT lisansıyla dağıtılır</span>"
+ ],
+ [
+  "<span>How-tos: <a href=\"/clipboard-history-mac\">Clipboard history on a Mac</a> · <a href=\"/paste-as-plain-text-mac\">Paste as plain text</a> · <a href=\"/clear-clipboard-mac\">Clear the clipboard</a></span>",
+  "<span>Makaleler (İngilizce): <a href=\"/clipboard-history-mac\">Clipboard history on a Mac</a> · <a href=\"/paste-as-plain-text-mac\">Paste as plain text</a> · <a href=\"/clear-clipboard-mac\">Clear the clipboard</a></span>"
+ ],
+ [
+  "<span><a href=\"/privacy\">Privacy policy</a> · <a href=\"/security\">Security</a> · <a href=\"/support\">Support</a> · <a href=\"https://github.com/andrey-insarov/Keepit/blob/main/CHANGELOG.md\">Changelog</a> · <a href=\"https://it.com\">it.com</a></span>",
+  "<span><a href=\"/privacy\">Gizlilik politikası</a> (İngilizce) · <a href=\"/security\">Güvenlik</a> (İngilizce) · <a href=\"/support\">Destek</a> · <a href=\"https://github.com/andrey-insarov/Keepit/blob/main/CHANGELOG.md\">Değişiklik günlüğü</a> · <a href=\"https://it.com\">it.com</a></span>"
+ ],
+ [
+  "copy.textContent = 'Copied'; setTimeout(() => copy.textContent = 'Copy', 1600);",
+  "copy.textContent = 'Kopyalandı'; setTimeout(() => copy.textContent = 'Kopyala', 1600);"
+ ],
+ [
+  "const before = 'Hi Michael,\\n\\nThanks for your order — it left the warehouse this morning. Tracking number: ';",
+  "const before = 'Merhaba Mehmet Bey,\\n\\nSiparişiniz için teşekkürler. Paketiniz bu sabah depodan çıktı. Takip numarası: ';"
+ ],
+ [
+  "const after = '. Delivery takes two to three days.';",
+  "const after = '. Teslimat iki üç gün sürer.';"
+ ]
+]

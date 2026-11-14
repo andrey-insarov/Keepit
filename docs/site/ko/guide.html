@@ -1,0 +1,815 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keepit 사용 설명서 – Mac용 클립보드 관리자</title><link rel="icon" href="/img/icon.png?v=a1519b94"><link rel="apple-touch-icon" href="/img/icon.png?v=a1519b94">
+<meta name="description" content="Mac용 무료 클립보드 관리자 Keepit 사용법: 기록 메뉴, 단축키, 템플릿, 뷰어, 암호화, Touch ID.">
+<link rel="canonical" href="https://keep.it.com/ko/guide"><link rel="alternate" hreflang="en" href="https://keep.it.com/guide"><link rel="alternate" hreflang="ru" href="https://keep.it.com/ru/guide"><link rel="alternate" hreflang="uk" href="https://keep.it.com/uk/guide"><link rel="alternate" hreflang="de" href="https://keep.it.com/de/guide"><link rel="alternate" hreflang="fr" href="https://keep.it.com/fr/guide"><link rel="alternate" hreflang="es" href="https://keep.it.com/es/guide"><link rel="alternate" hreflang="pt-BR" href="https://keep.it.com/pt-br/guide"><link rel="alternate" hreflang="ja" href="https://keep.it.com/ja/guide"><link rel="alternate" hreflang="zh-Hans" href="https://keep.it.com/zh-hans/guide"><link rel="alternate" hreflang="ar" href="https://keep.it.com/ar/guide"><link rel="alternate" hreflang="cs" href="https://keep.it.com/cs/guide"><link rel="alternate" hreflang="pl" href="https://keep.it.com/pl/guide"><link rel="alternate" hreflang="it" href="https://keep.it.com/it/guide"><link rel="alternate" hreflang="nl" href="https://keep.it.com/nl/guide"><link rel="alternate" hreflang="tr" href="https://keep.it.com/tr/guide"><link rel="alternate" hreflang="ko" href="https://keep.it.com/ko/guide"><link rel="alternate" hreflang="zh-Hant" href="https://keep.it.com/zh-hant/guide"><link rel="alternate" hreflang="he" href="https://keep.it.com/he/guide"><link rel="alternate" hreflang="x-default" href="https://keep.it.com/guide"><meta property="og:type" content="article"><meta property="og:site_name" content="Keepit"><meta property="og:locale" content="ko_KR"><meta property="og:title" content="Keepit 사용 설명서 – Mac용 클립보드 관리자"><meta property="og:description" content="Mac용 무료 클립보드 관리자 Keepit 사용법: 기록 메뉴, 단축키, 템플릿, 뷰어, 암호화, Touch ID."><meta property="og:image" content="https://keep.it.com/img/social-preview.png?v=57583ec3"><meta property="og:url" content="https://keep.it.com/ko/guide"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Keepit 사용 설명서 – Mac용 클립보드 관리자"><meta name="twitter:description" content="Mac용 무료 클립보드 관리자 Keepit 사용법: 기록 메뉴, 단축키, 템플릿, 뷰어, 암호화, Touch ID."><meta name="twitter:image" content="https://keep.it.com/img/social-preview.png?v=57583ec3"><meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "@id": "https://keep.it.com/ko/guide", "url": "https://keep.it.com/ko/guide", "name": "Keepit 사용 설명서", "headline": "Keepit 사용 설명서", "description": "Mac용 무료 클립보드 관리자 Keepit 사용법: 기록 메뉴, 단축키, 템플릿, 뷰어, 암호화, Touch ID.", "inLanguage": "ko", "isPartOf": {"@id": "https://keep.it.com/#site"}, "about": {"@id": "https://keep.it.com/#app"}, "author": {"@id": "https://keep.it.com/#org"}, "publisher": {"@id": "https://keep.it.com/#org"}, "image": "https://keep.it.com/img/social-preview.png?v=57583ec3", "dateModified": "2026-11-14", "translationOfWork": {"@id": "https://keep.it.com/guide"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Keepit", "item": "https://keep.it.com/ko/"}, {"@type": "ListItem", "position": 2, "name": "사용 설명서", "item": "https://keep.it.com/ko/guide"}]}]}</script>
+<script defer src="https://app.eurometrics.eu/script.js?v=7cfd3b4c27be" data-website-id="0ab7fe20-0c05-4061-b037-c033dc46c1e1" data-domains="keep.it.com" data-do-not-track="true" data-exclude-search="true" data-no-storage="true"></script>
+<style>
+:root{--paper:#fbfbfd;--ink:#0f1222;--ink-2:#4b4f63;--ink-3:#696d84;--blue:#2f4fd1;--blue-deep:#1f3aa6;--blue-tint:#eef2ff;--line:#e3e5ef;--key:#fff;--key-edge:#cfd2de;--win:#fff;--sel:#2f5cf0}
+@media(prefers-color-scheme:dark){:root{--paper:#0c0d14;--ink:#f2f3f8;--ink-2:#b7bacb;--ink-3:#8e92a9;--blue:#7d9bff;--blue-deep:#a9bdff;--blue-tint:#151b35;--line:#23263a;--key:#1b1e2e;--key-edge:#3a3e56;--win:#1a1c28;--sel:#3d6bff}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:72px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;font:17px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+:focus-visible{outline:3px solid var(--sel);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:20;-webkit-backdrop-filter:saturate(180%) blur(18px);backdrop-filter:saturate(180%) blur(18px);background:color-mix(in srgb,var(--paper) 78%,transparent);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:650;color:var(--ink);font-size:20px}.brand img{width:44px;height:44px;border-radius:10px}
+nav{display:flex;gap:24px;align-items:center}nav>a{color:var(--ink-2);font-size:15px}nav>a:hover{color:var(--ink);text-decoration:none}
+.mnav{display:none;position:relative}.mnav summary{list-style:none;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--ink)}
+.mnav summary::-webkit-details-marker{display:none}.mnav summary svg{width:22px;height:22px}.mnav[open] summary{background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.mnav .links{position:absolute;right:0;top:48px;min-width:210px;padding:6px;border-radius:14px;background:var(--win);border:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.18);display:grid}
+.mnav .links a{display:block;padding:11px 14px;border-radius:9px;font-size:16px;color:var(--ink)}.mnav .links a:hover{background:var(--blue-tint);text-decoration:none}
+@media(max-width:700px){nav{gap:10px}nav>a:not(.gh){display:none}.mnav{display:block;margin-right:-8px}}
+main.wrap{display:grid;grid-template-columns:230px minmax(0,1fr);gap:56px;padding-top:48px;padding-bottom:96px}
+main.wrap.narrow{grid-template-columns:minmax(0,1fr);max-width:820px}
+aside{position:sticky;top:76px;align-self:start;max-height:calc(100vh - 96px);overflow:auto;font-size:14px;line-height:1.45;padding-right:8px}
+aside .ttl{font-weight:650;color:var(--ink);margin:0 0 10px;font-size:13px}
+aside ol{list-style:none;margin:0;padding:0}aside li{margin:0}
+aside a{display:block;color:var(--ink-2);padding:4px 0 4px 12px;border-left:2px solid var(--line)}
+aside a:hover{color:var(--ink);text-decoration:none}aside a.on{color:var(--blue);border-left-color:var(--blue)}
+aside ol ol a{padding-left:24px;font-size:13px;color:var(--ink-3)}
+@media(max-width:900px){main.wrap{grid-template-columns:minmax(0,1fr);gap:0;padding-top:32px;padding-bottom:64px}aside{position:static;max-height:none;margin-bottom:32px;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--win)}aside ol ol{display:none}}
+article{max-width:72ch;min-width:0}
+article h1{font-size:clamp(34px,5vw,52px);line-height:1.05;letter-spacing:-.03em;font-weight:750;margin:0 0 .5em}
+article h1+p{font-size:19px;color:var(--ink-2)}
+article h2{font-size:30px;line-height:1.15;letter-spacing:-.02em;font-weight:700;margin:2.2em 0 .6em;padding-top:1em;border-top:1px solid var(--line)}
+article h3{font-size:20px;font-weight:650;margin:1.8em 0 .5em}
+article p,article li{color:var(--ink);}article li{margin:.25em 0}
+article hr{border:0;border-top:1px solid var(--line);margin:2.5em 0}
+code{font:.9em ui-monospace,"SF Mono",Menlo,monospace;background:color-mix(in srgb,var(--ink) 7%,transparent);padding:2px 6px;border-radius:6px;white-space:nowrap}
+@media(max-width:600px){code{white-space:normal;overflow-wrap:anywhere}}
+pre{background:var(--blue-tint);padding:14px 18px;border-radius:12px;overflow:auto;font-size:14px;line-height:1.6;max-width:100%}pre code{background:none;padding:0;white-space:pre-wrap;word-break:break-word}
+kbd.k{display:inline-block;min-width:1.7em;padding:0 .4em;text-align:center;font:600 .82em/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text",Helvetica,Arial,sans-serif;color:var(--ink);background:var(--key);border:1px solid var(--key-edge);border-bottom-width:2px;border-radius:6px;white-space:nowrap;vertical-align:baseline}
+.tbl{overflow-x:auto;margin:1.2em 0}table{border-collapse:collapse;width:100%;font-size:15.5px}th,td{text-align:left;padding:9px 12px 9px 0;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--ink-3);font-weight:600;font-size:14px}td code{display:inline-block;margin:1px 0}
+td:first-child{white-space:nowrap}@media(max-width:600px){td:first-child{white-space:normal}}
+figure.shot{margin:1.6em 0;width:100%}figure.shot a{display:block}figure.shot img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line);box-shadow:0 12px 32px -8px rgba(15,18,34,.25);cursor:zoom-in}
+figure.shot figcaption{font-size:14px;color:var(--ink-3);margin-top:8px}
+.slot{border:2px dashed var(--line);border-radius:12px;padding:28px;text-align:center;color:var(--ink-3);font-size:15px}
+.contents{display:none}
+.fb{margin:1.4em 0 2em;padding:22px 24px;border:1px solid var(--line);border-radius:16px;background:var(--win);display:grid;gap:14px}
+.fb label{display:grid;gap:6px;font-size:14px;font-weight:600;color:var(--ink-2)}.fb .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:600px){.fb .row2{grid-template-columns:1fr}}
+.fb .hint{font-weight:400;color:var(--ink-3)}
+.fb input[type=text],.fb input[type=email],.fb select,.fb textarea{font:16px/1.4 inherit;color:var(--ink);background:var(--win);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;box-sizing:border-box}
+.fb textarea{resize:vertical;min-height:140px}.fb input:focus,.fb select:focus,.fb textarea:focus{outline:2px solid var(--blue);outline-offset:1px;border-color:transparent}
+.fb input[type=file]{font-size:14px;color:var(--ink-2)}
+.fb-list{list-style:none;margin:-6px 0 0;padding:0;display:grid;gap:6px}.fb-list li{font-size:14px;color:var(--ink-2);display:flex;align-items:center;gap:10px}.fb-list button{font:inherit;font-size:13px;color:var(--blue);background:none;border:0;padding:0;cursor:pointer}.fb-list button:hover{text-decoration:underline}
+.fb .btn{justify-self:start;display:inline-flex;align-items:center;padding:12px 22px;border-radius:12px;font-weight:600;font-size:16px;line-height:1;border:0;cursor:pointer;background:var(--blue);color:#fff}
+.fb .btn[disabled]{opacity:.6;cursor:default}.fb-err{color:#c0392b;font-size:14px;margin:0}.fb-legal{font-size:13px;margin:-6px 0 0}.fb-ok{color:var(--ink);margin:0;padding:18px 20px;border-radius:12px;background:var(--blue-tint);line-height:1.5}
+footer{border-top:1px solid var(--line);padding:36px 0 64px;color:var(--ink-3);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}footer a{color:var(--ink-2)}
+#lb{position:fixed;inset:0;background:rgba(5,7,20,.86);display:none;align-items:center;justify-content:center;padding:24px;z-index:30;cursor:zoom-out}
+#lb.on{display:flex}#lb img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+
+.langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
+.tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
+code,kbd,pre{direction:ltr;unicode-bidi:isolate}
+.lpick{position:relative}.lpick summary{list-style:none;cursor:pointer;height:40px;padding:0 8px;display:flex;align-items:center;gap:5px;border-radius:10px;color:var(--ink-2,var(--ink))}
+.lpick summary::-webkit-details-marker{display:none}.lpick summary .chev{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.lpick .fl{flex:none;width:23px;height:16px;border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
+.lpick .links{position:absolute;right:0;top:48px;z-index:30;min-width:220px;padding:6px;border-radius:14px;background:var(--win);border:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.18);display:grid}
+.lpick .links a,.lpick .links b{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;font-size:15px;font-weight:400;color:var(--ink);white-space:nowrap}
+.lpick .links a:hover{background:var(--blue-tint);text-decoration:none}.lpick .links b{font-weight:600;background:color-mix(in srgb,var(--ink) 6%,transparent)}
+@media(min-width:701px){.lpick .links{max-height:calc(100vh - 64px);overflow:auto}.lpick .links.cols{display:block;column-count:2;column-gap:4px;min-width:430px}.lpick .links.cols a,.lpick .links.cols b{break-inside:avoid}}
+@media(max-width:700px){.lpick .links{right:-48px;max-height:70vh;overflow:auto}.lpick .links a,.lpick .links b{padding:11px 12px;font-size:16px}}
+[dir=rtl] .lpick .links{right:auto;left:0}
+@media(max-width:700px){[dir=rtl] .lpick .links{left:-48px}}
+[dir=rtl] .mnav .links{right:auto;left:0}
+@media(max-width:700px){[dir=rtl] .mnav{margin-right:0;margin-left:-8px}}
+[dir=rtl] aside{padding-right:0;padding-left:8px}
+[dir=rtl] aside a{padding:4px 12px 4px 0;border-left:0;border-right:2px solid var(--line)}
+[dir=rtl] aside a.on{border-right-color:var(--blue)}
+[dir=rtl] aside ol ol a{padding-left:0;padding-right:24px}
+[dir=rtl] th,[dir=rtl] td{text-align:right;padding:9px 0 9px 12px}
+[dir=rtl] .fb .btn{justify-self:end}
+</style></head>
+<body><header><div class="wrap">
+  <a class="brand" href="/ko/"><img src="/img/icon.png?v=a1519b94" alt="">Keepit</a>
+  <nav><a href="/ko/#features">기능</a><a href="/ko/guide">사용 설명서</a><a href="/security">보안</a><a href="/ko/support">지원</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a><details class="lpick"><summary aria-label="언어: 한국어"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><g transform="rotate(-34 10 7)"><path fill="#cd2e3a" d="M6.8 7a3.2 3.2 0 0 1 6.4 0z"/><path fill="#0047a0" d="M6.8 7a3.2 3.2 0 0 0 6.4 0z"/><circle cx="8.4" cy="7" r="1.6" fill="#cd2e3a"/><circle cx="11.6" cy="7" r="1.6" fill="#0047a0"/></g><path stroke="#000" stroke-width=".7" d="m3 3.6 2-1.5M3.5 4.3l2-1.5M14.5 2.1l2 1.5M15 1.4l2 1.5M3 10.4l2 1.5M3.5 9.7l2 1.5M14.5 11.9l2-1.5M15 12.6l2-1.5"/></svg><svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></summary><div class="links cols" dir="ltr"><a href="/guide" hreflang="en"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#b22234" d="M0 0h20v14H0z"/><path fill="#fff" d="M0 1.08h20v1.08H0z"/><path fill="#fff" d="M0 3.23h20v1.08H0z"/><path fill="#fff" d="M0 5.38h20v1.08H0z"/><path fill="#fff" d="M0 7.54h20v1.08H0z"/><path fill="#fff" d="M0 9.69h20v1.08H0z"/><path fill="#fff" d="M0 11.85h20v1.08H0z"/><path fill="#3c3b6e" d="M0 0h8.2v7.54H0z"/><circle cx="1.3" cy="1.30" r=".42" fill="#fff"/><circle cx="3.1" cy="1.30" r=".42" fill="#fff"/><circle cx="4.9" cy="1.30" r=".42" fill="#fff"/><circle cx="6.7" cy="1.30" r=".42" fill="#fff"/><circle cx="1.3" cy="2.95" r=".42" fill="#fff"/><circle cx="3.1" cy="2.95" r=".42" fill="#fff"/><circle cx="4.9" cy="2.95" r=".42" fill="#fff"/><circle cx="6.7" cy="2.95" r=".42" fill="#fff"/><circle cx="1.3" cy="4.60" r=".42" fill="#fff"/><circle cx="3.1" cy="4.60" r=".42" fill="#fff"/><circle cx="4.9" cy="4.60" r=".42" fill="#fff"/><circle cx="6.7" cy="4.60" r=".42" fill="#fff"/><circle cx="1.3" cy="6.25" r=".42" fill="#fff"/><circle cx="3.1" cy="6.25" r=".42" fill="#fff"/><circle cx="4.9" cy="6.25" r=".42" fill="#fff"/><circle cx="6.7" cy="6.25" r=".42" fill="#fff"/></svg><span lang="en">English</span></a><a href="/ru/guide" hreflang="ru"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#0039a6" d="M0 4.67h20V14H0z"/><path fill="#d52b1e" d="M0 9.33h20V14H0z"/></svg><span lang="ru">Русский</span></a><a href="/uk/guide" hreflang="uk"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#0057b7" d="M0 0h20v14H0z"/><path fill="#ffd700" d="M0 7h20v7H0z"/></svg><span lang="uk">Українська</span></a><a href="/de/guide" hreflang="de"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path d="M0 0h20v14H0z"/><path fill="#d00" d="M0 4.67h20V14H0z"/><path fill="#ffce00" d="M0 9.33h20V14H0z"/></svg><span lang="de">Deutsch</span></a><a href="/fr/guide" hreflang="fr"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#0055a4" d="M0 0h6.67v14H0z"/><path fill="#ef4135" d="M13.33 0H20v14h-6.67z"/></svg><span lang="fr">Français</span></a><a href="/es/guide" hreflang="es"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#aa151b" d="M0 0h20v14H0z"/><path fill="#f1bf00" d="M0 3.5h20v7H0z"/></svg><span lang="es">Español</span></a><a href="/pt-br/guide" hreflang="pt-BR"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#009c3b" d="M0 0h20v14H0z"/><path fill="#ffdf00" d="M10 1.6 18 7l-8 5.4L2 7z"/><circle cx="10" cy="7" r="3.1" fill="#002776"/><path fill="none" stroke="#fff" stroke-width=".7" d="M7.1 6.2c2-.5 4.3.1 5.8 1.6"/></svg><span lang="pt-BR">Português (Brasil)</span></a><a href="/ja/guide" hreflang="ja"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><circle cx="10" cy="7" r="4.2" fill="#bc002d"/></svg><span lang="ja">日本語</span></a><a href="/zh-hans/guide" hreflang="zh-Hans"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#de2910" d="M0 0h20v14H0z"/><polygon fill="#ffde00" points="3.50,1.40 3.99,2.92 5.59,2.92 4.30,3.86 4.79,5.38 3.50,4.44 2.21,5.38 2.70,3.86 1.41,2.92 3.01,2.92"/><polygon fill="#ffde00" points="7.38,0.85 7.26,1.38 7.73,1.66 7.19,1.71 7.08,2.25 6.86,1.75 6.31,1.81 6.72,1.44 6.50,0.94 6.97,1.22"/><polygon fill="#ffde00" points="9.05,2.52 8.68,2.93 8.96,3.40 8.46,3.18 8.09,3.59 8.15,3.04 7.65,2.82 8.19,2.71 8.24,2.17 8.52,2.64"/><polygon fill="#ffde00" points="9.15,5.00 8.63,5.17 8.63,5.71 8.31,5.27 7.79,5.44 8.11,5.00 7.79,4.56 8.31,4.73 8.63,4.29 8.63,4.83"/><polygon fill="#ffde00" points="7.65,6.78 7.12,6.66 6.84,7.13 6.79,6.59 6.25,6.48 6.75,6.26 6.69,5.71 7.06,6.12 7.56,5.90 7.28,6.37"/></svg><span lang="zh-Hans">简体中文</span></a><a href="/ar/guide" hreflang="ar"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#00732f" d="M0 0h20v4.67H0z"/><path d="M0 9.33h20V14H0z"/><path fill="#f00" d="M0 0h5v14H0z"/></svg><span lang="ar">العربية</span></a><a href="/cs/guide" hreflang="cs"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#d7141a" d="M0 7h20v7H0z"/><path fill="#11457e" d="m0 0 10 7-10 7z"/></svg><span lang="cs">Čeština</span></a><a href="/pl/guide" hreflang="pl"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#dc143c" d="M0 7h20v7H0z"/></svg><span lang="pl">Polski</span></a><a href="/it/guide" hreflang="it"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#009246" d="M0 0h6.67v14H0z"/><path fill="#ce2b37" d="M13.33 0H20v14h-6.67z"/></svg><span lang="it">Italiano</span></a><a href="/nl/guide" hreflang="nl"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#ae1c28" d="M0 0h20v4.67H0z"/><path fill="#21468b" d="M0 9.33h20V14H0z"/></svg><span lang="nl">Nederlands</span></a><a href="/tr/guide" hreflang="tr"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#e30a17" d="M0 0h20v14H0z"/><circle cx="7.4" cy="7" r="3.5" fill="#fff"/><circle cx="8.3" cy="7" r="2.8" fill="#e30a17"/><polygon fill="#fff" points="13.22,6.47 12.22,7.20 12.60,8.38 11.60,7.65 10.60,8.38 10.98,7.20 9.98,6.47 11.22,6.47 11.60,5.30 11.98,6.47"/></svg><span lang="tr">Türkçe</span></a><b aria-current="true"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><g transform="rotate(-34 10 7)"><path fill="#cd2e3a" d="M6.8 7a3.2 3.2 0 0 1 6.4 0z"/><path fill="#0047a0" d="M6.8 7a3.2 3.2 0 0 0 6.4 0z"/><circle cx="8.4" cy="7" r="1.6" fill="#cd2e3a"/><circle cx="11.6" cy="7" r="1.6" fill="#0047a0"/></g><path stroke="#000" stroke-width=".7" d="m3 3.6 2-1.5M3.5 4.3l2-1.5M14.5 2.1l2 1.5M15 1.4l2 1.5M3 10.4l2 1.5M3.5 9.7l2 1.5M14.5 11.9l2-1.5M15 12.6l2-1.5"/></svg><span lang="ko">한국어</span></b><a href="/zh-hant/guide" hreflang="zh-Hant"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#de2910" d="M0 0h20v14H0z"/><ellipse cx="10" cy="4.4" rx="1.35" ry="2.4" fill="#fff" transform="rotate(0 10 7)"/><ellipse cx="10" cy="4.4" rx="1.35" ry="2.4" fill="#fff" transform="rotate(72 10 7)"/><ellipse cx="10" cy="4.4" rx="1.35" ry="2.4" fill="#fff" transform="rotate(144 10 7)"/><ellipse cx="10" cy="4.4" rx="1.35" ry="2.4" fill="#fff" transform="rotate(216 10 7)"/><ellipse cx="10" cy="4.4" rx="1.35" ry="2.4" fill="#fff" transform="rotate(288 10 7)"/></svg><span lang="zh-Hant">繁體中文</span></a><a href="/he/guide" hreflang="he"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#0038b8" d="M0 1.6h20v1.7H0zM0 10.7h20v1.7H0z"/><path fill="none" stroke="#0038b8" stroke-width=".6" d="m10 4.6 2.1 3.6H7.9zM10 9.4 7.9 5.8h4.2z"/></svg><span lang="he">עברית</span></a></div></details><details class="mnav"><summary aria-label="메뉴"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><div class="links"><a href="/ko/#features">기능</a><a href="/ko/#privacy">개인정보 보호</a><a href="/ko/#install">설치</a><a href="/ko/guide">사용 설명서</a><a href="/security">보안</a><a href="/ko/support">지원</a></div></details></nav>
+</div></header>
+<main class="wrap"><aside aria-label="목차"><p class="ttl">이 페이지의 내용</p><ol><li><a href="#part-1-getting-started">1부. 시작하기</a><ol><li><a href="#install">설치</a></li><li><a href="#first-launch">처음 실행</a></li></ol></li><li><a href="#part-2-everyday-use">2부. 일상적인 사용</a><ol><li><a href="#the-history-menu">기록 메뉴</a></li><li><a href="#search-and-preview">검색과 미리보기</a></li><li><a href="#paste-without-the-menu">메뉴 없이 붙여넣기</a></li><li><a href="#the-paste-queue">붙여넣기 대기열</a></li><li><a href="#the-extended-menu">확장 메뉴</a></li></ol></li><li><a href="#part-3-templates">3부. 템플릿</a><ol><li><a href="#creating-and-organising">만들기와 정리하기</a></li><li><a href="#placeholders">자리표시자</a></li><li><a href="#templates-that-ask-questions">질문하는 템플릿</a></li></ol></li><li><a href="#part-4-the-viewer">4부. 뷰어</a></li><li><a href="#part-5-settings">5부. 설정</a></li><li><a href="#part-6-security">6부. 보안</a><ol><li><a href="#password-and-encryption">암호와 암호화</a></li><li><a href="#touch-id">Touch ID</a></li><li><a href="#recovery-phrase">복구 문구</a></li><li><a href="#backup">백업</a></li></ol></li><li><a href="#part-7-advanced">7부. 고급</a><ol><li><a href="#automation-the-keepit-url-scheme">자동화: keepit:// URL 체계</a></li><li><a href="#updates">업데이트</a></li><li><a href="#uninstalling">설치 제거</a></li></ol></li><li><a href="#reference">참고 자료</a><ol><li><a href="#troubleshooting">문제 해결</a></li><li><a href="#keyboard-cheat-sheet">단축키 요약</a></li><li><a href="#placeholder-cheat-sheet">자리표시자 요약</a></li></ol></li></ol></aside><article><h1 id="keepit-user-guide">Keepit 사용 설명서</h1><p class="tr-note">영어 원문을 번역한 페이지입니다. 원문: <a href="/guide">English</a>.</p>
+<p>Keepit은 macOS용 클립보드 기록 및 템플릿 관리자입니다. 메뉴 막대에 자리하고, 복사한 모든 것을
+기억하며, 단축키로 어떤 항목이든 다시 붙여넣습니다. 아래의 단축키는 모두 기본값이고 각각
+<em>설정 → 단축키</em>에서 바꿀 수 있습니다. 이 설명서는 Keepit 3을 다룹니다. Keepit 2.x 설명서는
+<a href="https://keep.it.com/v2/guide">keep.it.com/v2/guide</a>(영어)에 그대로 남아 있습니다.</p>
+<figure class="shot" style="max-width:629px"><a href="/img/guide/menu.png?v=ef1dd207" class="zoom" title="원본 크기로 열기"><img src="/img/guide/menu.png?v=ef1dd207" alt="기록 메뉴" width="629" height="778" loading="lazy"></a><figcaption>기록 메뉴</figcaption></figure>
+<p><strong>목차</strong></p>
+<ul>
+<li><a href="#part-1--getting-started">1부. 시작하기</a>: <a href="#install">설치</a> · <a href="#first-launch">처음 실행</a></li>
+<li><a href="#part-2--everyday-use">2부. 일상적인 사용</a>: <a href="#the-history-menu">기록 메뉴</a> · <a href="#search-and-preview">검색과 미리보기</a> · <a href="#paste-without-the-menu">메뉴 없이 붙여넣기</a> · <a href="#the-paste-queue">붙여넣기 대기열</a> · <a href="#the-extended-menu">확장 메뉴</a></li>
+<li><a href="#part-3--templates">3부. 템플릿</a>: <a href="#creating-and-organising">만들기와 정리하기</a> · <a href="#placeholders">자리표시자</a> · <a href="#templates-that-ask-questions">질문하는 템플릿</a></li>
+<li><a href="#part-4--the-viewer">4부. 뷰어</a></li>
+<li><a href="#part-5--settings">5부. 설정</a></li>
+<li><a href="#part-6-security">6부. 보안</a>: <a href="#password-and-encryption">암호와 암호화</a> · <a href="#touch-id">Touch ID</a> · <a href="#recovery-phrase">복구 문구</a> · <a href="#backup">백업</a></li>
+<li><a href="#part-7--advanced">7부. 고급</a>: <a href="#automation-the-keepit-url-scheme">자동화</a> · <a href="#updates">업데이트</a> · <a href="#uninstalling">설치 제거</a></li>
+<li><a href="#reference">참고 자료</a>: <a href="#troubleshooting">문제 해결</a> · <a href="#keyboard-cheat-sheet">단축키 요약</a> · <a href="#placeholder-cheat-sheet">자리표시자 요약</a></li>
+</ul>
+<hr />
+<h2 id="part-1-getting-started">1부. 시작하기</h2>
+<h3 id="install">설치</h3>
+<p><strong>Homebrew.</strong> <code>brew upgrade</code>로 최신 상태를 유지할 수 있어서 권장하는 방법입니다.</p>
+<pre><code class="language-bash">brew tap andrey-insarov/keepit https://github.com/andrey-insarov/Keepit
+brew install --cask andrey-insarov/keepit/keepit
+</code></pre>
+<p><strong>DMG.</strong> <a href="https://github.com/andrey-insarov/Keepit/releases/latest">최신 릴리스</a>에서
+<code>Keepit-&lt;버전&gt;.dmg</code>를 내려받아 열고 Keepit을 <em>응용 프로그램</em> 폴더로 드래그합니다.</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/dmg.png?v=2115ef2c" class="zoom" title="원본 크기로 열기"><img src="/img/guide/dmg.png?v=2115ef2c" alt="DMG: Keepit을 응용 프로그램 폴더로 드래그합니다" width="636" height="396" loading="lazy"></a><figcaption>DMG: Keepit을 응용 프로그램 폴더로 드래그합니다</figcaption></figure>
+<p>앱을 처음 열면 macOS가 이 앱이 인터넷에서 내려받은 것이며 Apple이 검사했음을 확인해 줍니다.
+<em>열기</em>를 클릭하세요.</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/gatekeeper.png?v=d79051e5" class="zoom" title="원본 크기로 열기"><img src="/img/guide/gatekeeper.png?v=d79051e5" alt="macOS Gatekeeper 확인 창" width="336" height="336" loading="lazy"></a><figcaption>macOS Gatekeeper 확인 창</figcaption></figure>
+<p>Keepit은 서명과 공증을 마쳤고, 스스로 업데이트하며, macOS 13 Ventura 이상이 설치된 Apple Silicon
+및 Intel Mac에서 네이티브로 실행됩니다.</p>
+<h3 id="first-launch">처음 실행</h3>
+<p>Keepit은 메뉴 막대 앱입니다. Dock 아이콘이 없고, 직접 열기 전에는 윈도우도 없습니다. 처음
+실행하면 메뉴 막대에 📎 아이콘이 나타나고 Keepit이 세 가지를 묻습니다.</p>
+<p><strong>1. 백업에서 복원할까요?</strong> 새 Mac이고 Keepit 백업(iCloud Drive나 다른 폴더의 자동 백업, 또는
+내보낸 <code>.keepit</code> 파일)이 있다면 <em>백업에서 복원…</em>이 다른 어떤 일보다 먼저 기록과 템플릿을
+되돌려 놓습니다. 파일은 그 파일을 만든 Mac의 암호나 그 Mac의 복구 문구로 잠금 해제합니다.
+<em>새로 시작</em>은 이 단계를 건너뜁니다. 같은 복원 기능은 나중에 <em>설정 → 백업 → 복원…</em>에서도 쓸 수
+있고, Finder에서 <code>.keepit</code> 파일을 이중 클릭해도 열립니다. 자세한 내용은 <a href="#backup">백업</a>에
+있습니다.</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/restore-first-run.png?v=cfa1e73f" class="zoom" title="원본 크기로 열기"><img src="/img/guide/restore-first-run.png?v=cfa1e73f" alt="새 Mac에서 받는 첫 질문: 백업에서 복원할지, 새로 시작할지" width="336" height="408" loading="lazy"></a><figcaption>새 Mac에서 받는 첫 질문: 백업에서 복원할지, 새로 시작할지</figcaption></figure>
+<p><strong>2. 암호(선택 사항).</strong> Keepit은 기록과 템플릿을 암호화해서 저장하고 Touch ID로 잠금 해제할 수
+있습니다. 지금 정해도 되고 나중에 <em>설정 → 보안</em>에서 정해도 됩니다. 작동 방식은
+<a href="#part-6-security">6부</a>에서 설명합니다. <em>나중에</em>를 선택하면 모든 것이 디스크에 암호화되지 않은
+채로 남습니다. 방금 백업을 그 백업의 암호로 복원했다면 Keepit이 그 암호를 이 Mac에서도 계속
+쓰도록 제안합니다.</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/password-offer.png?v=a377f4be" class="zoom" title="원본 크기로 열기"><img src="/img/guide/password-offer.png?v=a377f4be" alt="처음 실행할 때의 암호 설정 제안" width="336" height="410" loading="lazy"></a><figcaption>처음 실행할 때의 암호 설정 제안</figcaption></figure>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/no-password-notice.png?v=0da3b4f2" class="zoom" title="원본 크기로 열기"><img src="/img/guide/no-password-notice.png?v=0da3b4f2" alt="나중에를 선택한 경우: 그것이 무엇을 뜻하고 어디에서 바꿀 수 있는지 알려 주는 안내" width="336" height="342" loading="lazy"></a><figcaption>나중에를 선택한 경우: 그것이 무엇을 뜻하고 어디에서 바꿀 수 있는지 알려 주는 안내</figcaption></figure>
+<p><strong>3. 손쉬운 사용 권한.</strong> Keepit은 사용자 대신 붙여넣기 위해 작업 중이던 앱으로 ⌘V를 보냅니다.
+macOS는 <em>시스템 설정 → 개인정보 보호 및 보안 → 손쉬운 사용</em>에 등록된 앱에만 이를 허용합니다.
+<em>시스템 설정 열기</em>를 클릭하고 Keepit을 켜세요. 이 권한이 없어도 Keepit은 기록하고 복사하지만
+⌘V는 직접 눌러야 합니다.</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/accessibility-prompt.png?v=53fda070" class="zoom" title="원본 크기로 열기"><img src="/img/guide/accessibility-prompt.png?v=53fda070" alt="Keepit이 손쉬운 사용 권한을 요청합니다" width="336" height="462" loading="lazy"></a><figcaption>Keepit이 손쉬운 사용 권한을 요청합니다</figcaption></figure>
+<figure class="shot" style="max-width:762px"><a href="/img/guide/accessibility-settings.png?v=3324189c" class="zoom" title="원본 크기로 열기"><img src="/img/guide/accessibility-settings.png?v=3324189c" alt="개인정보 보호 및 보안 → 손쉬운 사용에서 켜진 Keepit" width="762" height="598" loading="lazy"></a><figcaption>개인정보 보호 및 보안 → 손쉬운 사용에서 켜진 Keepit</figcaption></figure>
+<p>Keepit은 기본적으로 로그인할 때 실행됩니다. <em>설정 → 일반</em>에서 끌 수 있습니다.</p>
+<hr />
+<h2 id="part-2-everyday-use">2부. 일상적인 사용</h2>
+<h3 id="the-history-menu">기록 메뉴</h3>
+<p>아무 앱에서나 <strong>⌥M</strong>을 누르거나 📎 아이콘을 클릭합니다. Keepit이 텍스트 커서를 찾을 수 있으면
+메뉴가 커서 옆에 열리고, 찾지 못하면 마우스 포인터 옆에 열립니다.</p>
+<p>각 줄은 복사한 항목 하나이며 최신 항목이 맨 위에 있습니다. 최신 항목은 <strong>굵게</strong> 표시됩니다.
+지금 클립보드에 들어 있는 것이 바로 그 항목이기 때문입니다. 아이콘은 복사한 앱을 나타냅니다.
+제목이 <code>…</code>로 끝나면 메뉴에 보이는 것보다 줄이 더 있다는 뜻입니다. 이미지는 축소판으로, 파일
+목록은 파일 이름으로 표시됩니다.</p>
+<figure class="shot" style="max-width:1045px"><a href="/img/guide/menu-preview.png?v=3a4dbc04" class="zoom" title="원본 크기로 열기"><img src="/img/guide/menu-preview.png?v=3a4dbc04" alt="메뉴 옆의 미리보기 패널이 강조 표시된 항목 전체와 원본 앱, 시간, 크기를 보여 줍니다" width="1045" height="648" loading="lazy"></a><figcaption>메뉴 옆의 미리보기 패널이 강조 표시된 항목 전체와 원본 앱, 시간, 크기를 보여 줍니다</figcaption></figure>
+<figure class="shot" style="max-width:1088px"><a href="/img/guide/menu-image.png?v=d7b4e3af" class="zoom" title="원본 크기로 열기"><img src="/img/guide/menu-image.png?v=d7b4e3af" alt="기록 속의 이미지: 메뉴에는 축소판, 미리보기에는 전체 이미지" width="1088" height="640" loading="lazy"></a><figcaption>기록 속의 이미지: 메뉴에는 축소판, 미리보기에는 전체 이미지</figcaption></figure>
+<p>항목을 붙여넣으려면 클릭하거나, ↑ ↓로 이동한 뒤 Return을 누르거나, <strong>⌃⌥</strong>와 함께 항목 번호를
+누릅니다. <kbd class="k">⌃⌥3</kbd>은 3번 항목을 붙여넣습니다. 같은 키는 메뉴를 열지 않아도 어디에서나 작동합니다.</p>
+<p>기록 아래에는 <em>템플릿</em> 하위 메뉴, 뷰어(⌥E), 설정(⌥S), <em>기록 지우기</em>(⌥C), <em>10분간 기록 일시
+정지</em>(⌥P, 기록에 남기고 싶지 않은 내용을 입력할 때), 암호가 설정된 경우의 <em>Keepit 잠그기</em>(⌥L),
+그리고 업데이트 항목이 있습니다. <strong>⌥T</strong>는 템플릿 메뉴만 따로 엽니다. 이 키들은 모두 메뉴 없이도
+작동합니다.</p>
+<h3 id="search-and-preview">검색과 미리보기</h3>
+<p><strong>검색.</strong> 메뉴가 열려 있을 때 입력을 시작하세요. 맨 위의 필드가 제목과 전체 텍스트로 목록을
+걸러 내므로 긴 항목 한가운데의 줄도 찾을 수 있습니다. Return은 첫 번째 일치 항목을 붙여넣고,
+Esc는 필드를 지우며, Esc를 한 번 더 누르면 메뉴가 닫힙니다.</p>
+<p><strong>미리보기.</strong> 항목 위에 포인터를 올리거나 키보드로 이동하면 메뉴 옆의 패널이 이미지 전체 또는 긴
+텍스트의 첫 몇 줄을 원본 앱, 날짜, 크기와 함께 보여 줍니다. 한 줄짜리 짧은 텍스트에는 미리보기가
+없습니다. 메뉴의 줄에 이미 전체가 보이기 때문입니다.</p>
+<figure class="shot" style="max-width:907px"><a href="/img/guide/search-preview.png?v=86998c10" class="zoom" title="원본 크기로 열기"><img src="/img/guide/search-preview.png?v=86998c10" alt="입력하면 메뉴가 걸러지고, 미리보기 패널이 강조 표시된 항목을 보여 줍니다" width="907" height="524" loading="lazy"></a><figcaption>입력하면 메뉴가 걸러지고, 미리보기 패널이 강조 표시된 항목을 보여 줍니다</figcaption></figure>
+<h3 id="paste-without-the-menu">메뉴 없이 붙여넣기</h3>
+<p>전역 단축키는 어느 앱에서든 그 시점의 기록을 대상으로 작동합니다(1번 항목이 클립보드입니다).</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>키</th>
+<th>동작</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><kbd class="k">⌃⌥1</kbd> … <kbd class="k">⌃⌥9</kbd>, <kbd class="k">⌃⌥0</kbd></td>
+<td>기록의 1–10번 항목을 붙여넣습니다</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥⇧V</kbd></td>
+<td><em>이전</em> 항목(2번 항목)을 붙여넣습니다. 다시 누르면 서로 자리를 되바꿉니다</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥V</kbd></td>
+<td>클립보드를 서식을 뺀 일반 텍스트로 붙여넣습니다</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
+<td>클립보드를 대문자 / 소문자 / 단어 첫 글자 대문자 / 문장 첫 글자 대문자로 붙여넣습니다</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥W</kbd></td>
+<td>클립보드의 앞뒤 공백을 잘라 내고 붙여넣습니다</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥J</kbd></td>
+<td>클립보드를 한 줄로 이어서 붙여넣습니다</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥K</kbd> <kbd class="k">⌃⌥D</kbd> <kbd class="k">⌃⌥Y</kbd></td>
+<td>클립보드에 취소선 / 밑줄 / 물결 밑줄을 넣어 붙여넣습니다. 채팅을 포함해 어디에서나 모양이 유지되는 일반 텍스트입니다(아래 참고)</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥X</kbd></td>
+<td>클립보드에서 이 장식들을 없애고 붙여넣습니다</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥A</kbd></td>
+<td>클립보드를 템플릿에 추가합니다</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥⌫</kbd></td>
+<td>기록에서 최신 항목을 삭제합니다</td>
+</tr>
+</tbody>
+</table></div>
+<p>이 세 가지 장식은 서식이 아닙니다. Keepit이 모든 글자 뒤에 유니코드 <em>결합 문자</em>를 붙이는 방식입니다
+(취̶소̶선̶, 밑̲줄̲, 물̰결̰). 그래서 실제 서식이라면 사라졌을 메신저, 웹 양식, 터미널에서도 텍스트가
+똑같이 보입니다. 대가도 있습니다. 이런 텍스트는 크기가 세 배가 되고, 원래 단어로 검색해도 찾을 수
+없으며, 화면 읽기 프로그램이 제대로 읽지 못하고, 일부 서체에서는 선이 고르지 않게 그려집니다.
+<em>장식 제거</em>(<kbd class="k">⌃⌥X</kbd>)는 이 문자들을 다시 떼어 냅니다. 다른 곳에서 장식한 텍스트에서도 떼어 냅니다.
+어느 방향이든 이 문자들은 출처와 관계없이 코드 포인트 기준으로 제거됩니다. 같은 문자를 글자로
+쓰는 음성 표기(U+0330은 IPA에서 짜내기 소리를 나타내는 기호이기도 합니다)에서는 그 문자가
+사라지고, 세 가지 장식도 먼저 그 문자들을 제거합니다. VoiceOver가 켜져 있으면 <code>⌃⌥</code>는 VoiceOver
+자체의 보조 키입니다. 설정 → 단축키에서 <em>최신 항목에 대한 동작</em>에 다른 보조 키를 지정하세요.</p>
+<p>변환은 텍스트에 적용됩니다. 이미지나 파일 목록에서는 키를 눌러도 경고음만 납니다. 이 모든
+단축키는 <em>설정 → 단축키</em>에서 바꾸거나 끌 수 있습니다.</p>
+<h3 id="the-paste-queue">붙여넣기 대기열</h3>
+<p>한곳에서 다섯 가지를 복사해 다른 곳에 순서대로 붙여넣고 싶을 때가 있습니다. 셀을 양식에, 페이지의
+줄을 문서에 옮기는 경우입니다. 붙여넣기 대기열은 메뉴 없이 이 일을 해 줍니다.</p>
+<ol>
+<li><strong>⌥N</strong>을 누릅니다(또는 메뉴에서 <em>붙여넣기 대기열 시작</em>을 선택합니다). 메뉴 막대 아이콘에
+   빨간 점과 카운터가 표시됩니다: <code>📎 ● 0</code>.</li>
+<li>평소처럼 ⌘C로 원하는 만큼 복사합니다. 복사할 때마다 카운터가 올라갑니다: 1, 2, 3…
+   모든 항목은 기록에도 남습니다.</li>
+</ol>
+<figure class="shot" style="max-width:350px"><a href="/img/guide/queue-menubar.png?v=808fb52c" class="zoom" title="원본 크기로 열기"><img src="/img/guide/queue-menubar.png?v=808fb52c" alt="대기열이 켜져 있을 때의 메뉴 막대: 빨간 점과 카운터" width="350" height="40" loading="lazy"></a><figcaption>대기열이 켜져 있을 때의 메뉴 막대: 빨간 점과 카운터</figcaption></figure>
+<ol>
+<li>텍스트를 넣을 곳으로 전환하고 항목마다 <strong>⌥V</strong>를 누릅니다. 가장 먼저 복사한 것이 가장 먼저
+   붙여넣어지고 카운터가 내려갑니다. ⌘V는 여전히 평소처럼 클립보드를 붙여넣으므로 둘을 섞어 쓸
+   수 있습니다.</li>
+<li>대기열은 마지막 항목을 붙여넣은 뒤, 또는 복사나 붙여넣기 없이 2분이 지나면 스스로 꺼집니다
+   (시간은 조절할 수 있습니다). ⌥N을 다시 누르면 더 일찍 멈춥니다.</li>
+</ol>
+<p><strong>⌥⇧N</strong>은 대기열에 남아 있는 것을 한꺼번에 붙여넣습니다. 항목은 줄바꿈, 탭, 공백으로 잇거나
+아무것도 넣지 않고 이을 수 있습니다. 설정의 <em>붙여넣기 대기열</em> 패널에서 선택하며, 대기 시간도
+그곳에서 정합니다. 대기열이 켜져 있는 동안 기록 메뉴는 대기열 항목을 표시합니다. <code>▶</code>는 다음에
+붙여넣을 항목, <code>○</code>는 아직 대기 중인 항목, <code>✓</code>는 이미 붙여넣은 항목입니다.</p>
+<figure class="shot" style="max-width:610px"><a href="/img/guide/queue-menu.png?v=a61b1a15" class="zoom" title="원본 크기로 열기"><img src="/img/guide/queue-menu.png?v=a61b1a15" alt="대기열이 켜진 기록 메뉴: ○ 대기 중, ▶ 다음, ✓ 붙여넣음. 메뉴 줄에 남은 개수가 표시됩니다" width="610" height="772" loading="lazy"></a><figcaption>대기열이 켜진 기록 메뉴: ○ 대기 중, ▶ 다음, ✓ 붙여넣음. 메뉴 줄에 남은 개수가 표시됩니다</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-queue.png?v=d30c5141" class="zoom" title="원본 크기로 열기"><img src="/img/guide/prefs-queue.png?v=d30c5141" alt="설정 → 붙여넣기 대기열" width="636" height="453" loading="lazy"></a><figcaption>설정 → 붙여넣기 대기열</figcaption></figure>
+<h3 id="the-extended-menu">확장 메뉴</h3>
+<p>기록 메뉴가 열려 있을 때 <strong>⇧</strong>를 누르고 있으면 모든 항목에 그 항목에 쓸 수 있는 동작을 모은 <code>▸</code>
+하위 메뉴가 생깁니다. 붙여넣기, 서식 없는 텍스트로 붙여넣기, 복사만(클립보드에만 넣고 붙여넣지
+않음), <em>다음으로 붙여넣기</em> 변환, 템플릿에 추가, 뷰어에서 보기, 삭제가 있습니다. 항목을
+가리키거나 →를 누르면 하위 메뉴가 열립니다. 열린 뒤에는 ⇧에서 손을 떼도 됩니다.</p>
+<figure class="shot" style="max-width:805px"><a href="/img/guide/extended-menu.png?v=8b44e749" class="zoom" title="원본 크기로 열기"><img src="/img/guide/extended-menu.png?v=8b44e749" alt="⇧를 누르고 있으면 모든 항목에 하위 메뉴가 생깁니다. 최신 항목에서는 전역 단축키가 표시됩니다" width="805" height="735" loading="lazy"></a><figcaption>⇧를 누르고 있으면 모든 항목에 하위 메뉴가 생깁니다. 최신 항목에서는 전역 단축키가 표시됩니다</figcaption></figure>
+<p>최신 항목의 하위 메뉴에는 위 표의 전역 단축키가 나열됩니다. 같은 키로 하는 같은 동작이므로
+여기에서 익힐 수 있습니다. 다른 항목에는 동작이 키 없이 표시됩니다. 단축키는 어디에서나
+작동하거나, 아니면 아예 표시되지 않습니다.</p>
+<figure class="shot" style="max-width:763px"><a href="/img/guide/extended-menu-item2.png?v=014734f0" class="zoom" title="원본 크기로 열기"><img src="/img/guide/extended-menu-item2.png?v=014734f0" alt="다른 항목의 경우: 같은 동작, 단축키 없음" width="763" height="665" loading="lazy"></a><figcaption>다른 항목의 경우: 같은 동작, 단축키 없음</figcaption></figure>
+<figure class="shot" style="max-width:765px"><a href="/img/guide/extended-menu-image.png?v=8f8e3b22" class="zoom" title="원본 크기로 열기"><img src="/img/guide/extended-menu-image.png?v=8f8e3b22" alt="이미지의 경우 텍스트 동작은 흐리게 표시됩니다. 붙여넣기, 복사만, 템플릿에 추가, 뷰어에서 보기, 삭제만 쓸 수 있습니다" width="765" height="655" loading="lazy"></a><figcaption>이미지의 경우 텍스트 동작은 흐리게 표시됩니다. 붙여넣기, 복사만, 템플릿에 추가, 뷰어에서 보기, 삭제만 쓸 수 있습니다</figcaption></figure>
+<hr />
+<h2 id="part-3-templates">3부. 템플릿</h2>
+<p>템플릿은 계속 보관해 두는 항목입니다. 서명, 주소, 준비해 둔 답장, 코드 조각, 자주 붙여넣는 로고
+같은 것들입니다. 폴더가 있는 트리에 들어 있고, 기록 메뉴의 <em>템플릿</em> 하위 메뉴와 <strong>⌥T</strong>에
+나타납니다. 새로 설치하면 <em>예제</em> 폴더(인사말, 오늘 날짜, 클립보드 인용, 서명)가 들어 있어서 직접
+만들기 전에 템플릿으로 무엇을 할 수 있는지 볼 수 있습니다. 마음대로 삭제하거나 편집하세요. 예제
+템플릿은 <em>설정 → 고급 → 재설정 및 설치 제거 → 재설정…</em>으로 되돌릴 수 있지만, 이 명령은 다른
+데이터와 설정도 함께 재설정합니다.</p>
+<figure class="shot" style="max-width:660px"><a href="/img/guide/template-examples.png?v=c143a1d7" class="zoom" title="원본 크기로 열기"><img src="/img/guide/template-examples.png?v=c143a1d7" alt="예제 폴더: 항목 위에 포인터를 올리면 텍스트가 보입니다" width="660" height="209" loading="lazy"></a><figcaption>예제 폴더: 항목 위에 포인터를 올리면 텍스트가 보입니다</figcaption></figure>
+<figure class="shot" style="max-width:738px"><a href="/img/guide/template-menu-letters.png?v=ea96333e" class="zoom" title="원본 크기로 열기"><img src="/img/guide/template-menu-letters.png?v=ea96333e" alt="템플릿 메뉴: 폴더는 하위 메뉴로 열리고, &amp; 뒤의 글자는 단축 문자가 됩니다" width="738" height="715" loading="lazy"></a><figcaption>템플릿 메뉴: 폴더는 하위 메뉴로 열리고, &amp; 뒤의 글자는 단축 문자가 됩니다</figcaption></figure>
+<h3 id="creating-and-organising">만들기와 정리하기</h3>
+<p><strong>템플릿 추가</strong></p>
+<ul>
+<li>기록 메뉴에서: 최신 항목은 <kbd class="k">⌃⌥A</kbd>, 맨 아래의 <em>클립보드를 템플릿에 추가</em>, 또는 아무 항목이나
+  ⇧ → 항목의 하위 메뉴 → <em>템플릿에 추가</em>.</li>
+<li>뷰어에서: 기록 항목을 선택하고 <em>템플릿에 추가</em>를 클릭하거나 템플릿 트리로 드래그합니다. <em>새
+  항목</em>은 빈 텍스트 템플릿을 만들고, <em>파일에서 새 항목</em>(컨텍스트 메뉴)은 텍스트 파일이나 이미지
+  파일로 템플릿을 만듭니다.</li>
+</ul>
+<p><strong>정리</strong></p>
+<ul>
+<li><em>새 폴더</em>는 폴더를 만듭니다. 항목을 폴더 사이로 드래그하거나 컨텍스트 메뉴의 <em>위로</em> /
+  <em>아래로</em>를 사용하세요.</li>
+<li>이름이 <code>-</code>인 템플릿은 메뉴에서 구분선이 됩니다.</li>
+<li>이름에서 글자 앞에 <code>&amp;</code>를 넣으면(예: <code>&amp;Signature</code>) 그 글자가 템플릿 메뉴에서 항목의 단축
+  문자가 됩니다. 메뉴가 열려 있을 때 <code>S</code>를 누르세요.</li>
+<li>컨텍스트 메뉴의 <em>단축키 설정</em>은 템플릿에 전용 전역 단축키를 지정합니다.</li>
+<li>이름이 없는 템플릿은 첫 줄이 표시됩니다. <em>이름 변경</em>과 <em>이름 지우기</em>는 컨텍스트 메뉴에 있고,
+  텍스트 위의 <em>이름</em> 필드를 편집해도 됩니다.</li>
+</ul>
+<h3 id="placeholders">자리표시자</h3>
+<p>텍스트 템플릿에는 붙여넣는 시점에 채워지는 <code>{…}</code> 자리표시자를 넣을 수 있습니다. 나머지는 모두
+그대로 붙여넣어집니다. 뷰어의 <strong>삽입 ▾</strong>은 모든 자리표시자를 나열하고 선택한 것을 커서 위치에
+넣어 주므로 외울 것이 없습니다.</p>
+<figure class="shot" style="max-width:717px"><a href="/img/guide/template-examples-date.png?v=8b048d0d" class="zoom" title="원본 크기로 열기"><img src="/img/guide/template-examples-date.png?v=8b048d0d" alt="오늘 날짜 예제: {date:EEEE, d MMMM yyyy}는 붙여넣을 때 현재 날짜가 됩니다" width="717" height="209" loading="lazy"></a><figcaption>오늘 날짜 예제: {date:EEEE, d MMMM yyyy}는 붙여넣을 때 현재 날짜가 됩니다</figcaption></figure>
+<figure class="shot" style="max-width:650px"><a href="/img/guide/insert-menu.png?v=4fa57206" class="zoom" title="원본 크기로 열기"><img src="/img/guide/insert-menu.png?v=4fa57206" alt="뷰어의 삽입 ▾은 모든 자리표시자를 나열합니다" width="650" height="770" loading="lazy"></a><figcaption>뷰어의 삽입 ▾은 모든 자리표시자를 나열합니다</figcaption></figure>
+<p>가장 유용한 것들:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>자리표시자</th>
+<th>결과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{date}</code> <code>{time}</code> <code>{datetime}</code></td>
+<td>오늘 날짜 / 현재 시간, 시스템 형식</td>
+</tr>
+<tr>
+<td><code>{date:yyyy-MM-dd}</code></td>
+<td>원하는 형식(<code>yyyy MM dd EEEE HH mm …</code>)</td>
+</tr>
+<tr>
+<td><code>{date:long}</code> <code>{time:short}</code> <code>{datetime:medium}</code></td>
+<td>이름이 있는 스타일: <code>short</code> <code>medium</code> <code>long</code> <code>full</code></td>
+</tr>
+<tr>
+<td><code>{date+7d}</code> <code>{date-1m:MMMM}</code> <code>{time+1h}</code> <code>{date+1y-2d}</code></td>
+<td>이동: <code>d</code> 일, <code>w</code> 주, <code>m</code> 개월, <code>y</code> 년, <code>h</code> 시간. <code>date</code>, <code>time</code>, <code>datetime</code>에 쓰며 여러 개를 이어 쓸 수 있습니다</td>
+</tr>
+<tr>
+<td><code>{clipboard}</code> <code>{clipboard:2}</code></td>
+<td>클립보드, 또는 기록의 N번 항목</td>
+</tr>
+<tr>
+<td><code>{clipboard\|upper}</code> <code>{clipboard\|trim\|oneline}</code></td>
+<td>필터 <code>upper</code> <code>lower</code> <code>title</code> <code>trim</code> <code>oneline</code> <code>url</code>, 이어 쓸 수 있습니다</td>
+</tr>
+<tr>
+<td><code>{cursor}</code></td>
+<td>붙여넣은 뒤 텍스트 커서가 놓일 위치</td>
+</tr>
+<tr>
+<td><code>{user}</code> <code>{username}</code> <code>{host}</code></td>
+<td>전체 이름, 계정 이름, 컴퓨터 이름</td>
+</tr>
+<tr>
+<td><code>{uuid}</code> <code>{random:1-100}</code></td>
+<td>새 UUID, 난수</td>
+</tr>
+<tr>
+<td><code>{{</code> <code>}}</code></td>
+<td>중괄호 문자 그대로: 템플릿 <code>{{"x":1}}</code>은 <code>{"x":1}</code>로 붙여넣어집니다</td>
+</tr>
+</tbody>
+</table></div>
+<p>자리표시자 이름은 소문자입니다. <code>{date}</code>는 자리표시자이고 <code>{Date}</code>와 <code>{DATE}</code>는 텍스트여서
+그대로 붙여넣어집니다. 스타일 이름과 필터(<code>{date:LONG}</code>, <code>{clipboard|UPPER}</code>)는 어느 쪽으로
+써도 됩니다.</p>
+<p>전체 목록은 <a href="#placeholder-cheat-sheet">자리표시자 요약</a>에 있습니다.</p>
+<h3 id="templates-that-ask-questions">질문하는 템플릿</h3>
+<p><code>{input:이름}</code>과 <code>{choice:레이블=A|B|C}</code>는 템플릿을 작은 양식으로 바꿉니다. 붙여넣을 때 Keepit이
+먼저 값을 묻고, 그다음 완성된 텍스트를 붙여넣습니다. 같은 이름은 몇 번 나오든 한 번만 묻습니다.
+<code>{input:이름=기본값}</code>은 필드를 미리 채워 둡니다.</p>
+<figure class="shot" style="max-width:484px"><a href="/img/guide/input-dialog.png?v=8f9de78e" class="zoom" title="원본 크기로 열기"><img src="/img/guide/input-dialog.png?v=8f9de78e" alt="{input:Name}이 들어 있는 템플릿을 붙여넣으면 먼저 값을 묻습니다" width="484" height="320" loading="lazy"></a><figcaption>{input:Name}이 들어 있는 템플릿을 붙여넣으면 먼저 값을 묻습니다</figcaption></figure>
+<p>예를 들어 답장 템플릿은 이렇습니다.</p>
+<pre><code>{input:이름}님, 안녕하세요.
+
+{date-1d}에 보내 주신 메시지 감사합니다. {date+3d:M월 d일}까지 답변드리겠습니다.
+{cursor}
+{user}
+</code></pre>
+<p>붙여넣으면 <em>이름</em>을 묻고, 날짜를 채우고, 전체 이름으로 서명하고, 빈 줄에 커서를 둡니다.</p>
+<hr />
+<h2 id="part-4-the-viewer">4부. 뷰어</h2>
+<p>메뉴의 <em>뷰어…</em> 또는 📎 아이콘 오른쪽 클릭으로 트리가 세 개 있는 윈도우를 엽니다. <strong>클립보드</strong>(지금의
+클립보드, 읽기 전용), <strong>기록</strong>(<em>텍스트 및 파일</em>과 <em>이미지</em>), <strong>템플릿</strong>입니다.</p>
+<figure class="shot" style="max-width:1004px"><a href="/img/guide/viewer.png?v=1c65e776" class="zoom" title="원본 크기로 열기"><img src="/img/guide/viewer.png?v=1c65e776" alt="템플릿이 선택된 뷰어" width="1004" height="637" loading="lazy"></a><figcaption>템플릿이 선택된 뷰어</figcaption></figure>
+<ul>
+<li>항목을 선택하면 오른쪽에 표시됩니다. 텍스트는 그 자리에서 편집할 수 있고, 편집기를 벗어날 때
+  변경 사항이 적용됩니다. 이미지는 패널에 맞게 크기가 조절되어 표시되고 위에 픽셀 크기와 파일
+  크기가 나옵니다. 파일 목록은 이중 클릭으로 파일을 엽니다. 컨텍스트 메뉴의 <em>16진 덤프로 보기</em>는
+  원시 바이트를 보여 줍니다.</li>
+<li>도구 막대: <em>클립보드로 보내기</em>, <em>붙여넣기</em>(직전에 쓰던 앱으로), <em>템플릿에 추가</em>, <em>새 항목</em>, <em>새
+  폴더</em>, <em>삭제</em>, <em>삽입 ▾</em>(자리표시자), 그리고 이 설명서를 여는 <strong>?</strong>.</li>
+<li><strong>검색</strong>(<kbd class="k">⌘F</kbd>): 왼쪽의 필드가 기록과 템플릿을 이름과 내용으로 걸러 내고 일치하는 부분을 강조
+  표시합니다.</li>
+<li>기록 항목을 보관하려면 템플릿 트리로 드래그하고, 템플릿을 다시 복사하려면 기록으로
+  드래그합니다. 순서는 드래그하거나 <em>위로</em> / <em>아래로</em>로 바꿉니다. ⌫는 선택한 항목을 삭제합니다.</li>
+<li>상태 막대에는 날짜, 원본 앱, 형식, 크기가 표시됩니다.</li>
+</ul>
+<figure class="shot" style="max-width:1025px"><a href="/img/guide/viewer-search.png?v=88476754" class="zoom" title="원본 크기로 열기"><img src="/img/guide/viewer-search.png?v=88476754" alt="뷰어에서 검색하면 일치하는 부분이 강조 표시됩니다" width="1025" height="682" loading="lazy"></a><figcaption>뷰어에서 검색하면 일치하는 부분이 강조 표시됩니다</figcaption></figure>
+<hr />
+<h2 id="part-5-settings">5부. 설정</h2>
+<p>메뉴에서 <code>⌘,</code>, <em>설정…</em>, 또는 아무 앱에서나 ⌥S. 이 윈도우는 Mac의 다른 설정 윈도우와 같은 방식으로
+작동합니다. 도구 막대에서 패널을 선택하면 되고, 변경 사항은 바꾸는 즉시 적용됩니다. 저장 버튼은
+없습니다. ⌘W나 Esc로 윈도우를 닫으세요. 옆에 <strong>?</strong>가 있는 옵션에는 설명이 담긴 팝오버가 있습니다.</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-general.png?v=09991ffc" class="zoom" title="원본 크기로 열기"><img src="/img/guide/prefs-general.png?v=09991ffc" alt="설정 → 일반" width="636" height="463" loading="lazy"></a><figcaption>설정 → 일반</figcaption></figure>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>패널</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>일반</strong></td>
+<td>로그인 시 실행 · 종료할 때 기록 저장, 시작할 때 복원 · 선택 후 붙여넣기(끔 = 복사만) · 붙여넣기 지연(앞으로 나오는 데 시간이 걸리는 앱에서는 값을 올리세요) · 텍스트 커서 위치에 메뉴 열기 · 업데이트: <em>자동으로 업데이트 확인</em>(사이트에서 내려받는 에디션, 끔 = 네트워크 요청이 전혀 없음), <a href="#updates">업데이트</a> 참고</td>
+</tr>
+<tr>
+<td><strong>단축키</strong></td>
+<td>모든 전역 단축키가 한곳에, 아래 참고</td>
+</tr>
+<tr>
+<td><strong>붙여넣기 대기열</strong></td>
+<td>대기열의 키 세 개, 대기열이 꺼지기까지의 대기 시간, <em>남은 항목 모두 붙여넣기</em>에서 항목 사이에 넣을 것, <a href="#the-paste-queue">붙여넣기 대기열</a> 참고</td>
+</tr>
+<tr>
+<td><strong>기록</strong></td>
+<td>텍스트/파일 항목과 이미지를 몇 개 보관할지(1000 / 30) · …보다 오래된 항목 잊기 · <em>중복 제거</em>(같은 것을 다시 복사하면 맨 위로 올라갑니다) · <em>숨겨진 클립보드 데이터 무시</em> · 무시할 앱 목록(번들 식별자, 암호 관리자는 항상 무시됩니다)</td>
+</tr>
+<tr>
+<td><strong>메뉴</strong></td>
+<td>검색 필드 · 번호 매기기 · 미리보기 패널 · 도구 설명 · 원본 앱 아이콘 · 이미지 축소판 · 메뉴의 항목 수(메뉴에 최신 항목을 몇 개 나열할지, 기본값 60, 나머지도 검색할 수 있습니다) · 제목 길이 · 축소판 높이</td>
+</tr>
+<tr>
+<td><strong>보안</strong></td>
+<td>암호, Touch ID, 잠금, 복구 문구, <a href="#part-6-security">6부</a> 참고</td>
+</tr>
+<tr>
+<td><strong>백업</strong></td>
+<td>자동 백업(제목 옆에 상태 줄): <em>폴더에 자동으로 백업</em>, 파일에 넣는 Mac 이름, 폴더, 보관할 사본 수 · 수동 백업: <em>지금 백업</em>, <em>아카이브로 저장…</em> · 복원: <em>복원…</em>, <a href="#backup">백업</a> 참고</td>
+</tr>
+<tr>
+<td><strong>고급</strong></td>
+<td>클립보드 확인 간격 · 자동화: <em>keepit:// URL 명령 허용</em>(기본적으로 꺼짐, <a href="#automation-the-keepit-url-scheme">자동화</a> 참고) · 데이터: <em>폴더 열기</em> · 재설정 및 설치 제거: <em>재설정…</em>(새로 설치한 상태로 되돌리며 예제 템플릿이 돌아옵니다) · <em>설치 제거…</em>(재설정한 다음 앱, 로그인 시 실행, 키체인 항목, 권한을 제거합니다)</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-history.png?v=e8444027" class="zoom" title="원본 크기로 열기"><img src="/img/guide/prefs-history.png?v=e8444027" alt="설정 → 기록: 한도와 무시할 앱 목록" width="636" height="504" loading="lazy"></a><figcaption>설정 → 기록: 한도와 무시할 앱 목록</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-hotkeys.png?v=2f5f309f" class="zoom" title="원본 크기로 열기"><img src="/img/guide/prefs-hotkeys.png?v=2f5f309f" alt="설정 → 단축키" width="636" height="717" loading="lazy"></a><figcaption>설정 → 단축키</figcaption></figure>
+<p><strong>단축키</strong> 패널에서 필드를 클릭하고 키 조합을 누릅니다. ⌫는 키를 끕니다. 다른 명령이 이미 쓰고
+있는 조합은 거부되고 그 이유가 필드 아래에 표시됩니다. <em>기본값으로 재설정</em>은 ⌥ + 글자 세트(⌥M
+기록, ⌥T 템플릿, ⌥E 뷰어, ⌥S 설정, ⌥C 기록 지우기, ⌥P 일시 정지, ⌥L 잠금, ⌥Q 종료)와 ⌥⇧V, ⌃⌥를
+되돌립니다. <em>번호로 항목 붙여넣기</em>와 <em>최신 항목에 대한 동작</em>은 보조 키만 받습니다. 숫자나 글자는
+Keepit이 덧붙입니다. macOS나 다른 앱이 어떤 조합을 이미 쓰고 있으면 Keepit이 시작할 때 알려
+줍니다. <em>뷰어</em> ⌥E, <em>설정</em> ⌥S, <em>기록 지우기</em> ⌥C, <em>기록 일시 정지</em> ⌥P, <em>Keepit 잠그기</em> ⌥L,
+<em>Keepit 종료</em> ⌥Q는 모든 앱에서 작동하며 메뉴에서 각 명령 옆에 표시됩니다. 미국 키보드 배열에서
+⌥ + 글자는 보통 특수 문자를 입력합니다(⌥S = ß, ⌥C = ç …). 그런 문자가 필요하면 단축키를 다른
+키로 옮기세요.</p>
+<hr />
+<h2 id="part-6-security">6부. 보안</h2>
+<h3 id="password-and-encryption">암호와 암호화</h3>
+<p><em>설정 → 보안 → 실행 시 암호 요구</em>는 기록과 템플릿을 AES-256-GCM으로 암호화합니다. 키는 암호에서
+파생되며(PBKDF2, 200 000회 반복) 메모리에만 존재합니다. Keepit이 잠기면 지워집니다. <em>Keepit
+잠그기</em>(<kbd class="k">⌥L</kbd>)를 실행할 때, 종료할 때, 그리고 선택한 경우 Mac이 일정 시간 잠겨 있거나 잠자기
+상태였을 때입니다. <em>Keepit 자동 잠금</em>은 새로 설치한 경우 <strong>안 함</strong>입니다(3.0.3에서 업데이트하면
+이전 선택이 유지됩니다. 화면과 함께 잠그기 상자가 켜져 있었다면 <em>즉시</em>입니다). 커피를 마시고 올
+때마다 암호를 묻는 클립보드 관리자는 결국 쓰지 않게 되고, 중요한 순간에는 <kbd class="k">⌥L</kbd>이 있기
+때문입니다. <em>즉시</em>는 화면과 함께 잠급니다. <em>5분 후</em>, <em>15분 후</em>, <em>1시간 후</em>는 잠깐 자리를 비운
+것은 그냥 넘기고(Keepit은 잠금 해제된 상태로 계속 기록합니다), Mac이 설정한 시간 내내 잠겨 있거나
+잠자기 상태였을 때에만 잠급니다. Mac이 이미 잠겨 있거나 다른 사용자의 세션이 앞에 있는 상태에서
+Keepit이 시작될 때(예를 들어 업데이트 후 재실행)에도 마찬가지입니다. macOS가 그 상태를 Keepit에
+알려 주는 한 시간은 시작 시점부터 계산됩니다(보통은 알려 줍니다. 알려 줄 수 없으면 다음 잠금이나
+잠자기부터 계산이 시작됩니다). Touch ID가 켜져 있으면 Keepit은 Mac의 잠금이 해제되는 순간 터치를
+요청하므로 첫 <kbd class="k">⌥M</kbd> 전에 준비가 끝납니다.</p>
+<figure class="shot" style="max-width:800px"><a href="/img/guide/set-password-keyboard.jpg?v=08002f0c" class="zoom" title="원본 크기로 열기"><img src="/img/guide/set-password-keyboard.jpg?v=08002f0c" alt="화면 키보드로 암호 설정하기. 스크린샷이 아니라 화면을 찍은 사진입니다. 제작자의 Mac에서 이 장면을 스크린샷으로 찍으면 대화상자만 나옵니다" width="800" height="600" loading="lazy"></a><figcaption>화면 키보드로 암호 설정하기. 스크린샷이 아니라 화면을 찍은 사진입니다. 제작자의 Mac에서 이 장면을 스크린샷으로 찍으면 대화상자만 나옵니다</figcaption></figure>
+<p>암호 대화상자는 현재 키보드 배열을 보여 주고 Caps Lock을 경고하므로, 암호가 거부되는 이유를 알
+수 없는 경우는 드뭅니다. 필드 옆의 키보드 버튼은 마우스로 암호를 입력하는 <strong>화면 키보드</strong>를
+엽니다. 클릭은 시스템에 키 입력으로 전달되지 않고, 키는 열 때마다 섞이며, 키보드는 스크린샷과
+화면 기록에서 자신을 빼 달라고 macOS에 요청합니다(일부 구성에서는 제외되지만 보장되지는
+않습니다). 완전히 신뢰하지 못하는 Mac이나 화면을 공유 중인 Mac을 위한 기능입니다. 실행할 때와
+잠긴 뒤에 Keepit은 암호(또는 Touch ID)를 묻습니다. <em>접근 복구…</em>는 그 대신 24단어 문구를
+받습니다. <a href="#recovery-phrase">복구 문구</a>를 참고하세요.</p>
+<figure class="shot" style="max-width:800px"><a href="/img/guide/unlock-keyboard.jpg?v=4c0be394" class="zoom" title="원본 크기로 열기"><img src="/img/guide/unlock-keyboard.jpg?v=4c0be394" alt="실행 시 잠금 해제: 암호, 종료, 또는 복구 문구. 무언가를 입력하기 전까지 확인 버튼은 비활성 상태입니다. 위와 같은 이유로 사진으로 찍었습니다" width="800" height="600" loading="lazy"></a><figcaption>실행 시 잠금 해제: 암호, 종료, 또는 복구 문구. 무언가를 입력하기 전까지 확인 버튼은 비활성 상태입니다. 위와 같은 이유로 사진으로 찍었습니다</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-security.png?v=7204a4dd" class="zoom" title="원본 크기로 열기"><img src="/img/guide/prefs-security.png?v=7204a4dd" alt="설정 → 보안" width="636" height="435" loading="lazy"></a><figcaption>설정 → 보안</figcaption></figure>
+<h3 id="touch-id">Touch ID</h3>
+<p><em>Touch ID로 잠금 해제</em>를 켜면 키가 지문으로 보호되는 Secure Enclave에도 저장됩니다. Keepit은 암호
+대신 터치를 요청합니다. 암호는 대체 수단으로 계속 작동합니다. 요청 창에서 <em>암호 사용</em>을 선택하면
+됩니다. 덮개를 닫고 Touch ID가 있는 외장 Magic Keyboard를 쓰는 경우 Keepit은 키보드에서 터치를
+요청합니다. <em>Touch ID로 암호 변경 허용</em>은 암호를 바꿀 때 지문이 이전 암호를 대신하게 해 줍니다.</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/touch-id.png?v=5e119bff" class="zoom" title="원본 크기로 열기"><img src="/img/guide/touch-id.png?v=5e119bff" alt="Touch ID로 잠금 해제. 암호는 대체 수단으로 남습니다" width="336" height="313" loading="lazy"></a><figcaption>Touch ID로 잠금 해제. 암호는 대체 수단으로 남습니다</figcaption></figure>
+<h3 id="recovery-phrase">복구 문구</h3>
+<p>암호를 설정하면 Keepit이 24단어 문구를 한 번 보여 줍니다. 인쇄하거나 암호 관리자에 보관하세요.
+암호를 잊었다면 잠금 해제 대화상자의 <em>접근 복구…</em>로 데이터를 열고 새 암호를 설정할 수 있습니다.
+<em>복구 문구 → 새로 만들기…</em>는 새 문구를 발급하고 이전 문구를 무효로 만듭니다. 그 옆의 <em>보기…</em>는
+Touch ID나 암호로 확인한 뒤 현재 문구를 다시 보여 줍니다.</p>
+<p>암호, 같은 Mac의 Touch ID, 문구 중 어느 것도 없으면 데이터를 복구할 수 없습니다. 서버가 없고
+재설정할 것도 없기 때문입니다.</p>
+<figure class="shot" style="max-width:568px"><a href="/img/guide/recovery-phrase.png?v=8aab134d" class="zoom" title="원본 크기로 열기"><img src="/img/guide/recovery-phrase.png?v=8aab134d" alt="24단어 복구 문구(여기에서는 단어를 가렸습니다)" width="568" height="586" loading="lazy"></a><figcaption>24단어 복구 문구(여기에서는 단어를 가렸습니다)</figcaption></figure>
+<h3 id="backup">백업</h3>
+<p>Keepit은 기록과 템플릿의 암호화된 사본을 사용자가 고른 폴더(iCloud Drive, Dropbox, Google Drive,
+외장 디스크, NAS)에 보관하고, 무언가 바뀔 때마다 새 사본을 기록할 수 있습니다. Keepit 서버는
+없습니다. 폴더는 사용자의 것입니다. 그 폴더를 제공하는 업체가 볼 수 있는 것은 암호화된 파일, 파일
+크기, 그리고 암호화되지 않은 작은 헤더입니다(언제 어떤 Keepit이 기록했는지, 키를 어떻게
+파생하는지, 임의의 식별자, 그리고 켰을 때에만 Mac의 이름). <a href="/security#backups">보안 페이지</a>(영어)에
+필드별로 나와 있습니다.</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-backup.png?v=cba8511b" class="zoom" title="원본 크기로 열기"><img src="/img/guide/prefs-backup.png?v=cba8511b" alt="설정 → 백업: 자동 백업, 수동 백업, 복원" width="636" height="527" loading="lazy"></a><figcaption>설정 → 백업: 자동 백업, 수동 백업, 복원</figcaption></figure>
+<p><strong>켜기.</strong> <em>설정 → 백업 → 폴더에 자동으로 백업</em>을 켠 다음 <em>선택…</em>으로 폴더를 고릅니다(선택 창은
+iCloud Drive에서 열립니다). 자동 백업에는 <em>설정 → 보안</em>의 암호 보호가 필요합니다. 각 사본은
+보관소의 키에서 파생된 키로 봉인되므로, 이 Mac이든 다른 Mac이든 Keepit 암호나 복구 문구로 열 수
+있고 따로 설정할 것이 없습니다. 암호가 없으면 체크상자가 비활성화되고 그 이유가 표시됩니다.</p>
+<p><strong>그다음에 일어나는 일: 일정.</strong> 마지막 변경으로부터 약 5분 뒤에(그리고 Keepit이 실행 중인 동안
+적어도 하루에 한 번) Keepit은 <code>Keepit-&lt;날짜와 시간&gt;-&lt;설치&gt;-&lt;id&gt;.keepit</code>이라는 이름의 파일을
+폴더에 기록하고, 다시 읽어서 확인한 다음에야 <em>보관 개수</em>(기본값 10, 범위 1–100)를 넘는 자신의
+가장 오래된 사본을 삭제합니다. 각 사본은 증분이 아니라 그 자체로 완전하므로 파일 하나만 있으면
+됩니다. 다른 Mac이 만든 사본이나 사용자가 직접 넣어 둔 파일은 절대 건드리지 않습니다. 폴더 하나를
+함께 쓰는 Mac 두 대는 서로 독립된 두 계열을 기록합니다. <em>자동 백업</em> 제목 옆의 상태 줄에는 마지막
+사본의 시간과 크기, 또는 마지막 시도가 실패한 이유가 표시됩니다. Keepit이 잠겨 있는 동안에는
+아무 일도 일어나지 않습니다. <em>지금 백업</em>(<em>수동 백업</em> 아래)은 대기 시간을 기다리지 않습니다.</p>
+<p><strong>이 Mac의 이름 포함</strong>(기본적으로 꺼짐)은 각 파일의 암호화되지 않은 헤더에 컴퓨터 이름을 넣어서
+한 폴더 안의 두 계열을 Finder에서 쉽게 구분할 수 있게 합니다. 저장소 제공업체가 그 이름을 볼 수
+있으므로 선택 사항으로 두었습니다.</p>
+<p><strong>복원.</strong> <em>복원…</em>은 잠금을 해제한 뒤 백업(이 Mac의 것, 다른 Mac의 것, 또는 내보낸 파일)을 엽니다.
+잠금 해제에는 그 백업을 만든 Mac의 암호, 또는 그 Mac이 암호를 설정할 때 보여 준 복구 문구(암호
+대화상자의 <em>접근 복구…</em>)를 씁니다. 미리보기에서 파일이 언제 어디에서 만들어졌고 항목이 몇 개
+들어 있는지 볼 수 있습니다. 그다음 두 가지 선택이 있습니다.</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/restore-preview.png?v=8f48d34e" class="zoom" title="원본 크기로 열기"><img src="/img/guide/restore-preview.png?v=8f48d34e" alt="복원 미리보기: 파일을 언제 어떤 Keepit이 기록했는지, 무엇이 들어 있는지, 병합 또는 대치" width="636" height="651" loading="lazy"></a><figcaption>복원 미리보기: 파일을 언제 어떤 Keepit이 기록했는지, 무엇이 들어 있는지, 병합 또는 대치</figcaption></figure>
+<ul>
+<li><em>병합</em>은 아직 없는 것만 추가합니다. 기록 항목은 내용을 기준으로 추가하고, 백업의 템플릿은
+  단축키 없이 <em>가져옴 &lt;날짜&gt;</em>라는 새 폴더 하나로 추가합니다. 그래서 백업에서 무엇이 왔는지 정확히
+  볼 수 있고 옮기거나 삭제할 수 있습니다. 기존 데이터는 아무것도 덮어쓰지 않습니다.</li>
+<li><em>대치</em>는 현재의 기록과 템플릿을 버리고 백업의 것으로 바꿉니다. 그 전에 Keepit은 지금 가지고
+  있는 것의 사본(<code>Keepit-before-restore-…</code>)을 백업 폴더나 사용자가 고른 폴더에 기록합니다. 그
+  사본을 기록할 수 없으면 대치는 시작되지 않습니다. Keepit에 아직 암호가 없으면 <em>아카이브로
+  저장…</em>과 마찬가지로 그 사본에 쓸 암호를 묻습니다.</li>
+</ul>
+<p><em>환경설정도 복원</em>은 백업에서 단축키, 한도, 옵션을 가져옵니다. 특정 Mac에 대한 신뢰를 나타내는
+설정(Touch ID, URL 자동화와 신뢰하는 앱, 백업 폴더 자체)은 항상 이 Mac의 값 그대로 남습니다.
+백업의 기록이 이 Mac의 한도보다 크면 Keepit이 확인을 받기 전에 얼마나 들어갈지 알려 줍니다.</p>
+<p>아직 암호가 없는 Mac에서 백업을 그 백업의 복구 문구로 복원했나요? Keepit은 먼저 암호를 설정하라고
+요청하므로 복원된 데이터가 암호화되지 않은 채 저장되는 일은 없습니다. 그리고 그 문구를 이
+Mac에서도 계속 쓸지 새 문구를 받을지 고를 수 있습니다. 암호로 복원했나요? Keepit이 그 암호를 이
+Mac의 암호로 유지하도록 제안합니다. 어느 경우든 자동 백업 자체는 Mac마다 따로 정하는 설정입니다.
+여기에서 켜고 폴더를 선택하면(같은 폴더여도 됩니다) 이 Mac은 이전 Mac의 파일 옆에 자신의 파일
+계열을 시작합니다.</p>
+<p><strong>새 Mac으로 옮기기</strong>가 이 기능의 핵심입니다. Keepit을 설치하고, 처음 실행할 때 <em>백업에서
+복원…</em>을 선택하고, 폴더에서 가장 최신 파일을 고르고, 이전 Mac의 암호를 입력하고, <em>대치</em>를
+선택합니다. 그런 다음 새 Mac에서 자동 백업을 켭니다. 그때까지 만들어진 사본은 각각 기록될 당시에
+쓰이던 암호와 문구로 열립니다. 암호를 바꾼 뒤에도 예전 사본에는 예전 암호가 필요합니다.</p>
+<p><strong>수동 백업.</strong> 버튼이 두 개 있고 하는 일이 서로 다릅니다. <em>지금 백업</em>은 자동 백업과 같은 종류의
+사본을 바로 만듭니다. 같은 종류의 파일, 같은 폴더와 계열이며 Keepit 암호나 문구로 엽니다.
+<em>아카이브로 저장…</em>은 사용자가 고른 위치에 <code>.keepit</code> <em>아카이브</em> 하나를 기록하고, 그 아카이브용으로
+정한 암호로 잠급니다. Keepit의 암호 보호가 없어도 되고, 그 뒤로 Keepit은 이 파일을 추적하지
+않습니다. 데이터를 넘겨줄 때나 백업 폴더 밖에 사본을 둘 때 씁니다. 제안되는 이름을 보면 무엇인지
+알 수 있습니다. 자동 사본은 <code>Keepit-&lt;날짜와 시간&gt;-&lt;설치&gt;-&lt;id&gt;.keepit</code>이고 아카이브는
+<code>Keepit-archive-&lt;날짜&gt;-manual.keepit</code>입니다.</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/save-to-archive.png?v=6d252de5" class="zoom" title="원본 크기로 열기"><img src="/img/guide/save-to-archive.png?v=6d252de5" alt="아카이브로 저장…: 파일 이름에 archive와 manual이 들어 있습니다" width="636" height="528" loading="lazy"></a><figcaption>아카이브로 저장…: 파일 이름에 archive와 manual이 들어 있습니다</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/archive-password.png?v=1b218e7c" class="zoom" title="원본 크기로 열기"><img src="/img/guide/archive-password.png?v=1b218e7c" alt="강도 표시기가 있는 아카이브 전용 암호: 어디에도 저장되지 않습니다" width="636" height="621" loading="lazy"></a><figcaption>강도 표시기가 있는 아카이브 전용 암호: 어디에도 저장되지 않습니다</figcaption></figure>
+<p><em>복원…</em>은 두 종류를 모두 엽니다. 아카이브는 2.x의 <em>내보내기…</em> / <em>가져오기…</em>를 대신합니다. 이
+파일로 사이트에서 내려받는 에디션과 App Store 에디션 사이, 그리고 Keepit 2.x와 3.x 사이에서
+데이터를 옮깁니다. 3.0이 기록한 파일을 열려면 3.0 이상이 필요하고, 3.0은 2.x가 기록한 모든 것을
+읽습니다.</p>
+<p><strong>문제가 생겼을 때.</strong> 실패한 사본은 상태 줄에 표시되고 간격을 점점 늘려 가며 다시 시도합니다.
+이전 사본은 그대로 남습니다. 복원 도중에 Keepit이 종료되었거나 Mac이 꺼졌다면 다음 실행 때 모든
+것을 복원 전 상태로 조용히 되돌립니다. 드물게 그렇게 할 수 없는 경우(기록할 수 없는 파일, 가득
+찬 디스크)에는 파일 이름을 알려 주고 아무것도 바꾸지 않은 채 종료합니다. 파일 문제를 해결하고
+다시 실행하세요. 파일 형식의 내부 구조를 포함한 자세한 내용은
+<a href="/security#backups">보안 페이지</a>(영어)에 있습니다.</p>
+<hr />
+<h2 id="part-7-advanced">7부. 고급</h2>
+<h3 id="automation-the-keepit-url-scheme">자동화: keepit:// URL 체계</h3>
+<p>단축어(<em>URL 열기</em>), Raycast, Alfred, Keyboard Maestro, 또는 셸의 <code>open</code>으로 Keepit을 조작할 수
+있습니다. 단, <em>설정 → 고급 → 자동화 → keepit:// URL 명령 허용</em>에서 <strong>켠 다음에만</strong> 가능합니다.
+어떤 앱이나 웹 페이지든 URL을 열 수 있고 <code>add</code> / <code>paste</code>는 클립보드를 바꾸고 맨 앞의 앱에 입력하기
+때문에 기본적으로 꺼져 있습니다. 꺼져 있을 때 Keepit은 그런 URL을 경고음과 함께 무시합니다. 켜져
+있으면 Keepit은 누가 URL을 열었는지 확인합니다. 각 앱에서 무언가를 바꾸는 첫 명령(<code>paste</code>, <code>copy</code>,
+<code>template</code>, <code>add</code>, <code>add-template</code>, <code>pause</code>, <code>resume</code>)은 대화상자에 표시됩니다. <em>허용</em>은 한 번만
+실행하고, <em>항상 허용</em>은 그 앱을 신뢰하는 앱 목록에 넣습니다(같은 패널의 <em>신뢰하는 앱 잊기</em>로 목록을
+비웁니다). 웹 브라우저나 macOS가 이름을 알 수 없는 발신자에게는 매번 묻습니다. Keepit 자신의
+윈도우만 여는 명령은 묻지 않습니다.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>URL</th>
+<th>효과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>keepit://paste/2</code><br><code>keepit://paste/latest</code><br><code>keepit://paste/previous</code></td>
+<td>기록의 N번 항목(또는 최신 항목 / 이전 항목)을 맨 앞의 앱에 붙여넣습니다</td>
+</tr>
+<tr>
+<td><code>keepit://copy/3</code></td>
+<td>N번 항목을 붙여넣지 않고 클립보드에 넣습니다</td>
+</tr>
+<tr>
+<td><code>keepit://template/Signature</code><br><code>keepit://template/Work/Reply?copy=1</code></td>
+<td>이름이나 폴더 경로로 지정한 템플릿을 붙여넣습니다(또는 복사합니다)</td>
+</tr>
+<tr>
+<td><code>keepit://add?text=…</code></td>
+<td>기록과 클립보드에 텍스트를 추가합니다</td>
+</tr>
+<tr>
+<td><code>keepit://add-template?text=…&amp;name=…</code></td>
+<td>템플릿을 만듭니다</td>
+</tr>
+<tr>
+<td><code>keepit://history</code><br><code>keepit://templates</code><br><code>keepit://viewer</code><br><code>keepit://settings</code></td>
+<td>기록 메뉴, 템플릿 메뉴, 뷰어, 설정을 엽니다</td>
+</tr>
+<tr>
+<td><code>keepit://pause</code><br><code>keepit://resume</code></td>
+<td>기록을 10분간 일시 정지 / 다시 시작합니다</td>
+</tr>
+</tbody>
+</table></div>
+<p>텍스트는 퍼센트 인코딩하세요(공백은 <code>%20</code>). Keepit이 잠겨 있는 동안에는 URL이 무시됩니다.</p>
+<h3 id="updates">업데이트</h3>
+<p>Keepit은 하루에 한 번 GitHub Releases를 확인하고 대화상자로 업데이트를 제안합니다. <em>업데이트
+확인…</em>은 바로 확인합니다. 업데이트는 서명(EdDSA)과 공증을 거칩니다. Homebrew에서는
+<code>brew upgrade --cask keepit</code>이 같은 일을 합니다. 모든 다운로드의 체크섬은 릴리스 페이지의
+<code>SHA256SUMS</code>에 있습니다.</p>
+<p>이 확인은 Keepit이 보내는 유일한 네트워크 요청이며 선택 사항입니다: <em>설정 → 일반 → 업데이트 →
+자동으로 업데이트 확인</em>. 끄면 Keepit은 사용자가 요청하더라도 어디에도 연결하지 않고, <em>업데이트
+확인…</em>은 메뉴에서 사라집니다. 그때는 <a href="https://keep.it.com">keep.it.com</a>에서 내려받거나
+Homebrew로 업데이트합니다. App Store 에디션에는 업데이트 기능도 이 옵션도 없습니다. App Store가
+업데이트합니다.</p>
+<h3 id="uninstalling">설치 제거</h3>
+<p><em>설정 → 고급 → 재설정 및 설치 제거 → 설치 제거…</em>는 앱, 데이터 폴더, 키체인 항목(Touch ID 키
+포함), 로그인 항목, 손쉬운 사용 항목을 제거합니다. 암호나 Touch ID, 직접 입력하는 <code>DELETE</code>,
+그리고 확인을 요구합니다. 데이터가 다시 필요할 수도 있다면 먼저 백업을 내보내세요. Homebrew를
+쓴다면 그 뒤에 <code>brew uninstall --cask --force keepit</code>을 실행해 Homebrew가 cask를 잊게 하세요.</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-advanced.png?v=9908024a" class="zoom" title="원본 크기로 열기"><img src="/img/guide/prefs-advanced.png?v=9908024a" alt="설정 → 고급" width="636" height="515" loading="lazy"></a><figcaption>설정 → 고급</figcaption></figure>
+<hr />
+<h2 id="reference">참고 자료</h2>
+<h3 id="troubleshooting">문제 해결</h3>
+<p><strong>항목을 선택해도 아무것도 붙여넣어지지 않습니다.</strong> 손쉬운 사용 권한이 없습니다: <em>시스템 설정 →
+개인정보 보호 및 보안 → 손쉬운 사용 → Keepit</em>. Keepit이 목록에 있는데도 붙여넣지 않으면 껐다가
+다시 켜세요. 앱을 다시 설치하면 macOS가 허용했던 권한을 잊습니다.</p>
+<p><strong>단축키가 아무 동작도 하지 않습니다.</strong> 다른 앱이나 macOS가 그 키를 쓰고 있습니다. Keepit은 실행할
+때 이를 알려 줍니다. <em>단축키</em> 패널에서 다른 조합을 고르세요. 숫자나 글자와 함께 쓰는 ⌃⌥ 조합은
+기본 상태의 Mac에서 비어 있습니다.</p>
+<p><strong>메뉴가 엉뚱한 곳에 열립니다.</strong> 사용 중인 앱이 텍스트 커서 위치를 알려 주지 않아서 메뉴가 마우스
+포인터 위치에 열리는 것입니다. 항상 포인터 위치가 좋다면 일반 패널의 <em>가능하면 텍스트 커서 위치에
+메뉴 열기</em>를 꺼서 커서 찾기를 끌 수 있습니다.</p>
+<p><strong>복사한 것이 보이지 않습니다.</strong> 복사한 앱이 숨김으로 표시한 것은 기록되지 않습니다. 암호
+관리자(내장 목록)나 무시 목록에 있는 앱이 맨 앞에 있을 때 복사한 것도 기록되지 않으며, 방금 다른
+앱으로 전환하기 직전까지 쓰던 앱도 여기에 포함됩니다. <em>설정 → 기록</em>과
+<a href="/security#what-is-not-recorded">보안 페이지</a>(영어)를 참고하세요.</p>
+<p><strong>Touch ID가 제안되지 않습니다.</strong> 지금 사용할 수 있는 Touch ID 센서가 없습니다(덮개가 닫혀 있고
+Touch ID 키보드가 없음). Keepit은 설정을 유지하고 센서를 사용할 수 있게 되는 즉시 지문을
+요청합니다.</p>
+<p><strong>백업 상태에 폴더를 사용할 수 없다고 나옵니다.</strong> 폴더가 이동되었거나, 이름이 바뀌었거나, 마운트가
+해제되었거나, (iCloud Drive의 경우) 로컬 저장 공간에서 제거되었습니다. 다시 마운트하거나 되돌려
+놓으면 다음 사본이 정상적으로 기록됩니다. 또는 <em>선택…</em>으로 새 폴더를 고르세요. 새 폴더에서는 새
+계열이 시작되고 이전 파일은 있던 자리에 남습니다.</p>
+<p><strong>백업 파일이 열리지 않습니다.</strong> <em>암호가 틀렸습니다</em>는 파일의 인증 태그가 일치하지 않았다는
+뜻입니다. 그 파일을 <em>기록한</em> Mac의 암호(암호를 바꾼 뒤에도 예전 사본은 예전 암호로 열립니다)나 그
+Mac의 복구 문구를 쓰고 있는지 확인하세요. <em>이 백업에는 Keepit 3.0 이상이 필요합니다</em>는 파일을
+여는 버전보다 새로운 버전이 그 파일을 기록했다는 뜻입니다.</p>
+<p><strong>Homebrew가 기존 앱 위에 설치하기를 거부합니다.</strong> 먼저 Keepit을 종료하고
+<code>/Applications/Keepit.app</code>을 휴지통으로 옮기거나 <code>--force</code>를 붙이세요.</p>
+<p>여전히 해결되지 않나요? <a href="https://github.com/andrey-insarov/Keepit/issues">GitHub Issues</a> · admin@keep.it.com</p>
+<h3 id="keyboard-cheat-sheet">단축키 요약</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>키</th>
+<th>동작</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><kbd class="k">⌥M</kbd></td>
+<td>기록 메뉴, 입력해서 검색</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥T</kbd></td>
+<td>템플릿 메뉴</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥1</kbd> … <kbd class="k">⌃⌥0</kbd></td>
+<td>1–10번 항목 붙여넣기(메뉴 안에서도, 어디에서나)</td>
+</tr>
+<tr>
+<td>메뉴에서 <kbd class="k">⇧</kbd></td>
+<td>확장 메뉴: 항목별 모든 동작</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥⇧V</kbd></td>
+<td>이전 항목 붙여넣기 / 자리 바꾸기</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥V</kbd></td>
+<td>클립보드를 서식 없는 텍스트로 붙여넣기</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
+<td>대문자 / 소문자 / 단어 첫 글자 대문자 / 문장 첫 글자 대문자</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥W</kbd> <kbd class="k">⌃⌥J</kbd></td>
+<td>앞뒤 공백 제거 / 한 줄로</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥K</kbd> <kbd class="k">⌃⌥D</kbd> <kbd class="k">⌃⌥Y</kbd> <kbd class="k">⌃⌥X</kbd></td>
+<td>취소선 / 밑줄 / 물결 밑줄 / 장식 제거</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥A</kbd></td>
+<td>클립보드를 템플릿에 추가</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥⌫</kbd></td>
+<td>최신 항목 삭제</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥N</kbd> · <kbd class="k">⌥V</kbd> · <kbd class="k">⌥⇧N</kbd></td>
+<td>붙여넣기 대기열: 시작 / 중지 · 다음 항목 붙여넣기 · 남은 항목 모두 붙여넣기</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥E</kbd> <kbd class="k">⌥S</kbd> <kbd class="k">⌥C</kbd> <kbd class="k">⌥P</kbd> <kbd class="k">⌥L</kbd> <kbd class="k">⌥Q</kbd></td>
+<td>뷰어 · 설정 · 기록 지우기 · 기록 일시 정지 · 잠그기 · 종료</td>
+</tr>
+<tr>
+<td>뷰어에서 <kbd class="k">⌘F</kbd></td>
+<td>검색</td>
+</tr>
+<tr>
+<td><code>⌘,</code></td>
+<td>설정</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="placeholder-cheat-sheet">자리표시자 요약</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>자리표시자</th>
+<th>결과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{date}</code> <code>{time}</code> <code>{datetime}</code></td>
+<td>날짜 / 시간 / 둘 다, 시스템 형식</td>
+</tr>
+<tr>
+<td><code>{date:yyyy-MM-dd}</code> <code>{time:HH:mm}</code></td>
+<td>사용자 지정 형식(유니코드 날짜 패턴)</td>
+</tr>
+<tr>
+<td><code>{date:long}</code> <code>{time:short}</code> <code>{datetime:full}</code></td>
+<td>이름이 있는 스타일: <code>short</code> <code>medium</code> <code>long</code> <code>full</code></td>
+</tr>
+<tr>
+<td><code>{date+7d}</code> <code>{date-1m:MMMM}</code> <code>{time+1h}</code> <code>{datetime-1d:long}</code> <code>{date+1y-2d}</code></td>
+<td>이동(<code>d</code> <code>w</code> <code>m</code> <code>y</code> <code>h</code>, 최대 네 개까지 이어 쓸 수 있습니다)</td>
+</tr>
+<tr>
+<td><code>{weekday}</code> <code>{month}</code> <code>{year}</code></td>
+<td>요일 이름, 월 이름, 연도</td>
+</tr>
+<tr>
+<td><code>{iso}</code> <code>{unix}</code></td>
+<td>ISO 8601 타임스탬프, 유닉스 시간</td>
+</tr>
+<tr>
+<td><code>{clipboard}</code> <code>{clipboard:2}</code></td>
+<td>클립보드(1번 항목) 또는 N번 항목</td>
+</tr>
+<tr>
+<td><code>{clipboard\|upper}</code> <code>\|lower</code> <code>\|title</code> <code>\|trim</code> <code>\|oneline</code> <code>\|url</code></td>
+<td>필터, 이어 쓸 수 있습니다</td>
+</tr>
+<tr>
+<td><code>{input:이름}</code> <code>{input:이름=기본값}</code></td>
+<td>붙여넣기 전에 값을 묻습니다</td>
+</tr>
+<tr>
+<td><code>{choice:레이블=A\|B\|C}</code></td>
+<td>옵션 중 하나를 고르게 합니다</td>
+</tr>
+<tr>
+<td><code>{cursor}</code></td>
+<td>붙여넣은 뒤의 커서 위치</td>
+</tr>
+<tr>
+<td><code>{user}</code> <code>{username}</code> <code>{host}</code></td>
+<td>전체 이름, 계정 이름, 컴퓨터 이름</td>
+</tr>
+<tr>
+<td><code>{uuid}</code> <code>{random:1-100}</code></td>
+<td>새 UUID, 범위 안의 난수</td>
+</tr>
+<tr>
+<td><code>{{</code> <code>}}</code></td>
+<td>중괄호 문자 그대로</td>
+</tr>
+</tbody>
+</table></div></article></main>
+<footer><div class="wrap">
+  <span>© 2026 UK Intis Telecom LTD · Keepit은 MIT 라이선스로 배포됩니다</span>
+  <span><a href="/privacy">개인정보 처리방침</a><span class="en-only"> (영어)</span> · <a href="/security">보안</a><span class="en-only"> (영어)</span> · <a href="/ko/support">지원</a> · <a href="https://github.com/andrey-insarov/Keepit/blob/main/CHANGELOG.md">변경 내역</a> · <a href="https://it.com">it.com</a></span>
+  <span class="langs"><a href="/guide" lang="en" hreflang="en">English</a> · <a href="/ru/guide" lang="ru" hreflang="ru">Русский</a> · <a href="/uk/guide" lang="uk" hreflang="uk">Українська</a> · <a href="/de/guide" lang="de" hreflang="de">Deutsch</a> · <a href="/fr/guide" lang="fr" hreflang="fr">Français</a> · <a href="/es/guide" lang="es" hreflang="es">Español</a> · <a href="/pt-br/guide" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a> · <a href="/ja/guide" lang="ja" hreflang="ja">日本語</a> · <a href="/zh-hans/guide" lang="zh-Hans" hreflang="zh-Hans">简体中文</a> · <a href="/ar/guide" lang="ar" hreflang="ar">العربية</a> · <a href="/cs/guide" lang="cs" hreflang="cs">Čeština</a> · <a href="/pl/guide" lang="pl" hreflang="pl">Polski</a> · <a href="/it/guide" lang="it" hreflang="it">Italiano</a> · <a href="/nl/guide" lang="nl" hreflang="nl">Nederlands</a> · <a href="/tr/guide" lang="tr" hreflang="tr">Türkçe</a> · <b lang="ko">한국어</b> · <a href="/zh-hant/guide" lang="zh-Hant" hreflang="zh-Hant">繁體中文</a> · <a href="/he/guide" lang="he" hreflang="he">עברית</a></span>
+</div></footer>
+<div id="lb" role="dialog" aria-label="원본 크기 스크린샷"><img alt=""></div>
+<script>
+(function(){
+  document.querySelectorAll('.mnav,.lpick').forEach(function(mn){mn.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){mn.removeAttribute('open');});});document.addEventListener('click',function(e){if(mn.open&&!mn.contains(e.target))mn.removeAttribute('open');});mn.addEventListener('toggle',function(){if(mn.open)document.querySelectorAll('.mnav,.lpick').forEach(function(o){if(o!==mn)o.removeAttribute('open');});});});
+  var lb=document.getElementById('lb'),im=lb.querySelector('img');
+  document.querySelectorAll('a.zoom').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();im.src=a.getAttribute('href');im.alt=a.querySelector('img').alt;lb.classList.add('on');});});
+  function close(){lb.classList.remove('on');im.src='';}
+  lb.addEventListener('click',close);document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+  var links=[].slice.call(document.querySelectorAll('aside a')),heads=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  if(links.length&&'IntersectionObserver' in window){
+    var cur=null;function mark(id){links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+id);});}
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){cur=e.target.id;mark(cur);}});},{rootMargin:'-70px 0px -70% 0px'});
+    heads.forEach(function(h){if(h)io.observe(h);});
+  }
+})();
+</script>
+</body></html>

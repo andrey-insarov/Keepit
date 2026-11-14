@@ -1,0 +1,33 @@
+{
+  "ui": {
+    "features": "יכולות",
+    "privacy": "פרטיות",
+    "install": "התקנה",
+    "guide": "מדריך",
+    "security": "אבטחה",
+    "support": "תמיכה",
+    "menu": "תפריט",
+    "copyright": "© 2026 UK Intis Telecom LTD · Keepit מופץ ברישיון MIT",
+    "privacy_policy": "מדיניות פרטיות",
+    "changelog": "יומן שינויים",
+    "on_this_page": "בעמוד זה",
+    "contents": "תוכן העניינים",
+    "open_full_size": "פתיחה בגודל מלא",
+    "full_size_screenshot": "צילום מסך בגודל מלא",
+    "language": "שפה",
+    "in_english": "(באנגלית)",
+    "translated_note": "תורגם מאנגלית. המקור: <a href=\"{en}\">English</a>."
+  },
+  "pages": {
+    "GUIDE.md": {
+      "title": "המדריך של Keepit – מנהל לוח ל-Mac",
+      "description": "איך משתמשים ב-Keepit, מנהל הלוח החינמי ל-Mac: תפריט ההיסטוריה, מקשי קיצור, תבניות, המציג, הצפנה ו-Touch ID.",
+      "crumb": "מדריך"
+    },
+    "SUPPORT.md": {
+      "title": "התמיכה של Keepit – עזרה במנהל הלוח ל-Mac",
+      "description": "איך מקבלים עזרה ב-Keepit, מנהל הלוח ל-Mac, ותשובות קצרות לשאלות נפוצות.",
+      "crumb": "תמיכה"
+    }
+  }
+}
