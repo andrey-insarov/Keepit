@@ -178,11 +178,21 @@ final class LayoutProbeTests: XCTestCase {
         XCTAssertEqual(probe(l).check(keyCode: kV, modifiers: OPT | SHIFT).verdict, .notNeeded)
     }
 
-    func testLettersAreTheUnionOfDeclaredLanguages() {
+    func testOnlyThePrimaryLanguageCounts() {
+        // macOS lists every language a layout can type (98 for U.S.), primary first.
         var l = FakeLayout.latinBase()
         l.id = "multi"; l.name = "Multi"; l.languages = ["de", "pl"]
         l.set(kL, mods: OPT, .characters("ł"))
+        XCTAssertEqual(probe(l).check(keyCode: kL, modifiers: OPT).verdict, .notNeeded)
+        l.languages = ["pl", "de"]
         XCTAssertEqual(probe(l).check(keyCode: kL, modifiers: OPT).verdict, .needed(layout: "Multi", types: "ł"))
+    }
+
+    func testLoneCombiningMarkIsNotNeeded() {
+        var l = FakeLayout.latinBase()
+        l.id = "ext"; l.name = "Extended"; l.languages = ["en"]
+        l.set(kV, mods: OPT | SHIFT, .characters("\u{030C}"))   // combining caron, as ABC – Extended types it
+        XCTAssertEqual(probe(l).check(keyCode: kV, modifiers: OPT | SHIFT).verdict, .notNeeded)
     }
 
     func testNoLanguagesProtectsLatinAndSymbolsOnly() {

@@ -7,7 +7,9 @@
 //
 //   needed(c)  ⇔  c ∈ letters(L) ∪ symbols  and  c ∉ plain(L)
 //
-// letters(L): the exemplar characters of every language the layout declares (both cases).
+// letters(L): the exemplar characters of the layout's primary language (both cases). macOS lists
+//             every language a layout can type — 98 for U.S. — with the primary one first; the union
+//             of all of them would make U.S. protect ß and œ. Lone combining marks are not letters.
 // symbols:    @ € ~ \ | { } [ ] $ # ^ `
 // plain(L):   everything the layout types without ⌥ or ⌘ — each key alone or with Shift, and each
 //             dead key reached that way followed by one such key (^ then e → ê) or by Space.
@@ -64,7 +66,7 @@ struct LayoutCheck: Equatable {
 struct LetterSet {
     let contains: (String) -> Bool
 
-    /// The union of the exemplar character sets of the given languages; Latin a–z when empty.
+    /// The union of the exemplar character sets of the given languages (the probe passes one); Latin a–z when empty.
     static func exemplar(_ languages: [String]) -> LetterSet {
         if languages.isEmpty { return .latin }
         var set = CharacterSet()
@@ -105,7 +107,7 @@ struct LayoutProbe {
         var results = combos.map { _ in LayoutCheck(verdict: .notNeeded, incomplete: 0) }
         var failed: [String] = []
         for layout in reader.enabledLayouts() {
-            guard let prepared = Prepared(layout, letters: letters(layout.languages)) else {
+            guard let prepared = Prepared(layout, letters: letters(Array(layout.languages.prefix(1)))) else {
                 failed.append(layout.id)
                 continue
             }
@@ -127,7 +129,7 @@ struct LayoutProbe {
 
     /// The rule for one combination on one layout. nil when the layout cannot be read.
     func check(keyCode: UInt16, modifiers: UInt32, on layout: LayoutInfo) -> (needed: String?, incomplete: Int)? {
-        Prepared(layout, letters: letters(layout.languages))?.check(keyCode: keyCode, modifiers: modifiers)
+        Prepared(layout, letters: letters(Array(layout.languages.prefix(1))))?.check(keyCode: keyCode, modifiers: modifiers)
     }
 
     /// A layout with its plain(L) built.
@@ -166,7 +168,10 @@ struct LayoutProbe {
         }
 
         func needs(_ c: String) -> Bool {
-            (letters.contains(c) || LayoutProbe.protectedSymbols.contains(c)) && !plain.contains(c)
+            // A lone combining mark (ABC – Extended types one on ⌥⇧V) is not a character anyone needs.
+            if let first = c.unicodeScalars.first, first.properties.generalCategory == .nonspacingMark
+                || first.properties.generalCategory == .enclosingMark { return false }
+            return (letters.contains(c) || LayoutProbe.protectedSymbols.contains(c)) && !plain.contains(c)
         }
 
         func check(keyCode: UInt16, modifiers: UInt32) -> (needed: String?, incomplete: Int) {
