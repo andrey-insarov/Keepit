@@ -34,7 +34,7 @@ Bir hata ya da yanlış bir çeviri mi buldunuz, yoksa bir sorunuz mu var? Aşa�
   var f=document.getElementById('fb'),err=document.getElementById('fb-err'),ok=document.getElementById('fb-ok'),
       msg=f.elements.message,count=document.getElementById('fb-count'),picker=document.getElementById('fb-files'),
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
-  var EM={name:'Lütfen adınızı yazın.',email:'Lütfen geçerli bir e-posta adresi yazın.',type:'Lütfen konuyu seçin.',short:'Lütfen durumu en az 70 karakterle anlatın.',long:'Mesaj çok uzun (en çok 5000 karakter).',files:'En çok 5 ekran görüntüsü eklenebilir. Fazla olanları kaldırıp formu yeniden gönderin.',total:'Ekler çok büyük (en çok 5 ekran görüntüsü, her biri en çok 1 MB).',form:'Form okunamadı.',spam:'Lütfen spam denetimini tamamlayın.',send:'Mesaj şu anda gönderilemedi. Lütfen bize e-posta yazın.'};
+  var EM={name:'Lütfen adınızı yazın.',email:'Lütfen geçerli bir e-posta adresi yazın.',type:'Lütfen konuyu seçin.',short:'Lütfen durumu en az 70 karakterle anlatın.',long:'Mesaj çok uzun (en çok 5000 karakter).',files:'En çok 5 ekran görüntüsü eklenebilir. Fazla olanları kaldırıp formu yeniden gönderin.',total:'Ekler çok büyük (en çok 5 ekran görüntüsü, her biri en çok 1 MB).',form:'Form okunamadı.',spam:'Lütfen insan olduğunuzu doğrulayın.',send:'Mesaj şu anda gönderilemedi. Lütfen bize e-posta yazın.'};
   function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'“'+n+'” 1 MB’tan büyük. Dosyayı kaldırın ya da küçültün, sonra formu yeniden gönderin.';if(c==='notimage')return'“'+n+'” desteklenen bir görüntü olarak tanınmadı. Dosyayı kaldırın ya da değiştirin, sonra formu yeniden gönderin.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Bir şeyler ters gitti.';}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' KB':(n/1048576).toFixed(1).replace('.',',')+' MB';}
@@ -66,7 +66,7 @@ Bir hata ya da yanlış bir çeviri mi buldunuz, yoksa bir sorunuz mu var? Aşa�
     if(msg.value.trim().length<70)return show('Lütfen durumu en az 70 karakterle anlatın.');
     if(msg.value.length>5000)return show('Mesaj çok uzun (en çok 5000 karakter).');
     var ts=f.querySelector('[name=cf-turnstile-response]');
-    if(!ts||!ts.value)return show('Lütfen spam denetimini tamamlayın.');
+    if(!ts||!ts.value)return show('Lütfen insan olduğunuzu doğrulayın.');
     var fd=new FormData();
     ['name','email','type','message'].forEach(function(k){fd.append(k,f.elements[k].value);});
     fd.append('cf-turnstile-response',ts.value);

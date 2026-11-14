@@ -6,7 +6,7 @@
 <form id="fb" class="fb" action="/api/feedback" method="post" enctype="multipart/form-data" novalidate>
   <div class="row2">
     <label>Имя<input name="name" type="text" maxlength="100" autocomplete="name" required></label>
-    <label>E-mail<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
+    <label>Электронная почта<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
   </div>
   <label>Тема
     <select name="type" required>
@@ -34,8 +34,8 @@
   var f=document.getElementById('fb'),err=document.getElementById('fb-err'),ok=document.getElementById('fb-ok'),
       msg=f.elements.message,count=document.getElementById('fb-count'),picker=document.getElementById('fb-files'),
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
-  var EM={name:'Укажите имя.',email:'Укажите правильный адрес e-mail.',type:'Выберите тему сообщения.',short:'Опишите, пожалуйста, хотя бы в 70 символах.',long:'Сообщение слишком длинное (не больше 5000 символов).',files:'Можно прикрепить не больше 5 снимков. Удалите лишние и отправьте форму снова.',total:'Вложения слишком большие (не больше 5 снимков по 1 МБ).',form:'Не удалось прочитать форму.',spam:'Пройдите, пожалуйста, проверку от спама.',send:'Сейчас не удалось отправить сообщение. Напишите нам, пожалуйста, по e-mail.'};
-  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'«'+n+'» больше 1 МБ. Удалите или уменьшите файл.';if(c==='notimage')return'«'+n+'» не удалось распознать как поддерживаемое изображение. Удалите или замените файл.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Что-то пошло не так.';}
+  var EM={name:'Укажите имя.',email:'Укажите правильный адрес e-mail.',type:'Выберите тему сообщения.',short:'Опишите, пожалуйста, хотя бы в 70 символах.',long:'Сообщение слишком длинное (не больше 5000 символов).',files:'Можно прикрепить не больше 5 снимков. Удалите лишние и отправьте форму снова.',total:'Вложения слишком большие (не больше 5 снимков по 1 МБ).',form:'Не удалось прочитать форму.',spam:'Подтвердите, что вы человек.',send:'Сейчас не удалось отправить сообщение. Напишите нам, пожалуйста, по e-mail.'};
+  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'«'+n+'» больше 1 МБ. Удалите или уменьшите файл. Затем отправьте форму ещё раз.';if(c==='notimage')return'«'+n+'» не удалось распознать как поддерживаемое изображение. Удалите или замените файл. Затем отправьте форму ещё раз.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Что-то пошло не так.';}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' КБ':(n/1048576).toFixed(1).replace('.',',')+' МБ';}
   function render(){
@@ -66,7 +66,7 @@
     if(msg.value.trim().length<70)return show('Опишите, пожалуйста, хотя бы в 70 символах.');
     if(msg.value.length>5000)return show('Сообщение слишком длинное (не больше 5000 символов).');
     var ts=f.querySelector('[name=cf-turnstile-response]');
-    if(!ts||!ts.value)return show('Пройдите, пожалуйста, проверку от спама.');
+    if(!ts||!ts.value)return show('Подтвердите, что вы человек.');
     var fd=new FormData();
     ['name','email','type','message'].forEach(function(k){fd.append(k,f.elements[k].value);});
     fd.append('cf-turnstile-response',ts.value);

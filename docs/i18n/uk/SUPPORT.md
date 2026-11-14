@@ -6,7 +6,7 @@
 <form id="fb" class="fb" action="/api/feedback" method="post" enctype="multipart/form-data" novalidate>
   <div class="row2">
     <label>Ім’я<input name="name" type="text" maxlength="100" autocomplete="name" required></label>
-    <label>E-mail<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
+    <label>Електронна пошта<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
   </div>
   <label>Тема
     <select name="type" required>
@@ -34,8 +34,8 @@
   var f=document.getElementById('fb'),err=document.getElementById('fb-err'),ok=document.getElementById('fb-ok'),
       msg=f.elements.message,count=document.getElementById('fb-count'),picker=document.getElementById('fb-files'),
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
-  var EM={name:'Вкажіть ім’я.',email:'Вкажіть правильну адресу e-mail.',type:'Виберіть тему повідомлення.',short:'Опишіть, будь ласка, хоча б у 70 символах.',long:'Повідомлення задовге (не більше 5000 символів).',files:'Можна прикріпити не більше 5 знімків. Видаліть зайві й надішліть форму знову.',total:'Вкладення завеликі (не більше 5 знімків по 1 МБ).',form:'Не вдалося прочитати форму.',spam:'Пройдіть, будь ласка, перевірку від спаму.',send:'Зараз не вдалося надіслати повідомлення. Напишіть нам, будь ласка, електронною поштою.'};
-  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'«'+n+'» більший за 1 МБ. Видаліть або зменште файл.';if(c==='notimage')return'«'+n+'» не вдалося розпізнати як підтримуване зображення. Видаліть або замініть файл.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Щось пішло не так.';}
+  var EM={name:'Вкажіть ім’я.',email:'Вкажіть правильну адресу e-mail.',type:'Виберіть тему повідомлення.',short:'Опишіть, будь ласка, хоча б у 70 символах.',long:'Повідомлення задовге (не більше 5000 символів).',files:'Можна прикріпити не більше 5 знімків. Видаліть зайві й надішліть форму знову.',total:'Вкладення завеликі (не більше 5 знімків по 1 МБ).',form:'Не вдалося прочитати форму.',spam:'Підтвердьте, що ви людина.',send:'Зараз не вдалося надіслати повідомлення. Напишіть нам, будь ласка, електронною поштою.'};
+  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'«'+n+'» більший за 1 МБ. Видаліть або зменште файл. Потім надішліть форму ще раз.';if(c==='notimage')return'«'+n+'» не вдалося розпізнати як підтримуване зображення. Видаліть або замініть файл. Потім надішліть форму ще раз.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Щось пішло не так.';}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' КБ':(n/1048576).toFixed(1).replace('.',',')+' МБ';}
   function render(){
@@ -66,7 +66,7 @@
     if(msg.value.trim().length<70)return show('Опишіть, будь ласка, хоча б у 70 символах.');
     if(msg.value.length>5000)return show('Повідомлення задовге (не більше 5000 символів).');
     var ts=f.querySelector('[name=cf-turnstile-response]');
-    if(!ts||!ts.value)return show('Пройдіть, будь ласка, перевірку від спаму.');
+    if(!ts||!ts.value)return show('Підтвердьте, що ви людина.');
     var fd=new FormData();
     ['name','email','type','message'].forEach(function(k){fd.append(k,f.elements[k].value);});
     fd.append('cf-turnstile-response',ts.value);

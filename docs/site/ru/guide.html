@@ -64,7 +64,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
 .langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
 .tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
 code,kbd,pre{direction:ltr;unicode-bidi:isolate}
-[dir=rtl] .tpl b{direction:ltr;unicode-bidi:isolate}
+[dir=rtl] .tpl b,[dir=rtl] .tags>span{direction:ltr;unicode-bidi:isolate}
+html:not([lang=en]) header a[href="/security"]::after{content:"EN";font-size:.62em;font-weight:600;letter-spacing:.04em;vertical-align:super;margin-inline-start:3px;opacity:.6}
 .lpick{position:relative}.lpick summary{list-style:none;cursor:pointer;height:40px;padding:0 8px;display:flex;align-items:center;gap:5px;border-radius:10px;color:var(--ink-2,var(--ink))}
 .lpick summary::-webkit-details-marker{display:none}.lpick summary .chev{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
 .lpick .fl{flex:none;width:23px;height:16px;border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
@@ -245,7 +246,7 @@ brew install --cask andrey-insarov/keepit/keepit
 <p>Шаблоны — это элементы, которые вы храните насовсем: подписи, адреса, готовые ответы, фрагменты кода,
 логотип, который часто вставляете. Они лежат в дереве с папками и появляются в подменю <em>Шаблоны</em> меню
 истории и по <strong>⌥T</strong>. В новой установке есть папка <em>Примеры</em> (приветствие, сегодняшняя дата, цитата буфера обмена и подпись). По ней видно, что умеют шаблоны, ещё до того, как вы напишете свои. Удаляйте или
-меняйте их как угодно (<em>Сбросить…</em> в Настройках вернёт их обратно).</p>
+меняйте их как угодно . Вернуть примеры можно через <em>Настройки → Дополнительно → Сброс и удаление → Сбросить…</em>. Это также сбросит остальные данные и настройки Keepit.</p>
 <figure class="shot" style="max-width:660px"><a href="/img/guide/template-examples.png?v=c143a1d7" class="zoom" title="Открыть в полном размере"><img src="/img/guide/template-examples.png?v=c143a1d7" alt="Папка «Примеры»: при наведении на элемент виден его текст" width="660" height="209" loading="lazy"></a><figcaption>Папка «Примеры»: при наведении на элемент виден его текст</figcaption></figure>
 <figure class="shot" style="max-width:738px"><a href="/img/guide/template-menu-letters.png?v=ea96333e" class="zoom" title="Открыть в полном размере"><img src="/img/guide/template-menu-letters.png?v=ea96333e" alt="Меню шаблонов: папки открываются как подменю, буквы после &amp; становятся клавишами" width="738" height="715" loading="lazy"></a><figcaption>Меню шаблонов: папки открываются как подменю, буквы после &amp; становятся клавишами</figcaption></figure>
 <h3 id="creating-and-organising">Создание и упорядочивание</h3>
@@ -333,7 +334,7 @@ brew install --cask andrey-insarov/keepit/keepit
 <p>Например, шаблон ответа:</p>
 <pre><code>Здравствуйте, {input:Имя}!
 
-Спасибо за письмо от {date-1d}. Отвечу до {date+3d:EEEE}.
+Спасибо за письмо от {date-1d}. Отвечу до {date+3d:d MMMM}.
 {cursor}
 {user}
 </code></pre>
@@ -425,8 +426,7 @@ AES-256-GCM. Ключ выводится из вашего пароля (PBKDF2,
 он стирается, когда Keepit блокируется: по команде <em>Заблокировать Keepit</em> (<kbd class="k">⌥L</kbd>), при выходе и, по желанию,
 после того как Mac какое-то время был заблокирован или спал. <em>Автоблокировка Keepit</em> в новой установке имеет значение <strong>Никогда</strong> (обновление с 3.0.3 сохраняет прежний выбор: <em>Сразу</em>, если был включён флажок блокировки вместе с экраном). Менеджер буфера обмена, который спрашивает пароль после каждого
 перерыва на кофе, перестают использовать, а для моментов, когда это важно, есть <kbd class="k">⌥L</kbd>. <em>Сразу</em>
-блокирует вместе с экраном; <em>Через 5 минут</em>, <em>Через 15 минут</em> или <em>Через 1 час</em> не реагируют на короткое отсутствие: Keepit остаётся разблокированным и продолжает запись, а блокируется, только если Mac был без вас всё
-это время. То же действует, если Keepit запускается, когда Mac уже заблокирован или на переднем
+блокирует вместе с экраном; <em>Через 5 минут</em>, <em>Через 15 минут</em> или <em>Через 1 час</em> не реагируют на короткое отсутствие: Keepit остаётся разблокированным и продолжает запись, а блокируется, только если Mac оставался заблокированным или спал в течение всего выбранного времени. То же действует, если Keepit запускается, когда Mac уже заблокирован или на переднем
 плане сеанс другого пользователя (например, при перезапуске после обновления): отсутствие отсчитывается
 с момента запуска, насколько macOS сообщает Keepit это состояние (обычно сообщает; если не может,
 отсчёт начнётся со следующей блокировки или сна). С включённым Touch ID Keepit просит прикоснуться к

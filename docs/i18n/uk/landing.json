@@ -117,7 +117,7 @@
  ],
  [
   "<div class=\"tpl\">Hi <b>{input:Name}</b>,\n\nThanks for your order — it ships on <b>{date+2d:EEEE, d MMMM}</b>.\nTracking: <b>{clipboard}</b>\n\n<b>{cursor}</b>\nBest, Andrey</div>",
-  "<div class=\"tpl\">Добрий день, <b>{input:Ім’я}</b>!\n\nДякуємо за замовлення. Його буде відправлено <b>{date+2d:EEEE, d MMMM}</b>.\nТрек-номер: <b>{clipboard}</b>\n\n<b>{cursor}</b>\nЗ повагою, Андрій</div>"
+  "<div class=\"tpl\">Добрий день, <b>{input:Ім’я}</b>!\n\nДякуємо за замовлення. Його буде відправлено <b>{date+2d:d MMMM}</b>.\nТрек-номер: <b>{clipboard}</b>\n\n<b>{cursor}</b>\nЗ повагою, Андрій</div>"
  ],
  [
   "<h3>Text, images, files</h3>\n        <p>Rich text with formatting, screenshots with thumbnails, lists of files from Finder. Duplicates are merged into one entry.</p>",

@@ -6,7 +6,7 @@ Du hast einen Fehler oder eine falsche Übersetzung gefunden oder hast eine Frag
 <form id="fb" class="fb" action="/api/feedback" method="post" enctype="multipart/form-data" novalidate>
   <div class="row2">
     <label>Name<input name="name" type="text" maxlength="100" autocomplete="name" required></label>
-    <label>E-mail<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
+    <label>E-Mail<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
   </div>
   <label>Worum geht es
     <select name="type" required>
@@ -34,8 +34,8 @@ Du hast einen Fehler oder eine falsche Übersetzung gefunden oder hast eine Frag
   var f=document.getElementById('fb'),err=document.getElementById('fb-err'),ok=document.getElementById('fb-ok'),
       msg=f.elements.message,count=document.getElementById('fb-count'),picker=document.getElementById('fb-files'),
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
-  var EM={name:'Bitte gib deinen Namen an.',email:'Bitte gib eine gültige E-Mail-Adresse an.',type:'Bitte wähle aus, worum es geht.',short:'Bitte beschreibe es in mindestens 70 Zeichen.',long:'Die Nachricht ist zu lang (höchstens 5000 Zeichen).',files:'Es lassen sich höchstens 5 Bildschirmfotos anhängen. Entferne die überzähligen und sende das Formular noch einmal.',total:'Die Anhänge sind zu groß (höchstens 5 Bildschirmfotos mit je 1 MB).',form:'Das Formular konnte nicht gelesen werden.',spam:'Bitte schließe die Spam-Prüfung ab.',send:'Die Nachricht konnte gerade nicht gesendet werden. Bitte schreib uns eine E-Mail.'};
-  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'„'+n+'“ ist größer als 1 MB. Entferne oder verkleinere die Datei.';if(c==='notimage')return'„'+n+'“ wurde nicht als unterstütztes Bild erkannt. Entferne oder ersetze die Datei.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Etwas ist schiefgegangen.';}
+  var EM={name:'Bitte gib deinen Namen an.',email:'Bitte gib eine gültige E-Mail-Adresse an.',type:'Bitte wähle aus, worum es geht.',short:'Bitte beschreibe es in mindestens 70 Zeichen.',long:'Die Nachricht ist zu lang (höchstens 5000 Zeichen).',files:'Es lassen sich höchstens 5 Bildschirmfotos anhängen. Entferne die überzähligen und sende das Formular noch einmal.',total:'Die Anhänge sind zu groß (höchstens 5 Bildschirmfotos mit je 1 MB).',form:'Das Formular konnte nicht gelesen werden.',spam:'Bitte bestätige, dass du ein Mensch bist.',send:'Die Nachricht konnte gerade nicht gesendet werden. Bitte schreib uns eine E-Mail.'};
+  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'„'+n+'“ ist größer als 1 MB. Entferne oder verkleinere die Datei. Sende das Formular anschließend erneut ab.';if(c==='notimage')return'„'+n+'“ wurde nicht als unterstütztes Bild erkannt. Entferne oder ersetze die Datei. Sende das Formular anschließend erneut ab.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Etwas ist schiefgegangen.';}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' KB':(n/1048576).toFixed(1).replace('.',',')+' MB';}
   function render(){
@@ -66,7 +66,7 @@ Du hast einen Fehler oder eine falsche Übersetzung gefunden oder hast eine Frag
     if(msg.value.trim().length<70)return show('Bitte beschreibe es in mindestens 70 Zeichen.');
     if(msg.value.length>5000)return show('Die Nachricht ist zu lang (höchstens 5000 Zeichen).');
     var ts=f.querySelector('[name=cf-turnstile-response]');
-    if(!ts||!ts.value)return show('Bitte schließe die Spam-Prüfung ab.');
+    if(!ts||!ts.value)return show('Bitte bestätige, dass du ein Mensch bist.');
     var fd=new FormData();
     ['name','email','type','message'].forEach(function(k){fd.append(k,f.elements[k].value);});
     fd.append('cf-turnstile-response',ts.value);

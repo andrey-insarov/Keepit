@@ -177,7 +177,7 @@
  ],
  [
   "<div><strong>1</strong><span>network request: the daily update check against GitHub. Optional; the App Store edition has no network entitlement at all — <a href=\"/security#network\">verify it</a>.</span></div>",
-  "<div><strong>Una</strong><span>sola petición de red: la búsqueda diaria de actualizaciones en GitHub. Se puede desactivar. La versión del App Store ni siquiera tiene permiso de acceso a la red: <a href=\"/security#network\">compruébalo tú mismo</a> (en inglés).</span></div>"
+  "<div><strong>Una</strong><span>sola petición de red: la búsqueda diaria de actualizaciones en GitHub. Se puede desactivar. La versión del App Store ni siquiera tiene permiso de acceso a la red: <a href=\"/security#network\">compruébalo</a> (en inglés).</span></div>"
  ],
  [
   "<div><strong>1</strong><span>folder on your Mac with everything in it — plus the backup folder, if you choose one. Delete them and Keepit is gone.</span></div>",

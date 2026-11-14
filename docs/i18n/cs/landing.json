@@ -165,7 +165,7 @@
  ],
  [
   "<p class=\"kicker\">A clipboard manager sees passwords, addresses and half-written messages. Keepit is built so that none of it goes anywhere you did not choose.</p>",
-  "<p class=\"kicker\">Správce schránky vidí hesla, adresy i rozepsané zprávy. Keepit je navržen tak, aby nic z toho neodešlo tam, kam jste to sami nechtěli poslat.</p>"
+  "<p class=\"kicker\">Správce schránky vidí hesla, adresy i rozepsané zprávy. Keepit je navržen tak, aby nic z toho neodešlo tam, kam to poslat nechcete.</p>"
  ],
  [
   "<div><strong>0</strong><span>accounts, servers or sync of its own. Nothing to log in to.</span></div>",
@@ -229,7 +229,7 @@
  ],
  [
   "<p class=\"kicker\">All of them are global and all of them can be changed in Settings → Shortcuts. A key that collides with one you already use stays off until you assign it.</p>",
-  "<p class=\"kicker\">Všechny jsou globální a mění se v Nastavení → Zkratky. Zkratka, která se kryje s už obsazenou, zůstane vypnutá, dokud ji sami nepřiřadíte.</p>"
+  "<p class=\"kicker\">Všechny jsou globální a mění se v Nastavení → Zkratky. Zkratka, která se kryje s už obsazenou, zůstane vypnutá, dokud ji nepřiřadíte.</p>"
  ],
  [
   "<dd>History menu at the text cursor</dd>",
@@ -305,7 +305,7 @@
  ],
  [
   "<details><summary>Why does Keepit ask for the Accessibility permission?</summary><p>For two things: to send ⌘V to the app you were working in after you pick an item, and to find the text cursor so the menu opens next to it. Keepit does not read or monitor other apps. Without the permission it still records history and copies the chosen item to the clipboard — you paste by hand.</p></details>",
-  "<details><summary>Proč Keepit potřebuje oprávnění Zpřístupnění?</summary><p>Potřebuje ho ke dvěma věcem. Za prvé proto, aby po výběru položky poslal ⌘V do aplikace, ve které jste pracovali. Za druhé proto, aby našel textový kurzor a otevřel nabídku vedle něj. Keepit jiné aplikace nečte ani nesleduje. Bez oprávnění dál zaznamenává historii a vybranou položku uloží do schránky, vložit ji ale musíte sami.</p></details>"
+  "<details><summary>Proč Keepit potřebuje oprávnění Zpřístupnění?</summary><p>Potřebuje ho ke dvěma věcem. Za prvé proto, aby po výběru položky poslal ⌘V do aplikace, ve které pracujete. Za druhé proto, aby našel textový kurzor a otevřel nabídku vedle něj. Keepit jiné aplikace nečte ani nesleduje. Bez oprávnění dál zaznamenává historii a vybranou položku uloží do schránky, vložit ji ale musíte ručně.</p></details>"
  ],
  [
   "<details><summary>Does anything leave my Mac?</summary><p>Not unless you ask it to. Keepit has no server: the only network request is the daily update check against GitHub Releases — and you can switch it off in Settings → General, after which Keepit makes no request at all. The App Store edition does not make even that one. There is no account, no telemetry, no crash reporting. If you switch on automatic backup, encrypted copies are written to a folder you choose; if that folder lives in iCloud Drive or Dropbox, that service syncs them under your account — Keepit itself never talks to it.</p></details>",

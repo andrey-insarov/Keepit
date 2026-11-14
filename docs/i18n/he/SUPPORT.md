@@ -36,7 +36,7 @@
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
   var PF={one:' תו',other:' תווים'},PR=window.Intl&&Intl.PluralRules?new Intl.PluralRules('he'):null;
   function pf(n){var k=PR?PR.select(n):'other';return Object.prototype.hasOwnProperty.call(PF,k)?PF[k]:PF.other;}
-  var EM={name:'נא לכתוב את שמכם.',email:'נא לכתוב כתובת דוא״ל תקינה.',type:'נא לבחור את נושא הפנייה.',short:'נא לתאר את הפנייה ב-70 תווים לפחות.',long:'ההודעה ארוכה מדי (עד 5000 תווים).',files:'אפשר לצרף עד 5 צילומי מסך. הסירו את העודפים ושלחו את הטופס שוב.',total:'הקבצים המצורפים גדולים מדי (עד 5 צילומי מסך, עד 1 MB כל אחד).',form:'לא ניתן היה לקרוא את הטופס.',spam:'נא להשלים את בדיקת הספאם.',send:'לא ניתן היה לשלוח את ההודעה כרגע. כתבו לנו בדוא״ל.'};
+  var EM={name:'נא לכתוב את שמכם.',email:'נא לכתוב כתובת דוא״ל תקינה.',type:'נא לבחור את נושא הפנייה.',short:'נא לתאר את הפנייה ב-70 תווים לפחות.',long:'ההודעה ארוכה מדי (עד 5000 תווים).',files:'אפשר לצרף עד 5 צילומי מסך. הסירו את העודפים ושלחו את הטופס שוב.',total:'הקבצים המצורפים גדולים מדי (עד 5 צילומי מסך, עד 1 MB כל אחד).',form:'לא ניתן היה לקרוא את הטופס.',spam:'אשרו שאתם בני אדם.',send:'לא ניתן היה לשלוח את ההודעה כרגע. כתבו לנו בדוא״ל.'};
   function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'“'+n+'” גדול מ-1 MB. הסירו את הקובץ או הקטינו אותו, ואז שלחו את הטופס שוב.';if(c==='notimage')return'“'+n+'” לא זוהה כתמונה נתמכת. הסירו את הקובץ או החליפו אותו, ואז שלחו את הטופס שוב.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'משהו השתבש.';}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' KB':(n/1048576).toFixed(1).replace('.','.')+' MB';}
@@ -68,7 +68,7 @@
     if(msg.value.trim().length<70)return show('נא לתאר את הפנייה ב-70 תווים לפחות.');
     if(msg.value.length>5000)return show('ההודעה ארוכה מדי (עד 5000 תווים).');
     var ts=f.querySelector('[name=cf-turnstile-response]');
-    if(!ts||!ts.value)return show('נא להשלים את בדיקת הספאם.');
+    if(!ts||!ts.value)return show('אשרו שאתם בני אדם.');
     var fd=new FormData();
     ['name','email','type','message'].forEach(function(k){fd.append(k,f.elements[k].value);});
     fd.append('cf-turnstile-response',ts.value);

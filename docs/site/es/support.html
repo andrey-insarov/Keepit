@@ -64,7 +64,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
 .langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
 .tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
 code,kbd,pre{direction:ltr;unicode-bidi:isolate}
-[dir=rtl] .tpl b{direction:ltr;unicode-bidi:isolate}
+[dir=rtl] .tpl b,[dir=rtl] .tags>span{direction:ltr;unicode-bidi:isolate}
+html:not([lang=en]) header a[href="/security"]::after{content:"EN";font-size:.62em;font-weight:600;letter-spacing:.04em;vertical-align:super;margin-inline-start:3px;opacity:.6}
 .lpick{position:relative}.lpick summary{list-style:none;cursor:pointer;height:40px;padding:0 8px;display:flex;align-items:center;gap:5px;border-radius:10px;color:var(--ink-2,var(--ink))}
 .lpick summary::-webkit-details-marker{display:none}.lpick summary .chev{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
 .lpick .fl{flex:none;width:23px;height:16px;border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
@@ -121,8 +122,8 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
   var f=document.getElementById('fb'),err=document.getElementById('fb-err'),ok=document.getElementById('fb-ok'),
       msg=f.elements.message,count=document.getElementById('fb-count'),picker=document.getElementById('fb-files'),
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
-  var EM={name:'Indica tu nombre.',email:'Indica una dirección de correo válida.',type:'Elige el asunto del mensaje.',short:'Descríbelo con 70 caracteres como mínimo.',long:'El mensaje es demasiado largo (5000 caracteres como máximo).',files:'Puedes adjuntar 5 capturas como máximo. Quita las que sobran y vuelve a enviar el formulario.',total:'Los archivos adjuntos ocupan demasiado (hasta 5 capturas, de un máximo de 1 MB cada una).',form:'No se ha podido leer el formulario.',spam:'Completa la verificación antispam.',send:'Ahora mismo no se ha podido enviar el mensaje. Escríbenos por correo electrónico.'};
-  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'«'+n+'» ocupa más de 1 MB. Quita el archivo o redúcelo.';if(c==='notimage')return'«'+n+'» no se ha reconocido como una imagen compatible. Quita el archivo o sustitúyelo.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Algo ha salido mal.';}
+  var EM={name:'Indica tu nombre.',email:'Indica una dirección de correo válida.',type:'Elige el asunto del mensaje.',short:'Descríbelo con 70 caracteres como mínimo.',long:'El mensaje es demasiado largo (5000 caracteres como máximo).',files:'Puedes adjuntar 5 capturas como máximo. Quita las que sobran y vuelve a enviar el formulario.',total:'Los archivos adjuntos ocupan demasiado (hasta 5 capturas, de un máximo de 1 MB cada una).',form:'No se ha podido leer el formulario.',spam:'Confirma que eres una persona.',send:'Ahora mismo no se ha podido enviar el mensaje. Escríbenos por correo electrónico.'};
+  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'«'+n+'» ocupa más de 1 MB. Quita el archivo o redúcelo. Después, vuelve a enviar el formulario.';if(c==='notimage')return'«'+n+'» no se ha reconocido como una imagen compatible. Quita el archivo o sustitúyelo. Después, vuelve a enviar el formulario.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Algo ha salido mal.';}
   var PF={one:' carácter',other:' caracteres'},PR=window.Intl&&Intl.PluralRules?new Intl.PluralRules('es'):null;
   function pf(n){var k=PR?PR.select(n):'other';return Object.prototype.hasOwnProperty.call(PF,k)?PF[k]:PF.other;}
   function show(e){err.textContent=e;err.hidden=!e;}
@@ -147,7 +148,7 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
     }
     picker.value='';render();
   });
-  msg.addEventListener('input',function(){var n=msg.value.trim().length;count.textContent=n<70?'faltan '+(70-n)+pf(70-n):n+pf(n);});
+  msg.addEventListener('input',function(){var n=msg.value.trim().length;count.textContent=n<70?(70-n===1?'falta ':'faltan ')+(70-n)+pf(70-n):n+pf(n);});
   f.addEventListener('submit',function(ev){
     ev.preventDefault();show('');
     if(!f.elements.name.value.trim())return show('Indica tu nombre.');
@@ -155,7 +156,7 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
     if(msg.value.trim().length<70)return show('Descríbelo con 70 caracteres como mínimo.');
     if(msg.value.length>5000)return show('El mensaje es demasiado largo (5000 caracteres como máximo).');
     var ts=f.querySelector('[name=cf-turnstile-response]');
-    if(!ts||!ts.value)return show('Completa la verificación antispam.');
+    if(!ts||!ts.value)return show('Confirma que eres una persona.');
     var fd=new FormData();
     ['name','email','type','message'].forEach(function(k){fd.append(k,f.elements[k].value);});
     fd.append('cf-turnstile-response',ts.value);
@@ -171,7 +172,7 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
 
 <p>Correo: <a href="mailto:admin@keep.it.com">admin@keep.it.com</a> · Paso a paso: la <a href="/es/guide">guía</a> · Cómo se protegen tus datos: <a href="/security">seguridad</a> (en inglés).</p>
 <h2 id="quick-answers">Respuestas rápidas</h2>
-<p><strong>No se pega nada después de elegir un elemento.</strong> Concede el permiso de Accesibilidad: Ajustes del Sistema → Privacidad y seguridad → Accesibilidad → activa Keepit (si ya aparece en la lista, desactívalo y vuelve a activarlo). Mientras tanto, pulsa ⌘V tú mismo: el elemento ya está en el portapapeles.</p>
+<p><strong>No se pega nada después de elegir un elemento.</strong> Concede el permiso de Accesibilidad: Ajustes del Sistema → Privacidad y seguridad → Accesibilidad → activa Keepit (si ya aparece en la lista, desactívalo y vuelve a activarlo). Mientras tanto, pulsa ⌘V manualmente: el elemento ya está en el portapapeles.</p>
 <p><strong>He olvidado la contraseña.</strong> Haz clic en <em>Recuperar acceso…</em> en la ventana de desbloqueo o usa Touch ID en el mismo Mac. Sin ninguna de las dos cosas, los datos no se pueden recuperar.</p>
 <p><strong>¿Dónde están mis datos?</strong> <code>~/Library/Application Support/Keepit/</code> (versión del App Store: dentro de <code>~/Library/Containers/com.it.keep/</code>).</p></article></main>
 <footer><div class="wrap">

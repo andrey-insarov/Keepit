@@ -36,7 +36,7 @@ Heb je een bug of een vertaalfout gevonden, of heb je een vraag? Stuur ons een b
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
   var PF={one:' teken',other:' tekens'},PR=window.Intl&&Intl.PluralRules?new Intl.PluralRules('nl'):null;
   function pf(n){var k=PR?PR.select(n):'other';return Object.prototype.hasOwnProperty.call(PF,k)?PF[k]:PF.other;}
-  var EM={name:'Vul je naam in.',email:'Vul een geldig e-mailadres in.',type:'Kies waar het over gaat.',short:'Beschrijf het in minimaal 70 tekens.',long:'Het bericht is te lang (maximaal 5000 tekens).',files:'Je kunt maximaal 5 schermafbeeldingen meesturen. Verwijder de overige en verstuur het formulier opnieuw.',total:'De bijlagen zijn te groot (maximaal 5 schermafbeeldingen van elk 1 MB).',form:'Het formulier kon niet worden gelezen.',spam:'Rond de spamcontrole af.',send:'Het bericht kon nu niet worden verstuurd. Stuur ons een e-mail.'};
+  var EM={name:'Vul je naam in.',email:'Vul een geldig e-mailadres in.',type:'Kies waar het over gaat.',short:'Beschrijf het in minimaal 70 tekens.',long:'Het bericht is te lang (maximaal 5000 tekens).',files:'Je kunt maximaal 5 schermafbeeldingen meesturen. Verwijder de overige en verstuur het formulier opnieuw.',total:'De bijlagen zijn te groot (maximaal 5 schermafbeeldingen van elk 1 MB).',form:'Het formulier kon niet worden gelezen.',spam:'Bevestig dat je een mens bent.',send:'Het bericht kon nu niet worden verstuurd. Stuur ons een e-mail.'};
   function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'‘'+n+'’ is groter dan 1 MB. Verwijder het bestand of maak het kleiner. Verstuur het formulier daarna opnieuw.';if(c==='notimage')return'‘'+n+'’ is niet herkend als ondersteunde afbeelding. Verwijder of vervang het bestand. Verstuur het formulier daarna opnieuw.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Er is iets misgegaan.';}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' kB':(n/1048576).toFixed(1).replace('.',',')+' MB';}
@@ -68,7 +68,7 @@ Heb je een bug of een vertaalfout gevonden, of heb je een vraag? Stuur ons een b
     if(msg.value.trim().length<70)return show('Beschrijf het in minimaal 70 tekens.');
     if(msg.value.length>5000)return show('Het bericht is te lang (maximaal 5000 tekens).');
     var ts=f.querySelector('[name=cf-turnstile-response]');
-    if(!ts||!ts.value)return show('Rond de spamcontrole af.');
+    if(!ts||!ts.value)return show('Bevestig dat je een mens bent.');
     var fd=new FormData();
     ['name','email','type','message'].forEach(function(k){fd.append(k,f.elements[k].value);});
     fd.append('cf-turnstile-response',ts.value);

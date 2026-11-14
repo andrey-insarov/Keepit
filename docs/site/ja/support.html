@@ -64,7 +64,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
 .langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
 .tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
 code,kbd,pre{direction:ltr;unicode-bidi:isolate}
-[dir=rtl] .tpl b{direction:ltr;unicode-bidi:isolate}
+[dir=rtl] .tpl b,[dir=rtl] .tags>span{direction:ltr;unicode-bidi:isolate}
+html:not([lang=en]) header a[href="/security"]::after{content:"EN";font-size:.62em;font-weight:600;letter-spacing:.04em;vertical-align:super;margin-inline-start:3px;opacity:.6}
 .lpick{position:relative}.lpick summary{list-style:none;cursor:pointer;height:40px;padding:0 8px;display:flex;align-items:center;gap:5px;border-radius:10px;color:var(--ink-2,var(--ink))}
 .lpick summary::-webkit-details-marker{display:none}.lpick summary .chev{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
 .lpick .fl{flex:none;width:23px;height:16px;border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
@@ -93,7 +94,7 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
 <form id="fb" class="fb" action="/api/feedback" method="post" enctype="multipart/form-data" novalidate>
   <div class="row2">
     <label>お名前<input name="name" type="text" maxlength="100" autocomplete="name" required></label>
-    <label>E-mail<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
+    <label>メールアドレス<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
   </div>
   <label>お問い合わせの種類
     <select name="type" required>
@@ -121,8 +122,8 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
   var f=document.getElementById('fb'),err=document.getElementById('fb-err'),ok=document.getElementById('fb-ok'),
       msg=f.elements.message,count=document.getElementById('fb-count'),picker=document.getElementById('fb-files'),
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
-  var EM={name:'お名前を入力してください。',email:'正しいメールアドレスを入力してください。',type:'お問い合わせの種類を選択してください。',short:'70文字以上でご記入ください。',long:'メッセージが長すぎます（5000文字以内）。',files:'スクリーンショットは5枚まで添付できます。余分なものを削除して、もう一度送信してください。',total:'添付ファイルが大きすぎます（スクリーンショットは5枚まで、各1 MB以内）。',form:'フォームを読み取れませんでした。',spam:'スパム対策の確認を完了してください。',send:'現在メッセージを送信できません。メールでご連絡ください。'};
-  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'「'+n+'」は1 MBを超えています。ファイルを削除するか、小さくしてください。';if(c==='notimage')return'「'+n+'」は対応している画像として認識できませんでした。ファイルを削除するか、差し替えてください。';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'エラーが発生しました。';}
+  var EM={name:'お名前を入力してください。',email:'正しいメールアドレスを入力してください。',type:'お問い合わせの種類を選択してください。',short:'70文字以上でご記入ください。',long:'メッセージが長すぎます（5000文字以内）。',files:'スクリーンショットは5枚まで添付できます。余分なものを削除して、もう一度送信してください。',total:'添付ファイルが大きすぎます（スクリーンショットは5枚まで、各1 MB以内）。',form:'フォームを読み取れませんでした。',spam:'人間であることを確認してください。',send:'現在メッセージを送信できません。メールでご連絡ください。'};
+  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'「'+n+'」は1 MBを超えています。ファイルを削除するか、小さくしてください。その後、フォームをもう一度送信してください。';if(c==='notimage')return'「'+n+'」は対応している画像として認識できませんでした。ファイルを削除するか、差し替えてください。その後、フォームをもう一度送信してください。';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'エラーが発生しました。';}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' KB':(n/1048576).toFixed(1).replace('.','.')+' MB';}
   function render(){
@@ -153,7 +154,7 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
     if(msg.value.trim().length<70)return show('70文字以上でご記入ください。');
     if(msg.value.length>5000)return show('メッセージが長すぎます（5000文字以内）。');
     var ts=f.querySelector('[name=cf-turnstile-response]');
-    if(!ts||!ts.value)return show('スパム対策の確認を完了してください。');
+    if(!ts||!ts.value)return show('人間であることを確認してください。');
     var fd=new FormData();
     ['name','email','type','message'].forEach(function(k){fd.append(k,f.elements[k].value);});
     fd.append('cf-turnstile-response',ts.value);

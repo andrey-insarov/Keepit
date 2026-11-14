@@ -34,8 +34,8 @@
   var f=document.getElementById('fb'),err=document.getElementById('fb-err'),ok=document.getElementById('fb-ok'),
       msg=f.elements.message,count=document.getElementById('fb-count'),picker=document.getElementById('fb-files'),
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
-  var EM={name:'Indica tu nombre.',email:'Indica una dirección de correo válida.',type:'Elige el asunto del mensaje.',short:'Descríbelo con 70 caracteres como mínimo.',long:'El mensaje es demasiado largo (5000 caracteres como máximo).',files:'Puedes adjuntar 5 capturas como máximo. Quita las que sobran y vuelve a enviar el formulario.',total:'Los archivos adjuntos ocupan demasiado (hasta 5 capturas, de un máximo de 1 MB cada una).',form:'No se ha podido leer el formulario.',spam:'Completa la verificación antispam.',send:'Ahora mismo no se ha podido enviar el mensaje. Escríbenos por correo electrónico.'};
-  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'«'+n+'» ocupa más de 1 MB. Quita el archivo o redúcelo.';if(c==='notimage')return'«'+n+'» no se ha reconocido como una imagen compatible. Quita el archivo o sustitúyelo.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Algo ha salido mal.';}
+  var EM={name:'Indica tu nombre.',email:'Indica una dirección de correo válida.',type:'Elige el asunto del mensaje.',short:'Descríbelo con 70 caracteres como mínimo.',long:'El mensaje es demasiado largo (5000 caracteres como máximo).',files:'Puedes adjuntar 5 capturas como máximo. Quita las que sobran y vuelve a enviar el formulario.',total:'Los archivos adjuntos ocupan demasiado (hasta 5 capturas, de un máximo de 1 MB cada una).',form:'No se ha podido leer el formulario.',spam:'Confirma que eres una persona.',send:'Ahora mismo no se ha podido enviar el mensaje. Escríbenos por correo electrónico.'};
+  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'«'+n+'» ocupa más de 1 MB. Quita el archivo o redúcelo. Después, vuelve a enviar el formulario.';if(c==='notimage')return'«'+n+'» no se ha reconocido como una imagen compatible. Quita el archivo o sustitúyelo. Después, vuelve a enviar el formulario.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Algo ha salido mal.';}
   var PF={one:' carácter',other:' caracteres'},PR=window.Intl&&Intl.PluralRules?new Intl.PluralRules('es'):null;
   function pf(n){var k=PR?PR.select(n):'other';return Object.prototype.hasOwnProperty.call(PF,k)?PF[k]:PF.other;}
   function show(e){err.textContent=e;err.hidden=!e;}
@@ -60,7 +60,7 @@
     }
     picker.value='';render();
   });
-  msg.addEventListener('input',function(){var n=msg.value.trim().length;count.textContent=n<70?'faltan '+(70-n)+pf(70-n):n+pf(n);});
+  msg.addEventListener('input',function(){var n=msg.value.trim().length;count.textContent=n<70?(70-n===1?'falta ':'faltan ')+(70-n)+pf(70-n):n+pf(n);});
   f.addEventListener('submit',function(ev){
     ev.preventDefault();show('');
     if(!f.elements.name.value.trim())return show('Indica tu nombre.');
@@ -68,7 +68,7 @@
     if(msg.value.trim().length<70)return show('Descríbelo con 70 caracteres como mínimo.');
     if(msg.value.length>5000)return show('El mensaje es demasiado largo (5000 caracteres como máximo).');
     var ts=f.querySelector('[name=cf-turnstile-response]');
-    if(!ts||!ts.value)return show('Completa la verificación antispam.');
+    if(!ts||!ts.value)return show('Confirma que eres una persona.');
     var fd=new FormData();
     ['name','email','type','message'].forEach(function(k){fd.append(k,f.elements[k].value);});
     fd.append('cf-turnstile-response',ts.value);
@@ -86,7 +86,7 @@ Correo: [admin@keep.it.com](mailto:admin@keep.it.com) · Paso a paso: la [guía]
 
 ## Respuestas rápidas
 
-**No se pega nada después de elegir un elemento.** Concede el permiso de Accesibilidad: Ajustes del Sistema → Privacidad y seguridad → Accesibilidad → activa Keepit (si ya aparece en la lista, desactívalo y vuelve a activarlo). Mientras tanto, pulsa ⌘V tú mismo: el elemento ya está en el portapapeles.
+**No se pega nada después de elegir un elemento.** Concede el permiso de Accesibilidad: Ajustes del Sistema → Privacidad y seguridad → Accesibilidad → activa Keepit (si ya aparece en la lista, desactívalo y vuelve a activarlo). Mientras tanto, pulsa ⌘V manualmente: el elemento ya está en el portapapeles.
 
 **He olvidado la contraseña.** Haz clic en *Recuperar acceso…* en la ventana de desbloqueo o usa Touch ID en el mismo Mac. Sin ninguna de las dos cosas, los datos no se pueden recuperar.
 

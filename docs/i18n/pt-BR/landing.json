@@ -117,7 +117,7 @@
  ],
  [
   "<div class=\"tpl\">Hi <b>{input:Name}</b>,\n\nThanks for your order — it ships on <b>{date+2d:EEEE, d MMMM}</b>.\nTracking: <b>{clipboard}</b>\n\n<b>{cursor}</b>\nBest, Andrey</div>",
-  "<div class=\"tpl\">Olá, <b>{input:Nome}</b>!\n\nObrigado pelo seu pedido. Ele será enviado em <b>{date+2d:EEEE, d 'de' MMMM}</b>.\nCódigo de rastreamento: <b>{clipboard}</b>\n\n<b>{cursor}</b>\nAtenciosamente, Andrey</div>"
+  "<div class=\"tpl\">Olá, <b>{input:Nome}</b>!\n\nObrigado pelo seu pedido. Ele será enviado em <b>{date+2d:d 'de' MMMM}</b>.\nCódigo de rastreamento: <b>{clipboard}</b>\n\n<b>{cursor}</b>\nAtenciosamente, Andrey</div>"
  ],
  [
   "<h3>Text, images, files</h3>\n        <p>Rich text with formatting, screenshots with thumbnails, lists of files from Finder. Duplicates are merged into one entry.</p>",
@@ -165,7 +165,7 @@
  ],
  [
   "<p class=\"kicker\">A clipboard manager sees passwords, addresses and half-written messages. Keepit is built so that none of it goes anywhere you did not choose.</p>",
-  "<p class=\"kicker\">Um gerenciador de área de transferência vê senhas, endereços e mensagens pela metade. O Keepit foi feito para que nada disso vá para algum lugar que você mesmo não tenha escolhido.</p>"
+  "<p class=\"kicker\">Um gerenciador de área de transferência vê senhas, endereços e mensagens pela metade. O Keepit foi feito para que nada disso vá para algum lugar que você não tenha escolhido.</p>"
  ],
  [
   "<div><strong>0</strong><span>accounts, servers or sync of its own. Nothing to log in to.</span></div>",
@@ -177,7 +177,7 @@
  ],
  [
   "<div><strong>1</strong><span>network request: the daily update check against GitHub. Optional; the App Store edition has no network entitlement at all — <a href=\"/security#network\">verify it</a>.</span></div>",
-  "<div><strong>Uma</strong><span>única requisição de rede: a verificação diária de atualizações no GitHub. Ela pode ser desativada. A versão da App Store não tem nem a permissão de acesso à rede: <a href=\"/security#network\">confira você mesmo</a> (em inglês).</span></div>"
+  "<div><strong>Uma</strong><span>única requisição de rede: a verificação diária de atualizações no GitHub. Ela pode ser desativada. A versão da App Store não tem nem a permissão de acesso à rede: <a href=\"/security#network\">confira</a> (em inglês).</span></div>"
  ],
  [
   "<div><strong>1</strong><span>folder on your Mac with everything in it — plus the backup folder, if you choose one. Delete them and Keepit is gone.</span></div>",

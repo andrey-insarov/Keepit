@@ -64,7 +64,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
 .langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
 .tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
 code,kbd,pre{direction:ltr;unicode-bidi:isolate}
-[dir=rtl] .tpl b{direction:ltr;unicode-bidi:isolate}
+[dir=rtl] .tpl b,[dir=rtl] .tags>span{direction:ltr;unicode-bidi:isolate}
+html:not([lang=en]) header a[href="/security"]::after{content:"EN";font-size:.62em;font-weight:600;letter-spacing:.04em;vertical-align:super;margin-inline-start:3px;opacity:.6}
 .lpick{position:relative}.lpick summary{list-style:none;cursor:pointer;height:40px;padding:0 8px;display:flex;align-items:center;gap:5px;border-radius:10px;color:var(--ink-2,var(--ink))}
 .lpick summary::-webkit-details-marker{display:none}.lpick summary .chev{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
 .lpick .fl{flex:none;width:23px;height:16px;border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
@@ -134,14 +135,12 @@ Podrobnosti najdete v oddílu <a href="#backup">Záloha</a>.</p>
 <figure class="shot" style="max-width:336px"><a href="/img/guide/restore-first-run.png?v=cfa1e73f" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/restore-first-run.png?v=cfa1e73f" alt="První otázka na novém Macu: obnovit ze zálohy, nebo začít znovu" width="336" height="408" loading="lazy"></a><figcaption>První otázka na novém Macu: obnovit ze zálohy, nebo začít znovu</figcaption></figure>
 <p><strong>2. Heslo (nepovinné).</strong> Keepit umí ukládat historii a šablony zašifrované a odemykat je pomocí
 Touch ID. Rozhodnout se můžete hned, nebo později v <em>Nastavení → Zabezpečení</em>; jak to funguje,
-vysvětluje <a href="#part-6-security">Část 6</a>. Při volbě <em>Teď ne</em> zůstane vše na disku nešifrované. Pokud
-jste před chvílí obnovili zálohu jejím heslem, Keepit nabídne, že toto heslo ponechá i pro tento Mac.</p>
+vysvětluje <a href="#part-6-security">Část 6</a>. Při volbě <em>Teď ne</em> zůstane vše na disku nešifrované. Po obnovení zálohy jejím heslem Keepit nabídne, že toto heslo ponechá i pro tento Mac.</p>
 <figure class="shot" style="max-width:336px"><a href="/img/guide/password-offer.png?v=a377f4be" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/password-offer.png?v=a377f4be" alt="Nabídka hesla při prvním spuštění" width="336" height="410" loading="lazy"></a><figcaption>Nabídka hesla při prvním spuštění</figcaption></figure>
 <figure class="shot" style="max-width:336px"><a href="/img/guide/no-password-notice.png?v=0da3b4f2" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/no-password-notice.png?v=0da3b4f2" alt="Volba Teď ne: jasné sdělení, co to znamená a kde to lze změnit" width="336" height="342" loading="lazy"></a><figcaption>Volba Teď ne: jasné sdělení, co to znamená a kde to lze změnit</figcaption></figure>
-<p><strong>3. Oprávnění Zpřístupnění.</strong> Aby mohl vkládat za vás, posílá Keepit ⌘V do aplikace, ve které jste
-pracovali. macOS to dovolí jen aplikacím uvedeným v <em>Nastavení systému → Soukromí a zabezpečení →
+<p><strong>3. Oprávnění Zpřístupnění.</strong> Aby mohl vkládat za vás, posílá Keepit ⌘V do aplikace, ve které pracujete. macOS to dovolí jen aplikacím uvedeným v <em>Nastavení systému → Soukromí a zabezpečení →
 Zpřístupnění</em>. Klikněte na <em>Otevřít Nastavení systému</em> a Keepit zapněte. Bez tohoto oprávnění Keepit
-dál zaznamenává a kopíruje, ale ⌘V stisknete sami.</p>
+dál zaznamenává a kopíruje, ale ⌘V je třeba stisknout ručně.</p>
 <figure class="shot" style="max-width:336px"><a href="/img/guide/accessibility-prompt.png?v=53fda070" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/accessibility-prompt.png?v=53fda070" alt="Keepit žádá o oprávnění Zpřístupnění" width="336" height="462" loading="lazy"></a><figcaption>Keepit žádá o oprávnění Zpřístupnění</figcaption></figure>
 <figure class="shot" style="max-width:762px"><a href="/img/guide/accessibility-settings.png?v=3324189c" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/accessibility-settings.png?v=3324189c" alt="Keepit zapnutý v Soukromí a zabezpečení → Zpřístupnění" width="762" height="598" loading="lazy"></a><figcaption>Keepit zapnutý v Soukromí a zabezpečení → Zpřístupnění</figcaption></figure>
 <p>Keepit se ve výchozím stavu spouští při přihlášení. Vypnout to lze v <em>Nastavení → Obecné</em>.</p>
@@ -151,7 +150,7 @@ dál zaznamenává a kopíruje, ale ⌘V stisknete sami.</p>
 <p>Stiskněte <strong>⌥M</strong> v kterékoli aplikaci nebo klikněte na ikonu 📎. Nabídka se otevře u textového
 kurzoru, pokud ho Keepit dokáže najít, jinak u ukazatele myši.</p>
 <p>Každý řádek je jedna zkopírovaná položka, nejnovější je nahoře. Ta nejnovější je <strong>tučně</strong>, protože
-právě ona je teď ve schránce. Ikona ukazuje aplikaci, ze které jste kopírovali. Název zakončený <code>…</code>
+právě ona je teď ve schránce. Ikona ukazuje zdrojovou aplikaci. Název zakončený <code>…</code>
 má víc řádků, než nabídka zobrazuje. Obrázky mají miniaturu, seznamy souborů ukazují názvy souborů.</p>
 <figure class="shot" style="max-width:1045px"><a href="/img/guide/menu-preview.png?v=3a4dbc04" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/menu-preview.png?v=3a4dbc04" alt="Panel náhledu vedle nabídky ukazuje zvýrazněnou položku celou, se zdrojovou aplikací, časem a velikostí" width="1045" height="648" loading="lazy"></a><figcaption>Panel náhledu vedle nabídky ukazuje zvýrazněnou položku celou, se zdrojovou aplikací, časem a velikostí</figcaption></figure>
 <figure class="shot" style="max-width:1088px"><a href="/img/guide/menu-image.png?v=d7b4e3af" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/menu-image.png?v=d7b4e3af" alt="Obrázek v historii: miniatura v nabídce, celý obrázek v náhledu" width="1088" height="640" loading="lazy"></a><figcaption>Obrázek v historii: miniatura v nabídce, celý obrázek v náhledu</figcaption></figure>
@@ -247,7 +246,7 @@ do formuláře, řádky ze stránky do dokumentu. Fronta vkládání to zvládne
 <figure class="shot" style="max-width:350px"><a href="/img/guide/queue-menubar.png?v=808fb52c" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/queue-menubar.png?v=808fb52c" alt="Řádek nabídek při zapnuté frontě: červená tečka a počítadlo" width="350" height="40" loading="lazy"></a><figcaption>Řádek nabídek při zapnuté frontě: červená tečka a počítadlo</figcaption></figure>
 <ol>
 <li>Přepněte se tam, kam text patří, a pro každou položku stiskněte <strong>⌥V</strong>. Jako první se vloží to,
-   co jste zkopírovali jako první, a počítadlo klesá. ⌘V dál vkládá schránku jako obvykle, takže
+   co bylo zkopírováno jako první, a počítadlo klesá. ⌘V dál vkládá schránku jako obvykle, takže
    obojí můžete kombinovat.</li>
 <li>Fronta se sama vypne po vložení poslední položky nebo po dvou minutách bez kopírování a vkládání
    (dobu lze upravit). Dalším stiskem ⌥N ji ukončíte dřív.</li>
@@ -274,8 +273,7 @@ zkratka buď funguje všude, nebo se nezobrazuje.</p>
 <p>Šablony jsou položky, které si necháváte natrvalo: podpisy, adresy, připravené odpovědi, úryvky
 kódu, logo, které často vkládáte. Jsou uložené ve stromu se složkami a najdete je v podnabídce
 <em>Šablony</em> v nabídce historie a pod <strong>⌥T</strong>. Čerstvá instalace obsahuje složku <em>Příklady</em> (pozdrav,
-dnešní datum, citace schránky a podpis), abyste viděli, co šablony umějí, ještě než si napíšete
-vlastní. Můžete je libovolně mazat nebo upravovat. Ukázkové šablony vrátí <em>Nastavení → Pokročilé →
+dnešní datum, citace schránky a podpis), aby bylo vidět, co šablony umějí, ještě než si napíšete vlastní. Můžete je libovolně mazat nebo upravovat. Ukázkové šablony vrátí <em>Nastavení → Pokročilé →
 Obnovení a odinstalace → Obnovit…</em>; tato volba ale vrátí do výchozího stavu i ostatní data
 a nastavení.</p>
 <figure class="shot" style="max-width:660px"><a href="/img/guide/template-examples.png?v=c143a1d7" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/template-examples.png?v=c143a1d7" alt="Složka Příklady: po najetí na položku se zobrazí její text" width="660" height="209" loading="lazy"></a><figcaption>Složka Příklady: po najetí na položku se zobrazí její text</figcaption></figure>
@@ -386,7 +384,7 @@ a <strong>Šablony</strong>.</p>
   editor opustíte. Obrázek se zobrazí zmenšený na velikost panelu, nad ním jsou jeho rozměry
   v pixelech a velikost souboru. Seznamy souborů otevřou soubor dvojím kliknutím. <em>Zobrazit jako
   hex dump</em> v kontextové nabídce ukáže surové bajty.</li>
-<li>Panel nástrojů: <em>Odeslat do schránky</em>, <em>Vložit</em> (do aplikace, ze které jste přišli), <em>Přidat do
+<li>Panel nástrojů: <em>Odeslat do schránky</em>, <em>Vložit</em> (do aplikace, ze které byl Prohlížeč otevřen), <em>Přidat do
   šablon</em>, <em>Nová položka</em>, <em>Nová složka</em>, <em>Smazat</em>, <em>Vložit ▾</em> (zástupné symboly) a <strong>?</strong>, tedy
   tato příručka.</li>
 <li><strong>Hledat</strong> (<kbd class="k">⌘F</kbd>): pole vlevo filtruje historii a šablony podle názvu i obsahu a shodu zvýrazní.</li>
@@ -516,8 +514,7 @@ nastavovat nemusí. Bez hesla je zaškrtávací pole neaktivní a uvádí důvod
 běží) zapíše Keepit do složky soubor s názvem <code>Keepit-&lt;datum a čas&gt;-&lt;instalace&gt;-&lt;id&gt;.keepit</code>,
 pro kontrolu ho přečte zpět a teprve potom smaže nejstarší ze svých vlastních kopií nad počet
 <em>Ponechat posledních</em> (ve výchozím stavu 10, rozsah 1–100). Každá kopie je úplná sama o sobě, nejde
-o přírůstek, takže vám vždy stačí jediný soubor. Kopií vytvořených jiným Macem ani souborů, které
-jste tam uložili sami, se Keepit nikdy nedotkne: dva Macy sdílející jednu složku zapisují dvě
+o přírůstek, takže vám vždy stačí jediný soubor. Kopií vytvořených jiným Macem ani souborů, které do složky přidáte, se Keepit nikdy nedotkne: dva Macy sdílející jednu složku zapisují dvě
 nezávislé řady. Stavový řádek vedle nadpisu <em>Automatická záloha</em> ukazuje čas a velikost poslední
 kopie, nebo důvod, proč poslední pokus selhal. Dokud je Keepit zamčený, neděje se nic; <em>Zálohovat
 nyní</em> (v části <em>Ruční záloha</em>) na období klidu nečeká.</p>
@@ -542,9 +539,9 @@ a kolik položek obsahuje. Potom máte dvě možnosti:</p>
 vyjadřují důvěru ke konkrétnímu Macu (Touch ID, automatizace přes URL a její důvěryhodné aplikace,
 samotná složka se zálohami), vždy zůstávají taková, jaká jsou zde. Pokud je historie ze zálohy větší,
 než dovolují limity tohoto Macu, Keepit před potvrzením řekne, kolik se toho vejde.</p>
-<p>Obnovili jste zálohu její frází pro obnovu na Macu, který ještě nemá heslo? Keepit vás požádá,
+<p>Obnovujete zálohu její frází pro obnovu na Macu, který ještě nemá heslo? Keepit vás požádá,
 abyste ho nejprve nastavili, takže se obnovená data nikdy neuloží nešifrovaná, a nechá vás tuto
-frázi pro tento Mac ponechat, nebo získat novou. Obnovili jste ji heslem? Keepit nabídne, že ho
+frázi pro tento Mac ponechat, nebo získat novou. Obnovujete ji heslem? Keepit nabídne, že ho
 ponechá jako heslo tohoto Macu. V obou případech je samotná automatická záloha nastavením každého
 Macu zvlášť: zapněte ji zde a vyberte složku (klidně tu stejnou) a tento Mac začne vedle souborů
 starého Macu zapisovat vlastní řadu.</p>
@@ -654,8 +651,7 @@ kurzor, a nabídka se proto otevře u ukazatele myši. Volba <em>Otevírat nabí
 pokud to jde</em> na panelu Obecné hledání kurzoru vypne, pokud chcete nabídku vždy u ukazatele.</p>
 <p><strong>Něco, co jsem zkopíroval(a), chybí.</strong> Nezaznamenává se nic, co kopírující aplikace označila jako
 skryté, ani kopie pořízená ve chvíli, kdy byl v popředí správce hesel (vestavěný seznam) nebo
-aplikace z vašeho seznamu ignorovaných, včetně aplikace, ze které jste se před okamžikem přepnuli
-jinam. Viz <em>Nastavení → Historie</em> a
+aplikace z vašeho seznamu ignorovaných, včetně aplikace, která byla v popředí těsně před přepnutím. Viz <em>Nastavení → Historie</em> a
 <a href="/security#what-is-not-recorded">stránku o zabezpečení</a> (anglicky).</p>
 <p><strong>Touch ID se nenabízí.</strong> V tuto chvíli není dostupný žádný snímač Touch ID (zavřené víko, žádná
 klávesnice s Touch ID). Keepit si nastavení ponechá a o otisk prstu požádá, jakmile bude snímač

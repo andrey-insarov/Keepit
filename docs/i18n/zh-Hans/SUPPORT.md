@@ -6,7 +6,7 @@
 <form id="fb" class="fb" action="/api/feedback" method="post" enctype="multipart/form-data" novalidate>
   <div class="row2">
     <label>姓名<input name="name" type="text" maxlength="100" autocomplete="name" required></label>
-    <label>E-mail<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
+    <label>电子邮件<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
   </div>
   <label>问题类型
     <select name="type" required>
@@ -34,8 +34,8 @@
   var f=document.getElementById('fb'),err=document.getElementById('fb-err'),ok=document.getElementById('fb-ok'),
       msg=f.elements.message,count=document.getElementById('fb-count'),picker=document.getElementById('fb-files'),
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
-  var EM={name:'请填写姓名。',email:'请填写有效的电子邮件地址。',type:'请选择问题类型。',short:'请至少用 70 个字符描述问题。',long:'留言太长（最多 5000 个字符）。',files:'最多可以附加 5 张截屏。请移除多余的截屏后重新发送。',total:'附件太大（最多 5 张截屏，每张不超过 1 MB）。',form:'无法读取表单。',spam:'请完成防垃圾信息验证。',send:'暂时无法发送留言，请改用电子邮件联系我们。'};
-  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'“'+n+'”超过 1 MB。请移除或缩小该文件。';if(c==='notimage')return'“'+n+'”无法识别为受支持的图片。请移除或更换该文件。';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'出了点问题。';}
+  var EM={name:'请填写姓名。',email:'请填写有效的电子邮件地址。',type:'请选择问题类型。',short:'请至少用 70 个字符描述问题。',long:'留言太长（最多 5000 个字符）。',files:'最多可以附加 5 张截屏。请移除多余的截屏后重新发送。',total:'附件太大（最多 5 张截屏，每张不超过 1 MB）。',form:'无法读取表单。',spam:'请完成人机验证。',send:'暂时无法发送留言，请改用电子邮件联系我们。'};
+  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'“'+n+'”超过 1 MB。请移除或缩小该文件。然后重新提交表单。';if(c==='notimage')return'“'+n+'”无法识别为受支持的图片。请移除或更换该文件。然后重新提交表单。';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'出了点问题。';}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' KB':(n/1048576).toFixed(1).replace('.','.')+' MB';}
   function render(){
@@ -66,7 +66,7 @@
     if(msg.value.trim().length<70)return show('请至少用 70 个字符描述问题。');
     if(msg.value.length>5000)return show('留言太长（最多 5000 个字符）。');
     var ts=f.querySelector('[name=cf-turnstile-response]');
-    if(!ts||!ts.value)return show('请完成防垃圾信息验证。');
+    if(!ts||!ts.value)return show('请完成人机验证。');
     var fd=new FormData();
     ['name','email','type','message'].forEach(function(k){fd.append(k,f.elements[k].value);});
     fd.append('cf-turnstile-response',ts.value);

@@ -134,7 +134,7 @@ appunti), da qualsiasi app:
 | `⌃⌥1` … `⌃⌥9`, `⌃⌥0` | Incolla l’elemento 1–10 della cronologia |
 | `⌥⇧V` | Incolla l’elemento *precedente* (il 2); premendo di nuovo li scambi ancora |
 | `⌃⌥V` | Incolla gli appunti come testo semplice, senza formattazione |
-| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | Incolla gli appunti in MAIUSCOLE / minuscole / Iniziali Maiuscole / come una frase |
+| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | Incolla gli appunti in MAIUSCOLO / minuscolo / Iniziali Maiuscole / come una frase |
 | `⌃⌥W` | Incolla gli appunti senza gli spazi iniziali e finali |
 | `⌃⌥J` | Incolla gli appunti riuniti in una sola riga |
 | `⌃⌥K` `⌃⌥D` `⌃⌥Y` | Incolla gli appunti barrati / sottolineati / con sottolineatura ondulata, come testo semplice che conserva l’aspetto ovunque, chat comprese (vedi sotto) |
@@ -631,7 +631,7 @@ Non hai risolto? [GitHub Issues](https://github.com/andrey-insarov/Keepit/issues
 | `⇧` nel menu | Menu esteso: tutte le azioni per ogni elemento |
 | `⌥⇧V` | Incolla l’elemento precedente / scambia |
 | `⌃⌥V` | Incolla gli appunti come testo semplice |
-| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | MAIUSCOLE / minuscole / Iniziali Maiuscole / come una frase |
+| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | MAIUSCOLO / minuscolo / Iniziali Maiuscole / Come una frase |
 | `⌃⌥W` `⌃⌥J` | Senza spazi ai bordi / su una sola riga |
 | `⌃⌥K` `⌃⌥D` `⌃⌥Y` `⌃⌥X` | Barrato / sottolineato / sottolineatura ondulata / rimuovi decorazioni |
 | `⌃⌥A` | Aggiungi gli appunti ai Modelli |

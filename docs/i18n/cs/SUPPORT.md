@@ -1,7 +1,7 @@
 <!-- source: SUPPORT.md b7c2b2a3fb8a171f4a5c7809742c5a119d4e8cc1 -->
 # Podpora Keepit
 
-Našli jste chybu nebo špatný překlad, nebo máte otázku? Napište nám pomocí formuláře níže. Chyby můžete hlásit také na [GitHub Issues](https://github.com/andrey-insarov/Keepit/issues).
+Chcete nahlásit chybu nebo nesprávný překlad, nebo se na něco zeptat? Napište nám pomocí formuláře níže. Chyby můžete hlásit také na [GitHub Issues](https://github.com/andrey-insarov/Keepit/issues).
 
 <form id="fb" class="fb" action="/api/feedback" method="post" enctype="multipart/form-data" novalidate>
   <div class="row2">
@@ -16,7 +16,7 @@ Našli jste chybu nebo špatný překlad, nebo máte otázku? Napište nám pomo
     </select>
   </label>
   <label>Zpráva <span class="hint" id="fb-count">alespoň 70 znaků</span>
-    <textarea name="message" rows="7" minlength="70" maxlength="5000" required placeholder="Co se stalo, co jste čekali, jakou verzi macOS a Keepit používáte…"></textarea>
+    <textarea name="message" rows="7" minlength="70" maxlength="5000" required placeholder="Co se stalo, jaké chování čekáte, jakou verzi macOS a Keepit používáte…"></textarea>
   </label>
   <label>Snímky obrazovky <span class="hint">nepovinné · až 5 obrázků, každý do 1 MB</span>
     <input id="fb-files" type="file" accept="image/png,image/jpeg,image/gif,image/webp,image/heic" multiple>
@@ -36,7 +36,7 @@ Našli jste chybu nebo špatný překlad, nebo máte otázku? Napište nám pomo
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
   var PF={one:' znak',few:' znaky',other:' znaků'},PR=window.Intl&&Intl.PluralRules?new Intl.PluralRules('cs'):null;
   function pf(n){var k=PR?PR.select(n):'other';return Object.prototype.hasOwnProperty.call(PF,k)?PF[k]:PF.other;}
-  var EM={name:'Uveďte prosím své jméno.',email:'Uveďte prosím platnou e-mailovou adresu.',type:'Vyberte prosím, čeho se zpráva týká.',short:'Popište to prosím alespoň 70 znaky.',long:'Zpráva je příliš dlouhá (nejvýše 5000 znaků).',files:'Přiložit lze nejvýše 5 snímků obrazovky. Odeberte přebytečné a odešlete formulář znovu.',total:'Přílohy jsou příliš velké (nejvýše 5 snímků obrazovky, každý do 1 MB).',form:'Formulář se nepodařilo přečíst.',spam:'Dokončete prosím kontrolu proti spamu.',send:'Zprávu se teď nepodařilo odeslat. Napište nám prosím e-mail.'};
+  var EM={name:'Uveďte prosím své jméno.',email:'Uveďte prosím platnou e-mailovou adresu.',type:'Vyberte prosím, čeho se zpráva týká.',short:'Popište to prosím alespoň 70 znaky.',long:'Zpráva je příliš dlouhá (nejvýše 5000 znaků).',files:'Přiložit lze nejvýše 5 snímků obrazovky. Odeberte přebytečné a odešlete formulář znovu.',total:'Přílohy jsou příliš velké (nejvýše 5 snímků obrazovky, každý do 1 MB).',form:'Formulář se nepodařilo přečíst.',spam:'Potvrďte prosím, že jste člověk.',send:'Zprávu se teď nepodařilo odeslat. Napište nám prosím e-mail.'};
   function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'„'+n+'“ je větší než 1 MB. Soubor odeberte nebo zmenšete. Potom formulář odešlete znovu.';if(c==='notimage')return'„'+n+'“ nebyl rozpoznán jako podporovaný obrázek. Soubor odeberte nebo nahraďte. Potom formulář odešlete znovu.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Něco se pokazilo.';}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' kB':(n/1048576).toFixed(1).replace('.',',')+' MB';}
@@ -68,7 +68,7 @@ Našli jste chybu nebo špatný překlad, nebo máte otázku? Napište nám pomo
     if(msg.value.trim().length<70)return show('Popište to prosím alespoň 70 znaky.');
     if(msg.value.length>5000)return show('Zpráva je příliš dlouhá (nejvýše 5000 znaků).');
     var ts=f.querySelector('[name=cf-turnstile-response]');
-    if(!ts||!ts.value)return show('Dokončete prosím kontrolu proti spamu.');
+    if(!ts||!ts.value)return show('Potvrďte prosím, že jste člověk.');
     var fd=new FormData();
     ['name','email','type','message'].forEach(function(k){fd.append(k,f.elements[k].value);});
     fd.append('cf-turnstile-response',ts.value);
@@ -86,7 +86,7 @@ E-mail: [admin@keep.it.com](mailto:admin@keep.it.com) · Krok za krokem: [Přír
 
 ## Krátké odpovědi
 
-**Po výběru položky se nic nevloží.** Udělte oprávnění Zpřístupnění: Nastavení systému → Soukromí a zabezpečení → Zpřístupnění → zapněte Keepit (pokud už v seznamu je, vypněte ho a znovu zapněte). Do té doby stiskněte ⌘V sami, položka už ve schránce je.
+**Po výběru položky se nic nevloží.** Udělte oprávnění Zpřístupnění: Nastavení systému → Soukromí a zabezpečení → Zpřístupnění → zapněte Keepit (pokud už v seznamu je, vypněte ho a znovu zapněte). Do té doby stiskněte ⌘V ručně, položka už ve schránce je.
 
 **Zapomněl(a) jsem heslo.** V okně pro odemčení klikněte na *Obnovit přístup…* nebo použijte Touch ID na stejném Macu. Bez jednoho z nich data obnovit nelze.
 
