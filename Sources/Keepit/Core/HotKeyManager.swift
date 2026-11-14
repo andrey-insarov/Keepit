@@ -6,6 +6,8 @@ import Foundation
 final class HotKeyManager {
     /// Return true to swallow hot keys for the moment (a menu of ours is tracking).
     var isSuppressed: () -> Bool = { false }
+    /// Tests: decide registrations without touching Carbon (the test process never holds a system hot key).
+    var registrationOverrideForTesting: ((HotKey) -> Bool)?
     private var handlers: [UInt32: (run: () -> Void, immediate: Bool)] = [:]
     private var refs: [UInt32: EventHotKeyRef] = [:]
     private var eventHandler: EventHandlerRef?
@@ -56,6 +58,7 @@ final class HotKeyManager {
     ///   wait for the main queue, so they never open a dialog over another.
     @discardableResult
     func register(_ hotKey: HotKey, immediate: Bool = false, handler: @escaping () -> Void) -> Bool {
+        if let override = registrationOverrideForTesting { return override(hotKey) }
         let id = nextId
         nextId += 1
         var ref: EventHotKeyRef?

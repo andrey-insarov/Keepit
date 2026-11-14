@@ -94,6 +94,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     var sessionActiveProbe: () -> Bool? = { ScreenState.isSessionActive() }
     /// Tests only: receives the hot keys that could not be registered instead of the alert.
     var hotKeyFailureForTesting: (([String]) -> Void)?
+    /// Tests: the keyboard layouts the hot-key filter sees instead of the system's enabled ones.
+    var layoutReaderForTesting: LayoutReading?
+    /// What became of each shortcut at the last `registerHotKeys()`: the layouts' verdict and Carbon's
+    /// answer (claude/keepit-hotkey-layouts-design.md H-4). Menus show a key only for `.registered`.
+    private(set) var hotKeyStatuses: [HotKeyID: HotKeyStatus] = [:]
+    /// The enabled layouts changed while a lock or a restore had the hot keys in hand; re-registered
+    /// when that flow is over (the restore's `defer`, or `unlock()`'s own call).
+    var layoutsChangedWhileBusy = false
+    private var layoutChangeDebounce: DispatchWorkItem?
     /// Tests only: the sender of a keepit:// URL (no Apple Event in a test) and the answer to its
     /// confirmation dialog, which may lock Keepit the way a user could while the dialog is open.
     var urlCommandSenderForTesting: URLSender?
@@ -356,6 +365,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         hotKeys.isSuppressed = { [weak self] in (self?.openMenus ?? 0) > 0 }
         registerHotKeys()
+        observeKeyboardLayouts()
         Storage.save(settings, to: Storage.settingsURL, encrypt: false, pretty: true)
         // Last, with everything in place that a lock stops: where the user is right now. Launched
         // behind a locked screen or in another user's session (a relaunch after an update, a login
@@ -588,6 +598,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         preferencesWindow?.close()
         monitor.stop()
         hotKeys.unregisterAll()
+        for id in hotKeyStatuses.keys where hotKeyStatuses[id]?.registration == .registered { hotKeyStatuses[id]?.registration = .suspended }
         history.purge()
         templates.purge()
         Storage.clearKey()
@@ -789,7 +800,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         b.toolTip = isLocked ? L("Keepit — locked, click to unlock")
                   : paused ? L("Keepit — recording paused")
                   : queue.isActive ? LF("Keepit — paste queue on: %d to paste (%@ next, %@ stop)", queue.remaining,
-                                        settings.queuePasteHotKey?.displayString ?? "–", settings.queueHotKey?.displayString ?? "–")
+                                        activeHotKey(.queuePaste)?.displayString ?? "–", activeHotKey(.queue)?.displayString ?? "–")
                   : LF("Keepit — %@ history, %@ templates", settings.historyHotKey.displayString, settings.templateHotKey.displayString)
         // Paste queue: a red dot and the number of items still to paste next to the icon.
         if queue.isActive, !isLocked {
@@ -1263,7 +1274,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             || old.viewerHotKey != new.viewerHotKey || old.preferencesHotKey != new.preferencesHotKey
             || old.clearHistoryHotKey != new.clearHistoryHotKey || old.quitHotKey != new.quitHotKey
             || old.queueHotKey != new.queueHotKey || old.queuePasteHotKey != new.queuePasteHotKey
-            || old.queuePasteAllHotKey != new.queuePasteAllHotKey {
+            || old.queuePasteAllHotKey != new.queuePasteAllHotKey
+            || old.chosenHotKeys != new.chosenHotKeys {       // re-recording a skipped default changes only this (H-3)
             registerHotKeys()
         }
         queue.timeout = new.queueTimeout
@@ -1285,62 +1297,71 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     func registerHotKeys() {
         hotKeys.unregisterAll()
+        layoutsChangedWhileBusy = false
         var failed: [String] = []
-        if !hotKeys.register(settings.historyHotKey, handler: { [weak self] in self?.showHistoryPopup() }) {
-            failed.append(settings.historyHotKey.displayString)
-        }
-        if !hotKeys.register(settings.templateHotKey, handler: { [weak self] in self?.showTemplatePopup() }) {
-            failed.append(settings.templateHotKey.displayString)
-        }
-        if let prev = settings.previousHotKey,
-           !hotKeys.register(prev, handler: { [weak self] in self?.pastePreviousItem() }) {
-            failed.append(prev.displayString)
-        }
-        if let mods = settings.latestActionModifiers {
-            for la in HotKey.LatestAction.allCases {
-                let hk = HotKey(keyCode: la.keyCode, modifiers: mods)
-                if !hotKeys.register(hk, handler: { [weak self] in self?.performOnLatest(la) }) { failed.append(hk.displayString) }
+        var statuses: [HotKeyID: HotKeyStatus] = [:]
+        // What the enabled keyboard layouts say about each default (H-1/H-2): a default that types a
+        // character a layout needs — German ⌥L is @ — is left free unless the user recorded it.
+        let probe = LayoutProbe(reader: layoutReaderForTesting ?? TISLayoutReader())
+        let decisions = HotKeyStatus.decide(settings, probe: probe)
+
+        /// Registers one single shortcut and records its status.
+        func single(_ id: HotKeyID, immediate: Bool = false, _ handler: @escaping () -> Void) {
+            guard let hk = settings.hotKey(id) else { statuses[id] = .off; return }
+            let d = decisions[id] ?? HotKeyStatus.Decision(layout: .notNeeded, incomplete: 0, errors: 0, skip: false)
+            var st = HotKeyStatus(layout: d.layout, incomplete: d.incomplete, errors: d.errors, registration: .skipped)
+            if d.skip {
+                Log.system.info("hot key \(hk.displayString) left free: \(String(describing: d.layout))")
+            } else if hotKeys.register(hk, immediate: immediate, handler: handler) {
+                st.registration = .registered
+            } else {
+                st.registration = .failed
+                failed.append(hk.displayString)
             }
-        }
-        if let mods = settings.numberPasteModifiers {
-            for (i, code) in HotKey.digitKeyCodes.enumerated() {
-                let hk = HotKey(keyCode: code, modifiers: mods)
-                if !hotKeys.register(hk, handler: { [weak self] in self?.pasteItem(at: i, plainText: false) }) {
-                    failed.append(hk.displayString)
-                }
+            if case .unchecked(let layouts) = d.layout, !layouts.isEmpty {
+                Log.system.info("hot key \(hk.displayString): layouts not checked: \(layouts.joined(separator: ", "))")
             }
+            if d.incomplete > 0 { Log.system.debug("hot key \(hk.displayString): \(d.incomplete) dead-key chains not followed") }
+            // Whatever the verdict: a failed read may have hidden another route to the character (H-1).
+            if d.errors > 0 { Log.system.error("hot key \(hk.displayString): \(d.errors) layout reads failed; verdict \(String(describing: d.layout)) stands") }
+            statuses[id] = st
         }
-        if let hk = settings.lockHotKey, !hotKeys.register(hk, immediate: true, handler: { [weak self] in self?.lock() }) {
-            failed.append(hk.displayString)
+        /// Registers a family (modifiers + several keys): registered only when every member is.
+        func family(_ id: HotKeyID, _ mods: UInt32?, _ members: [(HotKey, () -> Void)]) {
+            guard mods != nil else { statuses[id] = .off; return }
+            var ok = true
+            for (hk, handler) in members where !hotKeys.register(hk, handler: handler) {
+                ok = false
+                failed.append(hk.displayString)
+            }
+            // Control families are never a layout question (H-1): the verdict is not applicable, not "harmless".
+            statuses[id] = HotKeyStatus(layout: .notApplicable, registration: ok ? .registered : .failed)
         }
-        if let hk = settings.viewerHotKey, !hotKeys.register(hk, handler: { [weak self] in self?.openViewer() }) {
-            failed.append(hk.displayString)
-        }
-        if let hk = settings.preferencesHotKey, !hotKeys.register(hk, handler: { [weak self] in self?.openPreferences() }) {
-            failed.append(hk.displayString)
-        }
-        if let hk = settings.clearHistoryHotKey, !hotKeys.register(hk, handler: { [weak self] in self?.clearHistory() }) {
-            failed.append(hk.displayString)
-        }
-        if let hk = settings.queueHotKey, !hotKeys.register(hk, handler: { [weak self] in self?.toggleQueue() }) {
-            failed.append(hk.displayString)
-        }
-        if let hk = settings.queuePasteHotKey, !hotKeys.register(hk, handler: { [weak self] in self?.pasteFromQueue() }) {
-            failed.append(hk.displayString)
-        }
-        if let hk = settings.queuePasteAllHotKey, !hotKeys.register(hk, handler: { [weak self] in self?.pasteAllFromQueue() }) {
-            failed.append(hk.displayString)
-        }
-        if let hk = settings.quitHotKey, !hotKeys.register(hk, handler: { [weak self] in self?.quit() }) {
-            failed.append(hk.displayString)
-        }
-        if let hk = settings.pauseHotKey, !hotKeys.register(hk, handler: { [weak self] in
+
+        single(.history) { [weak self] in self?.showHistoryPopup() }
+        single(.template) { [weak self] in self?.showTemplatePopup() }
+        single(.previous) { [weak self] in self?.pastePreviousItem() }
+        family(.latest, settings.latestActionModifiers, HotKey.LatestAction.allCases.map { la in
+            (HotKey(keyCode: la.keyCode, modifiers: settings.latestActionModifiers ?? 0), { [weak self] in self?.performOnLatest(la) })
+        })
+        family(.numbers, settings.numberPasteModifiers, HotKey.digitKeyCodes.enumerated().map { i, code in
+            (HotKey(keyCode: code, modifiers: settings.numberPasteModifiers ?? 0), { [weak self] in self?.pasteItem(at: i, plainText: false) })
+        })
+        single(.lock, immediate: true) { [weak self] in self?.lock() }
+        single(.viewer) { [weak self] in self?.openViewer() }
+        single(.preferences) { [weak self] in self?.openPreferences() }
+        single(.clearHistory) { [weak self] in self?.clearHistory() }
+        single(.queue) { [weak self] in self?.toggleQueue() }
+        single(.queuePaste) { [weak self] in self?.pasteFromQueue() }
+        single(.queuePasteAll) { [weak self] in self?.pasteAllFromQueue() }
+        single(.quit) { [weak self] in self?.quit() }
+        single(.pause) { [weak self] in
             guard let self else { return }
             if let until = self.pausedUntil, until > Date() { self.resumeRecording() } else { self.pauseRecording() }
-        }) {
-            failed.append(hk.displayString)
         }
+        hotKeyStatuses = statuses
         // Per-template hot keys: paste the item directly, no menu ("Set Hot Key" on a template item).
+        // Always the user's own choice, so never filtered (H-2).
         for t in templates.allItems().filter({ $0.hotKey != nil }).prefix(Limits.templateHotKeysMax) {
             guard let hk = t.hotKey, t.clip != nil else { continue }
             let id = t.id
@@ -1364,6 +1385,51 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 a.runModal()
             }
         }
+    }
+
+    /// The stored shortcut when Carbon holds it right now, for a menu to show and answer to; nil when it is
+    /// off, left free for a layout, taken by another app or suspended by a lock (H-4).
+    func activeHotKey(_ id: HotKeyID) -> HotKey? {
+        guard hotKeyStatuses[id]?.isActive == true else { return nil }
+        return settings.hotKey(id)
+    }
+
+    /// The modifiers of a family (numbers, latest-item actions) when its hot keys are live, else nil.
+    func activeModifiers(_ id: HotKeyID) -> UInt32? {
+        guard hotKeyStatuses[id]?.isActive == true else { return nil }
+        return id == .numbers ? settings.numberPasteModifiers : settings.latestActionModifiers
+    }
+
+    // MARK: Keyboard layouts changing under the hot keys
+
+    /// macOS posts kTISNotifyEnabledKeyboardInputSourcesChanged several times while the user edits the
+    /// list; one re-registration half a second after the last.
+    func observeKeyboardLayouts() {
+        DistributedNotificationCenter.default().addObserver(
+            forName: NSNotification.Name(kTISNotifyEnabledKeyboardInputSourcesChanged as String), object: nil, queue: .main
+        ) { [weak self] _ in self?.layoutsDidChange() }
+    }
+
+    func layoutsDidChange() {
+        layoutChangeDebounce?.cancel()
+        let work = DispatchWorkItem { [weak self] in self?.applyLayoutChange() }
+        layoutChangeDebounce = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: work)
+    }
+
+    /// Re-registers for the new layouts — unless a lock or a restore has the hot keys in hand: the lock
+    /// unregistered them and `unlock()` re-registers afresh; a restore re-registers at its single exit
+    /// (`recheckLayoutsIfChanged()`), whether it committed, was cancelled or failed (H-4).
+    func applyLayoutChange() {
+        guard !uninstalling else { return }
+        guard !isLocked, !restoreInProgress else { layoutsChangedWhileBusy = true; return }
+        registerHotKeys()
+    }
+
+    /// After a restore ends, whatever its outcome.
+    func recheckLayoutsIfChanged() {
+        guard layoutsChangedWhileBusy, !isLocked, !uninstalling else { return }
+        registerHotKeys()
     }
 
     // MARK: - Main menu (needed so ⌘C/⌘V/⌘A work inside our own windows)
@@ -1589,7 +1655,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
 
         let items = menuBuilder.historyItems(history.items, target: self, action: #selector(historyChosen(_:)),
-                                             numberMods: settings.numberPasteModifiers, commandAccelerators: searching)
+                                             numberMods: activeModifiers(.numbers), commandAccelerators: searching)
         markQueue(items)
         if items.isEmpty {
             let e = NSMenuItem(title: L("(History is empty)"), action: nil, keyEquivalent: "")
@@ -1645,7 +1711,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         for mi in menu.items where mi.tag == MenuBuilder.historyTag { menu.removeItem(mi) }
         let matches = MenuBuilder.filter(history.items, query: query)
         var fresh = menuBuilder.historyItems(matches, target: self, action: #selector(historyChosen(_:)),
-                                             numberMods: settings.numberPasteModifiers, commandAccelerators: true)
+                                             numberMods: activeModifiers(.numbers), commandAccelerators: true)
         if fresh.isEmpty {
             let none = NSMenuItem(title: L("(no matches)"), action: nil, keyEquivalent: "")
             none.isEnabled = false
@@ -1667,25 +1733,25 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             return mi
         }
         var out: [NSMenuItem] = [
-            item(L("Viewer…"), #selector(openViewer), hotKey: settings.viewerHotKey),
-            item(L("Add Clipboard to Templates"), #selector(addClipboardToTemplates), hotKey: settings.latestActionModifiers.map { HotKey(keyCode: HotKey.LatestAction.addToTemplates.keyCode, modifiers: $0) }),
-            item(L("Settings…"), #selector(openPreferences), hotKey: settings.preferencesHotKey),
+            item(L("Viewer…"), #selector(openViewer), hotKey: activeHotKey(.viewer)),
+            item(L("Add Clipboard to Templates"), #selector(addClipboardToTemplates), hotKey: activeModifiers(.latest).map { HotKey(keyCode: HotKey.LatestAction.addToTemplates.keyCode, modifiers: $0) }),
+            item(L("Settings…"), #selector(openPreferences), hotKey: activeHotKey(.preferences)),
             .separator(),
-            item(L("Clear History"), #selector(clearHistory), hotKey: settings.clearHistoryHotKey),
+            item(L("Clear History"), #selector(clearHistory), hotKey: activeHotKey(.clearHistory)),
         ]
         if let until = pausedUntil, until > Date() {
             let f = DateFormatter(); f.timeStyle = .short
-            out.append(item(LF("Resume Recording (paused until %@)", f.string(from: until)), #selector(resumeRecording), hotKey: settings.pauseHotKey))
+            out.append(item(LF("Resume Recording (paused until %@)", f.string(from: until)), #selector(resumeRecording), hotKey: activeHotKey(.pause)))
         } else {
-            out.append(item(L("Pause Recording for 10 Minutes"), #selector(pauseRecording), hotKey: settings.pauseHotKey))
+            out.append(item(L("Pause Recording for 10 Minutes"), #selector(pauseRecording), hotKey: activeHotKey(.pause)))
         }
         if queue.isActive {
-            out.append(item(LF("Stop Paste Queue (%d to paste)", queue.remaining), #selector(toggleQueue), hotKey: settings.queueHotKey))
+            out.append(item(LF("Stop Paste Queue (%d to paste)", queue.remaining), #selector(toggleQueue), hotKey: activeHotKey(.queue)))
         } else {
-            out.append(item(L("Start Paste Queue"), #selector(toggleQueue), hotKey: settings.queueHotKey))
+            out.append(item(L("Start Paste Queue"), #selector(toggleQueue), hotKey: activeHotKey(.queue)))
         }
         if Vault.isEnabled {
-            out.append(item(L("Lock Keepit"), #selector(lock), hotKey: settings.lockHotKey))
+            out.append(item(L("Lock Keepit"), #selector(lock), hotKey: activeHotKey(.lock)))
         }
         out.append(.separator())
         if updater.isConfigured, settings.checkForUpdates {
@@ -1696,8 +1762,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             out.append(item(L("Grant Accessibility Permission…"), #selector(grantAccessibility)))
         }
         out.append(.separator())
-        let quitItem = item(L("Quit Keepit"), #selector(quit), hotKey: settings.quitHotKey)
-        if settings.quitHotKey == nil { quitItem.keyEquivalent = "q" }   // ⌘Q inside the menu, as everywhere on the Mac
+        let quitItem = item(L("Quit Keepit"), #selector(quit), hotKey: activeHotKey(.quit))
+        if activeHotKey(.quit) == nil { quitItem.keyEquivalent = "q" }   // ⌘Q inside the menu, as everywhere on the Mac
         out.append(quitItem)
         return out
     }
@@ -1790,7 +1856,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             paste: #selector(historyChosen(_:)), pastePlain: #selector(historyChosenPlain(_:)),
             copyOnly: #selector(historyCopied(_:)), transform: #selector(historyTransformed(_:)),
             pin: #selector(historyPinned(_:)), reveal: #selector(historyRevealed(_:)), delete: #selector(historyDeleted(_:))),
-            latestMods: isLatest ? settings.latestActionModifiers : nil)
+            latestMods: isLatest ? activeModifiers(.latest) : nil)
         m.delegate = self
         m.title = Self.actionMenuTitle
         return m
