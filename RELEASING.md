@@ -297,6 +297,13 @@ URLs on the site have no `.html`: Cloudflare Pages serves `guide.html` at `/guid
 link use the extensionless form (`build_guide.py` refuses to write a page that links to
 `something.html`). The files on disk keep their names.
 
+`docs/site/cb6b9005336571eeb8c71481e479129a.txt` is the IndexNow key (indexnow.org): the file
+name and its content are the key, and it is public by design — search engines fetch it to check
+that a submission of keep.it.com URLs comes from the site. After pages are added or changed,
+POST the URLs from `sitemap.xml` to `https://api.indexnow.org/indexnow` with `host`, `key` and
+`urlList`. Cloudflare's Crawler Hints (Caching → Configuration) is on, but it only reports
+cached responses and the HTML here is served uncached, so the submission is done by hand.
+
 Response headers for the static site are in `docs/site/_headers`. The Content-Security-Policy
 there allows `'unsafe-inline'` for scripts and styles because the pages still carry inline
 `<script>`/`<style>` blocks and `style=""` attributes; everything else is locked down (no
