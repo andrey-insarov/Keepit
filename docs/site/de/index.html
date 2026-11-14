@@ -203,6 +203,7 @@
 .langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
 .tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
 code,kbd,pre{direction:ltr;unicode-bidi:isolate}
+[dir=rtl] .tpl b{direction:ltr;unicode-bidi:isolate}
 .lpick{position:relative}.lpick summary{list-style:none;cursor:pointer;height:40px;padding:0 8px;display:flex;align-items:center;gap:5px;border-radius:10px;color:var(--ink-2,var(--ink))}
 .lpick summary::-webkit-details-marker{display:none}.lpick summary .chev{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
 .lpick .fl{flex:none;width:23px;height:16px;border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
@@ -304,7 +305,7 @@ Viele Grüße, Andrey</div>
       </div>
       <div class="cell c3">
         <h3>Keepit lässt sich mit der App „Kurzbefehle“, Raycast und Alfred verwenden</h3> <p>Über das URL-Schema <code>keepit://</code> lässt sich Eintrag N oder eine Vorlage nach Namen einfügen, Text zum Verlauf oder zu den Vorlagen hinzufügen und die Aufzeichnung pausieren. Ein Skript-Wörterbuch musst du dafür nicht lernen. Die Option ist aus, bis du sie unter Einstellungen → Erweitert einschaltest.</p>
-        <div class="tpl">open "keepit://template/<b>Signature</b>"
+        <div class="tpl" dir="ltr">open "keepit://template/<b>Signature</b>"
 open "keepit://add?text=<b>…</b>"
 open "keepit://pause"</div>
       </div>

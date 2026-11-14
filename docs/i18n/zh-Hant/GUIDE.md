@@ -53,7 +53,7 @@ Keepit 是選單列 App：沒有 Dock 圖像，在你主動打開之前也沒有
 
 ![選擇「暫時不要」時：清楚說明這代表什麼，以及可以在哪裡更改](site/img/guide/no-password-notice.png)
 
-**3.「輔助使用」權限。** 為了替你貼上，Keepit 會把 ⌘V 傳送到你原本使用的 App。macOS 只允許列在「系統設定」→「隱私權與安全性」→「輔助使用」中的 App 這樣做。按一下「打開系統設定」，然後開啟 Keepit。沒有這項權限時，Keepit 仍會記錄和拷貝，但需要你自己按 ⌘V。
+**3.「輔助使用」權限。** 為了替你貼上，Keepit 會把 ⌘V 傳送到你原本使用的 App。macOS 只允許列在「系統設定」→「隱私權與安全性」（香港版 macOS 顯示為「私隱與保安」）→「輔助使用」中的 App 這樣做。按一下「打開系統設定」，然後開啟 Keepit。沒有這項權限時，Keepit 仍會記錄和拷貝，但需要你自己按 ⌘V。
 
 ![Keepit 要求「輔助使用」權限](site/img/guide/accessibility-prompt.png)
 

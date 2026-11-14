@@ -109,7 +109,7 @@
  ],
  [
   "<h3>Templates that fill themselves in — a snippet manager built in</h3>",
-  "<h3>스스로 채워지는 템플릿, 곧 내장 스니펫 관리자</h3>"
+  "<h3>자동으로 내용을 채우는 템플릿: 내장 스니펫 관리 기능</h3>"
  ],
  [
   "<p>A template is plain text with placeholders. When you paste it, Keepit asks for the inputs, expands the rest and puts the cursor where <code>{cursor}</code> was.</p>",
@@ -137,7 +137,7 @@
  ],
  [
   "<h3>Works with Shortcuts, Raycast and Alfred</h3>\n        <p>A <code>keepit://</code> URL scheme pastes item N or a template by name, adds text to history or templates, pauses recording. No scripting dictionary to learn. Off until you switch it on in Settings → Advanced.</p>",
-  "<h3>Keepit은 단축어, Raycast, Alfred와 함께 작동합니다</h3>\n        <p><code>keepit://</code> URL 체계로 N번 항목이나 이름으로 지정한 템플릿을 붙여넣고, 기록이나 템플릿에 텍스트를 추가하고, 기록을 일시 정지할 수 있습니다. 스크립팅 사전을 배울 필요가 없습니다. 이 옵션은 설정 → 고급에서 켜기 전까지 꺼져 있습니다.</p>"
+  "<h3>Keepit은 단축어, Raycast, Alfred와 함께 작동합니다</h3>\n        <p><code>keepit://</code> URL 스킴으로 N번 항목이나 이름으로 지정한 템플릿을 붙여넣고, 기록이나 템플릿에 텍스트를 추가하고, 기록을 일시 정지할 수 있습니다. 스크립팅 사전을 배울 필요가 없습니다. 이 옵션은 설정 → 고급에서 켜기 전까지 꺼져 있습니다.</p>"
  ],
  [
   "<h3>Copy five things, paste five things</h3>\n        <p>Press <kbd class=\"k\">⌥N</kbd>, copy as many items as you need — the menu bar counts them — then <kbd class=\"k\">⌥V</kbd> pastes them back one at a time in the same order. <kbd class=\"k\">⌘V</kbd> keeps working as usual.</p>",

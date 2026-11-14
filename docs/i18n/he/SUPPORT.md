@@ -6,7 +6,7 @@
 <form id="fb" class="fb" action="/api/feedback" method="post" enctype="multipart/form-data" novalidate>
   <div class="row2">
     <label>שם<input name="name" type="text" maxlength="100" autocomplete="name" required></label>
-    <label>E-mail<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
+    <label>דוא״ל<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
   </div>
   <label>נושא הפנייה
     <select name="type" required>
@@ -86,7 +86,7 @@
 
 ## תשובות קצרות
 
-**אחרי בחירת פריט לא מודבק דבר.** העניקו את הרשאת הנגישות: הגדרות המערכת ← פרטיות ואבטחה ← נגישות ← הפעילו את Keepit (אם הוא כבר ברשימה, כבו אותו והפעילו שוב). עד אז לחצו על ⌘V בעצמכם; הפריט כבר נמצא בלוח.
+**אחרי בחירת פריט לא מודבק דבר.** העניקו את הרשאת הנגישות: הגדרות המערכת ← פרטיות ואבטחה ← נגישות ← הפעילו את Keepit (אם הוא כבר ברשימה, כבו אותו והפעילו שוב). עד אז לחצו על `⌘V` בעצמכם; הפריט כבר נמצא בלוח.
 
 **שכחתי את הסיסמה.** בחלון ביטול הנעילה לחצו על “שחזור גישה…”, או השתמשו ב-Touch ID באותו Mac. בלי אחד מהם אי אפשר לשחזר את הנתונים.
 

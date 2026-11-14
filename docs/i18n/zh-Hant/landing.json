@@ -109,7 +109,7 @@
  ],
  [
   "<h3>Templates that fill themselves in — a snippet manager built in</h3>",
-  "<h3>會自動填寫的範本，也就是內建的程式碼片段管理工具</h3>"
+  "<h3>會自動填寫的範本，也就是內建的文字片段管理工具</h3>"
  ],
  [
   "<p>A template is plain text with placeholders. When you paste it, Keepit asks for the inputs, expands the rest and puts the cursor where <code>{cursor}</code> was.</p>",
@@ -321,7 +321,7 @@
  ],
  [
   "<details><summary>Where does the design come from?</summary><p>Keepit started as a macOS take on the workflow of <a href=\"https://github.com/nakkag/CLCL\">CLCL</a>, a classic Windows clipboard tool, and grew into an app of its own — written from scratch in Swift, with ideas drawn from many clipboard and snippet managers. It is not affiliated with the CLCL author.</p></details>",
-  "<details><summary>怎麼會想到要做這樣一款 App？</summary><p>Keepit 最初是想把 Windows 經典剪貼板工具 <a href=\"https://github.com/nakkag/CLCL\">CLCL</a> 的工作方式搬到 macOS 上，後來成長為一款獨立的 App。它以 Swift 從零寫成，並吸收了許多剪貼板與程式碼片段管理工具的想法。本專案與 CLCL 的作者沒有關聯，但我們感謝他帶來的靈感。</p></details>"
+  "<details><summary>怎麼會想到要做這樣一款 App？</summary><p>Keepit 最初是想把 Windows 經典剪貼板工具 <a href=\"https://github.com/nakkag/CLCL\">CLCL</a> 的工作方式搬到 macOS 上，後來成長為一款獨立的 App。它以 Swift 從零寫成，並吸收了許多剪貼板與文字片段管理工具的想法。本專案與 CLCL 的作者沒有關聯，但我們感謝他帶來的靈感。</p></details>"
  ],
  [
   "<details><summary>How do I move my data to another Mac, or between editions?</summary><p>Switch on <em>Settings → Backup → Back up automatically to a folder</em> and pick iCloud Drive (or any folder): Keepit keeps complete, encrypted <code>.keepit</code> copies there. On the new Mac choose <em>Restore from Backup…</em> at first launch, enter the old Mac's password or recovery phrase, then <em>Replace</em> or <em>Merge</em>. For a one-off file there is <em>Save to Archive…</em> with its own password. Everything is AES-256-GCM encrypted, so a USB stick or a cloud folder is fine, and the same file works in both editions.</p></details>",

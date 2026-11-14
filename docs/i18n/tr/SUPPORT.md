@@ -6,7 +6,7 @@ Bir hata ya da yanlış bir çeviri mi buldunuz, yoksa bir sorunuz mu var? Aşa�
 <form id="fb" class="fb" action="/api/feedback" method="post" enctype="multipart/form-data" novalidate>
   <div class="row2">
     <label>Ad<input name="name" type="text" maxlength="100" autocomplete="name" required></label>
-    <label>E-mail<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
+    <label>E-posta<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
   </div>
   <label>Konu
     <select name="type" required>

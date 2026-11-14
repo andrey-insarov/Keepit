@@ -45,7 +45,7 @@ denetlendiğini doğrular. *Aç* düğmesini tıklayın.
 
 ![macOS Gatekeeper onayı](site/img/guide/gatekeeper.png)
 
-Keepit imzalı ve noter onaylıdır, kendi kendini günceller ve macOS 13 Ventura veya sonrasını
+Keepit imzalıdır ve Apple tarafından onaylanmıştır, kendi kendini günceller ve macOS 13 Ventura veya sonrasını
 çalıştıran Apple silicon ve Intel işlemcili Mac’lerde yerel olarak çalışır.
 
 ### İlk açılış
@@ -539,8 +539,8 @@ Metni yüzde kodlamasıyla kodlayın (boşluk için `%20`). Keepit kilitliyken U
 ### Güncellemeler
 
 Keepit günde bir kez GitHub Releases sayfasını denetler ve güncellemeleri bir iletişim penceresinde
-önerir; *Güncellemeleri Denetle…* bunu hemen yapar. Güncellemeler imzalıdır (EdDSA) ve noter
-onaylıdır. Homebrew ile aynı işi `brew upgrade --cask keepit` yapar. Her indirmenin sağlama
+önerir; *Güncellemeleri Denetle…* bunu hemen yapar. Güncellemeler imzalıdır (EdDSA) ve Apple
+tarafından onaylanmıştır. Homebrew ile aynı işi `brew upgrade --cask keepit` yapar. Her indirmenin sağlama
 toplamları sürüm sayfasındaki `SHA256SUMS` dosyasındadır.
 
 Bu denetim, Keepit’in gönderdiği tek ağ isteğidir ve isteğe bağlıdır: *Ayarlar → Genel →

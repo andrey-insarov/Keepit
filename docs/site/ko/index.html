@@ -203,6 +203,7 @@
 .langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
 .tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
 code,kbd,pre{direction:ltr;unicode-bidi:isolate}
+[dir=rtl] .tpl b{direction:ltr;unicode-bidi:isolate}
 .lpick{position:relative}.lpick summary{list-style:none;cursor:pointer;height:40px;padding:0 8px;display:flex;align-items:center;gap:5px;border-radius:10px;color:var(--ink-2,var(--ink))}
 .lpick summary::-webkit-details-marker{display:none}.lpick summary .chev{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
 .lpick .fl{flex:none;width:23px;height:16px;border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
@@ -283,7 +284,7 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
 
     <div class="bento">
       <div class="cell c4">
-        <h3>스스로 채워지는 템플릿, 곧 내장 스니펫 관리자</h3>
+        <h3>자동으로 내용을 채우는 템플릿: 내장 스니펫 관리 기능</h3>
         <p>템플릿은 자리표시자가 들어 있는 일반 텍스트입니다. 붙여넣을 때 Keepit이 필요한 값을 묻고 나머지 텍스트를 채운 다음 <code>{cursor}</code>가 있던 자리에 커서를 둡니다.</p>
         <div class="tpl"><b>{input:이름}</b>님, 안녕하세요.
 
@@ -306,8 +307,8 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
       </div>
       <div class="cell c3">
         <h3>Keepit은 단축어, Raycast, Alfred와 함께 작동합니다</h3>
-        <p><code>keepit://</code> URL 체계로 N번 항목이나 이름으로 지정한 템플릿을 붙여넣고, 기록이나 템플릿에 텍스트를 추가하고, 기록을 일시 정지할 수 있습니다. 스크립팅 사전을 배울 필요가 없습니다. 이 옵션은 설정 → 고급에서 켜기 전까지 꺼져 있습니다.</p>
-        <div class="tpl">open "keepit://template/<b>Signature</b>"
+        <p><code>keepit://</code> URL 스킴으로 N번 항목이나 이름으로 지정한 템플릿을 붙여넣고, 기록이나 템플릿에 텍스트를 추가하고, 기록을 일시 정지할 수 있습니다. 스크립팅 사전을 배울 필요가 없습니다. 이 옵션은 설정 → 고급에서 켜기 전까지 꺼져 있습니다.</p>
+        <div class="tpl" dir="ltr">open "keepit://template/<b>Signature</b>"
 open "keepit://add?text=<b>…</b>"
 open "keepit://pause"</div>
       </div>

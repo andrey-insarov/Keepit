@@ -64,6 +64,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
 .langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
 .tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
 code,kbd,pre{direction:ltr;unicode-bidi:isolate}
+[dir=rtl] .tpl b{direction:ltr;unicode-bidi:isolate}
 .lpick{position:relative}.lpick summary{list-style:none;cursor:pointer;height:40px;padding:0 8px;display:flex;align-items:center;gap:5px;border-radius:10px;color:var(--ink-2,var(--ink))}
 .lpick summary::-webkit-details-marker{display:none}.lpick summary .chev{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
 .lpick .fl{flex:none;width:23px;height:16px;border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
@@ -120,7 +121,7 @@ brew install --cask andrey-insarov/keepit/keepit
 <p><strong>2. 密碼（選用）。</strong> Keepit 可以把歷史記錄和範本加密儲存，並用 Touch ID 解鎖。你可以現在決定，也可以稍後在「設定」→「安全性」中決定；<a href="#part-6-security">第 6 部分</a>說明了運作方式。選擇「暫時不要」的話，所有內容都會以未加密的形式留在磁碟上。如果你剛才用備份的密碼還原了備份，Keepit 會提議在這部 Mac 上沿用該密碼。</p>
 <figure class="shot" style="max-width:336px"><a href="/img/guide/password-offer.png?v=a377f4be" class="zoom" title="以原始大小打開"><img src="/img/guide/password-offer.png?v=a377f4be" alt="首次啟動時的密碼設定提議" width="336" height="410" loading="lazy"></a><figcaption>首次啟動時的密碼設定提議</figcaption></figure>
 <figure class="shot" style="max-width:336px"><a href="/img/guide/no-password-notice.png?v=0da3b4f2" class="zoom" title="以原始大小打開"><img src="/img/guide/no-password-notice.png?v=0da3b4f2" alt="選擇「暫時不要」時：清楚說明這代表什麼，以及可以在哪裡更改" width="336" height="342" loading="lazy"></a><figcaption>選擇「暫時不要」時：清楚說明這代表什麼，以及可以在哪裡更改</figcaption></figure>
-<p><strong>3.「輔助使用」權限。</strong> 為了替你貼上，Keepit 會把 ⌘V 傳送到你原本使用的 App。macOS 只允許列在「系統設定」→「隱私權與安全性」→「輔助使用」中的 App 這樣做。按一下「打開系統設定」，然後開啟 Keepit。沒有這項權限時，Keepit 仍會記錄和拷貝，但需要你自己按 ⌘V。</p>
+<p><strong>3.「輔助使用」權限。</strong> 為了替你貼上，Keepit 會把 ⌘V 傳送到你原本使用的 App。macOS 只允許列在「系統設定」→「隱私權與安全性」（香港版 macOS 顯示為「私隱與保安」）→「輔助使用」中的 App 這樣做。按一下「打開系統設定」，然後開啟 Keepit。沒有這項權限時，Keepit 仍會記錄和拷貝，但需要你自己按 ⌘V。</p>
 <figure class="shot" style="max-width:336px"><a href="/img/guide/accessibility-prompt.png?v=53fda070" class="zoom" title="以原始大小打開"><img src="/img/guide/accessibility-prompt.png?v=53fda070" alt="Keepit 要求「輔助使用」權限" width="336" height="462" loading="lazy"></a><figcaption>Keepit 要求「輔助使用」權限</figcaption></figure>
 <figure class="shot" style="max-width:762px"><a href="/img/guide/accessibility-settings.png?v=3324189c" class="zoom" title="以原始大小打開"><img src="/img/guide/accessibility-settings.png?v=3324189c" alt="在「隱私權與安全性」→「輔助使用」中已開啟 Keepit" width="762" height="598" loading="lazy"></a><figcaption>在「隱私權與安全性」→「輔助使用」中已開啟 Keepit</figcaption></figure>
 <p>Keepit 預設會在登入時啟動，可在「設定」→「一般」中關閉。</p>

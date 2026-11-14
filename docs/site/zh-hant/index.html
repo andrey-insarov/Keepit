@@ -203,6 +203,7 @@
 .langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
 .tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
 code,kbd,pre{direction:ltr;unicode-bidi:isolate}
+[dir=rtl] .tpl b{direction:ltr;unicode-bidi:isolate}
 .lpick{position:relative}.lpick summary{list-style:none;cursor:pointer;height:40px;padding:0 8px;display:flex;align-items:center;gap:5px;border-radius:10px;color:var(--ink-2,var(--ink))}
 .lpick summary::-webkit-details-marker{display:none}.lpick summary .chev{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
 .lpick .fl{flex:none;width:23px;height:16px;border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
@@ -283,7 +284,7 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
 
     <div class="bento">
       <div class="cell c4">
-        <h3>會自動填寫的範本，也就是內建的程式碼片段管理工具</h3>
+        <h3>會自動填寫的範本，也就是內建的文字片段管理工具</h3>
         <p>範本就是帶有佔位符的普通文字。貼上時，Keepit 會詢問需要的值、補上其餘文字，並把游標放在原本 <code>{cursor}</code> 所在的位置。</p>
         <div class="tpl"><b>{input:姓名}</b>，你好：
 
@@ -307,7 +308,7 @@ Andrey 敬上</div>
       <div class="cell c3">
         <h3>Keepit 可搭配「捷徑」、Raycast 與 Alfred 使用</h3>
         <p><code>keepit://</code> URL 架構可以貼上第 N 個項目或依名稱貼上範本、把文字加入歷史記錄或範本，以及暫停記錄。不需要學習任何工序指令字典。這個選項預設為關閉，要到「設定」→「進階」中開啟後才會生效。</p>
-        <div class="tpl">open "keepit://template/<b>Signature</b>"
+        <div class="tpl" dir="ltr">open "keepit://template/<b>Signature</b>"
 open "keepit://add?text=<b>…</b>"
 open "keepit://pause"</div>
       </div>
@@ -396,7 +397,7 @@ open "keepit://pause"</div>
     <details><summary>會有任何東西離開我的 Mac 嗎？</summary><p>資料只儲存在本機，也就是你自己的電腦上。Keepit 沒有伺服器。唯一的網路請求是每天到 GitHub Releases 檢查更新，你可以在「設定」→「一般」中把它關閉，之後 Keepit 就不會發出任何請求。App Store 版本連這個請求也不會發出。沒有帳號、沒有遙測，也沒有當機報告。只有在你開啟自動備份到雲端資料夾時，資料才會進入網際網路：加密的副本會寫入你選擇的資料夾，如果該資料夾位於 iCloud 雲碟或 Dropbox 中，就由該服務以你的帳號進行同步。Keepit 本身不會與它連線。</p></details>
     <details><summary>忘記密碼怎麼辦？</summary><p>你可以使用開啟保護時 Keepit 顯示的 24 個單字復原短語，或在同一部 Mac 上使用 Touch ID。兩者都沒有的話，資料就無法復原。這是刻意的設計。</p></details>
     <details><summary>真的免費嗎？有什麼附帶條件？</summary><p>是的，完全免費：App 以 MIT 授權條款釋出，程式碼放在 <a href="https://github.com/andrey-insarov/Keepit">GitHub</a> 上。Keepit 是 <a href="https://it.com">it.com</a> 網域區的創辦人為了自己使用而製作的，後來才想到它可以成為展示 it.com 用途的好例子。所以這裡沒有廣告、沒有 App 內購買，也沒有付費版本：使用這個程式本身就是在向大家介紹我們的服務。</p></details>
-    <details><summary>怎麼會想到要做這樣一款 App？</summary><p>Keepit 最初是想把 Windows 經典剪貼板工具 <a href="https://github.com/nakkag/CLCL">CLCL</a> 的工作方式搬到 macOS 上，後來成長為一款獨立的 App。它以 Swift 從零寫成，並吸收了許多剪貼板與程式碼片段管理工具的想法。本專案與 CLCL 的作者沒有關聯，但我們感謝他帶來的靈感。</p></details>
+    <details><summary>怎麼會想到要做這樣一款 App？</summary><p>Keepit 最初是想把 Windows 經典剪貼板工具 <a href="https://github.com/nakkag/CLCL">CLCL</a> 的工作方式搬到 macOS 上，後來成長為一款獨立的 App。它以 Swift 從零寫成，並吸收了許多剪貼板與文字片段管理工具的想法。本專案與 CLCL 的作者沒有關聯，但我們感謝他帶來的靈感。</p></details>
     <details><summary>如何把資料轉移到另一部 Mac，或在不同版本之間轉移？</summary><p>開啟<em>「設定」→「備份」→「自動備份到資料夾」</em>，然後選擇 iCloud 雲碟（或任何資料夾）：Keepit 會在那裡保存完整的加密 <code>.keepit</code> 副本。在新的 Mac 上首次啟動時選擇<em>「從備份還原…」</em>，輸入舊 Mac 的密碼或復原短語，再選擇<em>「取代」</em>或<em>「合併」</em>。如果只是匯出一次，可以使用<em>「儲存為封存檔…」</em>，它有自己的密碼。所有內容都以 AES-256-GCM 加密，所以 USB 隨身碟或雲端資料夾都適用。同一個檔案在兩種版本中都能使用。</p></details>
     <details><summary>支援哪些 Mac？</summary><p>macOS 13 Ventura 或以上版本，Apple 晶片與 Intel。使用 Touch ID 解鎖需要配備 Touch ID 的 Mac。</p></details>
   </div></section>

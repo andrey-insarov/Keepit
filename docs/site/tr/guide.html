@@ -64,6 +64,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
 .langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
 .tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
 code,kbd,pre{direction:ltr;unicode-bidi:isolate}
+[dir=rtl] .tpl b{direction:ltr;unicode-bidi:isolate}
 .lpick{position:relative}.lpick summary{list-style:none;cursor:pointer;height:40px;padding:0 8px;display:flex;align-items:center;gap:5px;border-radius:10px;color:var(--ink-2,var(--ink))}
 .lpick summary::-webkit-details-marker{display:none}.lpick summary .chev{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
 .lpick .fl{flex:none;width:23px;height:16px;border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
@@ -120,7 +121,7 @@ ve Keepit’i <em>Uygulamalar</em> klasörüne sürükleyin.</p>
 <p>Uygulamayı ilk açtığınızda macOS, uygulamanın internetten indirildiğini ve Apple tarafından
 denetlendiğini doğrular. <em>Aç</em> düğmesini tıklayın.</p>
 <figure class="shot" style="max-width:336px"><a href="/img/guide/gatekeeper.png?v=d79051e5" class="zoom" title="Tam boyutta aç"><img src="/img/guide/gatekeeper.png?v=d79051e5" alt="macOS Gatekeeper onayı" width="336" height="336" loading="lazy"></a><figcaption>macOS Gatekeeper onayı</figcaption></figure>
-<p>Keepit imzalı ve noter onaylıdır, kendi kendini günceller ve macOS 13 Ventura veya sonrasını
+<p>Keepit imzalıdır ve Apple tarafından onaylanmıştır, kendi kendini günceller ve macOS 13 Ventura veya sonrasını
 çalıştıran Apple silicon ve Intel işlemcili Mac’lerde yerel olarak çalışır.</p>
 <h3 id="first-launch">İlk açılış</h3>
 <p>Keepit bir menü çubuğu uygulamasıdır: Dock simgesi yoktur, siz açana kadar penceresi de yoktur.
@@ -641,8 +642,8 @@ zaman sormaz.</p>
 <p>Metni yüzde kodlamasıyla kodlayın (boşluk için <code>%20</code>). Keepit kilitliyken URL’ler yoksayılır.</p>
 <h3 id="updates">Güncellemeler</h3>
 <p>Keepit günde bir kez GitHub Releases sayfasını denetler ve güncellemeleri bir iletişim penceresinde
-önerir; <em>Güncellemeleri Denetle…</em> bunu hemen yapar. Güncellemeler imzalıdır (EdDSA) ve noter
-onaylıdır. Homebrew ile aynı işi <code>brew upgrade --cask keepit</code> yapar. Her indirmenin sağlama
+önerir; <em>Güncellemeleri Denetle…</em> bunu hemen yapar. Güncellemeler imzalıdır (EdDSA) ve Apple
+tarafından onaylanmıştır. Homebrew ile aynı işi <code>brew upgrade --cask keepit</code> yapar. Her indirmenin sağlama
 toplamları sürüm sayfasındaki <code>SHA256SUMS</code> dosyasındadır.</p>
 <p>Bu denetim, Keepit’in gönderdiği tek ağ isteğidir ve isteğe bağlıdır: <em>Ayarlar → Genel →
 Güncellemeler → Güncellemeleri otomatik denetle</em>. Kapatıldığında Keepit, siz isteseniz bile hiçbir

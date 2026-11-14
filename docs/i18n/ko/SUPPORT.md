@@ -6,7 +6,7 @@
 <form id="fb" class="fb" action="/api/feedback" method="post" enctype="multipart/form-data" novalidate>
   <div class="row2">
     <label>이름<input name="name" type="text" maxlength="100" autocomplete="name" required></label>
-    <label>E-mail<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
+    <label>이메일<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
   </div>
   <label>문의 유형
     <select name="type" required>

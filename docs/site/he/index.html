@@ -203,6 +203,7 @@
 .langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
 .tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
 code,kbd,pre{direction:ltr;unicode-bidi:isolate}
+[dir=rtl] .tpl b{direction:ltr;unicode-bidi:isolate}
 .lpick{position:relative}.lpick summary{list-style:none;cursor:pointer;height:40px;padding:0 8px;display:flex;align-items:center;gap:5px;border-radius:10px;color:var(--ink-2,var(--ink))}
 .lpick summary::-webkit-details-marker{display:none}.lpick summary .chev{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
 .lpick .fl{flex:none;width:23px;height:16px;border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
@@ -249,7 +250,7 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
       </a>
       <a class="btn btn-ghost" href="#install">Homebrew ו-App Store</a>
     </div>
-    <p class="fine">חינמי ובקוד פתוח (MIT) · macOS 13 ומעלה, Apple silicon ו-Intel · מאושר נוטריונית על ידי Apple · <a href="https://github.com/andrey-insarov/Keepit/releases">כל הגרסאות</a></p>
+    <p class="fine">חינמי ובקוד פתוח (MIT) · macOS 13 ומעלה, Apple silicon ו-Intel · אושר על ידי Apple · <a href="https://github.com/andrey-insarov/Keepit/releases">כל הגרסאות</a></p>
 
     <div class="demo" aria-label="הנפשה: לחיצה על Option-M פותחת את תפריט ההיסטוריה של Keepit ליד סמן הטקסט ומדביקה את הפריט שנבחר">
       <div class="win">
@@ -307,7 +308,7 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
       <div class="cell c3">
         <h3>Keepit עובד עם קיצורים, Raycast ו-Alfred</h3>
         <p>סכמת <code>keepit://</code> מדביקה את פריט N או תבנית לפי שם, מוסיפה טקסט להיסטוריה או לתבניות ומשהה את ההקלטה. אין צורך ללמוד מילון סקריפטים. האפשרות כבויה עד שתפעילו אותה בהגדרות ← מתקדם.</p>
-        <div class="tpl">open "keepit://template/<b>Signature</b>"
+        <div class="tpl" dir="ltr">open "keepit://template/<b>Signature</b>"
 open "keepit://add?text=<b>…</b>"
 open "keepit://pause"</div>
       </div>
@@ -329,7 +330,7 @@ open "keepit://pause"</div>
       </div>
       <div class="cell c2">
         <h3>מתעדכן בעצמו</h3>
-        <p>היישום חתום ב-Developer ID ומאושר נוטריונית על ידי Apple. פעם ביום הוא בודק את GitHub Releases ומתקין עדכון בלחיצה אחת; החתימה של כל עדכון נבדקת לפני ההפעלה. את הבדיקה אפשר לכבות, ואז Keepit לא שולח לאינטרנט אף בקשה.</p>
+        <p>היישום חתום ב-Developer ID ואושר על ידי Apple. פעם ביום הוא בודק את GitHub Releases ומתקין עדכון בלחיצה אחת; החתימה של כל עדכון נבדקת לפני ההפעלה. את הבדיקה אפשר לכבות, ואז Keepit לא שולח לאינטרנט אף בקשה.</p>
       </div>
     </div>
   </div></section>
@@ -340,8 +341,8 @@ open "keepit://pause"</div>
     <div class="ledger">
       <div><strong>אין</strong><span>חשבונות, שרתים או סנכרון משלו. אין לאן להתחבר.</span></div>
       <div><strong>אין</strong><span>אנליטיקה, דוחות קריסה או רכיבי מעקב ביישום, גם לא אנונימיים. האתר רק סופר צפיות בעמודים, בלי קובצי Cookie.</span></div>
-      <div><strong>אחת</strong><span>בקשת רשת: בדיקת העדכונים היומית מול GitHub. אפשר לכבות אותה; לגרסת ה-App Store אין אפילו הרשאת רשת. <a href="/security#network">בדקו בעצמכם</a> (באנגלית).</span></div>
-      <div><strong>אחת</strong><span>תיקייה ב-Mac שלכם שבה נמצאים כל הנתונים. ועוד תיקיית הגיבויים, אם אתם מגבים. מחקו אותן, ולא יישאר זכר ל-Keepit.</span></div>
+      <div><strong>בקשה אחת</strong><span>ברשת: בדיקת העדכונים היומית מול GitHub. אפשר לכבות אותה; לגרסת ה-App Store אין אפילו הרשאת רשת. <a href="/security#network">בדקו בעצמכם</a> (באנגלית).</span></div>
+      <div><strong>תיקייה אחת</strong><span>ב-Mac שלכם, שבה נמצאים כל הנתונים. ועוד תיקיית הגיבויים, אם אתם מגבים. מחקו אותן, ולא יישאר זכר ל-Keepit.</span></div>
     </div>
     <div class="facts"><ul>
       <li>אם מגדירים סיסמה, ההיסטוריה והתבניות נשמרות מוצפנות ב-AES-256-GCM. המפתח נגזר באמצעות PBKDF2 (200 000 סבבים) ונמחק מהזיכרון בכל נעילה של Keepit.</li>
@@ -355,7 +356,7 @@ open "keepit://pause"</div>
     <h2>קל להתקין ונוח להשתמש</h2>
     <p class="kicker">פורמט הנתונים זהה בכל המהדורות. אפשר להעביר נתונים בין מחשבים בכל רגע באמצעות קובץ גיבוי מוצפן.</p>
     <div class="ways">
-      <div class="way"><h3>הורדה</h3><p>תמונת דיסק חתומה ומאושרת נוטריונית. גררו את Keepit אל יישומים ולחצו על <kbd class="k">⌥M</kbd>.</p><a class="btn btn-primary" id="download2" href="https://github.com/andrey-insarov/Keepit/releases/latest">הורדת DMG</a></div>
+      <div class="way"><h3>הורדה</h3><p>תמונת דיסק חתומה שאושרה על ידי Apple. גררו את Keepit אל יישומים ולחצו על <kbd class="k">⌥M</kbd>.</p><a class="btn btn-primary" id="download2" href="https://github.com/andrey-insarov/Keepit/releases/latest">הורדת DMG</a></div>
       <div class="way"><h3>Homebrew</h3><p>מה-tap של הפרויקט. <code>brew upgrade</code> מעדכן אותו יחד עם כל השאר.</p>
         <div class="brew"><code id="brewcmd">brew tap andrey-insarov/keepit https://github.com/andrey-insarov/Keepit &amp;&amp; brew install --cask andrey-insarov/keepit/keepit</code><button type="button" id="copybrew">העתקה</button></div></div>
       <div class="way"><h3>Mac App Store</h3><p>מהדורה בארגז חול עם אותן יכולות ובלי בדיקת עדכונים בכלל. Keepit נמצא בבדיקה; הקישור יופיע כאן ברגע שהוא יפורסם.</p><a class="btn btn-ghost" id="appstore" href="https://github.com/andrey-insarov/Keepit#installation">בקרוב</a></div>
@@ -392,7 +393,7 @@ open "keepit://pause"</div>
 
   <section id="faq"><div class="wrap faq">
     <h2>שאלות</h2>
-    <details><summary>למה Keepit צריך את הרשאת הנגישות?</summary><p>היא נחוצה לשני דברים. הראשון: לשלוח ⌘V ליישום שבו עבדתם אחרי שבחרתם פריט. השני: למצוא את סמן הטקסט ולפתוח את התפריט לידו. Keepit לא קורא יישומים אחרים ולא עוקב אחריהם. בלי ההרשאה הוא ממשיך לתעד את ההיסטוריה ולשים את הפריט שנבחר בלוח, אבל את ההדבקה תעשו בעצמכם.</p></details>
+    <details><summary>למה Keepit צריך את הרשאת הנגישות?</summary><p>היא נחוצה לשני דברים. הראשון: לשלוח ‎⌘V‎ ליישום שבו עבדתם אחרי שבחרתם פריט. השני: למצוא את סמן הטקסט ולפתוח את התפריט לידו. Keepit לא קורא יישומים אחרים ולא עוקב אחריהם. בלי ההרשאה הוא ממשיך לתעד את ההיסטוריה ולשים את הפריט שנבחר בלוח, אבל את ההדבקה תעשו בעצמכם.</p></details>
     <details><summary>האם משהו יוצא מה-Mac שלי?</summary><p>הנתונים נשמרים רק מקומית, במחשב שלכם. ל-Keepit אין שרת. בקשת הרשת היחידה היא בדיקת העדכונים היומית מול GitHub Releases, ואפשר לכבות אותה בהגדרות ← כללי; אחרי זה Keepit לא שולח שום בקשה. גרסת ה-App Store לא שולחת אפילו אותה. אין חשבון, אין טלמטריה ואין דוחות קריסה. הנתונים מגיעים לאינטרנט רק אם תפעילו גיבוי אוטומטי לתיקיית ענן: העותקים המוצפנים נכתבים לתיקייה שבחרתם, ואם היא נמצאת ב-iCloud Drive או ב-Dropbox, השירות הזה מסנכרן אותם בחשבון שלכם. Keepit עצמו לא מתקשר איתו.</p></details>
     <details><summary>מה יקרה אם אשכח את הסיסמה?</summary><p>אפשר להשתמש במשפט השחזור של 24 המילים ש-Keepit הציג כשהפעלתם את ההגנה, או ב-Touch ID באותו Mac. בלעדיהם אי אפשר לשחזר את הנתונים. כך זה תוכנן.</p></details>
     <details><summary>זה באמת בחינם? איפה המלכוד?</summary><p>כן, לגמרי בחינם: היישום מופץ ברישיון MIT והקוד נמצא ב-<a href="https://github.com/andrey-insarov/Keepit">GitHub</a>. את Keepit יצר מייסד אזור הדומיינים <a href="https://it.com">it.com</a> לשימוש עצמי, ורק אחר כך עלה הרעיון שזו יכולה להיות דוגמה טובה לשימוש ב-it.com. לכן אין כאן פרסומות, רכישות בתוך היישום או גרסה בתשלום: עצם השימוש בתוכנה מספר לאנשים על השירות שלנו.</p></details>

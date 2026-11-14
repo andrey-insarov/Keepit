@@ -13,7 +13,7 @@
  ],
  [
   "<meta property=\"og:description\" content=\"Clipboard history one hot key away. Templates, optional AES-256 encryption with Touch ID. Free and open source, no account, no Keepit cloud.\">",
-  "<meta property=\"og:description\" content=\"Pano geçmişi tek bir kısayol tuşunda. Şablonlar, isteğe bağlı AES-256 şifreleme ve Touch ID. Ücretsiz ve açık kaynaklı, hesap açmak gerekmez, veriler bilgisayarınızda kalır.\">"
+  "<meta property=\"og:description\" content=\"Pano geçmişi tek kısayolda. Şablonlar, isteğe bağlı AES-256 şifreleme ve Touch ID. Ücretsiz ve açık kaynaklı; hesap gerekmez, veriler Mac’inizde kalır.\">"
  ],
  [
   "<meta name=\"twitter:title\" content=\"Keepit – Free Clipboard Manager for Mac\">",
@@ -21,7 +21,7 @@
  ],
  [
   "<meta name=\"twitter:description\" content=\"Clipboard history one hot key away. Templates, optional AES-256 encryption with Touch ID. Free and open source, no account, no Keepit cloud.\">",
-  "<meta name=\"twitter:description\" content=\"Pano geçmişi tek bir kısayol tuşunda. Şablonlar, isteğe bağlı AES-256 şifreleme ve Touch ID. Ücretsiz ve açık kaynaklı, hesap açmak gerekmez, veriler bilgisayarınızda kalır.\">"
+  "<meta name=\"twitter:description\" content=\"Pano geçmişi tek kısayolda. Şablonlar, isteğe bağlı AES-256 şifreleme ve Touch ID. Ücretsiz ve açık kaynaklı; hesap gerekmez, veriler Mac’inizde kalır.\">"
  ],
  [
   "<nav><a href=\"#features\">Features</a><a href=\"#privacy\">Privacy</a><a href=\"#install\">Install</a><a href=\"/guide\">Guide</a><a href=\"/security\">Security</a><a href=\"/support\">Support</a>",
@@ -53,7 +53,7 @@
  ],
  [
   "<p class=\"fine\">Free and open source (MIT) · macOS 13 or later, Apple silicon and Intel · Notarized by Apple · <a href=\"https://github.com/andrey-insarov/Keepit/releases\">All releases</a></p>",
-  "<p class=\"fine\">Ücretsiz ve açık kaynaklı (MIT) · macOS 13 veya sonrası, Apple silicon ve Intel · Apple tarafından noter onaylı · <a href=\"https://github.com/andrey-insarov/Keepit/releases\">Tüm sürümler</a></p>"
+  "<p class=\"fine\">Ücretsiz ve açık kaynaklı (MIT) · macOS 13 veya sonrası, Apple silicon ve Intel · Apple tarafından onaylanmış · <a href=\"https://github.com/andrey-insarov/Keepit/releases\">Tüm sürümler</a></p>"
  ],
  [
   "aria-label=\"Animated demo: pressing Option-M opens the Keepit history menu at the text cursor and pastes the chosen item\"",
@@ -93,7 +93,7 @@
  ],
  [
   "<p class=\"kicker\">Keepit lives in the menu bar and stays out of the way. Every key below works in any app, and every one of them can be changed.</p>",
-  "<p class=\"kicker\">Keepit menü çubuğunda durur ve ayak altında dolaşmaz. Aşağıdaki kısayol tuşları her uygulamada çalışır ve her biri değiştirilebilir.</p>"
+  "<p class=\"kicker\">Keepit menü çubuğunda çalışır ve işinizi bölmez. Aşağıdaki kısayol tuşları her uygulamada çalışır ve her biri değiştirilebilir.</p>"
  ],
  [
   "<h3>The history menu</h3><p>Opens next to your text cursor. Type to search, hit a number or click — the item is pasted where you were typing. Hold <kbd class=\"k\">⇧</kbd> and every item grows a submenu: plain text, UPPERCASE, add to templates, delete.</p>",
@@ -157,7 +157,7 @@
  ],
  [
   "<h3>Updates itself</h3>\n        <p>Signed with a Developer ID and notarized by Apple. Checks GitHub Releases once a day and installs the update in one click; every update is signature-checked before it runs. The check is optional — switch it off and Keepit makes no network request at all.</p>",
-  "<h3>Kendi kendini günceller</h3>\n        <p>Uygulama Developer ID ile imzalanmış ve Apple tarafından noter onayından geçirilmiştir. Günde bir kez GitHub Releases sayfasını denetler ve güncellemeyi tek tıklamayla kurar; her güncellemenin imzası çalıştırılmadan önce doğrulanır. Denetim kapatılabilir; o zaman Keepit internete tek bir istek bile göndermez.</p>"
+  "<h3>Kendi kendini günceller</h3>\n        <p>Uygulama Developer ID ile imzalanmış ve Apple tarafından onaylanmıştır. Günde bir kez GitHub Releases sayfasını denetler ve güncellemeyi tek tıklamayla kurar; her güncellemenin imzası çalıştırılmadan önce doğrulanır. Denetim kapatılabilir; o zaman Keepit internete tek bir istek bile göndermez.</p>"
  ],
  [
   "<h2>Private by design, not by promise</h2>",
@@ -209,7 +209,7 @@
  ],
  [
   "<h3>Download</h3><p>A signed, notarized disk image. Drag Keepit to Applications and press <kbd class=\"k\">⌥M</kbd>.</p><a class=\"btn btn-primary\" id=\"download2\" href=\"https://github.com/andrey-insarov/Keepit/releases/latest\">Download DMG</a>",
-  "<h3>İndirme</h3><p>İmzalı ve noter onaylı bir disk görüntüsü. Keepit’i Uygulamalar klasörüne sürükleyin ve <kbd class=\"k\">⌥M</kbd> tuşlarına basın.</p><a class=\"btn btn-primary\" id=\"download2\" href=\"https://github.com/andrey-insarov/Keepit/releases/latest\">DMG’yi indir</a>"
+  "<h3>İndirme</h3><p>İmzalı ve Apple tarafından onaylanmış bir disk görüntüsü. Keepit’i Uygulamalar klasörüne sürükleyin ve <kbd class=\"k\">⌥M</kbd> tuşlarına basın.</p><a class=\"btn btn-primary\" id=\"download2\" href=\"https://github.com/andrey-insarov/Keepit/releases/latest\">DMG’yi indir</a>"
  ],
  [
   "<h3>Homebrew</h3><p>From the project's own tap. <code>brew upgrade</code> keeps it current alongside everything else.</p>",
@@ -229,7 +229,7 @@
  ],
  [
   "<p class=\"kicker\">All of them are global and all of them can be changed in Settings → Shortcuts. A key that collides with one you already use stays off until you assign it.</p>",
-  "<p class=\"kicker\">Hepsi geneldir ve Ayarlar → Kısayollar bölümünden değiştirilir. Kullanımda olan bir tuşla çakışan kısayol, siz özellikle atayana kadar kapalı kalır.</p>"
+  "<p class=\"kicker\">Tüm uygulamalarda çalışırlar ve Ayarlar → Kısayollar bölümünden değiştirilebilirler. Kullanımda olan bir tuşla çakışan kısayol, siz özellikle atayana kadar kapalı kalır.</p>"
  ],
  [
   "<dd>History menu at the text cursor</dd>",

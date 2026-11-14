@@ -480,7 +480,7 @@ Mac의 암호로 유지하도록 제안합니다. 어느 경우든 자동 백업
 
 ## 7부. 고급
 
-### 자동화: keepit:// URL 체계
+### 자동화: keepit:// URL 스킴
 
 단축어(*URL 열기*), Raycast, Alfred, Keyboard Maestro, 또는 셸의 `open`으로 Keepit을 조작할 수
 있습니다. 단, *설정 → 고급 → 자동화 → keepit:// URL 명령 허용*에서 **켠 다음에만** 가능합니다.
