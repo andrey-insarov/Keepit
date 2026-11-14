@@ -64,6 +64,15 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
 .langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
 .tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
 code,kbd,pre{direction:ltr;unicode-bidi:isolate}
+.lpick{position:relative}.lpick summary{list-style:none;cursor:pointer;height:40px;padding:0 8px;display:flex;align-items:center;gap:5px;border-radius:10px;color:var(--ink-2,var(--ink))}
+.lpick summary::-webkit-details-marker{display:none}.lpick summary svg{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.lpick .fl{font-size:20px;line-height:1;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
+.lpick .links{position:absolute;right:0;top:48px;z-index:30;min-width:220px;padding:6px;border-radius:14px;background:var(--win);border:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.18);display:grid}
+.lpick .links a,.lpick .links b{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;font-size:15px;font-weight:400;color:var(--ink);white-space:nowrap}
+.lpick .links a:hover{background:var(--blue-tint);text-decoration:none}.lpick .links b{font-weight:600;background:color-mix(in srgb,var(--ink) 6%,transparent)}
+@media(max-width:700px){.lpick .links{right:-48px;max-height:70vh;overflow:auto}.lpick .links a,.lpick .links b{padding:11px 12px;font-size:16px}}
+[dir=rtl] .lpick .links{right:auto;left:0}
+@media(max-width:700px){[dir=rtl] .lpick .links{left:-48px}}
 [dir=rtl] .mnav .links{right:auto;left:0}
 @media(max-width:700px){[dir=rtl] .mnav{margin-right:0;margin-left:-8px}}
 [dir=rtl] aside{padding-right:0;padding-left:8px}
@@ -75,7 +84,7 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
 </style></head>
 <body><header><div class="wrap">
   <a class="brand" href="/ar/"><img src="/img/icon.png?v=a1519b94" alt="">Keepit</a>
-  <nav><a href="/ar/#features">المزايا</a><a href="/ar/guide">الدليل</a><a href="/security">الأمن</a><a href="/ar/support">الدعم</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a><details class="mnav"><summary aria-label="القائمة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><div class="links"><a href="/ar/#features">المزايا</a><a href="/ar/#privacy">الخصوصية</a><a href="/ar/#install">التثبيت</a><a href="/ar/guide">الدليل</a><a href="/security">الأمن</a><a href="/ar/support">الدعم</a></div></details></nav>
+  <nav><a href="/ar/#features">المزايا</a><a href="/ar/guide">الدليل</a><a href="/security">الأمن</a><a href="/ar/support">الدعم</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a><details class="lpick"><summary aria-label="اللغة: العربية"><span class="fl" aria-hidden="true">🇸🇦</span><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></summary><div class="links" dir="ltr"><a href="/support" hreflang="en"><span class="fl" aria-hidden="true">🇬🇧</span><span lang="en">English</span></a><a href="/ru/support" hreflang="ru"><span class="fl" aria-hidden="true">🇷🇺</span><span lang="ru">Русский</span></a><a href="/uk/support" hreflang="uk"><span class="fl" aria-hidden="true">🇺🇦</span><span lang="uk">Українська</span></a><a href="/de/support" hreflang="de"><span class="fl" aria-hidden="true">🇩🇪</span><span lang="de">Deutsch</span></a><a href="/fr/support" hreflang="fr"><span class="fl" aria-hidden="true">🇫🇷</span><span lang="fr">Français</span></a><a href="/es/support" hreflang="es"><span class="fl" aria-hidden="true">🇪🇸</span><span lang="es">Español</span></a><a href="/pt-br/support" hreflang="pt-BR"><span class="fl" aria-hidden="true">🇧🇷</span><span lang="pt-BR">Português (Brasil)</span></a><a href="/ja/support" hreflang="ja"><span class="fl" aria-hidden="true">🇯🇵</span><span lang="ja">日本語</span></a><a href="/zh-hans/support" hreflang="zh-Hans"><span class="fl" aria-hidden="true">🇨🇳</span><span lang="zh-Hans">简体中文</span></a><b aria-current="true"><span class="fl" aria-hidden="true">🇸🇦</span><span lang="ar">العربية</span></b></div></details><details class="mnav"><summary aria-label="القائمة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><div class="links"><a href="/ar/#features">المزايا</a><a href="/ar/#privacy">الخصوصية</a><a href="/ar/#install">التثبيت</a><a href="/ar/guide">الدليل</a><a href="/security">الأمن</a><a href="/ar/support">الدعم</a></div></details></nav>
 </div></header>
 <main class="wrap narrow"><article><h1 id="keepit-support">دعم Keepit</h1><p class="tr-note">مترجم عن الإنجليزية. الأصل: <a href="/support">English</a>.</p>
 <p>هل وجدت خطأ أو ترجمة غير دقيقة، أو لديك سؤال؟ اكتب إلينا في الأسفل. يمكن أيضًا الإبلاغ عن الأخطاء في <a href="https://github.com/andrey-insarov/Keepit/issues">GitHub Issues</a>.</p>
@@ -169,7 +178,7 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
 <div id="lb" role="dialog" aria-label="لقطة شاشة بالحجم الكامل"><img alt=""></div>
 <script>
 (function(){
-  var mn=document.querySelector('.mnav');if(mn){mn.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){mn.removeAttribute('open');});});document.addEventListener('click',function(e){if(mn.open&&!mn.contains(e.target))mn.removeAttribute('open');});}
+  document.querySelectorAll('.mnav,.lpick').forEach(function(mn){mn.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){mn.removeAttribute('open');});});document.addEventListener('click',function(e){if(mn.open&&!mn.contains(e.target))mn.removeAttribute('open');});mn.addEventListener('toggle',function(){if(mn.open)document.querySelectorAll('.mnav,.lpick').forEach(function(o){if(o!==mn)o.removeAttribute('open');});});});
   var lb=document.getElementById('lb'),im=lb.querySelector('img');
   document.querySelectorAll('a.zoom').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();im.src=a.getAttribute('href');im.alt=a.querySelector('img').alt;lb.classList.add('on');});});
   function close(){lb.classList.remove('on');im.src='';}
