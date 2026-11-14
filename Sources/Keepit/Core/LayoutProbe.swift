@@ -27,9 +27,9 @@ import Foundation
 /// handed back to it unchanged; `id` is what the probe compares. The two differ because of an
 /// observation, not a documented contract: on macOS 27.2.1, after a completed composition the
 /// function returns the terminated state in the high 16 bits (German ^ then a → â with 1 << 16),
-/// and a pending dead key is the low 16 bits. A different macOS could change that; the probe would
-/// then over-count chains (the run before this rule) but never pass the function a value it did
-/// not produce.
+/// and a pending dead key is the low 16 bits. This is a heuristic: if the API's behaviour changes,
+/// `isPending` must be re-checked against a run of the harness (keepit-share/10-layout-probe.swift).
+/// Whatever the encoding, the token itself is passed back untouched.
 struct DeadKeyState: Hashable, ExpressibleByIntegerLiteral {
     let token: UInt32
     init(token: UInt32) { self.token = token }
