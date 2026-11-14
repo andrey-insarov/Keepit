@@ -36,7 +36,7 @@ final class Updater {
             guard isConfigured, !SelfTest.isActive else { return }
             if isEnabled {
                 if !started {
-                    do { try controller.startUpdater(); started = true } catch {
+                    do { try controller.updater.start(); started = true } catch {
                         Log.system.error("Sparkle did not start: \(error.localizedDescription)")
                         return
                     }

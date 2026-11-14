@@ -56,7 +56,7 @@ ICNS = $(if $(shell command -v iconutil 2>/dev/null),.build/AppIcon.icns,Resourc
 # Notarization: NOTARY_PROFILE (xcrun notarytool store-credentials) or the APPSTORE_* env vars used by CI.
 NOTARY_PROFILE ?=
 
-.PHONY: build app run install clean dist dmg icon notarize appstore appcast cask
+.PHONY: build app run install clean dist dmg icon notarize appstore appcast cask check
 
 # Sign the DMG with the Sparkle EdDSA key and write appcast.xml next to it.
 #   make appcast SPARKLE_PRIVATE_KEY_FILE=path   (or the key in the keychain from generate_keys)
@@ -226,6 +226,19 @@ app: build $(ICNS)
 
 run: app
 	open $(BUNDLE)
+
+# What CI's `build` job runs, in the same order, so a patch is checked here before it is pushed.
+# Refuses a dirty tree first: a file that is not committed would pass here and fail on the runner.
+check:
+	@test -z "$$(git status --porcelain)" || { echo "error: uncommitted or untracked files — commit or stash them, CI builds the committed tree only"; git status --short; exit 1; }
+	Scripts/check_resolved.sh
+	swift build
+	swift test
+	node --test functions/api/feedback.test.mjs
+	$(MAKE) dist VERSION=$(VERSION)
+	KEEPIT_DATA_DIR="$$(mktemp -d)" ./$(CONTENTS)/MacOS/$(APP) --selftest
+	@cat selftest-output/report.txt
+	@echo "check: all green — push the branch and open the pull request"
 
 install: app
 	rm -rf /Applications/$(BUNDLE)

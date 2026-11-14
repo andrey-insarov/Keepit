@@ -1,5 +1,9 @@
 # Releasing Keepit
 
+Every change reaches `main` through a pull request with a green `build` check (ruleset *Main*,
+see below). Before pushing a branch, run `make check` — the same steps as CI's `build` job, on the
+committed tree — and look at the built `Keepit.app` where the change is.
+
 1. Bump the version: edit `VERSION` (e.g. `2.2.0`) **and `Backup.readerVersion` in
    `Sources/Keepit/Core/Backup.swift`** — `CoreTests.testReaderVersionMatchesVERSIONFile` fails the
    build if the two differ — then commit. When the release was prepared on a branch, merge its PR
