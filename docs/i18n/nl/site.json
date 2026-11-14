@@ -1,0 +1,33 @@
+{
+  "ui": {
+    "features": "Functies",
+    "privacy": "Privacy",
+    "install": "Installatie",
+    "guide": "Handleiding",
+    "security": "Beveiliging",
+    "support": "Support",
+    "menu": "Menu",
+    "copyright": "© 2026 UK Intis Telecom LTD · Keepit valt onder de MIT-licentie",
+    "privacy_policy": "Privacybeleid",
+    "changelog": "Wijzigingen",
+    "on_this_page": "Op deze pagina",
+    "contents": "Inhoud",
+    "open_full_size": "Op volledige grootte openen",
+    "full_size_screenshot": "Schermafbeelding op volledige grootte",
+    "language": "Taal",
+    "in_english": "(Engels)",
+    "translated_note": "Vertaald uit het Engels. Origineel: <a href=\"{en}\">English</a>."
+  },
+  "pages": {
+    "GUIDE.md": {
+      "title": "Keepit-handleiding – klembordmanager voor de Mac",
+      "description": "Zo gebruik je Keepit, de gratis klembordmanager voor de Mac: geschiedenismenu, sneltoetsen, sjablonen, Weergave, versleuteling en Touch ID.",
+      "crumb": "Handleiding"
+    },
+    "SUPPORT.md": {
+      "title": "Keepit-support – hulp bij de klembordmanager voor de Mac",
+      "description": "Zo krijg je hulp bij Keepit, de klembordmanager voor de Mac, plus korte antwoorden op veelgestelde vragen.",
+      "crumb": "Support"
+    }
+  }
+}

@@ -1,0 +1,830 @@
+<!DOCTYPE html><html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Příručka Keepit – správce schránky pro Mac</title><link rel="icon" href="/img/icon.png?v=a1519b94"><link rel="apple-touch-icon" href="/img/icon.png?v=a1519b94">
+<meta name="description" content="Jak používat Keepit, bezplatného správce schránky pro Mac: nabídka historie, klávesové zkratky, šablony, Prohlížeč, šifrování a Touch ID.">
+<link rel="canonical" href="https://keep.it.com/cs/guide"><link rel="alternate" hreflang="en" href="https://keep.it.com/guide"><link rel="alternate" hreflang="ru" href="https://keep.it.com/ru/guide"><link rel="alternate" hreflang="uk" href="https://keep.it.com/uk/guide"><link rel="alternate" hreflang="de" href="https://keep.it.com/de/guide"><link rel="alternate" hreflang="fr" href="https://keep.it.com/fr/guide"><link rel="alternate" hreflang="es" href="https://keep.it.com/es/guide"><link rel="alternate" hreflang="pt-BR" href="https://keep.it.com/pt-br/guide"><link rel="alternate" hreflang="ja" href="https://keep.it.com/ja/guide"><link rel="alternate" hreflang="zh-Hans" href="https://keep.it.com/zh-hans/guide"><link rel="alternate" hreflang="ar" href="https://keep.it.com/ar/guide"><link rel="alternate" hreflang="cs" href="https://keep.it.com/cs/guide"><link rel="alternate" hreflang="pl" href="https://keep.it.com/pl/guide"><link rel="alternate" hreflang="it" href="https://keep.it.com/it/guide"><link rel="alternate" hreflang="nl" href="https://keep.it.com/nl/guide"><link rel="alternate" hreflang="x-default" href="https://keep.it.com/guide"><meta property="og:type" content="article"><meta property="og:site_name" content="Keepit"><meta property="og:locale" content="cs_CZ"><meta property="og:title" content="Příručka Keepit – správce schránky pro Mac"><meta property="og:description" content="Jak používat Keepit, bezplatného správce schránky pro Mac: nabídka historie, klávesové zkratky, šablony, Prohlížeč, šifrování a Touch ID."><meta property="og:image" content="https://keep.it.com/img/social-preview.png?v=57583ec3"><meta property="og:url" content="https://keep.it.com/cs/guide"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Příručka Keepit – správce schránky pro Mac"><meta name="twitter:description" content="Jak používat Keepit, bezplatného správce schránky pro Mac: nabídka historie, klávesové zkratky, šablony, Prohlížeč, šifrování a Touch ID."><meta name="twitter:image" content="https://keep.it.com/img/social-preview.png?v=57583ec3"><meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "@id": "https://keep.it.com/cs/guide", "url": "https://keep.it.com/cs/guide", "name": "Příručka Keepit", "headline": "Příručka Keepit", "description": "Jak používat Keepit, bezplatného správce schránky pro Mac: nabídka historie, klávesové zkratky, šablony, Prohlížeč, šifrování a Touch ID.", "inLanguage": "cs", "isPartOf": {"@id": "https://keep.it.com/#site"}, "about": {"@id": "https://keep.it.com/#app"}, "author": {"@id": "https://keep.it.com/#org"}, "publisher": {"@id": "https://keep.it.com/#org"}, "image": "https://keep.it.com/img/social-preview.png?v=57583ec3", "dateModified": "2026-11-14", "translationOfWork": {"@id": "https://keep.it.com/guide"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Keepit", "item": "https://keep.it.com/cs/"}, {"@type": "ListItem", "position": 2, "name": "Příručka", "item": "https://keep.it.com/cs/guide"}]}]}</script>
+<script defer src="https://app.eurometrics.eu/script.js?v=7cfd3b4c27be" data-website-id="0ab7fe20-0c05-4061-b037-c033dc46c1e1" data-domains="keep.it.com" data-do-not-track="true" data-exclude-search="true" data-no-storage="true"></script>
+<style>
+:root{--paper:#fbfbfd;--ink:#0f1222;--ink-2:#4b4f63;--ink-3:#696d84;--blue:#2f4fd1;--blue-deep:#1f3aa6;--blue-tint:#eef2ff;--line:#e3e5ef;--key:#fff;--key-edge:#cfd2de;--win:#fff;--sel:#2f5cf0}
+@media(prefers-color-scheme:dark){:root{--paper:#0c0d14;--ink:#f2f3f8;--ink-2:#b7bacb;--ink-3:#8e92a9;--blue:#7d9bff;--blue-deep:#a9bdff;--blue-tint:#151b35;--line:#23263a;--key:#1b1e2e;--key-edge:#3a3e56;--win:#1a1c28;--sel:#3d6bff}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:72px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;font:17px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+:focus-visible{outline:3px solid var(--sel);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:20;-webkit-backdrop-filter:saturate(180%) blur(18px);backdrop-filter:saturate(180%) blur(18px);background:color-mix(in srgb,var(--paper) 78%,transparent);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:650;color:var(--ink);font-size:20px}.brand img{width:44px;height:44px;border-radius:10px}
+nav{display:flex;gap:24px;align-items:center}nav>a{color:var(--ink-2);font-size:15px}nav>a:hover{color:var(--ink);text-decoration:none}
+.mnav{display:none;position:relative}.mnav summary{list-style:none;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--ink)}
+.mnav summary::-webkit-details-marker{display:none}.mnav summary svg{width:22px;height:22px}.mnav[open] summary{background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.mnav .links{position:absolute;right:0;top:48px;min-width:210px;padding:6px;border-radius:14px;background:var(--win);border:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.18);display:grid}
+.mnav .links a{display:block;padding:11px 14px;border-radius:9px;font-size:16px;color:var(--ink)}.mnav .links a:hover{background:var(--blue-tint);text-decoration:none}
+@media(max-width:700px){nav{gap:10px}nav>a:not(.gh){display:none}.mnav{display:block;margin-right:-8px}}
+main.wrap{display:grid;grid-template-columns:230px minmax(0,1fr);gap:56px;padding-top:48px;padding-bottom:96px}
+main.wrap.narrow{grid-template-columns:minmax(0,1fr);max-width:820px}
+aside{position:sticky;top:76px;align-self:start;max-height:calc(100vh - 96px);overflow:auto;font-size:14px;line-height:1.45;padding-right:8px}
+aside .ttl{font-weight:650;color:var(--ink);margin:0 0 10px;font-size:13px}
+aside ol{list-style:none;margin:0;padding:0}aside li{margin:0}
+aside a{display:block;color:var(--ink-2);padding:4px 0 4px 12px;border-left:2px solid var(--line)}
+aside a:hover{color:var(--ink);text-decoration:none}aside a.on{color:var(--blue);border-left-color:var(--blue)}
+aside ol ol a{padding-left:24px;font-size:13px;color:var(--ink-3)}
+@media(max-width:900px){main.wrap{grid-template-columns:minmax(0,1fr);gap:0;padding-top:32px;padding-bottom:64px}aside{position:static;max-height:none;margin-bottom:32px;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--win)}aside ol ol{display:none}}
+article{max-width:72ch;min-width:0}
+article h1{font-size:clamp(34px,5vw,52px);line-height:1.05;letter-spacing:-.03em;font-weight:750;margin:0 0 .5em}
+article h1+p{font-size:19px;color:var(--ink-2)}
+article h2{font-size:30px;line-height:1.15;letter-spacing:-.02em;font-weight:700;margin:2.2em 0 .6em;padding-top:1em;border-top:1px solid var(--line)}
+article h3{font-size:20px;font-weight:650;margin:1.8em 0 .5em}
+article p,article li{color:var(--ink);}article li{margin:.25em 0}
+article hr{border:0;border-top:1px solid var(--line);margin:2.5em 0}
+code{font:.9em ui-monospace,"SF Mono",Menlo,monospace;background:color-mix(in srgb,var(--ink) 7%,transparent);padding:2px 6px;border-radius:6px;white-space:nowrap}
+@media(max-width:600px){code{white-space:normal;overflow-wrap:anywhere}}
+pre{background:var(--blue-tint);padding:14px 18px;border-radius:12px;overflow:auto;font-size:14px;line-height:1.6;max-width:100%}pre code{background:none;padding:0;white-space:pre-wrap;word-break:break-word}
+kbd.k{display:inline-block;min-width:1.7em;padding:0 .4em;text-align:center;font:600 .82em/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text",Helvetica,Arial,sans-serif;color:var(--ink);background:var(--key);border:1px solid var(--key-edge);border-bottom-width:2px;border-radius:6px;white-space:nowrap;vertical-align:baseline}
+.tbl{overflow-x:auto;margin:1.2em 0}table{border-collapse:collapse;width:100%;font-size:15.5px}th,td{text-align:left;padding:9px 12px 9px 0;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--ink-3);font-weight:600;font-size:14px}td code{display:inline-block;margin:1px 0}
+td:first-child{white-space:nowrap}@media(max-width:600px){td:first-child{white-space:normal}}
+figure.shot{margin:1.6em 0;width:100%}figure.shot a{display:block}figure.shot img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line);box-shadow:0 12px 32px -8px rgba(15,18,34,.25);cursor:zoom-in}
+figure.shot figcaption{font-size:14px;color:var(--ink-3);margin-top:8px}
+.slot{border:2px dashed var(--line);border-radius:12px;padding:28px;text-align:center;color:var(--ink-3);font-size:15px}
+.contents{display:none}
+.fb{margin:1.4em 0 2em;padding:22px 24px;border:1px solid var(--line);border-radius:16px;background:var(--win);display:grid;gap:14px}
+.fb label{display:grid;gap:6px;font-size:14px;font-weight:600;color:var(--ink-2)}.fb .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:600px){.fb .row2{grid-template-columns:1fr}}
+.fb .hint{font-weight:400;color:var(--ink-3)}
+.fb input[type=text],.fb input[type=email],.fb select,.fb textarea{font:16px/1.4 inherit;color:var(--ink);background:var(--win);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;box-sizing:border-box}
+.fb textarea{resize:vertical;min-height:140px}.fb input:focus,.fb select:focus,.fb textarea:focus{outline:2px solid var(--blue);outline-offset:1px;border-color:transparent}
+.fb input[type=file]{font-size:14px;color:var(--ink-2)}
+.fb-list{list-style:none;margin:-6px 0 0;padding:0;display:grid;gap:6px}.fb-list li{font-size:14px;color:var(--ink-2);display:flex;align-items:center;gap:10px}.fb-list button{font:inherit;font-size:13px;color:var(--blue);background:none;border:0;padding:0;cursor:pointer}.fb-list button:hover{text-decoration:underline}
+.fb .btn{justify-self:start;display:inline-flex;align-items:center;padding:12px 22px;border-radius:12px;font-weight:600;font-size:16px;line-height:1;border:0;cursor:pointer;background:var(--blue);color:#fff}
+.fb .btn[disabled]{opacity:.6;cursor:default}.fb-err{color:#c0392b;font-size:14px;margin:0}.fb-legal{font-size:13px;margin:-6px 0 0}.fb-ok{color:var(--ink);margin:0;padding:18px 20px;border-radius:12px;background:var(--blue-tint);line-height:1.5}
+footer{border-top:1px solid var(--line);padding:36px 0 64px;color:var(--ink-3);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}footer a{color:var(--ink-2)}
+#lb{position:fixed;inset:0;background:rgba(5,7,20,.86);display:none;align-items:center;justify-content:center;padding:24px;z-index:30;cursor:zoom-out}
+#lb.on{display:flex}#lb img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+
+.langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
+.tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
+code,kbd,pre{direction:ltr;unicode-bidi:isolate}
+.lpick{position:relative}.lpick summary{list-style:none;cursor:pointer;height:40px;padding:0 8px;display:flex;align-items:center;gap:5px;border-radius:10px;color:var(--ink-2,var(--ink))}
+.lpick summary::-webkit-details-marker{display:none}.lpick summary .chev{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.lpick .fl{flex:none;width:23px;height:16px;border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
+.lpick .links{position:absolute;right:0;top:48px;z-index:30;min-width:220px;padding:6px;border-radius:14px;background:var(--win);border:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.18);display:grid}
+.lpick .links a,.lpick .links b{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;font-size:15px;font-weight:400;color:var(--ink);white-space:nowrap}
+.lpick .links a:hover{background:var(--blue-tint);text-decoration:none}.lpick .links b{font-weight:600;background:color-mix(in srgb,var(--ink) 6%,transparent)}
+@media(min-width:701px){.lpick .links{max-height:calc(100vh - 64px);overflow:auto}.lpick .links.cols{display:block;column-count:2;column-gap:4px;min-width:430px}.lpick .links.cols a,.lpick .links.cols b{break-inside:avoid}}
+@media(max-width:700px){.lpick .links{right:-48px;max-height:70vh;overflow:auto}.lpick .links a,.lpick .links b{padding:11px 12px;font-size:16px}}
+[dir=rtl] .lpick .links{right:auto;left:0}
+@media(max-width:700px){[dir=rtl] .lpick .links{left:-48px}}
+[dir=rtl] .mnav .links{right:auto;left:0}
+@media(max-width:700px){[dir=rtl] .mnav{margin-right:0;margin-left:-8px}}
+[dir=rtl] aside{padding-right:0;padding-left:8px}
+[dir=rtl] aside a{padding:4px 12px 4px 0;border-left:0;border-right:2px solid var(--line)}
+[dir=rtl] aside a.on{border-right-color:var(--blue)}
+[dir=rtl] aside ol ol a{padding-left:0;padding-right:24px}
+[dir=rtl] th,[dir=rtl] td{text-align:right;padding:9px 0 9px 12px}
+[dir=rtl] .fb .btn{justify-self:end}
+</style></head>
+<body><header><div class="wrap">
+  <a class="brand" href="/cs/"><img src="/img/icon.png?v=a1519b94" alt="">Keepit</a>
+  <nav><a href="/cs/#features">Funkce</a><a href="/cs/guide">Příručka</a><a href="/security">Zabezpečení</a><a href="/cs/support">Podpora</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a><details class="lpick"><summary aria-label="Jazyk: Čeština"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#d7141a" d="M0 7h20v7H0z"/><path fill="#11457e" d="m0 0 10 7-10 7z"/></svg><svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></summary><div class="links cols" dir="ltr"><a href="/guide" hreflang="en"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#b22234" d="M0 0h20v14H0z"/><path fill="#fff" d="M0 1.08h20v1.08H0z"/><path fill="#fff" d="M0 3.23h20v1.08H0z"/><path fill="#fff" d="M0 5.38h20v1.08H0z"/><path fill="#fff" d="M0 7.54h20v1.08H0z"/><path fill="#fff" d="M0 9.69h20v1.08H0z"/><path fill="#fff" d="M0 11.85h20v1.08H0z"/><path fill="#3c3b6e" d="M0 0h8.2v7.54H0z"/><circle cx="1.3" cy="1.30" r=".42" fill="#fff"/><circle cx="3.1" cy="1.30" r=".42" fill="#fff"/><circle cx="4.9" cy="1.30" r=".42" fill="#fff"/><circle cx="6.7" cy="1.30" r=".42" fill="#fff"/><circle cx="1.3" cy="2.95" r=".42" fill="#fff"/><circle cx="3.1" cy="2.95" r=".42" fill="#fff"/><circle cx="4.9" cy="2.95" r=".42" fill="#fff"/><circle cx="6.7" cy="2.95" r=".42" fill="#fff"/><circle cx="1.3" cy="4.60" r=".42" fill="#fff"/><circle cx="3.1" cy="4.60" r=".42" fill="#fff"/><circle cx="4.9" cy="4.60" r=".42" fill="#fff"/><circle cx="6.7" cy="4.60" r=".42" fill="#fff"/><circle cx="1.3" cy="6.25" r=".42" fill="#fff"/><circle cx="3.1" cy="6.25" r=".42" fill="#fff"/><circle cx="4.9" cy="6.25" r=".42" fill="#fff"/><circle cx="6.7" cy="6.25" r=".42" fill="#fff"/></svg><span lang="en">English</span></a><a href="/ru/guide" hreflang="ru"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#0039a6" d="M0 4.67h20V14H0z"/><path fill="#d52b1e" d="M0 9.33h20V14H0z"/></svg><span lang="ru">Русский</span></a><a href="/uk/guide" hreflang="uk"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#0057b7" d="M0 0h20v14H0z"/><path fill="#ffd700" d="M0 7h20v7H0z"/></svg><span lang="uk">Українська</span></a><a href="/de/guide" hreflang="de"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path d="M0 0h20v14H0z"/><path fill="#d00" d="M0 4.67h20V14H0z"/><path fill="#ffce00" d="M0 9.33h20V14H0z"/></svg><span lang="de">Deutsch</span></a><a href="/fr/guide" hreflang="fr"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#0055a4" d="M0 0h6.67v14H0z"/><path fill="#ef4135" d="M13.33 0H20v14h-6.67z"/></svg><span lang="fr">Français</span></a><a href="/es/guide" hreflang="es"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#aa151b" d="M0 0h20v14H0z"/><path fill="#f1bf00" d="M0 3.5h20v7H0z"/></svg><span lang="es">Español</span></a><a href="/pt-br/guide" hreflang="pt-BR"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#009c3b" d="M0 0h20v14H0z"/><path fill="#ffdf00" d="M10 1.6 18 7l-8 5.4L2 7z"/><circle cx="10" cy="7" r="3.1" fill="#002776"/><path fill="none" stroke="#fff" stroke-width=".7" d="M7.1 6.2c2-.5 4.3.1 5.8 1.6"/></svg><span lang="pt-BR">Português (Brasil)</span></a><a href="/ja/guide" hreflang="ja"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><circle cx="10" cy="7" r="4.2" fill="#bc002d"/></svg><span lang="ja">日本語</span></a><a href="/zh-hans/guide" hreflang="zh-Hans"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#de2910" d="M0 0h20v14H0z"/><polygon fill="#ffde00" points="3.50,1.40 3.99,2.92 5.59,2.92 4.30,3.86 4.79,5.38 3.50,4.44 2.21,5.38 2.70,3.86 1.41,2.92 3.01,2.92"/><polygon fill="#ffde00" points="7.38,0.85 7.26,1.38 7.73,1.66 7.19,1.71 7.08,2.25 6.86,1.75 6.31,1.81 6.72,1.44 6.50,0.94 6.97,1.22"/><polygon fill="#ffde00" points="9.05,2.52 8.68,2.93 8.96,3.40 8.46,3.18 8.09,3.59 8.15,3.04 7.65,2.82 8.19,2.71 8.24,2.17 8.52,2.64"/><polygon fill="#ffde00" points="9.15,5.00 8.63,5.17 8.63,5.71 8.31,5.27 7.79,5.44 8.11,5.00 7.79,4.56 8.31,4.73 8.63,4.29 8.63,4.83"/><polygon fill="#ffde00" points="7.65,6.78 7.12,6.66 6.84,7.13 6.79,6.59 6.25,6.48 6.75,6.26 6.69,5.71 7.06,6.12 7.56,5.90 7.28,6.37"/></svg><span lang="zh-Hans">简体中文</span></a><a href="/ar/guide" hreflang="ar"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#00732f" d="M0 0h20v4.67H0z"/><path d="M0 9.33h20V14H0z"/><path fill="#f00" d="M0 0h5v14H0z"/></svg><span lang="ar">العربية</span></a><b aria-current="true"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#d7141a" d="M0 7h20v7H0z"/><path fill="#11457e" d="m0 0 10 7-10 7z"/></svg><span lang="cs">Čeština</span></b><a href="/pl/guide" hreflang="pl"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#dc143c" d="M0 7h20v7H0z"/></svg><span lang="pl">Polski</span></a><a href="/it/guide" hreflang="it"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#009246" d="M0 0h6.67v14H0z"/><path fill="#ce2b37" d="M13.33 0H20v14h-6.67z"/></svg><span lang="it">Italiano</span></a><a href="/nl/guide" hreflang="nl"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#ae1c28" d="M0 0h20v4.67H0z"/><path fill="#21468b" d="M0 9.33h20V14H0z"/></svg><span lang="nl">Nederlands</span></a></div></details><details class="mnav"><summary aria-label="Nabídka"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><div class="links"><a href="/cs/#features">Funkce</a><a href="/cs/#privacy">Soukromí</a><a href="/cs/#install">Instalace</a><a href="/cs/guide">Příručka</a><a href="/security">Zabezpečení</a><a href="/cs/support">Podpora</a></div></details></nav>
+</div></header>
+<main class="wrap"><aside aria-label="Obsah"><p class="ttl">Na této stránce</p><ol><li><a href="#part-1-getting-started">Část 1: Začínáme</a><ol><li><a href="#install">Instalace</a></li><li><a href="#first-launch">První spuštění</a></li></ol></li><li><a href="#part-2-everyday-use">Část 2: Každodenní používání</a><ol><li><a href="#the-history-menu">Nabídka historie</a></li><li><a href="#search-and-preview">Hledání a náhled</a></li><li><a href="#paste-without-the-menu">Vkládání bez nabídky</a></li><li><a href="#the-paste-queue">Fronta vkládání</a></li><li><a href="#the-extended-menu">Rozšířená nabídka</a></li></ol></li><li><a href="#part-3-templates">Část 3: Šablony</a><ol><li><a href="#creating-and-organising">Vytváření a uspořádání</a></li><li><a href="#placeholders">Zástupné symboly</a></li><li><a href="#templates-that-ask-questions">Šablony, které se ptají</a></li></ol></li><li><a href="#part-4-the-viewer">Část 4: Prohlížeč</a></li><li><a href="#part-5-settings">Část 5: Nastavení</a></li><li><a href="#part-6-security">Část 6: Zabezpečení</a><ol><li><a href="#password-and-encryption">Heslo a šifrování</a></li><li><a href="#touch-id">Touch ID</a></li><li><a href="#recovery-phrase">Fráze pro obnovu</a></li><li><a href="#backup">Záloha</a></li></ol></li><li><a href="#part-7-advanced">Část 7: Pro pokročilé</a><ol><li><a href="#automation-the-keepit-url-scheme">Automatizace: schéma URL keepit://</a></li><li><a href="#updates">Aktualizace</a></li><li><a href="#uninstalling">Odinstalace</a></li></ol></li><li><a href="#reference">Přehledy</a><ol><li><a href="#troubleshooting">Řešení potíží</a></li><li><a href="#keyboard-cheat-sheet">Tahák klávesových zkratek</a></li><li><a href="#placeholder-cheat-sheet">Tahák zástupných symbolů</a></li></ol></li></ol></aside><article><h1 id="keepit-user-guide">Příručka Keepit</h1><p class="tr-note">Přeloženo z angličtiny. Originál: <a href="/guide">English</a>.</p>
+<p>Keepit spravuje historii schránky a šablony v systému macOS. Sídlí v řádku nabídek, pamatuje si
+vše, co zkopírujete, a kteroukoli položku vloží zpět klávesovou zkratkou. Všechny zkratky uvedené
+níže jsou výchozí a každou lze změnit v <em>Nastavení → Zkratky</em>. Tato příručka popisuje Keepit 3;
+příručka pro Keepit 2.x zůstává beze změny na adrese
+<a href="https://keep.it.com/v2/guide">keep.it.com/v2/guide</a> (anglicky).</p>
+<figure class="shot" style="max-width:629px"><a href="/img/guide/menu.png?v=ef1dd207" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/menu.png?v=ef1dd207" alt="Nabídka historie" width="629" height="778" loading="lazy"></a><figcaption>Nabídka historie</figcaption></figure>
+<p><strong>Obsah</strong></p>
+<ul>
+<li><a href="#part-1--getting-started">Část 1: Začínáme</a>: <a href="#install">Instalace</a> · <a href="#first-launch">První spuštění</a></li>
+<li><a href="#part-2--everyday-use">Část 2: Každodenní používání</a>: <a href="#the-history-menu">Nabídka historie</a> · <a href="#search-and-preview">Hledání a náhled</a> · <a href="#paste-without-the-menu">Vkládání bez nabídky</a> · <a href="#the-paste-queue">Fronta vkládání</a> · <a href="#the-extended-menu">Rozšířená nabídka</a></li>
+<li><a href="#part-3--templates">Část 3: Šablony</a>: <a href="#creating-and-organising">Vytváření a uspořádání</a> · <a href="#placeholders">Zástupné symboly</a> · <a href="#templates-that-ask-questions">Šablony, které se ptají</a></li>
+<li><a href="#part-4--the-viewer">Část 4: Prohlížeč</a></li>
+<li><a href="#part-5--settings">Část 5: Nastavení</a></li>
+<li><a href="#part-6-security">Část 6: Zabezpečení</a>: <a href="#password-and-encryption">Heslo a šifrování</a> · <a href="#touch-id">Touch ID</a> · <a href="#recovery-phrase">Fráze pro obnovu</a> · <a href="#backup">Záloha</a></li>
+<li><a href="#part-7--advanced">Část 7: Pro pokročilé</a>: <a href="#automation-the-keepit-url-scheme">Automatizace</a> · <a href="#updates">Aktualizace</a> · <a href="#uninstalling">Odinstalace</a></li>
+<li><a href="#reference">Přehledy</a>: <a href="#troubleshooting">Řešení potíží</a> · <a href="#keyboard-cheat-sheet">Tahák klávesových zkratek</a> · <a href="#placeholder-cheat-sheet">Tahák zástupných symbolů</a></li>
+</ul>
+<hr />
+<h2 id="part-1-getting-started">Část 1: Začínáme</h2>
+<h3 id="install">Instalace</h3>
+<p><strong>Homebrew.</strong> Doporučujeme ho, protože <code>brew upgrade</code> udržuje aplikaci aktuální:</p>
+<pre><code class="language-bash">brew tap andrey-insarov/keepit https://github.com/andrey-insarov/Keepit
+brew install --cask andrey-insarov/keepit/keepit
+</code></pre>
+<p><strong>DMG.</strong> Stáhněte si <code>Keepit-&lt;verze&gt;.dmg</code> z
+<a href="https://github.com/andrey-insarov/Keepit/releases/latest">nejnovějšího vydání</a>, otevřete ho a
+přetáhněte Keepit do složky <em>Aplikace</em>.</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/dmg.png?v=2115ef2c" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/dmg.png?v=2115ef2c" alt="DMG: přetáhněte Keepit do složky Aplikace" width="636" height="396" loading="lazy"></a><figcaption>DMG: přetáhněte Keepit do složky Aplikace</figcaption></figure>
+<p>Při prvním otevření aplikace macOS potvrdí, že byla stažena z internetu a že ji zkontroloval Apple.
+Klikněte na <em>Otevřít</em>.</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/gatekeeper.png?v=d79051e5" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/gatekeeper.png?v=d79051e5" alt="Potvrzení Gatekeeperu v macOS" width="336" height="336" loading="lazy"></a><figcaption>Potvrzení Gatekeeperu v macOS</figcaption></figure>
+<p>Keepit je podepsaný a notarizovaný, aktualizuje se sám a běží nativně na Macích s Apple silicon
+i s procesorem Intel a s macOS 13 Ventura nebo novějším.</p>
+<h3 id="first-launch">První spuštění</h3>
+<p>Keepit je aplikace pro řádek nabídek: nemá ikonu v Docku a žádné okno, dokud si ho neotevřete. Po
+prvním spuštění se v řádku nabídek objeví ikona 📎 a Keepit se zeptá na tři věci.</p>
+<p><strong>1. Obnovit ze zálohy?</strong> Pokud jde o nový Mac a máte zálohu Keepit (automatickou na iCloud Drivu
+nebo v jiné složce, případně exportovaný soubor <code>.keepit</code>), volba <em>Obnovit ze zálohy…</em> vrátí historii
+a šablony dřív, než se stane cokoli dalšího. Soubor odemknete heslem Macu, ze kterého pochází, nebo
+jeho frází pro obnovu. <em>Začít znovu</em> tento krok přeskočí. Stejné obnovení je později k dispozici
+v <em>Nastavení → Záloha → Obnovit…</em> a soubor <code>.keepit</code> otevřete také dvojím kliknutím ve Finderu.
+Podrobnosti najdete v oddílu <a href="#backup">Záloha</a>.</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/restore-first-run.png?v=cfa1e73f" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/restore-first-run.png?v=cfa1e73f" alt="První otázka na novém Macu: obnovit ze zálohy, nebo začít znovu" width="336" height="408" loading="lazy"></a><figcaption>První otázka na novém Macu: obnovit ze zálohy, nebo začít znovu</figcaption></figure>
+<p><strong>2. Heslo (nepovinné).</strong> Keepit umí ukládat historii a šablony zašifrované a odemykat je pomocí
+Touch ID. Rozhodnout se můžete hned, nebo později v <em>Nastavení → Zabezpečení</em>; jak to funguje,
+vysvětluje <a href="#part-6-security">Část 6</a>. Při volbě <em>Teď ne</em> zůstane vše na disku nešifrované. Pokud
+jste před chvílí obnovili zálohu jejím heslem, Keepit nabídne, že toto heslo ponechá i pro tento Mac.</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/password-offer.png?v=a377f4be" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/password-offer.png?v=a377f4be" alt="Nabídka hesla při prvním spuštění" width="336" height="410" loading="lazy"></a><figcaption>Nabídka hesla při prvním spuštění</figcaption></figure>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/no-password-notice.png?v=0da3b4f2" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/no-password-notice.png?v=0da3b4f2" alt="Volba Teď ne: jasné sdělení, co to znamená a kde to lze změnit" width="336" height="342" loading="lazy"></a><figcaption>Volba Teď ne: jasné sdělení, co to znamená a kde to lze změnit</figcaption></figure>
+<p><strong>3. Oprávnění Zpřístupnění.</strong> Aby mohl vkládat za vás, posílá Keepit ⌘V do aplikace, ve které jste
+pracovali. macOS to dovolí jen aplikacím uvedeným v <em>Nastavení systému → Soukromí a zabezpečení →
+Zpřístupnění</em>. Klikněte na <em>Otevřít Nastavení systému</em> a Keepit zapněte. Bez tohoto oprávnění Keepit
+dál zaznamenává a kopíruje, ale ⌘V stisknete sami.</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/accessibility-prompt.png?v=53fda070" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/accessibility-prompt.png?v=53fda070" alt="Keepit žádá o oprávnění Zpřístupnění" width="336" height="462" loading="lazy"></a><figcaption>Keepit žádá o oprávnění Zpřístupnění</figcaption></figure>
+<figure class="shot" style="max-width:762px"><a href="/img/guide/accessibility-settings.png?v=3324189c" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/accessibility-settings.png?v=3324189c" alt="Keepit zapnutý v Soukromí a zabezpečení → Zpřístupnění" width="762" height="598" loading="lazy"></a><figcaption>Keepit zapnutý v Soukromí a zabezpečení → Zpřístupnění</figcaption></figure>
+<p>Keepit se ve výchozím stavu spouští při přihlášení. Vypnout to lze v <em>Nastavení → Obecné</em>.</p>
+<hr />
+<h2 id="part-2-everyday-use">Část 2: Každodenní používání</h2>
+<h3 id="the-history-menu">Nabídka historie</h3>
+<p>Stiskněte <strong>⌥M</strong> v kterékoli aplikaci nebo klikněte na ikonu 📎. Nabídka se otevře u textového
+kurzoru, pokud ho Keepit dokáže najít, jinak u ukazatele myši.</p>
+<p>Každý řádek je jedna zkopírovaná položka, nejnovější je nahoře. Ta nejnovější je <strong>tučně</strong>, protože
+právě ona je teď ve schránce. Ikona ukazuje aplikaci, ze které jste kopírovali. Název zakončený <code>…</code>
+má víc řádků, než nabídka zobrazuje. Obrázky mají miniaturu, seznamy souborů ukazují názvy souborů.</p>
+<figure class="shot" style="max-width:1045px"><a href="/img/guide/menu-preview.png?v=3a4dbc04" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/menu-preview.png?v=3a4dbc04" alt="Panel náhledu vedle nabídky ukazuje zvýrazněnou položku celou, se zdrojovou aplikací, časem a velikostí" width="1045" height="648" loading="lazy"></a><figcaption>Panel náhledu vedle nabídky ukazuje zvýrazněnou položku celou, se zdrojovou aplikací, časem a velikostí</figcaption></figure>
+<figure class="shot" style="max-width:1088px"><a href="/img/guide/menu-image.png?v=d7b4e3af" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/menu-image.png?v=d7b4e3af" alt="Obrázek v historii: miniatura v nabídce, celý obrázek v náhledu" width="1088" height="640" loading="lazy"></a><figcaption>Obrázek v historii: miniatura v nabídce, celý obrázek v náhledu</figcaption></figure>
+<p>Položku vložíte tak, že na ni kliknete, nebo na ni přejdete šipkami ↑ ↓ a stisknete Return, nebo
+stisknete její číslo s <strong>⌃⌥</strong>: <kbd class="k">⌃⌥3</kbd> vloží položku 3. Stejná klávesa funguje odkudkoli, i bez
+otevření nabídky.</p>
+<p>Pod historií najdete podnabídku <em>Šablony</em>, Prohlížeč (⌥E), Nastavení (⌥S), <em>Vymazat historii</em> (⌥C),
+<em>Pozastavit zaznamenávání na 10 minut</em> (⌥P, když píšete něco, co se zaznamenat nemá), <em>Zamknout
+Keepit</em> (⌥L), pokud je nastavené heslo, a aktualizace. <strong>⌥T</strong> otevře samotnou nabídku šablon.
+Všechny tyto klávesy fungují i bez nabídky.</p>
+<h3 id="search-and-preview">Hledání a náhled</h3>
+<p><strong>Hledání.</strong> Když je nabídka otevřená, začněte psát: pole nahoře filtruje seznam podle názvu
+i podle celého textu, takže najde i řádek uprostřed dlouhé položky. Return vloží první shodu,
+Esc pole vymaže a druhé Esc nabídku zavře.</p>
+<p><strong>Náhled.</strong> Najeďte na položku myší (nebo na ni přejděte klávesnicí) a panel vedle nabídky ukáže
+celý obrázek nebo první řádky dlouhého textu spolu se zdrojovou aplikací, datem a velikostí.
+Krátké jednořádkové texty náhled nemají, řádek nabídky je už ukazuje celé.</p>
+<figure class="shot" style="max-width:907px"><a href="/img/guide/search-preview.png?v=86998c10" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/search-preview.png?v=86998c10" alt="Psaní filtruje nabídku; panel náhledu ukazuje zvýrazněnou položku" width="907" height="524" loading="lazy"></a><figcaption>Psaní filtruje nabídku; panel náhledu ukazuje zvýrazněnou položku</figcaption></figure>
+<h3 id="paste-without-the-menu">Vkládání bez nabídky</h3>
+<p>Globální klávesové zkratky pracují s historií v jejím současném stavu (položka 1 je schránka),
+a to z kterékoli aplikace:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Klávesy</th>
+<th>Co se stane</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><kbd class="k">⌃⌥1</kbd> … <kbd class="k">⌃⌥9</kbd>, <kbd class="k">⌃⌥0</kbd></td>
+<td>Vloží položku historie 1–10</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥⇧V</kbd></td>
+<td>Vloží <em>předchozí</em> položku (položku 2); dalším stiskem je prohodíte zpět</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥V</kbd></td>
+<td>Vloží schránku jako prostý text, bez formátování</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
+<td>Vloží schránku VELKÝMI PÍSMENY / malými písmeny / S Velkými Počátečními Písmeny / jako větu</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥W</kbd></td>
+<td>Vloží schránku bez mezer na začátku a na konci</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥J</kbd></td>
+<td>Vloží schránku spojenou do jednoho řádku</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥K</kbd> <kbd class="k">⌃⌥D</kbd> <kbd class="k">⌃⌥Y</kbd></td>
+<td>Vloží schránku přeškrtnutou / podtrženou / podtrženou vlnovkou, a to jako prostý text, který si vzhled zachová všude, i v chatech (viz níže)</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥X</kbd></td>
+<td>Vloží schránku bez těchto zdobení</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥A</kbd></td>
+<td>Přidá schránku do Šablon</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥⌫</kbd></td>
+<td>Smaže nejnovější položku z historie</td>
+</tr>
+</tbody>
+</table></div>
+<p>Tato tři zdobení nejsou formátování: Keepit za každý znak přidá <em>kombinující znak</em> Unicode
+(p̶ř̶e̶š̶k̶r̶t̶n̶u̶t̶í̶, p̲o̲d̲t̲r̲ž̲e̲n̲í̲, v̰l̰n̰o̰v̰k̰a̰), takže text vypadá stejně v messengeru, ve webovém
+formuláři i v terminálu, kde by se skutečné formátování ztratilo. Má to svou cenu: takový text je
+třikrát větší, hledání obyčejného slova ho nenajde, čtečky obrazovky se o něj zadrhávají a některá
+písma kreslí linku nerovnoměrně. <em>Odstranit zdobení</em> (<kbd class="k">⌃⌥X</kbd>) znaky zase odebere, a to i z textu
+ozdobeného jinde. V obou směrech se znaky odstraňují podle kódového bodu bez ohledu na to, odkud
+pocházejí: fonetický přepis, který tytéž znaky používá jako písmena (U+0330 je v IPA také značka
+pro třepenou fonaci), o ně přijde a všechna tři zdobení je nejprve odstraní také. Při zapnutém
+VoiceOveru slouží <code>⌃⌥</code> jako modifikátor samotného VoiceOveru: přiřaďte volbě <em>Akce s nejnovější
+položkou</em> jiný v Nastavení → Zkratky.</p>
+<p>Transformace se týkají textu; u obrázku nebo seznamu souborů klávesa jen pípne. Vše uvedené lze
+změnit nebo vypnout v <em>Nastavení → Zkratky</em>.</p>
+<h3 id="the-paste-queue">Fronta vkládání</h3>
+<p>Někdy potřebujete zkopírovat pět věcí z jednoho místa a ve stejném pořadí je vložit jinam: buňky
+do formuláře, řádky ze stránky do dokumentu. Fronta vkládání to zvládne bez nabídky:</p>
+<ol>
+<li>Stiskněte <strong>⌥N</strong> (nebo zvolte <em>Spustit frontu vkládání</em> v nabídce). Ikona v řádku nabídek ukáže
+   červenou tečku a počítadlo: <code>📎 ● 0</code>.</li>
+<li>Kopírujte jako obvykle pomocí ⌘C, kolikrát chcete. Počítadlo s každým kopírováním roste: 1, 2, 3…
+   Vše se zaznamenává i do historie.</li>
+</ol>
+<figure class="shot" style="max-width:350px"><a href="/img/guide/queue-menubar.png?v=808fb52c" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/queue-menubar.png?v=808fb52c" alt="Řádek nabídek při zapnuté frontě: červená tečka a počítadlo" width="350" height="40" loading="lazy"></a><figcaption>Řádek nabídek při zapnuté frontě: červená tečka a počítadlo</figcaption></figure>
+<ol>
+<li>Přepněte se tam, kam text patří, a pro každou položku stiskněte <strong>⌥V</strong>. Jako první se vloží to,
+   co jste zkopírovali jako první, a počítadlo klesá. ⌘V dál vkládá schránku jako obvykle, takže
+   obojí můžete kombinovat.</li>
+<li>Fronta se sama vypne po vložení poslední položky nebo po dvou minutách bez kopírování a vkládání
+   (dobu lze upravit). Dalším stiskem ⌥N ji ukončíte dřív.</li>
+</ol>
+<p><strong>⌥⇧N</strong> vloží najednou vše, co ve frontě ještě zbývá. Položky spojí zalomením řádku, tabulátorem,
+mezerou nebo ničím; vyberete si na panelu <em>Fronta vkládání</em> v Nastavení, kde se nastavuje i doba
+nečinnosti. Dokud je fronta zapnutá, nabídka historie její položky označuje: <code>▶</code> se vloží jako
+další, <code>○</code> čeká ve frontě, <code>✓</code> už byla vložena.</p>
+<figure class="shot" style="max-width:610px"><a href="/img/guide/queue-menu.png?v=a61b1a15" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/queue-menu.png?v=a61b1a15" alt="Nabídka historie se zapnutou frontou: ○ ve frontě, ▶ další, ✓ vloženo; řádek nabídky ukazuje, kolik položek zbývá" width="610" height="772" loading="lazy"></a><figcaption>Nabídka historie se zapnutou frontou: ○ ve frontě, ▶ další, ✓ vloženo; řádek nabídky ukazuje, kolik položek zbývá</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-queue.png?v=d30c5141" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/prefs-queue.png?v=d30c5141" alt="Nastavení → Fronta vkládání" width="636" height="453" loading="lazy"></a><figcaption>Nastavení → Fronta vkládání</figcaption></figure>
+<h3 id="the-extended-menu">Rozšířená nabídka</h3>
+<p>Když je nabídka historie otevřená, podržte <strong>⇧</strong> a každá položka dostane podnabídku <code>▸</code> se všemi
+akcemi pro danou položku: Vložit, Vložit jako prostý text, Jen zkopírovat (do schránky, bez
+vložení), transformace <em>Vložit jako</em>, Přidat do Šablon, Zobrazit v Prohlížeči, Smazat. Podnabídku
+otevřete najetím na položku nebo klávesou →; jakmile je otevřená, můžete ⇧ pustit.</p>
+<figure class="shot" style="max-width:805px"><a href="/img/guide/extended-menu.png?v=8b44e749" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/extended-menu.png?v=8b44e749" alt="Podržte ⇧: každá položka dostane podnabídku; u nejnovější položky jsou v ní globální klávesové zkratky" width="805" height="735" loading="lazy"></a><figcaption>Podržte ⇧: každá položka dostane podnabídku; u nejnovější položky jsou v ní globální klávesové zkratky</figcaption></figure>
+<p>U nejnovější položky podnabídka uvádí globální klávesové zkratky z tabulky výše. Jsou to stejné
+akce se stejnými klávesami, takže se je tu můžete naučit. Ostatní položky ukazují akce bez kláves:
+zkratka buď funguje všude, nebo se nezobrazuje.</p>
+<figure class="shot" style="max-width:763px"><a href="/img/guide/extended-menu-item2.png?v=014734f0" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/extended-menu-item2.png?v=014734f0" alt="U ostatních položek: stejné akce, bez zkratek" width="763" height="665" loading="lazy"></a><figcaption>U ostatních položek: stejné akce, bez zkratek</figcaption></figure>
+<figure class="shot" style="max-width:765px"><a href="/img/guide/extended-menu-image.png?v=8f8e3b22" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/extended-menu-image.png?v=8f8e3b22" alt="U obrázku jsou textové akce zašedlé; použít lze jen Vložit, Jen zkopírovat, Přidat do Šablon, Zobrazit v Prohlížeči a Smazat" width="765" height="655" loading="lazy"></a><figcaption>U obrázku jsou textové akce zašedlé; použít lze jen Vložit, Jen zkopírovat, Přidat do Šablon, Zobrazit v Prohlížeči a Smazat</figcaption></figure>
+<hr />
+<h2 id="part-3-templates">Část 3: Šablony</h2>
+<p>Šablony jsou položky, které si necháváte natrvalo: podpisy, adresy, připravené odpovědi, úryvky
+kódu, logo, které často vkládáte. Jsou uložené ve stromu se složkami a najdete je v podnabídce
+<em>Šablony</em> v nabídce historie a pod <strong>⌥T</strong>. Čerstvá instalace obsahuje složku <em>Příklady</em> (pozdrav,
+dnešní datum, citace schránky a podpis), abyste viděli, co šablony umějí, ještě než si napíšete
+vlastní. Můžete je libovolně mazat nebo upravovat (<em>Obnovit…</em> v Nastavení je vrátí).</p>
+<figure class="shot" style="max-width:660px"><a href="/img/guide/template-examples.png?v=c143a1d7" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/template-examples.png?v=c143a1d7" alt="Složka Příklady: po najetí na položku se zobrazí její text" width="660" height="209" loading="lazy"></a><figcaption>Složka Příklady: po najetí na položku se zobrazí její text</figcaption></figure>
+<figure class="shot" style="max-width:738px"><a href="/img/guide/template-menu-letters.png?v=ea96333e" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/template-menu-letters.png?v=ea96333e" alt="Nabídka šablon: složky se otevírají jako podnabídky, písmena za &amp; slouží jako zkratky" width="738" height="715" loading="lazy"></a><figcaption>Nabídka šablon: složky se otevírají jako podnabídky, písmena za &amp; slouží jako zkratky</figcaption></figure>
+<h3 id="creating-and-organising">Vytváření a uspořádání</h3>
+<p><strong>Přidání šablony</strong></p>
+<ul>
+<li>Z nabídky historie: <kbd class="k">⌃⌥A</kbd> pro nejnovější položku, <em>Přidat schránku do šablon</em> dole, nebo
+  ⇧ → podnabídka položky → <em>Přidat do Šablon</em> pro kteroukoli položku.</li>
+<li>V Prohlížeči: vyberte položku historie a klikněte na <em>Přidat do šablon</em>, nebo ji přetáhněte do
+  stromu Šablony. <em>Nová položka</em> vytvoří prázdnou textovou šablonu; <em>Nová položka ze souboru</em>
+  (kontextová nabídka) ji vytvoří z textového nebo obrazového souboru.</li>
+</ul>
+<p><strong>Uspořádání</strong></p>
+<ul>
+<li><em>Nová složka</em> vytvoří složku. Položky mezi složkami přetahujte, nebo použijte <em>Nahoru</em> / <em>Dolů</em>
+  v kontextové nabídce.</li>
+<li>Šablona s názvem <code>-</code> se v nabídce změní v oddělovací čáru.</li>
+<li>Znak <code>&amp;</code> před písmenem v názvu, například <code>&amp;Podpis</code>, udělá z tohoto písmene zkratku položky
+  v nabídce šablon: při otevřené nabídce stiskněte <code>P</code>.</li>
+<li><em>Nastavit klávesovou zkratku</em> v kontextové nabídce dá šabloně vlastní globální zkratku.</li>
+<li>Šablona bez názvu ukazuje svůj první řádek. <em>Přejmenovat</em> a <em>Vymazat název</em> jsou v kontextové
+  nabídce, nebo upravte pole <em>Název</em> nad textem.</li>
+</ul>
+<h3 id="placeholders">Zástupné symboly</h3>
+<p>Textové šablony mohou obsahovat zástupné symboly <code>{…}</code>, které se vyplní v okamžiku vložení. Vše
+ostatní se vloží beze změny. V Prohlížeči nabízí <strong>Vložit ▾</strong> seznam všech zástupných symbolů
+a vybraný umístí na pozici kurzoru, takže si nic nemusíte pamatovat.</p>
+<figure class="shot" style="max-width:717px"><a href="/img/guide/template-examples-date.png?v=8b048d0d" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/template-examples-date.png?v=8b048d0d" alt="Příklad Dnešní datum: z {date:EEEE, d MMMM yyyy} se při vložení stane aktuální datum" width="717" height="209" loading="lazy"></a><figcaption>Příklad Dnešní datum: z {date:EEEE, d MMMM yyyy} se při vložení stane aktuální datum</figcaption></figure>
+<figure class="shot" style="max-width:650px"><a href="/img/guide/insert-menu.png?v=4fa57206" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/insert-menu.png?v=4fa57206" alt="Vložit ▾ v Prohlížeči nabízí všechny zástupné symboly" width="650" height="770" loading="lazy"></a><figcaption>Vložit ▾ v Prohlížeči nabízí všechny zástupné symboly</figcaption></figure>
+<p>Ty nejužitečnější:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Zástupný symbol</th>
+<th>Výsledek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{date}</code> <code>{time}</code> <code>{datetime}</code></td>
+<td>Dnešní datum / aktuální čas, systémový formát</td>
+</tr>
+<tr>
+<td><code>{date:yyyy-MM-dd}</code></td>
+<td>Libovolný formát (<code>yyyy MM dd EEEE HH mm …</code>)</td>
+</tr>
+<tr>
+<td><code>{date:long}</code> <code>{time:short}</code> <code>{datetime:medium}</code></td>
+<td>Pojmenovaný styl: <code>short</code> <code>medium</code> <code>long</code> <code>full</code></td>
+</tr>
+<tr>
+<td><code>{date+7d}</code> <code>{date-1m:MMMM}</code> <code>{time+1h}</code> <code>{date+1y-2d}</code></td>
+<td>Posun: <code>d</code> dny, <code>w</code> týdny, <code>m</code> měsíce, <code>y</code> roky, <code>h</code> hodiny; u <code>date</code>, <code>time</code>, <code>datetime</code>, i několik za sebou</td>
+</tr>
+<tr>
+<td><code>{clipboard}</code> <code>{clipboard:2}</code></td>
+<td>Schránka, nebo položka historie N</td>
+</tr>
+<tr>
+<td><code>{clipboard\|upper}</code> <code>{clipboard\|trim\|oneline}</code></td>
+<td>Filtry <code>upper</code> <code>lower</code> <code>title</code> <code>trim</code> <code>oneline</code> <code>url</code>, lze je řetězit</td>
+</tr>
+<tr>
+<td><code>{cursor}</code></td>
+<td>Místo, kde po vložení skončí textový kurzor</td>
+</tr>
+<tr>
+<td><code>{user}</code> <code>{username}</code> <code>{host}</code></td>
+<td>Celé jméno, název účtu, název počítače</td>
+</tr>
+<tr>
+<td><code>{uuid}</code> <code>{random:1-100}</code></td>
+<td>Nové UUID; náhodné číslo</td>
+</tr>
+<tr>
+<td><code>{{</code> <code>}}</code></td>
+<td>Doslovné složené závorky: šablona <code>{{"x":1}}</code> vloží <code>{"x":1}</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Názvy zástupných symbolů se píšou malými písmeny: <code>{date}</code> je zástupný symbol, kdežto <code>{Date}</code>
+a <code>{DATE}</code> jsou text a vloží se tak, jak jsou. Názvy stylů a filtry (<code>{date:LONG}</code>,
+<code>{clipboard|UPPER}</code>) lze psát oběma způsoby.</p>
+<p>Úplný seznam je v <a href="#placeholder-cheat-sheet">taháku zástupných symbolů</a>.</p>
+<h3 id="templates-that-ask-questions">Šablony, které se ptají</h3>
+<p><code>{input:Jméno}</code> a <code>{choice:Popisek=A|B|C}</code> promění šablonu v malý formulář: když ji vkládáte,
+Keepit se nejprve zeptá na hodnoty a potom vloží hotový text. Na stejný název se ptá jen jednou,
+ať se v šabloně objevuje kolikrát chce; <code>{input:Jméno=Výchozí}</code> pole předvyplní.</p>
+<figure class="shot" style="max-width:484px"><a href="/img/guide/input-dialog.png?v=8f9de78e" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/input-dialog.png?v=8f9de78e" alt="Vložení šablony s {input:Name} se nejprve zeptá na hodnotu" width="484" height="320" loading="lazy"></a><figcaption>Vložení šablony s {input:Name} se nejprve zeptá na hodnotu</figcaption></figure>
+<p>Například šablona odpovědi:</p>
+<pre><code>Dobrý den, {input:Jméno},
+
+děkuji za Vaši zprávu z {date-1d}. Ozvu se Vám do {date+3d:EEEE}.
+{cursor}
+{user}
+</code></pre>
+<p>Při vložení se zeptá na <em>Jméno</em>, doplní data, podepíše vaším celým jménem a nechá kurzor na
+prázdném řádku.</p>
+<hr />
+<h2 id="part-4-the-viewer">Část 4: Prohlížeč</h2>
+<p><em>Prohlížeč…</em> v nabídce nebo kliknutí pravým tlačítkem na ikonu 📎 otevře okno se třemi stromy:
+<strong>Schránka</strong> (aktuální obsah schránky, jen ke čtení), <strong>Historie</strong> (<em>Text a soubory</em> a <em>Obrázky</em>)
+a <strong>Šablony</strong>.</p>
+<figure class="shot" style="max-width:1004px"><a href="/img/guide/viewer.png?v=1c65e776" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/viewer.png?v=1c65e776" alt="Prohlížeč s vybranou šablonou" width="1004" height="637" loading="lazy"></a><figcaption>Prohlížeč s vybranou šablonou</figcaption></figure>
+<ul>
+<li>Vyberte položku a uvidíte ji vpravo. Text lze upravovat přímo na místě a změny se použijí, když
+  editor opustíte. Obrázek se zobrazí zmenšený na velikost panelu, nad ním jsou jeho rozměry
+  v pixelech a velikost souboru. Seznamy souborů otevřou soubor dvojím kliknutím. <em>Zobrazit jako
+  hex dump</em> v kontextové nabídce ukáže surové bajty.</li>
+<li>Panel nástrojů: <em>Odeslat do schránky</em>, <em>Vložit</em> (do aplikace, ze které jste přišli), <em>Přidat do
+  šablon</em>, <em>Nová položka</em>, <em>Nová složka</em>, <em>Smazat</em>, <em>Vložit ▾</em> (zástupné symboly) a <strong>?</strong>, tedy
+  tato příručka.</li>
+<li><strong>Hledat</strong> (<kbd class="k">⌘F</kbd>): pole vlevo filtruje historii a šablony podle názvu i obsahu a shodu zvýrazní.</li>
+<li>Položky historie si uchováte přetažením do stromu Šablony, šablony zkopírujete zpět přetažením
+  do Historie. Pořadí měníte přetahováním nebo pomocí <em>Nahoru</em> / <em>Dolů</em>. ⌫ smaže vybranou položku.</li>
+<li>Stavový řádek ukazuje datum, zdrojovou aplikaci, formát a velikost.</li>
+</ul>
+<figure class="shot" style="max-width:1025px"><a href="/img/guide/viewer-search.png?v=88476754" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/viewer-search.png?v=88476754" alt="Hledání v Prohlížeči zvýrazňuje shody" width="1025" height="682" loading="lazy"></a><figcaption>Hledání v Prohlížeči zvýrazňuje shody</figcaption></figure>
+<hr />
+<h2 id="part-5-settings">Část 5: Nastavení</h2>
+<p><code>⌘,</code> v nabídce, <em>Nastavení…</em> nebo ⌥S z kterékoli aplikace. Okno funguje tak, jak je u oken
+nastavení na Macu zvykem: vyberte panel na panelu nástrojů a každá změna platí okamžitě. Tlačítko
+Uložit tu není; okno zavřete pomocí ⌘W nebo Esc. Každá volba, u které je <strong>?</strong>, má bublinu
+s vysvětlením.</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-general.png?v=09991ffc" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/prefs-general.png?v=09991ffc" alt="Nastavení → Obecné" width="636" height="463" loading="lazy"></a><figcaption>Nastavení → Obecné</figcaption></figure>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Panel</th>
+<th>Co na něm je</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Obecné</strong></td>
+<td>Spouštění při přihlášení · uložení historie při ukončení a její obnovení při startu · vložení po výběru (vypnuto = jen zkopírovat) · prodleva vložení, kterou zvyšte u aplikací, jež se do popředí dostávají pomalu · otevírání nabídky u textového kurzoru · Aktualizace: <em>Automaticky kontrolovat aktualizace</em> (edice ke stažení z webu; vypnuto = vůbec žádný síťový požadavek), viz <a href="#updates">Aktualizace</a></td>
+</tr>
+<tr>
+<td><strong>Zkratky</strong></td>
+<td>Všechny globální zkratky na jednom místě, viz níže</td>
+</tr>
+<tr>
+<td><strong>Fronta vkládání</strong></td>
+<td>Tři klávesy fronty, doba nečinnosti, po které se fronta vypne, a co vkládat mezi položky u volby <em>Vložit vše zbývající</em>, viz <a href="#the-paste-queue">Fronta vkládání</a></td>
+</tr>
+<tr>
+<td><strong>Historie</strong></td>
+<td>Kolik textových a souborových položek a kolik obrázků uchovávat (1000 / 30) · zapomínat položky starší než … · <em>Odstraňovat duplicity</em> (opětovné zkopírování téhož přesune položku nahoru) · <em>Ignorovat skrytá data schránky</em> · seznam ignorovaných aplikací (identifikátory balíčků; správci hesel jsou ignorováni vždy)</td>
+</tr>
+<tr>
+<td><strong>Nabídka</strong></td>
+<td>Pole hledání · číslování · panel náhledu · tipy · ikony zdrojových aplikací · miniatury obrázků · položky v nabídce (kolik nejnovějších záznamů nabídka vypíše, ve výchozím stavu 60; ostatní lze dál vyhledat) · délka názvu · výška miniatur</td>
+</tr>
+<tr>
+<td><strong>Zabezpečení</strong></td>
+<td>Heslo, Touch ID, zamykání, fráze pro obnovu, viz <a href="#part-6-security">Část 6</a></td>
+</tr>
+<tr>
+<td><strong>Záloha</strong></td>
+<td>Automatická záloha (stavový řádek vedle nadpisu): <em>Automaticky zálohovat do složky</em>, název Macu v souborech, složka, kolik kopií ponechat · Ruční záloha: <em>Zálohovat nyní</em>, <em>Uložit do archivu…</em> · Obnovení: <em>Obnovit…</em>, viz <a href="#backup">Záloha</a></td>
+</tr>
+<tr>
+<td><strong>Pokročilé</strong></td>
+<td>Interval dotazování schránky · Automatizace: <em>Povolit příkazy URL keepit://</em> (ve výchozím stavu vypnuto, viz <a href="#automation-the-keepit-url-scheme">Automatizace</a>) · Data: <em>Otevřít složku</em> · Obnovení a odinstalace: <em>Obnovit…</em> (návrat do stavu čerstvé instalace, vrátí se ukázkové šablony) · <em>Odinstalovat…</em> (obnovení a poté odstranění aplikace, spouštění při přihlášení, záznamu v klíčence a oprávnění)</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-history.png?v=e8444027" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/prefs-history.png?v=e8444027" alt="Nastavení → Historie: limity a seznam ignorovaných aplikací" width="636" height="504" loading="lazy"></a><figcaption>Nastavení → Historie: limity a seznam ignorovaných aplikací</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-hotkeys.png?v=2f5f309f" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/prefs-hotkeys.png?v=2f5f309f" alt="Nastavení → Zkratky" width="636" height="717" loading="lazy"></a><figcaption>Nastavení → Zkratky</figcaption></figure>
+<p>Na panelu <strong>Zkratky</strong> klikněte do pole a stiskněte kombinaci; ⌫ klávesu vypne. Kombinace, kterou už
+používá jiný příkaz, je odmítnuta a důvod se zobrazí pod poli. <em>Obnovit výchozí</em> vrátí sadu ⌥ +
+písmeno (⌥M historie, ⌥T šablony, ⌥E Prohlížeč, ⌥S Nastavení, ⌥C Vymazat historii, ⌥P pozastavení,
+⌥L zámek, ⌥Q ukončení), ⌥⇧V a ⌃⌥. Volby <em>Vložit položku podle čísla</em> a <em>Akce s nejnovější položkou</em>
+přijímají jen modifikátory, číslici nebo písmeno doplní Keepit. Pokud některou zkratku už vlastní
+macOS nebo jiná aplikace, Keepit to oznámí při spuštění. <em>Prohlížeč</em> ⌥E, <em>Nastavení</em> ⌥S, <em>Vymazat
+historii</em> ⌥C, <em>Pozastavit záznam</em> ⌥P, <em>Zamknout Keepit</em> ⌥L a <em>Ukončit Keepit</em> ⌥Q fungují
+z kterékoli aplikace a v nabídce jsou uvedené vedle svých příkazů. Na americkém rozložení klávesnice
+píše ⌥ + písmeno obvykle speciální znak (⌥S = ß, ⌥C = ç …); pokud některý z nich potřebujete,
+přesuňte zkratku jinam.</p>
+<hr />
+<h2 id="part-6-security">Část 6: Zabezpečení</h2>
+<h3 id="password-and-encryption">Heslo a šifrování</h3>
+<p><em>Nastavení → Zabezpečení → Vyžadovat heslo při spuštění</em> zašifruje historii a šablony pomocí
+AES-256-GCM. Klíč se odvozuje z vašeho hesla (PBKDF2, 200 000 iterací) a existuje jen v paměti.
+Smaže se, když se Keepit zamkne: volbou <em>Zamknout Keepit</em> (<kbd class="k">⌥L</kbd>), při ukončení a volitelně poté, co
+byl Mac nějakou dobu zamčený nebo uspaný. <em>Automatický zámek Keepit</em> je u nové instalace nastaven na
+<strong>Nikdy</strong> (aktualizace z verze 3.0.3 zachová původní volbu, tedy <em>Okamžitě</em>, pokud bylo zaškrtnuté
+zamykání s obrazovkou): správce schránky, který chce heslo po každé přestávce na kávu, lidé
+přestanou používat, a pro chvíle, kdy na tom záleží, je tu <kbd class="k">⌥L</kbd>. <em>Okamžitě</em> zamyká spolu
+s obrazovkou. Volby <em>Po 5 minutách</em>, <em>Po 15 minutách</em> a <em>Po 1 hodině</em> krátkou nepřítomnost
+přecházejí (Keepit zůstane odemčený a dál zaznamenává) a zamknou až tehdy, když byl Mac pryč po
+celou tuto dobu. Totéž platí, když se Keepit spustí ve chvíli, kdy je Mac už zamčený nebo je
+v popředí relace jiného uživatele (třeba při opětovném spuštění po aktualizaci): nepřítomnost se
+počítá od startu, pokud macOS tento stav Keepit hlásí (obvykle ano; když to nejde, odpočet začne
+při příštím zamčení nebo uspání). Při zapnutém Touch ID požádá Keepit o dotyk v okamžiku, kdy Mac
+odemknete, takže je připravený ještě před prvním <kbd class="k">⌥M</kbd>.</p>
+<figure class="shot" style="max-width:800px"><a href="/img/guide/set-password-keyboard.jpg?v=08002f0c" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/set-password-keyboard.jpg?v=08002f0c" alt="Nastavení hesla pomocí klávesnice na obrazovce. Je to fotografie obrazovky, ne snímek obrazovky: na autorově Macu ukazuje snímek této scény jen samotný dialog" width="800" height="600" loading="lazy"></a><figcaption>Nastavení hesla pomocí klávesnice na obrazovce. Je to fotografie obrazovky, ne snímek obrazovky: na autorově Macu ukazuje snímek této scény jen samotný dialog</figcaption></figure>
+<p>Dialogy pro heslo ukazují aktuální rozložení klávesnice a upozorňují na Caps Lock, takže odmítnuté
+heslo bývá málokdy záhadou. Tlačítko s klávesnicí vedle pole otevře <strong>klávesnici na obrazovce</strong>, na
+které heslo naklikáte myší: kliknutí nikdy neprocházejí systémem jako stisky kláves, klávesy se při
+každém otevření zamíchají a klávesnice žádá macOS, aby ji vynechal ze snímků a záznamů obrazovky
+(v některých konfiguracích vynechána je; zaručené to není). Hodí se pro Mac, kterému plně
+nedůvěřujete, nebo pro Mac, jehož obrazovka je sdílená. Při spuštění a po zamčení se Keepit zeptá
+na heslo (nebo na Touch ID); <em>Obnovit přístup…</em> místo něj přijme frázi o 24 slovech, viz
+<a href="#recovery-phrase">Fráze pro obnovu</a>.</p>
+<figure class="shot" style="max-width:800px"><a href="/img/guide/unlock-keyboard.jpg?v=4c0be394" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/unlock-keyboard.jpg?v=4c0be394" alt="Odemčení při spuštění: heslo, Ukončit nebo fráze pro obnovu; OK zůstává neaktivní, dokud něco nenapíšete. Vyfotografováno ze stejného důvodu jako výše" width="800" height="600" loading="lazy"></a><figcaption>Odemčení při spuštění: heslo, Ukončit nebo fráze pro obnovu; OK zůstává neaktivní, dokud něco nenapíšete. Vyfotografováno ze stejného důvodu jako výše</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-security.png?v=7204a4dd" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/prefs-security.png?v=7204a4dd" alt="Nastavení → Zabezpečení" width="636" height="435" loading="lazy"></a><figcaption>Nastavení → Zabezpečení</figcaption></figure>
+<h3 id="touch-id">Touch ID</h3>
+<p>Při zapnuté volbě <em>Odemykat pomocí Touch ID</em> je klíč uložen také v Secure Enclave za vaším otiskem
+prstu: Keepit místo hesla požádá o dotyk. Heslo dál funguje jako záložní možnost, ve výzvě stačí
+zvolit <em>Použít heslo</em>. Když je víko zavřené a máte externí Magic Keyboard s Touch ID, Keepit se ptá
+na klávesnici. <em>Povolit změnu hesla pomocí Touch ID</em> dovolí, aby při změně hesla otisk prstu
+zastoupil staré heslo.</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/touch-id.png?v=5e119bff" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/touch-id.png?v=5e119bff" alt="Odemčení pomocí Touch ID; heslo zůstává jako záložní možnost" width="336" height="313" loading="lazy"></a><figcaption>Odemčení pomocí Touch ID; heslo zůstává jako záložní možnost</figcaption></figure>
+<h3 id="recovery-phrase">Fráze pro obnovu</h3>
+<p>Když nastavíte heslo, Keepit jednou zobrazí frázi o 24 slovech. Vytiskněte si ji nebo ji uložte do
+správce hesel. Pokud heslo zapomenete, <em>Obnovit přístup…</em> v dialogu pro odemčení otevře data
+a umožní nastavit nové heslo. <em>Fráze pro obnovu → Vytvořit novou…</em> vydá novou frázi a starou
+zneplatní; <em>Zobrazit…</em> vedle toho ukáže aktuální frázi znovu, po ověření pomocí Touch ID nebo hesla.</p>
+<p>Bez hesla, Touch ID na stejném Macu nebo fráze data obnovit nelze: neexistuje žádný server a není
+co resetovat.</p>
+<figure class="shot" style="max-width:568px"><a href="/img/guide/recovery-phrase.png?v=8aab134d" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/recovery-phrase.png?v=8aab134d" alt="Fráze pro obnovu o 24 slovech (slova jsou zde skrytá)" width="568" height="586" loading="lazy"></a><figcaption>Fráze pro obnovu o 24 slovech (slova jsou zde skrytá)</figcaption></figure>
+<h3 id="backup">Záloha</h3>
+<p>Keepit umí uchovávat šifrovanou kopii historie a šablon ve složce, kterou si zvolíte (iCloud Drive,
+Dropbox, Google Drive, externí disk, NAS), a zapsat novou, kdykoli se něco změní. Žádný server
+Keepit neexistuje: složka je vaše. Poskytovatel, který za ní stojí, vidí šifrovaný soubor, jeho
+velikost a malou nešifrovanou hlavičku (kdy a kterou verzí Keepit byl soubor zapsán, jak se
+odvozuje klíč, náhodné identifikátory a název vašeho Macu jen tehdy, když to zapnete);
+<a href="/security#backups">stránka o zabezpečení</a> (anglicky) ji popisuje pole po poli.</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-backup.png?v=cba8511b" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/prefs-backup.png?v=cba8511b" alt="Nastavení → Záloha: automatická záloha, ruční záloha, obnovení" width="636" height="527" loading="lazy"></a><figcaption>Nastavení → Záloha: automatická záloha, ruční záloha, obnovení</figcaption></figure>
+<p><strong>Zapnutí.</strong> <em>Nastavení → Záloha → Automaticky zálohovat do složky</em> a potom <em>Vybrat…</em> složku
+(výběr se otevře na iCloud Drivu). Automatická záloha vyžaduje ochranu heslem z <em>Nastavení →
+Zabezpečení</em>: každá kopie je zapečetěna klíčem odvozeným z klíče vašeho trezoru, takže ji otevřete
+svým heslem Keepit nebo frází pro obnovu na tomto Macu i na jakémkoli jiném a nic dalšího se pro to
+nastavovat nemusí. Bez hesla je zaškrtávací pole neaktivní a uvádí důvod.</p>
+<p><strong>Co se děje potom: plán.</strong> Asi pět minut po poslední změně (a nejpozději jednou denně, dokud Keepit
+běží) zapíše Keepit do složky soubor s názvem <code>Keepit-&lt;datum a čas&gt;-&lt;instalace&gt;-&lt;id&gt;.keepit</code>,
+pro kontrolu ho přečte zpět a teprve potom smaže nejstarší ze svých vlastních kopií nad počet
+<em>Ponechat posledních</em> (ve výchozím stavu 10, rozsah 1–100). Každá kopie je úplná sama o sobě, nejde
+o přírůstek, takže vám vždy stačí jediný soubor. Kopií vytvořených jiným Macem ani souborů, které
+jste tam uložili sami, se Keepit nikdy nedotkne: dva Macy sdílející jednu složku zapisují dvě
+nezávislé řady. Stavový řádek vedle nadpisu <em>Automatická záloha</em> ukazuje čas a velikost poslední
+kopie, nebo důvod, proč poslední pokus selhal. Dokud je Keepit zamčený, neděje se nic; <em>Zálohovat
+nyní</em> (v části <em>Ruční záloha</em>) na období klidu nečeká.</p>
+<p><strong>Zahrnout název tohoto Macu</strong> (ve výchozím stavu vypnuto) vloží název počítače do nešifrované
+hlavičky každého souboru, takže se dvě řady v jedné složce ve Finderu snadno rozliší. Poskytovatel
+úložiště tento název vidí, a proto je volba nepovinná.</p>
+<p><strong>Obnovení.</strong> <em>Obnovit…</em> otevře zálohu (z tohoto Macu, z jiného Macu nebo exportovaný soubor) poté,
+co ji odemknete: heslem Macu, na kterém vznikla, nebo frází pro obnovu, kterou tento Mac zobrazil
+při nastavení hesla (<em>Obnovit přístup…</em> v dialogu pro heslo). Náhled ukáže, kdy a kde soubor vznikl
+a kolik položek obsahuje. Potom máte dvě možnosti:</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/restore-preview.png?v=8f48d34e" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/restore-preview.png?v=8f48d34e" alt="Náhled obnovení: kdy a kterou verzí Keepit byl soubor zapsán, co obsahuje, Sloučit nebo Nahradit" width="636" height="651" loading="lazy"></a><figcaption>Náhled obnovení: kdy a kterou verzí Keepit byl soubor zapsán, co obsahuje, Sloučit nebo Nahradit</figcaption></figure>
+<ul>
+<li><em>Sloučit</em> přidá to, co tu ještě není: položky historie podle obsahu a šablony ze zálohy jako jednu
+  novou složku s názvem <em>Import <datum></em>, bez jejich klávesových zkratek. Vidíte tak přesně, co ze
+  zálohy přišlo, a můžete to přesunout nebo smazat. Nic z vašich dat se nepřepíše.</li>
+<li><em>Nahradit</em> zahodí současnou historii a šablony a vezme místo nich ty ze zálohy. Předtím Keepit
+  zapíše kopii toho, co máte teď (<code>Keepit-before-restore-…</code>), do složky se zálohami nebo do složky,
+  kterou vyberete; pokud tuto kopii zapsat nelze, nahrazení se nespustí. Pokud Keepit ještě nemá
+  heslo, požádá vás o heslo pro tuto kopii, stejně jako u volby <em>Uložit do archivu…</em>.</li>
+</ul>
+<p><em>Obnovit také předvolby</em> přenese ze zálohy klávesové zkratky, limity a volby. Nastavení, která
+vyjadřují důvěru ke konkrétnímu Macu (Touch ID, automatizace přes URL a její důvěryhodné aplikace,
+samotná složka se zálohami), vždy zůstávají taková, jaká jsou zde. Pokud je historie ze zálohy větší,
+než dovolují limity tohoto Macu, Keepit před potvrzením řekne, kolik se toho vejde.</p>
+<p>Obnovili jste zálohu její frází pro obnovu na Macu, který ještě nemá heslo? Keepit vás požádá,
+abyste ho nejprve nastavili, takže se obnovená data nikdy neuloží nešifrovaná, a nechá vás tuto
+frázi pro tento Mac ponechat, nebo získat novou. Obnovili jste ji heslem? Keepit nabídne, že ho
+ponechá jako heslo tohoto Macu. V obou případech je samotná automatická záloha nastavením každého
+Macu zvlášť: zapněte ji zde a vyberte složku (klidně tu stejnou) a tento Mac začne vedle souborů
+starého Macu zapisovat vlastní řadu.</p>
+<p><strong>Přechod na nový Mac</strong> je hlavní smysl toho všeho: nainstalujte Keepit, při prvním spuštění zvolte
+<em>Obnovit ze zálohy…</em>, vyberte ve své složce nejnovější soubor, zadejte heslo starého Macu a zvolte
+<em>Nahradit</em>; potom na novém Macu zapněte automatickou zálohu. Dosavadní kopie se otevírají heslem
+a frází, které platily v době jejich zápisu: po změně hesla potřebují ty staré stále staré heslo.</p>
+<p><strong>Ruční záloha.</strong> Jsou tu dvě tlačítka a každé dělá něco jiného. <em>Zálohovat nyní</em> vytvoří hned
+kopii stejného typu jako automatická: stejný druh souboru, stejná složka i řada, otevírá se vaším
+heslem Keepit nebo frází. <em>Uložit do archivu…</em> zapíše jeden <em>archiv</em> <code>.keepit</code> tam, kam určíte,
+a zamkne ho heslem, které pro něj zvolíte. Nepotřebuje ochranu Keepit heslem a Keepit pak soubor
+dál nesleduje. Hodí se pro předání dat nebo pro kopii mimo složku se zálohami. Navržený název říká,
+o co jde: <code>Keepit-archive-&lt;datum&gt;-manual.keepit</code>, na rozdíl od automatických kopií
+<code>Keepit-&lt;datum a čas&gt;-&lt;instalace&gt;-&lt;id&gt;.keepit</code>.</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/save-to-archive.png?v=6d252de5" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/save-to-archive.png?v=6d252de5" alt="Uložit do archivu…: název souboru obsahuje slova archive a manual" width="636" height="528" loading="lazy"></a><figcaption>Uložit do archivu…: název souboru obsahuje slova archive a manual</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/archive-password.png?v=1b218e7c" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/archive-password.png?v=1b218e7c" alt="Vlastní heslo archivu s ukazatelem síly: nikam se neukládá" width="636" height="621" loading="lazy"></a><figcaption>Vlastní heslo archivu s ukazatelem síly: nikam se neukládá</figcaption></figure>
+<p><em>Obnovit…</em> otevře obojí. Archiv nahrazuje volby <em>Exportovat…</em> / <em>Importovat…</em> z verze 2.x. Soubor
+přenáší data mezi edicí ke stažení z webu a edicí z App Storu i mezi Keepit 2.x a 3.x: soubor
+zapsaný verzí 3.0 lze otevřít jen ve verzi 3.0 nebo novější; verze 3.0 přečte vše, co zapsala 2.x.</p>
+<p><strong>Když se něco pokazí.</strong> Neúspěšná kopie se ohlásí ve stavovém řádku a pokus se opakuje
+s prodlužujícími se přestávkami; předchozí kopie zůstávají. Pokud byl Keepit ukončen nebo Mac
+vypadl uprostřed obnovení, příští spuštění tiše vrátí vše do stavu před obnovením. Ve vzácném
+případě, kdy to nejde (soubor, který nelze zapsat, plný disk), Keepit soubor jmenuje a ukončí se,
+aniž cokoli změní: opravte soubor a spusťte Keepit znovu. Podrobnosti včetně vnitřní podoby formátu
+souboru jsou na <a href="/security#backups">stránce o zabezpečení</a> (anglicky).</p>
+<hr />
+<h2 id="part-7-advanced">Část 7: Pro pokročilé</h2>
+<h3 id="automation-the-keepit-url-scheme">Automatizace: schéma URL keepit://</h3>
+<p>Aplikace Zkratky (<em>Otevřít URL</em>), Raycast, Alfred, Keyboard Maestro nebo příkaz <code>open</code> v shellu
+mohou Keepit ovládat, <strong>jakmile to zapnete</strong> v <em>Nastavení → Pokročilé → Automatizace → Povolit
+příkazy URL keepit://</em>. Ve výchozím stavu je to vypnuté, protože URL může otevřít kterákoli aplikace
+nebo webová stránka a příkazy <code>add</code> / <code>paste</code> mění schránku a píšou do aplikace v popředí; při
+vypnuté volbě Keepit taková URL ignoruje a pípne. Při zapnuté volbě se Keepit dívá, kdo URL
+otevřel: první příkaz z každé aplikace, který něco mění (<code>paste</code>, <code>copy</code>, <code>template</code>, <code>add</code>,
+<code>add-template</code>, <code>pause</code>, <code>resume</code>), se zobrazí v dialogu. <em>Povolit</em> ho provede jednou, <em>Vždy
+povolit</em> zařadí aplikaci na seznam důvěryhodných (vymažete ho volbou <em>Zapomenout důvěryhodné
+aplikace</em> na stejném panelu). Webového prohlížeče nebo odesílatele, kterého macOS neumí
+pojmenovat, se Keepit ptá pokaždé. Příkazy, které jen otevírají vlastní okna Keepit, se neptají
+nikdy.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>URL</th>
+<th>Účinek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>keepit://paste/2</code><br><code>keepit://paste/latest</code><br><code>keepit://paste/previous</code></td>
+<td>Vloží položku historie N (nebo nejnovější / předchozí) do aplikace v popředí</td>
+</tr>
+<tr>
+<td><code>keepit://copy/3</code></td>
+<td>Uloží položku N do schránky bez vložení</td>
+</tr>
+<tr>
+<td><code>keepit://template/Signature</code><br><code>keepit://template/Work/Reply?copy=1</code></td>
+<td>Vloží (nebo zkopíruje) šablonu podle názvu nebo cesty ke složce</td>
+</tr>
+<tr>
+<td><code>keepit://add?text=…</code></td>
+<td>Přidá text do historie a do schránky</td>
+</tr>
+<tr>
+<td><code>keepit://add-template?text=…&amp;name=…</code></td>
+<td>Vytvoří šablonu</td>
+</tr>
+<tr>
+<td><code>keepit://history</code><br><code>keepit://templates</code><br><code>keepit://viewer</code><br><code>keepit://settings</code></td>
+<td>Otevře nabídku historie, nabídku šablon, Prohlížeč, Nastavení</td>
+</tr>
+<tr>
+<td><code>keepit://pause</code><br><code>keepit://resume</code></td>
+<td>Pozastaví záznam na 10 minut / obnoví ho</td>
+</tr>
+</tbody>
+</table></div>
+<p>Text kódujte procenty (<code>%20</code> místo mezery). Dokud je Keepit zamčený, URL se ignorují.</p>
+<h3 id="updates">Aktualizace</h3>
+<p>Keepit jednou denně kontroluje GitHub Releases a aktualizace nabízí v dialogu; <em>Zkontrolovat
+aktualizace…</em> to udělá hned. Aktualizace jsou podepsané (EdDSA) a notarizované. S Homebrew udělá
+totéž <code>brew upgrade --cask keepit</code>. Kontrolní součty všech stahovaných souborů jsou v <code>SHA256SUMS</code>
+na stránce vydání.</p>
+<p>Tato kontrola je jediný síťový požadavek, který Keepit posílá, a je volitelná: <em>Nastavení → Obecné →
+Aktualizace → Automaticky kontrolovat aktualizace</em>. Když ji vypnete, Keepit už nic nekontaktuje, ani
+na vaši žádost, a <em>Zkontrolovat aktualizace…</em> zmizí z nabídek. Aktualizujete pak stažením
+z <a href="https://keep.it.com">keep.it.com</a> nebo pomocí Homebrew. Edice z App Storu žádný aktualizátor ani
+takovou volbu nemá; aktualizuje ji App Store.</p>
+<h3 id="uninstalling">Odinstalace</h3>
+<p><em>Nastavení → Pokročilé → Obnovení a odinstalace → Odinstalovat…</em> odstraní aplikaci, složku s daty,
+záznamy v klíčence (včetně klíče pro Touch ID), položku spouštěnou při přihlášení a záznam ve
+Zpřístupnění. Vyžádá si heslo nebo Touch ID, napsané slovo <code>DELETE</code> a potvrzení. Pokud byste data
+ještě mohli chtít, nejprve si exportujte zálohu. S Homebrew potom spusťte
+<code>brew uninstall --cask --force keepit</code>, aby Homebrew na cask zapomněl.</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-advanced.png?v=9908024a" class="zoom" title="Otevřít v plné velikosti"><img src="/img/guide/prefs-advanced.png?v=9908024a" alt="Nastavení → Pokročilé" width="636" height="515" loading="lazy"></a><figcaption>Nastavení → Pokročilé</figcaption></figure>
+<hr />
+<h2 id="reference">Přehledy</h2>
+<h3 id="troubleshooting">Řešení potíží</h3>
+<p><strong>Po výběru položky se nic nevloží.</strong> Chybí oprávnění Zpřístupnění: <em>Nastavení systému → Soukromí
+a zabezpečení → Zpřístupnění → Keepit</em>. Pokud Keepit v seznamu je, a přesto nevkládá, vypněte ho
+a znovu zapněte. macOS udělené oprávnění zapomene, když se aplikace přeinstaluje.</p>
+<p><strong>Klávesová zkratka nic nedělá.</strong> Vlastní ji jiná aplikace nebo macOS; Keepit to hlásí při spuštění.
+Vyberte jinou kombinaci na panelu <em>Zkratky</em>. Kombinace ⌃⌥ s číslicemi a písmeny je na Macu
+v továrním stavu volná.</p>
+<p><strong>Nabídka se otevírá na špatném místě.</strong> Aplikace, ve které jste, nezpřístupňuje svůj textový
+kurzor, a nabídka se proto otevře u ukazatele myši. Volba <em>Otevírat nabídku u textového kurzoru,
+pokud to jde</em> na panelu Obecné hledání kurzoru vypne, pokud chcete nabídku vždy u ukazatele.</p>
+<p><strong>Něco, co jsem zkopíroval(a), chybí.</strong> Nezaznamenává se nic, co kopírující aplikace označila jako
+skryté, ani kopie pořízená ve chvíli, kdy byl v popředí správce hesel (vestavěný seznam) nebo
+aplikace z vašeho seznamu ignorovaných, včetně aplikace, ze které jste se před okamžikem přepnuli
+jinam. Viz <em>Nastavení → Historie</em> a
+<a href="/security#what-is-not-recorded">stránku o zabezpečení</a> (anglicky).</p>
+<p><strong>Touch ID se nenabízí.</strong> V tuto chvíli není dostupný žádný snímač Touch ID (zavřené víko, žádná
+klávesnice s Touch ID). Keepit si nastavení ponechá a o otisk prstu požádá, jakmile bude snímač
+k dispozici.</p>
+<p><strong>Stav zálohy hlásí, že složka není dostupná.</strong> Složka byla přesunuta, přejmenována, odpojena nebo
+(u iCloud Drivu) odstraněna z místního úložiště. Připojte ji nebo ji vraťte a příští kopie proběhne;
+případně zvolte <em>Vybrat…</em> a určete novou složku. Nová složka začíná novou řadu, staré soubory
+zůstanou tam, kde jsou.</p>
+<p><strong>Soubor se zálohou nejde otevřít.</strong> <em>Chybné heslo</em> znamená, že nesouhlasila autentizační značka
+souboru: ujistěte se, že používáte heslo Macu, který soubor <em>zapsal</em> (po změně hesla se staré kopie
+stále otevírají starým heslem), nebo jeho frázi pro obnovu. <em>Tato záloha vyžaduje Keepit 3.0 nebo
+novější</em> znamená, že soubor zapsala novější verze, než která ho otevírá.</p>
+<p><strong>Homebrew odmítá instalovat přes existující aplikaci.</strong> Nejprve Keepit ukončete a přesuňte
+<code>/Applications/Keepit.app</code> do Koše, nebo přidejte <code>--force</code>.</p>
+<p>Stále si nevíte rady? <a href="https://github.com/andrey-insarov/Keepit/issues">GitHub Issues</a> · admin@keep.it.com</p>
+<h3 id="keyboard-cheat-sheet">Tahák klávesových zkratek</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Klávesy</th>
+<th>Akce</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><kbd class="k">⌥M</kbd></td>
+<td>Nabídka historie, psaním hledáte</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥T</kbd></td>
+<td>Nabídka šablon</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥1</kbd> … <kbd class="k">⌃⌥0</kbd></td>
+<td>Vložit položku 1–10 (v nabídce i kdekoli jinde)</td>
+</tr>
+<tr>
+<td><kbd class="k">⇧</kbd> v nabídce</td>
+<td>Rozšířená nabídka: všechny akce pro každou položku</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥⇧V</kbd></td>
+<td>Vložit předchozí položku / prohodit</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥V</kbd></td>
+<td>Vložit schránku jako prostý text</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
+<td>VELKÁ PÍSMENA / malá písmena / Velká Počáteční Písmena / jako věta</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥W</kbd> <kbd class="k">⌃⌥J</kbd></td>
+<td>Bez okrajových mezer / na jeden řádek</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥K</kbd> <kbd class="k">⌃⌥D</kbd> <kbd class="k">⌃⌥Y</kbd> <kbd class="k">⌃⌥X</kbd></td>
+<td>Přeškrtnutí / podtržení / vlnovka / odstranit zdobení</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥A</kbd></td>
+<td>Přidat schránku do Šablon</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥⌫</kbd></td>
+<td>Smazat nejnovější položku</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥N</kbd> · <kbd class="k">⌥V</kbd> · <kbd class="k">⌥⇧N</kbd></td>
+<td>Fronta vkládání: spustit / zastavit · vložit další · vložit vše zbývající</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥E</kbd> <kbd class="k">⌥S</kbd> <kbd class="k">⌥C</kbd> <kbd class="k">⌥P</kbd> <kbd class="k">⌥L</kbd> <kbd class="k">⌥Q</kbd></td>
+<td>Prohlížeč · Nastavení · Vymazat historii · Pozastavit záznam · Zamknout · Ukončit</td>
+</tr>
+<tr>
+<td><kbd class="k">⌘F</kbd> v Prohlížeči</td>
+<td>Hledat</td>
+</tr>
+<tr>
+<td><code>⌘,</code></td>
+<td>Nastavení</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="placeholder-cheat-sheet">Tahák zástupných symbolů</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Zástupný symbol</th>
+<th>Výsledek</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{date}</code> <code>{time}</code> <code>{datetime}</code></td>
+<td>Datum / čas / obojí, systémový formát</td>
+</tr>
+<tr>
+<td><code>{date:yyyy-MM-dd}</code> <code>{time:HH:mm}</code></td>
+<td>Vlastní formát (vzory data podle Unicode)</td>
+</tr>
+<tr>
+<td><code>{date:long}</code> <code>{time:short}</code> <code>{datetime:full}</code></td>
+<td>Pojmenovaný styl: <code>short</code> <code>medium</code> <code>long</code> <code>full</code></td>
+</tr>
+<tr>
+<td><code>{date+7d}</code> <code>{date-1m:MMMM}</code> <code>{time+1h}</code> <code>{datetime-1d:long}</code> <code>{date+1y-2d}</code></td>
+<td>Posun (<code>d</code> <code>w</code> <code>m</code> <code>y</code> <code>h</code>; až čtyři posuny za sebou)</td>
+</tr>
+<tr>
+<td><code>{weekday}</code> <code>{month}</code> <code>{year}</code></td>
+<td>Název dne, název měsíce, rok</td>
+</tr>
+<tr>
+<td><code>{iso}</code> <code>{unix}</code></td>
+<td>Časové razítko ISO 8601, unixový čas</td>
+</tr>
+<tr>
+<td><code>{clipboard}</code> <code>{clipboard:2}</code></td>
+<td>Schránka (položka 1) nebo položka N</td>
+</tr>
+<tr>
+<td><code>{clipboard\|upper}</code> <code>\|lower</code> <code>\|title</code> <code>\|trim</code> <code>\|oneline</code> <code>\|url</code></td>
+<td>Filtry, lze je řetězit</td>
+</tr>
+<tr>
+<td><code>{input:Jméno}</code> <code>{input:Jméno=Výchozí}</code></td>
+<td>Zeptat se před vložením na hodnotu</td>
+</tr>
+<tr>
+<td><code>{choice:Popisek=A\|B\|C}</code></td>
+<td>Nechat vybrat jednu z možností</td>
+</tr>
+<tr>
+<td><code>{cursor}</code></td>
+<td>Pozice kurzoru po vložení</td>
+</tr>
+<tr>
+<td><code>{user}</code> <code>{username}</code> <code>{host}</code></td>
+<td>Celé jméno, název účtu, název počítače</td>
+</tr>
+<tr>
+<td><code>{uuid}</code> <code>{random:1-100}</code></td>
+<td>Nové UUID, náhodné číslo z rozsahu</td>
+</tr>
+<tr>
+<td><code>{{</code> <code>}}</code></td>
+<td>Doslovné složené závorky</td>
+</tr>
+</tbody>
+</table></div></article></main>
+<footer><div class="wrap">
+  <span>© 2026 UK Intis Telecom LTD · Keepit je šířen pod licencí MIT</span>
+  <span><a href="/privacy">Zásady ochrany soukromí</a><span class="en-only"> (anglicky)</span> · <a href="/security">Zabezpečení</a><span class="en-only"> (anglicky)</span> · <a href="/cs/support">Podpora</a> · <a href="https://github.com/andrey-insarov/Keepit/blob/main/CHANGELOG.md">Seznam změn</a> · <a href="https://it.com">it.com</a></span>
+  <span class="langs"><a href="/guide" lang="en" hreflang="en">English</a> · <a href="/ru/guide" lang="ru" hreflang="ru">Русский</a> · <a href="/uk/guide" lang="uk" hreflang="uk">Українська</a> · <a href="/de/guide" lang="de" hreflang="de">Deutsch</a> · <a href="/fr/guide" lang="fr" hreflang="fr">Français</a> · <a href="/es/guide" lang="es" hreflang="es">Español</a> · <a href="/pt-br/guide" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a> · <a href="/ja/guide" lang="ja" hreflang="ja">日本語</a> · <a href="/zh-hans/guide" lang="zh-Hans" hreflang="zh-Hans">简体中文</a> · <a href="/ar/guide" lang="ar" hreflang="ar">العربية</a> · <b lang="cs">Čeština</b> · <a href="/pl/guide" lang="pl" hreflang="pl">Polski</a> · <a href="/it/guide" lang="it" hreflang="it">Italiano</a> · <a href="/nl/guide" lang="nl" hreflang="nl">Nederlands</a></span>
+</div></footer>
+<div id="lb" role="dialog" aria-label="Snímek obrazovky v plné velikosti"><img alt=""></div>
+<script>
+(function(){
+  document.querySelectorAll('.mnav,.lpick').forEach(function(mn){mn.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){mn.removeAttribute('open');});});document.addEventListener('click',function(e){if(mn.open&&!mn.contains(e.target))mn.removeAttribute('open');});mn.addEventListener('toggle',function(){if(mn.open)document.querySelectorAll('.mnav,.lpick').forEach(function(o){if(o!==mn)o.removeAttribute('open');});});});
+  var lb=document.getElementById('lb'),im=lb.querySelector('img');
+  document.querySelectorAll('a.zoom').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();im.src=a.getAttribute('href');im.alt=a.querySelector('img').alt;lb.classList.add('on');});});
+  function close(){lb.classList.remove('on');im.src='';}
+  lb.addEventListener('click',close);document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+  var links=[].slice.call(document.querySelectorAll('aside a')),heads=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  if(links.length&&'IntersectionObserver' in window){
+    var cur=null;function mark(id){links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+id);});}
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){cur=e.target.id;mark(cur);}});},{rootMargin:'-70px 0px -70% 0px'});
+    heads.forEach(function(h){if(h)io.observe(h);});
+  }
+})();
+</script>
+</body></html>

@@ -1,0 +1,33 @@
+{
+  "ui": {
+    "features": "Funkce",
+    "privacy": "Soukromí",
+    "install": "Instalace",
+    "guide": "Příručka",
+    "security": "Zabezpečení",
+    "support": "Podpora",
+    "menu": "Nabídka",
+    "copyright": "© 2026 UK Intis Telecom LTD · Keepit je šířen pod licencí MIT",
+    "privacy_policy": "Zásady ochrany soukromí",
+    "changelog": "Seznam změn",
+    "on_this_page": "Na této stránce",
+    "contents": "Obsah",
+    "open_full_size": "Otevřít v plné velikosti",
+    "full_size_screenshot": "Snímek obrazovky v plné velikosti",
+    "language": "Jazyk",
+    "in_english": "(anglicky)",
+    "translated_note": "Přeloženo z angličtiny. Originál: <a href=\"{en}\">English</a>."
+  },
+  "pages": {
+    "GUIDE.md": {
+      "title": "Příručka Keepit – správce schránky pro Mac",
+      "description": "Jak používat Keepit, bezplatného správce schránky pro Mac: nabídka historie, klávesové zkratky, šablony, Prohlížeč, šifrování a Touch ID.",
+      "crumb": "Příručka"
+    },
+    "SUPPORT.md": {
+      "title": "Podpora Keepit – pomoc se správcem schránky pro Mac",
+      "description": "Jak získat pomoc s Keepit, správcem schránky pro Mac, a krátké odpovědi na časté otázky.",
+      "crumb": "Podpora"
+    }
+  }
+}

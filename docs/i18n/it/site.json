@@ -1,0 +1,33 @@
+{
+  "ui": {
+    "features": "Funzioni",
+    "privacy": "Privacy",
+    "install": "Installazione",
+    "guide": "Guida",
+    "security": "Sicurezza",
+    "support": "Supporto",
+    "menu": "Menu",
+    "copyright": "© 2026 UK Intis Telecom LTD · Keepit è distribuito con licenza MIT",
+    "privacy_policy": "Informativa sulla privacy",
+    "changelog": "Registro delle modifiche",
+    "on_this_page": "In questa pagina",
+    "contents": "Indice",
+    "open_full_size": "Apri a dimensione intera",
+    "full_size_screenshot": "Schermata a dimensione intera",
+    "language": "Lingua",
+    "in_english": "(in inglese)",
+    "translated_note": "Tradotto dall’inglese. Originale: <a href=\"{en}\">English</a>."
+  },
+  "pages": {
+    "GUIDE.md": {
+      "title": "Guida di Keepit – gestore degli appunti per Mac",
+      "description": "Come usare Keepit, il gestore degli appunti gratuito per Mac: menu della cronologia, tasti rapidi, modelli, Visualizzatore, crittografia e Touch ID.",
+      "crumb": "Guida"
+    },
+    "SUPPORT.md": {
+      "title": "Supporto Keepit – aiuto per il gestore degli appunti per Mac",
+      "description": "Come ottenere aiuto per Keepit, il gestore degli appunti per Mac, e risposte brevi alle domande più frequenti.",
+      "crumb": "Supporto"
+    }
+  }
+}

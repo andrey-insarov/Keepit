@@ -49,6 +49,17 @@ LANGS = [
     ("ja",      "ja",      "ja",      "日本語",               "ja_JP",   "ltr"),
     ("zh-Hans", "zh-hans", "zh-Hans", "简体中文",             "zh_CN",   "ltr"),
     ("ar",      "ar",      "ar",      "العربية",              "ar_AR",   "rtl"),
+    ("cs",      "cs",      "cs",      "Čeština",             "cs_CZ",   "ltr"),
+    ("pl",      "pl",      "pl",      "Polski",              "pl_PL",   "ltr"),
+    ("it",      "it",      "it",      "Italiano",            "it_IT",   "ltr"),
+    ("nl",      "nl",      "nl",      "Nederlands",          "nl_NL",   "ltr"),
+    ("tr",      "tr",      "tr",      "Türkçe",              "tr_TR",   "ltr"),
+    ("ko",      "ko",      "ko",      "한국어",               "ko_KR",   "ltr"),
+    ("zh-Hant", "zh-hant", "zh-Hant", "繁體中文",             "zh_HK",   "ltr"),
+    ("he",      "he",      "he",      "עברית",               "he_IL",   "rtl"),
+    ("et",      "et",      "et",      "Eesti",               "et_EE",   "ltr"),
+    ("lt",      "lt",      "lt",      "Lietuvių",            "lt_LT",   "ltr"),
+    ("lv",      "lv",      "lv",      "Latviešu",            "lv_LV",   "ltr"),
 ]
 LANG = {l[0]: dict(code=l[0], slug=l[1], hreflang=l[2], name=l[3], og=l[4], dir=l[5]) for l in LANGS}
 TRANSLATED = {"GUIDE.md": "guide.html", "SUPPORT.md": "support.html"}   # + the landing
@@ -132,14 +143,14 @@ def localize_links(fragment: str, lang: str) -> str:
 # Drawn as SVG (viewBox 20×14) so they look the same everywhere: Windows has no flag emoji.
 # English carries the US flag (16 dots stand for the stars). At 22 px wide they are simplified: no coat of arms for Spain, a plain band for Brazil's motto,
 # Arabic carries the flag of the UAE, which can be drawn exactly at this size.
-def _star(cx: float, cy: float, r: float, rot: float = -90) -> str:
+def _star(cx: float, cy: float, r: float, rot: float = -90, fill: str = "#ffde00") -> str:
     import math
     pts = []
     for i in range(10):
         a = math.radians(rot + i * 36)
         rr = r if i % 2 == 0 else r * 0.382
         pts.append(f"{cx + rr * math.cos(a):.2f},{cy + rr * math.sin(a):.2f}")
-    return f'<polygon fill="#ffde00" points="{" ".join(pts)}"/>'
+    return f'<polygon fill="{fill}" points="{" ".join(pts)}"/>'
 
 
 FLAG = {
@@ -156,6 +167,22 @@ FLAG = {
     "zh-Hans": '<path fill="#de2910" d="M0 0h20v14H0z"/>' + _star(3.5, 3.6, 2.2) + _star(7, 1.5, .75, -60) + _star(8.4, 2.9, .75, -30)
                + _star(8.4, 5, .75, 0) + _star(7, 6.4, .75, 30),
     "ar": '<path fill="#fff" d="M0 0h20v14H0z"/><path fill="#00732f" d="M0 0h20v4.67H0z"/><path d="M0 9.33h20V14H0z"/><path fill="#f00" d="M0 0h5v14H0z"/>',
+    "cs": '<path fill="#fff" d="M0 0h20v14H0z"/><path fill="#d7141a" d="M0 7h20v7H0z"/><path fill="#11457e" d="m0 0 10 7-10 7z"/>',
+    "pl": '<path fill="#fff" d="M0 0h20v14H0z"/><path fill="#dc143c" d="M0 7h20v7H0z"/>',
+    "it": '<path fill="#fff" d="M0 0h20v14H0z"/><path fill="#009246" d="M0 0h6.67v14H0z"/><path fill="#ce2b37" d="M13.33 0H20v14h-6.67z"/>',
+    "nl": '<path fill="#fff" d="M0 0h20v14H0z"/><path fill="#ae1c28" d="M0 0h20v4.67H0z"/><path fill="#21468b" d="M0 9.33h20V14H0z"/>',
+    "tr": '<path fill="#e30a17" d="M0 0h20v14H0z"/><circle cx="7.4" cy="7" r="3.5" fill="#fff"/><circle cx="8.3" cy="7" r="2.8" fill="#e30a17"/>'
+          + _star(11.6, 7, 1.7, -18, "#fff"),
+    "ko": '<path fill="#fff" d="M0 0h20v14H0z"/><g transform="rotate(-34 10 7)"><path fill="#cd2e3a" d="M6.8 7a3.2 3.2 0 0 1 6.4 0z"/>'
+          '<path fill="#0047a0" d="M6.8 7a3.2 3.2 0 0 0 6.4 0z"/><circle cx="8.4" cy="7" r="1.6" fill="#cd2e3a"/><circle cx="11.6" cy="7" r="1.6" fill="#0047a0"/></g>'
+          '<path stroke="#000" stroke-width=".7" d="m3 3.6 2-1.5M3.5 4.3l2-1.5M14.5 2.1l2 1.5M15 1.4l2 1.5M3 10.4l2 1.5M3.5 9.7l2 1.5M14.5 11.9l2-1.5M15 12.6l2-1.5"/>',
+    "zh-Hant": '<path fill="#de2910" d="M0 0h20v14H0z"/>'
+               + "".join(f'<ellipse cx="10" cy="4.4" rx="1.35" ry="2.4" fill="#fff" transform="rotate({a} 10 7)"/>' for a in range(0, 360, 72)),
+    "he": '<path fill="#fff" d="M0 0h20v14H0z"/><path fill="#0038b8" d="M0 1.6h20v1.7H0zM0 10.7h20v1.7H0z"/>'
+          '<path fill="none" stroke="#0038b8" stroke-width=".6" d="m10 4.6 2.1 3.6H7.9zM10 9.4 7.9 5.8h4.2z"/>',
+    "et": '<path fill="#fff" d="M0 0h20v14H0z"/><path fill="#0072ce" d="M0 0h20v4.67H0z"/><path d="M0 4.67h20v4.66H0z"/>',
+    "lt": '<path fill="#fdb913" d="M0 0h20v14H0z"/><path fill="#006a44" d="M0 4.67h20V14H0z"/><path fill="#c1272d" d="M0 9.33h20V14H0z"/>',
+    "lv": '<path fill="#9e3039" d="M0 0h20v14H0z"/><path fill="#fff" d="M0 5.6h20v2.8H0z"/>',
 }
 
 
@@ -180,7 +207,7 @@ def langpick_html(lang: str, ui: dict, page: str | None) -> str:
     return (f'<details class="lpick"><summary aria-label="{ui["language"]}: {LANG[lang]["name"]}">'
             f'{flag_svg(lang)}'
             '<svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg>'
-            f'</summary><div class="links" dir="ltr">{"".join(items)}</div></details>')
+            f'</summary><div class="links{" cols" if len(items) > 12 else ""}" dir="ltr">{"".join(items)}</div></details>')
 
 
 def header_html(lang: str, ui: dict, page: str | None = None) -> str:
@@ -296,6 +323,7 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
 .lpick .links{position:absolute;right:0;top:48px;z-index:30;min-width:220px;padding:6px;border-radius:14px;background:var(--win);border:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.18);display:grid}
 .lpick .links a,.lpick .links b{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;font-size:15px;font-weight:400;color:var(--ink);white-space:nowrap}
 .lpick .links a:hover{background:var(--blue-tint);text-decoration:none}.lpick .links b{font-weight:600;background:color-mix(in srgb,var(--ink) 6%,transparent)}
+@media(min-width:701px){.lpick .links{max-height:calc(100vh - 64px);overflow:auto}.lpick .links.cols{display:block;column-count:2;column-gap:4px;min-width:430px}.lpick .links.cols a,.lpick .links.cols b{break-inside:avoid}}
 @media(max-width:700px){.lpick .links{right:-48px;max-height:70vh;overflow:auto}.lpick .links a,.lpick .links b{padding:11px 12px;font-size:16px}}
 [dir=rtl] .lpick .links{right:auto;left:0}
 @media(max-width:700px){[dir=rtl] .lpick .links{left:-48px}}
