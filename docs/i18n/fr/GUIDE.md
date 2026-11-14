@@ -404,7 +404,7 @@ place la phrase de 24 mots, voir [Phrase de récupération](#recovery-phrase).
 
 Avec *Déverrouiller avec Touch ID*, la clé est également stockée dans la Secure Enclave, protégée par
 votre empreinte : Keepit demande un toucher au lieu du mot de passe. Le mot de passe continue de
-fonctionner en solution de secours (le bouton de mot de passe dans la demande). Écran rabattu et avec
+fonctionner en solution de secours (le bouton *Utiliser le mot de passe…* dans la demande). Écran rabattu et avec
 un Magic Keyboard externe doté de Touch ID, Keepit demande l’empreinte sur le clavier. *Autoriser le
 changement de mot de passe avec Touch ID* permet à une empreinte de remplacer l’ancien mot de passe
 lorsque vous le changez.
@@ -532,7 +532,7 @@ Les détails, y compris la structure interne du format de fichier, se trouvent s
 
 ### Automatisation : le schéma d’URL keepit://
 
-Raccourcis (*Ouvrir l’URL*), Raycast, Alfred, Keyboard Maestro ou `open` dans un shell peuvent piloter
+Raccourcis (*Ouvrir les URL*), Raycast, Alfred, Keyboard Maestro ou `open` dans un shell peuvent piloter
 Keepit, **une fois que vous l’avez activé** dans *Réglages → Avancé → Automatisation → Autoriser les
 commandes URL keepit://*. C’est désactivé par défaut, car n’importe quelle app ou page web peut ouvrir
 une URL, et `add` / `paste` modifient le presse-papiers et saisissent du texte dans l’app au premier
@@ -623,7 +623,7 @@ récent* signifie que le fichier a été écrit par une version plus récente qu
 l’ouvrir.
 
 **Homebrew refuse d’installer par-dessus une app existante.** Quittez Keepit et placez d’abord
-`/Applications/Keepit.app` dans la corbeille, ou ajoutez `--force`.
+`/Applications/Keepit.app` dans la Corbeille, ou ajoutez `--force`.
 
 Toujours bloqué ? [GitHub Issues](https://github.com/andrey-insarov/Keepit/issues) · admin@keep.it.com
 

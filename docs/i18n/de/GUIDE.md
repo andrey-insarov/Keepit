@@ -398,7 +398,7 @@ stattdessen die Phrase aus 24 Wörtern entgegen, siehe [Wiederherstellungsphrase
 
 Mit *Mit Touch ID entsperren* liegt der Schlüssel zusätzlich in der Secure Enclave, geschützt durch
 deinen Fingerabdruck: Keepit bittet um eine Berührung statt um das Passwort. Das Passwort
-funktioniert weiterhin als Ausweg (die Passwort-Taste im Dialog). Ist der Deckel geschlossen und ein
+funktioniert weiterhin als Ausweg (die Taste *Passwort verwenden …* im Dialog). Ist der Deckel geschlossen und ein
 externes Magic Keyboard mit Touch ID angeschlossen, fragt Keepit dort. Mit *Passwortänderung per
 Touch ID erlauben* kann ein Fingerabdruck beim Ändern des Passworts das alte Passwort ersetzen.
 
@@ -523,7 +523,7 @@ inneren Aufbau des Dateiformats, stehen auf der [Sicherheitsseite](/security#bac
 
 ### Automatisierung: das URL-Schema keepit://
 
-Kurzbefehle (*URL öffnen*), Raycast, Alfred, Keyboard Maestro oder `open` in einer Shell können Keepit
+Kurzbefehle (*URLs öffnen*), Raycast, Alfred, Keyboard Maestro oder `open` in einer Shell können Keepit
 steuern, **sobald du das einschaltest**, und zwar unter *Einstellungen → Erweitert → Automatisierung →
 keepit://-URL-Befehle erlauben*. Standardmäßig ist es aus, weil jede App und jede Webseite eine URL
 öffnen kann und `add` / `paste` die Zwischenablage ändern und in die vorderste App tippen. Ist es aus,

@@ -53,11 +53,11 @@ Keepit 是一款菜单栏应用：程序坞里没有图标，你不打开就没�
 
 ![选取“暂不”时：明确说明这意味着什么，以及在哪里可以更改](site/img/guide/no-password-notice.png)
 
-**3. 辅助功能权限。** 为了替你粘贴，Keepit 会向你刚才使用的应用发送 ⌘V。macOS 只允许“系统设置”→“隐私与安全性”→“辅助功能”列表中的应用这样做。点按“打开系统设置”，然后把 Keepit 打开。没有这项权限时，Keepit 仍会记录和复制，但 ⌘V 需要你自己按。
+**3. 无障碍权限。** 为了替你粘贴，Keepit 会向你刚才使用的应用发送 ⌘V。macOS 只允许“系统设置”→“隐私与安全”→“无障碍”（较早版本的 macOS 中为“隐私与安全性”→“辅助功能”）列表中的应用这样做。点按“打开系统设置”，然后把 Keepit 打开。没有这项权限时，Keepit 仍会记录和复制，但 ⌘V 需要你自己按。
 
-![Keepit 请求辅助功能权限](site/img/guide/accessibility-prompt.png)
+![Keepit 请求无障碍权限](site/img/guide/accessibility-prompt.png)
 
-![已在“隐私与安全性”→“辅助功能”中打开 Keepit](site/img/guide/accessibility-settings.png)
+![已在“隐私与安全”→“无障碍”中打开 Keepit](site/img/guide/accessibility-settings.png)
 
 Keepit 默认在登录时启动，可以在“设置”→“通用”中关闭。
 
@@ -267,7 +267,7 @@ Keepit 默认在登录时启动，可以在“设置”→“通用”中关闭�
 
 ### Touch ID
 
-打开“使用 Touch ID 解锁”后，密钥还会保存在安全隔区中，并由你的指纹保护：Keepit 会请你按指纹，而不是输入密码。密码仍然可以作为备用方式使用（提示中的密码按钮）。合上屏幕并使用带 Touch ID 的外接妙控键盘时，Keepit 会在键盘上请求指纹。打开“允许使用 Touch ID 更改密码”后，更改密码时可以用指纹代替旧密码。
+打开“使用 Touch ID 解锁”后，密钥还会保存在安全隔区中，并由你的指纹保护：Keepit 会请你按指纹，而不是输入密码。密码仍然可以作为备用方式使用（提示中的“使用密码…”按钮）。合上屏幕并使用带 Touch ID 的外接妙控键盘时，Keepit 会在键盘上请求指纹。打开“允许使用 Touch ID 更改密码”后，更改密码时可以用指纹代替旧密码。
 
 ![使用 Touch ID 解锁；密码仍可作为备用方式](site/img/guide/touch-id.png)
 
@@ -320,7 +320,7 @@ Keepit 可以把历史记录和模板的加密副本保存在你选择的文件�
 
 ### 自动化：keepit:// URL 方案
 
-快捷指令（“打开 URL”）、Raycast、Alfred、Keyboard Maestro，或者 shell 中的 `open` 命令，都可以控制 Keepit，**前提是你已经打开了这项功能**：“设置”→“高级”→“自动化”→“允许 keepit:// URL 命令”。它默认关闭，因为任何应用或网页都可以打开 URL，而 `add` / `paste` 会更改剪贴板，并向前台应用输入内容。关闭时，Keepit 会忽略这类 URL，并发出提示音。打开后，Keepit 会查看是谁打开了 URL：每个应用发来的第一条会更改内容的命令（`paste`、`copy`、`template`、`add`、`add-template`、`pause`、`resume`）都会显示在一个对话框中。“允许”只执行这一次，“始终允许”会把这个应用加入受信任列表（可以在同一个面板中用“忘记受信任的应用”清空）。对于网页浏览器，或者 macOS 无法识别的发送方，每次都会询问。只是打开 Keepit 自己窗口的命令从不询问。
+快捷指令（“打开URL”）、Raycast、Alfred、Keyboard Maestro，或者 shell 中的 `open` 命令，都可以控制 Keepit，**前提是你已经打开了这项功能**：“设置”→“高级”→“自动化”→“允许 keepit:// URL 命令”。它默认关闭，因为任何应用或网页都可以打开 URL，而 `add` / `paste` 会更改剪贴板，并向前台应用输入内容。关闭时，Keepit 会忽略这类 URL，并发出提示音。打开后，Keepit 会查看是谁打开了 URL：每个应用发来的第一条会更改内容的命令（`paste`、`copy`、`template`、`add`、`add-template`、`pause`、`resume`）都会显示在一个对话框中。“允许”只执行这一次，“始终允许”会把这个应用加入受信任列表（可以在同一个面板中用“忘记受信任的应用”清空）。对于网页浏览器，或者 macOS 无法识别的发送方，每次都会询问。只是打开 Keepit 自己窗口的命令从不询问。
 
 | URL | 效果 |
 |-----|--------|
@@ -342,7 +342,7 @@ Keepit 每天检查一次 GitHub Releases，有更新时会用对话框提示。
 
 ### 卸载
 
-“设置”→“高级”→“重置与卸载”→“卸载…”会移除应用、数据文件夹、钥匙串条目（包括 Touch ID 密钥）、登录项和辅助功能中的条目。它会要求你输入密码或使用 Touch ID，键入 `DELETE`，并再次确认。如果以后可能还需要这些数据，请先导出一份备份。如果是用 Homebrew 安装的，之后请运行 `brew uninstall --cask --force keepit`，让 Homebrew 也清除这个 cask 的记录。
+“设置”→“高级”→“重置与卸载”→“卸载…”会移除应用、数据文件夹、钥匙串条目（包括 Touch ID 密钥）、登录项和无障碍中的条目。它会要求你输入密码或使用 Touch ID，键入 `DELETE`，并再次确认。如果以后可能还需要这些数据，请先导出一份备份。如果是用 Homebrew 安装的，之后请运行 `brew uninstall --cask --force keepit`，让 Homebrew 也清除这个 cask 的记录。
 
 ![“设置”→“高级”](site/img/guide/prefs-advanced.png)
 
@@ -352,7 +352,7 @@ Keepit 每天检查一次 GitHub Releases，有更新时会用对话框提示。
 
 ### 故障排除
 
-**选择项目后没有粘贴任何内容。** 缺少辅助功能权限：请检查“系统设置”→“隐私与安全性”→“辅助功能”→“Keepit”。如果 Keepit 已经在列表中却仍然不粘贴，请先关闭再重新打开：重新安装应用后，macOS 会忘记之前的授权。
+**选择项目后没有粘贴任何内容。** 缺少无障碍权限：请检查“系统设置”→“隐私与安全”→“无障碍”→“Keepit”。如果 Keepit 已经在列表中却仍然不粘贴，请先关闭再重新打开：重新安装应用后，macOS 会忘记之前的授权。
 
 **某个快捷键没有反应。** 它被其他应用或 macOS 占用了，Keepit 在启动时会报告这一点。请在“快捷键”面板中换一个组合键。在一台没有额外配置的 Mac 上，⌃⌥ 加数字和字母的组合是空闲的。
 

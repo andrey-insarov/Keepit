@@ -392,7 +392,7 @@ contraseña (o Touch ID). *Recuperar acceso…* acepta en su lugar la frase de 2
 
 Con *Desbloquear con Touch ID*, la clave se guarda además en el Secure Enclave, protegida por tu
 huella: Keepit pide un toque en lugar de la contraseña. La contraseña sigue funcionando como
-alternativa (el botón de contraseña del aviso). Con la tapa cerrada y un Magic Keyboard externo con
+alternativa (el botón *Usar contraseña…* del aviso). Con la tapa cerrada y un Magic Keyboard externo con
 Touch ID, Keepit lo pide en el teclado. *Permitir cambiar la contraseña con Touch ID* deja que la
 huella sustituya a la contraseña antigua cuando la cambias.
 
@@ -510,7 +510,7 @@ detalles, incluido cómo es por dentro el formato del archivo, están en la
 
 ### Automatización: el esquema de URL keepit://
 
-Atajos (*Abrir URL*), Raycast, Alfred, Keyboard Maestro u `open` en un terminal pueden controlar
+Atajos (*Abrir direcciones URL*), Raycast, Alfred, Keyboard Maestro u `open` en un terminal pueden controlar
 Keepit **una vez que lo actives** en *Ajustes → Avanzado → Automatización → Permitir comandos URL
 keepit://*. Viene desactivado porque cualquier app o página web puede abrir una URL, y `add` / `paste`
 cambian el portapapeles y escriben en la app que está en primer plano. Con la opción desactivada,

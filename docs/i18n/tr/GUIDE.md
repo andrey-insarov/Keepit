@@ -394,7 +394,7 @@ ifadeyi kabul eder, bkz. [Kurtarma ifadesi](#recovery-phrase).
 
 *Touch ID ile kilidi aç* seçeneğiyle anahtar, parmak izinizin arkasında Secure Enclave’de de
 saklanır: Keepit parola yerine dokunmanızı ister. Parola yedek yöntem olarak çalışmayı sürdürür;
-istem penceresinde *Parolayı Kullan* seçeneğini kullanın. Kapak kapalıyken ve Touch ID’li harici
+istem penceresinde *Parola Kullan…* seçeneğini kullanın. Kapak kapalıyken ve Touch ID’li harici
 bir Magic Keyboard varken Keepit dokunmayı klavyede ister. *Parolayı Touch ID ile değiştirmeye izin
 ver*, parolayı değiştirirken parmak izinin eski parolanın yerini tutmasını sağlar.
 

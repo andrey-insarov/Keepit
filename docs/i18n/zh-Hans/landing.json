@@ -305,7 +305,7 @@
  ],
  [
   "<details><summary>Why does Keepit ask for the Accessibility permission?</summary><p>For two things: to send ⌘V to the app you were working in after you pick an item, and to find the text cursor so the menu opens next to it. Keepit does not read or monitor other apps. Without the permission it still records history and copies the chosen item to the clipboard — you paste by hand.</p></details>",
-  "<details><summary>Keepit 为什么要请求辅助功能权限？</summary><p>有两个用途。第一，在你选好项目之后，向你刚才使用的应用发送 ⌘V。第二，找到文本光标的位置，把菜单打开在它旁边。Keepit 不会读取或监视其他应用。不给这项权限，它照样会记录历史，并把选中的项目放进剪贴板，只是需要你自己来粘贴。</p></details>"
+  "<details><summary>Keepit 为什么要请求无障碍权限？</summary><p>有两个用途。第一，在你选好项目之后，向你刚才使用的应用发送 ⌘V。第二，找到文本光标的位置，把菜单打开在它旁边。Keepit 不会读取或监视其他应用。不给这项权限，它照样会记录历史，并把选中的项目放进剪贴板，只是需要你自己来粘贴。</p></details>"
  ],
  [
   "<details><summary>Does anything leave my Mac?</summary><p>Not unless you ask it to. Keepit has no server: the only network request is the daily update check against GitHub Releases — and you can switch it off in Settings → General, after which Keepit makes no request at all. The App Store edition does not make even that one. There is no account, no telemetry, no crash reporting. If you switch on automatic backup, encrypted copies are written to a folder you choose; if that folder lives in iCloud Drive or Dropbox, that service syncs them under your account — Keepit itself never talks to it.</p></details>",
