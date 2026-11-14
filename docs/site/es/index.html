@@ -203,7 +203,8 @@
 .langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
 .tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
 code,kbd,pre{direction:ltr;unicode-bidi:isolate}
-[dir=rtl] .tpl b{direction:ltr;unicode-bidi:isolate}
+[dir=rtl] .tpl b,[dir=rtl] .tags>span{direction:ltr;unicode-bidi:isolate}
+html:not([lang=en]) header a[href="/security"]::after{content:"EN";font-size:.62em;font-weight:600;letter-spacing:.04em;vertical-align:super;margin-inline-start:3px;opacity:.6}
 .lpick{position:relative}.lpick summary{list-style:none;cursor:pointer;height:40px;padding:0 8px;display:flex;align-items:center;gap:5px;border-radius:10px;color:var(--ink-2,var(--ink))}
 .lpick summary::-webkit-details-marker{display:none}.lpick summary .chev{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
 .lpick .fl{flex:none;width:23px;height:16px;border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
@@ -333,7 +334,7 @@ open "keepit://pause"</div>
     <div class="ledger">
       <div><strong>Sin</strong><span>cuentas, servidores ni sincronización propia. No hay dónde iniciar sesión.</span></div>
       <div><strong>Sin</strong><span>analíticas, informes de fallos ni rastreadores en la app, ni siquiera anónimos. El sitio web solo cuenta las visitas a las páginas, sin cookies.</span></div>
-      <div><strong>Una</strong><span>sola petición de red: la búsqueda diaria de actualizaciones en GitHub. Se puede desactivar. La versión del App Store ni siquiera tiene permiso de acceso a la red: <a href="/security#network">compruébalo tú mismo</a> (en inglés).</span></div>
+      <div><strong>Una</strong><span>sola petición de red: la búsqueda diaria de actualizaciones en GitHub. Se puede desactivar. La versión del App Store ni siquiera tiene permiso de acceso a la red: <a href="/security#network">compruébalo</a> (en inglés).</span></div>
       <div><strong>Una</strong><span>carpeta en tu Mac con todos los datos. Más la carpeta de copias de seguridad, si las haces. Bórralas y no quedará ni rastro de Keepit.</span></div>
     </div>
     <div class="facts"><ul>

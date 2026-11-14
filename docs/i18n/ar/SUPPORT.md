@@ -6,7 +6,7 @@
 <form id="fb" class="fb" action="/api/feedback" method="post" enctype="multipart/form-data" novalidate>
   <div class="row2">
     <label>الاسم<input name="name" type="text" maxlength="100" autocomplete="name" required></label>
-    <label>E-mail<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
+    <label>البريد الإلكتروني<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
   </div>
   <label>الموضوع
     <select name="type" required>
@@ -34,8 +34,8 @@
   var f=document.getElementById('fb'),err=document.getElementById('fb-err'),ok=document.getElementById('fb-ok'),
       msg=f.elements.message,count=document.getElementById('fb-count'),picker=document.getElementById('fb-files'),
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
-  var EM={name:'أدخل اسمك.',email:'أدخل عنوان بريد إلكتروني صحيحًا.',type:'اختر موضوع الرسالة.',short:'يرجى الوصف في 70 حرفًا على الأقل.',long:'الرسالة طويلة جدًا (5000 حرف على الأكثر).',files:'يمكن إرفاق 5 لقطات على الأكثر. أزل الزائد منها ثم أرسل النموذج من جديد.',total:'المرفقات كبيرة جدًا (5 لقطات على الأكثر، كل منها 1 ميغابايت).',form:'تعذرت قراءة النموذج.',spam:'يرجى إكمال التحقق من الرسائل المزعجة.',send:'تعذر إرسال الرسالة الآن. راسلنا بالبريد الإلكتروني.'};
-  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'«'+n+'» أكبر من 1 ميغابايت. أزل الملف أو صغّره.';if(c==='notimage')return'«'+n+'» تعذر التعرف عليه كصورة مدعومة. أزل الملف أو استبدله.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'حدث خطأ ما.';}
+  var EM={name:'أدخل اسمك.',email:'أدخل عنوان بريد إلكتروني صحيحًا.',type:'اختر موضوع الرسالة.',short:'يرجى الوصف في 70 حرفًا على الأقل.',long:'الرسالة طويلة جدًا (5000 حرف على الأكثر).',files:'يمكن إرفاق 5 لقطات على الأكثر. أزل الزائد منها ثم أرسل النموذج من جديد.',total:'المرفقات كبيرة جدًا (5 لقطات على الأكثر، كل منها 1 ميغابايت).',form:'تعذرت قراءة النموذج.',spam:'يُرجى تأكيد أنك إنسان.',send:'تعذر إرسال الرسالة الآن. راسلنا بالبريد الإلكتروني.'};
+  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'«'+n+'» أكبر من 1 ميغابايت. أزل الملف أو صغّره. ثم أرسل النموذج مرة أخرى.';if(c==='notimage')return'«'+n+'» تعذر التعرف عليه كصورة مدعومة. أزل الملف أو استبدله. ثم أرسل النموذج مرة أخرى.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'حدث خطأ ما.';}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' ك.ب':(n/1048576).toFixed(1).replace('.','.')+' م.ب';}
   function render(){
@@ -58,7 +58,7 @@
     }
     picker.value='';render();
   });
-  msg.addEventListener('input',function(){var n=msg.value.trim().length;count.textContent=n<70?'بقي '+(70-n)+' حرفًا':n+' حرفًا';});
+  msg.addEventListener('input',function(){var n=msg.value.trim().length;count.textContent=n<70?'عدد الأحرف المتبقية: '+(70-n):'عدد الأحرف: '+n;});
   f.addEventListener('submit',function(ev){
     ev.preventDefault();show('');
     if(!f.elements.name.value.trim())return show('أدخل اسمك.');
@@ -66,7 +66,7 @@
     if(msg.value.trim().length<70)return show('يرجى الوصف في 70 حرفًا على الأقل.');
     if(msg.value.length>5000)return show('الرسالة طويلة جدًا (5000 حرف على الأكثر).');
     var ts=f.querySelector('[name=cf-turnstile-response]');
-    if(!ts||!ts.value)return show('يرجى إكمال التحقق من الرسائل المزعجة.');
+    if(!ts||!ts.value)return show('يُرجى تأكيد أنك إنسان.');
     var fd=new FormData();
     ['name','email','type','message'].forEach(function(k){fd.append(k,f.elements[k].value);});
     fd.append('cf-turnstile-response',ts.value);

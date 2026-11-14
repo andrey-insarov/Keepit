@@ -34,8 +34,8 @@ Encontrou um erro, uma tradução incorreta ou tem alguma dúvida? Escreva abaix
   var f=document.getElementById('fb'),err=document.getElementById('fb-err'),ok=document.getElementById('fb-ok'),
       msg=f.elements.message,count=document.getElementById('fb-count'),picker=document.getElementById('fb-files'),
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
-  var EM={name:'Informe o seu nome.',email:'Informe um endereço de e-mail válido.',type:'Escolha o assunto da mensagem.',short:'Descreva em pelo menos 70 caracteres.',long:'A mensagem está longa demais (no máximo 5000 caracteres).',files:'Você pode anexar no máximo 5 capturas. Remova as excedentes e envie o formulário de novo.',total:'Os anexos são grandes demais (até 5 capturas, com no máximo 1 MB cada).',form:'Não foi possível ler o formulário.',spam:'Conclua a verificação antispam.',send:'Não foi possível enviar a mensagem agora. Escreva para nós por e-mail.'};
-  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'“'+n+'” tem mais de 1 MB. Remova ou reduza o arquivo.';if(c==='notimage')return'“'+n+'” não foi reconhecido como uma imagem compatível. Remova ou substitua o arquivo.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Algo deu errado.';}
+  var EM={name:'Informe o seu nome.',email:'Informe um endereço de e-mail válido.',type:'Escolha o assunto da mensagem.',short:'Descreva em pelo menos 70 caracteres.',long:'A mensagem está longa demais (no máximo 5000 caracteres).',files:'Você pode anexar no máximo 5 capturas. Remova as excedentes e envie o formulário de novo.',total:'Os anexos são grandes demais (até 5 capturas, com no máximo 1 MB cada).',form:'Não foi possível ler o formulário.',spam:'Confirme que você é uma pessoa.',send:'Não foi possível enviar a mensagem agora. Escreva para nós por e-mail.'};
+  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'“'+n+'” tem mais de 1 MB. Remova ou reduza o arquivo. Depois, envie o formulário novamente.';if(c==='notimage')return'“'+n+'” não foi reconhecido como uma imagem compatível. Remova ou substitua o arquivo. Depois, envie o formulário novamente.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Algo deu errado.';}
   var PF={one:' caractere',other:' caracteres'},PR=window.Intl&&Intl.PluralRules?new Intl.PluralRules('pt-BR'):null;
   function pf(n){var k=PR?PR.select(n):'other';return Object.prototype.hasOwnProperty.call(PF,k)?PF[k]:PF.other;}
   function show(e){err.textContent=e;err.hidden=!e;}
@@ -60,7 +60,7 @@ Encontrou um erro, uma tradução incorreta ou tem alguma dúvida? Escreva abaix
     }
     picker.value='';render();
   });
-  msg.addEventListener('input',function(){var n=msg.value.trim().length;count.textContent=n<70?'faltam '+(70-n)+pf(70-n):n+pf(n);});
+  msg.addEventListener('input',function(){var n=msg.value.trim().length;count.textContent=n<70?(70-n===1?'falta ':'faltam ')+(70-n)+pf(70-n):n+pf(n);});
   f.addEventListener('submit',function(ev){
     ev.preventDefault();show('');
     if(!f.elements.name.value.trim())return show('Informe o seu nome.');
@@ -68,7 +68,7 @@ Encontrou um erro, uma tradução incorreta ou tem alguma dúvida? Escreva abaix
     if(msg.value.trim().length<70)return show('Descreva em pelo menos 70 caracteres.');
     if(msg.value.length>5000)return show('A mensagem está longa demais (no máximo 5000 caracteres).');
     var ts=f.querySelector('[name=cf-turnstile-response]');
-    if(!ts||!ts.value)return show('Conclua a verificação antispam.');
+    if(!ts||!ts.value)return show('Confirme que você é uma pessoa.');
     var fd=new FormData();
     ['name','email','type','message'].forEach(function(k){fd.append(k,f.elements[k].value);});
     fd.append('cf-turnstile-response',ts.value);
@@ -86,7 +86,7 @@ E-mail: [admin@keep.it.com](mailto:admin@keep.it.com) · Passo a passo: o [guia]
 
 ## Respostas rápidas
 
-**Nada é colado depois que escolho um item.** Conceda a permissão de Acessibilidade: Ajustes do Sistema → Privacidade e Segurança → Acessibilidade → ative o Keepit (se ele já estiver na lista, desative e ative de novo). Enquanto isso, pressione ⌘V você mesmo: o item já está na área de transferência.
+**Nada é colado depois que escolho um item.** Conceda a permissão de Acessibilidade: Ajustes do Sistema → Privacidade e Segurança → Acessibilidade → ative o Keepit (se ele já estiver na lista, desative e ative de novo). Enquanto isso, pressione ⌘V manualmente: o item já está na área de transferência.
 
 **Esqueci a senha.** Clique em *Recuperar acesso…* na janela de desbloqueio ou use o Touch ID no mesmo Mac. Sem nenhum dos dois, não há como recuperar os dados.
 

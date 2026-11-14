@@ -36,7 +36,7 @@ Hai trovato un bug o una traduzione sbagliata, oppure hai una domanda? Scrivici 
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
   var PF={one:' carattere',other:' caratteri'},PR=window.Intl&&Intl.PluralRules?new Intl.PluralRules('it'):null;
   function pf(n){var k=PR?PR.select(n):'other';return Object.prototype.hasOwnProperty.call(PF,k)?PF[k]:PF.other;}
-  var EM={name:'Inserisci il tuo nome.',email:'Inserisci un indirizzo e-mail valido.',type:'Scegli di cosa si tratta.',short:'Descrivi il problema in almeno 70 caratteri.',long:'Il messaggio è troppo lungo (al massimo 5000 caratteri).',files:'Si possono allegare al massimo 5 schermate. Rimuovi quelle in più e invia di nuovo il modulo.',total:'Gli allegati sono troppo grandi (al massimo 5 schermate da 1 MB ciascuna).',form:'Non è stato possibile leggere il modulo.',spam:'Completa la verifica antispam.',send:'Al momento non è stato possibile inviare il messaggio. Scrivici un’e-mail.'};
+  var EM={name:'Inserisci il tuo nome.',email:'Inserisci un indirizzo e-mail valido.',type:'Scegli di cosa si tratta.',short:'Descrivi il problema in almeno 70 caratteri.',long:'Il messaggio è troppo lungo (al massimo 5000 caratteri).',files:'Si possono allegare al massimo 5 schermate. Rimuovi quelle in più e invia di nuovo il modulo.',total:'Gli allegati sono troppo grandi (al massimo 5 schermate da 1 MB ciascuna).',form:'Non è stato possibile leggere il modulo.',spam:'Conferma di essere una persona.',send:'Al momento non è stato possibile inviare il messaggio. Scrivici un’e-mail.'};
   function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'«'+n+'» supera 1 MB. Rimuovi il file o riducilo. Poi invia di nuovo il modulo.';if(c==='notimage')return'«'+n+'» non è stato riconosciuto come immagine supportata. Rimuovi il file o sostituiscilo. Poi invia di nuovo il modulo.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Qualcosa è andato storto.';}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' KB':(n/1048576).toFixed(1).replace('.',',')+' MB';}
@@ -68,7 +68,7 @@ Hai trovato un bug o una traduzione sbagliata, oppure hai una domanda? Scrivici 
     if(msg.value.trim().length<70)return show('Descrivi il problema in almeno 70 caratteri.');
     if(msg.value.length>5000)return show('Il messaggio è troppo lungo (al massimo 5000 caratteri).');
     var ts=f.querySelector('[name=cf-turnstile-response]');
-    if(!ts||!ts.value)return show('Completa la verifica antispam.');
+    if(!ts||!ts.value)return show('Conferma di essere una persona.');
     var fd=new FormData();
     ['name','email','type','message'].forEach(function(k){fd.append(k,f.elements[k].value);});
     fd.append('cf-turnstile-response',ts.value);

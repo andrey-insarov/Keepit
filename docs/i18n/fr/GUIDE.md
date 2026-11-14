@@ -44,7 +44,7 @@ Apple. Cliquez sur *Ouvrir*.
 
 ![Confirmation Gatekeeper de macOS](site/img/guide/gatekeeper.png)
 
-Keepit est signé et notarié, se met à jour tout seul et fonctionne en natif sur les Mac à puce Apple
+Keepit est signé et authentifié, se met à jour tout seul et fonctionne en natif sur les Mac à puce Apple
 et Intel sous macOS 13 Ventura ou ultérieur.
 
 ### Premier lancement
@@ -136,7 +136,7 @@ instant. L’élément 1 est le presse-papiers :
 | `⌃⌥1` … `⌃⌥9`, `⌃⌥0` | Coller l’un des éléments 1 à 10 de l’historique |
 | `⌥⇧V` | Coller l’élément *précédent* (élément 2) ; appuyez de nouveau pour revenir |
 | `⌃⌥V` | Coller le presse-papiers en texte brut, sans mise en forme |
-| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | Coller le presse-papiers en MAJUSCULES / en minuscules / avec Une Majuscule À Chaque Mot / avec une majuscule en début de phrase |
+| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | Coller le presse-papiers en MAJUSCULES / en minuscules / avec Chaque Mot En Majuscule / comme une phrase |
 | `⌃⌥W` | Coller le presse-papiers sans les espaces de début et de fin |
 | `⌃⌥J` | Coller le presse-papiers sur une seule ligne |
 | `⌃⌥K` `⌃⌥D` `⌃⌥Y` | Coller le presse-papiers barré / souligné / souligné d’un trait ondulé, sous forme de texte brut qui garde son apparence partout, y compris dans les messageries (voir ci-dessous) |
@@ -214,8 +214,7 @@ extraits de code, un logo que vous collez souvent. Ils sont rangés dans une arb
 apparaissent dans le sous-menu *Modèles* du menu d’historique ainsi que sous **⌥T**. Une installation
 neuve contient un dossier *Exemples* (une formule de salutation, la date du jour, une citation du
 presse-papiers et une signature) pour que vous voyiez ce que les modèles savent faire avant d’écrire
-les vôtres. Supprimez-les ou modifiez-les à votre guise (*Réinitialiser…* dans les Réglages les fait
-revenir).
+les vôtres. Supprimez-les ou modifiez-les à votre guise . Pour retrouver les exemples, utilisez *Réglages → Avancé → Réinitialiser et désinstaller → Réinitialiser…*. Cette opération réinitialise aussi les autres données et réglages de Keepit.
 
 ![Le dossier Exemples : le survol d’un élément affiche son texte](site/img/guide/template-examples.png)
 
@@ -378,8 +377,7 @@ depuis la 3.0.3 conserve l’ancien choix, *Immédiatement* si le verrouillage a
 activé). Un gestionnaire de presse-papiers qui réclame son mot de passe après chaque pause café finit
 par ne plus être utilisé, et `⌥L` est là pour les moments qui comptent. *Immédiatement* verrouille en
 même temps que l’écran. *Après 5 minutes*, *Après 15 minutes* ou *Après 1 heure* ne tiennent pas compte d’une
-courte absence : Keepit reste déverrouillé et continue d’enregistrer, et ne se verrouille que si le
-Mac est resté absent pendant toute la durée. Il en va de même quand Keepit démarre alors que le Mac
+courte absence : Keepit reste déverrouillé et continue d’enregistrer, et ne se verrouille que si le Mac est resté verrouillé ou en veille pendant toute la durée choisie. Il en va de même quand Keepit démarre alors que le Mac
 est déjà verrouillé ou que la session d’un autre utilisateur est au premier plan (un redémarrage après
 une mise à jour, par exemple) : l’absence est comptée à partir du démarrage, dans la mesure où macOS
 signale cet état à Keepit (c’est normalement le cas ; sinon, le décompte commence au prochain
@@ -563,7 +561,7 @@ verrouillé.
 
 Keepit consulte GitHub Releases une fois par jour et propose les mises à jour dans une zone de
 dialogue. *Rechercher des mises à jour…* le fait immédiatement. Les mises à jour sont signées (EdDSA)
-et notariées. Avec Homebrew, `brew upgrade --cask keepit` fait la même chose. Les sommes de contrôle de
+et authentifiées. Avec Homebrew, `brew upgrade --cask keepit` fait la même chose. Les sommes de contrôle de
 chaque téléchargement se trouvent dans `SHA256SUMS` sur la page de la version.
 
 Cette recherche est la seule requête réseau de Keepit, et elle est facultative : *Réglages → Général →
@@ -639,7 +637,7 @@ Toujours bloqué ? [GitHub Issues](https://github.com/andrey-insarov/Keepit/iss
 | `⇧` dans le menu | Menu étendu : toutes les actions pour chaque élément |
 | `⌥⇧V` | Coller l’élément précédent / permuter |
 | `⌃⌥V` | Coller le presse-papiers en texte brut |
-| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | MAJUSCULES / minuscules / Majuscule À Chaque Mot / majuscule en début de phrase |
+| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | MAJUSCULES / minuscules / Chaque Mot En Majuscule / Comme une phrase |
 | `⌃⌥W` `⌃⌥J` | Sans espaces aux extrémités / sur une seule ligne |
 | `⌃⌥K` `⌃⌥D` `⌃⌥Y` `⌃⌥X` | Barré / souligné / souligné ondulé / retirer les décorations |
 | `⌃⌥A` | Ajouter le presse-papiers aux Modèles |

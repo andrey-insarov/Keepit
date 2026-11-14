@@ -63,17 +63,15 @@ Podrobnosti najdete v oddílu [Záloha](#backup).
 
 **2. Heslo (nepovinné).** Keepit umí ukládat historii a šablony zašifrované a odemykat je pomocí
 Touch ID. Rozhodnout se můžete hned, nebo později v *Nastavení → Zabezpečení*; jak to funguje,
-vysvětluje [Část 6](#part-6-security). Při volbě *Teď ne* zůstane vše na disku nešifrované. Pokud
-jste před chvílí obnovili zálohu jejím heslem, Keepit nabídne, že toto heslo ponechá i pro tento Mac.
+vysvětluje [Část 6](#part-6-security). Při volbě *Teď ne* zůstane vše na disku nešifrované. Po obnovení zálohy jejím heslem Keepit nabídne, že toto heslo ponechá i pro tento Mac.
 
 ![Nabídka hesla při prvním spuštění](site/img/guide/password-offer.png)
 
 ![Volba Teď ne: jasné sdělení, co to znamená a kde to lze změnit](site/img/guide/no-password-notice.png)
 
-**3. Oprávnění Zpřístupnění.** Aby mohl vkládat za vás, posílá Keepit ⌘V do aplikace, ve které jste
-pracovali. macOS to dovolí jen aplikacím uvedeným v *Nastavení systému → Soukromí a zabezpečení →
+**3. Oprávnění Zpřístupnění.** Aby mohl vkládat za vás, posílá Keepit ⌘V do aplikace, ve které pracujete. macOS to dovolí jen aplikacím uvedeným v *Nastavení systému → Soukromí a zabezpečení →
 Zpřístupnění*. Klikněte na *Otevřít Nastavení systému* a Keepit zapněte. Bez tohoto oprávnění Keepit
-dál zaznamenává a kopíruje, ale ⌘V stisknete sami.
+dál zaznamenává a kopíruje, ale ⌘V je třeba stisknout ručně.
 
 ![Keepit žádá o oprávnění Zpřístupnění](site/img/guide/accessibility-prompt.png)
 
@@ -91,7 +89,7 @@ Stiskněte **⌥M** v kterékoli aplikaci nebo klikněte na ikonu 📎. Nabídka
 kurzoru, pokud ho Keepit dokáže najít, jinak u ukazatele myši.
 
 Každý řádek je jedna zkopírovaná položka, nejnovější je nahoře. Ta nejnovější je **tučně**, protože
-právě ona je teď ve schránce. Ikona ukazuje aplikaci, ze které jste kopírovali. Název zakončený `…`
+právě ona je teď ve schránce. Ikona ukazuje zdrojovou aplikaci. Název zakončený `…`
 má víc řádků, než nabídka zobrazuje. Obrázky mají miniaturu, seznamy souborů ukazují názvy souborů.
 
 ![Panel náhledu vedle nabídky ukazuje zvýrazněnou položku celou, se zdrojovou aplikací, časem a velikostí](site/img/guide/menu-preview.png)
@@ -164,7 +162,7 @@ do formuláře, řádky ze stránky do dokumentu. Fronta vkládání to zvládne
    ![Řádek nabídek při zapnuté frontě: červená tečka a počítadlo](site/img/guide/queue-menubar.png)
 
 3. Přepněte se tam, kam text patří, a pro každou položku stiskněte **⌥V**. Jako první se vloží to,
-   co jste zkopírovali jako první, a počítadlo klesá. ⌘V dál vkládá schránku jako obvykle, takže
+   co bylo zkopírováno jako první, a počítadlo klesá. ⌘V dál vkládá schránku jako obvykle, takže
    obojí můžete kombinovat.
 4. Fronta se sama vypne po vložení poslední položky nebo po dvou minutách bez kopírování a vkládání
    (dobu lze upravit). Dalším stiskem ⌥N ji ukončíte dřív.
@@ -202,8 +200,7 @@ zkratka buď funguje všude, nebo se nezobrazuje.
 Šablony jsou položky, které si necháváte natrvalo: podpisy, adresy, připravené odpovědi, úryvky
 kódu, logo, které často vkládáte. Jsou uložené ve stromu se složkami a najdete je v podnabídce
 *Šablony* v nabídce historie a pod **⌥T**. Čerstvá instalace obsahuje složku *Příklady* (pozdrav,
-dnešní datum, citace schránky a podpis), abyste viděli, co šablony umějí, ještě než si napíšete
-vlastní. Můžete je libovolně mazat nebo upravovat. Ukázkové šablony vrátí *Nastavení → Pokročilé →
+dnešní datum, citace schránky a podpis), aby bylo vidět, co šablony umějí, ještě než si napíšete vlastní. Můžete je libovolně mazat nebo upravovat. Ukázkové šablony vrátí *Nastavení → Pokročilé →
 Obnovení a odinstalace → Obnovit…*; tato volba ale vrátí do výchozího stavu i ostatní data
 a nastavení.
 
@@ -298,7 +295,7 @@ a **Šablony**.
   editor opustíte. Obrázek se zobrazí zmenšený na velikost panelu, nad ním jsou jeho rozměry
   v pixelech a velikost souboru. Seznamy souborů otevřou soubor dvojím kliknutím. *Zobrazit jako
   hex dump* v kontextové nabídce ukáže surové bajty.
-- Panel nástrojů: *Odeslat do schránky*, *Vložit* (do aplikace, ze které jste přišli), *Přidat do
+- Panel nástrojů: *Odeslat do schránky*, *Vložit* (do aplikace, ze které byl Prohlížeč otevřen), *Přidat do
   šablon*, *Nová položka*, *Nová složka*, *Smazat*, *Vložit ▾* (zástupné symboly) a **?**, tedy
   tato příručka.
 - **Hledat** (`⌘F`): pole vlevo filtruje historii a šablony podle názvu i obsahu a shodu zvýrazní.
@@ -424,8 +421,7 @@ nastavovat nemusí. Bez hesla je zaškrtávací pole neaktivní a uvádí důvod
 běží) zapíše Keepit do složky soubor s názvem `Keepit-<datum a čas>-<instalace>-<id>.keepit`,
 pro kontrolu ho přečte zpět a teprve potom smaže nejstarší ze svých vlastních kopií nad počet
 *Ponechat posledních* (ve výchozím stavu 10, rozsah 1–100). Každá kopie je úplná sama o sobě, nejde
-o přírůstek, takže vám vždy stačí jediný soubor. Kopií vytvořených jiným Macem ani souborů, které
-jste tam uložili sami, se Keepit nikdy nedotkne: dva Macy sdílející jednu složku zapisují dvě
+o přírůstek, takže vám vždy stačí jediný soubor. Kopií vytvořených jiným Macem ani souborů, které do složky přidáte, se Keepit nikdy nedotkne: dva Macy sdílející jednu složku zapisují dvě
 nezávislé řady. Stavový řádek vedle nadpisu *Automatická záloha* ukazuje čas a velikost poslední
 kopie, nebo důvod, proč poslední pokus selhal. Dokud je Keepit zamčený, neděje se nic; *Zálohovat
 nyní* (v části *Ruční záloha*) na období klidu nečeká.
@@ -454,9 +450,9 @@ vyjadřují důvěru ke konkrétnímu Macu (Touch ID, automatizace přes URL a j
 samotná složka se zálohami), vždy zůstávají taková, jaká jsou zde. Pokud je historie ze zálohy větší,
 než dovolují limity tohoto Macu, Keepit před potvrzením řekne, kolik se toho vejde.
 
-Obnovili jste zálohu její frází pro obnovu na Macu, který ještě nemá heslo? Keepit vás požádá,
+Obnovujete zálohu její frází pro obnovu na Macu, který ještě nemá heslo? Keepit vás požádá,
 abyste ho nejprve nastavili, takže se obnovená data nikdy neuloží nešifrovaná, a nechá vás tuto
-frázi pro tento Mac ponechat, nebo získat novou. Obnovili jste ji heslem? Keepit nabídne, že ho
+frázi pro tento Mac ponechat, nebo získat novou. Obnovujete ji heslem? Keepit nabídne, že ho
 ponechá jako heslo tohoto Macu. V obou případech je samotná automatická záloha nastavením každého
 Macu zvlášť: zapněte ji zde a vyberte složku (klidně tu stejnou) a tento Mac začne vedle souborů
 starého Macu zapisovat vlastní řadu.
@@ -562,8 +558,7 @@ pokud to jde* na panelu Obecné hledání kurzoru vypne, pokud chcete nabídku v
 
 **Něco, co jsem zkopíroval(a), chybí.** Nezaznamenává se nic, co kopírující aplikace označila jako
 skryté, ani kopie pořízená ve chvíli, kdy byl v popředí správce hesel (vestavěný seznam) nebo
-aplikace z vašeho seznamu ignorovaných, včetně aplikace, ze které jste se před okamžikem přepnuli
-jinam. Viz *Nastavení → Historie* a
+aplikace z vašeho seznamu ignorovaných, včetně aplikace, která byla v popředí těsně před přepnutím. Viz *Nastavení → Historie* a
 [stránku o zabezpečení](/security#what-is-not-recorded) (anglicky).
 
 **Touch ID se nenabízí.** V tuto chvíli není dostupný žádný snímač Touch ID (zavřené víko, žádná

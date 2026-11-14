@@ -64,7 +64,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
 .langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
 .tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
 code,kbd,pre{direction:ltr;unicode-bidi:isolate}
-[dir=rtl] .tpl b{direction:ltr;unicode-bidi:isolate}
+[dir=rtl] .tpl b,[dir=rtl] .tags>span{direction:ltr;unicode-bidi:isolate}
+html:not([lang=en]) header a[href="/security"]::after{content:"EN";font-size:.62em;font-weight:600;letter-spacing:.04em;vertical-align:super;margin-inline-start:3px;opacity:.6}
 .lpick{position:relative}.lpick summary{list-style:none;cursor:pointer;height:40px;padding:0 8px;display:flex;align-items:center;gap:5px;border-radius:10px;color:var(--ink-2,var(--ink))}
 .lpick summary::-webkit-details-marker{display:none}.lpick summary .chev{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
 .lpick .fl{flex:none;width:23px;height:16px;border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
@@ -123,7 +124,7 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
   var PF={one:' teken',other:' tekens'},PR=window.Intl&&Intl.PluralRules?new Intl.PluralRules('nl'):null;
   function pf(n){var k=PR?PR.select(n):'other';return Object.prototype.hasOwnProperty.call(PF,k)?PF[k]:PF.other;}
-  var EM={name:'Vul je naam in.',email:'Vul een geldig e-mailadres in.',type:'Kies waar het over gaat.',short:'Beschrijf het in minimaal 70 tekens.',long:'Het bericht is te lang (maximaal 5000 tekens).',files:'Je kunt maximaal 5 schermafbeeldingen meesturen. Verwijder de overige en verstuur het formulier opnieuw.',total:'De bijlagen zijn te groot (maximaal 5 schermafbeeldingen van elk 1 MB).',form:'Het formulier kon niet worden gelezen.',spam:'Rond de spamcontrole af.',send:'Het bericht kon nu niet worden verstuurd. Stuur ons een e-mail.'};
+  var EM={name:'Vul je naam in.',email:'Vul een geldig e-mailadres in.',type:'Kies waar het over gaat.',short:'Beschrijf het in minimaal 70 tekens.',long:'Het bericht is te lang (maximaal 5000 tekens).',files:'Je kunt maximaal 5 schermafbeeldingen meesturen. Verwijder de overige en verstuur het formulier opnieuw.',total:'De bijlagen zijn te groot (maximaal 5 schermafbeeldingen van elk 1 MB).',form:'Het formulier kon niet worden gelezen.',spam:'Bevestig dat je een mens bent.',send:'Het bericht kon nu niet worden verstuurd. Stuur ons een e-mail.'};
   function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'‘'+n+'’ is groter dan 1 MB. Verwijder het bestand of maak het kleiner. Verstuur het formulier daarna opnieuw.';if(c==='notimage')return'‘'+n+'’ is niet herkend als ondersteunde afbeelding. Verwijder of vervang het bestand. Verstuur het formulier daarna opnieuw.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Er is iets misgegaan.';}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' kB':(n/1048576).toFixed(1).replace('.',',')+' MB';}
@@ -155,7 +156,7 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
     if(msg.value.trim().length<70)return show('Beschrijf het in minimaal 70 tekens.');
     if(msg.value.length>5000)return show('Het bericht is te lang (maximaal 5000 tekens).');
     var ts=f.querySelector('[name=cf-turnstile-response]');
-    if(!ts||!ts.value)return show('Rond de spamcontrole af.');
+    if(!ts||!ts.value)return show('Bevestig dat je een mens bent.');
     var fd=new FormData();
     ['name','email','type','message'].forEach(function(k){fd.append(k,f.elements[k].value);});
     fd.append('cf-turnstile-response',ts.value);

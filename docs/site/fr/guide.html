@@ -64,7 +64,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
 .langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
 .tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
 code,kbd,pre{direction:ltr;unicode-bidi:isolate}
-[dir=rtl] .tpl b{direction:ltr;unicode-bidi:isolate}
+[dir=rtl] .tpl b,[dir=rtl] .tags>span{direction:ltr;unicode-bidi:isolate}
+html:not([lang=en]) header a[href="/security"]::after{content:"EN";font-size:.62em;font-weight:600;letter-spacing:.04em;vertical-align:super;margin-inline-start:3px;opacity:.6}
 .lpick{position:relative}.lpick summary{list-style:none;cursor:pointer;height:40px;padding:0 8px;display:flex;align-items:center;gap:5px;border-radius:10px;color:var(--ink-2,var(--ink))}
 .lpick summary::-webkit-details-marker{display:none}.lpick summary .chev{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
 .lpick .fl{flex:none;width:23px;height:16px;border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
@@ -120,7 +121,7 @@ dans <em>Applications</em>.</p>
 <p>À la première ouverture, macOS confirme que l’app provient d’Internet et qu’elle a été vérifiée par
 Apple. Cliquez sur <em>Ouvrir</em>.</p>
 <figure class="shot" style="max-width:336px"><a href="/img/guide/gatekeeper.png?v=d79051e5" class="zoom" title="Ouvrir en taille réelle"><img src="/img/guide/gatekeeper.png?v=d79051e5" alt="Confirmation Gatekeeper de macOS" width="336" height="336" loading="lazy"></a><figcaption>Confirmation Gatekeeper de macOS</figcaption></figure>
-<p>Keepit est signé et notarié, se met à jour tout seul et fonctionne en natif sur les Mac à puce Apple
+<p>Keepit est signé et authentifié, se met à jour tout seul et fonctionne en natif sur les Mac à puce Apple
 et Intel sous macOS 13 Ventura ou ultérieur.</p>
 <h3 id="first-launch">Premier lancement</h3>
 <p>Keepit est une app de barre des menus : elle n’a ni icône dans le Dock ni fenêtre tant que vous n’en
@@ -202,7 +203,7 @@ instant. L’élément 1 est le presse-papiers :</p>
 </tr>
 <tr>
 <td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
-<td>Coller le presse-papiers en MAJUSCULES / en minuscules / avec Une Majuscule À Chaque Mot / avec une majuscule en début de phrase</td>
+<td>Coller le presse-papiers en MAJUSCULES / en minuscules / avec Chaque Mot En Majuscule / comme une phrase</td>
 </tr>
 <tr>
 <td><kbd class="k">⌃⌥W</kbd></td>
@@ -286,8 +287,7 @@ extraits de code, un logo que vous collez souvent. Ils sont rangés dans une arb
 apparaissent dans le sous-menu <em>Modèles</em> du menu d’historique ainsi que sous <strong>⌥T</strong>. Une installation
 neuve contient un dossier <em>Exemples</em> (une formule de salutation, la date du jour, une citation du
 presse-papiers et une signature) pour que vous voyiez ce que les modèles savent faire avant d’écrire
-les vôtres. Supprimez-les ou modifiez-les à votre guise (<em>Réinitialiser…</em> dans les Réglages les fait
-revenir).</p>
+les vôtres. Supprimez-les ou modifiez-les à votre guise . Pour retrouver les exemples, utilisez <em>Réglages → Avancé → Réinitialiser et désinstaller → Réinitialiser…</em>. Cette opération réinitialise aussi les autres données et réglages de Keepit.</p>
 <figure class="shot" style="max-width:660px"><a href="/img/guide/template-examples.png?v=c143a1d7" class="zoom" title="Ouvrir en taille réelle"><img src="/img/guide/template-examples.png?v=c143a1d7" alt="Le dossier Exemples : le survol d’un élément affiche son texte" width="660" height="209" loading="lazy"></a><figcaption>Le dossier Exemples : le survol d’un élément affiche son texte</figcaption></figure>
 <figure class="shot" style="max-width:738px"><a href="/img/guide/template-menu-letters.png?v=ea96333e" class="zoom" title="Ouvrir en taille réelle"><img src="/img/guide/template-menu-letters.png?v=ea96333e" alt="Le menu des modèles : les dossiers s’ouvrent en sous-menus, les lettres précédées de &amp; deviennent des touches d’accès rapide" width="738" height="715" loading="lazy"></a><figcaption>Le menu des modèles : les dossiers s’ouvrent en sous-menus, les lettres précédées de &amp; deviennent des touches d’accès rapide</figcaption></figure>
 <h3 id="creating-and-organising">Créer et organiser</h3>
@@ -486,8 +486,7 @@ depuis la 3.0.3 conserve l’ancien choix, <em>Immédiatement</em> si le verroui
 activé). Un gestionnaire de presse-papiers qui réclame son mot de passe après chaque pause café finit
 par ne plus être utilisé, et <kbd class="k">⌥L</kbd> est là pour les moments qui comptent. <em>Immédiatement</em> verrouille en
 même temps que l’écran. <em>Après 5 minutes</em>, <em>Après 15 minutes</em> ou <em>Après 1 heure</em> ne tiennent pas compte d’une
-courte absence : Keepit reste déverrouillé et continue d’enregistrer, et ne se verrouille que si le
-Mac est resté absent pendant toute la durée. Il en va de même quand Keepit démarre alors que le Mac
+courte absence : Keepit reste déverrouillé et continue d’enregistrer, et ne se verrouille que si le Mac est resté verrouillé ou en veille pendant toute la durée choisie. Il en va de même quand Keepit démarre alors que le Mac
 est déjà verrouillé ou que la session d’un autre utilisateur est au premier plan (un redémarrage après
 une mise à jour, par exemple) : l’absence est comptée à partir du démarrage, dans la mesure où macOS
 signale cet état à Keepit (c’est normalement le cas ; sinon, le décompte commence au prochain
@@ -666,7 +665,7 @@ verrouillé.</p>
 <h3 id="updates">Mises à jour</h3>
 <p>Keepit consulte GitHub Releases une fois par jour et propose les mises à jour dans une zone de
 dialogue. <em>Rechercher des mises à jour…</em> le fait immédiatement. Les mises à jour sont signées (EdDSA)
-et notariées. Avec Homebrew, <code>brew upgrade --cask keepit</code> fait la même chose. Les sommes de contrôle de
+et authentifiées. Avec Homebrew, <code>brew upgrade --cask keepit</code> fait la même chose. Les sommes de contrôle de
 chaque téléchargement se trouvent dans <code>SHA256SUMS</code> sur la page de la version.</p>
 <p>Cette recherche est la seule requête réseau de Keepit, et elle est facultative : <em>Réglages → Général →
 Mises à jour → Rechercher les mises à jour automatiquement</em>. Une fois désactivée, Keepit ne contacte
@@ -750,7 +749,7 @@ l’ouvrir.</p>
 </tr>
 <tr>
 <td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
-<td>MAJUSCULES / minuscules / Majuscule À Chaque Mot / majuscule en début de phrase</td>
+<td>MAJUSCULES / minuscules / Chaque Mot En Majuscule / Comme une phrase</td>
 </tr>
 <tr>
 <td><kbd class="k">⌃⌥W</kbd> <kbd class="k">⌃⌥J</kbd></td>

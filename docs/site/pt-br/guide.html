@@ -64,7 +64,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
 .langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
 .tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
 code,kbd,pre{direction:ltr;unicode-bidi:isolate}
-[dir=rtl] .tpl b{direction:ltr;unicode-bidi:isolate}
+[dir=rtl] .tpl b,[dir=rtl] .tags>span{direction:ltr;unicode-bidi:isolate}
+html:not([lang=en]) header a[href="/security"]::after{content:"EN";font-size:.62em;font-weight:600;letter-spacing:.04em;vertical-align:super;margin-inline-start:3px;opacity:.6}
 .lpick{position:relative}.lpick summary{list-style:none;cursor:pointer;height:40px;padding:0 8px;display:flex;align-items:center;gap:5px;border-radius:10px;color:var(--ink-2,var(--ink))}
 .lpick summary::-webkit-details-marker{display:none}.lpick summary .chev{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
 .lpick .fl{flex:none;width:23px;height:16px;border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
@@ -197,7 +198,7 @@ item 1 é a área de transferência:</p>
 </tr>
 <tr>
 <td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
-<td>Colar a área de transferência em MAIÚSCULAS / minúsculas / Iniciais Maiúsculas / só a primeira letra maiúscula</td>
+<td>Colar a área de transferência em MAIÚSCULAS / minúsculas / Iniciais Maiúsculas / como uma frase</td>
 </tr>
 <tr>
 <td><kbd class="k">⌃⌥W</kbd></td>
@@ -277,8 +278,7 @@ atalho ou funciona em todo lugar, ou não é mostrado.</p>
 um logotipo que você cola com frequência. Eles ficam em uma árvore com pastas e aparecem no submenu
 <em>Modelos</em> do menu de histórico e em <strong>⌥T</strong>. Uma instalação nova vem com uma pasta <em>Exemplos</em> (uma
 saudação, a data de hoje, uma citação da área de transferência e uma assinatura) para você ver o que
-os modelos fazem antes de escrever os seus. Apague ou edite esses exemplos como quiser (<em>Redefinir…</em>
-nos Ajustes traz todos de volta).</p>
+os modelos fazem antes de escrever os seus. Apague ou edite esses exemplos como quiser . Para recuperar os exemplos, use <em>Ajustes → Avançado → Redefinir e desinstalar → Redefinir…</em>. Isso também redefine os outros dados e ajustes do Keepit.</p>
 <figure class="shot" style="max-width:660px"><a href="/img/guide/template-examples.png?v=c143a1d7" class="zoom" title="Abrir em tamanho real"><img src="/img/guide/template-examples.png?v=c143a1d7" alt="A pasta Exemplos: ao passar o cursor sobre um item, o texto dele aparece" width="660" height="209" loading="lazy"></a><figcaption>A pasta Exemplos: ao passar o cursor sobre um item, o texto dele aparece</figcaption></figure>
 <figure class="shot" style="max-width:738px"><a href="/img/guide/template-menu-letters.png?v=ea96333e" class="zoom" title="Abrir em tamanho real"><img src="/img/guide/template-menu-letters.png?v=ea96333e" alt="O menu de modelos: as pastas abrem como submenus e as letras depois de &amp; viram teclas de acesso rápido" width="738" height="715" loading="lazy"></a><figcaption>O menu de modelos: as pastas abrem como submenus e as letras depois de &amp; viram teclas de acesso rápido</figcaption></figure>
 <h3 id="creating-and-organising">Criar e organizar</h3>
@@ -469,8 +469,7 @@ instalação nova (uma atualização a partir da 3.0.3 mantém a escolha anterio
 bloqueio junto com a tela estava ativado). Um gerenciador de área de transferência que pede a senha
 depois de cada pausa para o café acaba deixando de ser usado, e <kbd class="k">⌥L</kbd> está aí para os momentos que
 importam. <em>Imediatamente</em> bloqueia junto com a tela. <em>Após 5 minutos</em>, <em>Após 15 minutos</em> ou <em>Após 1 hora</em>
-ignoram uma ausência curta: o Keepit continua desbloqueado e gravando, e só bloqueia quando o Mac
-ficou ausente durante todo esse tempo. O mesmo vale quando o Keepit abre com o Mac já bloqueado ou com
+ignoram uma ausência curta: o Keepit continua desbloqueado e gravando, e só bloqueia quando o Mac permaneceu bloqueado ou em repouso durante todo o intervalo escolhido. O mesmo vale quando o Keepit abre com o Mac já bloqueado ou com
 a sessão de outro usuário em primeiro plano (uma reabertura depois de uma atualização, por exemplo): a
 ausência conta a partir da abertura, na medida em que o macOS informa esse estado ao Keepit
 (normalmente informa; quando não consegue, a contagem começa no próximo bloqueio ou repouso). Com o
@@ -521,7 +520,7 @@ nenhuma configuração extra. Sem senha, a caixa de seleção fica desativada e 
 <code>Keepit-&lt;date and time&gt;-&lt;installation&gt;-&lt;id&gt;.keepit</code>, lê o arquivo de volta para conferir e só então
 apaga as mais antigas das suas próprias cópias além de <em>Manter os últimos</em> (10 por padrão, de 1 a
 100). Cada cópia é completa por si só, não um incremento, então um único arquivo é tudo de que você
-precisa. Cópias feitas por outro Mac e arquivos que você mesmo colocar ali nunca são tocados: dois
+precisa. Cópias feitas por outro Mac e arquivos que você colocar ali nunca são tocados: dois
 Macs que compartilham uma pasta gravam duas séries independentes. A linha de status ao lado do título
 <em>Backup automático</em> mostra a hora e o tamanho da última cópia, ou por que a última tentativa falhou.
 Nada acontece enquanto o Keepit está bloqueado. <em>Fazer backup agora</em> (em <em>Backup manual</em>) não espera o
@@ -715,7 +714,7 @@ mais nova do que a que está tentando abri-lo.</p>
 </tr>
 <tr>
 <td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
-<td>MAIÚSCULAS / minúsculas / Iniciais Maiúsculas / primeira letra maiúscula</td>
+<td>MAIÚSCULAS / minúsculas / Iniciais Maiúsculas / Como uma frase</td>
 </tr>
 <tr>
 <td><kbd class="k">⌃⌥W</kbd> <kbd class="k">⌃⌥J</kbd></td>

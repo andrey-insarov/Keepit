@@ -34,8 +34,8 @@ Vous avez trouvé un bug, une erreur de traduction, ou vous avez une question ?
   var f=document.getElementById('fb'),err=document.getElementById('fb-err'),ok=document.getElementById('fb-ok'),
       msg=f.elements.message,count=document.getElementById('fb-count'),picker=document.getElementById('fb-files'),
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
-  var EM={name:'Indiquez votre nom.',email:'Indiquez une adresse e-mail valide.',type:'Choisissez le sujet du message.',short:'Merci de décrire le problème en 70 caractères au moins.',long:'Le message est trop long (5000 caractères au maximum).',files:'Vous pouvez joindre 5 captures au maximum. Retirez les captures en trop et renvoyez le formulaire.',total:'Les pièces jointes sont trop volumineuses (5 captures au maximum, de 1 Mo chacune au maximum).',form:'Le formulaire n’a pas pu être lu.',spam:'Merci de valider la vérification anti-spam.',send:'Le message n’a pas pu être envoyé pour le moment. Écrivez-nous plutôt par e-mail.'};
-  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'« '+n+' » dépasse 1 Mo. Retirez ou réduisez le fichier.';if(c==='notimage')return'« '+n+' » n’a pas été reconnu comme une image prise en charge. Retirez ou remplacez le fichier.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Une erreur s’est produite.';}
+  var EM={name:'Indiquez votre nom.',email:'Indiquez une adresse e-mail valide.',type:'Choisissez le sujet du message.',short:'Merci de décrire le problème en 70 caractères au moins.',long:'Le message est trop long (5000 caractères au maximum).',files:'Vous pouvez joindre 5 captures au maximum. Retirez les captures en trop et renvoyez le formulaire.',total:'Les pièces jointes sont trop volumineuses (5 captures au maximum, de 1 Mo chacune au maximum).',form:'Le formulaire n’a pas pu être lu.',spam:'Veuillez confirmer que vous êtes une personne.',send:'Le message n’a pas pu être envoyé pour le moment. Écrivez-nous plutôt par e-mail.'};
+  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'« '+n+' » dépasse 1 Mo. Retirez ou réduisez le fichier. Envoyez ensuite à nouveau le formulaire.';if(c==='notimage')return'« '+n+' » n’a pas été reconnu comme une image prise en charge. Retirez ou remplacez le fichier. Envoyez ensuite à nouveau le formulaire.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Une erreur s’est produite.';}
   var PF={one:' caractère',other:' caractères'},PR=window.Intl&&Intl.PluralRules?new Intl.PluralRules('fr'):null;
   function pf(n){var k=PR?PR.select(n):'other';return Object.prototype.hasOwnProperty.call(PF,k)?PF[k]:PF.other;}
   function show(e){err.textContent=e;err.hidden=!e;}
@@ -68,7 +68,7 @@ Vous avez trouvé un bug, une erreur de traduction, ou vous avez une question ?
     if(msg.value.trim().length<70)return show('Merci de décrire le problème en 70 caractères au moins.');
     if(msg.value.length>5000)return show('Le message est trop long (5000 caractères au maximum).');
     var ts=f.querySelector('[name=cf-turnstile-response]');
-    if(!ts||!ts.value)return show('Merci de valider la vérification anti-spam.');
+    if(!ts||!ts.value)return show('Veuillez confirmer que vous êtes une personne.');
     var fd=new FormData();
     ['name','email','type','message'].forEach(function(k){fd.append(k,f.elements[k].value);});
     fd.append('cf-turnstile-response',ts.value);

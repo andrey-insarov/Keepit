@@ -203,7 +203,8 @@
 .langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
 .tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
 code,kbd,pre{direction:ltr;unicode-bidi:isolate}
-[dir=rtl] .tpl b{direction:ltr;unicode-bidi:isolate}
+[dir=rtl] .tpl b,[dir=rtl] .tags>span{direction:ltr;unicode-bidi:isolate}
+html:not([lang=en]) header a[href="/security"]::after{content:"EN";font-size:.62em;font-weight:600;letter-spacing:.04em;vertical-align:super;margin-inline-start:3px;opacity:.6}
 .lpick{position:relative}.lpick summary{list-style:none;cursor:pointer;height:40px;padding:0 8px;display:flex;align-items:center;gap:5px;border-radius:10px;color:var(--ink-2,var(--ink))}
 .lpick summary::-webkit-details-marker{display:none}.lpick summary .chev{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
 .lpick .fl{flex:none;width:23px;height:16px;border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
@@ -250,7 +251,7 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
       </a>
       <a class="btn btn-ghost" href="#install">Homebrew et App Store</a>
     </div>
-    <p class="fine">Gratuit et open source (MIT) · macOS 13 ou ultérieur, puce Apple et Intel · Notarié par Apple · <a href="https://github.com/andrey-insarov/Keepit/releases">Toutes les versions</a></p>
+    <p class="fine">Gratuit et open source (MIT) · macOS 13 ou ultérieur, puce Apple et Intel · Authentifié par Apple · <a href="https://github.com/andrey-insarov/Keepit/releases">Toutes les versions</a></p>
 
     <div class="demo" aria-label="Animation : Option-M ouvre le menu d’historique de Keepit au niveau du curseur de texte et colle l’élément choisi">
       <div class="win">
@@ -322,7 +323,7 @@ open "keepit://pause"</div>
         <h3>Une touche de collage par app</h3> <p>Certaines apps collent avec <kbd class="k">⌘⇧V</kbd> ou <kbd class="k">⌃V</kbd>. Indiquez-le une fois à Keepit pour l’app concernée et il y utilisera la bonne touche.</p>
       </div>
       <div class="cell c2">
-        <h3>Mises à jour automatiques</h3> <p>L’app est signée avec un Developer ID et notariée par Apple. Une fois par jour, elle consulte GitHub Releases et installe la mise à jour en un clic. La signature de chaque mise à jour est vérifiée avant son lancement. Cette recherche peut être désactivée, et Keepit n’envoie alors plus aucune requête sur Internet.</p>
+        <h3>Mises à jour automatiques</h3> <p>L’app est signée avec un Developer ID et authentifiée par Apple. Une fois par jour, elle consulte GitHub Releases et installe la mise à jour en un clic. La signature de chaque mise à jour est vérifiée avant son lancement. Cette recherche peut être désactivée, et Keepit n’envoie alors plus aucune requête sur Internet.</p>
       </div>
     </div>
   </div></section>
@@ -348,7 +349,7 @@ open "keepit://pause"</div>
     <h2>Simple à installer, agréable à utiliser</h2>
     <p class="kicker">Le format des données est le même dans toutes les versions. Vous pouvez à tout moment transférer vos données d’un ordinateur à l’autre avec un fichier de sauvegarde chiffré.</p>
     <div class="ways">
-      <div class="way"><h3>Téléchargement</h3><p>Une image disque signée et notariée. Faites glisser Keepit dans Applications et appuyez sur <kbd class="k">⌥M</kbd>.</p><a class="btn btn-primary" id="download2" href="https://github.com/andrey-insarov/Keepit/releases/latest">Télécharger le DMG</a></div>
+      <div class="way"><h3>Téléchargement</h3><p>Une image disque signée et authentifiée. Faites glisser Keepit dans Applications et appuyez sur <kbd class="k">⌥M</kbd>.</p><a class="btn btn-primary" id="download2" href="https://github.com/andrey-insarov/Keepit/releases/latest">Télécharger le DMG</a></div>
       <div class="way"><h3>Homebrew</h3><p>Depuis le tap du projet. <code>brew upgrade</code> le met à jour avec tout le reste.</p>
         <div class="brew"><code id="brewcmd">brew tap andrey-insarov/keepit https://github.com/andrey-insarov/Keepit &amp;&amp; brew install --cask andrey-insarov/keepit/keepit</code><button type="button" id="copybrew">Copier</button></div></div>
       <div class="way"><h3>Mac App Store</h3><p>Version en bac à sable avec les mêmes fonctionnalités et sans aucune recherche de mises à jour. Keepit est en cours de validation. Le lien apparaîtra ici dès sa publication.</p><a class="btn btn-ghost" id="appstore" href="https://github.com/andrey-insarov/Keepit#installation">Bientôt</a></div>

@@ -133,7 +133,7 @@ Eintrag 1 ist dabei die Zwischenablage:
 | `⌃⌥1` … `⌃⌥9`, `⌃⌥0` | Verlaufseintrag 1–10 einfügen |
 | `⌥⇧V` | Den *vorherigen* Eintrag (Eintrag 2) einfügen; noch einmal drücken, um zurückzutauschen |
 | `⌃⌥V` | Zwischenablage als reinen Text einfügen, ohne Formatierung |
-| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | Zwischenablage in GROSSBUCHSTABEN / kleinbuchstaben / Mit Großen Wortanfängen / mit großem Satzanfang einfügen |
+| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | Zwischenablage in GROSSBUCHSTABEN / kleinbuchstaben / Jedes Wort Groß / mit großem Satzanfang einfügen |
 | `⌃⌥W` | Zwischenablage ohne Leerraum am Anfang und Ende einfügen |
 | `⌃⌥J` | Zwischenablage zu einer Zeile zusammengefasst einfügen |
 | `⌃⌥K` `⌃⌥D` `⌃⌥Y` | Zwischenablage durchgestrichen / unterstrichen / mit Wellenlinie einfügen, als reiner Text, der überall gleich aussieht, auch in Chats (siehe unten) |
@@ -213,7 +213,7 @@ Code-Schnipsel, ein Logo, das du oft einfügst. Sie liegen in einem Baum mit Ord
 Untermenü *Vorlagen* des Verlaufsmenüs und unter **⌥T**. Eine frische Installation bringt einen
 Ordner *Beispiele* mit (eine Begrüßung, das heutige Datum, ein Zitat der Zwischenablage und eine
 Signatur), damit du siehst, was Vorlagen können, bevor du eigene schreibst. Lösche oder bearbeite sie
-nach Belieben (*Zurücksetzen …* in den Einstellungen bringt sie zurück).
+nach Belieben . Die Beispiele lassen sich über *Einstellungen → Erweitert → Zurücksetzen und deinstallieren → Zurücksetzen …* wiederherstellen. Dabei werden auch die übrigen Daten und Einstellungen von Keepit zurückgesetzt.
 
 ![Der Ordner Beispiele: Beim Zeigen auf einen Eintrag erscheint sein Text](site/img/guide/template-examples.png)
 
@@ -371,8 +371,7 @@ alte Wahl, nämlich *Sofort*, wenn das Sperren zusammen mit dem Bildschirm einge
 Clipboard-Manager, der nach jeder Kaffeepause sein Passwort verlangt, wird bald nicht mehr benutzt,
 und für die Momente, in denen es darauf ankommt, gibt es `⌥L`. *Sofort* sperrt zusammen mit dem
 Bildschirm. *Nach 5 Minuten*, *Nach 15 Minuten* oder *Nach 1 Stunde* lassen eine kurze Abwesenheit
-unberücksichtigt: Keepit bleibt entsperrt und zeichnet weiter auf und sperrt erst, wenn der Mac die
-ganze Zeit über weg war. Dasselbe gilt, wenn Keepit startet, während der Mac schon gesperrt ist oder
+unberücksichtigt: Keepit bleibt entsperrt und zeichnet weiter auf und sperrt erst, wenn der Mac während der gesamten eingestellten Zeit gesperrt oder im Ruhezustand war. Dasselbe gilt, wenn Keepit startet, während der Mac schon gesperrt ist oder
 die Sitzung eines anderen Benutzers im Vordergrund läuft (etwa bei einem Neustart nach einem Update):
 Die Abwesenheit zählt ab dem Start, soweit macOS diesen Zustand an Keepit meldet (normalerweise tut es
 das; wenn nicht, beginnt die Zählung mit der nächsten Sperre oder dem nächsten Ruhezustand). Mit
@@ -629,7 +628,7 @@ Kommst du nicht weiter? [GitHub Issues](https://github.com/andrey-insarov/Keepit
 | `⇧` im Menü | Erweitertes Menü: alle Aktionen pro Eintrag |
 | `⌥⇧V` | Vorherigen Eintrag einfügen / tauschen |
 | `⌃⌥V` | Zwischenablage als reinen Text einfügen |
-| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | GROSSBUCHSTABEN / kleinbuchstaben / Große Wortanfänge / großer Satzanfang |
+| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | GROSSBUCHSTABEN / kleinbuchstaben / Jedes Wort Groß / Satzanfang groß |
 | `⌃⌥W` `⌃⌥J` | Ohne Leerraum am Rand / in einer Zeile |
 | `⌃⌥K` `⌃⌥D` `⌃⌥Y` `⌃⌥X` | Durchgestrichen / unterstrichen / Wellenlinie / Verzierungen entfernen |
 | `⌃⌥A` | Zwischenablage zu Vorlagen hinzufügen |

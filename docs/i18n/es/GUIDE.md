@@ -133,7 +133,7 @@ elemento 1 es el portapapeles:
 | `⌃⌥1` … `⌃⌥9`, `⌃⌥0` | Pegar uno de los elementos del 1 al 10 del historial |
 | `⌥⇧V` | Pegar el elemento *anterior* (el 2); pulsa otra vez para volver al primero |
 | `⌃⌥V` | Pegar el portapapeles como texto sin formato |
-| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | Pegar el portapapeles en MAYÚSCULAS / minúsculas / Mayúscula En Cada Palabra / con mayúscula inicial |
+| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | Pegar el portapapeles en MAYÚSCULAS / minúsculas / Cada Palabra En Mayúscula / como una oración |
 | `⌃⌥W` | Pegar el portapapeles sin los espacios del principio y del final |
 | `⌃⌥J` | Pegar el portapapeles unido en una sola línea |
 | `⌃⌥K` `⌃⌥D` `⌃⌥Y` | Pegar el portapapeles tachado / subrayado / con subrayado ondulado, como texto sin formato que conserva su aspecto en cualquier sitio, también en los chats (ver más abajo) |
@@ -208,8 +208,7 @@ Las plantillas son elementos que guardas para siempre: firmas, direcciones, resp
 de código, un logotipo que pegas a menudo. Están en un árbol con carpetas y aparecen en el submenú
 *Plantillas* del menú del historial y con **⌥T**. Una instalación nueva trae una carpeta *Ejemplos*
 (un saludo, la fecha de hoy, una cita del portapapeles y una firma) para que veas lo que pueden hacer
-las plantillas antes de escribir las tuyas. Bórralas o edítalas como quieras (*Restablecer…* en los
-Ajustes las recupera).
+las plantillas antes de escribir las tuyas. Bórralas o edítalas como quieras . Puedes recuperar los ejemplos en *Ajustes → Avanzado → Restablecer y desinstalar → Restablecer…*. Esto también restablece los demás datos y ajustes de Keepit.
 
 ![La carpeta Ejemplos: al pasar el puntero por un elemento se ve su texto](site/img/guide/template-examples.png)
 
@@ -366,7 +365,7 @@ después de que el Mac haya estado un rato bloqueado o en reposo. *Bloqueo autom
 *Inmediatamente* si estaba activado el bloqueo junto con la pantalla). Un gestor de portapapeles que
 pide la contraseña después de cada pausa para el café acaba por no usarse, y `⌥L` está ahí para los
 momentos que importan. *Inmediatamente* bloquea a la vez que la pantalla. *Tras 5 minutos*, *Tras 15 minutos* o *Tras 1 hora* pasan por alto una ausencia corta: Keepit sigue desbloqueado y grabando, y solo
-se bloquea cuando el Mac ha estado ausente todo ese tiempo. Lo mismo vale cuando Keepit arranca con el
+se bloquea cuando el Mac ha permanecido bloqueado o en reposo durante todo el intervalo elegido. Lo mismo vale cuando Keepit arranca con el
 Mac ya bloqueado o con la sesión de otro usuario en primer plano (por ejemplo, al reiniciarse tras una
 actualización): la ausencia cuenta desde el arranque, en la medida en que macOS comunica ese estado a
 Keepit (normalmente lo hace; si no puede, la cuenta empieza en el siguiente bloqueo o reposo). Con
@@ -610,7 +609,7 @@ escribió una versión más nueva que la que intenta abrirlo.
 | `⇧` en el menú | Menú ampliado: todas las acciones de cada elemento |
 | `⌥⇧V` | Pegar el elemento anterior / alternar |
 | `⌃⌥V` | Pegar el portapapeles como texto sin formato |
-| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | MAYÚSCULAS / minúsculas / Mayúscula En Cada Palabra / mayúscula inicial |
+| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | MAYÚSCULAS / minúsculas / Cada Palabra En Mayúscula / Como una oración |
 | `⌃⌥W` `⌃⌥J` | Sin espacios en los extremos / en una sola línea |
 | `⌃⌥K` `⌃⌥D` `⌃⌥Y` `⌃⌥X` | Tachado / subrayado / subrayado ondulado / quitar decoraciones |
 | `⌃⌥A` | Añadir el portapapeles a Plantillas |

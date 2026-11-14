@@ -64,7 +64,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
 .langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
 .tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
 code,kbd,pre{direction:ltr;unicode-bidi:isolate}
-[dir=rtl] .tpl b{direction:ltr;unicode-bidi:isolate}
+[dir=rtl] .tpl b,[dir=rtl] .tags>span{direction:ltr;unicode-bidi:isolate}
+html:not([lang=en]) header a[href="/security"]::after{content:"EN";font-size:.62em;font-weight:600;letter-spacing:.04em;vertical-align:super;margin-inline-start:3px;opacity:.6}
 .lpick{position:relative}.lpick summary{list-style:none;cursor:pointer;height:40px;padding:0 8px;display:flex;align-items:center;gap:5px;border-radius:10px;color:var(--ink-2,var(--ink))}
 .lpick summary::-webkit-details-marker{display:none}.lpick summary .chev{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
 .lpick .fl{flex:none;width:23px;height:16px;border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
@@ -199,7 +200,7 @@ elemento 1 es el portapapeles:</p>
 </tr>
 <tr>
 <td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
-<td>Pegar el portapapeles en MAYÚSCULAS / minúsculas / Mayúscula En Cada Palabra / con mayúscula inicial</td>
+<td>Pegar el portapapeles en MAYÚSCULAS / minúsculas / Cada Palabra En Mayúscula / como una oración</td>
 </tr>
 <tr>
 <td><kbd class="k">⌃⌥W</kbd></td>
@@ -280,8 +281,7 @@ las acciones sin teclas: un atajo funciona en todas partes o no se muestra.</p>
 de código, un logotipo que pegas a menudo. Están en un árbol con carpetas y aparecen en el submenú
 <em>Plantillas</em> del menú del historial y con <strong>⌥T</strong>. Una instalación nueva trae una carpeta <em>Ejemplos</em>
 (un saludo, la fecha de hoy, una cita del portapapeles y una firma) para que veas lo que pueden hacer
-las plantillas antes de escribir las tuyas. Bórralas o edítalas como quieras (<em>Restablecer…</em> en los
-Ajustes las recupera).</p>
+las plantillas antes de escribir las tuyas. Bórralas o edítalas como quieras . Puedes recuperar los ejemplos en <em>Ajustes → Avanzado → Restablecer y desinstalar → Restablecer…</em>. Esto también restablece los demás datos y ajustes de Keepit.</p>
 <figure class="shot" style="max-width:660px"><a href="/img/guide/template-examples.png?v=c143a1d7" class="zoom" title="Abrir a tamaño completo"><img src="/img/guide/template-examples.png?v=c143a1d7" alt="La carpeta Ejemplos: al pasar el puntero por un elemento se ve su texto" width="660" height="209" loading="lazy"></a><figcaption>La carpeta Ejemplos: al pasar el puntero por un elemento se ve su texto</figcaption></figure>
 <figure class="shot" style="max-width:738px"><a href="/img/guide/template-menu-letters.png?v=ea96333e" class="zoom" title="Abrir a tamaño completo"><img src="/img/guide/template-menu-letters.png?v=ea96333e" alt="El menú de plantillas: las carpetas se abren como submenús y las letras precedidas de &amp; se convierten en teclas de acceso rápido" width="738" height="715" loading="lazy"></a><figcaption>El menú de plantillas: las carpetas se abren como submenús y las letras precedidas de &amp; se convierten en teclas de acceso rápido</figcaption></figure>
 <h3 id="creating-and-organising">Crear y organizar</h3>
@@ -474,7 +474,7 @@ después de que el Mac haya estado un rato bloqueado o en reposo. <em>Bloqueo au
 <em>Inmediatamente</em> si estaba activado el bloqueo junto con la pantalla). Un gestor de portapapeles que
 pide la contraseña después de cada pausa para el café acaba por no usarse, y <kbd class="k">⌥L</kbd> está ahí para los
 momentos que importan. <em>Inmediatamente</em> bloquea a la vez que la pantalla. <em>Tras 5 minutos</em>, <em>Tras 15 minutos</em> o <em>Tras 1 hora</em> pasan por alto una ausencia corta: Keepit sigue desbloqueado y grabando, y solo
-se bloquea cuando el Mac ha estado ausente todo ese tiempo. Lo mismo vale cuando Keepit arranca con el
+se bloquea cuando el Mac ha permanecido bloqueado o en reposo durante todo el intervalo elegido. Lo mismo vale cuando Keepit arranca con el
 Mac ya bloqueado o con la sesión de otro usuario en primer plano (por ejemplo, al reiniciarse tras una
 actualización): la ausencia cuenta desde el arranque, en la medida en que macOS comunica ese estado a
 Keepit (normalmente lo hace; si no puede, la cuenta empieza en el siguiente bloqueo o reposo). Con
@@ -721,7 +721,7 @@ escribió una versión más nueva que la que intenta abrirlo.</p>
 </tr>
 <tr>
 <td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
-<td>MAYÚSCULAS / minúsculas / Mayúscula En Cada Palabra / mayúscula inicial</td>
+<td>MAYÚSCULAS / minúsculas / Cada Palabra En Mayúscula / Como una oración</td>
 </tr>
 <tr>
 <td><kbd class="k">⌃⌥W</kbd> <kbd class="k">⌃⌥J</kbd></td>

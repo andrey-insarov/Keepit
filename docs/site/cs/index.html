@@ -203,7 +203,8 @@
 .langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
 .tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
 code,kbd,pre{direction:ltr;unicode-bidi:isolate}
-[dir=rtl] .tpl b{direction:ltr;unicode-bidi:isolate}
+[dir=rtl] .tpl b,[dir=rtl] .tags>span{direction:ltr;unicode-bidi:isolate}
+html:not([lang=en]) header a[href="/security"]::after{content:"EN";font-size:.62em;font-weight:600;letter-spacing:.04em;vertical-align:super;margin-inline-start:3px;opacity:.6}
 .lpick{position:relative}.lpick summary{list-style:none;cursor:pointer;height:40px;padding:0 8px;display:flex;align-items:center;gap:5px;border-radius:10px;color:var(--ink-2,var(--ink))}
 .lpick summary::-webkit-details-marker{display:none}.lpick summary .chev{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
 .lpick .fl{flex:none;width:23px;height:16px;border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
@@ -337,7 +338,7 @@ open "keepit://pause"</div>
 
   <section id="privacy" class="band"><div class="wrap">
     <h2>Soukromí dané návrhem, ne sliby</h2>
-    <p class="kicker">Správce schránky vidí hesla, adresy i rozepsané zprávy. Keepit je navržen tak, aby nic z toho neodešlo tam, kam jste to sami nechtěli poslat.</p>
+    <p class="kicker">Správce schránky vidí hesla, adresy i rozepsané zprávy. Keepit je navržen tak, aby nic z toho neodešlo tam, kam to poslat nechcete.</p>
     <div class="ledger">
       <div><strong>Žádné</strong><span>účty, servery ani vlastní synchronizace. Není se kam přihlašovat.</span></div>
       <div><strong>Žádná</strong><span>analytika, hlášení pádů ani sledovací prvky v aplikaci, a to ani anonymní. Web pouze počítá zobrazení stránek, bez cookies.</span></div>
@@ -365,7 +366,7 @@ open "keepit://pause"</div>
 
   <section><div class="wrap">
     <h2>Výchozí klávesové zkratky</h2>
-    <p class="kicker">Všechny jsou globální a mění se v Nastavení → Zkratky. Zkratka, která se kryje s už obsazenou, zůstane vypnutá, dokud ji sami nepřiřadíte.</p>
+    <p class="kicker">Všechny jsou globální a mění se v Nastavení → Zkratky. Zkratka, která se kryje s už obsazenou, zůstane vypnutá, dokud ji nepřiřadíte.</p>
     <div class="sheet">
       <dl>
         <div class="r"><dt><kbd class="k">⌥M</kbd></dt><dd>Nabídka historie u textového kurzoru</dd></div>
@@ -393,7 +394,7 @@ open "keepit://pause"</div>
 
   <section id="faq"><div class="wrap faq">
     <h2>Otázky</h2>
-    <details><summary>Proč Keepit potřebuje oprávnění Zpřístupnění?</summary><p>Potřebuje ho ke dvěma věcem. Za prvé proto, aby po výběru položky poslal ⌘V do aplikace, ve které jste pracovali. Za druhé proto, aby našel textový kurzor a otevřel nabídku vedle něj. Keepit jiné aplikace nečte ani nesleduje. Bez oprávnění dál zaznamenává historii a vybranou položku uloží do schránky, vložit ji ale musíte sami.</p></details>
+    <details><summary>Proč Keepit potřebuje oprávnění Zpřístupnění?</summary><p>Potřebuje ho ke dvěma věcem. Za prvé proto, aby po výběru položky poslal ⌘V do aplikace, ve které pracujete. Za druhé proto, aby našel textový kurzor a otevřel nabídku vedle něj. Keepit jiné aplikace nečte ani nesleduje. Bez oprávnění dál zaznamenává historii a vybranou položku uloží do schránky, vložit ji ale musíte ručně.</p></details>
     <details><summary>Odchází něco z mého Macu?</summary><p>Data se ukládají pouze lokálně, ve vašem počítači. Keepit nemá žádný server. Jediným síťovým požadavkem je každodenní kontrola aktualizací na GitHub Releases, a tu lze vypnout v Nastavení → Obecné; Keepit pak neposílá žádné požadavky. Verze z App Storu neposílá ani tento. Neexistuje účet, telemetrie ani hlášení pádů. Data se do internetu dostanou jen tehdy, když zapnete automatické zálohování do cloudové složky: šifrované kopie se zapisují do složky, kterou vyberete, a pokud leží na iCloud Drivu nebo v Dropboxu, synchronizuje je tato služba pod vaším účtem. Keepit sám s ní nekomunikuje.</p></details>
     <details><summary>Co když zapomenu heslo?</summary><p>Můžete použít frázi pro obnovu o 24 slovech, kterou Keepit zobrazil při zapnutí ochrany, nebo Touch ID na stejném Macu. Bez nich data obnovit nelze. Je to záměr.</p></details>
     <details><summary>Je to opravdu zdarma? V čem je háček?</summary><p>Ano, zcela zdarma: aplikace vychází pod licencí MIT a kód je na <a href="https://github.com/andrey-insarov/Keepit">GitHubu</a>. Keepit vytvořil zakladatel doménové zóny <a href="https://it.com">it.com</a> pro vlastní potřebu a teprve potom přišel nápad, že může dobře ukázat, k čemu se it.com hodí. Proto tu není reklama, nákupy v aplikaci ani placená verze: o naší službě lidem vypráví už samo používání programu.</p></details>

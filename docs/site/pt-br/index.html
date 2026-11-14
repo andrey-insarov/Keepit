@@ -203,7 +203,8 @@
 .langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
 .tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
 code,kbd,pre{direction:ltr;unicode-bidi:isolate}
-[dir=rtl] .tpl b{direction:ltr;unicode-bidi:isolate}
+[dir=rtl] .tpl b,[dir=rtl] .tags>span{direction:ltr;unicode-bidi:isolate}
+html:not([lang=en]) header a[href="/security"]::after{content:"EN";font-size:.62em;font-weight:600;letter-spacing:.04em;vertical-align:super;margin-inline-start:3px;opacity:.6}
 .lpick{position:relative}.lpick summary{list-style:none;cursor:pointer;height:40px;padding:0 8px;display:flex;align-items:center;gap:5px;border-radius:10px;color:var(--ink-2,var(--ink))}
 .lpick summary::-webkit-details-marker{display:none}.lpick summary .chev{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
 .lpick .fl{flex:none;width:23px;height:16px;border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
@@ -288,7 +289,7 @@ code,kbd,pre{direction:ltr;unicode-bidi:isolate}
         <p>Um modelo é um texto comum com marcadores. Quando você o cola, o Keepit pede os valores necessários, insere o restante do texto e coloca o cursor onde estava <code>{cursor}</code>.</p>
         <div class="tpl">Olá, <b>{input:Nome}</b>!
 
-Obrigado pelo seu pedido. Ele será enviado em <b>{date+2d:EEEE, d 'de' MMMM}</b>.
+Obrigado pelo seu pedido. Ele será enviado em <b>{date+2d:d 'de' MMMM}</b>.
 Código de rastreamento: <b>{clipboard}</b>
 
 <b>{cursor}</b>
@@ -329,11 +330,11 @@ open "keepit://pause"</div>
 
   <section id="privacy" class="band"><div class="wrap">
     <h2>Privacidade incorporada ao app, não apenas prometida</h2>
-    <p class="kicker">Um gerenciador de área de transferência vê senhas, endereços e mensagens pela metade. O Keepit foi feito para que nada disso vá para algum lugar que você mesmo não tenha escolhido.</p>
+    <p class="kicker">Um gerenciador de área de transferência vê senhas, endereços e mensagens pela metade. O Keepit foi feito para que nada disso vá para algum lugar que você não tenha escolhido.</p>
     <div class="ledger">
       <div><strong>Sem</strong><span>contas, servidores ou sincronização própria. Não há onde fazer login.</span></div>
       <div><strong>Sem</strong><span>análises, relatórios de falhas ou rastreadores no app, nem mesmo anônimos. O site só conta as visualizações de página, sem cookies.</span></div>
-      <div><strong>Uma</strong><span>única requisição de rede: a verificação diária de atualizações no GitHub. Ela pode ser desativada. A versão da App Store não tem nem a permissão de acesso à rede: <a href="/security#network">confira você mesmo</a> (em inglês).</span></div>
+      <div><strong>Uma</strong><span>única requisição de rede: a verificação diária de atualizações no GitHub. Ela pode ser desativada. A versão da App Store não tem nem a permissão de acesso à rede: <a href="/security#network">confira</a> (em inglês).</span></div>
       <div><strong>Uma</strong><span>pasta no seu Mac com todos os dados. Mais a pasta de backup, se você fizer backups. Apague as duas e não sobra nenhum vestígio do Keepit.</span></div>
     </div>
     <div class="facts"><ul>

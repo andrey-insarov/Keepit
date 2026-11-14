@@ -131,7 +131,7 @@ item 1 é a área de transferência:
 | `⌃⌥1` … `⌃⌥9`, `⌃⌥0` | Colar um dos itens de 1 a 10 do histórico |
 | `⌥⇧V` | Colar o item *anterior* (item 2); pressione de novo para voltar |
 | `⌃⌥V` | Colar a área de transferência como texto simples, sem formatação |
-| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | Colar a área de transferência em MAIÚSCULAS / minúsculas / Iniciais Maiúsculas / só a primeira letra maiúscula |
+| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | Colar a área de transferência em MAIÚSCULAS / minúsculas / Iniciais Maiúsculas / como uma frase |
 | `⌃⌥W` | Colar a área de transferência sem os espaços do início e do fim |
 | `⌃⌥J` | Colar a área de transferência em uma única linha |
 | `⌃⌥K` `⌃⌥D` `⌃⌥Y` | Colar a área de transferência tachada / sublinhada / com sublinhado ondulado, como texto simples que mantém a aparência em qualquer lugar, inclusive em chats (veja abaixo) |
@@ -205,8 +205,7 @@ Modelos são itens que você guarda de vez: assinaturas, endereços, respostas p
 um logotipo que você cola com frequência. Eles ficam em uma árvore com pastas e aparecem no submenu
 *Modelos* do menu de histórico e em **⌥T**. Uma instalação nova vem com uma pasta *Exemplos* (uma
 saudação, a data de hoje, uma citação da área de transferência e uma assinatura) para você ver o que
-os modelos fazem antes de escrever os seus. Apague ou edite esses exemplos como quiser (*Redefinir…*
-nos Ajustes traz todos de volta).
+os modelos fazem antes de escrever os seus. Apague ou edite esses exemplos como quiser . Para recuperar os exemplos, use *Ajustes → Avançado → Redefinir e desinstalar → Redefinir…*. Isso também redefine os outros dados e ajustes do Keepit.
 
 ![A pasta Exemplos: ao passar o cursor sobre um item, o texto dele aparece](site/img/guide/template-examples.png)
 
@@ -361,8 +360,7 @@ instalação nova (uma atualização a partir da 3.0.3 mantém a escolha anterio
 bloqueio junto com a tela estava ativado). Um gerenciador de área de transferência que pede a senha
 depois de cada pausa para o café acaba deixando de ser usado, e `⌥L` está aí para os momentos que
 importam. *Imediatamente* bloqueia junto com a tela. *Após 5 minutos*, *Após 15 minutos* ou *Após 1 hora*
-ignoram uma ausência curta: o Keepit continua desbloqueado e gravando, e só bloqueia quando o Mac
-ficou ausente durante todo esse tempo. O mesmo vale quando o Keepit abre com o Mac já bloqueado ou com
+ignoram uma ausência curta: o Keepit continua desbloqueado e gravando, e só bloqueia quando o Mac permaneceu bloqueado ou em repouso durante todo o intervalo escolhido. O mesmo vale quando o Keepit abre com o Mac já bloqueado ou com
 a sessão de outro usuário em primeiro plano (uma reabertura depois de uma atualização, por exemplo): a
 ausência conta a partir da abertura, na medida em que o macOS informa esse estado ao Keepit
 (normalmente informa; quando não consegue, a contagem começa no próximo bloqueio ou repouso). Com o
@@ -429,7 +427,7 @@ nenhuma configuração extra. Sem senha, a caixa de seleção fica desativada e 
 `Keepit-<date and time>-<installation>-<id>.keepit`, lê o arquivo de volta para conferir e só então
 apaga as mais antigas das suas próprias cópias além de *Manter os últimos* (10 por padrão, de 1 a
 100). Cada cópia é completa por si só, não um incremento, então um único arquivo é tudo de que você
-precisa. Cópias feitas por outro Mac e arquivos que você mesmo colocar ali nunca são tocados: dois
+precisa. Cópias feitas por outro Mac e arquivos que você colocar ali nunca são tocados: dois
 Macs que compartilham uma pasta gravam duas séries independentes. A linha de status ao lado do título
 *Backup automático* mostra a hora e o tamanho da última cópia, ou por que a última tentativa falhou.
 Nada acontece enquanto o Keepit está bloqueado. *Fazer backup agora* (em *Backup manual*) não espera o
@@ -604,7 +602,7 @@ Ainda com problemas? [GitHub Issues](https://github.com/andrey-insarov/Keepit/is
 | `⇧` no menu | Menu estendido: todas as ações de cada item |
 | `⌥⇧V` | Colar o item anterior / alternar |
 | `⌃⌥V` | Colar a área de transferência como texto simples |
-| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | MAIÚSCULAS / minúsculas / Iniciais Maiúsculas / primeira letra maiúscula |
+| `⌃⌥U` `⌃⌥L` `⌃⌥T` `⌃⌥S` | MAIÚSCULAS / minúsculas / Iniciais Maiúsculas / Como uma frase |
 | `⌃⌥W` `⌃⌥J` | Sem espaços nas pontas / em uma única linha |
 | `⌃⌥K` `⌃⌥D` `⌃⌥Y` `⌃⌥X` | Tachado / sublinhado / sublinhado ondulado / remover decorações |
 | `⌃⌥A` | Adicionar a área de transferência aos Modelos |

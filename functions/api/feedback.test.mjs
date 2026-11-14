@@ -253,3 +253,33 @@ test("translated support pages: the character counter agrees in number", async (
     for (const [n, unit] of Object.entries(cases)) assert.equal(pf(Number(n)), unit, `${lang} ${n}`);
   }
 });
+
+test("translated support pages: the whole counter line reads correctly at small numbers", async () => {
+  const { readFileSync } = await import("node:fs");
+  const dir = new URL("../../docs/i18n/", import.meta.url);
+  const line = (lang) => {
+    const src = readFileSync(new URL(`${lang}/SUPPORT.md`, dir), "utf8");
+    const expr = src.match(/count\.textContent=(.*?);\}\);/);
+    assert.ok(expr, `${lang}: counter expression`);
+    const pf = src.match(/^\s*var PF=\{.*;$/m), fn = src.match(/^\s*function pf\(n\)\{.*\}$/m);
+    return new Function("n", `var window={Intl:Intl};${pf ? pf[0] : ""}\n${fn ? fn[0] : ""}\nreturn ${expr[1]};`);
+  };
+  const left = (lang, k) => line(lang)(70 - k);
+  const want = {
+    es: { 1: "falta 1 carácter", 2: "faltan 2 caracteres", 11: "faltan 11 caracteres", 21: "faltan 21 caracteres" },
+    "pt-BR": { 1: "falta 1 caractere", 2: "faltam 2 caracteres", 21: "faltam 21 caracteres" },
+    fr: { 1: "encore 1 caractère", 2: "encore 2 caractères" },
+    ar: { 1: "عدد الأحرف المتبقية: 1", 2: "عدد الأحرف المتبقية: 2", 11: "عدد الأحرف المتبقية: 11" },
+    cs: { 1: "ještě 1 znak", 3: "ještě 3 znaky", 11: "ještě 11 znaků", 21: "ještě 21 znaků" },
+    pl: { 1: "jeszcze 1 znak", 3: "jeszcze 3 znaki", 11: "jeszcze 11 znaków", 21: "jeszcze 21 znaków", 22: "jeszcze 22 znaki" },
+    it: { 1: "ancora 1 carattere", 2: "ancora 2 caratteri" },
+    nl: { 1: "nog 1 teken", 2: "nog 2 tekens" },
+    he: { 1: "עוד 1 תו", 2: "עוד 2 תווים" },
+    de: { 1: "noch 1 Zeichen", 2: "noch 2 Zeichen" },
+    ru: { 1: "ещё 1 симв.", 21: "ещё 21 симв." },
+  };
+  for (const [lang, cases] of Object.entries(want))
+    for (const [k, text] of Object.entries(cases)) assert.equal(left(lang, Number(k)), text, `${lang} ${k}`);
+  assert.equal(line("ar")(72), "عدد الأحرف: 72");
+  assert.equal(line("es")(72), "72 caracteres");
+});

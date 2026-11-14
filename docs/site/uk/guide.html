@@ -64,7 +64,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-bet
 .langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
 .tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
 code,kbd,pre{direction:ltr;unicode-bidi:isolate}
-[dir=rtl] .tpl b{direction:ltr;unicode-bidi:isolate}
+[dir=rtl] .tpl b,[dir=rtl] .tags>span{direction:ltr;unicode-bidi:isolate}
+html:not([lang=en]) header a[href="/security"]::after{content:"EN";font-size:.62em;font-weight:600;letter-spacing:.04em;vertical-align:super;margin-inline-start:3px;opacity:.6}
 .lpick{position:relative}.lpick summary{list-style:none;cursor:pointer;height:40px;padding:0 8px;display:flex;align-items:center;gap:5px;border-radius:10px;color:var(--ink-2,var(--ink))}
 .lpick summary::-webkit-details-marker{display:none}.lpick summary .chev{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
 .lpick .fl{flex:none;width:23px;height:16px;border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
@@ -196,7 +197,7 @@ brew install --cask andrey-insarov/keepit/keepit
 </tr>
 <tr>
 <td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
-<td>Вставити буфер обміну ВЕРХНІМ РЕГІСТРОМ / нижнім регістром / Кожне Слово З Великої / як у реченні</td>
+<td>Вставити буфер обміну ВЕЛИКИМИ ЛІТЕРАМИ / малими літерами / Кожне Слово З Великої / як у реченні</td>
 </tr>
 <tr>
 <td><kbd class="k">⌃⌥W</kbd></td>
@@ -276,7 +277,7 @@ Unicode (з̶а̶к̶р̶е̶с̶л̶е̶н̶н̶я̶, п̲і̲д̲к̲р̲е̲�
 логотип, який часто вставляєте. Вони лежать у дереві з теками і з’являються в підменю <em>Шаблони</em> меню
 історії та за <strong>⌥T</strong>. У свіжовстановленій програмі є тека <em>Приклади</em> (привітання, сьогоднішня дата,
 цитата з буфера обміну і підпис), щоб ви побачили, що вміють шаблони, перш ніж писати свої. Їх можна
-видаляти і редагувати як завгодно (<em>Скинути…</em> в Налаштуваннях повертає їх).</p>
+видаляти і редагувати як завгодно . Повернути приклади можна через <em>Налаштування → Додатково → Скидання і видалення → Скинути…</em>. Це також скине інші дані й налаштування Keepit.</p>
 <figure class="shot" style="max-width:660px"><a href="/img/guide/template-examples.png?v=c143a1d7" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/template-examples.png?v=c143a1d7" alt="Тека Приклади: наведення на елемент показує його текст" width="660" height="209" loading="lazy"></a><figcaption>Тека Приклади: наведення на елемент показує його текст</figcaption></figure>
 <figure class="shot" style="max-width:738px"><a href="/img/guide/template-menu-letters.png?v=ea96333e" class="zoom" title="Відкрити в повному розмірі"><img src="/img/guide/template-menu-letters.png?v=ea96333e" alt="Меню шаблонів: теки відкриваються як підменю, літери після &amp; стають клавішами швидкого вибору" width="738" height="715" loading="lazy"></a><figcaption>Меню шаблонів: теки відкриваються як підменю, літери після &amp; стають клавішами швидкого вибору</figcaption></figure>
 <h3 id="creating-and-organising">Створення і впорядкування</h3>
@@ -368,7 +369,7 @@ Keepit спершу запитує значення, а потім вставл�
 <p>Наприклад, шаблон відповіді:</p>
 <pre><code>Добрий день, {input:Ім’я}!
 
-Дякую за ваш лист від {date-1d}. Я відповім до {date+3d:EEEE}.
+Дякую за ваш лист від {date-1d}. Я відповім до {date+3d:d MMMM}.
 {cursor}
 {user}
 </code></pre>
@@ -468,8 +469,7 @@ AES-256-GCM. Ключ виводиться з вашого пароля (PBKDF2,
 ввімкнено блокування разом з екраном). Менеджером буфера обміну, який просить пароль після кожної
 перерви на каву, перестають користуватися, а для важливих моментів є <kbd class="k">⌥L</kbd>. <em>Одразу</em> блокує разом з
 екраном. <em>Через 5 хвилин</em>, <em>Через 15 хвилин</em> чи <em>Через 1 годину</em> не зважають на коротку відсутність: Keepit
-залишається розблокованим і продовжує записувати, а блокується лише тоді, коли Mac був недоступний
-увесь цей час. Те саме стосується випадку, коли Keepit запускається на вже заблокованому Mac або коли
+залишається розблокованим і продовжує записувати, а блокується лише тоді, коли Mac залишався заблокованим або перебував у режимі сну протягом усього вибраного часу. Те саме стосується випадку, коли Keepit запускається на вже заблокованому Mac або коли
 на передньому плані сеанс іншого користувача (наприклад, перезапуск після оновлення): відсутність
 рахується від запуску, наскільки macOS повідомляє Keepit про цей стан (зазвичай повідомляє; якщо ні,
 відлік почнеться з наступного блокування чи сну). Коли ввімкнено Touch ID, Keepit просить дотик у
@@ -707,7 +707,7 @@ Touch ID немає). Keepit зберігає налаштування і поп
 </tr>
 <tr>
 <td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
-<td>ВЕРХНІЙ РЕГІСТР / нижній регістр / Кожне Слово З Великої / як у реченні</td>
+<td>ВЕЛИКІ ЛІТЕРИ / малі літери / Кожне Слово З Великої / Як у реченні</td>
 </tr>
 <tr>
 <td><kbd class="k">⌃⌥W</kbd> <kbd class="k">⌃⌥J</kbd></td>
