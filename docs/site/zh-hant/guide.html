@@ -399,7 +399,7 @@ brew install --cask andrey-insarov/keepit/keepit
 <hr />
 <h2 id="part-7-advanced">第 7 部分：進階</h2>
 <h3 id="automation-the-keepit-url-scheme">自動化：keepit:// URL 架構</h3>
-<p>「捷徑」（「打開 URL」）、Raycast、Alfred、Keyboard Maestro 或 shell 中的 <code>open</code> 都可以控制 Keepit，<strong>前提是你先開啟這項功能</strong>：「設定」→「進階」→「自動化」→「允許 keepit:// URL 指令」。它預設為關閉，因為任何 App 或網頁都能打開 URL，而 <code>add</code> / <code>paste</code> 會更動剪貼板並在最前面的 App 中輸入文字；關閉時，Keepit 會忽略這類 URL 並發出提示音。開啟後，Keepit 會查看是誰打開了 URL：每個 App 第一次發出會造成變更的指令（<code>paste</code>、<code>copy</code>、<code>template</code>、<code>add</code>、<code>add-template</code>、<code>pause</code>、<code>resume</code>）時，都會顯示一個對話框。「允許」只執行這一次，「永遠允許」會把該 App 加入信任列表（可在同一面板中用「忘記信任的 App」清除）。網頁瀏覽器，或 macOS 無法識別的來源，每次都會詢問。只打開 Keepit 自身視窗的指令則從不詢問。</p>
+<p>「捷徑」（「打開URL」）、Raycast、Alfred、Keyboard Maestro 或 shell 中的 <code>open</code> 都可以控制 Keepit，<strong>前提是你先開啟這項功能</strong>：「設定」→「進階」→「自動化」→「允許 keepit:// URL 指令」。它預設為關閉，因為任何 App 或網頁都能打開 URL，而 <code>add</code> / <code>paste</code> 會更動剪貼板並在最前面的 App 中輸入文字；關閉時，Keepit 會忽略這類 URL 並發出提示音。開啟後，Keepit 會查看是誰打開了 URL：每個 App 第一次發出會造成變更的指令（<code>paste</code>、<code>copy</code>、<code>template</code>、<code>add</code>、<code>add-template</code>、<code>pause</code>、<code>resume</code>）時，都會顯示一個對話框。「允許」只執行這一次，「永遠允許」會把該 App 加入信任列表（可在同一面板中用「忘記信任的 App」清除）。網頁瀏覽器，或 macOS 無法識別的來源，每次都會詢問。只打開 Keepit 自身視窗的指令則從不詢問。</p>
 <div class="tbl"><table>
 <thead>
 <tr>

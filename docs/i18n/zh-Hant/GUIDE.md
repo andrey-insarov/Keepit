@@ -320,7 +320,7 @@ Keepit 可以在你選擇的資料夾（iCloud 雲碟、Dropbox、Google 雲端�
 
 ### 自動化：keepit:// URL 架構
 
-「捷徑」（「打開 URL」）、Raycast、Alfred、Keyboard Maestro 或 shell 中的 `open` 都可以控制 Keepit，**前提是你先開啟這項功能**：「設定」→「進階」→「自動化」→「允許 keepit:// URL 指令」。它預設為關閉，因為任何 App 或網頁都能打開 URL，而 `add` / `paste` 會更動剪貼板並在最前面的 App 中輸入文字；關閉時，Keepit 會忽略這類 URL 並發出提示音。開啟後，Keepit 會查看是誰打開了 URL：每個 App 第一次發出會造成變更的指令（`paste`、`copy`、`template`、`add`、`add-template`、`pause`、`resume`）時，都會顯示一個對話框。「允許」只執行這一次，「永遠允許」會把該 App 加入信任列表（可在同一面板中用「忘記信任的 App」清除）。網頁瀏覽器，或 macOS 無法識別的來源，每次都會詢問。只打開 Keepit 自身視窗的指令則從不詢問。
+「捷徑」（「打開URL」）、Raycast、Alfred、Keyboard Maestro 或 shell 中的 `open` 都可以控制 Keepit，**前提是你先開啟這項功能**：「設定」→「進階」→「自動化」→「允許 keepit:// URL 指令」。它預設為關閉，因為任何 App 或網頁都能打開 URL，而 `add` / `paste` 會更動剪貼板並在最前面的 App 中輸入文字；關閉時，Keepit 會忽略這類 URL 並發出提示音。開啟後，Keepit 會查看是誰打開了 URL：每個 App 第一次發出會造成變更的指令（`paste`、`copy`、`template`、`add`、`add-template`、`pause`、`resume`）時，都會顯示一個對話框。「允許」只執行這一次，「永遠允許」會把該 App 加入信任列表（可在同一面板中用「忘記信任的 App」清除）。網頁瀏覽器，或 macOS 無法識別的來源，每次都會詢問。只打開 Keepit 自身視窗的指令則從不詢問。
 
 | URL | 效果 |
 |-----|--------|

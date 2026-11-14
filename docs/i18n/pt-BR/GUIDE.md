@@ -386,7 +386,7 @@ dela, a frase de 24 palavras; veja [Frase de recuperação](#recovery-phrase).
 
 Com *Desbloquear com Touch ID*, a chave também fica guardada no Secure Enclave, protegida pela sua
 impressão digital: o Keepit pede um toque em vez da senha. A senha continua valendo como alternativa
-(o botão de senha no pedido). Com a tampa fechada e um Magic Keyboard externo com Touch ID, o Keepit
+(o botão *Usar Senha…* no pedido). Com a tampa fechada e um Magic Keyboard externo com Touch ID, o Keepit
 pede no teclado. *Permitir alterar a senha com Touch ID* deixa a impressão digital substituir a senha
 antiga quando você a altera.
 
