@@ -97,9 +97,9 @@ final class LayoutProbeTests: XCTestCase {
 
     func testGermanNeedsAtEuroAndDeadTilde() {
         let p = probe(german())
-        XCTAssertEqual(p.check(keyCode: kL, modifiers: OPT), LayoutCheck(verdict: .needed(layout: "German", types: "@"), incomplete: 0))
-        XCTAssertEqual(p.check(keyCode: kE, modifiers: OPT), LayoutCheck(verdict: .needed(layout: "German", types: "€"), incomplete: 0))
-        XCTAssertEqual(p.check(keyCode: kN, modifiers: OPT), LayoutCheck(verdict: .needed(layout: "German", types: "~"), incomplete: 0))
+        XCTAssertEqual(p.check(keyCode: kL, modifiers: OPT), LayoutCheck(verdict: .needed(layout: "German", types: "@"), incomplete: 0, errors: 0))
+        XCTAssertEqual(p.check(keyCode: kE, modifiers: OPT), LayoutCheck(verdict: .needed(layout: "German", types: "€"), incomplete: 0, errors: 0))
+        XCTAssertEqual(p.check(keyCode: kN, modifiers: OPT), LayoutCheck(verdict: .needed(layout: "German", types: "~"), incomplete: 0, errors: 0))
         XCTAssertEqual(p.check(keyCode: kM, modifiers: OPT).verdict, .notNeeded)   // µ is neither a letter nor protected
     }
 
@@ -162,7 +162,11 @@ final class LayoutProbeTests: XCTestCase {
         var l = FakeLayout.latinBase()
         l.id = "fr"; l.name = "French"; l.languages = ["fr"]
         l.plain(kLeftBracket, "é")
-        l.set(kE, mods: OPT, .characters("e\u{0301}".precomposedStringWithCanonicalMapping))
+        l.set(kE, mods: OPT, .characters("e\u{0301}"))      // decomposed, as a reader might hand it over
+        XCTAssertEqual(probe(l).check(keyCode: kE, modifiers: OPT).verdict, .notNeeded)
+        // And the other way round: the plain key decomposed, the ⌥ output precomposed.
+        l.plain(kLeftBracket, "e\u{0301}")
+        l.set(kE, mods: OPT, .characters("é"))
         XCTAssertEqual(probe(l).check(keyCode: kE, modifiers: OPT).verdict, .notNeeded)
     }
 
@@ -200,7 +204,10 @@ final class LayoutProbeTests: XCTestCase {
         var l = FakeLayout.latinBase()
         l.id = "ext"; l.name = "Extended"; l.languages = ["en"]
         l.set(kV, mods: OPT | SHIFT, .characters("\u{030C}"))   // combining caron, as ABC – Extended types it
-        XCTAssertEqual(probe(l).check(keyCode: kV, modifiers: OPT | SHIFT).verdict, .notNeeded)
+        var p = probe(l)
+        // Even a letter set that lists the mark does not make it needed: the exclusion is what is tested.
+        p.letters = { _ in LetterSet(characterSet: CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyz\u{030C}")) }
+        XCTAssertEqual(p.check(keyCode: kV, modifiers: OPT | SHIFT).verdict, .notNeeded)
     }
 
     func testNoLanguagesProtectsLatinAndSymbolsOnly() {
@@ -210,6 +217,49 @@ final class LayoutProbeTests: XCTestCase {
         l.set(kE, mods: OPT, .characters("@"))
         XCTAssertEqual(probe(l).check(keyCode: kL, modifiers: OPT).verdict, .notNeeded)
         XCTAssertEqual(probe(l).check(keyCode: kE, modifiers: OPT).verdict, .needed(layout: "Custom", types: "@"))
+    }
+
+    // MARK: Errors and partial answers
+
+    func testTranslationErrorIsReportedNotTreatedAsNothing() {
+        var l = FakeLayout.latinBase()
+        l.id = "x"; l.name = "Flaky"; l.languages = ["en"]
+        l.set(kL, mods: OPT, .error)
+        let r = probe(l).check(keyCode: kL, modifiers: OPT)
+        XCTAssertEqual(r.verdict, .unchecked(failed: ["x"]))
+        XCTAssertEqual(r.errors, 1)
+        // A layout that needs the combination still wins over one whose call failed.
+        XCTAssertEqual(probe(l, german()).check(keyCode: kL, modifiers: OPT).verdict, .needed(layout: "German", types: "@"))
+    }
+
+    func testErrorWhileBuildingPlainIsCountedAndTheHitStillReported() {
+        var l = german()
+        l.set(kX, mods: 0, .error)                    // one plain key could not be read
+        let r = probe(l).check(keyCode: kL, modifiers: OPT)
+        XCTAssertEqual(r.verdict, .needed(layout: "German", types: "@"))
+        XCTAssertEqual(r.errors, 1)
+        // Where nothing is needed, the same error makes the layout unchecked rather than safe.
+        XCTAssertEqual(probe(l).check(keyCode: kM, modifiers: OPT).verdict, .unchecked(failed: ["de"]))
+    }
+
+    func testTextWithRemainingDeadStateIsJudgedAndCountedAsIncomplete() {
+        var l = us()
+        l.set(kN, mods: OPT, .charactersThenDeadKey("n", 1))          // text and a state at once; n is plain
+        l.set(kA, mods: 0, dead: 1, .charactersThenDeadKey("ã", 2))   // a composition that leaves another state
+        let r = probe(l).check(keyCode: kN, modifiers: OPT)
+        XCTAssertEqual(r.verdict, .notNeeded)
+        XCTAssertEqual(r.incomplete, 1)
+        l.set(kN, mods: OPT, .charactersThenDeadKey("@", 1))          // the text itself can be the needed one
+        XCTAssertEqual(probe(l).check(keyCode: kN, modifiers: OPT).verdict, .needed(layout: "U.S.", types: "@"))
+    }
+
+    func testIncompleteChainsInPlainAreReportedEvenForDirectOutput() {
+        var l = german()
+        l.set(kGrave, mods: 0, .deadKey(5))
+        l.set(kA, mods: 0, dead: 5, .deadKey(6))     // a plain two-dead-key chain the analysis does not follow
+        let r = probe(l).check(keyCode: kL, modifiers: OPT)   // ⌥L types @ directly
+        XCTAssertEqual(r.verdict, .needed(layout: "German", types: "@"))
+        XCTAssertEqual(r.incomplete, 1)
     }
 
     // MARK: Several layouts
@@ -243,7 +293,7 @@ final class LayoutProbeTests: XCTestCase {
     }
 
     func testNoLayoutsMeansNothingNeeded() {
-        XCTAssertEqual(probe().check(keyCode: kL, modifiers: OPT), LayoutCheck(verdict: .notNeeded, incomplete: 0))
+        XCTAssertEqual(probe().check(keyCode: kL, modifiers: OPT), LayoutCheck(verdict: .notNeeded, incomplete: 0, errors: 0))
     }
 
     // MARK: The system's own data

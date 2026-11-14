@@ -26,10 +26,15 @@ import Foundation
 /// What a key with modifiers (and an incoming dead-key state) produces on a layout.
 enum KeyOutput: Equatable {
     case nothing
-    /// Printable output, NFC-normalised.
+    /// Printable output. The probe NFC-normalises it; readers need not.
     case characters(String)
     /// A dead key: the state to pass to the next key.
     case deadKey(UInt32)
+    /// Printable output and a dead-key state at once: UCKeyTranslate allows a transition that
+    /// both emits text and leaves the layout in a new state.
+    case charactersThenDeadKey(String, UInt32)
+    /// The layout could not answer (a UCKeyTranslate error). Not "nothing": the probe counts it.
+    case error
 }
 
 /// One keyboard layout as the probe sees it.
@@ -57,9 +62,13 @@ enum LayoutVerdict: Equatable {
 
 struct LayoutCheck: Equatable {
     var verdict: LayoutVerdict
-    /// Dead-key compositions that ended in another dead state and were not expanded. Never
-    /// evidence that a combination is safe — only a measure of what the analysis did not see.
+    /// Dead-key compositions that ended in another dead state and were not expanded — while
+    /// building plain(L) or while expanding the combination. Never evidence that a combination is
+    /// safe, only a measure of what the analysis did not see.
     var incomplete: Int
+    /// UCKeyTranslate calls that failed, summed over layouts. A layout with a failed call is listed
+    /// in `.unchecked(failed:)` unless a layout (this one included) needs the combination.
+    var errors: Int
 }
 
 /// The letters a layout protects: those of its languages, or a–z when it declares none.
@@ -105,31 +114,31 @@ struct LayoutProbe {
 
     /// One verdict per combination, reading each layout once.
     func checkAll(_ combos: [(keyCode: UInt16, modifiers: UInt32)]) -> [LayoutCheck] {
-        var results = combos.map { _ in LayoutCheck(verdict: .notNeeded, incomplete: 0) }
-        var failed: [String] = []
+        var results = combos.map { _ in LayoutCheck(verdict: .notNeeded, incomplete: 0, errors: 0) }
+        var failed = combos.map { _ in [String]() }   // per combination: layouts whose answer had an error
         for layout in reader.enabledLayouts() {
             guard let prepared = Prepared(layout, letters: letters(Array(layout.languages.prefix(1)))) else {
-                failed.append(layout.id)
+                for i in results.indices { failed[i].append(layout.id) }
                 continue
             }
             for (i, combo) in combos.enumerated() {
                 let r = prepared.check(keyCode: combo.keyCode, modifiers: combo.modifiers)
                 results[i].incomplete += r.incomplete
+                results[i].errors += r.errors
+                if r.errors > 0 { failed[i].append(layout.id) }
                 if case .notNeeded = results[i].verdict, let c = r.needed {
                     results[i].verdict = .needed(layout: layout.name, types: c)
                 }
             }
         }
-        if !failed.isEmpty {
-            for i in results.indices where results[i].verdict == .notNeeded {
-                results[i].verdict = .unchecked(failed: failed)
-            }
+        for i in results.indices where results[i].verdict == .notNeeded && !failed[i].isEmpty {
+            results[i].verdict = .unchecked(failed: failed[i])
         }
         return results
     }
 
     /// The rule for one combination on one layout. nil when the layout cannot be read.
-    func check(keyCode: UInt16, modifiers: UInt32, on layout: LayoutInfo) -> (needed: String?, incomplete: Int)? {
+    func check(keyCode: UInt16, modifiers: UInt32, on layout: LayoutInfo) -> (needed: String?, incomplete: Int, errors: Int)? {
         Prepared(layout, letters: letters(Array(layout.languages.prefix(1))))?.check(keyCode: keyCode, modifiers: modifiers)
     }
 
@@ -142,18 +151,26 @@ struct LayoutProbe {
         let translate: (UInt16, UInt32, UInt32) -> KeyOutput
         let letters: LetterSet
         let plain: Set<String>
+        /// Dead-key chains in plain(L) that went past the second key, and calls that failed while
+        /// building it. Both make every verdict on this layout less certain, so check() reports them.
+        let plainIncomplete: Int
+        let plainErrors: Int
 
         init?(_ layout: LayoutInfo, letters: LetterSet) {
-            guard let t = layout.translate else { return nil }
+            guard let raw = layout.translate else { return nil }
+            let t: (UInt16, UInt32, UInt32) -> KeyOutput = { Prepared.normalised(raw($0, $1, $2)) }
             translate = t
             self.letters = letters
             var plain = Set<String>()
             var deadStates = Set<UInt32>()
+            var incomplete = 0, errors = 0
             for code in Prepared.keyCodes {
                 for mods in Prepared.plainModifiers {
                     switch t(code, mods, 0) {
                     case .characters(let c): plain.insert(c)
                     case .deadKey(let state): deadStates.insert(state)
+                    case .charactersThenDeadKey(let c, let state): plain.insert(c); deadStates.insert(state)
+                    case .error: errors += 1
                     case .nothing: break
                     }
                 }
@@ -161,11 +178,28 @@ struct LayoutProbe {
             for state in deadStates {
                 for code in Prepared.keyCodes {
                     for mods in Prepared.plainModifiers {
-                        if case .characters(let c) = t(code, mods, state) { plain.insert(c) }
+                        switch t(code, mods, state) {
+                        case .characters(let c): plain.insert(c)
+                        case .charactersThenDeadKey(let c, _): plain.insert(c); incomplete += 1
+                        case .deadKey: incomplete += 1
+                        case .error: errors += 1
+                        case .nothing: break
+                        }
                     }
                 }
             }
             self.plain = plain
+            plainIncomplete = incomplete
+            plainErrors = errors
+        }
+
+        /// NFC on everything a reader hands over, so the comparison does not depend on the reader.
+        static func normalised(_ out: KeyOutput) -> KeyOutput {
+            switch out {
+            case .characters(let c): return .characters(c.precomposedStringWithCanonicalMapping)
+            case .charactersThenDeadKey(let c, let state): return .charactersThenDeadKey(c.precomposedStringWithCanonicalMapping, state)
+            default: return out
+            }
         }
 
         func needs(_ c: String) -> Bool {
@@ -175,30 +209,48 @@ struct LayoutProbe {
             return (letters.contains(c) || LayoutProbe.protectedSymbols.contains(c)) && !plain.contains(c)
         }
 
-        func check(keyCode: UInt16, modifiers: UInt32) -> (needed: String?, incomplete: Int) {
+        func check(keyCode: UInt16, modifiers: UInt32) -> (needed: String?, incomplete: Int, errors: Int) {
+            var incomplete = plainIncomplete, errors = plainErrors
+            var found: String?
+            var state: UInt32?
             switch translate(keyCode, modifiers, 0) {
             case .nothing:
-                return (nil, 0)
+                break
+            case .error:
+                errors += 1
             case .characters(let c):
-                return (needs(c) ? c : nil, 0)
-            case .deadKey(let state):
+                if needs(c) { found = c }
+            case .deadKey(let st):
+                state = st
+            case .charactersThenDeadKey(let c, let st):
+                if needs(c) { found = c }
+                state = st
+            }
+            if let state {
                 // The dead key's own character (the one Space produces) wins; otherwise the first
                 // composition with a plain key that the layout needs. Every composition is visited
                 // so that `incomplete` counts what was not expanded.
-                var incomplete = 0
-                var found: String?
+                var composed: String?
                 for code in Prepared.keyCodes {
                     for mods in Prepared.plainModifiers {
                         switch translate(code, mods, state) {
-                        case .characters(let c): if found == nil, needs(c) { found = c }
+                        case .characters(let c): if composed == nil, needs(c) { composed = c }
+                        case .charactersThenDeadKey(let c, _): if composed == nil, needs(c) { composed = c }; incomplete += 1
                         case .deadKey: incomplete += 1
+                        case .error: errors += 1
                         case .nothing: break
                         }
                     }
                 }
-                if case .characters(let rest) = translate(Prepared.spaceKey, 0, state), needs(rest) { found = rest }
-                return (found, incomplete)
+                switch translate(Prepared.spaceKey, 0, state) {
+                case .characters(let rest) where needs(rest): composed = rest
+                case .charactersThenDeadKey(let rest, _) where needs(rest): composed = rest
+                case .error: errors += 1
+                default: break
+                }
+                if found == nil { found = composed }
             }
+            return (found, incomplete, errors)
         }
     }
 }
@@ -234,15 +286,17 @@ struct TISLayoutReader: LayoutReading {
                 let layout = base.assumingMemoryBound(to: UCKeyboardLayout.self)
                 var dead = deadIn
                 var length = 0
-                var chars = [UniChar](repeating: 0, count: 8)
+                var chars = [UniChar](repeating: 0, count: 255)   // the API's maximum; 8 risked kUCOutputBufferTooSmall
                 let status = UCKeyTranslate(layout, keyCode, UInt16(kUCKeyActionDown), (carbonModifiers >> 8) & 0xFF,
                                             keyboardType, 0, &dead, chars.count, &length, &chars)
-                guard status == noErr else { return .nothing }
+                guard status == noErr else { return .error }
                 if length == 0 { return dead != 0 ? .deadKey(dead) : .nothing }
                 let s = String(utf16CodeUnits: chars, count: length).precomposedStringWithCanonicalMapping
                 // Control characters and the like are not something a user types.
-                guard let scalar = s.unicodeScalars.first, scalar.value >= 0x20, scalar.value != 0x7F else { return .nothing }
-                return .characters(s)
+                guard let scalar = s.unicodeScalars.first, scalar.value >= 0x20, scalar.value != 0x7F else {
+                    return dead != 0 ? .deadKey(dead) : .nothing
+                }
+                return dead != 0 ? .charactersThenDeadKey(s, dead) : .characters(s)
             }
         }
     }
