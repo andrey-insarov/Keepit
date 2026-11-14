@@ -60,7 +60,7 @@
 "Free and open source. Made by the team behind the it.com domain zone." = "免费开源。由 it.com 域名区团队打造。";
 "General" = "通用";
 "Good" = "较强";
-"Grant Accessibility Permission…" = "授予辅助功能权限…";
+"Grant Accessibility Permission…" = "授予无障碍权限…";
 "History" = "历史记录";
 "History menu:" = "历史记录菜单：";
 "History — %d text/file item(s) (max %d) and %d image(s) (max %d). Each group drops its oldest entries first." = "历史记录 — 文本/文件 %d 项（上限 %d），图片 %d 张（上限 %d）。每组优先删除最旧的条目。";
@@ -74,7 +74,7 @@
 "Images — %d of %d." = "图片 — %d / %d。";
 "Issues a new 24-word phrase and invalidates the old one. Use it if the printed sheet was lost or seen by someone; you will then be offered to change the password too." = "生成新的 24 词助记词并使旧的失效。如果打印件丢失或被他人看到，请使用此功能；随后还会建议您更改密码。";
 "Keepit is locked" = "Keepit 已锁定";
-"Keepit needs the Accessibility permission to paste" = "Keepit 需要辅助功能权限才能粘贴";
+"Keepit needs the Accessibility permission to paste" = "Keepit 需要无障碍权限才能粘贴";
 "Keepit never stores the phrase itself." = "Keepit 绝不会存储助记词本身。";
 "Keepit — %@ history, %@ templates" = "Keepit — 历史记录 %@，模板 %@";
 "Keepit — Viewer" = "Keepit — 查看器";
@@ -103,7 +103,7 @@
 "Paste into the active app after choosing" = "选择后粘贴到当前应用";
 "Path" = "路径";
 "Press keys… (⎋ cancels)" = "按下按键…（⎋ 取消）";
-"Press ⌘V to paste now. To paste automatically, allow Keepit in System Settings → Privacy & Security → Accessibility. If Keepit is already listed, turn it off and on again (macOS forgets the grant when the app is rebuilt with a different signature)." = "按 ⌘V 立即粘贴。要自动粘贴，请在 系统设置 → 隐私与安全性 → 辅助功能 中允许 Keepit。如果 Keepit 已在列表中，请关闭后重新打开（应用以不同签名重新构建后，macOS 会忘记该授权）。";
+"Press ⌘V to paste now. To paste automatically, allow Keepit in System Settings → Privacy & Security → Accessibility. If Keepit is already listed, turn it off and on again (macOS forgets the grant when the app is rebuilt with a different signature)." = "按 ⌘V 立即粘贴。要自动粘贴，请在 系统设置 → 隐私与安全 → 无障碍 中允许 Keepit。如果 Keepit 已在列表中，请关闭后重新打开（应用以不同签名重新构建后，macOS 会忘记该授权）。";
 "Pressing it sends the item to the clipboard and pastes it without showing the menu." = "按下即可将该项发送到剪贴板并直接粘贴，不显示菜单。";
 "Print…" = "打印…";
 "Quit" = "退出";
@@ -196,7 +196,7 @@
 "I understand that Keepit's data will be deleted forever and, without a backup, cannot be recovered." = "我明白 Keepit 的数据将被永久删除，且没有备份将无法恢复。";
 "Delete Everything" = "全部删除";
 "Keepit and all its data have been deleted." = "Keepit 及其全部数据已删除。";
-"The app has been moved to the Trash. If an Accessibility entry for Keepit remains in System Settings, you can remove it there." = "应用已移到废纸篓。如果系统设置的辅助功能中仍有 Keepit 条目，可在那里删除。";
+"The app has been moved to the Trash. If an Accessibility entry for Keepit remains in System Settings, you can remove it there." = "应用已移到废纸篓。如果系统设置的无障碍中仍有 Keepit 条目，可在那里删除。";
 "All Keepit data has been deleted." = "Keepit 的全部数据已删除。";
 "Finish by dragging Keepit from the Applications folder to the Trash." = "最后请将 Keepit 从“应用程序”文件夹拖到废纸篓。";
 "Protect your clipboard history with a password?" = "使用密码保护剪贴板历史记录？";
@@ -204,8 +204,8 @@
 "Set Password…" = "设置密码…";
 "Not Now" = "暂不";
 "Your data will not be encrypted" = "您的数据将不会被加密";
-"Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "没有该权限，Keepit 仍能记录历史并将项目复制到剪贴板，但无法向当前应用发送 ⌘V，也无法在文本光标处显示菜单。\n\n系统设置 → 隐私与安全性 → 辅助功能 → 启用 Keepit。";
-"Keepit removes its Accessibility permission." = "Keepit 正在移除其辅助功能权限。";
+"Without it Keepit can still record history and copy items to the clipboard, but it cannot send ⌘V to the active app or place the menu at the text cursor.\n\nSystem Settings → Privacy & Security → Accessibility → enable Keepit." = "没有该权限，Keepit 仍能记录历史并将项目复制到剪贴板，但无法向当前应用发送 ⌘V，也无法在文本光标处显示菜单。\n\n系统设置 → 隐私与安全 → 无障碍 → 启用 Keepit。";
+"Keepit removes its Accessibility permission." = "Keepit 正在移除其无障碍权限。";
 "Also unlock with Touch ID" = "同时使用 Touch ID 解锁";
 "Search history…" = "搜索历史记录…";
 "(no matches)" = "(无匹配项)";
@@ -392,7 +392,7 @@
 "reset Keepit" = "重置 Keepit";
 "Reset Keepit to a fresh install?" = "要将 Keepit 重置为全新安装状态吗？";
 "Clipboard history, templates, settings, the password and the Touch ID key are deleted; the example templates come back. The app, its permissions and Launch at login stay. There is no undo — export a backup first if you may want the data back." = "将删除剪贴板历史、模板、设置、密码和 Touch ID 密钥；示例模板会恢复。应用、其权限和登录时启动保持不变。无法撤销——如果以后可能需要数据，请先导出备份。";
-"Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back." = "“重置”将 Keepit 恢复为全新安装状态：删除历史、模板、设置、密码和 Touch ID 密钥，恢复示例模板；应用及其权限保留。“卸载”在此基础上再移除应用、登录时启动、钥匙串条目和辅助功能权限。两者都需要密码或 Touch ID；卸载还需要键入确认。如果以后可能需要数据，请先导出备份。";
+"Reset puts Keepit back to a fresh install — history, templates, settings, password and Touch ID key are deleted and the example templates return; the app and its permissions stay. Uninstall does the same and then removes the app, Launch at login, the keychain entry and the Accessibility permission. Both ask for your password or Touch ID; Uninstall also for a typed confirmation. Export a backup first if you may want the data back." = "“重置”将 Keepit 恢复为全新安装状态：删除历史、模板、设置、密码和 Touch ID 密钥，恢复示例模板；应用及其权限保留。“卸载”在此基础上再移除应用、登录时启动、钥匙串条目和无障碍权限。两者都需要密码或 Touch ID；卸载还需要键入确认。如果以后可能需要数据，请先导出备份。";
 "Recovery Access…" = "恢复访问…";
 "Updates" = "更新";
 "Check for updates automatically" = "自动检查更新";
@@ -510,7 +510,7 @@
 "User guide: %@ (keep.it.com)" = "使用指南：%@（keep.it.com）";
 "Writes one .keepit archive wherever you choose, locked with a password you pick for it — no Keepit password needed, and Keepit does not keep track of the file afterwards. For handing data over or keeping a copy outside the backup folder; Restore… opens it on any Mac, in either edition." = "在你选择的位置写入一个 .keepit 归档，用你为其设置的密码锁定——无需 Keepit 密码，之后 Keepit 也不再跟踪该文件。用于移交数据或在备份文件夹之外保留一份副本；“恢复…”可在任何 Mac、任一版本中打开它。";
 "Puts Keepit back to a fresh install: history, templates, settings, the password and the Touch ID key are deleted and the example templates return; the app, its permissions and Launch at login stay. Asks for your password or Touch ID. There is no undo — save an archive first if you may want the data back." = "将 Keepit 恢复为全新安装状态：历史、模板、设置、密码和 Touch ID 密钥被删除，示例模板恢复；应用本身、其权限和登录时启动保持不变。需要密码或 Touch ID。无法撤销——如果以后可能需要这些数据，请先保存归档。";
-"Reset, then remove the app itself, Launch at login, the keychain entry and the Accessibility permission. Asks for your password or Touch ID and for a typed confirmation. Save an archive first if you may want the data back." = "先重置，再移除应用本身、登录时启动、钥匙串条目和辅助功能权限。需要密码或 Touch ID 以及键入确认。如果以后可能需要这些数据，请先保存归档。";
+"Reset, then remove the app itself, Launch at login, the keychain entry and the Accessibility permission. Asks for your password or Touch ID and for a typed confirmation. Save an archive first if you may want the data back." = "先重置，再移除应用本身、登录时启动、钥匙串条目和无障碍权限。需要密码或 Touch ID 以及键入确认。如果以后可能需要这些数据，请先保存归档。";
 "Archive password" = "归档密码";
 "Archive saved: %d history item(s), %d template item(s)." = "归档已保存：历史记录 %d 项，模板 %d 项。";
 "Could not save the archive: %@" = "无法保存归档：%@";
