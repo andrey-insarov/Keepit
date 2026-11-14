@@ -21,7 +21,7 @@ Keepit keeps a history of everything you copy and pastes any of it back with a s
 PASTE ANYTHING YOU COPIED
 • Press ⌥M anywhere: a menu with your recent clips opens right at the text cursor.
 • Type to search, pick with the mouse, or press 1–9 / A–Z — the item is pasted into the app you're working in.
-• Hover an item for a preview panel; hold ⇧ for an extended menu: paste as plain text, UPPERCASE, Title Case, single line, add to templates, delete.
+• Hover an item for a preview panel; hold ⇧ for an extended menu: paste as plain text, UPPERCASE, Title Case, single line, struck through or underlined, add to templates, delete.
 • Text, rich text, images (with thumbnails) and files are all kept. Duplicates are merged; recent items stay on top.
 • ⌃⌥1–0 paste items 1–10 without opening the menu.
 
