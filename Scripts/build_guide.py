@@ -129,7 +129,41 @@ def localize_links(fragment: str, lang: str) -> str:
 
 # One flag per language for the picker in the header. A flag stands for a country, not a language,
 # so these are the conventional choices; the native name beside it in the list is what identifies it.
-FLAG = {"en": "🇬🇧", "ru": "🇷🇺", "uk": "🇺🇦", "de": "🇩🇪", "fr": "🇫🇷", "es": "🇪🇸", "pt-BR": "🇧🇷", "ja": "🇯🇵", "zh-Hans": "🇨🇳", "ar": "🇸🇦"}
+# Drawn as SVG (viewBox 20×14) so they look the same everywhere: Windows has no flag emoji.
+# At 22 px wide they are simplified: no coat of arms for Spain, a plain band for Brazil's motto,
+# strokes standing for the inscription and the sword for Saudi Arabia.
+def _star(cx: float, cy: float, r: float, rot: float = -90) -> str:
+    import math
+    pts = []
+    for i in range(10):
+        a = math.radians(rot + i * 36)
+        rr = r if i % 2 == 0 else r * 0.382
+        pts.append(f"{cx + rr * math.cos(a):.2f},{cy + rr * math.sin(a):.2f}")
+    return f'<polygon fill="#ffde00" points="{" ".join(pts)}"/>'
+
+
+FLAG = {
+    "en": '<path fill="#012169" d="M0 0h20v14H0z"/><path stroke="#fff" stroke-width="2.8" d="m0 0 20 14M20 0 0 14"/>'
+          '<path stroke="#c8102e" stroke-width="1" d="m0 0 20 14M20 0 0 14"/><path stroke="#fff" stroke-width="4.6" d="M10 0v14M0 7h20"/>'
+          '<path stroke="#c8102e" stroke-width="2.6" d="M10 0v14M0 7h20"/>',
+    "ru": '<path fill="#fff" d="M0 0h20v14H0z"/><path fill="#0039a6" d="M0 4.67h20V14H0z"/><path fill="#d52b1e" d="M0 9.33h20V14H0z"/>',
+    "uk": '<path fill="#0057b7" d="M0 0h20v14H0z"/><path fill="#ffd700" d="M0 7h20v7H0z"/>',
+    "de": '<path d="M0 0h20v14H0z"/><path fill="#d00" d="M0 4.67h20V14H0z"/><path fill="#ffce00" d="M0 9.33h20V14H0z"/>',
+    "fr": '<path fill="#fff" d="M0 0h20v14H0z"/><path fill="#0055a4" d="M0 0h6.67v14H0z"/><path fill="#ef4135" d="M13.33 0H20v14h-6.67z"/>',
+    "es": '<path fill="#aa151b" d="M0 0h20v14H0z"/><path fill="#f1bf00" d="M0 3.5h20v7H0z"/>',
+    "pt-BR": '<path fill="#009c3b" d="M0 0h20v14H0z"/><path fill="#ffdf00" d="M10 1.6 18 7l-8 5.4L2 7z"/><circle cx="10" cy="7" r="3.1" fill="#002776"/>'
+             '<path fill="none" stroke="#fff" stroke-width=".7" d="M7.1 6.2c2-.5 4.3.1 5.8 1.6"/>',
+    "ja": '<path fill="#fff" d="M0 0h20v14H0z"/><circle cx="10" cy="7" r="4.2" fill="#bc002d"/>',
+    "zh-Hans": '<path fill="#de2910" d="M0 0h20v14H0z"/>' + _star(3.5, 3.6, 2.2) + _star(7, 1.5, .75, -60) + _star(8.4, 2.9, .75, -30)
+               + _star(8.4, 5, .75, 0) + _star(7, 6.4, .75, 30),
+    "ar": '<path fill="#006c35" d="M0 0h20v14H0z"/><path fill="none" stroke="#fff" stroke-linecap="round" stroke-width=".9" '
+          'd="M5 4.2h3.2M9.4 4.2h1.4M12 4.2h3M5.6 6.1h2.2M9 6.1h5.6M6.2 8h7.6"/>'
+          '<path fill="none" stroke="#fff" stroke-linecap="round" stroke-width=".8" d="M5.2 10.4h9.2M14.4 10.4l.9-.5M5.2 9.9v1"/>',
+}
+
+
+def flag_svg(code: str) -> str:
+    return f'<svg class="fl" viewBox="0 0 20 14" aria-hidden="true">{FLAG.get(code, "")}</svg>'
 
 
 def langpick_html(lang: str, ui: dict, page: str | None) -> str:
@@ -139,16 +173,16 @@ def langpick_html(lang: str, ui: dict, page: str | None) -> str:
         return ""
     items = []
     for code in active_langs():
-        h, name, flag = LANG[code]["hreflang"], LANG[code]["name"], FLAG.get(code, "")
-        label = f'<span class="fl" aria-hidden="true">{flag}</span><span lang="{h}">{name}</span>'
+        h, name = LANG[code]["hreflang"], LANG[code]["name"]
+        label = f'{flag_svg(code)}<span lang="{h}">{name}</span>'
         if code == lang:
             items.append(f'<b aria-current="true">{label}</b>')
         else:
             href = page_url(page, code).removeprefix(SITE.rstrip("/"))
             items.append(f'<a href="{href}" hreflang="{h}">{label}</a>')
     return (f'<details class="lpick"><summary aria-label="{ui["language"]}: {LANG[lang]["name"]}">'
-            f'<span class="fl" aria-hidden="true">{FLAG.get(lang, "")}</span>'
-            '<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg>'
+            f'{flag_svg(lang)}'
+            '<svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg>'
             f'</summary><div class="links" dir="ltr">{"".join(items)}</div></details>')
 
 
@@ -260,8 +294,8 @@ CSS_I18N = """
 .tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
 code,kbd,pre{direction:ltr;unicode-bidi:isolate}
 .lpick{position:relative}.lpick summary{list-style:none;cursor:pointer;height:40px;padding:0 8px;display:flex;align-items:center;gap:5px;border-radius:10px;color:var(--ink-2,var(--ink))}
-.lpick summary::-webkit-details-marker{display:none}.lpick summary svg{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
-.lpick .fl{font-size:20px;line-height:1;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
+.lpick summary::-webkit-details-marker{display:none}.lpick summary .chev{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.lpick .fl{flex:none;width:23px;height:16px;border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
 .lpick .links{position:absolute;right:0;top:48px;z-index:30;min-width:220px;padding:6px;border-radius:14px;background:var(--win);border:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.18);display:grid}
 .lpick .links a,.lpick .links b{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;font-size:15px;font-weight:400;color:var(--ink);white-space:nowrap}
 .lpick .links a:hover{background:var(--blue-tint);text-decoration:none}.lpick .links b{font-weight:600;background:color-mix(in srgb,var(--ink) 6%,transparent)}
