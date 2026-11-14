@@ -253,6 +253,16 @@ final class LayoutProbeTests: XCTestCase {
         XCTAssertEqual(probe(l).check(keyCode: kN, modifiers: OPT).verdict, .needed(layout: "U.S.", types: "@"))
     }
 
+    func testKeyThatKeepsTheDeadStateIsNotAChain() {
+        // Under a pending dead key, modifiers and unmapped keys answer "same state, no text" — 50 of them per
+        // layout in the real run. That is not a chain the analysis failed to follow.
+        var l = us()
+        l.set(kX, mods: 0, dead: 1, .deadKey(1))
+        XCTAssertEqual(probe(l).check(keyCode: kN, modifiers: OPT).incomplete, 0)
+        l.set(kX, mods: 0, dead: 1, .deadKey(2))
+        XCTAssertEqual(probe(l).check(keyCode: kN, modifiers: OPT).incomplete, 1)
+    }
+
     func testIncompleteChainsInPlainAreReportedEvenForDirectOutput() {
         var l = german()
         l.set(kGrave, mods: 0, .deadKey(5))

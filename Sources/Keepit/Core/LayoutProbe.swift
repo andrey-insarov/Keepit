@@ -151,8 +151,9 @@ struct LayoutProbe {
         let translate: (UInt16, UInt32, UInt32) -> KeyOutput
         let letters: LetterSet
         let plain: Set<String>
-        /// Dead-key chains in plain(L) that went past the second key, and calls that failed while
-        /// building it. Both make every verdict on this layout less certain, so check() reports them.
+        /// Dead-key chains in plain(L) that went past the second key (a key that leaves the state as it
+        /// was did nothing — modifiers and unmapped keys do that for every state), and calls that failed
+        /// while building it. Both make every verdict on this layout less certain, so check() reports them.
         let plainIncomplete: Int
         let plainErrors: Int
 
@@ -181,7 +182,7 @@ struct LayoutProbe {
                         switch t(code, mods, state) {
                         case .characters(let c): plain.insert(c)
                         case .charactersThenDeadKey(let c, _): plain.insert(c); incomplete += 1
-                        case .deadKey: incomplete += 1
+                        case .deadKey(let next): if next != state { incomplete += 1 }   // same state: the key did nothing
                         case .error: errors += 1
                         case .nothing: break
                         }
@@ -236,7 +237,7 @@ struct LayoutProbe {
                         switch translate(code, mods, state) {
                         case .characters(let c): if composed == nil, needs(c) { composed = c }
                         case .charactersThenDeadKey(let c, _): if composed == nil, needs(c) { composed = c }; incomplete += 1
-                        case .deadKey: incomplete += 1
+                        case .deadKey(let next): if next != state { incomplete += 1 }   // same state: the key did nothing
                         case .error: errors += 1
                         case .nothing: break
                         }
