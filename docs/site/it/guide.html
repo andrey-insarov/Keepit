@@ -1,0 +1,868 @@
+<!DOCTYPE html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guida di Keepit – gestore degli appunti per Mac</title><link rel="icon" href="/img/icon.png?v=a1519b94"><link rel="apple-touch-icon" href="/img/icon.png?v=a1519b94">
+<meta name="description" content="Come usare Keepit, il gestore degli appunti gratuito per Mac: menu della cronologia, tasti rapidi, modelli, Visualizzatore, crittografia e Touch ID.">
+<link rel="canonical" href="https://keep.it.com/it/guide"><link rel="alternate" hreflang="en" href="https://keep.it.com/guide"><link rel="alternate" hreflang="ru" href="https://keep.it.com/ru/guide"><link rel="alternate" hreflang="uk" href="https://keep.it.com/uk/guide"><link rel="alternate" hreflang="de" href="https://keep.it.com/de/guide"><link rel="alternate" hreflang="fr" href="https://keep.it.com/fr/guide"><link rel="alternate" hreflang="es" href="https://keep.it.com/es/guide"><link rel="alternate" hreflang="pt-BR" href="https://keep.it.com/pt-br/guide"><link rel="alternate" hreflang="ja" href="https://keep.it.com/ja/guide"><link rel="alternate" hreflang="zh-Hans" href="https://keep.it.com/zh-hans/guide"><link rel="alternate" hreflang="ar" href="https://keep.it.com/ar/guide"><link rel="alternate" hreflang="cs" href="https://keep.it.com/cs/guide"><link rel="alternate" hreflang="pl" href="https://keep.it.com/pl/guide"><link rel="alternate" hreflang="it" href="https://keep.it.com/it/guide"><link rel="alternate" hreflang="nl" href="https://keep.it.com/nl/guide"><link rel="alternate" hreflang="x-default" href="https://keep.it.com/guide"><meta property="og:type" content="article"><meta property="og:site_name" content="Keepit"><meta property="og:locale" content="it_IT"><meta property="og:title" content="Guida di Keepit – gestore degli appunti per Mac"><meta property="og:description" content="Come usare Keepit, il gestore degli appunti gratuito per Mac: menu della cronologia, tasti rapidi, modelli, Visualizzatore, crittografia e Touch ID."><meta property="og:image" content="https://keep.it.com/img/social-preview.png?v=57583ec3"><meta property="og:url" content="https://keep.it.com/it/guide"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Guida di Keepit – gestore degli appunti per Mac"><meta name="twitter:description" content="Come usare Keepit, il gestore degli appunti gratuito per Mac: menu della cronologia, tasti rapidi, modelli, Visualizzatore, crittografia e Touch ID."><meta name="twitter:image" content="https://keep.it.com/img/social-preview.png?v=57583ec3"><meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "TechArticle", "@id": "https://keep.it.com/it/guide", "url": "https://keep.it.com/it/guide", "name": "Guida di Keepit", "headline": "Guida di Keepit", "description": "Come usare Keepit, il gestore degli appunti gratuito per Mac: menu della cronologia, tasti rapidi, modelli, Visualizzatore, crittografia e Touch ID.", "inLanguage": "it", "isPartOf": {"@id": "https://keep.it.com/#site"}, "about": {"@id": "https://keep.it.com/#app"}, "author": {"@id": "https://keep.it.com/#org"}, "publisher": {"@id": "https://keep.it.com/#org"}, "image": "https://keep.it.com/img/social-preview.png?v=57583ec3", "dateModified": "2026-11-14", "translationOfWork": {"@id": "https://keep.it.com/guide"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Keepit", "item": "https://keep.it.com/it/"}, {"@type": "ListItem", "position": 2, "name": "Guida", "item": "https://keep.it.com/it/guide"}]}]}</script>
+<script defer src="https://app.eurometrics.eu/script.js?v=7cfd3b4c27be" data-website-id="0ab7fe20-0c05-4061-b037-c033dc46c1e1" data-domains="keep.it.com" data-do-not-track="true" data-exclude-search="true" data-no-storage="true"></script>
+<style>
+:root{--paper:#fbfbfd;--ink:#0f1222;--ink-2:#4b4f63;--ink-3:#696d84;--blue:#2f4fd1;--blue-deep:#1f3aa6;--blue-tint:#eef2ff;--line:#e3e5ef;--key:#fff;--key-edge:#cfd2de;--win:#fff;--sel:#2f5cf0}
+@media(prefers-color-scheme:dark){:root{--paper:#0c0d14;--ink:#f2f3f8;--ink-2:#b7bacb;--ink-3:#8e92a9;--blue:#7d9bff;--blue-deep:#a9bdff;--blue-tint:#151b35;--line:#23263a;--key:#1b1e2e;--key-edge:#3a3e56;--win:#1a1c28;--sel:#3d6bff}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:72px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;font:17px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+:focus-visible{outline:3px solid var(--sel);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:20;-webkit-backdrop-filter:saturate(180%) blur(18px);backdrop-filter:saturate(180%) blur(18px);background:color-mix(in srgb,var(--paper) 78%,transparent);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:650;color:var(--ink);font-size:20px}.brand img{width:44px;height:44px;border-radius:10px}
+nav{display:flex;gap:24px;align-items:center}nav>a{color:var(--ink-2);font-size:15px}nav>a:hover{color:var(--ink);text-decoration:none}
+.mnav{display:none;position:relative}.mnav summary{list-style:none;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:var(--ink)}
+.mnav summary::-webkit-details-marker{display:none}.mnav summary svg{width:22px;height:22px}.mnav[open] summary{background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.mnav .links{position:absolute;right:0;top:48px;min-width:210px;padding:6px;border-radius:14px;background:var(--win);border:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.18);display:grid}
+.mnav .links a{display:block;padding:11px 14px;border-radius:9px;font-size:16px;color:var(--ink)}.mnav .links a:hover{background:var(--blue-tint);text-decoration:none}
+@media(max-width:700px){nav{gap:10px}nav>a:not(.gh){display:none}.mnav{display:block;margin-right:-8px}}
+main.wrap{display:grid;grid-template-columns:230px minmax(0,1fr);gap:56px;padding-top:48px;padding-bottom:96px}
+main.wrap.narrow{grid-template-columns:minmax(0,1fr);max-width:820px}
+aside{position:sticky;top:76px;align-self:start;max-height:calc(100vh - 96px);overflow:auto;font-size:14px;line-height:1.45;padding-right:8px}
+aside .ttl{font-weight:650;color:var(--ink);margin:0 0 10px;font-size:13px}
+aside ol{list-style:none;margin:0;padding:0}aside li{margin:0}
+aside a{display:block;color:var(--ink-2);padding:4px 0 4px 12px;border-left:2px solid var(--line)}
+aside a:hover{color:var(--ink);text-decoration:none}aside a.on{color:var(--blue);border-left-color:var(--blue)}
+aside ol ol a{padding-left:24px;font-size:13px;color:var(--ink-3)}
+@media(max-width:900px){main.wrap{grid-template-columns:minmax(0,1fr);gap:0;padding-top:32px;padding-bottom:64px}aside{position:static;max-height:none;margin-bottom:32px;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--win)}aside ol ol{display:none}}
+article{max-width:72ch;min-width:0}
+article h1{font-size:clamp(34px,5vw,52px);line-height:1.05;letter-spacing:-.03em;font-weight:750;margin:0 0 .5em}
+article h1+p{font-size:19px;color:var(--ink-2)}
+article h2{font-size:30px;line-height:1.15;letter-spacing:-.02em;font-weight:700;margin:2.2em 0 .6em;padding-top:1em;border-top:1px solid var(--line)}
+article h3{font-size:20px;font-weight:650;margin:1.8em 0 .5em}
+article p,article li{color:var(--ink);}article li{margin:.25em 0}
+article hr{border:0;border-top:1px solid var(--line);margin:2.5em 0}
+code{font:.9em ui-monospace,"SF Mono",Menlo,monospace;background:color-mix(in srgb,var(--ink) 7%,transparent);padding:2px 6px;border-radius:6px;white-space:nowrap}
+@media(max-width:600px){code{white-space:normal;overflow-wrap:anywhere}}
+pre{background:var(--blue-tint);padding:14px 18px;border-radius:12px;overflow:auto;font-size:14px;line-height:1.6;max-width:100%}pre code{background:none;padding:0;white-space:pre-wrap;word-break:break-word}
+kbd.k{display:inline-block;min-width:1.7em;padding:0 .4em;text-align:center;font:600 .82em/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text",Helvetica,Arial,sans-serif;color:var(--ink);background:var(--key);border:1px solid var(--key-edge);border-bottom-width:2px;border-radius:6px;white-space:nowrap;vertical-align:baseline}
+.tbl{overflow-x:auto;margin:1.2em 0}table{border-collapse:collapse;width:100%;font-size:15.5px}th,td{text-align:left;padding:9px 12px 9px 0;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--ink-3);font-weight:600;font-size:14px}td code{display:inline-block;margin:1px 0}
+td:first-child{white-space:nowrap}@media(max-width:600px){td:first-child{white-space:normal}}
+figure.shot{margin:1.6em 0;width:100%}figure.shot a{display:block}figure.shot img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line);box-shadow:0 12px 32px -8px rgba(15,18,34,.25);cursor:zoom-in}
+figure.shot figcaption{font-size:14px;color:var(--ink-3);margin-top:8px}
+.slot{border:2px dashed var(--line);border-radius:12px;padding:28px;text-align:center;color:var(--ink-3);font-size:15px}
+.contents{display:none}
+.fb{margin:1.4em 0 2em;padding:22px 24px;border:1px solid var(--line);border-radius:16px;background:var(--win);display:grid;gap:14px}
+.fb label{display:grid;gap:6px;font-size:14px;font-weight:600;color:var(--ink-2)}.fb .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:600px){.fb .row2{grid-template-columns:1fr}}
+.fb .hint{font-weight:400;color:var(--ink-3)}
+.fb input[type=text],.fb input[type=email],.fb select,.fb textarea{font:16px/1.4 inherit;color:var(--ink);background:var(--win);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;box-sizing:border-box}
+.fb textarea{resize:vertical;min-height:140px}.fb input:focus,.fb select:focus,.fb textarea:focus{outline:2px solid var(--blue);outline-offset:1px;border-color:transparent}
+.fb input[type=file]{font-size:14px;color:var(--ink-2)}
+.fb-list{list-style:none;margin:-6px 0 0;padding:0;display:grid;gap:6px}.fb-list li{font-size:14px;color:var(--ink-2);display:flex;align-items:center;gap:10px}.fb-list button{font:inherit;font-size:13px;color:var(--blue);background:none;border:0;padding:0;cursor:pointer}.fb-list button:hover{text-decoration:underline}
+.fb .btn{justify-self:start;display:inline-flex;align-items:center;padding:12px 22px;border-radius:12px;font-weight:600;font-size:16px;line-height:1;border:0;cursor:pointer;background:var(--blue);color:#fff}
+.fb .btn[disabled]{opacity:.6;cursor:default}.fb-err{color:#c0392b;font-size:14px;margin:0}.fb-legal{font-size:13px;margin:-6px 0 0}.fb-ok{color:var(--ink);margin:0;padding:18px 20px;border-radius:12px;background:var(--blue-tint);line-height:1.5}
+footer{border-top:1px solid var(--line);padding:36px 0 64px;color:var(--ink-3);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}footer a{color:var(--ink-2)}
+#lb{position:fixed;inset:0;background:rgba(5,7,20,.86);display:none;align-items:center;justify-content:center;padding:24px;z-index:30;cursor:zoom-out}
+#lb.on{display:flex}#lb img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+
+.langs{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px}.langs b{color:var(--ink);font-weight:600}.en-only{color:var(--ink-3)}
+.tr-note{font-size:14px;color:var(--ink-3);margin:0 0 1.6em}
+code,kbd,pre{direction:ltr;unicode-bidi:isolate}
+.lpick{position:relative}.lpick summary{list-style:none;cursor:pointer;height:40px;padding:0 8px;display:flex;align-items:center;gap:5px;border-radius:10px;color:var(--ink-2,var(--ink))}
+.lpick summary::-webkit-details-marker{display:none}.lpick summary .chev{width:11px;height:11px;opacity:.7}.lpick[open] summary,.lpick summary:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.lpick .fl{flex:none;width:23px;height:16px;border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 16%,transparent)}
+.lpick .links{position:absolute;right:0;top:48px;z-index:30;min-width:220px;padding:6px;border-radius:14px;background:var(--win);border:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.18);display:grid}
+.lpick .links a,.lpick .links b{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;font-size:15px;font-weight:400;color:var(--ink);white-space:nowrap}
+.lpick .links a:hover{background:var(--blue-tint);text-decoration:none}.lpick .links b{font-weight:600;background:color-mix(in srgb,var(--ink) 6%,transparent)}
+@media(min-width:701px){.lpick .links{max-height:calc(100vh - 64px);overflow:auto}.lpick .links.cols{display:block;column-count:2;column-gap:4px;min-width:430px}.lpick .links.cols a,.lpick .links.cols b{break-inside:avoid}}
+@media(max-width:700px){.lpick .links{right:-48px;max-height:70vh;overflow:auto}.lpick .links a,.lpick .links b{padding:11px 12px;font-size:16px}}
+[dir=rtl] .lpick .links{right:auto;left:0}
+@media(max-width:700px){[dir=rtl] .lpick .links{left:-48px}}
+[dir=rtl] .mnav .links{right:auto;left:0}
+@media(max-width:700px){[dir=rtl] .mnav{margin-right:0;margin-left:-8px}}
+[dir=rtl] aside{padding-right:0;padding-left:8px}
+[dir=rtl] aside a{padding:4px 12px 4px 0;border-left:0;border-right:2px solid var(--line)}
+[dir=rtl] aside a.on{border-right-color:var(--blue)}
+[dir=rtl] aside ol ol a{padding-left:0;padding-right:24px}
+[dir=rtl] th,[dir=rtl] td{text-align:right;padding:9px 0 9px 12px}
+[dir=rtl] .fb .btn{justify-self:end}
+</style></head>
+<body><header><div class="wrap">
+  <a class="brand" href="/it/"><img src="/img/icon.png?v=a1519b94" alt="">Keepit</a>
+  <nav><a href="/it/#features">Funzioni</a><a href="/it/guide">Guida</a><a href="/security">Sicurezza</a><a href="/it/support">Supporto</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a><details class="lpick"><summary aria-label="Lingua: Italiano"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#009246" d="M0 0h6.67v14H0z"/><path fill="#ce2b37" d="M13.33 0H20v14h-6.67z"/></svg><svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></summary><div class="links cols" dir="ltr"><a href="/guide" hreflang="en"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#b22234" d="M0 0h20v14H0z"/><path fill="#fff" d="M0 1.08h20v1.08H0z"/><path fill="#fff" d="M0 3.23h20v1.08H0z"/><path fill="#fff" d="M0 5.38h20v1.08H0z"/><path fill="#fff" d="M0 7.54h20v1.08H0z"/><path fill="#fff" d="M0 9.69h20v1.08H0z"/><path fill="#fff" d="M0 11.85h20v1.08H0z"/><path fill="#3c3b6e" d="M0 0h8.2v7.54H0z"/><circle cx="1.3" cy="1.30" r=".42" fill="#fff"/><circle cx="3.1" cy="1.30" r=".42" fill="#fff"/><circle cx="4.9" cy="1.30" r=".42" fill="#fff"/><circle cx="6.7" cy="1.30" r=".42" fill="#fff"/><circle cx="1.3" cy="2.95" r=".42" fill="#fff"/><circle cx="3.1" cy="2.95" r=".42" fill="#fff"/><circle cx="4.9" cy="2.95" r=".42" fill="#fff"/><circle cx="6.7" cy="2.95" r=".42" fill="#fff"/><circle cx="1.3" cy="4.60" r=".42" fill="#fff"/><circle cx="3.1" cy="4.60" r=".42" fill="#fff"/><circle cx="4.9" cy="4.60" r=".42" fill="#fff"/><circle cx="6.7" cy="4.60" r=".42" fill="#fff"/><circle cx="1.3" cy="6.25" r=".42" fill="#fff"/><circle cx="3.1" cy="6.25" r=".42" fill="#fff"/><circle cx="4.9" cy="6.25" r=".42" fill="#fff"/><circle cx="6.7" cy="6.25" r=".42" fill="#fff"/></svg><span lang="en">English</span></a><a href="/ru/guide" hreflang="ru"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#0039a6" d="M0 4.67h20V14H0z"/><path fill="#d52b1e" d="M0 9.33h20V14H0z"/></svg><span lang="ru">Русский</span></a><a href="/uk/guide" hreflang="uk"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#0057b7" d="M0 0h20v14H0z"/><path fill="#ffd700" d="M0 7h20v7H0z"/></svg><span lang="uk">Українська</span></a><a href="/de/guide" hreflang="de"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path d="M0 0h20v14H0z"/><path fill="#d00" d="M0 4.67h20V14H0z"/><path fill="#ffce00" d="M0 9.33h20V14H0z"/></svg><span lang="de">Deutsch</span></a><a href="/fr/guide" hreflang="fr"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#0055a4" d="M0 0h6.67v14H0z"/><path fill="#ef4135" d="M13.33 0H20v14h-6.67z"/></svg><span lang="fr">Français</span></a><a href="/es/guide" hreflang="es"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#aa151b" d="M0 0h20v14H0z"/><path fill="#f1bf00" d="M0 3.5h20v7H0z"/></svg><span lang="es">Español</span></a><a href="/pt-br/guide" hreflang="pt-BR"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#009c3b" d="M0 0h20v14H0z"/><path fill="#ffdf00" d="M10 1.6 18 7l-8 5.4L2 7z"/><circle cx="10" cy="7" r="3.1" fill="#002776"/><path fill="none" stroke="#fff" stroke-width=".7" d="M7.1 6.2c2-.5 4.3.1 5.8 1.6"/></svg><span lang="pt-BR">Português (Brasil)</span></a><a href="/ja/guide" hreflang="ja"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><circle cx="10" cy="7" r="4.2" fill="#bc002d"/></svg><span lang="ja">日本語</span></a><a href="/zh-hans/guide" hreflang="zh-Hans"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#de2910" d="M0 0h20v14H0z"/><polygon fill="#ffde00" points="3.50,1.40 3.99,2.92 5.59,2.92 4.30,3.86 4.79,5.38 3.50,4.44 2.21,5.38 2.70,3.86 1.41,2.92 3.01,2.92"/><polygon fill="#ffde00" points="7.38,0.85 7.26,1.38 7.73,1.66 7.19,1.71 7.08,2.25 6.86,1.75 6.31,1.81 6.72,1.44 6.50,0.94 6.97,1.22"/><polygon fill="#ffde00" points="9.05,2.52 8.68,2.93 8.96,3.40 8.46,3.18 8.09,3.59 8.15,3.04 7.65,2.82 8.19,2.71 8.24,2.17 8.52,2.64"/><polygon fill="#ffde00" points="9.15,5.00 8.63,5.17 8.63,5.71 8.31,5.27 7.79,5.44 8.11,5.00 7.79,4.56 8.31,4.73 8.63,4.29 8.63,4.83"/><polygon fill="#ffde00" points="7.65,6.78 7.12,6.66 6.84,7.13 6.79,6.59 6.25,6.48 6.75,6.26 6.69,5.71 7.06,6.12 7.56,5.90 7.28,6.37"/></svg><span lang="zh-Hans">简体中文</span></a><a href="/ar/guide" hreflang="ar"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#00732f" d="M0 0h20v4.67H0z"/><path d="M0 9.33h20V14H0z"/><path fill="#f00" d="M0 0h5v14H0z"/></svg><span lang="ar">العربية</span></a><a href="/cs/guide" hreflang="cs"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#d7141a" d="M0 7h20v7H0z"/><path fill="#11457e" d="m0 0 10 7-10 7z"/></svg><span lang="cs">Čeština</span></a><a href="/pl/guide" hreflang="pl"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#dc143c" d="M0 7h20v7H0z"/></svg><span lang="pl">Polski</span></a><b aria-current="true"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#009246" d="M0 0h6.67v14H0z"/><path fill="#ce2b37" d="M13.33 0H20v14h-6.67z"/></svg><span lang="it">Italiano</span></b><a href="/nl/guide" hreflang="nl"><svg class="fl" viewBox="0 0 20 14" aria-hidden="true"><path fill="#fff" d="M0 0h20v14H0z"/><path fill="#ae1c28" d="M0 0h20v4.67H0z"/><path fill="#21468b" d="M0 9.33h20V14H0z"/></svg><span lang="nl">Nederlands</span></a></div></details><details class="mnav"><summary aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><div class="links"><a href="/it/#features">Funzioni</a><a href="/it/#privacy">Privacy</a><a href="/it/#install">Installazione</a><a href="/it/guide">Guida</a><a href="/security">Sicurezza</a><a href="/it/support">Supporto</a></div></details></nav>
+</div></header>
+<main class="wrap"><aside aria-label="Indice"><p class="ttl">In questa pagina</p><ol><li><a href="#part-1-getting-started">Parte 1. Per iniziare</a><ol><li><a href="#install">Installazione</a></li><li><a href="#first-launch">Primo avvio</a></li></ol></li><li><a href="#part-2-everyday-use">Parte 2. Uso quotidiano</a><ol><li><a href="#the-history-menu">Il menu della cronologia</a></li><li><a href="#search-and-preview">Ricerca e anteprima</a></li><li><a href="#paste-without-the-menu">Incollare senza menu</a></li><li><a href="#the-paste-queue">La coda di incolla</a></li><li><a href="#the-extended-menu">Il menu esteso</a></li></ol></li><li><a href="#part-3-templates">Parte 3. Modelli</a><ol><li><a href="#creating-and-organising">Creare e organizzare</a></li><li><a href="#placeholders">Segnaposto</a></li><li><a href="#templates-that-ask-questions">Modelli che fanno domande</a></li></ol></li><li><a href="#part-4-the-viewer">Parte 4. Il Visualizzatore</a></li><li><a href="#part-5-settings">Parte 5. Impostazioni</a></li><li><a href="#part-6-security">Parte 6. Sicurezza</a><ol><li><a href="#password-and-encryption">Password e crittografia</a></li><li><a href="#touch-id">Touch ID</a></li><li><a href="#recovery-phrase">Frase di recupero</a></li><li><a href="#backup">Backup</a></li></ol></li><li><a href="#part-7-advanced">Parte 7. Funzioni avanzate</a><ol><li><a href="#automation-the-keepit-url-scheme">Automazione: lo schema URL keepit://</a></li><li><a href="#updates">Aggiornamenti</a></li><li><a href="#uninstalling">Disinstallazione</a></li></ol></li><li><a href="#reference">Riferimenti</a><ol><li><a href="#troubleshooting">Risoluzione dei problemi</a></li><li><a href="#keyboard-cheat-sheet">Promemoria dei tasti</a></li><li><a href="#placeholder-cheat-sheet">Promemoria dei segnaposto</a></li></ol></li></ol></aside><article><h1 id="keepit-user-guide">Guida di Keepit</h1><p class="tr-note">Tradotto dall’inglese. Originale: <a href="/guide">English</a>.</p>
+<p>Keepit gestisce la cronologia degli appunti e i modelli su macOS. Vive nella barra dei menu,
+ricorda tutto ciò che copi e incolla di nuovo qualsiasi elemento con un tasto rapido. Tutti i tasti
+rapidi indicati qui sotto sono quelli predefiniti e ognuno si può cambiare in <em>Impostazioni →
+Abbreviazioni</em>. Questa guida descrive Keepit 3; la guida di Keepit 2.x resta invariata
+all’indirizzo <a href="https://keep.it.com/v2/guide">keep.it.com/v2/guide</a> (in inglese).</p>
+<figure class="shot" style="max-width:629px"><a href="/img/guide/menu.png?v=ef1dd207" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/menu.png?v=ef1dd207" alt="Il menu della cronologia" width="629" height="778" loading="lazy"></a><figcaption>Il menu della cronologia</figcaption></figure>
+<p><strong>Indice</strong></p>
+<ul>
+<li><a href="#part-1--getting-started">Parte 1. Per iniziare</a>: <a href="#install">Installazione</a> · <a href="#first-launch">Primo avvio</a></li>
+<li><a href="#part-2--everyday-use">Parte 2. Uso quotidiano</a>: <a href="#the-history-menu">Il menu della cronologia</a> · <a href="#search-and-preview">Ricerca e anteprima</a> · <a href="#paste-without-the-menu">Incollare senza menu</a> · <a href="#the-paste-queue">La coda di incolla</a> · <a href="#the-extended-menu">Il menu esteso</a></li>
+<li><a href="#part-3--templates">Parte 3. Modelli</a>: <a href="#creating-and-organising">Creare e organizzare</a> · <a href="#placeholders">Segnaposto</a> · <a href="#templates-that-ask-questions">Modelli che fanno domande</a></li>
+<li><a href="#part-4--the-viewer">Parte 4. Il Visualizzatore</a></li>
+<li><a href="#part-5--settings">Parte 5. Impostazioni</a></li>
+<li><a href="#part-6-security">Parte 6. Sicurezza</a>: <a href="#password-and-encryption">Password e crittografia</a> · <a href="#touch-id">Touch ID</a> · <a href="#recovery-phrase">Frase di recupero</a> · <a href="#backup">Backup</a></li>
+<li><a href="#part-7--advanced">Parte 7. Funzioni avanzate</a>: <a href="#automation-the-keepit-url-scheme">Automazione</a> · <a href="#updates">Aggiornamenti</a> · <a href="#uninstalling">Disinstallazione</a></li>
+<li><a href="#reference">Riferimenti</a>: <a href="#troubleshooting">Risoluzione dei problemi</a> · <a href="#keyboard-cheat-sheet">Promemoria dei tasti</a> · <a href="#placeholder-cheat-sheet">Promemoria dei segnaposto</a></li>
+</ul>
+<hr />
+<h2 id="part-1-getting-started">Parte 1. Per iniziare</h2>
+<h3 id="install">Installazione</h3>
+<p><strong>Homebrew.</strong> È il metodo consigliato, perché <code>brew upgrade</code> mantiene l’app aggiornata:</p>
+<pre><code class="language-bash">brew tap andrey-insarov/keepit https://github.com/andrey-insarov/Keepit
+brew install --cask andrey-insarov/keepit/keepit
+</code></pre>
+<p><strong>DMG.</strong> Scarica <code>Keepit-&lt;versione&gt;.dmg</code> dalla
+<a href="https://github.com/andrey-insarov/Keepit/releases/latest">release più recente</a>, aprilo e trascina
+Keepit in <em>Applicazioni</em>.</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/dmg.png?v=2115ef2c" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/dmg.png?v=2115ef2c" alt="Il DMG: trascina Keepit in Applicazioni" width="636" height="396" loading="lazy"></a><figcaption>Il DMG: trascina Keepit in Applicazioni</figcaption></figure>
+<p>La prima volta che apri l’app, macOS conferma che proviene da Internet e che è stata controllata da
+Apple. Fai clic su <em>Apri</em>.</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/gatekeeper.png?v=d79051e5" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/gatekeeper.png?v=d79051e5" alt="La conferma di Gatekeeper in macOS" width="336" height="336" loading="lazy"></a><figcaption>La conferma di Gatekeeper in macOS</figcaption></figure>
+<p>Keepit è firmato e autenticato, si aggiorna da solo e funziona in modo nativo sui Mac con Apple
+silicon e con processore Intel, con macOS 13 Ventura o successivo.</p>
+<h3 id="first-launch">Primo avvio</h3>
+<p>Keepit è un’app della barra dei menu: non ha un’icona nel Dock né una finestra finché non ne apri
+una. Dopo il primo avvio nella barra dei menu compare l’icona 📎 e Keepit chiede tre cose.</p>
+<p><strong>1. Ripristinare da un backup?</strong> Se questo è un Mac nuovo e hai un backup di Keepit (automatico,
+in iCloud Drive o in un’altra cartella, oppure un file <code>.keepit</code> esportato), <em>Ripristina da
+backup…</em> riporta la cronologia e i modelli prima che succeda qualsiasi altra cosa. Sblocchi il
+file con la password del Mac da cui proviene oppure con la sua frase di recupero. <em>Inizia da zero</em>
+salta questo passaggio. Lo stesso ripristino è disponibile più tardi in <em>Impostazioni → Backup →
+Ripristina…</em>, e un file <code>.keepit</code> si apre anche con un doppio clic nel Finder. I dettagli sono
+nella sezione <a href="#backup">Backup</a>.</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/restore-first-run.png?v=cfa1e73f" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/restore-first-run.png?v=cfa1e73f" alt="La prima domanda su un Mac nuovo: ripristinare da un backup o iniziare da zero" width="336" height="408" loading="lazy"></a><figcaption>La prima domanda su un Mac nuovo: ripristinare da un backup o iniziare da zero</figcaption></figure>
+<p><strong>2. Una password (facoltativa).</strong> Keepit può salvare la cronologia e i modelli crittografati
+e sbloccarli con Touch ID. Puoi decidere subito oppure più tardi in <em>Impostazioni → Sicurezza</em>; la
+<a href="#part-6-security">Parte 6</a> spiega come funziona. Con <em>Non ora</em> tutto resta sul disco non
+crittografato. Se un attimo prima hai ripristinato un backup con la sua password, Keepit propone di
+mantenere quella password anche per questo Mac.</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/password-offer.png?v=a377f4be" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/password-offer.png?v=a377f4be" alt="La proposta della password al primo avvio" width="336" height="410" loading="lazy"></a><figcaption>La proposta della password al primo avvio</figcaption></figure>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/no-password-notice.png?v=0da3b4f2" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/no-password-notice.png?v=0da3b4f2" alt="Scegliendo Non ora: una spiegazione chiara di che cosa comporta e di dove si può cambiare" width="336" height="342" loading="lazy"></a><figcaption>Scegliendo Non ora: una spiegazione chiara di che cosa comporta e di dove si può cambiare</figcaption></figure>
+<p><strong>3. L’autorizzazione Accessibilità.</strong> Per incollare al posto tuo, Keepit invia ⌘V all’app in cui
+stavi lavorando. macOS lo consente solo alle app elencate in <em>Impostazioni di Sistema → Privacy
+e sicurezza → Accessibilità</em>. Fai clic su <em>Apri Impostazioni di Sistema</em> e attiva Keepit. Senza
+questa autorizzazione Keepit continua a registrare e a copiare, ma ⌘V lo premi tu.</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/accessibility-prompt.png?v=53fda070" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/accessibility-prompt.png?v=53fda070" alt="Keepit chiede l’autorizzazione Accessibilità" width="336" height="462" loading="lazy"></a><figcaption>Keepit chiede l’autorizzazione Accessibilità</figcaption></figure>
+<figure class="shot" style="max-width:762px"><a href="/img/guide/accessibility-settings.png?v=3324189c" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/accessibility-settings.png?v=3324189c" alt="Keepit attivato in Privacy e sicurezza → Accessibilità" width="762" height="598" loading="lazy"></a><figcaption>Keepit attivato in Privacy e sicurezza → Accessibilità</figcaption></figure>
+<p>Di default Keepit si avvia al login. Puoi disattivarlo in <em>Impostazioni → Generali</em>.</p>
+<hr />
+<h2 id="part-2-everyday-use">Parte 2. Uso quotidiano</h2>
+<h3 id="the-history-menu">Il menu della cronologia</h3>
+<p>Premi <strong>⌥M</strong> in qualsiasi app oppure fai clic sull’icona 📎. Il menu si apre accanto al cursore di
+testo, se Keepit riesce a trovarlo, altrimenti accanto al puntatore del mouse.</p>
+<p>Ogni riga è un elemento copiato e il più recente sta in alto. Il più recente è in <strong>grassetto</strong>,
+perché è quello che si trova negli appunti in questo momento. L’icona mostra l’app da cui hai
+copiato. Un titolo che termina con <code>…</code> ha più righe di quante ne mostri il menu. Le immagini hanno
+una miniatura, gli elenchi di file mostrano i nomi dei file.</p>
+<figure class="shot" style="max-width:1045px"><a href="/img/guide/menu-preview.png?v=3a4dbc04" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/menu-preview.png?v=3a4dbc04" alt="Il pannello di anteprima accanto al menu mostra per intero l’elemento evidenziato, con l’app di origine, l’ora e la dimensione" width="1045" height="648" loading="lazy"></a><figcaption>Il pannello di anteprima accanto al menu mostra per intero l’elemento evidenziato, con l’app di origine, l’ora e la dimensione</figcaption></figure>
+<figure class="shot" style="max-width:1088px"><a href="/img/guide/menu-image.png?v=d7b4e3af" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/menu-image.png?v=d7b4e3af" alt="Un’immagine nella cronologia: miniatura nel menu, immagine intera nell’anteprima" width="1088" height="640" loading="lazy"></a><figcaption>Un’immagine nella cronologia: miniatura nel menu, immagine intera nell’anteprima</figcaption></figure>
+<p>Per incollare un elemento fai clic su di esso, oppure raggiungilo con ↑ ↓ e premi Invio, oppure
+premi il suo numero con <strong>⌃⌥</strong>: <kbd class="k">⌃⌥3</kbd> incolla l’elemento 3. Lo stesso tasto funziona ovunque,
+anche senza aprire il menu.</p>
+<p>Sotto la cronologia trovi il sottomenu <em>Modelli</em>, il Visualizzatore (⌥E), le Impostazioni (⌥S),
+<em>Cancella cronologia</em> (⌥C), <em>Sospendi la registrazione per 10 minuti</em> (⌥P, per quando scrivi
+qualcosa che non vuoi registrare), <em>Blocca Keepit</em> (⌥L) se è impostata una password, e gli
+aggiornamenti. <strong>⌥T</strong> apre direttamente il menu dei modelli. Ognuno di questi tasti funziona anche
+senza il menu.</p>
+<h3 id="search-and-preview">Ricerca e anteprima</h3>
+<p><strong>Ricerca.</strong> Con il menu aperto inizia a scrivere: il campo in alto filtra l’elenco per titolo
+e per testo completo, quindi trova anche una riga nel mezzo di un elemento lungo. Invio incolla la
+prima corrispondenza, Esc svuota il campo e un secondo Esc chiude il menu.</p>
+<p><strong>Anteprima.</strong> Passa con il puntatore su un elemento (o raggiungilo con la tastiera) e un pannello
+accanto al menu mostra l’immagine intera oppure le prime righe di un testo lungo, con l’app di
+origine, la data e la dimensione. I testi brevi di una sola riga non hanno anteprima, perché la
+riga del menu li mostra già per intero.</p>
+<figure class="shot" style="max-width:907px"><a href="/img/guide/search-preview.png?v=86998c10" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/search-preview.png?v=86998c10" alt="Scrivendo si filtra il menu; il pannello di anteprima mostra l’elemento evidenziato" width="907" height="524" loading="lazy"></a><figcaption>Scrivendo si filtra il menu; il pannello di anteprima mostra l’elemento evidenziato</figcaption></figure>
+<h3 id="paste-without-the-menu">Incollare senza menu</h3>
+<p>I tasti rapidi globali agiscono sulla cronologia così com’è in quel momento (l’elemento 1 sono gli
+appunti), da qualsiasi app:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Tasti</th>
+<th>Che cosa succede</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><kbd class="k">⌃⌥1</kbd> … <kbd class="k">⌃⌥9</kbd>, <kbd class="k">⌃⌥0</kbd></td>
+<td>Incolla l’elemento 1–10 della cronologia</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥⇧V</kbd></td>
+<td>Incolla l’elemento <em>precedente</em> (il 2); premendo di nuovo li scambi ancora</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥V</kbd></td>
+<td>Incolla gli appunti come testo semplice, senza formattazione</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
+<td>Incolla gli appunti in MAIUSCOLE / minuscole / Iniziali Maiuscole / come una frase</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥W</kbd></td>
+<td>Incolla gli appunti senza gli spazi iniziali e finali</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥J</kbd></td>
+<td>Incolla gli appunti riuniti in una sola riga</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥K</kbd> <kbd class="k">⌃⌥D</kbd> <kbd class="k">⌃⌥Y</kbd></td>
+<td>Incolla gli appunti barrati / sottolineati / con sottolineatura ondulata, come testo semplice che conserva l’aspetto ovunque, chat comprese (vedi sotto)</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥X</kbd></td>
+<td>Incolla gli appunti dopo aver rimosso queste decorazioni</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥A</kbd></td>
+<td>Aggiunge gli appunti ai Modelli</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥⌫</kbd></td>
+<td>Elimina dalla cronologia l’elemento più recente</td>
+</tr>
+</tbody>
+</table></div>
+<p>Le tre decorazioni non sono formattazione: Keepit aggiunge dopo ogni carattere un <em>segno
+combinatorio</em> Unicode (b̶a̶r̶r̶a̶t̶o̶, s̲o̲t̲t̲o̲l̲i̲n̲e̲a̲t̲o̲, o̰n̰d̰ṵl̰a̰t̰o̰), così il testo ha lo stesso aspetto in
+un’app di messaggistica, in un modulo web o in un terminale, dove la formattazione vera andrebbe
+persa. C’è un prezzo: un testo così occupa il triplo, una ricerca della parola semplice non lo
+trova, gli screen reader vi inciampano e alcuni font disegnano la linea in modo irregolare.
+<em>Rimuovi decorazioni</em> (<kbd class="k">⌃⌥X</kbd>) toglie di nuovo i segni, anche da un testo decorato altrove. In
+entrambi i casi i segni vengono rimossi per punto di codice, qualunque sia la loro provenienza:
+una trascrizione fonetica che usa gli stessi segni come lettere (U+0330 è anche il segno IPA della
+voce cricchiata) li perde, e anche le tre decorazioni prima li rimuovono. Con VoiceOver attivo,
+<code>⌃⌥</code> è il modificatore di VoiceOver stesso: assegnane un altro ad <em>Azioni sull’ultimo elemento</em> in
+Impostazioni → Abbreviazioni.</p>
+<p>Le trasformazioni si applicano al testo; con un’immagine o un elenco di file il tasto emette solo
+un segnale acustico. Tutti questi tasti si possono cambiare o disattivare in <em>Impostazioni →
+Abbreviazioni</em>.</p>
+<h3 id="the-paste-queue">La coda di incolla</h3>
+<p>A volte serve copiare cinque cose da un posto e incollarle in ordine da un’altra parte: celle in
+un modulo, righe di una pagina in un documento. La coda di incolla lo fa senza il menu:</p>
+<ol>
+<li>Premi <strong>⌥N</strong> (oppure scegli <em>Avvia la coda di incolla</em> nel menu). L’icona nella barra dei menu
+   mostra un punto rosso e un contatore: <code>📎 ● 0</code>.</li>
+<li>Copia come al solito con ⌘C, tutte le volte che vuoi. Il contatore sale a ogni copia: 1, 2, 3…
+   Tutto viene registrato anche nella cronologia.</li>
+</ol>
+<figure class="shot" style="max-width:350px"><a href="/img/guide/queue-menubar.png?v=808fb52c" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/queue-menubar.png?v=808fb52c" alt="La barra dei menu con la coda attiva: punto rosso e contatore" width="350" height="40" loading="lazy"></a><figcaption>La barra dei menu con la coda attiva: punto rosso e contatore</figcaption></figure>
+<ol>
+<li>Passa al punto in cui va il testo e premi <strong>⌥V</strong> per ogni elemento. Ciò che hai copiato per
+   primo viene incollato per primo e il contatore scende. ⌘V continua a incollare gli appunti come
+   sempre, quindi puoi alternare i due.</li>
+<li>La coda si disattiva da sola dopo aver incollato l’ultimo elemento, oppure dopo due minuti
+   senza copie né incolla (il tempo si può regolare). Un altro ⌥N la ferma prima.</li>
+</ol>
+<p><strong>⌥⇧N</strong> incolla in una volta tutto ciò che resta nella coda. Gli elementi vengono uniti con un
+ritorno a capo, una tabulazione, uno spazio o niente: lo scegli nel pannello <em>Coda di incolla</em>
+delle Impostazioni, dove si regola anche il tempo di inattività. Finché la coda è attiva, il menu
+della cronologia ne contrassegna gli elementi: <code>▶</code> è il prossimo da incollare, <code>○</code> è ancora in
+coda, <code>✓</code> è già stato incollato.</p>
+<figure class="shot" style="max-width:610px"><a href="/img/guide/queue-menu.png?v=a61b1a15" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/queue-menu.png?v=a61b1a15" alt="Il menu della cronologia con la coda attiva: ○ in coda, ▶ prossimo, ✓ incollato; la riga del menu mostra quanti ne restano" width="610" height="772" loading="lazy"></a><figcaption>Il menu della cronologia con la coda attiva: ○ in coda, ▶ prossimo, ✓ incollato; la riga del menu mostra quanti ne restano</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-queue.png?v=d30c5141" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/prefs-queue.png?v=d30c5141" alt="Impostazioni → Coda di incolla" width="636" height="453" loading="lazy"></a><figcaption>Impostazioni → Coda di incolla</figcaption></figure>
+<h3 id="the-extended-menu">Il menu esteso</h3>
+<p>Con il menu della cronologia aperto tieni premuto <strong>⇧</strong> e ogni elemento riceve un sottomenu <code>▸</code>
+con tutte le azioni disponibili per quell’elemento: Incolla, Incolla come testo semplice, Solo
+copia (negli appunti, senza incollare), le trasformazioni <em>Incolla come</em>, Aggiungi ai Modelli,
+Mostra nel Visualizzatore, Elimina. Per aprirlo punta l’elemento o premi →; una volta aperto puoi
+rilasciare ⇧.</p>
+<figure class="shot" style="max-width:805px"><a href="/img/guide/extended-menu.png?v=8b44e749" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/extended-menu.png?v=8b44e749" alt="Tieni premuto ⇧: ogni elemento riceve un sottomenu; per il più recente mostra i tasti rapidi globali" width="805" height="735" loading="lazy"></a><figcaption>Tieni premuto ⇧: ogni elemento riceve un sottomenu; per il più recente mostra i tasti rapidi globali</figcaption></figure>
+<p>Per l’elemento più recente il sottomenu elenca i tasti rapidi globali della tabella qui sopra.
+Sono le stesse azioni con gli stessi tasti, quindi puoi impararli qui. Gli altri elementi mostrano
+le azioni senza tasti: un tasto rapido o funziona ovunque oppure non viene mostrato.</p>
+<figure class="shot" style="max-width:763px"><a href="/img/guide/extended-menu-item2.png?v=014734f0" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/extended-menu-item2.png?v=014734f0" alt="Per gli altri elementi: le stesse azioni, senza tasti rapidi" width="763" height="665" loading="lazy"></a><figcaption>Per gli altri elementi: le stesse azioni, senza tasti rapidi</figcaption></figure>
+<figure class="shot" style="max-width:765px"><a href="/img/guide/extended-menu-image.png?v=8f8e3b22" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/extended-menu-image.png?v=8f8e3b22" alt="Per un’immagine le azioni di testo sono in grigio; valgono solo Incolla, Solo copia, Aggiungi ai Modelli, Mostra nel Visualizzatore ed Elimina" width="765" height="655" loading="lazy"></a><figcaption>Per un’immagine le azioni di testo sono in grigio; valgono solo Incolla, Solo copia, Aggiungi ai Modelli, Mostra nel Visualizzatore ed Elimina</figcaption></figure>
+<hr />
+<h2 id="part-3-templates">Parte 3. Modelli</h2>
+<p>I modelli sono elementi che conservi per sempre: firme, indirizzi, risposte pronte, frammenti di
+codice, un logo che incolli spesso. Stanno in un albero con cartelle e compaiono nel sottomenu
+<em>Modelli</em> del menu della cronologia e sotto <strong>⌥T</strong>. Una nuova installazione include una cartella
+<em>Esempi</em> (un saluto, la data di oggi, una citazione degli appunti e una firma), così puoi vedere
+che cosa sanno fare i modelli prima di scriverne di tuoi. Eliminali o modificali come preferisci.
+Puoi ripristinare i modelli di esempio da <em>Impostazioni → Avanzate → Ripristino e disinstallazione
+→ Ripristina…</em>; questa operazione però reimposta anche gli altri dati e le impostazioni.</p>
+<figure class="shot" style="max-width:660px"><a href="/img/guide/template-examples.png?v=c143a1d7" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/template-examples.png?v=c143a1d7" alt="La cartella Esempi: passando su un elemento se ne vede il testo" width="660" height="209" loading="lazy"></a><figcaption>La cartella Esempi: passando su un elemento se ne vede il testo</figcaption></figure>
+<figure class="shot" style="max-width:738px"><a href="/img/guide/template-menu-letters.png?v=ea96333e" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/template-menu-letters.png?v=ea96333e" alt="Il menu dei modelli: le cartelle si aprono come sottomenu, le lettere dopo &amp; diventano scorciatoie" width="738" height="715" loading="lazy"></a><figcaption>Il menu dei modelli: le cartelle si aprono come sottomenu, le lettere dopo &amp; diventano scorciatoie</figcaption></figure>
+<h3 id="creating-and-organising">Creare e organizzare</h3>
+<p><strong>Aggiungere un modello</strong></p>
+<ul>
+<li>Dal menu della cronologia: <kbd class="k">⌃⌥A</kbd> per l’elemento più recente, <em>Aggiungi gli appunti ai modelli</em>
+  in fondo, oppure ⇧ → sottomenu dell’elemento → <em>Aggiungi ai Modelli</em> per qualsiasi elemento.</li>
+<li>Nel Visualizzatore: seleziona un elemento della cronologia e fai clic su <em>Aggiungi ai modelli</em>,
+  oppure trascinalo nell’albero Modelli. <em>Nuovo elemento</em> crea un modello di testo vuoto; <em>Nuovo
+  elemento da file</em> (menu contestuale) ne crea uno da un file di testo o da un’immagine.</li>
+</ul>
+<p><strong>Organizzare</strong></p>
+<ul>
+<li><em>Nuova cartella</em> crea una cartella. Trascina gli elementi tra le cartelle, oppure usa <em>Su</em> /
+  <em>Giù</em> nel menu contestuale.</li>
+<li>Un modello chiamato <code>-</code> diventa una linea di separazione nel menu.</li>
+<li>Una <code>&amp;</code> prima di una lettera del nome, per esempio <code>&amp;Firma</code>, fa di quella lettera la scorciatoia
+  dell’elemento nel menu dei modelli: con il menu aperto premi <code>F</code>.</li>
+<li><em>Imposta tasto rapido</em> nel menu contestuale assegna al modello un tasto rapido globale tutto suo.</li>
+<li>Un modello senza nome mostra la sua prima riga. <em>Rinomina</em> e <em>Cancella nome</em> sono nel menu
+  contestuale, oppure puoi modificare il campo <em>Nome</em> sopra il testo.</li>
+</ul>
+<h3 id="placeholders">Segnaposto</h3>
+<p>I modelli di testo possono contenere segnaposto <code>{…}</code>, che vengono compilati al momento di
+incollare. Tutto il resto viene incollato senza modifiche. Nel Visualizzatore, <strong>Inserisci ▾</strong>
+elenca tutti i segnaposto e mette quello scelto nel punto del cursore, quindi non c’è niente da
+imparare a memoria.</p>
+<figure class="shot" style="max-width:717px"><a href="/img/guide/template-examples-date.png?v=8b048d0d" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/template-examples-date.png?v=8b048d0d" alt="L’esempio Data di oggi: {date:EEEE, d MMMM yyyy} diventa la data corrente quando viene incollato" width="717" height="209" loading="lazy"></a><figcaption>L’esempio Data di oggi: {date:EEEE, d MMMM yyyy} diventa la data corrente quando viene incollato</figcaption></figure>
+<figure class="shot" style="max-width:650px"><a href="/img/guide/insert-menu.png?v=4fa57206" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/insert-menu.png?v=4fa57206" alt="Inserisci ▾ nel Visualizzatore elenca tutti i segnaposto" width="650" height="770" loading="lazy"></a><figcaption>Inserisci ▾ nel Visualizzatore elenca tutti i segnaposto</figcaption></figure>
+<p>I più utili:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Segnaposto</th>
+<th>Risultato</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{date}</code> <code>{time}</code> <code>{datetime}</code></td>
+<td>Data di oggi / ora corrente, formato di sistema</td>
+</tr>
+<tr>
+<td><code>{date:yyyy-MM-dd}</code></td>
+<td>Qualsiasi formato (<code>yyyy MM dd EEEE HH mm …</code>)</td>
+</tr>
+<tr>
+<td><code>{date:long}</code> <code>{time:short}</code> <code>{datetime:medium}</code></td>
+<td>Uno stile con nome: <code>short</code> <code>medium</code> <code>long</code> <code>full</code></td>
+</tr>
+<tr>
+<td><code>{date+7d}</code> <code>{date-1m:MMMM}</code> <code>{time+1h}</code> <code>{date+1y-2d}</code></td>
+<td>Spostamento: <code>d</code> giorni, <code>w</code> settimane, <code>m</code> mesi, <code>y</code> anni, <code>h</code> ore; su <code>date</code>, <code>time</code>, <code>datetime</code>, anche più di uno di seguito</td>
+</tr>
+<tr>
+<td><code>{clipboard}</code> <code>{clipboard:2}</code></td>
+<td>Gli appunti, oppure l’elemento N della cronologia</td>
+</tr>
+<tr>
+<td><code>{clipboard\|upper}</code> <code>{clipboard\|trim\|oneline}</code></td>
+<td>Filtri <code>upper</code> <code>lower</code> <code>title</code> <code>trim</code> <code>oneline</code> <code>url</code>, concatenabili</td>
+</tr>
+<tr>
+<td><code>{cursor}</code></td>
+<td>Il punto in cui si troverà il cursore di testo dopo aver incollato</td>
+</tr>
+<tr>
+<td><code>{user}</code> <code>{username}</code> <code>{host}</code></td>
+<td>Nome completo, nome dell’account, nome del computer</td>
+</tr>
+<tr>
+<td><code>{uuid}</code> <code>{random:1-100}</code></td>
+<td>Un nuovo UUID; un numero casuale</td>
+</tr>
+<tr>
+<td><code>{{</code> <code>}}</code></td>
+<td>Parentesi graffe letterali: un modello <code>{{"x":1}}</code> incolla <code>{"x":1}</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>I nomi dei segnaposto sono in minuscolo: <code>{date}</code> è un segnaposto, mentre <code>{Date}</code> e <code>{DATE}</code> sono
+testo e vengono incollati così come sono. I nomi degli stili e i filtri (<code>{date:LONG}</code>,
+<code>{clipboard|UPPER}</code>) si possono scrivere in entrambi i modi.</p>
+<p>L’elenco completo è nel <a href="#placeholder-cheat-sheet">promemoria dei segnaposto</a>.</p>
+<h3 id="templates-that-ask-questions">Modelli che fanno domande</h3>
+<p><code>{input:Nome}</code> e <code>{choice:Etichetta=A|B|C}</code> trasformano un modello in un piccolo modulo: quando lo
+incolli, Keepit chiede prima i valori e poi incolla il testo completo. Lo stesso nome viene chiesto
+una sola volta, per quante volte compaia; <code>{input:Nome=Predefinito}</code> precompila il campo.</p>
+<figure class="shot" style="max-width:484px"><a href="/img/guide/input-dialog.png?v=8f9de78e" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/input-dialog.png?v=8f9de78e" alt="Incollando un modello con {input:Name} viene chiesto prima il valore" width="484" height="320" loading="lazy"></a><figcaption>Incollando un modello con {input:Name} viene chiesto prima il valore</figcaption></figure>
+<p>Per esempio, un modello di risposta:</p>
+<pre><code>Buongiorno {input:Nome},
+
+grazie per il tuo messaggio del {date-1d}. Ti risponderò entro {date+3d:EEEE}.
+{cursor}
+{user}
+</code></pre>
+<p>Quando lo incolli chiede il <em>Nome</em>, inserisce le date, firma con il tuo nome completo e lascia il
+cursore sulla riga vuota.</p>
+<hr />
+<h2 id="part-4-the-viewer">Parte 4. Il Visualizzatore</h2>
+<p><em>Visualizzatore…</em> nel menu, oppure un clic con il tasto destro sull’icona 📎, apre una finestra con
+tre alberi: <strong>Appunti</strong> (gli appunti in questo momento, in sola lettura), <strong>Cronologia</strong> (<em>Testo
+e file</em> e <em>Immagini</em>) e <strong>Modelli</strong>.</p>
+<figure class="shot" style="max-width:1004px"><a href="/img/guide/viewer.png?v=1c65e776" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/viewer.png?v=1c65e776" alt="Il Visualizzatore con un modello selezionato" width="1004" height="637" loading="lazy"></a><figcaption>Il Visualizzatore con un modello selezionato</figcaption></figure>
+<ul>
+<li>Seleziona un elemento per vederlo a destra. Il testo si modifica sul posto e le modifiche
+  vengono applicate quando esci dall’editor. Un’immagine viene mostrata ridimensionata per stare
+  nel pannello, con sopra le dimensioni in pixel e la dimensione del file. Gli elenchi di file
+  aprono il file con un doppio clic. <em>Mostra come dump esadecimale</em> nel menu contestuale mostra
+  i byte grezzi.</li>
+<li>La barra degli strumenti: <em>Invia agli appunti</em>, <em>Incolla</em> (nell’app da cui provieni),
+  <em>Aggiungi ai modelli</em>, <em>Nuovo elemento</em>, <em>Nuova cartella</em>, <em>Elimina</em>, <em>Inserisci ▾</em> (segnaposto)
+  e <strong>?</strong>, cioè questa guida.</li>
+<li><strong>Cerca</strong> (<kbd class="k">⌘F</kbd>): il campo a sinistra filtra la cronologia e i modelli per nome e per contenuto
+  ed evidenzia la corrispondenza.</li>
+<li>Trascina gli elementi della cronologia nell’albero Modelli per conservarli, e i modelli nella
+  Cronologia per copiarli di nuovo; riordina trascinando oppure con <em>Su</em> / <em>Giù</em>. ⌫ elimina
+  l’elemento selezionato.</li>
+<li>La barra di stato mostra la data, l’app di origine, il formato e la dimensione.</li>
+</ul>
+<figure class="shot" style="max-width:1025px"><a href="/img/guide/viewer-search.png?v=88476754" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/viewer-search.png?v=88476754" alt="La ricerca nel Visualizzatore evidenzia le corrispondenze" width="1025" height="682" loading="lazy"></a><figcaption>La ricerca nel Visualizzatore evidenzia le corrispondenze</figcaption></figure>
+<hr />
+<h2 id="part-5-settings">Parte 5. Impostazioni</h2>
+<p><code>⌘,</code> nel menu, <em>Impostazioni…</em>, oppure ⌥S da qualsiasi app. La finestra funziona come le finestre
+delle impostazioni sul Mac: scegli un pannello nella barra degli strumenti e ogni modifica vale
+dal momento in cui la fai. Non c’è un pulsante Salva; chiudi la finestra con ⌘W o Esc. Ogni
+opzione con un <strong>?</strong> accanto ha un popover che la spiega.</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-general.png?v=09991ffc" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/prefs-general.png?v=09991ffc" alt="Impostazioni → Generali" width="636" height="463" loading="lazy"></a><figcaption>Impostazioni → Generali</figcaption></figure>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Pannello</th>
+<th>Che cosa contiene</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Generali</strong></td>
+<td>Avvio al login · salvataggio della cronologia all’uscita e ripristino all’avvio · incolla dopo la scelta (disattivato = solo copia) · ritardo dell’incolla, da aumentare per le app lente a venire in primo piano · apertura del menu al cursore di testo · Aggiornamenti: <em>Cerca aggiornamenti automaticamente</em> (edizione scaricata dal sito; disattivato = nessuna richiesta di rete), vedi <a href="#updates">Aggiornamenti</a></td>
+</tr>
+<tr>
+<td><strong>Abbreviazioni</strong></td>
+<td>Tutti i tasti rapidi globali in un unico posto, vedi sotto</td>
+</tr>
+<tr>
+<td><strong>Coda di incolla</strong></td>
+<td>I tre tasti della coda, il tempo di inattività dopo il quale la coda si disattiva e che cosa mettere tra gli elementi per <em>Incolla tutto il resto</em>, vedi <a href="#the-paste-queue">La coda di incolla</a></td>
+</tr>
+<tr>
+<td><strong>Cronologia</strong></td>
+<td>Quanti elementi di testo e file e quante immagini conservare (1000 / 30) · dimentica gli elementi più vecchi di … · <em>Rimuovi i duplicati</em> (copiare di nuovo la stessa cosa la riporta in cima) · <em>Ignora i dati nascosti degli appunti</em> · l’elenco delle app ignorate (identificatori bundle; i gestori di password sono sempre ignorati)</td>
+</tr>
+<tr>
+<td><strong>Menu</strong></td>
+<td>Campo di ricerca · numerazione · pannello di anteprima · suggerimenti · icone delle app di origine · miniature delle immagini · elementi nel menu (quante delle voci più recenti elenca il menu, 60 di default; le altre restano ricercabili) · lunghezza del titolo · altezza delle miniature</td>
+</tr>
+<tr>
+<td><strong>Sicurezza</strong></td>
+<td>Password, Touch ID, blocco, frase di recupero, vedi la <a href="#part-6-security">Parte 6</a></td>
+</tr>
+<tr>
+<td><strong>Backup</strong></td>
+<td>Backup automatico (riga di stato accanto al titolo): <em>Esegui il backup automaticamente in una cartella</em>, il nome del Mac nei file, la cartella, quante copie conservare · Backup manuale: <em>Esegui backup ora</em>, <em>Salva in archivio…</em> · Ripristino: <em>Ripristina…</em>, vedi <a href="#backup">Backup</a></td>
+</tr>
+<tr>
+<td><strong>Avanzate</strong></td>
+<td>Intervallo di interrogazione degli appunti · Automazione: <em>Consenti comandi URL keepit://</em> (disattivato di default, vedi <a href="#automation-the-keepit-url-scheme">Automazione</a>) · Dati: <em>Apri cartella</em> · Ripristino e disinstallazione: <em>Ripristina…</em> (ritorno allo stato di una nuova installazione, tornano i modelli di esempio) · <em>Disinstalla…</em> (ripristino, poi rimozione dell’app, dell’avvio al login, della voce nel portachiavi e delle autorizzazioni)</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-history.png?v=e8444027" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/prefs-history.png?v=e8444027" alt="Impostazioni → Cronologia: limiti ed elenco delle app ignorate" width="636" height="504" loading="lazy"></a><figcaption>Impostazioni → Cronologia: limiti ed elenco delle app ignorate</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-hotkeys.png?v=2f5f309f" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/prefs-hotkeys.png?v=2f5f309f" alt="Impostazioni → Abbreviazioni" width="636" height="717" loading="lazy"></a><figcaption>Impostazioni → Abbreviazioni</figcaption></figure>
+<p>Nel pannello <strong>Abbreviazioni</strong> fai clic su un campo e premi una combinazione; ⌫ disattiva un
+tasto. Una combinazione già usata da un altro comando viene rifiutata e il motivo compare sotto
+i campi. <em>Ripristina predefiniti</em> riporta il set ⌥ + lettera (⌥M cronologia, ⌥T modelli,
+⌥E Visualizzatore, ⌥S Impostazioni, ⌥C Cancella cronologia, ⌥P sospensione, ⌥L blocco, ⌥Q uscita),
+⌥⇧V e ⌃⌥. <em>Incolla elemento per numero</em> e <em>Azioni sull’ultimo elemento</em> accettano solo
+modificatori: la cifra o la lettera la aggiunge Keepit. Se macOS o un’altra app occupa già una
+combinazione, Keepit lo segnala all’avvio. <em>Visualizzatore</em> ⌥E, <em>Impostazioni</em> ⌥S, <em>Cancella
+cronologia</em> ⌥C, <em>Sospendi la registrazione</em> ⌥P, <em>Blocca Keepit</em> ⌥L ed <em>Esci da Keepit</em> ⌥Q
+funzionano da qualsiasi app e sono mostrati nel menu accanto ai rispettivi comandi. Con il layout
+statunitense ⌥ + lettera di solito scrive un carattere speciale (⌥S = ß, ⌥C = ç …); se te ne serve
+uno, sposta il tasto rapido.</p>
+<hr />
+<h2 id="part-6-security">Parte 6. Sicurezza</h2>
+<h3 id="password-and-encryption">Password e crittografia</h3>
+<p><em>Impostazioni → Sicurezza → Richiedi la password all’avvio</em> crittografa la cronologia e i modelli
+con AES-256-GCM. La chiave è derivata dalla tua password (PBKDF2, 200 000 iterazioni) ed esiste
+solo in memoria. Viene cancellata quando Keepit si blocca: con <em>Blocca Keepit</em> (<kbd class="k">⌥L</kbd>), all’uscita
+e, se lo desideri, dopo che il Mac è rimasto bloccato o in stop per un certo tempo. <em>Blocco
+automatico di Keepit</em> è impostato su <strong>Mai</strong> in una nuova installazione (un aggiornamento dalla
+3.0.3 conserva la vecchia scelta, cioè <em>Subito</em> se era selezionata la casella del blocco insieme
+allo schermo): un gestore degli appunti che chiede la password dopo ogni pausa caffè smette di
+essere usato, e per i momenti che contano c’è <kbd class="k">⌥L</kbd>. <em>Subito</em> blocca insieme allo schermo. <em>Dopo
+5 minuti</em>, <em>Dopo 15 minuti</em> e <em>Dopo 1 ora</em> ignorano un’assenza breve (Keepit resta sbloccato
+e continua a registrare) e bloccano solo se il Mac è rimasto bloccato o in stop per tutto l’intervallo impostato. Lo
+stesso vale quando Keepit si avvia mentre il Mac è già bloccato o è in primo piano la sessione di
+un altro utente (un riavvio dopo un aggiornamento, per esempio): l’assenza si conta dall’avvio,
+nella misura in cui macOS comunica quello stato a Keepit (di norma lo fa; quando non può, il
+conteggio parte dal blocco o dallo stop successivo). Con Touch ID attivo, Keepit chiede un tocco
+nel momento in cui il Mac viene sbloccato, così è pronto prima del primo <kbd class="k">⌥M</kbd>.</p>
+<figure class="shot" style="max-width:800px"><a href="/img/guide/set-password-keyboard.jpg?v=08002f0c" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/set-password-keyboard.jpg?v=08002f0c" alt="Impostazione della password con la tastiera a schermo. È una fotografia dello schermo, non una schermata: sul Mac dell’autore una schermata di questa scena mostra solo la finestra di dialogo" width="800" height="600" loading="lazy"></a><figcaption>Impostazione della password con la tastiera a schermo. È una fotografia dello schermo, non una schermata: sul Mac dell’autore una schermata di questa scena mostra solo la finestra di dialogo</figcaption></figure>
+<p>Le finestre della password mostrano il layout di tastiera attuale e avvisano se è attivo Bloc
+Maiusc, quindi una password rifiutata è raramente un mistero. Il pulsante con la tastiera accanto
+al campo apre una <strong>tastiera a schermo</strong> per digitare la password con il mouse: i clic non passano
+mai dal sistema come pressioni di tasti, i tasti vengono mescolati a ogni apertura e la tastiera
+chiede a macOS di tenerla fuori dalle schermate e dalle registrazioni dello schermo (in alcune
+configurazioni viene esclusa; non è garantito). È pensata per un Mac di cui non ti fidi del tutto
+o il cui schermo è condiviso. All’avvio e dopo un blocco Keepit chiede la password (o Touch ID);
+<em>Recupera accesso…</em> accetta al suo posto la frase di 24 parole, vedi
+<a href="#recovery-phrase">Frase di recupero</a>.</p>
+<figure class="shot" style="max-width:800px"><a href="/img/guide/unlock-keyboard.jpg?v=4c0be394" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/unlock-keyboard.jpg?v=4c0be394" alt="Sblocco all’avvio: password, Esci oppure la frase di recupero; OK resta disattivato finché non scrivi qualcosa. Fotografato per lo stesso motivo di sopra" width="800" height="600" loading="lazy"></a><figcaption>Sblocco all’avvio: password, Esci oppure la frase di recupero; OK resta disattivato finché non scrivi qualcosa. Fotografato per lo stesso motivo di sopra</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-security.png?v=7204a4dd" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/prefs-security.png?v=7204a4dd" alt="Impostazioni → Sicurezza" width="636" height="435" loading="lazy"></a><figcaption>Impostazioni → Sicurezza</figcaption></figure>
+<h3 id="touch-id">Touch ID</h3>
+<p>Con <em>Sblocca con Touch ID</em> la chiave viene conservata anche nella Secure Enclave, dietro la tua
+impronta: Keepit chiede un tocco invece della password. La password continua a funzionare come
+alternativa, basta scegliere <em>Usa password</em> nella richiesta. Con il coperchio chiuso e una Magic
+Keyboard esterna con Touch ID, Keepit chiede il tocco sulla tastiera. <em>Consenti di cambiare la
+password con Touch ID</em> permette all’impronta di sostituire la vecchia password quando la cambi.</p>
+<figure class="shot" style="max-width:336px"><a href="/img/guide/touch-id.png?v=5e119bff" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/touch-id.png?v=5e119bff" alt="Sblocco con Touch ID; la password resta come alternativa" width="336" height="313" loading="lazy"></a><figcaption>Sblocco con Touch ID; la password resta come alternativa</figcaption></figure>
+<h3 id="recovery-phrase">Frase di recupero</h3>
+<p>Quando imposti una password, Keepit mostra una sola volta una frase di 24 parole. Stampala
+o conservala in un gestore di password. Se dimentichi la password, <em>Recupera accesso…</em> nella
+finestra di sblocco apre i dati e ti permette di impostarne una nuova. <em>Frase di recupero → Crea
+nuova…</em> genera una nuova frase e invalida la vecchia; <em>Mostra…</em>, lì accanto, mostra di nuovo la
+frase attuale dopo Touch ID o la password.</p>
+<p>Senza la password, Touch ID sullo stesso Mac o la frase, i dati non si possono recuperare: non
+c’è un server e non c’è niente da reimpostare.</p>
+<figure class="shot" style="max-width:568px"><a href="/img/guide/recovery-phrase.png?v=8aab134d" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/recovery-phrase.png?v=8aab134d" alt="La frase di recupero di 24 parole (qui le parole sono nascoste)" width="568" height="586" loading="lazy"></a><figcaption>La frase di recupero di 24 parole (qui le parole sono nascoste)</figcaption></figure>
+<h3 id="backup">Backup</h3>
+<p>Keepit può conservare una copia crittografata della cronologia e dei modelli in una cartella a tua
+scelta (iCloud Drive, Dropbox, Google Drive, un disco esterno, un NAS) e scriverne una nuova ogni
+volta che qualcosa cambia. Un server Keepit non esiste: la cartella è tua. Il fornitore che la
+ospita vede il file crittografato, la sua dimensione e una piccola intestazione non crittografata
+(quando e con quale Keepit è stato scritto, come viene derivata la chiave, identificatori casuali
+e il nome del tuo Mac solo se lo attivi); la <a href="/security#backups">pagina sulla sicurezza</a> (in
+inglese) la elenca campo per campo.</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-backup.png?v=cba8511b" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/prefs-backup.png?v=cba8511b" alt="Impostazioni → Backup: backup automatico, backup manuale, ripristino" width="636" height="527" loading="lazy"></a><figcaption>Impostazioni → Backup: backup automatico, backup manuale, ripristino</figcaption></figure>
+<p><strong>Attivazione.</strong> <em>Impostazioni → Backup → Esegui il backup automaticamente in una cartella</em>, poi
+<em>Scegli…</em> una cartella (la finestra di scelta si apre in iCloud Drive). Il backup automatico
+richiede la protezione con password di <em>Impostazioni → Sicurezza</em>: ogni copia è sigillata con una
+chiave derivata dalla chiave della tua cassaforte, quindi si apre con la tua password di Keepit
+o con la frase di recupero, su questo Mac o su qualsiasi altro, e non c’è nient’altro da
+configurare. Senza una password la casella è disattivata e ne indica il motivo.</p>
+<p><strong>Che cosa succede dopo: la pianificazione.</strong> Circa cinque minuti dopo l’ultima modifica
+(e almeno una volta al giorno finché Keepit è in esecuzione) Keepit scrive nella cartella un file
+chiamato <code>Keepit-&lt;data e ora&gt;-&lt;installazione&gt;-&lt;id&gt;.keepit</code>, lo rilegge per verificarlo e solo
+allora elimina le più vecchie tra le proprie copie oltre il numero indicato in <em>Conserva gli
+ultimi</em> (10 di default, 1–100). Ogni copia è completa di per sé, non è un
+incremento, quindi un solo file è tutto ciò che ti serve. Le copie fatte da un altro Mac, o i file
+che metti lì tu, non vengono mai toccati: due Mac che condividono una cartella scrivono due serie
+indipendenti. La riga di stato accanto al titolo <em>Backup automatico</em> mostra l’ora e la dimensione
+dell’ultima copia, oppure il motivo per cui l’ultimo tentativo è fallito. Mentre Keepit è
+bloccato non succede nulla; <em>Esegui backup ora</em> (sotto <em>Backup manuale</em>) non aspetta il periodo
+di quiete.</p>
+<p><strong>Includi il nome di questo Mac</strong> (disattivato di default) inserisce il nome del computer
+nell’intestazione non crittografata di ogni file, così due serie nella stessa cartella si
+distinguono facilmente nel Finder. Il fornitore dello spazio di archiviazione vede quel nome, ed
+è per questo che l’opzione è facoltativa.</p>
+<p><strong>Ripristino.</strong> <em>Ripristina…</em> apre un backup (di questo Mac, di un altro Mac o un file esportato)
+dopo che l’hai sbloccato: con la password del Mac su cui è stato creato, oppure con la frase di
+recupero che quel Mac ha mostrato quando è stata impostata la password (<em>Recupera accesso…</em> nella
+finestra della password). Un’anteprima mostra quando e dove è stato creato il file e quanti
+elementi contiene. Poi hai due possibilità:</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/restore-preview.png?v=8f48d34e" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/restore-preview.png?v=8f48d34e" alt="L’anteprima del ripristino: quando e con quale Keepit è stato scritto il file, che cosa contiene, Unisci o Sostituisci" width="636" height="651" loading="lazy"></a><figcaption>L’anteprima del ripristino: quando e con quale Keepit è stato scritto il file, che cosa contiene, Unisci o Sostituisci</figcaption></figure>
+<ul>
+<li><em>Unisci</em> aggiunge ciò che non c’è ancora: gli elementi della cronologia in base al contenuto
+  e i modelli del backup come un’unica nuova cartella chiamata <em>Importato <data></em>, senza i loro
+  tasti rapidi. Così vedi esattamente che cosa è arrivato dal backup e puoi spostarlo
+  o eliminarlo. Niente di tuo viene sovrascritto.</li>
+<li><em>Sostituisci</em> scarta la cronologia e i modelli attuali e prende al loro posto quelli del
+  backup. Prima di farlo, Keepit scrive una copia di ciò che hai adesso
+  (<code>Keepit-before-restore-…</code>) nella cartella dei backup o in una cartella che scegli; se quella
+  copia non può essere scritta, la sostituzione non parte. Se Keepit non ha ancora una password,
+  te ne viene chiesta una per quella copia, come con <em>Salva in archivio…</em>.</li>
+</ul>
+<p><em>Ripristina anche le preferenze</em> riporta dal backup i tasti rapidi, i limiti e le opzioni. Le
+impostazioni che esprimono fiducia in un Mac specifico (Touch ID, l’automazione via URL e le sue
+app attendibili, la cartella stessa dei backup) restano sempre come sono qui. Se la cronologia del
+backup è più grande di quanto consentono i limiti di questo Mac, Keepit dice quanto ci starebbe
+prima che tu confermi.</p>
+<p>Hai ripristinato un backup con la sua frase di recupero su un Mac che non ha ancora una password?
+Keepit ti chiede prima di impostarne una, così i dati ripristinati non finiscono mai sul disco non
+crittografati, e ti lascia mantenere quella frase per questo Mac oppure ottenerne una nuova. L’hai
+ripristinato con la password? Keepit propone di mantenerla come password di questo Mac. In
+entrambi i casi il backup automatico è un’impostazione propria di ciascun Mac: attivalo qui
+e scegli la cartella (va bene anche la stessa) e questo Mac inizierà una propria serie di file
+accanto a quella del vecchio Mac.</p>
+<p><strong>Il passaggio a un Mac nuovo</strong> è lo scopo di tutto questo: installa Keepit, al primo avvio scegli
+<em>Ripristina da backup…</em>, seleziona il file più recente nella tua cartella, inserisci la password
+del vecchio Mac e scegli <em>Sostituisci</em>; poi attiva il backup automatico sul nuovo Mac. Le copie
+fatte fin lì si aprono con la password e la frase in vigore quando ciascuna è stata scritta: dopo
+un cambio di password, quelle vecchie richiedono ancora la vecchia password.</p>
+<p><strong>Backup manuale.</strong> Ci sono due pulsanti e fanno due cose diverse. <em>Esegui backup ora</em> crea subito
+una copia come quelle automatiche: stesso tipo di file, stessa cartella e stessa serie, e si apre
+con la tua password di Keepit o con la frase. <em>Salva in archivio…</em> scrive un singolo <em>archivio</em>
+<code>.keepit</code> dove vuoi tu, bloccato con una password che scegli apposta. Non richiede la protezione
+con password di Keepit, e Keepit poi non tiene traccia del file. Serve per consegnare i dati
+a qualcuno o per una copia fuori dalla cartella dei backup. Il nome proposto dice di che cosa si
+tratta: <code>Keepit-archive-&lt;data&gt;-manual.keepit</code>, accanto alle copie automatiche
+<code>Keepit-&lt;data e ora&gt;-&lt;installazione&gt;-&lt;id&gt;.keepit</code>.</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/save-to-archive.png?v=6d252de5" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/save-to-archive.png?v=6d252de5" alt="Salva in archivio…: il nome del file contiene archive e manual" width="636" height="528" loading="lazy"></a><figcaption>Salva in archivio…: il nome del file contiene archive e manual</figcaption></figure>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/archive-password.png?v=1b218e7c" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/archive-password.png?v=1b218e7c" alt="La password dell’archivio, con un indicatore di robustezza: non viene salvata da nessuna parte" width="636" height="621" loading="lazy"></a><figcaption>La password dell’archivio, con un indicatore di robustezza: non viene salvata da nessuna parte</figcaption></figure>
+<p><em>Ripristina…</em> apre entrambi i tipi. L’archivio sostituisce <em>Esporta…</em> / <em>Importa…</em> della 2.x. Il
+file trasferisce i dati tra l’edizione scaricata dal sito e quella dell’App Store, e tra Keepit
+2.x e 3.x: un file scritto dalla 3.0 richiede la 3.0 o successiva per essere aperto; la 3.0 legge
+tutto ciò che ha scritto la 2.x.</p>
+<p><strong>Se qualcosa va storto.</strong> Una copia non riuscita viene segnalata nella riga di stato e ritentata
+con pause sempre più lunghe; le copie precedenti restano. Se Keepit è stato chiuso o il Mac si
+è spento nel mezzo di un ripristino, l’avvio successivo rimette tutto in silenzio com’era prima
+del ripristino. Nel raro caso in cui non ci riesca (un file che non può scrivere, il disco pieno),
+indica il file ed esce senza modificare nulla: sistema il file e avvia di nuovo Keepit. I dettagli,
+compresa la struttura interna del formato del file, sono nella
+<a href="/security#backups">pagina sulla sicurezza</a> (in inglese).</p>
+<hr />
+<h2 id="part-7-advanced">Parte 7. Funzioni avanzate</h2>
+<h3 id="automation-the-keepit-url-scheme">Automazione: lo schema URL keepit://</h3>
+<p>Comandi Rapidi (<em>Apri URL</em>), Raycast, Alfred, Keyboard Maestro o <code>open</code> in una shell possono
+comandare Keepit, <strong>una volta che lo attivi</strong> in <em>Impostazioni → Avanzate → Automazione → Consenti
+comandi URL keepit://</em>. È disattivato di default perché qualsiasi app o pagina web può aprire un
+URL, e <code>add</code> / <code>paste</code> modificano gli appunti e scrivono nell’app in primo piano; quando
+è disattivato, Keepit ignora questi URL con un segnale acustico. Quando è attivo, Keepit guarda
+chi ha aperto l’URL: il primo comando di ciascuna app che modifica qualcosa (<code>paste</code>, <code>copy</code>,
+<code>template</code>, <code>add</code>, <code>add-template</code>, <code>pause</code>, <code>resume</code>) viene mostrato in una finestra di dialogo.
+<em>Consenti</em> lo esegue una volta, <em>Consenti sempre</em> mette l’app nell’elenco di quelle attendibili
+(si svuota con <em>Dimentica app attendibili</em> nello stesso pannello). A un browser web, o a un
+mittente che macOS non sa identificare, la conferma viene chiesta ogni volta. I comandi che aprono
+soltanto le finestre di Keepit non chiedono mai nulla.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>URL</th>
+<th>Effetto</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>keepit://paste/2</code><br><code>keepit://paste/latest</code><br><code>keepit://paste/previous</code></td>
+<td>Incolla l’elemento N della cronologia (oppure l’ultimo / il precedente) nell’app in primo piano</td>
+</tr>
+<tr>
+<td><code>keepit://copy/3</code></td>
+<td>Mette l’elemento N negli appunti senza incollarlo</td>
+</tr>
+<tr>
+<td><code>keepit://template/Signature</code><br><code>keepit://template/Work/Reply?copy=1</code></td>
+<td>Incolla (o copia) un modello per nome o per percorso di cartella</td>
+</tr>
+<tr>
+<td><code>keepit://add?text=…</code></td>
+<td>Aggiunge testo alla cronologia e agli appunti</td>
+</tr>
+<tr>
+<td><code>keepit://add-template?text=…&amp;name=…</code></td>
+<td>Crea un modello</td>
+</tr>
+<tr>
+<td><code>keepit://history</code><br><code>keepit://templates</code><br><code>keepit://viewer</code><br><code>keepit://settings</code></td>
+<td>Apre il menu della cronologia, il menu dei modelli, il Visualizzatore, le Impostazioni</td>
+</tr>
+<tr>
+<td><code>keepit://pause</code><br><code>keepit://resume</code></td>
+<td>Sospende la registrazione per 10 minuti / la riprende</td>
+</tr>
+</tbody>
+</table></div>
+<p>Codifica il testo con la codifica percentuale (<code>%20</code> per uno spazio). Mentre Keepit è bloccato gli
+URL vengono ignorati.</p>
+<h3 id="updates">Aggiornamenti</h3>
+<p>Keepit controlla GitHub Releases una volta al giorno e propone gli aggiornamenti in una finestra
+di dialogo; <em>Controlla aggiornamenti…</em> lo fa subito. Gli aggiornamenti sono firmati (EdDSA)
+e autenticati. Con Homebrew, <code>brew upgrade --cask keepit</code> fa la stessa cosa. I checksum di ogni
+download sono in <code>SHA256SUMS</code> nella pagina della release.</p>
+<p>Questo controllo è l’unica richiesta di rete che Keepit invia, ed è facoltativo: <em>Impostazioni →
+Generali → Aggiornamenti → Cerca aggiornamenti automaticamente</em>. Una volta disattivato, Keepit non
+contatta più nulla, nemmeno su tua richiesta, e <em>Controlla aggiornamenti…</em> scompare dai menu. In
+quel caso aggiorni scaricando l’app da <a href="https://keep.it.com">keep.it.com</a> oppure con Homebrew.
+L’edizione App Store non ha un programma di aggiornamento né questa opzione; la aggiorna l’App
+Store.</p>
+<h3 id="uninstalling">Disinstallazione</h3>
+<p><em>Impostazioni → Avanzate → Ripristino e disinstallazione → Disinstalla…</em> rimuove l’app, la
+cartella dei dati, le voci nel portachiavi (compresa la chiave di Touch ID), l’elemento di login
+e la voce in Accessibilità. Chiede la password o Touch ID, la parola <code>DELETE</code> digitata e una
+conferma. Se pensi che i dati possano servirti ancora, esporta prima un backup. Con Homebrew esegui poi
+<code>brew uninstall --cask --force keepit</code>, in modo che Homebrew dimentichi il cask.</p>
+<figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-advanced.png?v=9908024a" class="zoom" title="Apri a dimensione intera"><img src="/img/guide/prefs-advanced.png?v=9908024a" alt="Impostazioni → Avanzate" width="636" height="515" loading="lazy"></a><figcaption>Impostazioni → Avanzate</figcaption></figure>
+<hr />
+<h2 id="reference">Riferimenti</h2>
+<h3 id="troubleshooting">Risoluzione dei problemi</h3>
+<p><strong>Dopo aver scelto un elemento non viene incollato nulla.</strong> Manca l’autorizzazione Accessibilità:
+<em>Impostazioni di Sistema → Privacy e sicurezza → Accessibilità → Keepit</em>. Se Keepit è nell’elenco
+ma non incolla comunque, disattivalo e riattivalo. macOS dimentica l’autorizzazione quando l’app
+viene reinstallata.</p>
+<p><strong>Un tasto rapido non fa nulla.</strong> Appartiene a un’altra app o a macOS; Keepit lo segnala
+all’avvio. Scegli un’altra combinazione nel pannello <em>Abbreviazioni</em>. ⌃⌥ con cifre e lettere
+è libero su un Mac con le impostazioni di fabbrica.</p>
+<p><strong>Il menu si apre nel posto sbagliato.</strong> L’app in cui ti trovi non espone il suo cursore di testo,
+quindi il menu ripiega sul puntatore del mouse. <em>Apri il menu al cursore di testo quando
+possibile</em>, nel pannello Generali, disattiva la ricerca del cursore se preferisci sempre il
+puntatore.</p>
+<p><strong>Manca qualcosa che ho copiato.</strong> Non viene registrato nulla di ciò che l’app di origine ha
+contrassegnato come nascosto, né una copia fatta mentre era in primo piano un gestore di password
+(elenco integrato) o un’app del tuo elenco di app ignorate, compresa l’app che hai appena
+lasciato. Vedi <em>Impostazioni → Cronologia</em> e la
+<a href="/security#what-is-not-recorded">pagina sulla sicurezza</a> (in inglese).</p>
+<p><strong>Touch ID non viene proposto.</strong> Al momento nessun sensore Touch ID è raggiungibile (coperchio
+chiuso, nessuna tastiera con Touch ID). Keepit conserva l’impostazione e chiede l’impronta non
+appena un sensore è disponibile.</p>
+<p><strong>Lo stato del backup dice che la cartella non è disponibile.</strong> La cartella è stata spostata,
+rinominata, disattivata oppure (iCloud Drive) rimossa dall’archivio locale. Rendila di nuovo
+disponibile e la copia successiva andrà a buon fine; in alternativa usa <em>Scegli…</em> per indicare una
+nuova cartella. Una nuova cartella inizia una nuova serie, i vecchi file restano dove sono.</p>
+<p><strong>Un file di backup non si apre.</strong> <em>Password errata</em> significa che il tag di autenticazione del
+file non corrispondeva: assicurati di usare la password del Mac che ha <em>scritto</em> il file (dopo un
+cambio di password le vecchie copie si aprono ancora con la vecchia password), oppure la sua frase
+di recupero. <em>Questo backup richiede Keepit 3.0 o successivo</em> significa che il file è stato
+scritto da una versione più recente di quella che lo sta aprendo.</p>
+<p><strong>Homebrew si rifiuta di installare sopra un’app esistente.</strong> Prima esci da Keepit e sposta
+<code>/Applications/Keepit.app</code> nel Cestino, oppure aggiungi <code>--force</code>.</p>
+<p>Non hai risolto? <a href="https://github.com/andrey-insarov/Keepit/issues">GitHub Issues</a> · admin@keep.it.com</p>
+<h3 id="keyboard-cheat-sheet">Promemoria dei tasti</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Tasti</th>
+<th>Azione</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><kbd class="k">⌥M</kbd></td>
+<td>Menu della cronologia, scrivi per cercare</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥T</kbd></td>
+<td>Menu dei modelli</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥1</kbd> … <kbd class="k">⌃⌥0</kbd></td>
+<td>Incolla l’elemento 1–10 (nel menu e ovunque)</td>
+</tr>
+<tr>
+<td><kbd class="k">⇧</kbd> nel menu</td>
+<td>Menu esteso: tutte le azioni per ogni elemento</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥⇧V</kbd></td>
+<td>Incolla l’elemento precedente / scambia</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥V</kbd></td>
+<td>Incolla gli appunti come testo semplice</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥U</kbd> <kbd class="k">⌃⌥L</kbd> <kbd class="k">⌃⌥T</kbd> <kbd class="k">⌃⌥S</kbd></td>
+<td>MAIUSCOLE / minuscole / Iniziali Maiuscole / come una frase</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥W</kbd> <kbd class="k">⌃⌥J</kbd></td>
+<td>Senza spazi ai bordi / su una sola riga</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥K</kbd> <kbd class="k">⌃⌥D</kbd> <kbd class="k">⌃⌥Y</kbd> <kbd class="k">⌃⌥X</kbd></td>
+<td>Barrato / sottolineato / sottolineatura ondulata / rimuovi decorazioni</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥A</kbd></td>
+<td>Aggiungi gli appunti ai Modelli</td>
+</tr>
+<tr>
+<td><kbd class="k">⌃⌥⌫</kbd></td>
+<td>Elimina l’elemento più recente</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥N</kbd> · <kbd class="k">⌥V</kbd> · <kbd class="k">⌥⇧N</kbd></td>
+<td>Coda di incolla: avvia / ferma · incolla il successivo · incolla tutto il resto</td>
+</tr>
+<tr>
+<td><kbd class="k">⌥E</kbd> <kbd class="k">⌥S</kbd> <kbd class="k">⌥C</kbd> <kbd class="k">⌥P</kbd> <kbd class="k">⌥L</kbd> <kbd class="k">⌥Q</kbd></td>
+<td>Visualizzatore · Impostazioni · Cancella cronologia · Sospendi la registrazione · Blocca · Esci</td>
+</tr>
+<tr>
+<td><kbd class="k">⌘F</kbd> nel Visualizzatore</td>
+<td>Cerca</td>
+</tr>
+<tr>
+<td><code>⌘,</code></td>
+<td>Impostazioni</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="placeholder-cheat-sheet">Promemoria dei segnaposto</h3>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Segnaposto</th>
+<th>Risultato</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{date}</code> <code>{time}</code> <code>{datetime}</code></td>
+<td>Data / ora / entrambe, formato di sistema</td>
+</tr>
+<tr>
+<td><code>{date:yyyy-MM-dd}</code> <code>{time:HH:mm}</code></td>
+<td>Formato personalizzato (modelli di data Unicode)</td>
+</tr>
+<tr>
+<td><code>{date:long}</code> <code>{time:short}</code> <code>{datetime:full}</code></td>
+<td>Stile con nome: <code>short</code> <code>medium</code> <code>long</code> <code>full</code></td>
+</tr>
+<tr>
+<td><code>{date+7d}</code> <code>{date-1m:MMMM}</code> <code>{time+1h}</code> <code>{datetime-1d:long}</code> <code>{date+1y-2d}</code></td>
+<td>Spostamento (<code>d</code> <code>w</code> <code>m</code> <code>y</code> <code>h</code>; fino a quattro spostamenti di seguito)</td>
+</tr>
+<tr>
+<td><code>{weekday}</code> <code>{month}</code> <code>{year}</code></td>
+<td>Nome del giorno, nome del mese, anno</td>
+</tr>
+<tr>
+<td><code>{iso}</code> <code>{unix}</code></td>
+<td>Data e ora ISO 8601, tempo Unix</td>
+</tr>
+<tr>
+<td><code>{clipboard}</code> <code>{clipboard:2}</code></td>
+<td>Gli appunti (elemento 1) oppure l’elemento N</td>
+</tr>
+<tr>
+<td><code>{clipboard\|upper}</code> <code>\|lower</code> <code>\|title</code> <code>\|trim</code> <code>\|oneline</code> <code>\|url</code></td>
+<td>Filtri, concatenabili</td>
+</tr>
+<tr>
+<td><code>{input:Nome}</code> <code>{input:Nome=Predefinito}</code></td>
+<td>Chiede un valore prima di incollare</td>
+</tr>
+<tr>
+<td><code>{choice:Etichetta=A\|B\|C}</code></td>
+<td>Chiede di scegliere un’opzione</td>
+</tr>
+<tr>
+<td><code>{cursor}</code></td>
+<td>Posizione del cursore dopo aver incollato</td>
+</tr>
+<tr>
+<td><code>{user}</code> <code>{username}</code> <code>{host}</code></td>
+<td>Nome completo, nome dell’account, nome del computer</td>
+</tr>
+<tr>
+<td><code>{uuid}</code> <code>{random:1-100}</code></td>
+<td>Nuovo UUID, numero casuale in un intervallo</td>
+</tr>
+<tr>
+<td><code>{{</code> <code>}}</code></td>
+<td>Parentesi graffe letterali</td>
+</tr>
+</tbody>
+</table></div></article></main>
+<footer><div class="wrap">
+  <span>© 2026 UK Intis Telecom LTD · Keepit è distribuito con licenza MIT</span>
+  <span><a href="/privacy">Informativa sulla privacy</a><span class="en-only"> (in inglese)</span> · <a href="/security">Sicurezza</a><span class="en-only"> (in inglese)</span> · <a href="/it/support">Supporto</a> · <a href="https://github.com/andrey-insarov/Keepit/blob/main/CHANGELOG.md">Registro delle modifiche</a> · <a href="https://it.com">it.com</a></span>
+  <span class="langs"><a href="/guide" lang="en" hreflang="en">English</a> · <a href="/ru/guide" lang="ru" hreflang="ru">Русский</a> · <a href="/uk/guide" lang="uk" hreflang="uk">Українська</a> · <a href="/de/guide" lang="de" hreflang="de">Deutsch</a> · <a href="/fr/guide" lang="fr" hreflang="fr">Français</a> · <a href="/es/guide" lang="es" hreflang="es">Español</a> · <a href="/pt-br/guide" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a> · <a href="/ja/guide" lang="ja" hreflang="ja">日本語</a> · <a href="/zh-hans/guide" lang="zh-Hans" hreflang="zh-Hans">简体中文</a> · <a href="/ar/guide" lang="ar" hreflang="ar">العربية</a> · <a href="/cs/guide" lang="cs" hreflang="cs">Čeština</a> · <a href="/pl/guide" lang="pl" hreflang="pl">Polski</a> · <b lang="it">Italiano</b> · <a href="/nl/guide" lang="nl" hreflang="nl">Nederlands</a></span>
+</div></footer>
+<div id="lb" role="dialog" aria-label="Schermata a dimensione intera"><img alt=""></div>
+<script>
+(function(){
+  document.querySelectorAll('.mnav,.lpick').forEach(function(mn){mn.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){mn.removeAttribute('open');});});document.addEventListener('click',function(e){if(mn.open&&!mn.contains(e.target))mn.removeAttribute('open');});mn.addEventListener('toggle',function(){if(mn.open)document.querySelectorAll('.mnav,.lpick').forEach(function(o){if(o!==mn)o.removeAttribute('open');});});});
+  var lb=document.getElementById('lb'),im=lb.querySelector('img');
+  document.querySelectorAll('a.zoom').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();im.src=a.getAttribute('href');im.alt=a.querySelector('img').alt;lb.classList.add('on');});});
+  function close(){lb.classList.remove('on');im.src='';}
+  lb.addEventListener('click',close);document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+  var links=[].slice.call(document.querySelectorAll('aside a')),heads=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  if(links.length&&'IntersectionObserver' in window){
+    var cur=null;function mark(id){links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+id);});}
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){cur=e.target.id;mark(cur);}});},{rootMargin:'-70px 0px -70% 0px'});
+    heads.forEach(function(h){if(h)io.observe(h);});
+  }
+})();
+</script>
+</body></html>

@@ -1,0 +1,33 @@
+{
+  "ui": {
+    "features": "Funkcje",
+    "privacy": "Prywatność",
+    "install": "Instalacja",
+    "guide": "Podręcznik",
+    "security": "Bezpieczeństwo",
+    "support": "Wsparcie",
+    "menu": "Menu",
+    "copyright": "© 2026 UK Intis Telecom LTD · Keepit jest udostępniany na licencji MIT",
+    "privacy_policy": "Polityka prywatności",
+    "changelog": "Lista zmian",
+    "on_this_page": "Na tej stronie",
+    "contents": "Spis treści",
+    "open_full_size": "Otwórz w pełnym rozmiarze",
+    "full_size_screenshot": "Zrzut ekranu w pełnym rozmiarze",
+    "language": "Język",
+    "in_english": "(po angielsku)",
+    "translated_note": "Przetłumaczono z angielskiego. Oryginał: <a href=\"{en}\">English</a>."
+  },
+  "pages": {
+    "GUIDE.md": {
+      "title": "Podręcznik Keepit – menedżer schowka dla Maca",
+      "description": "Jak korzystać z Keepit, darmowego menedżera schowka dla Maca: menu historii, skróty klawiszowe, szablony, Przeglądarka, szyfrowanie i Touch ID.",
+      "crumb": "Podręcznik"
+    },
+    "SUPPORT.md": {
+      "title": "Wsparcie Keepit – pomoc dotycząca menedżera schowka dla Maca",
+      "description": "Jak uzyskać pomoc dotyczącą Keepit, menedżera schowka dla Maca, oraz krótkie odpowiedzi na częste pytania.",
+      "crumb": "Wsparcie"
+    }
+  }
+}
