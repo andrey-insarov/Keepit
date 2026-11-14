@@ -34,8 +34,8 @@
   var f=document.getElementById('fb'),err=document.getElementById('fb-err'),ok=document.getElementById('fb-ok'),
       msg=f.elements.message,count=document.getElementById('fb-count'),picker=document.getElementById('fb-files'),
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
-  var EM={name:'Укажите имя.',email:'Укажите правильный адрес e-mail.',type:'Выберите тему сообщения.',short:'Опишите, пожалуйста, хотя бы в 70 символах.',long:'Сообщение слишком длинное (не больше 5000 символов).',files:'Не больше 5 снимков. Остальные не добавлены.',total:'Вложения слишком большие (не больше 5 снимков по 1 МБ).',form:'Не удалось прочитать форму.',spam:'Пройдите, пожалуйста, проверку от спама.',send:'Сейчас не удалось отправить сообщение. Напишите нам, пожалуйста, по e-mail.'};
-  function emsg(r){if(r.code==='toobig')return'«'+(r.file||'')+'» больше 1 МБ и не добавлен.';if(r.code==='notimage')return'«'+(r.file||'')+'» не является изображением и не добавлен.';return EM[r.code]||'Что-то пошло не так.';}
+  var EM={name:'Укажите имя.',email:'Укажите правильный адрес e-mail.',type:'Выберите тему сообщения.',short:'Опишите, пожалуйста, хотя бы в 70 символах.',long:'Сообщение слишком длинное (не больше 5000 символов).',files:'Можно прикрепить не больше 5 снимков. Удалите лишние и отправьте форму снова.',total:'Вложения слишком большие (не больше 5 снимков по 1 МБ).',form:'Не удалось прочитать форму.',spam:'Пройдите, пожалуйста, проверку от спама.',send:'Сейчас не удалось отправить сообщение. Напишите нам, пожалуйста, по e-mail.'};
+  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'«'+n+'» больше 1 МБ. Удалите или уменьшите файл.';if(c==='notimage')return'«'+n+'» не удалось распознать как поддерживаемое изображение. Удалите или замените файл.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'Что-то пошло не так.';}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' КБ':(n/1048576).toFixed(1).replace('.',',')+' МБ';}
   function render(){

@@ -34,8 +34,8 @@
   var f=document.getElementById('fb'),err=document.getElementById('fb-err'),ok=document.getElementById('fb-ok'),
       msg=f.elements.message,count=document.getElementById('fb-count'),picker=document.getElementById('fb-files'),
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
-  var EM={name:'お名前を入力してください。',email:'正しいメールアドレスを入力してください。',type:'お問い合わせの種類を選択してください。',short:'70文字以上でご記入ください。',long:'メッセージが長すぎます（5000文字以内）。',files:'スクリーンショットは5枚までです。残りは追加されませんでした。',total:'添付ファイルが大きすぎます（スクリーンショットは5枚まで、各1 MB以内）。',form:'フォームを読み取れませんでした。',spam:'スパム対策の確認を完了してください。',send:'現在メッセージを送信できません。メールでご連絡ください。'};
-  function emsg(r){if(r.code==='toobig')return'「'+(r.file||'')+'」は1 MBを超えているため追加されませんでした。';if(r.code==='notimage')return'「'+(r.file||'')+'」は画像ではないため追加されませんでした。';return EM[r.code]||'エラーが発生しました。';}
+  var EM={name:'お名前を入力してください。',email:'正しいメールアドレスを入力してください。',type:'お問い合わせの種類を選択してください。',short:'70文字以上でご記入ください。',long:'メッセージが長すぎます（5000文字以内）。',files:'スクリーンショットは5枚まで添付できます。余分なものを削除して、もう一度送信してください。',total:'添付ファイルが大きすぎます（スクリーンショットは5枚まで、各1 MB以内）。',form:'フォームを読み取れませんでした。',spam:'スパム対策の確認を完了してください。',send:'現在メッセージを送信できません。メールでご連絡ください。'};
+  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'「'+n+'」は1 MBを超えています。ファイルを削除するか、小さくしてください。';if(c==='notimage')return'「'+n+'」は対応している画像として認識できませんでした。ファイルを削除するか、差し替えてください。';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'エラーが発生しました。';}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' KB':(n/1048576).toFixed(1).replace('.','.')+' MB';}
   function render(){

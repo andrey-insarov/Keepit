@@ -34,8 +34,8 @@
   var f=document.getElementById('fb'),err=document.getElementById('fb-err'),ok=document.getElementById('fb-ok'),
       msg=f.elements.message,count=document.getElementById('fb-count'),picker=document.getElementById('fb-files'),
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
-  var EM={name:'أدخل اسمك.',email:'أدخل عنوان بريد إلكتروني صحيحًا.',type:'اختر موضوع الرسالة.',short:'يرجى الوصف في 70 حرفًا على الأقل.',long:'الرسالة طويلة جدًا (5000 حرف على الأكثر).',files:'5 لقطات على الأكثر. لم تُضف البقية.',total:'المرفقات كبيرة جدًا (5 لقطات على الأكثر، كل منها 1 ميغابايت).',form:'تعذرت قراءة النموذج.',spam:'يرجى إكمال التحقق من الرسائل المزعجة.',send:'تعذر إرسال الرسالة الآن. راسلنا بالبريد الإلكتروني.'};
-  function emsg(r){if(r.code==='toobig')return'«'+(r.file||'')+'» أكبر من 1 ميغابايت ولم يُضف.';if(r.code==='notimage')return'«'+(r.file||'')+'» ليس صورة ولم يُضف.';return EM[r.code]||'حدث خطأ ما.';}
+  var EM={name:'أدخل اسمك.',email:'أدخل عنوان بريد إلكتروني صحيحًا.',type:'اختر موضوع الرسالة.',short:'يرجى الوصف في 70 حرفًا على الأقل.',long:'الرسالة طويلة جدًا (5000 حرف على الأكثر).',files:'يمكن إرفاق 5 لقطات على الأكثر. أزل الزائد منها ثم أرسل النموذج من جديد.',total:'المرفقات كبيرة جدًا (5 لقطات على الأكثر، كل منها 1 ميغابايت).',form:'تعذرت قراءة النموذج.',spam:'يرجى إكمال التحقق من الرسائل المزعجة.',send:'تعذر إرسال الرسالة الآن. راسلنا بالبريد الإلكتروني.'};
+  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'«'+n+'» أكبر من 1 ميغابايت. أزل الملف أو صغّره.';if(c==='notimage')return'«'+n+'» تعذر التعرف عليه كصورة مدعومة. أزل الملف أو استبدله.';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'حدث خطأ ما.';}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' ك.ب':(n/1048576).toFixed(1).replace('.','.')+' م.ب';}
   function render(){

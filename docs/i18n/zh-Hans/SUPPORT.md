@@ -34,8 +34,8 @@
   var f=document.getElementById('fb'),err=document.getElementById('fb-err'),ok=document.getElementById('fb-ok'),
       msg=f.elements.message,count=document.getElementById('fb-count'),picker=document.getElementById('fb-files'),
       list=document.getElementById('fb-list'),btn=f.querySelector('button'),files=[];
-  var EM={name:'请填写姓名。',email:'请填写有效的电子邮件地址。',type:'请选择问题类型。',short:'请至少用 70 个字符描述问题。',long:'留言太长（最多 5000 个字符）。',files:'最多 5 张截屏，其余的没有添加。',total:'附件太大（最多 5 张截屏，每张不超过 1 MB）。',form:'无法读取表单。',spam:'请完成防垃圾信息验证。',send:'暂时无法发送留言，请改用电子邮件联系我们。'};
-  function emsg(r){if(r.code==='toobig')return'“'+(r.file||'')+'”超过 1 MB，没有添加。';if(r.code==='notimage')return'“'+(r.file||'')+'”不是图片，没有添加。';return EM[r.code]||'出了点问题。';}
+  var EM={name:'请填写姓名。',email:'请填写有效的电子邮件地址。',type:'请选择问题类型。',short:'请至少用 70 个字符描述问题。',long:'留言太长（最多 5000 个字符）。',files:'最多可以附加 5 张截屏。请移除多余的截屏后重新发送。',total:'附件太大（最多 5 张截屏，每张不超过 1 MB）。',form:'无法读取表单。',spam:'请完成防垃圾信息验证。',send:'暂时无法发送留言，请改用电子邮件联系我们。'};
+  function emsg(r){var c=r&&r.code,n=(r&&r.file)||'';if(c==='toobig')return'“'+n+'”超过 1 MB。请移除或缩小该文件。';if(c==='notimage')return'“'+n+'”无法识别为受支持的图片。请移除或更换该文件。';return typeof c==='string'&&Object.prototype.hasOwnProperty.call(EM,c)?EM[c]:'出了点问题。';}
   function show(e){err.textContent=e;err.hidden=!e;}
   function kb(n){return n<1048576?Math.round(n/1024)+' KB':(n/1048576).toFixed(1).replace('.','.')+' MB';}
   function render(){

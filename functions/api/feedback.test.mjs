@@ -1,7 +1,7 @@
 // node --test functions/api — no network, no Workers runtime: the pure parts only.
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { sniffImage, validate, TYPES, LIMITS, IMAGE_MAX_EDGE, turnstileVerdict, allowedTurnstileHostnames, confirmationEmail, DEFAULT_TURNSTILE_HOSTNAMES } from "./feedback.js";
+import { onRequestPost, sniffImage, validate, TYPES, LIMITS, IMAGE_MAX_EDGE, turnstileVerdict, allowedTurnstileHostnames, confirmationEmail, DEFAULT_TURNSTILE_HOSTNAMES } from "./feedback.js";
 
 import { deflateSync } from "node:zlib";
 
@@ -143,4 +143,86 @@ test("the confirmation to the (unverified) sender carries nothing the submitter 
   assert.match(m.text, /did not write to us/);
   const fixed = confirmationEmail("f", "t", "r").text;
   assert.equal(fixed, confirmationEmail("f", "u", "r").text, "the same text for every recipient");
+});
+
+// ---- error codes: the contract between the function and the translated support pages ----
+
+const CODES = ["name", "email", "type", "short", "long", "files", "toobig", "notimage", "total", "form", "spam", "send"];
+const file = (name, size, type = "image/png") => ({ name, size, type });
+
+test("validate: every refusal carries its code, and the file name where one is at fault", () => {
+  const code = (fields) => { const r = validate(form({ ...good, ...fields })); assert.equal(r.ok, false); assert.equal(typeof r.error, "string"); return r; };
+  assert.equal(code({ name: "" }).code, "name");
+  assert.equal(code({ name: "x".repeat(LIMITS.nameMax + 1) }).code, "name");
+  assert.equal(code({ email: "nope" }).code, "email");
+  assert.equal(code({ type: "nope" }).code, "type");
+  assert.equal(code({ message: "short" }).code, "short");
+  assert.equal(code({ message: "x".repeat(LIMITS.messageMax + 1) }).code, "long");
+  assert.equal(code({ files: Array.from({ length: LIMITS.files + 1 }, (_, i) => file(`s${i}.png`, 10)) }).code, "files");
+  const big = code({ files: [file("big.png", LIMITS.fileBytes + 1)] });
+  assert.deepEqual([big.code, big.file], ["toobig", "big.png"]);
+  const txt = code({ files: [file("notes.txt", 10, "text/plain")] });
+  assert.deepEqual([txt.code, txt.file], ["notimage", "notes.txt"]);
+  assert.equal(code({ extra: "x".repeat(LIMITS.bodyBytes) }).code, "total");
+  assert.equal(validate(form(good)).code, undefined);
+});
+
+/** A multipart POST as a browser sends it; `headers` overrides (null removes). */
+async function post(fields, headers = {}) {
+  const fd = new FormData();
+  for (const [k, v] of Object.entries(fields)) for (const x of Array.isArray(v) ? v : [v]) x instanceof File ? fd.append(k, x, x.name) : fd.append(k, x);
+  const draft = new Request("https://keep.it.com/api/feedback", { method: "POST", body: fd });
+  const body = await draft.arrayBuffer();
+  const h = new Headers({ "content-type": draft.headers.get("content-type"), "content-length": String(body.byteLength) });
+  for (const [k, v] of Object.entries(headers)) v === null ? h.delete(k) : h.set(k, v);
+  return new Request("https://keep.it.com/api/feedback", { method: "POST", headers: h, body });
+}
+/** Run the handler with fetch replaced: Turnstile answers `turnstile`, the mail API answers `mailOK`. */
+async function handle(request, { turnstile = { success: true, hostname: DEFAULT_TURNSTILE_HOSTNAMES[0] }, mailOK = true } = {}) {
+  const real = globalThis.fetch;
+  globalThis.fetch = async (url) => String(url).includes("siteverify")
+    ? new Response(JSON.stringify(turnstile), { headers: { "content-type": "application/json" } })
+    : new Response("{}", { status: mailOK ? 200 : 500 });
+  try {
+    const r = await onRequestPost({ request, env: { TURNSTILE_SECRET: "s", RESEND_API_KEY: "k", FEEDBACK_FROM: "a@example.test", FEEDBACK_TO: "b@example.test" } });
+    return { status: r.status, ...(await r.json()) };
+  } finally { globalThis.fetch = real; }
+}
+
+test("handler: each error response has the status, the English text and the code", async () => {
+  const fields = { ...good, "cf-turnstile-response": "token" };
+  const is = (r, status, code) => { assert.equal(r.status, status, code); assert.equal(r.code, code); assert.equal(typeof r.error, "string"); };
+  is(await handle(await post(fields, { "content-length": null })), 411, "form");
+  is(await handle(await post(fields, { "content-length": String(LIMITS.bodyBytes + 1) })), 413, "total");
+  is(await handle(await post(fields, { "content-type": "text/plain" })), 400, "form");
+  is(await handle(await post({ ...fields, name: "" })), 400, "name");
+  is(await handle(await post(fields), { turnstile: { success: false } }), 400, "spam");
+  is(await handle(await post(fields), { mailOK: false }), 502, "send");
+  const fake = await handle(await post({ ...fields, files: new File(["not really a picture"], "fake.png", { type: "image/png" }) }));
+  is(fake, 400, "notimage");
+  assert.equal(fake.file, "fake.png");
+});
+
+test("translated support pages: an own message for every code, the generic one for anything else", async () => {
+  const { readdirSync, readFileSync } = await import("node:fs");
+  const dir = new URL("../../docs/i18n/", import.meta.url);
+  const langs = readdirSync(dir).filter((l) => !l.startsWith("."));
+  assert.ok(langs.length >= 9);
+  for (const lang of langs) {
+    const src = readFileSync(new URL(`${lang}/SUPPORT.md`, dir), "utf8");
+    const em = src.match(/^\s*var EM=\{.*\};$/m), fn = src.match(/^\s*function emsg\(r\)\{.*\}$/m);
+    assert.ok(em && fn, `${lang}: EM and emsg present`);
+    assert.ok(!src.includes("x[1].error"), `${lang}: the server's English text is not shown`);
+    const emsg = new Function(`${em[0]}\n${fn[0]}\nreturn emsg;`)();
+    const generic = emsg({});
+    assert.equal(typeof generic, "string");
+    for (const code of CODES) {
+      const m = emsg({ code, file: "shot.png" });
+      assert.equal(typeof m, "string", `${lang} ${code}`);
+      assert.ok(m.length > 5 && m !== generic, `${lang} ${code}: own message`);
+      if (code === "toobig" || code === "notimage") assert.ok(m.includes("shot.png"), `${lang} ${code}: names the file`);
+    }
+    for (const r of [null, undefined, {}, { error: "English" }, { code: "nope" }, { code: "constructor" }, { code: "toString" }, { code: "__proto__" }, { code: "hasOwnProperty" }, { code: 7 }, { code: ["name"] }])
+      assert.equal(emsg(r), generic, `${lang}: fallback for ${JSON.stringify(r)}`);
+  }
 });
