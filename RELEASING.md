@@ -24,7 +24,8 @@
    waits for approval: Actions → the run → **Review deployments** → `release` → Approve.
 4. The release job signs with Developer ID, notarizes with Apple, staples the ticket, signs the
    Sparkle appcast and attaches `Keepit-2.2.0.dmg`, `.zip`, `.dmg.sig`, `SHA256SUMS` and
-   `appcast.xml` to the GitHub Release for the tag, then bumps the Homebrew cask on `main`.
+   `appcast.xml` to the GitHub Release for the tag, then bumps the Homebrew cask on `main`
+   (pushed with the cask bump deploy key — see below; `main` takes nothing else without a pull request).
 
 `CFBundleShortVersionString` comes from `VERSION`; `CFBundleVersion` is the commit count
 (`git rev-list --count HEAD`), so every build has a unique, increasing build number.
@@ -223,6 +224,28 @@ after each push to `main` or a tag (Codeberg itself no longer offers pull mirror
 The mirror push force-updates every branch and tag on Codeberg to match GitHub but never deletes
 anything there — do not push to the mirror by hand.
 
+
+## Branch rules and the cask bump key
+
+Ruleset **Main** (Settings → Rules → Rulesets) protects `main`: no deletion, no force push, every
+change through a pull request, and the `build` check must be green before the merge. Nobody is on the
+bypass list except **Deploy keys**, which exist for one purpose: the `release` job commits
+`Casks/keepit.rb` and the site's `softwareVersion` after a release, and a pull request opened by the
+job would never get its `build` check (pushes made with `GITHUB_TOKEN` start no workflows), so that one
+commit is pushed directly with a write deploy key. One-time setup:
+
+1. `ssh-keygen -t ed25519 -f ~/Desktop/cask_bump -N "" -C "github-actions cask bump"`
+2. GitHub → repo → Settings → **Deploy keys** → Add deploy key: title `cask bump (release job)`,
+   paste `cask_bump.pub`, tick **Allow write access**.
+3. `gh secret set CASK_BUMP_DEPLOY_KEY --env release -R andrey-insarov/Keepit < ~/Desktop/cask_bump`
+   — an **environment** secret: only `v*` tags reach it, after the same approval as the signing keys.
+4. Ruleset Main → Bypass list → Add bypass → **Deploy keys** (already added on 14 Nov 2026).
+5. Delete both files from the Desktop (a lost key is replaced by a new deploy key).
+
+A push with the key starts the `build` and `mirror` jobs like any push to `main`, so the bump reaches
+Codeberg at once. If the step fails after the release is out (missing key, revoked key), the release
+itself is fine: open a pull request with `make cask VERSION=$(cat VERSION)` and the `softwareVersion`
+line in `docs/site/index.html` by hand.
 
 ## Site and support form (Cloudflare Pages)
 
