@@ -330,6 +330,38 @@ final class HotKeyStatusTests: XCTestCase {
         XCTAssertEqual(Self.descendants(content).compactMap({ $0 as? NSTextField }).filter { !$0.isHidden && $0.stringValue.contains("leaves it free") }.count, 0)
     }
 
+    func testALongerNoteGrowsTheWindow() throws {
+        // A note that changes text without appearing or vanishing can wrap onto more lines: the pane must re-fit.
+        let a = makeApp(german())
+        a.registerHotKeys()
+        let w = SettingsWindowController(app: a)
+        let window = try XCTUnwrap(w.window)
+        defer { window.close() }
+        w.showPaneForTesting("shortcuts")
+        let content = try XCTUnwrap(window.contentView)
+        window.layoutIfNeeded(); content.layoutSubtreeIfNeeded()
+        let before = window.frame.height
+        func notes() -> [NSTextField] { Self.descendants(content).compactMap { $0 as? NSTextField }.filter { !$0.isHidden && $0.stringValue.contains("Used to type") } }
+        XCTAssertEqual(notes().count, 2)
+        var long = german()
+        long.name = "Deutsch – Standard (erweiterte Tastaturbelegung mit einem sehr, sehr langen Namen, damit die Zeile umbricht)"
+        a.layoutReaderForTesting = long
+        a.applyLayoutChange()
+        window.layoutIfNeeded(); content.layoutSubtreeIfNeeded()
+        XCTAssertGreaterThan(window.frame.height, before, "two notes each gained lines")
+        for f in notes() {
+            let r = content.convert(f.bounds, from: f)
+            XCTAssertGreaterThanOrEqual(r.minY, -1, "\(f.stringValue.prefix(30)) \(r) in \(content.bounds)")
+            XCTAssertLessThanOrEqual(r.maxY, content.bounds.maxY + 1, "\(f.stringValue.prefix(30)) \(r) in \(content.bounds)")
+            XCTAssertTrue(f.stringValue.contains(long.name))
+        }
+        // And back: the window shrinks again.
+        a.layoutReaderForTesting = german()
+        a.applyLayoutChange()
+        window.layoutIfNeeded()
+        XCTAssertEqual(window.frame.height, before, accuracy: 1)
+    }
+
     static func descendants(_ v: NSView) -> [NSView] { v.subviews + v.subviews.flatMap(descendants) }
 
     func testLatestActionsHintNamesTheKeys() {

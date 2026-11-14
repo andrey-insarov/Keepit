@@ -23,7 +23,7 @@ final class LocalizationTests: XCTestCase {
 
     func testPlaceholdersSurviveTranslation() throws {
         // Plain %@ / %d must come in the same order; positional %1$@ may be reordered by a translation
-        // (Japanese puts the layout before the character), so those are compared as a set.
+        // (Japanese puts the layout before the character), so those are compared sorted, repetitions kept.
         let re = try NSRegularExpression(pattern: "%(?:\\d+\\$)?[@d]")
         func ph(_ s: String) -> [String] {
             let all = re.matches(in: s, range: NSRange(s.startIndex..., in: s)).map { String(s[Range($0.range, in: s)!]) }

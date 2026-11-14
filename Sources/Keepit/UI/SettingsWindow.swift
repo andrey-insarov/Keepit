@@ -233,11 +233,12 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         var changed = false
         for (id, field) in hotKeyNotes {
             let text = hotKeyNoteText(id)
-            let wasHidden = field.isHidden
+            // Any change of text can change the number of wrapped lines (a skipped note becoming a
+            // recorded one, another layout's name), not only a note appearing or vanishing.
+            if field.stringValue != text { changed = true }
             field.stringValue = text
             field.isHidden = text.isEmpty
             if let grid = field.superview as? NSGridView, let row = grid.cell(for: field)?.row { row.isHidden = text.isEmpty }
-            if wasHidden != text.isEmpty { changed = true }
             recorder(for: id)?.isDimmed = app.hotKeyStatuses[id]?.registration == .skipped
         }
         if changed, let pane = panes.first(where: { $0.view === shownPane }) { show(pane: pane, animate: true) }
