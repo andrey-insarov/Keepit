@@ -527,7 +527,7 @@ T = {
 'Underline': '底線',
 'Wavy underline': '波浪底線',
 'Remove decorations': '移除裝飾',
-"Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, K strikethrough, D underline, Y wavy underline, X remove decorations, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu. With VoiceOver on, ⌃⌥ is its own modifier — pick another combination here, ⌃⌘ say.": '與字母鍵一起作用於最新項目（剪貼板）的修飾鍵：V 純文字，U 大寫，L 小寫，T 每個單字首字母大寫，S 句首字母大寫，W 去除首尾空白，J 合併為一行，K 刪除線，D 底線，Y 波浪底線，X 移除裝飾，A 加入範本，⌫ 刪除。相同的按鍵也會顯示在項目的延伸選單中。開啟 VoiceOver 時，⌃⌥ 是它自己的修飾鍵——請在此選擇其他組合，例如 ⌃⌘。',
+"Modifiers that act on the latest item (the clipboard) with a letter: %@ plain text, %@ UPPERCASE, %@ lowercase, %@ Title Case, %@ Sentence case, %@ trim, %@ single line, %@ strikethrough, %@ underline, %@ wavy underline, %@ remove decorations, %@ add to Templates, ⌫ delete. The same keys are shown in the item's extended menu. With VoiceOver on, ⌃⌥ is its own modifier — pick another combination here, ⌃⌘ say.": "與字母鍵一起作用於最新項目（剪貼板）的修飾鍵：%@ 純文字，%@ 大寫，%@ 小寫，%@ 每個單字首字母大寫，%@ 句首字母大寫，%@ 去除首尾空白，%@ 合併為一行，%@ 刪除線，%@ 底線，%@ 波浪底線，%@ 移除裝飾，%@ 加入範本，⌫ 刪除。相同的按鍵也會顯示在項目的延伸選單中。開啟 VoiceOver 時，⌃⌥ 是它自己的修飾鍵——請在此選擇其他組合，例如 ⌃⌘。",
 'Keepit was locked during the restore. The restored data is on disk and is loaded when you unlock.': '回復過程中 Keepit 已鎖定。回復的資料已儲存在磁碟上，解鎖時會載入。',
 'Auto-lock Keepit:': '自動鎖定 Keepit：',
 'Lock Keepit on its own once the Mac has been locked or asleep for this long. Never: locking the Mac leaves Keepit unlocked. Immediately: Keepit locks with the Mac. With a delay, a short absence changes nothing — Keepit stays unlocked and keeps recording — and a longer one wipes the key from memory and unloads history and templates; unlock with Touch ID or the password afterwards. With Touch ID on, Keepit asks for a touch as soon as the Mac is unlocked.': '當 Mac 鎖定或睡眠達到此時長後，自動鎖定 Keepit。「永不」：鎖定 Mac 不會鎖定 Keepit。「立即」：Keepit 隨 Mac 一起鎖定。設定延遲後，短暫離開不會有任何變化——Keepit 保持解鎖並繼續記錄——較長時間離開則會從記憶體清除金鑰並卸載歷史與範本；之後以觸控 ID 或密碼解鎖。開啟觸控 ID 後，Mac 一解鎖 Keepit 就會要求觸控。',
@@ -574,4 +574,7 @@ T = {
 'Could not set the new password: %@\n\nThe password has not changed: the data still opens as before. Keepit asks for a new password again at the next unlock.': '無法設定新密碼：%@\n\n密碼未更改：資料仍可照舊開啟。下次解鎖時 Keepit 會再次要求設定新密碼。',
 'Could not change the password: %@\n\nThe password has not changed: the data still opens with the current one.': '無法更改密碼：%@\n\n密碼未更改：資料仍可用目前的密碼開啟。',
 'Keepit could not save %@: the file would be larger than %d MB, the most it can read back. The previous file is kept, without the latest changes; remove some items (or set smaller limits in Settings) and it saves again.': 'Keepit 無法儲存 %@：檔案將超過 %d MB，即它能讀回的上限。先前的檔案已保留，但不含最近的變更；移除一些項目（或在設定中調低限制）後即可繼續儲存。',
+'Used to type %1$@ on %2$@, so Keepit leaves it free. Click the field and press %3$@ to use it anyway.': '在「%2$@」鍵盤配置中用於輸入 %1$@，因此 Keepit 不佔用此快速鍵。若仍要使用，請按一下該欄位並按下 %3$@。',
+'Used to type %1$@ on %2$@. Keepit needs this shortcut; choose another to free %1$@.': '在「%2$@」鍵盤配置中用於輸入 %1$@。Keepit 需要此快速鍵；請選擇另一個以便輸入 %1$@。',
+"Used to type %1$@ on %2$@. While Keepit runs, %1$@ can't be typed with it.": '在「%2$@」鍵盤配置中用於輸入 %1$@。Keepit 執行時，無法用它輸入 %1$@。',
 }

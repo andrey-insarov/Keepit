@@ -22,9 +22,12 @@ final class LocalizationTests: XCTestCase {
     }
 
     func testPlaceholdersSurviveTranslation() throws {
-        let re = try NSRegularExpression(pattern: "%[@d]")
+        // Plain %@ / %d must come in the same order; positional %1$@ may be reordered by a translation
+        // (Japanese puts the layout before the character), so those are compared as a set.
+        let re = try NSRegularExpression(pattern: "%(?:\\d+\\$)?[@d]")
         func ph(_ s: String) -> [String] {
-            re.matches(in: s, range: NSRange(s.startIndex..., in: s)).map { String(s[Range($0.range, in: s)!]) }
+            let all = re.matches(in: s, range: NSRange(s.startIndex..., in: s)).map { String(s[Range($0.range, in: s)!]) }
+            return all.filter { !$0.contains("$") } + all.filter { $0.contains("$") }.sorted()
         }
         for lang in Self.languages {
             for (k, v) in try table(lang) {

@@ -140,8 +140,18 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         }
         let remembered = UserDefaults.standard.string(forKey: Self.lastPaneKey)
         show(pane: panes.first { $0.id.rawValue == remembered } ?? panes[0], animate: false)
+        // The layouts changed (or a lock/unlock re-registered) while the window is open: the notes follow.
+        NotificationCenter.default.addObserver(self, selector: #selector(hotKeysDidChange), name: AppDelegate.hotKeysDidChange, object: nil)
     }
     required init?(coder: NSCoder) { fatalError() }
+
+    @objc private func hotKeysDidChange() { updateHotKeyNotes() }
+
+    /// Tests: show a pane by its toolbar id without going through the toolbar.
+    func showPaneForTesting(_ id: String) {
+        guard let pane = panes.first(where: { $0.id.rawValue == id }) else { return }
+        show(pane: pane, animate: false)
+    }
 
     func show() {
         load()
@@ -152,7 +162,10 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
 
     /// Esc closes, like every settings window on the Mac (unless a shortcut field is recording).
     private var escMonitor: Any?
-    deinit { if let m = escMonitor { NSEvent.removeMonitor(m) } }
+    deinit {
+        if let m = escMonitor { NSEvent.removeMonitor(m) }
+        NotificationCenter.default.removeObserver(self)
+    }
 
     // MARK: Building blocks
 
@@ -182,6 +195,79 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         field.widthAnchor.constraint(lessThanOrEqualToConstant: 400).isActive = true
         field.isHidden = true
         return [NSView(), field]
+    }
+
+    /// A quiet line under a shortcut's row: why it is not in use, or what it takes from the keyboard
+    /// (claude/keepit-hotkey-layouts-design.md H-5). Hidden with its grid row while there is nothing to say.
+    private var hotKeyNotes: [HotKeyID: NSTextField] = [:]
+
+    private func note(_ id: HotKeyID) -> [NSView] {
+        let field = NSTextField(wrappingLabelWithString: "")
+        field.textColor = .secondaryLabelColor
+        field.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
+        field.preferredMaxLayoutWidth = 400
+        field.widthAnchor.constraint(lessThanOrEqualToConstant: 400).isActive = true
+        hotKeyNotes[id] = field
+        return [NSView(), field]
+    }
+
+    /// What the note under a shortcut says, from the app's status for it. Empty when there is nothing to say.
+    func hotKeyNoteText(_ id: HotKeyID) -> String {
+        guard let st = app.hotKeyStatuses[id], case .needed(let layout, let types) = st.layout,
+              let hk = app.settings.hotKey(id) else { return "" }
+        switch st.registration {
+        case .skipped:
+            return LF("Used to type %1$@ on %2$@, so Keepit leaves it free. Click the field and press %3$@ to use it anyway.", types, layout, hk.displayString)
+        case .registered:
+            // The user's own (recorded, or a changed value) or a required default: the character is lost
+            // while Keepit runs — true only while the key is actually held.
+            return id.isRequired
+                ? LF("Used to type %1$@ on %2$@. Keepit needs this shortcut; choose another to free %1$@.", types, layout)
+                : LF("Used to type %1$@ on %2$@. While Keepit runs, %1$@ can't be typed with it.", types, layout)
+        case .off, .failed, .suspended:
+            return ""      // off: nothing to say; failed: the alert said it; suspended: the window is closed by a lock
+        }
+    }
+
+    private func updateHotKeyNotes() {
+        var changed = false
+        for (id, field) in hotKeyNotes {
+            let text = hotKeyNoteText(id)
+            let wasHidden = field.isHidden
+            field.stringValue = text
+            field.isHidden = text.isEmpty
+            if let grid = field.superview as? NSGridView, let row = grid.cell(for: field)?.row { row.isHidden = text.isEmpty }
+            if wasHidden != text.isEmpty { changed = true }
+            recorder(for: id)?.isDimmed = app.hotKeyStatuses[id]?.registration == .skipped
+        }
+        if changed, let pane = panes.first(where: { $0.view === shownPane }) { show(pane: pane, animate: true) }
+    }
+
+    private func recorder(for id: HotKeyID) -> HotKeyRecorderView? {
+        switch id {
+        case .history: return historyHK
+        case .template: return templateHK
+        case .previous: return previousHK
+        case .numbers: return numbersHK
+        case .latest: return latestHK
+        case .viewer: return viewerHK
+        case .preferences: return prefsHK
+        case .clearHistory: return clearHK
+        case .pause: return pauseHK
+        case .lock: return lockHK
+        case .quit: return quitHK
+        case .queue: return queueHK
+        case .queuePaste: return queuePasteHK
+        case .queuePasteAll: return queueAllHK
+        }
+    }
+
+    /// The latest-item hint names the keys by what they type on the current layout (stage 4 makes
+    /// `KeyCodes.name` follow the layout; today it is the US letter), in the order the text lists them.
+    static func latestActionsHint() -> String {
+        let order: [HotKey.LatestAction] = [.plain, .upper, .lower, .title, .sentence, .trim, .singleLine, .strikethrough, .underline, .wavy, .undecorate, .addToTemplates]
+        let names = order.map { KeyCodes.name(for: UInt16($0.keyCode)) }
+        return LF("Modifiers that act on the latest item (the clipboard) with a letter: %@ plain text, %@ UPPERCASE, %@ lowercase, %@ Title Case, %@ Sentence case, %@ trim, %@ single line, %@ strikethrough, %@ underline, %@ wavy underline, %@ remove decorations, %@ add to Templates, ⌫ delete. The same keys are shown in the item's extended menu. With VoiceOver on, ⌃⌥ is its own modifier — pick another combination here, ⌃⌘ say.", names[0], names[1], names[2], names[3], names[4], names[5], names[6], names[7], names[8], names[9], names[10], names[11])
     }
 
     private func setStatus(_ field: NSTextField, _ text: String) {
@@ -366,19 +452,19 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         let resetHK = NSButton(title: L("Reset to Defaults"), target: self, action: #selector(resetShortcuts))
         let shortcuts = grid([
             header(L("Menus")),
-            row(L("History menu:"), recorder(historyHK, clear: false)),
-            row(L("Template menu:"), recorder(templateHK, clear: false)),
+            row(L("History menu:"), recorder(historyHK, clear: false)), note(.history),
+            row(L("Template menu:"), recorder(templateHK, clear: false)), note(.template),
             header(L("Paste without the menu")),
-            row(L("Paste previous item:"), help(recorder(previousHK), L("Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off."))),
+            row(L("Paste previous item:"), help(recorder(previousHK), L("Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off."))), note(.previous),
             row(L("Paste item by number:"), help(recorder(numbersHK, modifiersOnly: true), L("Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off."))),
-            row(L("Actions on the latest item:"), help(recorder(latestHK, modifiersOnly: true, suffix: L("letter")), L("Modifiers that act on the latest item (the clipboard) with a letter: V plain text, U UPPERCASE, L lowercase, T Title Case, S Sentence case, W trim, J single line, K strikethrough, D underline, Y wavy underline, X remove decorations, A add to Templates, ⌫ delete. The same keys are shown in the item's extended menu. With VoiceOver on, ⌃⌥ is its own modifier — pick another combination here, ⌃⌘ say."))),
+            row(L("Actions on the latest item:"), help(recorder(latestHK, modifiersOnly: true, suffix: L("letter")), Self.latestActionsHint())),
             header(L("Other")),
-            row(L("Viewer:"), recorder(viewerHK)),
-            row(L("Settings:"), recorder(prefsHK)),
-            row(L("Clear History:"), recorder(clearHK)),
-            row(L("Pause recording:"), recorder(pauseHK)),
-            row(L("Lock Keepit:"), recorder(lockHK)),
-            row(L("Quit Keepit:"), recorder(quitHK)),
+            row(L("Viewer:"), recorder(viewerHK)), note(.viewer),
+            row(L("Settings:"), recorder(prefsHK)), note(.preferences),
+            row(L("Clear History:"), recorder(clearHK)), note(.clearHistory),
+            row(L("Pause recording:"), recorder(pauseHK)), note(.pause),
+            row(L("Lock Keepit:"), recorder(lockHK)), note(.lock),
+            row(L("Quit Keepit:"), recorder(quitHK)), note(.quit),
             status(shortcutStatus),
             [NSView(), help(resetHK, L("Shortcuts set here and on the Paste Queue pane work from any app and are shown next to their commands in the menu. ⌫ in a field switches the shortcut off. Reset to Defaults restores every shortcut, including the paste queue's."))],
         ])
@@ -386,8 +472,9 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         let queue = grid([
             header(L("Shortcuts")),
             row(L("Start / stop the queue:"), help(recorder(queueHK), L("Serial copy-and-paste. Start the queue, copy several things in a row (the menu bar icon counts them), then paste them back one by one in the same order with the key below. The queue ends when the last item has been pasted or after the idle time; ⌘V keeps working as usual."))),
-            row(L("Paste next item:"), recorder(queuePasteHK)),
-            row(L("Paste all remaining:"), help(recorder(queueAllHK), L("Pastes everything still in the queue as one text, items joined with the separator below, and ends the queue."))),
+            note(.queue),
+            row(L("Paste next item:"), recorder(queuePasteHK)), note(.queuePaste),
+            row(L("Paste all remaining:"), help(recorder(queueAllHK), L("Pastes everything still in the queue as one text, items joined with the separator below, and ends the queue."))), note(.queuePasteAll),
             status(queueStatus),
             header(L("Behaviour")),
             row(L("Idle time:"), help(number(queueTimeout, unit: L("seconds"), min: 0, max: 3600, step: 10),
@@ -655,6 +742,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         clearHK.hotKey = s.clearHistoryHotKey; pauseHK.hotKey = s.pauseHotKey
         lockHK.hotKey = s.lockHotKey; quitHK.hotKey = s.quitHotKey
         setStatus(shortcutStatus, "")
+        updateHotKeyNotes()
 
         queueHK.hotKey = s.queueHotKey; queuePasteHK.hotKey = s.queuePasteHotKey; queueAllHK.hotKey = s.queuePasteAllHotKey
         setNumber(queueTimeout, s.queueTimeout)

@@ -13,6 +13,10 @@ final class HotKeyRecorderView: NSControl {
     var modifiersOnly = false
     /// What follows the modifiers in the modifiers-only display, e.g. "1–0" or "V/U/L…".
     var modifiersSuffix = "1–0"
+    /// Drawn in the secondary colour: the combination is stored but not in use (left free for a layout).
+    var isDimmed = false {
+        didSet { needsDisplay = true }
+    }
     private var recording = false {
         didSet { needsDisplay = true }
     }
@@ -98,7 +102,7 @@ final class HotKeyRecorderView: NSControl {
         let text = recording ? L("Press keys… (⎋ cancels)") : (set ?? (allowsClear ? L("Off — click to set") : L("Click to set")))
         let attrs: [NSAttributedString.Key: Any] = [
             .font: NSFont.systemFont(ofSize: NSFont.systemFontSize),
-            .foregroundColor: recording ? NSColor.secondaryLabelColor : NSColor.labelColor,
+            .foregroundColor: recording || isDimmed ? NSColor.secondaryLabelColor : NSColor.labelColor,
         ]
         let size = (text as NSString).size(withAttributes: attrs)
         let origin = NSPoint(x: (bounds.width - size.width) / 2, y: (bounds.height - size.height) / 2)
