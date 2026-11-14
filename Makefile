@@ -235,6 +235,7 @@ check:
 	swift build
 	swift test
 	node --test functions/api/feedback.test.mjs
+	python3 Scripts/test_indexnow.py
 	$(MAKE) dist VERSION=$(VERSION)
 	KEEPIT_DATA_DIR="$$(mktemp -d)" ./$(CONTENTS)/MacOS/$(APP) --selftest
 	@cat selftest-output/report.txt

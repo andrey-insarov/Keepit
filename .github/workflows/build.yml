@@ -42,6 +42,9 @@ jobs:
       - name: Support function tests (pure parts, no network)
         run: node --test functions/api/feedback.test.mjs
 
+      - name: Site script tests (pure parts, no network)
+        run: python3 Scripts/test_indexnow.py
+
       - name: Package app + DMG (ad-hoc)
         run: make dist VERSION=$(cat VERSION)
 
