@@ -6,7 +6,7 @@ import Foundation
 final class HotKeyManager {
     /// While a menu of ours is tracking, the system still turns the registered combination into a hot-key
     /// event and never delivers the key to the menu, so AppKit cannot run the item's key equivalent itself
-    /// (H-8). The app answers true when it has routed or dropped the press because a menu is open;
+    /// (H-9). The app answers true when it has routed or dropped the press because a menu is open;
     /// false means no menu is open and the hot key runs as usual.
     var whileMenuOpen: (HotKey) -> Bool = { _ in false }
     /// Tests: decide registrations without touching Carbon (the test process never holds a system hot key).
@@ -36,7 +36,7 @@ final class HotKeyManager {
                 return OSStatus(eventNotHandledErr)
             }
             if let h = manager.handlers[hkID.id] {
-                // While one of our menus is open the press belongs to the menu: route it there (H-8).
+                // While one of our menus is open the press belongs to the menu: route it there (H-9).
                 if let hk = manager.hotKeysById[hkID.id], manager.whileMenuOpen(hk) { return noErr }
                 if h.immediate {
                     // Runs inside a modal loop too (modalPanel is a common mode): a main-queue block

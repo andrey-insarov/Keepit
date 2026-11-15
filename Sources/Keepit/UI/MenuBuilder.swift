@@ -105,7 +105,7 @@ final class MenuBuilder {
 
     /// The first enabled item whose key equivalent is exactly `key` with `flags`, searching each menu
     /// and its attached submenus in order (callers pass the deepest open menu first). The hidden ⇧
-    /// copies count like any other item. Used to route a hot key pressed while a menu of ours is open (H-8).
+    /// copies count like any other item. Used to route a hot key pressed while a menu of ours is open (H-9).
     static func item(forKeyEquivalent key: String, flags: NSEvent.ModifierFlags, in menus: [NSMenu]) -> NSMenuItem? {
         for menu in menus {
             for mi in menu.items {

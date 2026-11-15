@@ -44,14 +44,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     /// menu that went away without `menuDidClose` is simply gone.
     private let openTrackedMenus = NSHashTable<NSMenu>.weakObjects()
     var openTrackedMenusForTesting: Int { openTrackedMenus.count }
-    /// The same menus in opening order (root first), for routing a hot key to the deepest one (H-8).
+    /// The same menus in opening order (root first), for routing a hot key to the deepest one (H-9).
     private var openMenuStack: [Weak<NSMenu>] = []
     struct Weak<T: AnyObject> { weak var value: T?; init(_ v: T) { value = v } }
     private func cancelOpenMenus() {
         for menu in openTrackedMenus.allObjects { menu.cancelTracking() }
     }
 
-    /// A hot key pressed while a menu of ours is open (H-8). The system has already turned the key into
+    /// A hot key pressed while a menu of ours is open (H-9). The system has already turned the key into
     /// a hot-key event, so the menu never saw it; the press goes to the item that shows this combination:
     /// in the deepest open menu first, then up to the root, attached submenus included; a ⌃⌥ letter with
     /// the history menu open and no submenu attached acts on the latest item, as the global key does.
@@ -1662,7 +1662,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if menu.title == Self.actionMenuTitle { ExtendedMenuWatch.shared.submenuClosed(); return }
         ExtendedMenuWatch.shared.stop(menu)
         PreviewPanel.shared.hide()
-        if statusItem.menu === menu { statusItem.menu = nil }
+        if statusItem?.menu === menu { statusItem.menu = nil }   // nil before launch (tests drive the delegate calls)
         lastClosedWasHistoryMenu = menu.items.contains { $0.tag == MenuBuilder.historyTag }
         let wasPopup = popupActive
         popupActive = false
