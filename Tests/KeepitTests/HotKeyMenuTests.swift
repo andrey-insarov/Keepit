@@ -183,7 +183,7 @@ final class HotKeyMenuTests: XCTestCase {
 
     // MARK: The lock combination over a popup (SEC05)
 
-    func testAPopupMenuCarriesTheLockCombinationHiddenAndTheStatusBarMenuAlreadyShowsIt() throws {
+    func testAPopupMenuCarriesTheLockCombinationHiddenOnce() throws {
         let a = app()
         a.history.add(.text("latest"))
         let lockKey = try XCTUnwrap(a.activeHotKey(.lock))
@@ -196,9 +196,10 @@ final class HotKeyMenuTests: XCTestCase {
         XCTAssertEqual(hidden.action, #selector(AppDelegate.lock))
         XCTAssertFalse(hidden.allowsAutomaticKeyEquivalentLocalization)
 
+        // The status-bar menu shows the Lock item itself when a vault exists (none in this test); either way
+        // the combination is answered by exactly one item, however often the helper runs.
         let statusBar = a.buildHistoryMenu(includeTemplates: true, includeApp: true)
-        let shown = try XCTUnwrap(MenuBuilder.item(forKeyEquivalent: eq.key, flags: eq.mask, in: [statusBar]))
-        XCTAssertFalse(shown.isHidden)
+        a.addLockKeyEquivalent(to: statusBar)
         a.addLockKeyEquivalent(to: statusBar)
         XCTAssertEqual(statusBar.items.filter { $0.keyEquivalent == eq.key && $0.keyEquivalentModifierMask == eq.mask }.count, 1, "not added twice")
     }

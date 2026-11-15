@@ -39,10 +39,8 @@ final class MenuSearchItem: NSMenuItem, NSSearchFieldDelegate {
         guard event.type == .keyDown, let menu else { return false }
         let mods = event.modifierFlags.intersection([.command, .control, .option, .shift])
         guard !mods.isDisjoint(with: [.command, .control, .option]) else { return false }
-        var keys: [String] = []
-        if let k = KeyCodes.menuCharacter(for: event.keyCode) { keys.append(k) }
-        if let k = event.charactersIgnoringModifiers?.lowercased(), k.count == 1, !keys.contains(k) { keys.append(k) }
-        guard let item = keys.lazy.compactMap({ MenuBuilder.item(forKeyEquivalent: $0, flags: mods, in: [menu]) }).first,
+        guard let key = KeyCodes.menuCharacter(for: event.keyCode) ?? event.charactersIgnoringModifiers?.lowercased(), key.count == 1,
+              let item = MenuBuilder.item(forKeyEquivalent: key, flags: mods, in: [menu]),
               let action = item.action else { return false }
         Log.system.notice("menu open: the search field runs the matching item")
         menu.cancelTracking()
