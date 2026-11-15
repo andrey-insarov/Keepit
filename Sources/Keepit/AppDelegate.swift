@@ -71,14 +71,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             }
         }
         if let mi = hit, let action = mi.action {
-            Log.system.debug("hot key \(hk.displayString, privacy: .public) with a menu open: routed to '\(mi.title, privacy: .public)'")
+            Log.system.notice("hot key \(hk.displayString, privacy: .public) with a menu open: routed to the menu item")   // no title: a history row's title is clipboard text
             cancelOpenMenus()
             // After the tracking loop has unwound, like a click: the menu's own actions run the same way.
             DispatchQueue.main.async { NSApp.sendAction(action, to: mi.target, from: mi) }
         } else if hk == activeHotKey(.history) || hk == activeHotKey(.template) {
             cancelOpenMenus()
         } else {
-            Log.system.debug("hot key \(hk.displayString, privacy: .public) with a menu open: no item shows it, dropped")
+            Log.system.notice("hot key \(hk.displayString, privacy: .public) with a menu open: no item shows it, dropped")
         }
         return true
     }
