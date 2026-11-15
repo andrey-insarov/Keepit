@@ -16,6 +16,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private lazy var updater = Updater()
     private var checkForUpdatesItem: NSMenuItem?
     private var preferencesWindow: SettingsWindowController?
+    var settingsWindowForTesting: AnyObject? { preferencesWindow }
     private(set) var viewer: ViewerWindowController?
     /// Set by the uninstaller: nothing may be written to disk any more (see Uninstall.swift).
     var uninstalling = false
@@ -38,15 +39,48 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private enum HistoryMenuOrigin { case statusItem, popup(NSPoint) }
     private var historyMenuOrigin: HistoryMenuOrigin?
     private var lastClosedWasHistoryMenu = false
-    /// Menus of ours currently tracking (history, template, action submenus); global hot keys pause meanwhile.
-    private var openMenus = 0
     /// The menus this delegate has open, so a lock can close them (SEC05: a history menu stayed
     /// open over a locked app; the lock hot key is delivered inside the tracking loop). Weak: a
     /// menu that went away without `menuDidClose` is simply gone.
     private let openTrackedMenus = NSHashTable<NSMenu>.weakObjects()
     var openTrackedMenusForTesting: Int { openTrackedMenus.count }
+    /// The same menus in opening order (root first), for routing a hot key to the deepest one (H-8).
+    private var openMenuStack: [Weak<NSMenu>] = []
+    struct Weak<T: AnyObject> { weak var value: T?; init(_ v: T) { value = v } }
     private func cancelOpenMenus() {
         for menu in openTrackedMenus.allObjects { menu.cancelTracking() }
+    }
+
+    /// A hot key pressed while a menu of ours is open (H-8). The system has already turned the key into
+    /// a hot-key event, so the menu never saw it; the press goes to the item that shows this combination:
+    /// in the deepest open menu first, then up to the root, attached submenus included; a ⌃⌥ letter with
+    /// the history menu open and no submenu attached acts on the latest item, as the global key does.
+    /// The menus close, the item's action runs once. The combination that opened the menu closes it.
+    /// Anything else is dropped: nothing is typed, nothing fires behind the menu. Returns false when no
+    /// menu of ours is open, so the hot key runs as usual.
+    func routeHotKeyWhileMenuOpen(_ hk: HotKey) -> Bool {
+        let menus = Array(openMenuStack.compactMap(\.value).reversed())
+        guard !menus.isEmpty else { return false }
+        let flags = MenuBuilder.flags(hk.modifiers)
+        var hit: NSMenuItem?
+        if let key = KeyCodes.menuCharacter(for: UInt16(hk.keyCode)) {
+            hit = MenuBuilder.item(forKeyEquivalent: key, flags: flags, in: menus)
+            if hit == nil, menus.contains(where: { $0.items.contains { $0.tag == MenuBuilder.historyTag } }),
+               let latest = history.items.first, let actions = actionMenu(for: latest.id) {
+                hit = MenuBuilder.item(forKeyEquivalent: key, flags: flags, in: [actions])
+            }
+        }
+        if let mi = hit, let action = mi.action {
+            Log.system.debug("hot key \(hk.displayString, privacy: .public) with a menu open: routed to '\(mi.title, privacy: .public)'")
+            cancelOpenMenus()
+            // After the tracking loop has unwound, like a click: the menu's own actions run the same way.
+            DispatchQueue.main.async { NSApp.sendAction(action, to: mi.target, from: mi) }
+        } else if hk == activeHotKey(.history) || hk == activeHotKey(.template) {
+            cancelOpenMenus()
+        } else {
+            Log.system.debug("hot key \(hk.displayString, privacy: .public) with a menu open: no item shows it, dropped")
+        }
+        return true
     }
 
     /// True while the vault key is wiped and data is unloaded (password set, not yet entered).
@@ -365,7 +399,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             self?.lastExternalApp = app
         }
 
-        hotKeys.isSuppressed = { [weak self] in (self?.openMenus ?? 0) > 0 }
+        hotKeys.whileMenuOpen = { [weak self] hk in self?.routeHotKeyWhileMenuOpen(hk) ?? false }
         registerHotKeys()
         observeKeyboardLayouts()
         Storage.save(settings, to: Storage.settingsURL, encrypt: false, pretty: true)
@@ -1609,8 +1643,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     func menuWillOpen(_ menu: NSMenu) {
-        openMenus += 1
         openTrackedMenus.add(menu)
+        openMenuStack.removeAll { $0.value == nil || $0.value === menu }
+        openMenuStack.append(Weak(menu))
         if let s = historySearchItem, menu.items.first === s { s.focus() }
         if menu.items.contains(where: { $0.tag == MenuBuilder.historyTag }) {
             ExtendedMenuWatch.shared.watch(menu) { [weak self] mi in
@@ -1622,8 +1657,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     func menuDidClose(_ menu: NSMenu) {
-        openMenus = max(0, openMenus - 1)
         openTrackedMenus.remove(menu)
+        openMenuStack.removeAll { $0.value == nil || $0.value === menu }
         if menu.title == Self.actionMenuTitle { ExtendedMenuWatch.shared.submenuClosed(); return }
         ExtendedMenuWatch.shared.stop(menu)
         PreviewPanel.shared.hide()

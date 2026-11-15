@@ -4,11 +4,15 @@ import Foundation
 /// System-wide hot keys via Carbon RegisterEventHotKey — the macOS counterpart of RegisterHotKey().
 /// Carbon hot keys don't need the Accessibility permission (unlike CGEvent taps).
 final class HotKeyManager {
-    /// Return true to swallow hot keys for the moment (a menu of ours is tracking).
-    var isSuppressed: () -> Bool = { false }
+    /// While a menu of ours is tracking, the system still turns the registered combination into a hot-key
+    /// event and never delivers the key to the menu, so AppKit cannot run the item's key equivalent itself
+    /// (H-8). The app answers true when it has routed or dropped the press because a menu is open;
+    /// false means no menu is open and the hot key runs as usual.
+    var whileMenuOpen: (HotKey) -> Bool = { _ in false }
     /// Tests: decide registrations without touching Carbon (the test process never holds a system hot key).
     var registrationOverrideForTesting: ((HotKey) -> Bool)?
     private var handlers: [UInt32: (run: () -> Void, immediate: Bool)] = [:]
+    private var hotKeysById: [UInt32: HotKey] = [:]
     private var refs: [UInt32: EventHotKeyRef] = [:]
     private var eventHandler: EventHandlerRef?
     private var nextId: UInt32 = 1
@@ -32,9 +36,8 @@ final class HotKeyManager {
                 return OSStatus(eventNotHandledErr)
             }
             if let h = manager.handlers[hkID.id] {
-                // While one of our menus is open the same combination is also a menu key equivalent,
-                // which AppKit fires itself — don't run the action twice.
-                if manager.isSuppressed() { return noErr }
+                // While one of our menus is open the press belongs to the menu: route it there (H-8).
+                if let hk = manager.hotKeysById[hkID.id], manager.whileMenuOpen(hk) { return noErr }
                 if h.immediate {
                     // Runs inside a modal loop too (modalPanel is a common mode): a main-queue block
                     // would wait for the block that opened the dialog to return (auditor's P2 on PR #28).
@@ -71,6 +74,7 @@ final class HotKeyManager {
         }
         refs[id] = r
         handlers[id] = (handler, immediate)
+        hotKeysById[id] = hotKey
         return true
     }
 
@@ -78,5 +82,6 @@ final class HotKeyManager {
         for (_, r) in refs { UnregisterEventHotKey(r) }
         refs.removeAll()
         handlers.removeAll()
+        hotKeysById.removeAll()
     }
 }
