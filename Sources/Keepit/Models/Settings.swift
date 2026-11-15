@@ -496,8 +496,15 @@ enum KeyCodes {
     /// The character the key types on the current layout with no modifiers (a dead key: the character it
     /// types before Space), when it is one grapheme and not a space. Only for keys the US table names
     /// with one character: Space, arrows, F-keys and ⌫ keep their names on every layout.
+    /// Keys whose name never follows the layout: they have no character, or a fixed symbol.
+    private static let fixedNameKeys: Set<UInt16> = [
+        UInt16(kVK_Space), UInt16(kVK_Return), UInt16(kVK_Tab), UInt16(kVK_Escape), UInt16(kVK_Delete), UInt16(kVK_ForwardDelete),
+        UInt16(kVK_LeftArrow), UInt16(kVK_RightArrow), UInt16(kVK_UpArrow), UInt16(kVK_DownArrow),
+        UInt16(kVK_Home), UInt16(kVK_End), UInt16(kVK_PageUp), UInt16(kVK_PageDown),
+    ] // F1–F12 have two- or three-character names and never pass the one-character test below
+
     private static func layoutCharacter(_ keyCode: UInt16) -> String? {
-        guard let us = names[keyCode], us.count == 1 else { return nil }
+        guard !fixedNameKeys.contains(keyCode), let us = names[keyCode], us.count == 1 else { return nil }
         guard let layout = currentLayoutForTesting?() ?? TISLayoutReader.currentASCIICapableLayout(),
               let translate = layout.translate else { return nil }
         if cache?.id != layout.id { cache = (layout.id, [:]) }

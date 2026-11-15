@@ -75,6 +75,8 @@ final class KeyCodesLayoutTests: XCTestCase {
     func testKeysWithoutACharacterAndUnansweredKeysKeepTheirUSNames() {
         var f = azerty()
         f.set(kVK_Space, .characters(" "))
+        // A layout that answers something printable for keys without a character: the fixed names win.
+        f.set(kVK_LeftArrow, .characters("x")); f.set(kVK_Delete, .characters("x")); f.set(kVK_Tab, .characters("x")); f.set(kVK_Return, .characters("x"))
         f.set(kVK_ANSI_B, .characters("\u{1B}"))            // a control character is no name
         f.set(kVK_ANSI_C, .characters("ab"))                // two characters are no name
         f.set(kVK_ANSI_D, .error)
@@ -83,6 +85,8 @@ final class KeyCodesLayoutTests: XCTestCase {
         XCTAssertEqual(KeyCodes.name(for: UInt16(kVK_F5)), "F5")
         XCTAssertEqual(KeyCodes.name(for: UInt16(kVK_LeftArrow)), "←")
         XCTAssertEqual(KeyCodes.name(for: UInt16(kVK_Delete)), "⌫")
+        XCTAssertEqual(KeyCodes.name(for: UInt16(kVK_Tab)), "⇥"); XCTAssertEqual(KeyCodes.name(for: UInt16(kVK_Return)), "↩")
+        XCTAssertEqual(KeyCodes.menuCharacter(for: UInt16(kVK_Delete)), "\u{8}"); XCTAssertEqual(KeyCodes.menuCharacter(for: UInt16(kVK_LeftArrow)), String(UnicodeScalar(NSLeftArrowFunctionKey)!))
         XCTAssertEqual(KeyCodes.name(for: UInt16(kVK_ANSI_B)), "B")
         XCTAssertEqual(KeyCodes.name(for: UInt16(kVK_ANSI_C)), "C")
         XCTAssertEqual(KeyCodes.name(for: UInt16(kVK_ANSI_D)), "D")
@@ -108,8 +112,10 @@ final class KeyCodesLayoutTests: XCTestCase {
         XCTAssertEqual(KeyCodes.name(for: UInt16(kVK_ANSI_A)), "Q")
         KeyCodes.invalidateLayoutCache()                 // what selectedLayoutDidChange() does
         XCTAssertEqual(KeyCodes.name(for: UInt16(kVK_ANSI_A)), "X")
-        use(qwertz())                                    // another id: a fresh cache
+        let other = qwertz().info
+        KeyCodes.currentLayoutForTesting = { other }     // another id, no invalidation: the cache is per id and starts afresh
         XCTAssertEqual(KeyCodes.name(for: UInt16(kVK_ANSI_A)), "A", "QWERTZ says nothing about A here: US fallback")
+        XCTAssertEqual(KeyCodes.name(for: UInt16(kVK_ANSI_Y)), "Z")
     }
 
     func testMenusCarryTheLayoutCharacterAndKeepAppKitFromMovingIt() throws {
