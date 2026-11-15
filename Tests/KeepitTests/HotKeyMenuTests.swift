@@ -98,6 +98,35 @@ final class HotKeyMenuTests: XCTestCase {
         XCTAssertNil(MenuBuilder.item(forKeyEquivalent: "v", flags: ctrlOpt, in: [menu]))
     }
 
+    // MARK: The focused search field runs a matching combination (typed into it as a character)
+
+    private func keyDown(_ chars: String, unmodified: String, flags: NSEvent.ModifierFlags) throws -> NSEvent {
+        try XCTUnwrap(NSEvent.keyEvent(with: .keyDown, location: .zero, modifierFlags: flags, timestamp: 0, windowNumber: 0,
+                                       context: nil, characters: chars, charactersIgnoringModifiers: unmodified,
+                                       isARepeat: false, keyCode: 32))
+    }
+
+    func testTheSearchFieldRunsTheMatchingItemAndTakesTheTypedCharacterBack() throws {
+        let a = app()
+        a.settings.searchInMenu = true
+        a.history.add(.text("older"))
+        a.history.add(.text("latest"))
+        let menu = a.buildHistoryMenu(includeTemplates: false, includeApp: false)
+        let search = try XCTUnwrap(menu.items.first as? MenuSearchItem, "the search field is the first item")
+
+        // ⌃⌥U on German arrives as the dead key "¨" with "u" as the unmodified character.
+        XCTAssertTrue(search.handleMenuKeyEquivalent(try keyDown("¨", unmodified: "u", flags: ctrlOpt)))
+        let ran = expectation(description: "the action runs on the next turn")
+        DispatchQueue.main.async { ran.fulfill() }
+        wait(for: [ran], timeout: 1)
+        XCTAssertEqual(pasted.last?.plainText, "LATEST")
+
+        XCTAssertFalse(search.handleMenuKeyEquivalent(try keyDown("u", unmodified: "u", flags: [])), "a bare letter is typed, never taken")
+        XCTAssertFalse(search.handleMenuKeyEquivalent(try keyDown("U", unmodified: "u", flags: [.shift])), "⇧ alone is typing too")
+        XCTAssertFalse(search.handleMenuKeyEquivalent(try keyDown("q", unmodified: "q", flags: ctrlOpt)), "no item for ⌃⌥Q")
+        XCTAssertEqual(pasted.count, 1)
+    }
+
     // MARK: The registrations are lifted while a menu tracks
 
     func testHotKeysAreLiftedAtTheFirstMenuAndRestoredAfterTheLast() throws {
