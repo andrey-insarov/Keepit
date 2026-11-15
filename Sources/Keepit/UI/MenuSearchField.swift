@@ -40,9 +40,11 @@ final class MenuSearchItem: NSMenuItem, NSSearchFieldDelegate {
         guard event.type == .keyDown, let menu else { return false }
         let mods = event.modifierFlags.intersection([.command, .control, .option, .shift])
         guard !mods.isDisjoint(with: [.command, .control, .option]) else { return false }
-        guard let key = KeyCodes.menuCharacter(for: event.keyCode) ?? event.charactersIgnoringModifiers?.lowercased(), key.count == 1,
-              let item = MenuBuilder.item(forKeyEquivalent: key, flags: mods, in: [menu]),
-              let action = item.action else { return false }
+        let key = KeyCodes.menuCharacter(for: event.keyCode) ?? event.charactersIgnoringModifiers?.lowercased()
+        let found = key.flatMap { $0.count == 1 ? MenuBuilder.item(forKeyEquivalent: $0, flags: mods, in: [menu]) : nil }
+        // Diagnostic (no clipboard text: a key code, modifier bits and a yes/no).
+        Log.system.notice("menu open: search field key code \(event.keyCode) mods \(mods.rawValue) key \(key == nil ? "none" : "one") item \(found == nil ? "none" : "found")")
+        guard let item = found, let action = item.action else { return false }
         Log.system.notice("menu open: the search field runs the matching item")
         menu.cancelTracking()
         DispatchQueue.main.async { NSApp.sendAction(action, to: item.target, from: item) }
