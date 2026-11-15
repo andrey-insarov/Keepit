@@ -104,9 +104,10 @@ final class HotKeyMenuTests: XCTestCase {
         let menu = a.buildHistoryMenu(includeTemplates: false, includeApp: false)
         let search = try XCTUnwrap(menu.items.first as? MenuSearchItem, "search in the menu is on by default")
 
-        XCTAssertTrue(search.handleMenuKeyEquivalent(keyDown("v", ctrlOpt, keyCode: kVK_ANSI_V)), "⌃⌥V names the hidden plain-paste item")
+        let editor = try XCTUnwrap(search.field.fieldEditorForTesting as? MenuSearchFieldEditor, "the cell hands out our editor")
+        editor.keyDown(with: keyDown("v", ctrlOpt, keyCode: kVK_ANSI_V))          // what the tracking menu sends the focused field
         RunLoop.main.run(until: Date().addingTimeInterval(0.1))
-        XCTAssertEqual(pasted.map(\.plainText), ["latest"], "run once")
+        XCTAssertEqual(pasted.map(\.plainText), ["latest"], "⌃⌥V names the hidden plain-paste item: run once")
 
         XCTAssertTrue(search.handleMenuKeyEquivalent(keyDown("2", ctrlOpt, keyCode: kVK_ANSI_2)))
         RunLoop.main.run(until: Date().addingTimeInterval(0.1))
