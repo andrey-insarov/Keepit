@@ -108,11 +108,10 @@ final class HotKeyMenuTests: XCTestCase {
 
     func testTheSearchFieldRunsTheMatchingItemAndTakesTheTypedCharacterBack() throws {
         let a = app()
-        a.settings.searchInMenu = true
         a.history.add(.text("older"))
         a.history.add(.text("latest"))
         let menu = a.buildHistoryMenu(includeTemplates: false, includeApp: false)
-        let search = try XCTUnwrap(menu.items.first as? MenuSearchItem, "the search field is the first item")
+        let search = try XCTUnwrap(menu.items.first as? MenuSearchItem, "the search field is the first item (searchInMenu defaults to on)")
 
         // ⌃⌥U on German arrives as the dead key "¨" with "u" as the unmodified character.
         XCTAssertTrue(search.handleMenuKeyEquivalent(try keyDown("¨", unmodified: "u", flags: ctrlOpt)))
