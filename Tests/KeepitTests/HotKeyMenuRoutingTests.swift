@@ -2,7 +2,7 @@ import Carbon
 import XCTest
 @testable import Keepit
 
-/// H-8 of claude/keepit-hotkey-layouts-design.md: a hot key pressed while a menu of ours is open goes
+/// H-9 of claude/keepit-hotkey-layouts-design.md: a hot key pressed while a menu of ours is open goes
 /// to the item that shows the combination; the menu closes and the action runs once. The matcher is
 /// pure; the routing is exercised on an AppDelegate with a built history menu "open" through the
 /// delegate calls, the paste caught by `Paster.pasteSinkForTesting`.
