@@ -7,6 +7,8 @@ final class MenuSearchItem: NSMenuItem, NSSearchFieldDelegate {
     var onChange: ((String) -> Void)?
     var onReturn: (() -> Void)?
     private var lastText = ""
+    /// The event being handled; tests hand in a key event of their own.
+    var currentEvent: () -> NSEvent? = { NSApp.currentEvent }
 
     init(width: CGFloat = 300) {
         super.init(title: "", action: nil, keyEquivalent: "")
@@ -27,14 +29,20 @@ final class MenuSearchItem: NSMenuItem, NSSearchFieldDelegate {
     /// equivalents. A key with ⌘, ⌃ or ⌥ that is the key equivalent of an enabled item of the menu
     /// (submenus and hidden items included, as AppKit would match it) closes the menu and runs the item's
     /// action once, on the next turn, as after a click. Bare letters and digits are never taken.
+    /// The key is the physical one: the items' equivalents are the ASCII-capable layout's characters for
+    /// their key codes (H-6), so the event's key code is read the same way (on Russian the U key arrives
+    /// as "г" and still names the UPPERCASE item). A key the layout table does not name falls back to
+    /// the event's own unmodified character, as AppKit matches it.
     /// Not every key gets here: the menu takes ⌃⌥V as "page down" before the field sees it.
     @discardableResult
     func handleMenuKeyEquivalent(_ event: NSEvent) -> Bool {
         guard event.type == .keyDown, let menu else { return false }
         let mods = event.modifierFlags.intersection([.command, .control, .option, .shift])
         guard !mods.isDisjoint(with: [.command, .control, .option]) else { return false }
-        guard let key = event.charactersIgnoringModifiers?.lowercased(), key.count == 1,
-              let item = MenuBuilder.item(forKeyEquivalent: key, flags: mods, in: [menu]),
+        var keys: [String] = []
+        if let k = KeyCodes.menuCharacter(for: event.keyCode) { keys.append(k) }
+        if let k = event.charactersIgnoringModifiers?.lowercased(), k.count == 1, !keys.contains(k) { keys.append(k) }
+        guard let item = keys.lazy.compactMap({ MenuBuilder.item(forKeyEquivalent: $0, flags: mods, in: [menu]) }).first,
               let action = item.action else { return false }
         Log.system.notice("menu open: the search field runs the matching item")
         menu.cancelTracking()
@@ -54,7 +62,7 @@ final class MenuSearchItem: NSMenuItem, NSSearchFieldDelegate {
     func controlTextDidChange(_ obj: Notification) {
         // The key was typed into the field before anything else saw it (a dead key, an ⌥ character):
         // if it names a menu item, the typed text is taken back and the item runs instead (H-9).
-        if let event = NSApp.currentEvent, event.type == .keyDown {
+        if let event = currentEvent(), event.type == .keyDown {
             if handleMenuKeyEquivalent(event) { field.stringValue = lastText; return }
         }
         lastText = field.stringValue
@@ -66,7 +74,7 @@ final class MenuSearchItem: NSMenuItem, NSSearchFieldDelegate {
             onReturn?()
             return true
         }
-        if let event = NSApp.currentEvent, event.type == .keyDown {
+        if let event = currentEvent(), event.type == .keyDown {
             if handleMenuKeyEquivalent(event) { return true }
         }
         return false

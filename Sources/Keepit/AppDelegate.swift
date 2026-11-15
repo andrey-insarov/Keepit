@@ -1546,6 +1546,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     // MARK: - Popups on hot key
 
+    /// The lock combination works over a menu of ours as a key equivalent (SEC05, H-9): the Carbon
+    /// registrations are lifted while the menu tracks, so a menu that does not show the Lock item (the
+    /// popups) carries it hidden. Nothing is added when the menu already answers to that combination.
+    func addLockKeyEquivalent(to menu: NSMenu) {
+        guard let lockKey = activeHotKey(.lock), let eq = lockKey.menuKeyEquivalent,
+              MenuBuilder.item(forKeyEquivalent: eq.key, flags: eq.mask, in: [menu]) == nil else { return }
+        let lockItem = NSMenuItem(title: L("Lock Keepit"), action: #selector(lock), keyEquivalent: eq.key)
+        lockItem.keyEquivalentModifierMask = eq.mask
+        lockItem.allowsAutomaticKeyEquivalentLocalization = false
+        lockItem.target = self
+        lockItem.isHidden = true
+        menu.addItem(lockItem)
+    }
+
     func showHistoryPopup() {
         popUp(buildHistoryMenu(includeTemplates: true, includeApp: false), isHistory: true)
     }
@@ -1563,6 +1577,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         menuSelectionMade = false
         popupActive = true
         menu.delegate = self
+
+        addLockKeyEquivalent(to: menu)
 
         var point = fixed ?? NSEvent.mouseLocation
         if fixed == nil, settings.showAtCaret, let caret = Paster.caretScreenPoint() {
@@ -1622,7 +1638,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     func menuDidClose(_ menu: NSMenu) {
         openTrackedMenus.remove(menu)
-        if openTrackedMenus.allObjects.isEmpty { hotKeys.resumeAfterMenu() }
+        if openTrackedMenus.allObjects.isEmpty, !hotKeys.resumeAfterMenu().isEmpty {
+            // Carbon refused a combination it held before the menu (another app took it meanwhile) or one
+            // first asked for under the menu: the statuses, the menus and Settings must say so, and the
+            // usual alert names it. The full pass does all of that; no menu is open now, so it registers
+            // directly (H-9).
+            registerHotKeys()
+        }
         if menu.title == Self.actionMenuTitle { ExtendedMenuWatch.shared.submenuClosed(); return }
         ExtendedMenuWatch.shared.stop(menu)
         PreviewPanel.shared.hide()
