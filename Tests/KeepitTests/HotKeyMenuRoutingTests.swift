@@ -66,11 +66,11 @@ final class HotKeyMenuRoutingTests: XCTestCase {
         XCTAssertTrue(try XCTUnwrap(MenuBuilder.item(forKeyEquivalent: "w", flags: ctrlOpt, in: [root])) === row)
         XCTAssertTrue(try XCTUnwrap(MenuBuilder.item(forKeyEquivalent: "u", flags: ctrlOpt, in: [root])).title.contains(TextTransform.upper.title), "found through the attached submenu")
 
-        let disabled = NSMenuItem(title: "off", action: #selector(noop), keyEquivalent: "x")
+        let disabled = NSMenuItem(title: "off", action: #selector(noop), keyEquivalent: "b")
         disabled.keyEquivalentModifierMask = ctrlOpt
         disabled.isEnabled = false
         root.addItem(disabled)
-        XCTAssertNil(MenuBuilder.item(forKeyEquivalent: "x", flags: ctrlOpt, in: [root]), "a disabled item does not answer")
+        XCTAssertNil(MenuBuilder.item(forKeyEquivalent: "b", flags: ctrlOpt, in: [root]), "a disabled item does not answer")
     }
 
     // MARK: The routing
