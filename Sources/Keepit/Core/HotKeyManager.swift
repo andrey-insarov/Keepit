@@ -37,7 +37,8 @@ final class HotKeyManager {
             }
             if let h = manager.handlers[hkID.id] {
                 // While one of our menus is open the press belongs to the menu: route it there (H-9).
-                if let hk = manager.hotKeysById[hkID.id], manager.whileMenuOpen(hk) { return noErr }
+                // Not the immediate handler (the lock key): it runs whatever is open and closes the menus itself.
+                if !h.immediate, let hk = manager.hotKeysById[hkID.id], manager.whileMenuOpen(hk) { return noErr }
                 if h.immediate {
                     // Runs inside a modal loop too (modalPanel is a common mode): a main-queue block
                     // would wait for the block that opened the dialog to return (auditor's P2 on PR #28).
