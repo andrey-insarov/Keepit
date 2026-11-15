@@ -73,6 +73,7 @@ final class MenuBuilder {
             for extra in [NSEvent.ModifierFlags(), [.shift]] {
                 let mi = NSMenuItem(title: title, action: sel, keyEquivalent: keyChar)
                 mi.keyEquivalentModifierMask = (mask ?? []).union(extra)
+                mi.allowsAutomaticKeyEquivalentLocalization = false   // already the layout's character; AppKit must not move it again
                 mi.isHidden = extra == [.shift]
                 mi.isEnabled = enabled
                 mi.target = target
@@ -100,6 +101,19 @@ final class MenuBuilder {
         add(L("Show in Viewer"), a.reveal, key: nil, symbol: "eye")
         add(L("Delete"), a.delete, key: .delete, symbol: "trash")
         return m
+    }
+
+    /// The first enabled item whose key equivalent is exactly `key` with `flags`, searching each menu
+    /// and its attached submenus in order (callers pass the deepest open menu first). The hidden ⇧
+    /// copies count like any other item. Used to route a hot key pressed while a menu of ours is open (H-9).
+    static func item(forKeyEquivalent key: String, flags: NSEvent.ModifierFlags, in menus: [NSMenu]) -> NSMenuItem? {
+        for menu in menus {
+            for mi in menu.items {
+                if mi.isEnabled, mi.action != nil, !mi.keyEquivalent.isEmpty, mi.keyEquivalent == key, mi.keyEquivalentModifierMask == flags { return mi }
+                if let sub = mi.submenu, let hit = item(forKeyEquivalent: key, flags: flags, in: [sub]) { return hit }
+            }
+        }
+        return nil
     }
 
     /// Carbon modifier bits → AppKit flags.
@@ -131,6 +145,12 @@ final class MenuBuilder {
             if settings.numberItems, i < accels.count {
                 let ch = accels[i]
                 mi.keyEquivalent = String(ch).lowercased()
+                if global, i < HotKey.digitKeyCodes.count {
+                    // The global ⌃⌥1–0 fire on the physical digit keys; the menu must answer to the same
+                    // keys, which type something else on AZERTY (& é " …). The prefix stays the index.
+                    mi.keyEquivalent = KeyCodes.menuCharacter(for: UInt16(HotKey.digitKeyCodes[i])) ?? mi.keyEquivalent
+                    mi.allowsAutomaticKeyEquivalentLocalization = false
+                }
                 mi.keyEquivalentModifierMask = mask
                 mi.title = "\(ch)  " + title     // visible prefix "1  text"
             }

@@ -38,8 +38,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private enum HistoryMenuOrigin { case statusItem, popup(NSPoint) }
     private var historyMenuOrigin: HistoryMenuOrigin?
     private var lastClosedWasHistoryMenu = false
-    /// Menus of ours currently tracking (history, template, action submenus); global hot keys pause meanwhile.
-    private var openMenus = 0
     /// The menus this delegate has open, so a lock can close them (SEC05: a history menu stayed
     /// open over a locked app; the lock hot key is delivered inside the tracking loop). Weak: a
     /// menu that went away without `menuDidClose` is simply gone.
@@ -365,7 +363,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             self?.lastExternalApp = app
         }
 
-        hotKeys.isSuppressed = { [weak self] in (self?.openMenus ?? 0) > 0 }
         registerHotKeys()
         observeKeyboardLayouts()
         Storage.save(settings, to: Storage.settingsURL, encrypt: false, pretty: true)
@@ -1349,7 +1346,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         family(.numbers, settings.numberPasteModifiers, HotKey.digitKeyCodes.enumerated().map { i, code in
             (HotKey(keyCode: code, modifiers: settings.numberPasteModifiers ?? 0), { [weak self] in self?.pasteItem(at: i, plainText: false) })
         })
-        single(.lock, immediate: true) { [weak self] in self?.lock() }
+        if let lockKey = settings.hotKey(.lock), lockKey.isTakenByMenuTracking {
+            // Over an open menu the lock is a key equivalent (H-9), and NSMenu keeps ⌃V, ⌃N and ⌃P for itself: this
+            // combination could not lock there, so it is not used at all and the user is told to change it.
+            statuses[.lock] = HotKeyStatus(layout: .notApplicable, registration: .failed)
+            failed.append(lockKey.displayString)
+            Log.system.error("lock hot key \(lockKey.displayString, privacy: .public) not registered: NSMenu takes ⌃V, ⌃N and ⌃P while a menu is open")
+        } else {
+            single(.lock, immediate: true) { [weak self] in self?.lock() }
+        }
         single(.viewer) { [weak self] in self?.openViewer() }
         single(.preferences) { [weak self] in self?.openPreferences() }
         single(.clearHistory) { [weak self] in self?.clearHistory() }
@@ -1411,6 +1416,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         DistributedNotificationCenter.default().addObserver(
             forName: NSNotification.Name(kTISNotifyEnabledKeyboardInputSourcesChanged as String), object: nil, queue: .main
         ) { [weak self] _ in self?.layoutsDidChange() }
+        // The selected layout changed: the names of the keys change with it (H-6). A menu of ours that
+        // is open carries the old layout's key equivalents; it is closed rather than left to miss presses,
+        // and comes back rebuilt when opened again.
+        DistributedNotificationCenter.default().addObserver(
+            forName: NSNotification.Name(kTISNotifySelectedKeyboardInputSourceChanged as String), object: nil, queue: .main
+        ) { [weak self] _ in self?.selectedLayoutDidChange() }
+    }
+
+    func selectedLayoutDidChange() {
+        KeyCodes.invalidateLayoutCache()
+        cancelOpenMenus()
+        updateStatusIcon()
+        NotificationCenter.default.post(name: KeyCodes.layoutDidChange, object: self)
     }
 
     func layoutsDidChange() {
@@ -1536,6 +1554,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     // MARK: - Popups on hot key
 
+    /// The lock combination works over a menu of ours as a key equivalent (SEC05, H-9): the Carbon
+    /// registrations are lifted while the menu tracks, so a menu that does not show the Lock item (the
+    /// popups) carries it hidden. Nothing is added when the menu already answers to that combination.
+    func addLockKeyEquivalent(to menu: NSMenu) {
+        guard let lockKey = activeHotKey(.lock), let eq = lockKey.menuKeyEquivalent,
+              MenuBuilder.item(forKeyEquivalent: eq.key, flags: eq.mask, in: [menu]) == nil else { return }
+        let lockItem = NSMenuItem(title: L("Lock Keepit"), action: #selector(lock), keyEquivalent: eq.key)
+        lockItem.keyEquivalentModifierMask = eq.mask
+        lockItem.allowsAutomaticKeyEquivalentLocalization = false
+        lockItem.target = self
+        lockItem.isHidden = true
+        menu.addItem(lockItem)
+    }
+
     func showHistoryPopup() {
         popUp(buildHistoryMenu(includeTemplates: true, includeApp: false), isHistory: true)
     }
@@ -1553,6 +1585,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         menuSelectionMade = false
         popupActive = true
         menu.delegate = self
+
+        addLockKeyEquivalent(to: menu)
 
         var point = fixed ?? NSEvent.mouseLocation
         if fixed == nil, settings.showAtCaret, let caret = Paster.caretScreenPoint() {
@@ -1596,7 +1630,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     func menuWillOpen(_ menu: NSMenu) {
-        openMenus += 1
+        // While a menu of ours tracks, the keys must reach it, not Carbon (H-9): the registrations are
+        // lifted at the first menu and restored when the last one has closed.
+        if openTrackedMenus.allObjects.isEmpty { hotKeys.suspendForMenu() }
         openTrackedMenus.add(menu)
         if let s = historySearchItem, menu.items.first === s { s.focus() }
         if menu.items.contains(where: { $0.tag == MenuBuilder.historyTag }) {
@@ -1609,12 +1645,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     func menuDidClose(_ menu: NSMenu) {
-        openMenus = max(0, openMenus - 1)
         openTrackedMenus.remove(menu)
+        if openTrackedMenus.allObjects.isEmpty, !hotKeys.resumeAfterMenu().isEmpty {
+            // Carbon refused a combination it held before the menu (another app took it meanwhile) or one
+            // first asked for under the menu: the statuses, the menus and Settings must say so, and the
+            // usual alert names it. The full pass does all of that; no menu is open now, so it registers
+            // directly (H-9).
+            registerHotKeys()
+        }
         if menu.title == Self.actionMenuTitle { ExtendedMenuWatch.shared.submenuClosed(); return }
         ExtendedMenuWatch.shared.stop(menu)
         PreviewPanel.shared.hide()
-        if statusItem.menu === menu { statusItem.menu = nil }
+        if statusItem?.menu === menu { statusItem.menu = nil }   // nil before launch (tests drive the delegate calls)
         lastClosedWasHistoryMenu = menu.items.contains { $0.tag == MenuBuilder.historyTag }
         let wasPopup = popupActive
         popupActive = false
@@ -1666,6 +1708,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             menu.addItem(e)
         } else {
             for mi in items { menu.addItem(mi) }
+            // The "actions on the latest item" combinations work with this menu open too (H-9): hidden
+            // items carry the key equivalents of the latest row's action menu, which is attached only
+            // while ⇧ is held. Same selectors, same represented objects; AppKit runs whichever it finds first.
+            if let latest = history.items.first, let actions = actionMenu(for: latest.id) {
+                for a in actions.items where !a.keyEquivalent.isEmpty && a.action != nil && a.isEnabled {
+                    let hidden = NSMenuItem(title: a.title, action: a.action, keyEquivalent: a.keyEquivalent)
+                    hidden.keyEquivalentModifierMask = a.keyEquivalentModifierMask
+                    hidden.allowsAutomaticKeyEquivalentLocalization = false
+                    hidden.target = a.target
+                    hidden.representedObject = a.representedObject
+                    hidden.isHidden = true
+                    menu.addItem(hidden)
+                }
+            }
         }
 
         if includeTemplates {
@@ -1732,6 +1788,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             if let eq = hotKey?.menuKeyEquivalent {
                 mi.keyEquivalent = eq.key
                 mi.keyEquivalentModifierMask = eq.mask
+                mi.allowsAutomaticKeyEquivalentLocalization = false   // already the layout's character (H-6)
             }
             return mi
         }

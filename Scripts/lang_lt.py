@@ -576,5 +576,6 @@ T = {
 'Keepit could not save %@: the file would be larger than %d MB, the most it can read back. The previous file is kept, without the latest changes; remove some items (or set smaller limits in Settings) and it saves again.': '„Keepit“ nepavyko įrašyti %@: failas būtų didesnis nei %d MB – daugiausia, kiek jis gali nuskaityti. Ankstesnis failas paliktas be paskutinių pakeitimų; pašalinkite kelis elementus (arba sumažinkite ribas nustatymuose) ir įrašymas tęsis.',
 'Used to type %1$@ on %2$@, so Keepit leaves it free. Click the field and press %3$@ to use it anyway.': 'Naudojamas %1$@ įvesti išdėstyme „%2$@“, todėl „Keepit“ jo neužima. Spustelėkite laukelį ir paspauskite %3$@, jei vis tiek norite jį naudoti.',
 'Used to type %1$@ on %2$@. Keepit needs this shortcut; choose another to free %1$@.': 'Naudojamas %1$@ įvesti išdėstyme „%2$@“. „Keepit“ šio spartinimo klavišo reikia; pasirinkite kitą, kad atlaisvintumėte %1$@.',
+"macOS menus move the selection with ⌃V, ⌃N and ⌃P, so this combination can't lock Keepit while a menu is open. Choose another.": '„macOS“ meniu ⌃V, ⌃N ir ⌃P perkelia žymėjimą, todėl šiuo deriniu negalima užrakinti „Keepit“, kai meniu atidarytas. Pasirinkite kitą.',
 "Used to type %1$@ on %2$@. While Keepit runs, %1$@ can't be typed with it.": 'Naudojamas %1$@ įvesti išdėstyme „%2$@“. Kol „Keepit“ veikia, %1$@ juo įvesti nepavyks.',
 }

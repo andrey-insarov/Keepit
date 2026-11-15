@@ -576,5 +576,6 @@ T = {
 'Keepit could not save %@: the file would be larger than %d MB, the most it can read back. The previous file is kept, without the latest changes; remove some items (or set smaller limits in Settings) and it saves again.': 'Keepit 無法儲存 %@：檔案將超過 %d MB，即它能讀回的上限。先前的檔案已保留，但不含最近的變更；移除一些項目（或在設定中調低限制）後即可繼續儲存。',
 'Used to type %1$@ on %2$@, so Keepit leaves it free. Click the field and press %3$@ to use it anyway.': '在「%2$@」鍵盤配置中用於輸入 %1$@，因此 Keepit 不佔用此快速鍵。若仍要使用，請按一下該欄位並按下 %3$@。',
 'Used to type %1$@ on %2$@. Keepit needs this shortcut; choose another to free %1$@.': '在「%2$@」鍵盤配置中用於輸入 %1$@。Keepit 需要此快速鍵；請選擇另一個以便輸入 %1$@。',
+"macOS menus move the selection with ⌃V, ⌃N and ⌃P, so this combination can't lock Keepit while a menu is open. Choose another.": 'macOS 選單以 ⌃V、⌃N 和 ⌃P 移動選取項目，因此選單開啟時此組合鍵無法鎖定 Keepit。請選擇其他組合鍵。',
 "Used to type %1$@ on %2$@. While Keepit runs, %1$@ can't be typed with it.": '在「%2$@」鍵盤配置中用於輸入 %1$@。Keepit 執行時，無法用它輸入 %1$@。',
 }

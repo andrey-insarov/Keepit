@@ -4,11 +4,16 @@ import Foundation
 /// System-wide hot keys via Carbon RegisterEventHotKey — the macOS counterpart of RegisterHotKey().
 /// Carbon hot keys don't need the Accessibility permission (unlike CGEvent taps).
 final class HotKeyManager {
-    /// Return true to swallow hot keys for the moment (a menu of ours is tracking).
-    var isSuppressed: () -> Bool = { false }
     /// Tests: decide registrations without touching Carbon (the test process never holds a system hot key).
     var registrationOverrideForTesting: ((HotKey) -> Bool)?
     private var handlers: [UInt32: (run: () -> Void, immediate: Bool)] = [:]
+    private var hotKeysById: [UInt32: HotKey] = [:]
+    /// Ids whose Carbon registration is lifted while a menu of ours is tracking (H-9).
+    private var suspendedForMenu: Set<UInt32> = []
+    /// True between `suspendForMenu()` and `resumeAfterMenu()`.
+    private(set) var isSuspendedForMenu = false
+    /// Tests: how many registrations `resumeAfterMenu()` has redone.
+    private(set) var resumedCountForTesting = 0
     private var refs: [UInt32: EventHotKeyRef] = [:]
     private var eventHandler: EventHandlerRef?
     private var nextId: UInt32 = 1
@@ -32,9 +37,6 @@ final class HotKeyManager {
                 return OSStatus(eventNotHandledErr)
             }
             if let h = manager.handlers[hkID.id] {
-                // While one of our menus is open the same combination is also a menu key equivalent,
-                // which AppKit fires itself — don't run the action twice.
-                if manager.isSuppressed() { return noErr }
                 if h.immediate {
                     // Runs inside a modal loop too (modalPanel is a common mode): a main-queue block
                     // would wait for the block that opened the dialog to return (auditor's P2 on PR #28).
@@ -58,19 +60,34 @@ final class HotKeyManager {
     ///   wait for the main queue, so they never open a dialog over another.
     @discardableResult
     func register(_ hotKey: HotKey, immediate: Bool = false, handler: @escaping () -> Void) -> Bool {
-        if let override = registrationOverrideForTesting { return override(hotKey) }
         let id = nextId
         nextId += 1
+        // Registered while a menu of ours is tracking (a layout change re-registers): the registration
+        // waits for the menu to close, like the ones lifted for it. Carbon is not asked, so a refusal
+        // surfaces at `resumeAfterMenu()`, whose caller recomputes the statuses (H-9).
+        if isSuspendedForMenu {
+            handlers[id] = (handler, immediate)
+            hotKeysById[id] = hotKey
+            suspendedForMenu.insert(id)
+            return true
+        }
+        guard attempt(hotKey, id: id) else { return false }
+        handlers[id] = (handler, immediate)
+        hotKeysById[id] = hotKey
+        return true
+    }
+
+    /// One Carbon registration under `id` (or the test override's answer); the ref is kept on success.
+    private func attempt(_ hotKey: HotKey, id: UInt32) -> Bool {
+        if let override = registrationOverrideForTesting { return override(hotKey) }   // no Carbon in tests
         var ref: EventHotKeyRef?
         let hkID = EventHotKeyID(signature: Self.signature, id: id)
-        let status = RegisterEventHotKey(hotKey.keyCode, hotKey.modifiers, hkID,
-                                         GetApplicationEventTarget(), 0, &ref)
+        let status = RegisterEventHotKey(hotKey.keyCode, hotKey.modifiers, hkID, GetApplicationEventTarget(), 0, &ref)
         guard status == noErr, let r = ref else {
-            Log.system.error("RegisterEventHotKey failed for \(hotKey.displayString): \(status)")
+            Log.system.error("RegisterEventHotKey failed for \(hotKey.displayString, privacy: .public): \(status)")
             return false
         }
         refs[id] = r
-        handlers[id] = (handler, immediate)
         return true
     }
 
@@ -78,5 +95,45 @@ final class HotKeyManager {
         for (_, r) in refs { UnregisterEventHotKey(r) }
         refs.removeAll()
         handlers.removeAll()
+        hotKeysById.removeAll()
+        suspendedForMenu.removeAll()         // a menu still tracking keeps isSuspendedForMenu: new registrations wait too
+    }
+
+    /// A menu of ours is about to track (H-9). While it does, the window server would turn a registered
+    /// combination into a hot-key event that is not delivered before the menu closes, and the menu would
+    /// never see the key; so every registration is lifted for the duration and the keys reach the menu as
+    /// key events, which AppKit matches against the items' key equivalents. The lock key too: each menu
+    /// of ours carries its combination as an item, so a lock pressed over a menu locks at once (SEC05).
+    func suspendForMenu() {
+        guard !isSuspendedForMenu else { return }
+        isSuspendedForMenu = true
+        for id in handlers.keys {
+            suspendedForMenu.insert(id)
+            if let r = refs.removeValue(forKey: id) { UnregisterEventHotKey(r) }
+        }
+    }
+
+    /// The last menu of ours closed: the lifted registrations come back under their ids. Returns the
+    /// combinations Carbon refused this time (taken by another app meanwhile, or first asked for now);
+    /// the caller recomputes the statuses when the list is not empty, so no shortcut stays shown as
+    /// registered while it is not.
+    @discardableResult
+    func resumeAfterMenu() -> [HotKey] {
+        guard isSuspendedForMenu else { return [] }
+        isSuspendedForMenu = false
+        let ids = suspendedForMenu.sorted()
+        suspendedForMenu.removeAll()
+        var refused: [HotKey] = []
+        for id in ids {
+            guard let hk = hotKeysById[id], handlers[id] != nil else { continue }
+            resumedCountForTesting += 1
+            if !attempt(hk, id: id) {
+                Log.system.error("RegisterEventHotKey failed after a menu for \(hk.displayString, privacy: .public)")
+                handlers[id] = nil
+                hotKeysById[id] = nil
+                refused.append(hk)
+            }
+        }
+        return refused
     }
 }

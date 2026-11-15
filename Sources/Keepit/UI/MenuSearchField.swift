@@ -6,6 +6,9 @@ final class MenuSearchItem: NSMenuItem, NSSearchFieldDelegate {
     let field = NSSearchField(frame: NSRect(x: 0, y: 0, width: 280, height: 24))
     var onChange: ((String) -> Void)?
     var onReturn: (() -> Void)?
+    private var lastText = ""
+    /// The event being handled; tests hand in a key event of their own.
+    var currentEvent: () -> NSEvent? = { NSApp.currentEvent }
 
     init(width: CGFloat = 300) {
         super.init(title: "", action: nil, keyEquivalent: "")
@@ -15,22 +18,60 @@ final class MenuSearchItem: NSMenuItem, NSSearchFieldDelegate {
         field.sendsSearchStringImmediately = true
         field.sendsWholeSearchString = false
         field.delegate = self
-        field.focusRingType = .none
+        // The focus ring stays: it is the one visible sign that the field has focus, and with the field
+        // focused a key with modifiers is typed into it rather than matched by the menu (H-9).
         field.autoresizingMask = [.width]
         box.addSubview(field)
         view = box
     }
 
+    /// H-9: while the history menu tracks, the search field is usually the first responder, so a key with
+    /// modifiers is typed into it (⌃⌥U on German is the dead key "¨") instead of reaching the menu's key
+    /// equivalents. A key with ⌘, ⌃ or ⌥ that is the key equivalent of an enabled item of the menu
+    /// (submenus and hidden items included, as AppKit would match it) closes the menu and runs the item's
+    /// action once, on the next turn, as after a click. Bare letters and digits are never taken.
+    /// The key is the physical one: the items' equivalents are the ASCII-capable layout's characters for
+    /// their key codes (H-6), so the event's key code is read the same way (on Russian the U key arrives
+    /// as "г" and still names the UPPERCASE item). A key the layout table does not name falls back to
+    /// the event's own unmodified character, as AppKit matches it.
+    /// Not every key gets here: the menu takes ⌃⌥V as "page down" before the field sees it.
+    @discardableResult
+    func handleMenuKeyEquivalent(_ event: NSEvent) -> Bool {
+        guard event.type == .keyDown, let menu else { return false }
+        let mods = event.modifierFlags.intersection([.command, .control, .option, .shift])
+        guard !mods.isDisjoint(with: [.command, .control, .option]) else { return false }
+        guard let key = KeyCodes.menuCharacter(for: event.keyCode) ?? event.charactersIgnoringModifiers?.lowercased(), key.count == 1,
+              let item = MenuBuilder.item(forKeyEquivalent: key, flags: mods, in: [menu]),
+              let action = item.action else { return false }
+        Log.system.notice("menu open: the search field runs the matching item")
+        menu.cancelTracking()
+        DispatchQueue.main.async { NSApp.sendAction(action, to: item.target, from: item) }
+        return true
+    }
+
     required init(coder: NSCoder) { fatalError() }
 
+    /// Focus after the menu has its window. The menu's window is not key, so the insertion point would not
+    /// be drawn; it is asked to become key for the caret to show (a menu window may decline — the focus
+    /// ring is the sign that stays).
     func focus() {
         DispatchQueue.main.async { [weak self] in
-            guard let f = self?.field else { return }
-            f.window?.makeFirstResponder(f)
+            guard let f = self?.field, let w = f.window else { return }
+            w.makeFirstResponder(f)
+            if !w.isKeyWindow { w.makeKey() }
         }
     }
 
     func controlTextDidChange(_ obj: Notification) {
+        // Taking the text back below posts this notification again with the same current event: the
+        // text is then already the saved one, and nothing runs twice.
+        guard field.stringValue != lastText else { return }
+        // The key was typed into the field before anything else saw it (a dead key, an ⌥ character):
+        // if it names a menu item, the typed text is taken back and the item runs instead (H-9).
+        if let event = currentEvent(), event.type == .keyDown {
+            if handleMenuKeyEquivalent(event) { field.stringValue = lastText; return }
+        }
+        lastText = field.stringValue
         onChange?(field.stringValue)
     }
 
@@ -38,6 +79,9 @@ final class MenuSearchItem: NSMenuItem, NSSearchFieldDelegate {
         if sel == #selector(NSResponder.insertNewline(_:)) {
             onReturn?()
             return true
+        }
+        if let event = currentEvent(), event.type == .keyDown {
+            if handleMenuKeyEquivalent(event) { return true }
         }
         return false
     }

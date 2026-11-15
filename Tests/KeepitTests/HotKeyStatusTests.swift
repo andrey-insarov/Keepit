@@ -12,9 +12,13 @@ final class HotKeyStatusTests: XCTestCase {
     override func setUpWithError() throws {
         tmp = TempStorage()
         try FileManager.default.createDirectory(at: Storage.directory, withIntermediateDirectories: true)
+        KeyCodes.currentLayoutForTesting = { KeyCodes.usTable }     // labels from the US table, not the runner's layout
+        KeyCodes.invalidateLayoutCache()
     }
     override func tearDown() {
         tmp.restore()
+        KeyCodes.currentLayoutForTesting = nil
+        KeyCodes.invalidateLayoutCache()
     }
 
     // MARK: Fixtures

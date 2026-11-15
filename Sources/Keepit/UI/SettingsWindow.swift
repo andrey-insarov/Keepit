@@ -142,7 +142,19 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         show(pane: panes.first { $0.id.rawValue == remembered } ?? panes[0], animate: false)
         // The layouts changed (or a lock/unlock re-registered) while the window is open: the notes follow.
         NotificationCenter.default.addObserver(self, selector: #selector(hotKeysDidChange), name: AppDelegate.hotKeysDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardLayoutDidChange), name: KeyCodes.layoutDidChange, object: nil)
     }
+
+    /// The selected layout changed: every recorder shows its combination with the new layout's letters,
+    /// the latest-item hint names its keys afresh, and the notes quote the new combination (H-6).
+    @objc private func keyboardLayoutDidChange() {
+        for id in HotKeyID.allCases { recorder(for: id)?.needsDisplay = true }
+        let hint = Self.latestActionsHint()
+        latestHintButton?.toolTip = hint
+        latestHintButton?.identifier = NSUserInterfaceItemIdentifier(hint)
+        updateHotKeyNotes()
+    }
+    private var latestHintButton: NSButton?
     required init?(coder: NSCoder) { fatalError() }
 
     @objc private func hotKeysDidChange() { updateHotKeyNotes() }
@@ -211,8 +223,12 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         return [NSView(), field]
     }
 
+    /// The lock shortcut on ⌃ + V: refused by the recorder, and a stored one is named here (H-9, SEC05).
+    static var lockTakenByMenuText: String { L("macOS menus move the selection with ⌃V, ⌃N and ⌃P, so this combination can't lock Keepit while a menu is open. Choose another.") }
+
     /// What the note under a shortcut says, from the app's status for it. Empty when there is nothing to say.
     func hotKeyNoteText(_ id: HotKeyID) -> String {
+        if id == .lock, let hk = app.settings.hotKey(id), hk.isTakenByMenuTracking { return Self.lockTakenByMenuText }
         guard let st = app.hotKeyStatuses[id], case .needed(let layout, let types) = st.layout,
               let hk = app.settings.hotKey(id) else { return "" }
         switch st.registration {
@@ -451,6 +467,8 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         backup.cell(for: backupStatus)?.xPlacement = .trailing
 
         let resetHK = NSButton(title: L("Reset to Defaults"), target: self, action: #selector(resetShortcuts))
+        let latestHelp = help(recorder(latestHK, modifiersOnly: true, suffix: L("letter")), Self.latestActionsHint())
+        latestHintButton = (latestHelp as? NSStackView)?.views.compactMap { $0 as? NSButton }.first
         let shortcuts = grid([
             header(L("Menus")),
             row(L("History menu:"), recorder(historyHK, clear: false)), note(.history),
@@ -458,7 +476,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
             header(L("Paste without the menu")),
             row(L("Paste previous item:"), help(recorder(previousHK), L("Pastes the second item of the history straight away, without the menu — handy for swapping between the two latest clips. Click the field and press ⌫ to turn it off."))), note(.previous),
             row(L("Paste item by number:"), help(recorder(numbersHK, modifiersOnly: true), L("Modifiers that, together with 1–9 and 0, paste history item 1–10 directly. Click the field and press the modifiers with any digit; ⌫ turns it off."))),
-            row(L("Actions on the latest item:"), help(recorder(latestHK, modifiersOnly: true, suffix: L("letter")), Self.latestActionsHint())),
+            row(L("Actions on the latest item:"), latestHelp),
             header(L("Other")),
             row(L("Viewer:"), recorder(viewerHK)), note(.viewer),
             row(L("Settings:"), recorder(prefsHK)), note(.preferences),
@@ -939,6 +957,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
 
     /// Two of our own shortcuts on the same combination would silently shadow each other.
     private func conflict(in s: Settings) -> String? {
+        if let h = s.lockHotKey, h.isTakenByMenuTracking { return Self.lockTakenByMenuText }
         var all: [(String, HotKey)] = [(L("History menu"), s.historyHotKey), (L("Template menu"), s.templateHotKey)]
         if let h = s.previousHotKey { all.append((L("Paste previous item"), h)) }
         if let m = s.latestActionModifiers {
