@@ -661,4 +661,5 @@
 
 "Used to type %1$@ on %2$@, so Keepit leaves it free. Click the field and press %3$@ to use it anyway." = "Used to type %1$@ on %2$@, so Keepit leaves it free. Click the field and press %3$@ to use it anyway.";
 "Used to type %1$@ on %2$@. Keepit needs this shortcut; choose another to free %1$@." = "Used to type %1$@ on %2$@. Keepit needs this shortcut; choose another to free %1$@.";
+"macOS menus scroll with ⌃V, so this combination can't lock Keepit while a menu is open. Choose another." = "macOS menus scroll with ⌃V, so this combination can't lock Keepit while a menu is open. Choose another.";
 "Used to type %1$@ on %2$@. While Keepit runs, %1$@ can't be typed with it." = "Used to type %1$@ on %2$@. While Keepit runs, %1$@ can't be typed with it.";

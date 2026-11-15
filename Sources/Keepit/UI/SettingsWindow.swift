@@ -223,8 +223,12 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
         return [NSView(), field]
     }
 
+    /// The lock shortcut on ⌃ + V: refused by the recorder, and a stored one is named here (H-9, SEC05).
+    static var lockTakenByMenuText: String { L("macOS menus scroll with ⌃V, so this combination can't lock Keepit while a menu is open. Choose another.") }
+
     /// What the note under a shortcut says, from the app's status for it. Empty when there is nothing to say.
     func hotKeyNoteText(_ id: HotKeyID) -> String {
+        if id == .lock, let hk = app.settings.hotKey(id), hk.isTakenByMenuTracking { return Self.lockTakenByMenuText }
         guard let st = app.hotKeyStatuses[id], case .needed(let layout, let types) = st.layout,
               let hk = app.settings.hotKey(id) else { return "" }
         switch st.registration {
@@ -953,6 +957,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
 
     /// Two of our own shortcuts on the same combination would silently shadow each other.
     private func conflict(in s: Settings) -> String? {
+        if let h = s.lockHotKey, h.isTakenByMenuTracking { return Self.lockTakenByMenuText }
         var all: [(String, HotKey)] = [(L("History menu"), s.historyHotKey), (L("Template menu"), s.templateHotKey)]
         if let h = s.previousHotKey { all.append((L("Paste previous item"), h)) }
         if let m = s.latestActionModifiers {

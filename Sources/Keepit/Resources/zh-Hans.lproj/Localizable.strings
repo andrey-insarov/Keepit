@@ -576,4 +576,5 @@
 "Keepit could not save %@: the file would be larger than %d MB, the most it can read back. The previous file is kept, without the latest changes; remove some items (or set smaller limits in Settings) and it saves again." = "Keepit 无法保存 %@：文件将超过 %d MB，即它能读回的上限。之前的文件已保留，但不含最近的更改；删除一些项目（或在设置中调低限制）后即可继续保存。";
 "Used to type %1$@ on %2$@, so Keepit leaves it free. Click the field and press %3$@ to use it anyway." = "在“%2$@”键盘布局中用于输入 %1$@，因此 Keepit 不占用此快捷键。若仍要使用，请点按该栏并按下 %3$@。";
 "Used to type %1$@ on %2$@. Keepit needs this shortcut; choose another to free %1$@." = "在“%2$@”键盘布局中用于输入 %1$@。Keepit 需要此快捷键；请选择另一个以便输入 %1$@。";
+"macOS menus scroll with ⌃V, so this combination can't lock Keepit while a menu is open. Choose another." = "macOS 菜单用 ⌃V 翻页，因此菜单打开时该组合键无法锁定 Keepit。请选择其他组合键。";
 "Used to type %1$@ on %2$@. While Keepit runs, %1$@ can't be typed with it." = "在“%2$@”键盘布局中用于输入 %1$@。Keepit 运行时，无法用它输入 %1$@。";

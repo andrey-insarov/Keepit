@@ -13,6 +13,11 @@ struct HotKey: Codable, Equatable {
     static let optionM = option(kVK_ANSI_M)
     static let optionShiftV = HotKey(keyCode: UInt32(kVK_ANSI_V), modifiers: UInt32(optionKey | shiftKey))
     static func optionShift(_ key: Int) -> HotKey { HotKey(keyCode: UInt32(key), modifiers: UInt32(optionKey | shiftKey)) }
+    /// ⌃ + the V key, with any further modifiers: NSMenu takes it as "page down" while a menu tracks, before
+    /// any key equivalent or first responder of ours (H-9, observed on macOS 27). The lock shortcut must work
+    /// over an open menu (SEC05), so such a combination cannot be the lock shortcut: refused when recorded,
+    /// and a stored one is not registered and is named in the alert and under its row.
+    var isTakenByMenuTracking: Bool { keyCode == UInt32(kVK_ANSI_V) && modifiers & UInt32(controlKey) != 0 }
     /// Letters of the "actions on the latest item" hot keys (<mods> + letter), shared by the menu and the registry.
     enum LatestAction: CaseIterable {
         case plain, upper, lower, title, sentence, trim, singleLine, strikethrough, underline, wavy, undecorate, addToTemplates, delete

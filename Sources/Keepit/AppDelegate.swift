@@ -1346,7 +1346,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         family(.numbers, settings.numberPasteModifiers, HotKey.digitKeyCodes.enumerated().map { i, code in
             (HotKey(keyCode: code, modifiers: settings.numberPasteModifiers ?? 0), { [weak self] in self?.pasteItem(at: i, plainText: false) })
         })
-        single(.lock, immediate: true) { [weak self] in self?.lock() }
+        if let lockKey = settings.hotKey(.lock), lockKey.isTakenByMenuTracking {
+            // Over an open menu the lock is a key equivalent (H-9), and NSMenu keeps ⌃V for itself: this
+            // combination could not lock there, so it is not used at all and the user is told to change it.
+            statuses[.lock] = HotKeyStatus(layout: .notApplicable, registration: .failed)
+            failed.append(lockKey.displayString)
+            Log.system.error("lock hot key \(lockKey.displayString, privacy: .public) not registered: NSMenu takes ⌃V while a menu is open")
+        } else {
+            single(.lock, immediate: true) { [weak self] in self?.lock() }
+        }
         single(.viewer) { [weak self] in self?.openViewer() }
         single(.preferences) { [weak self] in self?.openPreferences() }
         single(.clearHistory) { [weak self] in self?.clearHistory() }

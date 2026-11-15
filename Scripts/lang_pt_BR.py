@@ -576,5 +576,6 @@ T = {
 'Keepit could not save %@: the file would be larger than %d MB, the most it can read back. The previous file is kept, without the latest changes; remove some items (or set smaller limits in Settings) and it saves again.': 'O Keepit não conseguiu salvar %@: o arquivo ultrapassaria %d MB, o máximo que ele consegue ler de volta. O arquivo anterior foi mantido, sem as últimas alterações; remova alguns itens (ou reduza os limites nos Ajustes) e ele voltará a salvar.',
 'Used to type %1$@ on %2$@, so Keepit leaves it free. Click the field and press %3$@ to use it anyway.': 'Serve para digitar %1$@ no leiaute “%2$@”, por isso o Keepit o deixa livre. Clique no campo e pressione %3$@ para usá-lo mesmo assim.',
 'Used to type %1$@ on %2$@. Keepit needs this shortcut; choose another to free %1$@.': 'Serve para digitar %1$@ no leiaute “%2$@”. O Keepit precisa deste atalho; escolha outro para liberar %1$@.',
+"macOS menus scroll with ⌃V, so this combination can't lock Keepit while a menu is open. Choose another.": 'Nos menus do macOS, ⌃V rola a lista, então esta combinação não pode bloquear o Keepit com um menu aberto. Escolha outra.',
 "Used to type %1$@ on %2$@. While Keepit runs, %1$@ can't be typed with it.": 'Serve para digitar %1$@ no leiaute “%2$@”. Enquanto o Keepit estiver aberto, não será possível digitar %1$@ com ele.',
 }

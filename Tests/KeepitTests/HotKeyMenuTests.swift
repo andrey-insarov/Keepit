@@ -239,6 +239,38 @@ final class HotKeyMenuTests: XCTestCase {
         XCTAssertGreaterThan(a.hotKeys.resumedCountForTesting, before, "the new registrations were resumed with the menu's close")
     }
 
+    // MARK: The lock shortcut on ⌃ + V is excluded (NSMenu keeps the key)
+
+    /// The auditor's scenario: the latest-item family off, the lock recorded as ⌃⌥V (no conflict then),
+    /// the history menu open, the combination pressed: NSMenu pages. So the combination is not used at
+    /// all: not registered, named in the alert, no hidden Lock item, a note under its row.
+    func testALockShortcutOnControlVIsNotRegisteredAndIsNamed() throws {
+        let a = AppDelegate()
+        a.loadStoresForTesting()
+        var reported: [String] = []
+        a.hotKeyFailureForTesting = { reported = $0 }
+        a.hotKeys.registrationOverrideForTesting = { _ in true }
+        a.layoutReaderForTesting = HotKeyStatusTests.Fake.latin(id: "us", name: "U.S.", lang: "en")
+        var s = a.settings
+        s.latestActionModifiers = nil
+        s.lockHotKey = HotKey(keyCode: UInt32(kVK_ANSI_V), modifiers: HotKey.controlOption)
+        a.apply(settings: s)
+        a.history.add(.text("latest"))
+
+        XCTAssertEqual(a.hotKeyStatuses[.lock]?.registration, .failed)
+        XCTAssertEqual(reported, ["⌃⌥V"])
+        XCTAssertNil(a.activeHotKey(.lock))
+        let popup = a.buildHistoryMenu(includeTemplates: true, includeApp: false)
+        a.addLockKeyEquivalent(to: popup)
+        XCTAssertNil(MenuBuilder.item(forKeyEquivalent: "v", flags: ctrlOpt, in: [popup]), "no item for a combination the menu would take")
+        XCTAssertEqual(SettingsWindowController(app: a).hotKeyNoteText(.lock), SettingsWindowController.lockTakenByMenuText)
+
+        XCTAssertTrue(HotKey(keyCode: UInt32(kVK_ANSI_V), modifiers: UInt32(controlKey | optionKey | shiftKey)).isTakenByMenuTracking, "any further modifiers")
+        XCTAssertTrue(HotKey(keyCode: UInt32(kVK_ANSI_V), modifiers: UInt32(controlKey)).isTakenByMenuTracking)
+        XCTAssertFalse(HotKey.optionShiftV.isTakenByMenuTracking, "no ⌃: typed, not paged")
+        XCTAssertFalse(HotKey(keyCode: UInt32(kVK_ANSI_U), modifiers: HotKey.controlOption).isTakenByMenuTracking)
+    }
+
     // MARK: A registration refused after a menu is not left shown as registered
 
     func testARefusalAtResumeRecomputesTheStatusesAndNamesTheCombination() throws {

@@ -576,5 +576,6 @@ T = {
 'Keepit could not save %@: the file would be larger than %d MB, the most it can read back. The previous file is kept, without the latest changes; remove some items (or set smaller limits in Settings) and it saves again.': 'Keepit nie mógł zapisać %@: plik przekroczyłby %d MB, czyli maksimum, jakie potrafi odczytać. Poprzedni plik został zachowany, bez ostatnich zmian; usuń kilka elementów (lub zmniejsz limity w Ustawieniach), a zapis zostanie wznowiony.',
 'Used to type %1$@ on %2$@, so Keepit leaves it free. Click the field and press %3$@ to use it anyway.': 'Służy do wpisywania %1$@ w układzie „%2$@”, dlatego Keepit go nie zajmuje. Kliknij pole i naciśnij %3$@, aby mimo to użyć tego skrótu.',
 'Used to type %1$@ on %2$@. Keepit needs this shortcut; choose another to free %1$@.': 'Służy do wpisywania %1$@ w układzie „%2$@”. Keepit potrzebuje tego skrótu; wybierz inny, aby uwolnić %1$@.',
+"macOS menus scroll with ⌃V, so this combination can't lock Keepit while a menu is open. Choose another.": 'W menu macOS ⌃V przewija listę, więc ta kombinacja nie może zablokować Keepit przy otwartym menu. Wybierz inną.',
 "Used to type %1$@ on %2$@. While Keepit runs, %1$@ can't be typed with it.": 'Służy do wpisywania %1$@ w układzie „%2$@”. Gdy Keepit działa, nie da się nim wpisać %1$@.',
 }
