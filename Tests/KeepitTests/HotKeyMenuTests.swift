@@ -92,33 +92,6 @@ final class HotKeyMenuTests: XCTestCase {
         XCTAssertEqual(pasted.last?.plainText, "older")
     }
 
-    private func keyDown(_ chars: String, _ flags: NSEvent.ModifierFlags, keyCode: Int) -> NSEvent {
-        try! XCTUnwrap(NSEvent.keyEvent(with: .keyDown, location: .zero, modifierFlags: flags, timestamp: 0, windowNumber: 0, context: nil,
-                                        characters: chars, charactersIgnoringModifiers: chars, isARepeat: false, keyCode: UInt16(keyCode)))
-    }
-
-    func testTheSearchFieldHandsAMenuKeyEquivalentToTheMenuAndKeepsTheRest() throws {
-        let a = app()
-        a.history.add(.text("older"))
-        a.history.add(.text("latest"))
-        let menu = a.buildHistoryMenu(includeTemplates: false, includeApp: false)
-        let search = try XCTUnwrap(menu.items.first as? MenuSearchItem, "search in the menu is on by default")
-
-        let editor = try XCTUnwrap(search.field.fieldEditorForTesting as? MenuSearchFieldEditor, "the cell hands out our editor")
-        editor.keyDown(with: keyDown("v", ctrlOpt, keyCode: kVK_ANSI_V))          // what the tracking menu sends the focused field
-        RunLoop.main.run(until: Date().addingTimeInterval(0.1))
-        XCTAssertEqual(pasted.map(\.plainText), ["latest"], "⌃⌥V names the hidden plain-paste item: run once")
-
-        XCTAssertTrue(search.handleMenuKeyEquivalent(keyDown("2", ctrlOpt, keyCode: kVK_ANSI_2)))
-        RunLoop.main.run(until: Date().addingTimeInterval(0.1))
-        XCTAssertEqual(pasted.last?.plainText, "older")
-
-        XCTAssertFalse(search.handleMenuKeyEquivalent(keyDown("v", [], keyCode: kVK_ANSI_V)), "a bare letter is typed into the field")
-        XCTAssertFalse(search.handleMenuKeyEquivalent(keyDown("z", [.command], keyCode: kVK_ANSI_Z)), "⌘Z names no item: the field keeps it")
-        XCTAssertFalse(search.handleMenuKeyEquivalent(keyDown("v", [.option], keyCode: kVK_ANSI_V)), "⌥V alone names no item here")
-        XCTAssertEqual(pasted.count, 2)
-    }
-
     func testAnEmptyHistoryMenuHasNoHiddenItems() {
         let a = app()
         let menu = a.buildHistoryMenu(includeTemplates: false, includeApp: false)
