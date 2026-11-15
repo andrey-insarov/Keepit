@@ -18,7 +18,8 @@ final class MenuSearchItem: NSMenuItem, NSSearchFieldDelegate {
         field.sendsSearchStringImmediately = true
         field.sendsWholeSearchString = false
         field.delegate = self
-        field.focusRingType = .none
+        // The focus ring stays: it is the one visible sign that the field has focus, and with the field
+        // focused a key with modifiers is typed into it rather than matched by the menu (H-9).
         field.autoresizingMask = [.width]
         box.addSubview(field)
         view = box
@@ -50,10 +51,14 @@ final class MenuSearchItem: NSMenuItem, NSSearchFieldDelegate {
 
     required init(coder: NSCoder) { fatalError() }
 
+    /// Focus after the menu has its window. The menu's window is not key, so the insertion point would not
+    /// be drawn; it is asked to become key for the caret to show (a menu window may decline — the focus
+    /// ring is the sign that stays).
     func focus() {
         DispatchQueue.main.async { [weak self] in
-            guard let f = self?.field else { return }
-            f.window?.makeFirstResponder(f)
+            guard let f = self?.field, let w = f.window else { return }
+            w.makeFirstResponder(f)
+            if !w.isKeyWindow { w.makeKey() }
         }
     }
 
