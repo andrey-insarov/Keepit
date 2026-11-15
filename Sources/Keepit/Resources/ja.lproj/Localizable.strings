@@ -576,5 +576,5 @@
 "Keepit could not save %@: the file would be larger than %d MB, the most it can read back. The previous file is kept, without the latest changes; remove some items (or set smaller limits in Settings) and it saves again." = "Keepit は %@ を保存できませんでした。ファイルが読み戻せる上限の %d MB を超えてしまうためです。以前のファイルは保持されますが、最新の変更は含まれません。項目をいくつか削除する（または設定で上限を下げる）と、再び保存されます。";
 "Used to type %1$@ on %2$@, so Keepit leaves it free. Click the field and press %3$@ to use it anyway." = "「%2$@」では %1$@ の入力に使うため、Keepit はこのショートカットを空けています。それでも使う場合はフィールドをクリックして %3$@ を押してください。";
 "Used to type %1$@ on %2$@. Keepit needs this shortcut; choose another to free %1$@." = "「%2$@」では %1$@ の入力に使います。Keepit にはこのショートカットが必要です。%1$@ を入力できるようにするには別の組み合わせを選んでください。";
-"macOS menus scroll with ⌃V, so this combination can't lock Keepit while a menu is open. Choose another." = "macOS のメニューでは ⌃V がスクロールに使われるため、メニューが開いている間はこの組み合わせで Keepit をロックできません。別の組み合わせを選んでください。";
+"macOS menus move the selection with ⌃V, ⌃N and ⌃P, so this combination can't lock Keepit while a menu is open. Choose another." = "macOS のメニューでは ⌃V、⌃N、⌃P が選択の移動に使われるため、メニューが開いている間はこの組み合わせで Keepit をロックできません。別の組み合わせを選んでください。";
 "Used to type %1$@ on %2$@. While Keepit runs, %1$@ can't be typed with it." = "「%2$@」では %1$@ の入力に使います。Keepit の実行中は、この組み合わせで %1$@ を入力できません。";

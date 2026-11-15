@@ -224,7 +224,7 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
     }
 
     /// The lock shortcut on ⌃ + V: refused by the recorder, and a stored one is named here (H-9, SEC05).
-    static var lockTakenByMenuText: String { L("macOS menus scroll with ⌃V, so this combination can't lock Keepit while a menu is open. Choose another.") }
+    static var lockTakenByMenuText: String { L("macOS menus move the selection with ⌃V, ⌃N and ⌃P, so this combination can't lock Keepit while a menu is open. Choose another.") }
 
     /// What the note under a shortcut says, from the app's status for it. Empty when there is nothing to say.
     func hotKeyNoteText(_ id: HotKeyID) -> String {

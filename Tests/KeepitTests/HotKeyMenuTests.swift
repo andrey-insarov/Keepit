@@ -267,6 +267,9 @@ final class HotKeyMenuTests: XCTestCase {
 
         XCTAssertTrue(HotKey(keyCode: UInt32(kVK_ANSI_V), modifiers: UInt32(controlKey | optionKey | shiftKey)).isTakenByMenuTracking, "any further modifiers")
         XCTAssertTrue(HotKey(keyCode: UInt32(kVK_ANSI_V), modifiers: UInt32(controlKey)).isTakenByMenuTracking)
+        XCTAssertTrue(HotKey(keyCode: UInt32(kVK_ANSI_N), modifiers: HotKey.controlOption).isTakenByMenuTracking, "⌃N moves down")
+        XCTAssertTrue(HotKey(keyCode: UInt32(kVK_ANSI_P), modifiers: UInt32(controlKey | cmdKey)).isTakenByMenuTracking, "⌃P moves up")
+        XCTAssertFalse(HotKey(keyCode: UInt32(kVK_ANSI_A), modifiers: HotKey.controlOption).isTakenByMenuTracking, "⌃A is not taken (observed)")
         XCTAssertFalse(HotKey.optionShiftV.isTakenByMenuTracking, "no ⌃: typed, not paged")
         XCTAssertFalse(HotKey(keyCode: UInt32(kVK_ANSI_U), modifiers: HotKey.controlOption).isTakenByMenuTracking)
     }
