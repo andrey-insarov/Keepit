@@ -1605,10 +1605,38 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         PreviewPanel.shared.schedule(clip, besides: frame)
     }
 
+    /// While a menu of ours tracks: a key that is the key equivalent of one of its items is taken here,
+    /// before the menu's own keyboard navigation can (⌃V is "page down" to a tracking menu, so ⌃⌥V never
+    /// reached the item) and before the search field's editor (H-9).
+    private var menuKeyMonitor: Any?
+    private weak var rootTrackingMenu: NSMenu?
+
+    private func installMenuKeyMonitor(for menu: NSMenu) {
+        rootTrackingMenu = menu
+        guard menuKeyMonitor == nil else { return }
+        menuKeyMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
+            guard let self, let root = self.rootTrackingMenu else { return event }
+            let mods = event.modifierFlags.intersection([.command, .control, .option, .shift])
+            guard !mods.isDisjoint(with: [.command, .control, .option]),
+                  let key = event.charactersIgnoringModifiers?.lowercased(), key.count == 1 else { return event }
+            Log.system.notice("menu open: key with modifiers reached the local monitor")
+            guard let item = MenuBuilder.item(forKeyEquivalent: key, flags: mods, in: [root]), let action = item.action else { return event }
+            Log.system.notice("menu open: the local monitor runs the matching item")
+            root.cancelTracking()
+            DispatchQueue.main.async { NSApp.sendAction(action, to: item.target, from: item) }
+            return nil
+        }
+    }
+    private func removeMenuKeyMonitor() {
+        if let m = menuKeyMonitor { NSEvent.removeMonitor(m) }
+        menuKeyMonitor = nil
+        rootTrackingMenu = nil
+    }
+
     func menuWillOpen(_ menu: NSMenu) {
         // While a menu of ours tracks, the keys must reach it, not Carbon (H-9): the registrations are
         // lifted at the first menu and restored when the last one has closed.
-        if openTrackedMenus.allObjects.isEmpty { hotKeys.suspendForMenu() }
+        if openTrackedMenus.allObjects.isEmpty { hotKeys.suspendForMenu(); installMenuKeyMonitor(for: menu) }
         openTrackedMenus.add(menu)
         if let s = historySearchItem, menu.items.first === s { s.focus() }
         if menu.items.contains(where: { $0.tag == MenuBuilder.historyTag }) {
@@ -1622,7 +1650,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     func menuDidClose(_ menu: NSMenu) {
         openTrackedMenus.remove(menu)
-        if openTrackedMenus.allObjects.isEmpty { hotKeys.resumeAfterMenu() }
+        if openTrackedMenus.allObjects.isEmpty { hotKeys.resumeAfterMenu(); removeMenuKeyMonitor() }
         if menu.title == Self.actionMenuTitle { ExtendedMenuWatch.shared.submenuClosed(); return }
         ExtendedMenuWatch.shared.stop(menu)
         PreviewPanel.shared.hide()
