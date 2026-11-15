@@ -133,6 +133,8 @@ final class HotKeyMenuTests: XCTestCase {
         event = try keyDown("¨", unmodified: "u", flags: ctrlOpt)
         search.controlTextDidChange(Notification(name: NSControl.textDidChangeNotification, object: search.field))
         XCTAssertEqual(search.field.stringValue, "la", "the typed character is taken back")
+        // Taking it back posts the notification once more, with the same current event (seen on a Mac).
+        search.controlTextDidChange(Notification(name: NSControl.textDidChangeNotification, object: search.field))
         XCTAssertEqual(queries, ["la"], "the filter never saw the character")
         nextTurn()
         XCTAssertEqual(pasted.map(\.plainText), ["LATEST"], "UPPERCASE of the latest item, once")
