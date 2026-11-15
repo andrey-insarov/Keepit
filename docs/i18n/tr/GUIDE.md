@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 39bab8b4f2a3de5ce61f2427db3f17e669b6f280 -->
+<!-- source: GUIDE.md 02a558b209b5788bd20956d5be4d5997d024d7d3 -->
 # Keepit kullanım kılavuzu
 
 Keepit, macOS için bir pano geçmişi ve şablon yöneticisidir. Menü çubuğunda durur, kopyaladığınız
@@ -351,7 +351,7 @@ harfi Keepit ekler. macOS ya da başka bir uygulama bir birleşimi zaten kullan�
 açılışta bildirir. *Görüntüleyici* ⌥E, *Ayarlar* ⌥S, *Geçmişi temizle* ⌥C, *Kaydı duraklat* ⌥P,
 *Keepit’i kilitle* ⌥L ve *Keepit’ten çık* ⌥Q her uygulamadan çalışır ve menüde komutlarının yanında
 gösterilir. ABD klavye düzeninde ⌥ + harf normalde özel bir karakter yazar (⌥S = ß, ⌥C = ç …);
-bunlardan birine ihtiyacınız varsa kısayolu başka bir tuşa taşıyın.
+bunlardan birine ihtiyacınız varsa kısayolu başka bir tuşa taşıyın. Keepit klavye düzenlerinizi de okur: Ayarlar’da ve menülerde gösterilen harfler, kullandığınız düzende o tuşların üzerindeki harflerdir; düzeninizin ihtiyaç duyduğu bir karakteri alacak varsayılan kısayolu (Almanca düzende ⌥L @ yazar, Lehçe düzende ł) Keepit açılışta boş bırakır — alanının altındaki not bunu söyler; yine de kullanmak için alana tıklayıp kombinasyona basın.
 
 ---
 
@@ -571,7 +571,7 @@ yapıştırmıyorsa kapatıp yeniden açın. Uygulama yeniden kurulduğunda macO
 
 **Bir kısayol tuşu hiçbir şey yapmıyor.** Onu başka bir uygulama ya da macOS kullanıyor; Keepit
 bunu açılışta bildirir. *Kısayollar* bölmesinde başka bir birleşim seçin. Rakam ve harflerle ⌃⌥,
-fabrika ayarlarındaki bir Mac’te boştadır.
+fabrika ayarlarındaki bir Mac’te boştadır. Ya da klavye düzenlerinizden birinde bir karakter yazdığı için Keepit’in boş bıraktığı varsayılan bir kısayoldur; *Kısayollar* panelinde alanının altındaki not bunu söyler. Başka bir kombinasyon seçin ya da yine de kullanmak için alana tıklayıp aynısına basın.
 
 **Menü yanlış yerde açılıyor.** İçinde bulunduğunuz uygulama metin imlecini bildirmiyor; bu yüzden
 menü fare imlecinin yanında açılıyor. Her zaman fare imlecini tercih ediyorsanız Genel bölmesindeki

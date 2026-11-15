@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 39bab8b4f2a3de5ce61f2427db3f17e669b6f280 -->
+<!-- source: GUIDE.md 02a558b209b5788bd20956d5be4d5997d024d7d3 -->
 # Guia do Keepit
 
 O Keepit é um gerenciador de histórico da área de transferência e de modelos para macOS. Ele fica na
@@ -344,7 +344,7 @@ acrescentado pelo Keepit. Se o macOS ou outro app já usa alguma combinação, o
 *Visualizador* ⌥E, *Ajustes* ⌥S, *Limpar histórico* ⌥C, *Pausar gravação* ⌥P, *Bloquear o Keepit* ⌥L
 e *Encerrar o Keepit* ⌥Q funcionam a partir de qualquer app e aparecem ao lado dos comandos no menu.
 No Mac, ⌥+letra normalmente digita um caractere especial (por exemplo, ⌥C = ç no layout americano); se
-você precisar de algum deles, mude o comando para outra tecla.
+você precisar de algum deles, mude o comando para outra tecla. O Keepit também lê os seus leiautes de teclado: as letras mostradas nos Ajustes e nos menus são as das teclas do leiaute que você está usando, e um atalho padrão que tomaria um caractere de que o seu leiaute precisa (⌥L digita @ no alemão e ł no polonês) fica livre quando o Keepit abre; a nota abaixo do campo diz isso. Clique no campo e pressione a combinação para usá-la mesmo assim.
 
 ---
 
@@ -561,7 +561,7 @@ desative e ative de novo: o macOS esquece a permissão quando o app é reinstala
 
 **Um atalho não faz nada.** Outro app ou o macOS já usa essa combinação. O Keepit avisa ao abrir.
 Escolha outra combinação no painel *Atalhos*. ⌃⌥ com dígitos e letras está livre em um Mac com a
-configuração de fábrica.
+configuração de fábrica. Ou é um atalho padrão que o Keepit deixou livre porque ele digita um caractere em um dos seus leiautes de teclado; a nota abaixo do campo no painel *Atalhos* diz isso. Escolha outra combinação, ou clique no campo e pressione a mesma para usá-la mesmo assim.
 
 **O menu abre no lugar errado.** O app em que você está não expõe o cursor de texto, então o menu
 recorre ao cursor do mouse. *Abrir o menu no cursor de texto quando possível*, no painel Geral,

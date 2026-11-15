@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 39bab8b4f2a3de5ce61f2427db3f17e669b6f280 -->
+<!-- source: GUIDE.md 02a558b209b5788bd20956d5be4d5997d024d7d3 -->
 # Keepit-handleiding
 
 Keepit beheert je klembordgeschiedenis en sjablonen op macOS. Het woont in de menubalk, onthoudt
@@ -357,7 +357,7 @@ een andere app een combinatie al in gebruik heeft, meldt Keepit dat bij de start
 *Instellingen* ⌥S, *Geschiedenis wissen* ⌥C, *Opname pauzeren* ⌥P, *Keepit vergrendelen* ⌥L en
 *Keepit stoppen* ⌥Q werken vanuit elke app en staan in het menu naast hun commando’s. Op een
 Amerikaanse toetsenbordindeling typt ⌥ + letter normaal gesproken een speciaal teken (⌥S = ß,
-⌥C = ç …); als je een daarvan nodig hebt, verplaats dan de sneltoets.
+⌥C = ç …); als je een daarvan nodig hebt, verplaats dan de sneltoets. Keepit leest ook je toetsenbordindelingen: de letters in Instellingen en in de menu’s zijn die op de toetsen van de indeling die je gebruikt, en een standaardsneltoets die een teken zou innemen dat je indeling nodig heeft (⌥L typt @ op de Duitse, ł op de Poolse) laat Keepit bij de start vrij — de notitie onder het veld zegt het; klik in het veld en druk op de combinatie om hem toch te gebruiken.
 
 ---
 
@@ -586,7 +586,7 @@ wanneer de app opnieuw wordt geïnstalleerd.
 
 **Een sneltoets doet niets.** Een andere app of macOS heeft hem in gebruik; Keepit meldt dat bij
 de start. Kies een andere combinatie in het paneel *Sneltoetsen*. ⌃⌥ met cijfers en letters is vrij
-op een Mac met standaardinstellingen.
+op een Mac met standaardinstellingen. Of het is een standaardsneltoets die Keepit vrij heeft gelaten omdat hij op een van je toetsenbordindelingen een teken typt; de notitie onder het veld in het paneel *Sneltoetsen* zegt het. Kies een andere combinatie, of klik in het veld en druk op dezelfde om hem toch te gebruiken.
 
 **Het menu opent op de verkeerde plek.** De app waarin je werkt, geeft zijn tekstcursor niet door,
 en daarom valt het menu terug op de muisaanwijzer. *Menu bij de tekstcursor openen indien

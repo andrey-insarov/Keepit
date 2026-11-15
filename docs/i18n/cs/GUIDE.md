@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 39bab8b4f2a3de5ce61f2427db3f17e669b6f280 -->
+<!-- source: GUIDE.md 02a558b209b5788bd20956d5be4d5997d024d7d3 -->
 # Příručka Keepit
 
 Keepit spravuje historii schránky a šablony v systému macOS. Sídlí v řádku nabídek, pamatuje si
@@ -340,7 +340,7 @@ macOS nebo jiná aplikace, Keepit to oznámí při spuštění. *Prohlížeč* �
 historii* ⌥C, *Pozastavit záznam* ⌥P, *Zamknout Keepit* ⌥L a *Ukončit Keepit* ⌥Q fungují
 z kterékoli aplikace a v nabídce jsou uvedené vedle svých příkazů. Na americkém rozložení klávesnice
 píše ⌥ + písmeno obvykle speciální znak (⌥S = ß, ⌥C = ç …); pokud některý z nich potřebujete,
-přesuňte zkratku jinam.
+přesuňte zkratku jinam. Keepit také čte vaše rozložení klávesnice: písmena zobrazená v Nastavení a v nabídkách jsou ta na klávesách rozložení, které právě používáte, a výchozí zkratku, která by zabrala znak potřebný ve vašem rozložení (⌥L píše @ v německém a ł v polském), Keepit při spuštění nechá volnou — říká to poznámka pod jejím polem; chcete-li ji přesto použít, klikněte do pole a stiskněte kombinaci.
 
 ---
 
@@ -550,7 +550,7 @@ a znovu zapněte. macOS udělené oprávnění zapomene, když se aplikace přei
 
 **Klávesová zkratka nic nedělá.** Vlastní ji jiná aplikace nebo macOS; Keepit to hlásí při spuštění.
 Vyberte jinou kombinaci na panelu *Zkratky*. Kombinace ⌃⌥ s číslicemi a písmeny je na Macu
-v továrním stavu volná.
+v továrním stavu volná. Nebo je to výchozí zkratka, kterou Keepit nechal volnou, protože v některém z vašich rozložení klávesnice píše znak; říká to poznámka pod jejím polem na panelu *Zkratky*. Vyberte jinou kombinaci, nebo klikněte do pole a stiskněte tutéž, chcete-li ji přesto použít.
 
 **Nabídka se otevírá na špatném místě.** Aplikace, ve které jste, nezpřístupňuje svůj textový
 kurzor, a nabídka se proto otevře u ukazatele myši. Volba *Otevírat nabídku u textového kurzoru,

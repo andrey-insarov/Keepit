@@ -360,7 +360,7 @@ brew install --cask andrey-insarov/keepit/keepit
 </table></div>
 <figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-history.png?v=e8444027" class="zoom" title="查看原始大小"><img src="/img/guide/prefs-history.png?v=e8444027" alt="“设置”→“历史记录”：数量上限和忽略的应用列表" width="636" height="504" loading="lazy"></a><figcaption>“设置”→“历史记录”：数量上限和忽略的应用列表</figcaption></figure>
 <figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-hotkeys.png?v=2f5f309f" class="zoom" title="查看原始大小"><img src="/img/guide/prefs-hotkeys.png?v=2f5f309f" alt="“设置”→“快捷键”" width="636" height="717" loading="lazy"></a><figcaption>“设置”→“快捷键”</figcaption></figure>
-<p>在<strong>快捷键</strong>面板中，点按一个输入栏，然后按下组合键。⌫ 可以关闭某个按键。已被其他命令占用的组合键不会被接受，原因会显示在输入栏下方。“恢复默认”会把 ⌥+字母这一组（⌥M 历史记录、⌥T 模板、⌥E 查看器、⌥S 设置、⌥C 清除历史记录、⌥P 暂停、⌥L 锁定、⌥Q 退出）以及 ⌥⇧V 和 ⌃⌥ 恢复原样。“按编号粘贴项目”和“对最新项的操作”只接受修饰键，数字或字母由 Keepit 补上。如果某个组合键已经被 macOS 或其他应用占用，Keepit 会在启动时告诉你。“查看器”⌥E、“设置”⌥S、“清除历史记录”⌥C、“暂停记录”⌥P、“锁定 Keepit”⌥L 和“退出 Keepit”⌥Q 在任何应用中都能使用，并显示在菜单中相应命令的旁边。快捷键是按键盘上的按键位置来定义的，所以使用中文输入法时 ⌥M 照样有效。在英文输入状态下，⌥+字母通常会输入特殊字符（⌥S = ß、⌥C = ç 等），如果你需要输入这些字符，请把命令换到别的按键上。</p>
+<p>在<strong>快捷键</strong>面板中，点按一个输入栏，然后按下组合键。⌫ 可以关闭某个按键。已被其他命令占用的组合键不会被接受，原因会显示在输入栏下方。“恢复默认”会把 ⌥+字母这一组（⌥M 历史记录、⌥T 模板、⌥E 查看器、⌥S 设置、⌥C 清除历史记录、⌥P 暂停、⌥L 锁定、⌥Q 退出）以及 ⌥⇧V 和 ⌃⌥ 恢复原样。“按编号粘贴项目”和“对最新项的操作”只接受修饰键，数字或字母由 Keepit 补上。如果某个组合键已经被 macOS 或其他应用占用，Keepit 会在启动时告诉你。“查看器”⌥E、“设置”⌥S、“清除历史记录”⌥C、“暂停记录”⌥P、“锁定 Keepit”⌥L 和“退出 Keepit”⌥Q 在任何应用中都能使用，并显示在菜单中相应命令的旁边。快捷键是按键盘上的按键位置来定义的，所以使用中文输入法时 ⌥M 照样有效。在英文输入状态下，⌥+字母通常会输入特殊字符（⌥S = ß、⌥C = ç 等），如果你需要输入这些字符，请把命令换到别的按键上。Keepit 还会读取你的键盘布局：设置和菜单中显示的字母就是你当前布局中这些按键上的字母；如果某个默认快捷键会占用你的布局需要的字符（德语布局中 ⌥L 输入 @，波兰语布局中输入 ł），Keepit 启动时会把它空出来，字段下方的说明会写明；要照旧使用，请点击字段并按下该组合键。</p>
 <hr />
 <h2 id="part-6-security">第 6 部分：安全</h2>
 <h3 id="password-and-encryption">密码和加密</h3>
@@ -449,7 +449,7 @@ brew install --cask andrey-insarov/keepit/keepit
 <h2 id="reference">参考</h2>
 <h3 id="troubleshooting">故障排除</h3>
 <p><strong>选择项目后没有粘贴任何内容。</strong> 缺少无障碍权限：请检查“系统设置”→“隐私与安全”→“无障碍”→“Keepit”。如果 Keepit 已经在列表中却仍然不粘贴，请先关闭再重新打开：重新安装应用后，macOS 会忘记之前的授权。</p>
-<p><strong>某个快捷键没有反应。</strong> 它被其他应用或 macOS 占用了，Keepit 在启动时会报告这一点。请在“快捷键”面板中换一个组合键。在一台没有额外配置的 Mac 上，⌃⌥ 加数字和字母的组合是空闲的。</p>
+<p><strong>某个快捷键没有反应。</strong> 它被其他应用或 macOS 占用了，Keepit 在启动时会报告这一点。请在“快捷键”面板中换一个组合键。在一台没有额外配置的 Mac 上，⌃⌥ 加数字和字母的组合是空闲的。也可能是 Keepit 空出来的默认快捷键，因为它在你的某个键盘布局中会输入字符；“快捷键”面板中该字段下方的说明会写明。请换一个组合键，或点击字段并按下同一组合键以照旧使用。</p>
 <p><strong>菜单打开的位置不对。</strong> 你正在使用的应用没有提供文本光标的位置，所以菜单改为在鼠标指针处打开。如果你希望菜单始终在指针处打开，可以关闭“通用”面板中的“尽可能在文本光标处打开菜单”。</p>
 <p><strong>我复制的某些内容不见了。</strong> 来源应用标记为隐藏的内容不会被记录。当前台是密码管理器（内置列表）或你的忽略列表中的应用时所做的复制也不会被记录，包括你刚刚从中切换出来的那个应用。请参阅“设置”→“历史记录”和<a href="/security#what-is-not-recorded">安全说明页面</a>（英文）。</p>
 <p><strong>没有提供 Touch ID 选项。</strong> 目前没有可用的 Touch ID 传感器（屏幕合上了，也没有带 Touch ID 的键盘）。Keepit 会保留这项设置，一旦有传感器可用，就会请求指纹。</p>

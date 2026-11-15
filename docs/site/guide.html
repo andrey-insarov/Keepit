@@ -431,7 +431,7 @@ that explains it.</p>
 combination already used by another command is refused and the reason is shown under the fields; <em>Reset to
 Defaults</em> brings back the ⌥-letter set (⌥M history, ⌥T templates, ⌥E Viewer, ⌥S Settings, ⌥C Clear History, ⌥P pause, ⌥L lock, ⌥Q quit), ⌥⇧V and ⌃⌥. <em>Paste item by number</em> and <em>Actions on the latest item</em>
 take only modifiers — the digit or letter is added by Keepit. If macOS or another app already owns one, Keepit says so when it
-starts. <em>Viewer</em> ⌥E, <em>Settings</em> ⌥S, <em>Clear History</em> ⌥C, <em>Pause recording</em> ⌥P, <em>Lock Keepit</em> ⌥L and <em>Quit Keepit</em> ⌥Q work from any app and are shown next to their commands in the menu. On a US layout ⌥+letter normally types a special character (⌥S = ß, ⌥C = ç …); if you need one of those, move the key.</p>
+starts. <em>Viewer</em> ⌥E, <em>Settings</em> ⌥S, <em>Clear History</em> ⌥C, <em>Pause recording</em> ⌥P, <em>Lock Keepit</em> ⌥L and <em>Quit Keepit</em> ⌥Q work from any app and are shown next to their commands in the menu. On a US layout ⌥+letter normally types a special character (⌥S = ß, ⌥C = ç …); if you need one of those, move the key. Keepit also reads your keyboard layouts: the letters shown in Settings and in the menus are the ones on the keys of the layout you are using, and a default that would take a character your layout needs (⌥L types @ on German, ł on Polish) is left free when Keepit starts — the note under its field says so; click the field and press the combination to use it anyway.</p>
 <hr />
 <h2 id="part-6-security">Part 6 — Security</h2>
 <h3 id="password-and-encryption">Password and encryption</h3>
@@ -616,8 +616,10 @@ forgets the cask.</p>
 <p><strong>Nothing is pasted after choosing an item.</strong> Accessibility is missing: <em>System Settings → Privacy &amp;
 Security → Accessibility → Keepit</em>. If Keepit is listed but still does not paste, switch it off and
 on again — macOS forgets the grant when the app is reinstalled.</p>
-<p><strong>A hot key does nothing.</strong> Another app or macOS owns it; Keepit reports that at launch. Pick a
-different combination on the <em>Shortcuts</em> pane. ⌃⌥ with digits and letters is free on a stock Mac.</p>
+<p><strong>A hot key does nothing.</strong> Another app or macOS owns it; Keepit reports that at launch. Or it is a
+default Keepit left free because it types a character on one of your keyboard layouts; the note under
+its field on the <em>Shortcuts</em> pane says so. Pick a different combination, or click the field and press
+the same one to use it anyway. ⌃⌥ with digits and letters is free on a stock Mac.</p>
 <p><strong>The menu opens in the wrong place.</strong> The app you are in does not expose its text cursor, so the
 menu falls back to the mouse pointer. <em>Open menu at text cursor</em> on the General tab turns the
 lookup off if you prefer the pointer always.</p>

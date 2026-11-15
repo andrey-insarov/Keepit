@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 39bab8b4f2a3de5ce61f2427db3f17e669b6f280 -->
+<!-- source: GUIDE.md 02a558b209b5788bd20956d5be4d5997d024d7d3 -->
 # Guida di Keepit
 
 Keepit gestisce la cronologia degli appunti e i modelli su macOS. Vive nella barra dei menu,
@@ -357,7 +357,7 @@ combinazione, Keepit lo segnala all’avvio. *Visualizzatore* ⌥E, *Impostazion
 cronologia* ⌥C, *Sospendi la registrazione* ⌥P, *Blocca Keepit* ⌥L ed *Esci da Keepit* ⌥Q
 funzionano da qualsiasi app e sono mostrati nel menu accanto ai rispettivi comandi. Con il layout
 statunitense ⌥ + lettera di solito scrive un carattere speciale (⌥S = ß, ⌥C = ç …); se te ne serve
-uno, sposta il tasto rapido.
+uno, sposta il tasto rapido. Keepit legge anche le tue disposizioni di tastiera: le lettere mostrate nelle Impostazioni e nei menu sono quelle dei tasti della disposizione che stai usando, e un tasto rapido predefinito che toglierebbe un carattere necessario alla tua disposizione (⌥L scrive @ in quella tedesca, ł in quella polacca) viene lasciato libero all’avvio di Keepit — lo dice la nota sotto il suo campo; fai clic nel campo e premi la combinazione per usarlo comunque.
 
 ---
 
@@ -588,7 +588,7 @@ viene reinstallata.
 
 **Un tasto rapido non fa nulla.** Appartiene a un’altra app o a macOS; Keepit lo segnala
 all’avvio. Scegli un’altra combinazione nel pannello *Abbreviazioni*. ⌃⌥ con cifre e lettere
-è libero su un Mac con le impostazioni di fabbrica.
+è libero su un Mac con le impostazioni di fabbrica. Oppure è un tasto rapido predefinito che Keepit ha lasciato libero perché scrive un carattere in una delle tue disposizioni di tastiera; lo dice la nota sotto il suo campo nel pannello *Tasti rapidi*. Scegli un’altra combinazione, o fai clic nel campo e premi la stessa per usarla comunque.
 
 **Il menu si apre nel posto sbagliato.** L’app in cui ti trovi non espone il suo cursore di testo,
 quindi il menu ripiega sul puntatore del mouse. *Apri il menu al cursore di testo quando

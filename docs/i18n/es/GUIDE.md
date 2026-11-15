@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 39bab8b4f2a3de5ce61f2427db3f17e669b6f280 -->
+<!-- source: GUIDE.md 02a558b209b5788bd20956d5be4d5997d024d7d3 -->
 # Guía de Keepit
 
 Keepit es un gestor del historial del portapapeles y de plantillas para macOS. Vive en la barra de
@@ -349,7 +349,7 @@ los añade Keepit. Si macOS u otra app ya usa alguna combinación, Keepit lo avi
 ⌥E, *Ajustes* ⌥S, *Borrar historial* ⌥C, *Pausar la grabación* ⌥P, *Bloquear Keepit* ⌥L y *Salir de
 Keepit* ⌥Q funcionan desde cualquier app y aparecen junto a sus comandos en el menú. En el Mac,
 ⌥+letra suele escribir un carácter especial (por ejemplo ⌥C = © o ⌥E = € en el teclado español); si
-necesitas alguno, mueve el comando a otra tecla.
+necesitas alguno, mueve el comando a otra tecla. Keepit también lee tus distribuciones de teclado: las letras que ves en Ajustes y en los menús son las de las teclas de la distribución que estás usando, y un atajo predeterminado que quitaría un carácter que tu distribución necesita (⌥L escribe @ en la alemana y ł en la polaca) se deja libre al arrancar Keepit; la nota bajo su campo lo dice; haz clic en el campo y pulsa la combinación para usarla de todos modos.
 
 ---
 
@@ -568,7 +568,7 @@ Sistema → Privacidad y seguridad → Accesibilidad → Keepit*. Si Keepit apar
 sin pegar, desactívalo y vuelve a activarlo: macOS olvida el permiso cuando se reinstala la app.
 
 **Un atajo no hace nada.** Lo está usando otra app o macOS. Keepit lo avisa al arrancar. Elige otra
-combinación en el panel *Atajos*. ⌃⌥ con dígitos y letras está libre en un Mac recién configurado.
+combinación en el panel *Atajos*. ⌃⌥ con dígitos y letras está libre en un Mac recién configurado. O es un atajo predeterminado que Keepit dejó libre porque escribe un carácter en una de tus distribuciones de teclado; la nota bajo su campo en el panel *Atajos* lo dice. Elige otra combinación, o haz clic en el campo y pulsa la misma para usarla de todos modos.
 
 **El menú se abre en un sitio equivocado.** La app en la que estás no expone su cursor de texto, así
 que el menú recurre al puntero del ratón. *Abrir el menú en el cursor de texto cuando sea posible*, en

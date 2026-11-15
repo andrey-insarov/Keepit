@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 39bab8b4f2a3de5ce61f2427db3f17e669b6f280 -->
+<!-- source: GUIDE.md 02a558b209b5788bd20956d5be4d5997d024d7d3 -->
 # Guide de Keepit
 
 Keepit est un gestionnaire d’historique du presse-papiers et de modèles pour macOS. Il s’installe dans
@@ -357,10 +357,10 @@ des touches de modification, le chiffre ou la lettre étant ajouté par Keepit. 
 app utilise déjà une combinaison, Keepit le signale au démarrage. *Visionneuse* ⌥E, *Réglages* ⌥S,
 *Effacer l’historique* ⌥C, *Suspendre l’enregistrement* ⌥P, *Verrouiller Keepit* ⌥L et *Quitter
 Keepit* ⌥Q fonctionnent depuis n’importe quelle app et sont rappelés à côté de leurs commandes dans le
-menu. Les touches sont définies par leur position physique sur le clavier, selon la disposition
-américaine : sur un clavier AZERTY, ⌥M correspond donc à la touche située à droite du N. Sur un Mac,
+menu. Les touches sont définies par leur position physique sur le clavier : sur un clavier AZERTY, le
+raccourci de l’historique est la touche à droite du N et s’affiche donc ⌥,. Sur un Mac,
 ⌥+lettre saisit normalement un caractère spécial (© ou € par exemple) ; si vous avez besoin de
-l’un d’eux, déplacez la commande sur une autre touche.
+l’un d’eux, déplacez la commande sur une autre touche. Keepit lit aussi vos dispositions de clavier : les lettres affichées dans les Réglages et dans les menus sont celles des touches de la disposition que vous utilisez, et un raccourci par défaut qui prendrait un caractère dont votre disposition a besoin (⌥L saisit @ en allemand, ł en polonais) est laissé libre au lancement de Keepit — la note sous son champ le dit ; cliquez dans le champ et appuyez sur la combinaison pour l’utiliser malgré tout.
 
 ---
 
@@ -593,7 +593,7 @@ réinstallée.
 
 **Un raccourci ne fait rien.** Une autre app ou macOS l’utilise déjà. Keepit le signale au lancement.
 Choisissez une autre combinaison dans la sous-fenêtre *Raccourcis*. ⌃⌥ avec des chiffres et des lettres
-est libre sur un Mac dans sa configuration d’origine.
+est libre sur un Mac dans sa configuration d’origine. Ou c’est un raccourci par défaut que Keepit a laissé libre parce qu’il saisit un caractère dans l’une de vos dispositions de clavier ; la note sous son champ dans le panneau *Raccourcis* le dit. Choisissez une autre combinaison, ou cliquez dans le champ et appuyez sur la même pour l’utiliser malgré tout.
 
 **Le menu s’ouvre au mauvais endroit.** L’app dans laquelle vous êtes n’expose pas son curseur de
 texte, le menu se rabat donc sur le pointeur de la souris. *Ouvrir le menu au curseur de texte si

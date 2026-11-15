@@ -350,7 +350,7 @@ brew install --cask andrey-insarov/keepit/keepit
 </tr>
 <tr>
 <td><strong>備份</strong></td>
-<td>自動備份（標題旁有狀態列）：「自動備份到資料夾」、檔案中的 Mac 名稱、資料夾、保留幾份副本 · 手動備份：「立即備份」、「儲存為封存檔…」· 還原：「還原…」，見<a href="#backup">備份</a></td>
+<td>自動備份（標題旁有狀態列）：「自動備份到檔案夾」、檔案中的 Mac 名稱、資料夾、保留幾份副本 · 手動備份：「立即備份」、「儲存為封存檔…」· 還原：「還原…」，見<a href="#backup">備份</a></td>
 </tr>
 <tr>
 <td><strong>進階</strong></td>
@@ -360,7 +360,7 @@ brew install --cask andrey-insarov/keepit/keepit
 </table></div>
 <figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-history.png?v=e8444027" class="zoom" title="以原始大小打開"><img src="/img/guide/prefs-history.png?v=e8444027" alt="「設定」→「歷史記錄」：上限和忽略的 App 列表" width="636" height="504" loading="lazy"></a><figcaption>「設定」→「歷史記錄」：上限和忽略的 App 列表</figcaption></figure>
 <figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-hotkeys.png?v=2f5f309f" class="zoom" title="以原始大小打開"><img src="/img/guide/prefs-hotkeys.png?v=2f5f309f" alt="「設定」→「快速鍵」" width="636" height="717" loading="lazy"></a><figcaption>「設定」→「快速鍵」</figcaption></figure>
-<p>在<strong>快速鍵</strong>面板中按一下欄位，然後按下一組按鍵；⌫ 會停用該按鍵；已被其他指令使用的組合會被拒絕，原因會顯示在欄位下方；「重設為預設值」會恢復 ⌥ + 字母這一組（⌥M 歷史記錄、⌥T 範本、⌥E 檢視器、⌥S 設定、⌥C 清除歷史記錄、⌥P 暫停、⌥L 鎖定、⌥Q 結束），以及 ⌥⇧V 和 ⌃⌥。「依編號貼上項目」和「對最新項目的動作」只接受變更鍵，數字或字母由 Keepit 加上。如果 macOS 或其他 App 已經佔用了某組按鍵，Keepit 會在啟動時告知。「檢視器」⌥E、「設定」⌥S、「清除歷史記錄」⌥C、「暫停記錄」⌥P、「鎖定 Keepit」⌥L 和「結束 Keepit」⌥Q 在任何 App 中都有效，並顯示在選單中各指令的旁邊。在美式鍵盤配置上，⌥ + 字母通常會輸入特殊字元（⌥S = ß、⌥C = ç …）；如果你需要其中某個字元，請把快速鍵改到別的按鍵上。</p>
+<p>在<strong>快速鍵</strong>面板中按一下欄位，然後按下一組按鍵；⌫ 會停用該按鍵；已被其他指令使用的組合會被拒絕，原因會顯示在欄位下方；「重設為預設值」會恢復 ⌥ + 字母這一組（⌥M 歷史記錄、⌥T 範本、⌥E 檢視器、⌥S 設定、⌥C 清除歷史記錄、⌥P 暫停、⌥L 鎖定、⌥Q 結束），以及 ⌥⇧V 和 ⌃⌥。「依編號貼上項目」和「對最新項目的動作」只接受變更鍵，數字或字母由 Keepit 加上。如果 macOS 或其他 App 已經佔用了某組按鍵，Keepit 會在啟動時告知。「檢視器」⌥E、「設定」⌥S、「清除歷史記錄」⌥C、「暫停記錄」⌥P、「鎖定 Keepit」⌥L 和「結束 Keepit」⌥Q 在任何 App 中都有效，並顯示在選單中各指令的旁邊。在美式鍵盤配置上，⌥ + 字母通常會輸入特殊字元（⌥S = ß、⌥C = ç …）；如果你需要其中某個字元，請把快速鍵改到別的按鍵上。Keepit 也會讀取你的鍵盤配置：設定和選單中顯示的字母就是你目前配置中這些按鍵上的字母；如果某個預設快速鍵會佔用你的配置所需的字元（德文配置中 ⌥L 會輸入 @，波蘭文配置中會輸入 ł），Keepit 啟動時會把它空出來，欄位下方的註記會說明；若仍要使用，請按一下欄位並按下該組合鍵。</p>
 <hr />
 <h2 id="part-6-security">第 6 部分：安全性</h2>
 <h3 id="password-and-encryption">密碼與加密</h3>
@@ -379,13 +379,13 @@ brew install --cask andrey-insarov/keepit/keepit
 <h3 id="backup">備份</h3>
 <p>Keepit 可以在你選擇的資料夾（iCloud 雲碟、Dropbox、Google 雲端硬碟、外接磁碟、NAS）中保存一份歷史記錄和範本的加密副本，並在內容有變更時寫入新的副本。Keepit 沒有伺服器：資料夾是你自己的。資料夾背後的服務供應商看得到的是加密檔案、檔案大小，以及一小段未加密的標頭（檔案在何時、由哪個版本的 Keepit 寫入，密鑰如何衍生，隨機識別碼，以及只有在你開啟該選項時才會包含的 Mac 名稱）；<a href="/security#backups">安全性頁面</a>（英文）逐一列出了每個欄位。</p>
 <figure class="shot" style="max-width:636px"><a href="/img/guide/prefs-backup.png?v=cba8511b" class="zoom" title="以原始大小打開"><img src="/img/guide/prefs-backup.png?v=cba8511b" alt="「設定」→「備份」：自動備份、手動備份、還原" width="636" height="527" loading="lazy"></a><figcaption>「設定」→「備份」：自動備份、手動備份、還原</figcaption></figure>
-<p><strong>開啟。</strong> 「設定」→「備份」→「自動備份到資料夾」，然後按「選擇…」挑選資料夾（選擇視窗會在 iCloud 雲碟中打開）。自動備份需要先在「設定」→「安全性」中啟用密碼保護：每份副本都以從你的保險庫密鑰衍生出的密鑰封存，所以在這部 Mac 或任何其他 Mac 上，都能用你的 Keepit 密碼或復原短語打開，不需要另外設定什麼。沒有設定密碼時，這個註記框會停用並說明原因。</p>
+<p><strong>開啟。</strong> 「設定」→「備份」→「自動備份到檔案夾」，然後按「選擇…」挑選資料夾（選擇視窗會在 iCloud 雲碟中打開）。自動備份需要先在「設定」→「安全性」中啟用密碼保護：每份副本都以從你的保險庫密鑰衍生出的密鑰封存，所以在這部 Mac 或任何其他 Mac 上，都能用你的 Keepit 密碼或復原短語打開，不需要另外設定什麼。沒有設定密碼時，這個註記框會停用並說明原因。</p>
 <p><strong>接下來會發生什麼：排程。</strong> 在最後一次變更後大約五分鐘（而且只要 Keepit 在執行，每天至少一次），Keepit 會把名為 <code>Keepit-&lt;日期和時間&gt;-&lt;安裝&gt;-&lt;id&gt;.keepit</code> 的檔案寫入資料夾，再讀回來檢查，之後才會刪除自己的副本中超出「保留最近」數量（預設 10，範圍 1–100）的最舊副本。每份副本本身都是完整的，不是增量備份，所以你只需要一個檔案。其他 Mac 製作的副本，或你自己放進去的檔案，絕對不會被動到：共用一個資料夾的兩部 Mac 會寫入兩個各自獨立的系列。「自動備份」標題旁的狀態列會顯示最後一份副本的時間和大小，或上一次嘗試失敗的原因。Keepit 鎖定時什麼都不會發生；「立即備份」（位於「手動備份」下方）不會等待靜止期。</p>
 <p><strong>包含本機名稱</strong>（預設關閉）會把電腦名稱放進每個檔案的未加密標頭，這樣同一個資料夾中的兩個系列在 Finder 裡就很容易分辨。儲存服務供應商看得到這個名稱，這就是它設為選用的原因。</p>
 <p><strong>還原。</strong> 「還原…」會在你解鎖之後打開一份備份（這部 Mac 的、另一部 Mac 的，或匯出的檔案）：解鎖時使用製作該備份的 Mac 的密碼，或那部 Mac 在設定密碼時顯示的復原短語（密碼對話框中的「復原存取…」）。預覽會顯示檔案是在何時、何處製作的，以及包含多少個項目。接著有兩種選擇：</p>
 <figure class="shot" style="max-width:636px"><a href="/img/guide/restore-preview.png?v=8f48d34e" class="zoom" title="以原始大小打開"><img src="/img/guide/restore-preview.png?v=8f48d34e" alt="還原預覽：檔案在何時、由哪個版本的 Keepit 寫入，包含什麼內容，合併或取代" width="636" height="651" loading="lazy"></a><figcaption>還原預覽：檔案在何時、由哪個版本的 Keepit 寫入，包含什麼內容，合併或取代</figcaption></figure>
 <ul>
-<li>「合併」會加入目前還沒有的內容：歷史記錄項目依內容判斷，備份中的範本則放進一個名為「輸入 &lt;日期&gt;」的新檔案夾，不帶它們的快速鍵。這樣你就能清楚看到哪些內容來自備份，並加以搬移或刪除。你原有的資料不會被覆寫。</li>
+<li>「合併」會加入目前還沒有的內容：歷史記錄項目依內容判斷，備份中的範本則放進一個名為「已匯入 &lt;日期&gt;」的新檔案夾，不帶它們的快速鍵。這樣你就能清楚看到哪些內容來自備份，並加以搬移或刪除。你原有的資料不會被覆寫。</li>
 <li>「取代」會捨棄目前的歷史記錄和範本，改用備份中的內容。在這之前，Keepit 會把你目前資料的副本（<code>Keepit-before-restore-…</code>）寫入備份資料夾，或你挑選的資料夾；如果這份副本無法寫入，取代就不會開始。如果 Keepit 還沒有設定密碼，就會像「儲存為封存檔…」一樣，要求你為這份副本設定一個密碼。</li>
 </ul>
 <p>「同時回復偏好設定」會從備份帶回快速鍵、上限和選項；代表對某一部 Mac 的信任的那些設定（Touch ID、URL 自動化及其信任的 App、備份資料夾本身）一律保持這部 Mac 上的現狀。如果備份中的歷史記錄超過這部 Mac 的上限所允許的範圍，Keepit 會在你確認之前告訴你能放進多少。</p>
@@ -449,7 +449,7 @@ brew install --cask andrey-insarov/keepit/keepit
 <h2 id="reference">參考資料</h2>
 <h3 id="troubleshooting">疑難排解</h3>
 <p><strong>選擇項目後沒有貼上任何內容。</strong> 缺少「輔助使用」權限：「系統設定」→「隱私權與安全性」→「輔助使用」→ Keepit。如果 Keepit 已經在列表中卻仍然無法貼上，請先關閉再重新開啟。重新安裝 App 後，macOS 會忘記先前授予的權限。</p>
-<p><strong>快速鍵沒有反應。</strong> 它被其他 App 或 macOS 佔用了；Keepit 會在啟動時回報這種情況。請在「快速鍵」面板中選擇另一組按鍵。在原廠設定的 Mac 上，⌃⌥ 搭配數字和字母是沒有被佔用的。</p>
+<p><strong>快速鍵沒有反應。</strong> 它被其他 App 或 macOS 佔用了；Keepit 會在啟動時回報這種情況。請在「快速鍵」面板中選擇另一組按鍵。在原廠設定的 Mac 上，⌃⌥ 搭配數字和字母是沒有被佔用的。也可能是 Keepit 空出來的預設快速鍵，因為它在你的某個鍵盤配置中會輸入字元；「快速鍵」面板中該欄位下方的註記會說明。請換一組按鍵，或按一下欄位並按下同一組合鍵以照舊使用。</p>
 <p><strong>選單在錯誤的位置打開。</strong> 你所在的 App 沒有公開它的文字游標位置，所以選單改在滑鼠指標處打開。如果你希望一律使用指標位置，可以關閉「一般」面板中的「盡可能在文字游標處打開選單」來停用游標搜尋。</p>
 <p><strong>我拷貝的某些內容不見了。</strong> 來源 App 標示為隱藏的內容不會被記錄；當密碼管理工具（內建列表）或你的忽略列表中的 App 位於最前面時所拷貝的內容也不會被記錄，這也包括你剛剛才切換離開的那個 App。請參閱「設定」→「歷史記錄」和<a href="/security#what-is-not-recorded">安全性頁面</a>（英文）。</p>
 <p><strong>沒有出現 Touch ID 選項。</strong> 目前沒有可用的 Touch ID 感測器（螢幕已闔上，也沒有配備 Touch ID 的鍵盤）。Keepit 會保留這項設定，一旦有感測器可用，就會要求你提供指紋。</p>

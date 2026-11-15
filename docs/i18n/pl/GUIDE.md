@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 39bab8b4f2a3de5ce61f2427db3f17e669b6f280 -->
+<!-- source: GUIDE.md 02a558b209b5788bd20956d5be4d5997d024d7d3 -->
 # Podręcznik Keepit
 
 Keepit zarządza historią schowka i szablonami w systemie macOS. Mieszka na pasku menu, pamięta
@@ -346,7 +346,7 @@ Keepit. Jeśli któryś skrót należy już do macOS albo innej aplikacji, Keepi
 starcie. *Przeglądarka* ⌥E, *Ustawienia* ⌥S, *Wyczyść historię* ⌥C, *Wstrzymaj nagrywanie* ⌥P,
 *Zablokuj Keepit* ⌥L i *Zakończ Keepit* ⌥Q działają z dowolnej aplikacji i są pokazane w menu obok
 swoich poleceń. W układzie amerykańskim ⌥ + litera zwykle wpisuje znak specjalny (⌥S = ß, ⌥C = ç …);
-jeśli któregoś z nich potrzebujesz, przenieś skrót na inny klawisz.
+jeśli któregoś z nich potrzebujesz, przenieś skrót na inny klawisz. Keepit odczytuje też twoje układy klawiatury: litery pokazywane w Ustawieniach i w menu są literami klawiszy układu, którego właśnie używasz, a domyślny skrót, który zabrałby znak potrzebny w twoim układzie (⌥L wpisuje @ w układzie niemieckim, ł w polskim), Keepit zostawia wolny przy uruchomieniu — mówi o tym notatka pod jego polem; kliknij pole i naciśnij kombinację, aby mimo to jej użyć.
 
 ---
 
@@ -567,7 +567,7 @@ wyłącz go i włącz ponownie. macOS zapomina przyznane uprawnienie po ponownej
 
 **Skrót klawiszowy nic nie robi.** Należy do innej aplikacji albo do macOS; Keepit zgłasza to przy
 uruchomieniu. Wybierz inną kombinację w panelu *Skróty*. Kombinacja ⌃⌥ z cyframi i literami jest
-wolna na Macu w stanie fabrycznym.
+wolna na Macu w stanie fabrycznym. Albo jest to domyślny skrót, który Keepit zostawił wolny, bo w jednym z twoich układów klawiatury wpisuje znak; mówi o tym notatka pod jego polem w panelu *Skróty*. Wybierz inną kombinację albo kliknij pole i naciśnij tę samą, aby mimo to jej użyć.
 
 **Menu otwiera się w złym miejscu.** Aplikacja, w której jesteś, nie udostępnia swojego kursora
 tekstowego, więc menu otwiera się przy wskaźniku myszy. Opcja *Otwieraj menu przy kursorze
