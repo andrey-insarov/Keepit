@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 02a558b209b5788bd20956d5be4d5997d024d7d3 -->
+<!-- source: GUIDE.md 0be95178b3d79d4d8716766770440ce3a98d0dcf -->
 # Keepit-handleiding
 
 Keepit beheert je klembordgeschiedenis en sjablonen op macOS. Het woont in de menubalk, onthoudt
@@ -11,13 +11,13 @@ handleiding beschrijft Keepit 3; de handleiding voor Keepit 2.x blijft ongewijzi
 
 **Inhoud**
 
-- [Deel 1. Aan de slag](#part-1--getting-started): [Installatie](#install) · [Eerste start](#first-launch)
-- [Deel 2. Dagelijks gebruik](#part-2--everyday-use): [Het geschiedenismenu](#the-history-menu) · [Zoeken en voorvertoning](#search-and-preview) · [Plakken zonder menu](#paste-without-the-menu) · [De plakwachtrij](#the-paste-queue) · [Het uitgebreide menu](#the-extended-menu)
-- [Deel 3. Sjablonen](#part-3--templates): [Maken en ordenen](#creating-and-organising) · [Plaatsaanduidingen](#placeholders) · [Sjablonen die vragen stellen](#templates-that-ask-questions)
-- [Deel 4. De Weergave](#part-4--the-viewer)
-- [Deel 5. Instellingen](#part-5--settings)
+- [Deel 1. Aan de slag](#part-1-getting-started): [Installatie](#install) · [Eerste start](#first-launch)
+- [Deel 2. Dagelijks gebruik](#part-2-everyday-use): [Het geschiedenismenu](#the-history-menu) · [Zoeken en voorvertoning](#search-and-preview) · [Plakken zonder menu](#paste-without-the-menu) · [De plakwachtrij](#the-paste-queue) · [Het uitgebreide menu](#the-extended-menu)
+- [Deel 3. Sjablonen](#part-3-templates): [Maken en ordenen](#creating-and-organising) · [Plaatsaanduidingen](#placeholders) · [Sjablonen die vragen stellen](#templates-that-ask-questions)
+- [Deel 4. De Weergave](#part-4-the-viewer)
+- [Deel 5. Instellingen](#part-5-settings)
 - [Deel 6. Beveiliging](#part-6-security): [Wachtwoord en versleuteling](#password-and-encryption) · [Touch ID](#touch-id) · [Herstelzin](#recovery-phrase) · [Reservekopie](#backup)
-- [Deel 7. Geavanceerd](#part-7--advanced): [Automatisering](#automation-the-keepit-url-scheme) · [Updates](#updates) · [Verwijderen](#uninstalling)
+- [Deel 7. Geavanceerd](#part-7-advanced): [Automatisering](#automation-the-keepit-url-scheme) · [Updates](#updates) · [Verwijderen](#uninstalling)
 - [Naslag](#reference): [Problemen oplossen](#troubleshooting) · [Spiekbriefje sneltoetsen](#keyboard-cheat-sheet) · [Spiekbriefje plaatsaanduidingen](#placeholder-cheat-sheet)
 
 ---
@@ -357,7 +357,7 @@ een andere app een combinatie al in gebruik heeft, meldt Keepit dat bij de start
 *Instellingen* ⌥S, *Geschiedenis wissen* ⌥C, *Opname pauzeren* ⌥P, *Keepit vergrendelen* ⌥L en
 *Keepit stoppen* ⌥Q werken vanuit elke app en staan in het menu naast hun commando’s. Op een
 Amerikaanse toetsenbordindeling typt ⌥ + letter normaal gesproken een speciaal teken (⌥S = ß,
-⌥C = ç …); als je een daarvan nodig hebt, verplaats dan de sneltoets. Keepit leest ook je toetsenbordindelingen: de letters in Instellingen en in de menu’s zijn die op de toetsen van de indeling die je gebruikt, en een standaardsneltoets die een teken zou innemen dat je indeling nodig heeft (⌥L typt @ op de Duitse, ł op de Poolse) laat Keepit bij de start vrij — de notitie onder het veld zegt het; klik in het veld en druk op de combinatie om hem toch te gebruiken.
+⌥C = ç …); als je een daarvan nodig hebt, verplaats dan de sneltoets. Keepit leest ook je toetsenbordindelingen: de letters in Instellingen en in de menu’s zijn die op de toetsen van de indeling die je gebruikt, en een standaardsneltoets die een teken zou innemen dat je indeling nodig heeft (⌥L typt @ op de Duitse, ł op de Poolse) laat Keepit bij de start vrij — de notitie onder het veld zegt het; klik in het veld en druk op de combinatie om hem toch te gebruiken. Bij een niet-Latijnse indeling, zoals de Russische, komen de namen uit de Latijnse indeling die macOS eraan koppelt, net als in de menu’s van het systeem zelf.
 
 ---
 

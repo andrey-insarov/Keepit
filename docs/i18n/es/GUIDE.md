@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 02a558b209b5788bd20956d5be4d5997d024d7d3 -->
+<!-- source: GUIDE.md 0be95178b3d79d4d8716766770440ce3a98d0dcf -->
 # Guía de Keepit
 
 Keepit es un gestor del historial del portapapeles y de plantillas para macOS. Vive en la barra de
@@ -11,13 +11,13 @@ Atajos*. Esta guía describe Keepit 3. La guía de Keepit 2.x se conserva sin ca
 
 **Contenido**
 
-- [Parte 1: Primeros pasos](#part-1--getting-started): [Instalación](#install) · [Primer arranque](#first-launch)
-- [Parte 2: Uso diario](#part-2--everyday-use): [El menú del historial](#the-history-menu) · [Búsqueda y vista previa](#search-and-preview) · [Pegar sin el menú](#paste-without-the-menu) · [La cola de pegado](#the-paste-queue) · [El menú ampliado](#the-extended-menu)
-- [Parte 3: Plantillas](#part-3--templates): [Crear y organizar](#creating-and-organising) · [Marcadores](#placeholders) · [Plantillas que hacen preguntas](#templates-that-ask-questions)
-- [Parte 4: El Visor](#part-4--the-viewer)
-- [Parte 5: Ajustes](#part-5--settings)
+- [Parte 1: Primeros pasos](#part-1-getting-started): [Instalación](#install) · [Primer arranque](#first-launch)
+- [Parte 2: Uso diario](#part-2-everyday-use): [El menú del historial](#the-history-menu) · [Búsqueda y vista previa](#search-and-preview) · [Pegar sin el menú](#paste-without-the-menu) · [La cola de pegado](#the-paste-queue) · [El menú ampliado](#the-extended-menu)
+- [Parte 3: Plantillas](#part-3-templates): [Crear y organizar](#creating-and-organising) · [Marcadores](#placeholders) · [Plantillas que hacen preguntas](#templates-that-ask-questions)
+- [Parte 4: El Visor](#part-4-the-viewer)
+- [Parte 5: Ajustes](#part-5-settings)
 - [Parte 6: Seguridad](#part-6-security): [Contraseña y cifrado](#password-and-encryption) · [Touch ID](#touch-id) · [Frase de recuperación](#recovery-phrase) · [Copia de seguridad](#backup)
-- [Parte 7: Funciones avanzadas](#part-7--advanced): [Automatización](#automation-the-keepit-url-scheme) · [Actualizaciones](#updates) · [Desinstalación](#uninstalling)
+- [Parte 7: Funciones avanzadas](#part-7-advanced): [Automatización](#automation-the-keepit-url-scheme) · [Actualizaciones](#updates) · [Desinstalación](#uninstalling)
 - [Referencia](#reference): [Solución de problemas](#troubleshooting) · [Resumen de atajos](#keyboard-cheat-sheet) · [Resumen de marcadores](#placeholder-cheat-sheet)
 
 ---
@@ -349,7 +349,7 @@ los añade Keepit. Si macOS u otra app ya usa alguna combinación, Keepit lo avi
 ⌥E, *Ajustes* ⌥S, *Borrar historial* ⌥C, *Pausar la grabación* ⌥P, *Bloquear Keepit* ⌥L y *Salir de
 Keepit* ⌥Q funcionan desde cualquier app y aparecen junto a sus comandos en el menú. En el Mac,
 ⌥+letra suele escribir un carácter especial (por ejemplo ⌥C = © o ⌥E = € en el teclado español); si
-necesitas alguno, mueve el comando a otra tecla. Keepit también lee tus distribuciones de teclado: las letras que ves en Ajustes y en los menús son las de las teclas de la distribución que estás usando, y un atajo predeterminado que quitaría un carácter que tu distribución necesita (⌥L escribe @ en la alemana y ł en la polaca) se deja libre al arrancar Keepit; la nota bajo su campo lo dice; haz clic en el campo y pulsa la combinación para usarla de todos modos.
+necesitas alguno, mueve el comando a otra tecla. Keepit también lee tus distribuciones de teclado: las letras que ves en Ajustes y en los menús son las de las teclas de la distribución que estás usando, y un atajo predeterminado que quitaría un carácter que tu distribución necesita (⌥L escribe @ en la alemana y ł en la polaca) se deja libre al arrancar Keepit; la nota bajo su campo lo dice; haz clic en el campo y pulsa la combinación para usarla de todos modos. Con una distribución no latina, como la rusa, los nombres se toman de la distribución latina que macOS le asocia, como en los menús del propio sistema.
 
 ---
 

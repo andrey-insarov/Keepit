@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 02a558b209b5788bd20956d5be4d5997d024d7d3 -->
+<!-- source: GUIDE.md 0be95178b3d79d4d8716766770440ce3a98d0dcf -->
 # Keepit kullanım kılavuzu
 
 Keepit, macOS için bir pano geçmişi ve şablon yöneticisidir. Menü çubuğunda durur, kopyaladığınız
@@ -12,13 +12,13 @@ Keepit 3’ü anlatır; Keepit 2.x kılavuzu
 
 **İçindekiler**
 
-- [Bölüm 1. Başlarken](#part-1--getting-started): [Kurulum](#install) · [İlk açılış](#first-launch)
-- [Bölüm 2. Günlük kullanım](#part-2--everyday-use): [Geçmiş menüsü](#the-history-menu) · [Arama ve önizleme](#search-and-preview) · [Menüsüz yapıştırma](#paste-without-the-menu) · [Yapıştırma kuyruğu](#the-paste-queue) · [Genişletilmiş menü](#the-extended-menu)
-- [Bölüm 3. Şablonlar](#part-3--templates): [Oluşturma ve düzenleme](#creating-and-organising) · [Yer tutucular](#placeholders) · [Soru soran şablonlar](#templates-that-ask-questions)
-- [Bölüm 4. Görüntüleyici](#part-4--the-viewer)
-- [Bölüm 5. Ayarlar](#part-5--settings)
+- [Bölüm 1. Başlarken](#part-1-getting-started): [Kurulum](#install) · [İlk açılış](#first-launch)
+- [Bölüm 2. Günlük kullanım](#part-2-everyday-use): [Geçmiş menüsü](#the-history-menu) · [Arama ve önizleme](#search-and-preview) · [Menüsüz yapıştırma](#paste-without-the-menu) · [Yapıştırma kuyruğu](#the-paste-queue) · [Genişletilmiş menü](#the-extended-menu)
+- [Bölüm 3. Şablonlar](#part-3-templates): [Oluşturma ve düzenleme](#creating-and-organising) · [Yer tutucular](#placeholders) · [Soru soran şablonlar](#templates-that-ask-questions)
+- [Bölüm 4. Görüntüleyici](#part-4-the-viewer)
+- [Bölüm 5. Ayarlar](#part-5-settings)
 - [Bölüm 6. Güvenlik](#part-6-security): [Parola ve şifreleme](#password-and-encryption) · [Touch ID](#touch-id) · [Kurtarma ifadesi](#recovery-phrase) · [Yedekleme](#backup)
-- [Bölüm 7. Gelişmiş](#part-7--advanced): [Otomasyon](#automation-the-keepit-url-scheme) · [Güncellemeler](#updates) · [Kaldırma](#uninstalling)
+- [Bölüm 7. Gelişmiş](#part-7-advanced): [Otomasyon](#automation-the-keepit-url-scheme) · [Güncellemeler](#updates) · [Kaldırma](#uninstalling)
 - [Başvuru](#reference): [Sorun giderme](#troubleshooting) · [Kısayol özeti](#keyboard-cheat-sheet) · [Yer tutucu özeti](#placeholder-cheat-sheet)
 
 ---
@@ -351,7 +351,7 @@ harfi Keepit ekler. macOS ya da başka bir uygulama bir birleşimi zaten kullan�
 açılışta bildirir. *Görüntüleyici* ⌥E, *Ayarlar* ⌥S, *Geçmişi temizle* ⌥C, *Kaydı duraklat* ⌥P,
 *Keepit’i kilitle* ⌥L ve *Keepit’ten çık* ⌥Q her uygulamadan çalışır ve menüde komutlarının yanında
 gösterilir. ABD klavye düzeninde ⌥ + harf normalde özel bir karakter yazar (⌥S = ß, ⌥C = ç …);
-bunlardan birine ihtiyacınız varsa kısayolu başka bir tuşa taşıyın. Keepit klavye düzenlerinizi de okur: Ayarlar’da ve menülerde gösterilen harfler, kullandığınız düzende o tuşların üzerindeki harflerdir; düzeninizin ihtiyaç duyduğu bir karakteri alacak varsayılan kısayolu (Almanca düzende ⌥L @ yazar, Lehçe düzende ł) Keepit açılışta boş bırakır — alanının altındaki not bunu söyler; yine de kullanmak için alana tıklayıp kombinasyona basın.
+bunlardan birine ihtiyacınız varsa kısayolu başka bir tuşa taşıyın. Keepit klavye düzenlerinizi de okur: Ayarlar’da ve menülerde gösterilen harfler, kullandığınız düzende o tuşların üzerindeki harflerdir; düzeninizin ihtiyaç duyduğu bir karakteri alacak varsayılan kısayolu (Almanca düzende ⌥L @ yazar, Lehçe düzende ł) Keepit açılışta boş bırakır — alanının altındaki not bunu söyler; yine de kullanmak için alana tıklayıp kombinasyona basın. Rusça gibi Latin olmayan bir düzende adlar, macOS’un o düzenle eşlediği Latin düzeninden alınır; sistemin kendi menülerinde de böyledir.
 
 ---
 

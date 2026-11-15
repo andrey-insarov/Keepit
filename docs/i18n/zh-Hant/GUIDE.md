@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 02a558b209b5788bd20956d5be4d5997d024d7d3 -->
+<!-- source: GUIDE.md 0be95178b3d79d4d8716766770440ce3a98d0dcf -->
 # Keepit 使用手冊
 
 Keepit 是 macOS 上的剪貼板歷史記錄與範本管理工具。它常駐在選單列，記住你拷貝過的所有內容，並能用快速鍵把任何一個項目貼回去。下面提到的快速鍵都是預設值，每一個都可以在「設定」→「快速鍵」中更改。本手冊說明的是 Keepit 3；Keepit 2.x 的手冊原樣保留在 [keep.it.com/v2/guide](https://keep.it.com/v2/guide)（英文）。
@@ -7,13 +7,13 @@ Keepit 是 macOS 上的剪貼板歷史記錄與範本管理工具。它常駐在
 
 **目錄**
 
-- [第 1 部分：開始使用](#part-1--getting-started)：[安裝](#install) · [首次啟動](#first-launch)
-- [第 2 部分：日常使用](#part-2--everyday-use)：[歷史記錄選單](#the-history-menu) · [搜尋與預覽](#search-and-preview) · [不開選單直接貼上](#paste-without-the-menu) · [貼上佇列](#the-paste-queue) · [延伸選單](#the-extended-menu)
-- [第 3 部分：範本](#part-3--templates)：[建立與整理](#creating-and-organising) · [佔位符](#placeholders) · [會提問的範本](#templates-that-ask-questions)
-- [第 4 部分：檢視器](#part-4--the-viewer)
-- [第 5 部分：設定](#part-5--settings)
+- [第 1 部分：開始使用](#part-1-getting-started)：[安裝](#install) · [首次啟動](#first-launch)
+- [第 2 部分：日常使用](#part-2-everyday-use)：[歷史記錄選單](#the-history-menu) · [搜尋與預覽](#search-and-preview) · [不開選單直接貼上](#paste-without-the-menu) · [貼上佇列](#the-paste-queue) · [延伸選單](#the-extended-menu)
+- [第 3 部分：範本](#part-3-templates)：[建立與整理](#creating-and-organising) · [佔位符](#placeholders) · [會提問的範本](#templates-that-ask-questions)
+- [第 4 部分：檢視器](#part-4-the-viewer)
+- [第 5 部分：設定](#part-5-settings)
 - [第 6 部分：安全性](#part-6-security)：[密碼與加密](#password-and-encryption) · [Touch ID](#touch-id) · [復原短語](#recovery-phrase) · [備份](#backup)
-- [第 7 部分：進階](#part-7--advanced)：[自動化](#automation-the-keepit-url-scheme) · [更新](#updates) · [解除安裝](#uninstalling)
+- [第 7 部分：進階](#part-7-advanced)：[自動化](#automation-the-keepit-url-scheme) · [更新](#updates) · [解除安裝](#uninstalling)
 - [參考資料](#reference)：[疑難排解](#troubleshooting) · [快速鍵速查表](#keyboard-cheat-sheet) · [佔位符速查表](#placeholder-cheat-sheet)
 
 ---
@@ -247,7 +247,7 @@ Keepit 預設會在登入時啟動，可在「設定」→「一般」中關閉�
 
 ![「設定」→「快速鍵」](site/img/guide/prefs-hotkeys.png)
 
-在**快速鍵**面板中按一下欄位，然後按下一組按鍵；⌫ 會停用該按鍵；已被其他指令使用的組合會被拒絕，原因會顯示在欄位下方；「重設為預設值」會恢復 ⌥ + 字母這一組（⌥M 歷史記錄、⌥T 範本、⌥E 檢視器、⌥S 設定、⌥C 清除歷史記錄、⌥P 暫停、⌥L 鎖定、⌥Q 結束），以及 ⌥⇧V 和 ⌃⌥。「依編號貼上項目」和「對最新項目的動作」只接受變更鍵，數字或字母由 Keepit 加上。如果 macOS 或其他 App 已經佔用了某組按鍵，Keepit 會在啟動時告知。「檢視器」⌥E、「設定」⌥S、「清除歷史記錄」⌥C、「暫停記錄」⌥P、「鎖定 Keepit」⌥L 和「結束 Keepit」⌥Q 在任何 App 中都有效，並顯示在選單中各指令的旁邊。在美式鍵盤配置上，⌥ + 字母通常會輸入特殊字元（⌥S = ß、⌥C = ç …）；如果你需要其中某個字元，請把快速鍵改到別的按鍵上。Keepit 也會讀取你的鍵盤配置：設定和選單中顯示的字母就是你目前配置中這些按鍵上的字母；如果某個預設快速鍵會佔用你的配置所需的字元（德文配置中 ⌥L 會輸入 @，波蘭文配置中會輸入 ł），Keepit 啟動時會把它空出來，欄位下方的註記會說明；若仍要使用，請按一下欄位並按下該組合鍵。
+在**快速鍵**面板中按一下欄位，然後按下一組按鍵；⌫ 會停用該按鍵；已被其他指令使用的組合會被拒絕，原因會顯示在欄位下方；「重設為預設值」會恢復 ⌥ + 字母這一組（⌥M 歷史記錄、⌥T 範本、⌥E 檢視器、⌥S 設定、⌥C 清除歷史記錄、⌥P 暫停、⌥L 鎖定、⌥Q 結束），以及 ⌥⇧V 和 ⌃⌥。「依編號貼上項目」和「對最新項目的動作」只接受變更鍵，數字或字母由 Keepit 加上。如果 macOS 或其他 App 已經佔用了某組按鍵，Keepit 會在啟動時告知。「檢視器」⌥E、「設定」⌥S、「清除歷史記錄」⌥C、「暫停記錄」⌥P、「鎖定 Keepit」⌥L 和「結束 Keepit」⌥Q 在任何 App 中都有效，並顯示在選單中各指令的旁邊。在美式鍵盤配置上，⌥ + 字母通常會輸入特殊字元（⌥S = ß、⌥C = ç …）；如果你需要其中某個字元，請把快速鍵改到別的按鍵上。Keepit 也會讀取你的鍵盤配置：設定和選單中顯示的字母就是你目前配置中這些按鍵上的字母；如果某個預設快速鍵會佔用你的配置所需的字元（德文配置中 ⌥L 會輸入 @，波蘭文配置中會輸入 ł），Keepit 啟動時會把它空出來，欄位下方的註記會說明；若仍要使用，請按一下欄位並按下該組合鍵。在俄文等非拉丁字母配置下，名稱取自 macOS 與之配對的拉丁字母配置，與系統本身的選單一致。
 
 ---
 

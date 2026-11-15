@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 02a558b209b5788bd20956d5be4d5997d024d7d3 -->
+<!-- source: GUIDE.md 0be95178b3d79d4d8716766770440ce3a98d0dcf -->
 # Guida di Keepit
 
 Keepit gestisce la cronologia degli appunti e i modelli su macOS. Vive nella barra dei menu,
@@ -11,13 +11,13 @@ all’indirizzo [keep.it.com/v2/guide](https://keep.it.com/v2/guide) (in inglese
 
 **Indice**
 
-- [Parte 1. Per iniziare](#part-1--getting-started): [Installazione](#install) · [Primo avvio](#first-launch)
-- [Parte 2. Uso quotidiano](#part-2--everyday-use): [Il menu della cronologia](#the-history-menu) · [Ricerca e anteprima](#search-and-preview) · [Incollare senza menu](#paste-without-the-menu) · [La coda di incolla](#the-paste-queue) · [Il menu esteso](#the-extended-menu)
-- [Parte 3. Modelli](#part-3--templates): [Creare e organizzare](#creating-and-organising) · [Segnaposto](#placeholders) · [Modelli che fanno domande](#templates-that-ask-questions)
-- [Parte 4. Il Visualizzatore](#part-4--the-viewer)
-- [Parte 5. Impostazioni](#part-5--settings)
+- [Parte 1. Per iniziare](#part-1-getting-started): [Installazione](#install) · [Primo avvio](#first-launch)
+- [Parte 2. Uso quotidiano](#part-2-everyday-use): [Il menu della cronologia](#the-history-menu) · [Ricerca e anteprima](#search-and-preview) · [Incollare senza menu](#paste-without-the-menu) · [La coda di incolla](#the-paste-queue) · [Il menu esteso](#the-extended-menu)
+- [Parte 3. Modelli](#part-3-templates): [Creare e organizzare](#creating-and-organising) · [Segnaposto](#placeholders) · [Modelli che fanno domande](#templates-that-ask-questions)
+- [Parte 4. Il Visualizzatore](#part-4-the-viewer)
+- [Parte 5. Impostazioni](#part-5-settings)
 - [Parte 6. Sicurezza](#part-6-security): [Password e crittografia](#password-and-encryption) · [Touch ID](#touch-id) · [Frase di recupero](#recovery-phrase) · [Backup](#backup)
-- [Parte 7. Funzioni avanzate](#part-7--advanced): [Automazione](#automation-the-keepit-url-scheme) · [Aggiornamenti](#updates) · [Disinstallazione](#uninstalling)
+- [Parte 7. Funzioni avanzate](#part-7-advanced): [Automazione](#automation-the-keepit-url-scheme) · [Aggiornamenti](#updates) · [Disinstallazione](#uninstalling)
 - [Riferimenti](#reference): [Risoluzione dei problemi](#troubleshooting) · [Promemoria dei tasti](#keyboard-cheat-sheet) · [Promemoria dei segnaposto](#placeholder-cheat-sheet)
 
 ---
@@ -357,7 +357,7 @@ combinazione, Keepit lo segnala all’avvio. *Visualizzatore* ⌥E, *Impostazion
 cronologia* ⌥C, *Sospendi la registrazione* ⌥P, *Blocca Keepit* ⌥L ed *Esci da Keepit* ⌥Q
 funzionano da qualsiasi app e sono mostrati nel menu accanto ai rispettivi comandi. Con il layout
 statunitense ⌥ + lettera di solito scrive un carattere speciale (⌥S = ß, ⌥C = ç …); se te ne serve
-uno, sposta il tasto rapido. Keepit legge anche le tue disposizioni di tastiera: le lettere mostrate nelle Impostazioni e nei menu sono quelle dei tasti della disposizione che stai usando, e un tasto rapido predefinito che toglierebbe un carattere necessario alla tua disposizione (⌥L scrive @ in quella tedesca, ł in quella polacca) viene lasciato libero all’avvio di Keepit — lo dice la nota sotto il suo campo; fai clic nel campo e premi la combinazione per usarlo comunque.
+uno, sposta il tasto rapido. Keepit legge anche le tue disposizioni di tastiera: le lettere mostrate nelle Impostazioni e nei menu sono quelle dei tasti della disposizione che stai usando, e un tasto rapido predefinito che toglierebbe un carattere necessario alla tua disposizione (⌥L scrive @ in quella tedesca, ł in quella polacca) viene lasciato libero all’avvio di Keepit — lo dice la nota sotto il suo campo; fai clic nel campo e premi la combinazione per usarlo comunque. Con un layout non latino, come il russo, i nomi vengono dal layout latino che macOS gli abbina, come nei menu del sistema stesso.
 
 ---
 

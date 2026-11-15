@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 02a558b209b5788bd20956d5be4d5997d024d7d3 -->
+<!-- source: GUIDE.md 0be95178b3d79d4d8716766770440ce3a98d0dcf -->
 # Guia do Keepit
 
 O Keepit é um gerenciador de histórico da área de transferência e de modelos para macOS. Ele fica na
@@ -11,13 +11,13 @@ descreve o Keepit 3. O guia do Keepit 2.x continua disponível, sem alterações
 
 **Conteúdo**
 
-- [Parte 1: Primeiros passos](#part-1--getting-started): [Instalação](#install) · [Primeira abertura](#first-launch)
-- [Parte 2: Uso no dia a dia](#part-2--everyday-use): [O menu de histórico](#the-history-menu) · [Busca e pré-visualização](#search-and-preview) · [Colar sem o menu](#paste-without-the-menu) · [A fila de colagem](#the-paste-queue) · [O menu estendido](#the-extended-menu)
-- [Parte 3: Modelos](#part-3--templates): [Criar e organizar](#creating-and-organising) · [Marcadores](#placeholders) · [Modelos que fazem perguntas](#templates-that-ask-questions)
-- [Parte 4: O Visualizador](#part-4--the-viewer)
-- [Parte 5: Ajustes](#part-5--settings)
+- [Parte 1: Primeiros passos](#part-1-getting-started): [Instalação](#install) · [Primeira abertura](#first-launch)
+- [Parte 2: Uso no dia a dia](#part-2-everyday-use): [O menu de histórico](#the-history-menu) · [Busca e pré-visualização](#search-and-preview) · [Colar sem o menu](#paste-without-the-menu) · [A fila de colagem](#the-paste-queue) · [O menu estendido](#the-extended-menu)
+- [Parte 3: Modelos](#part-3-templates): [Criar e organizar](#creating-and-organising) · [Marcadores](#placeholders) · [Modelos que fazem perguntas](#templates-that-ask-questions)
+- [Parte 4: O Visualizador](#part-4-the-viewer)
+- [Parte 5: Ajustes](#part-5-settings)
 - [Parte 6: Segurança](#part-6-security): [Senha e criptografia](#password-and-encryption) · [Touch ID](#touch-id) · [Frase de recuperação](#recovery-phrase) · [Backup](#backup)
-- [Parte 7: Recursos avançados](#part-7--advanced): [Automação](#automation-the-keepit-url-scheme) · [Atualizações](#updates) · [Desinstalação](#uninstalling)
+- [Parte 7: Recursos avançados](#part-7-advanced): [Automação](#automation-the-keepit-url-scheme) · [Atualizações](#updates) · [Desinstalação](#uninstalling)
 - [Referência](#reference): [Solução de problemas](#troubleshooting) · [Resumo dos atalhos](#keyboard-cheat-sheet) · [Resumo dos marcadores](#placeholder-cheat-sheet)
 
 ---
@@ -344,7 +344,7 @@ acrescentado pelo Keepit. Se o macOS ou outro app já usa alguma combinação, o
 *Visualizador* ⌥E, *Ajustes* ⌥S, *Limpar histórico* ⌥C, *Pausar gravação* ⌥P, *Bloquear o Keepit* ⌥L
 e *Encerrar o Keepit* ⌥Q funcionam a partir de qualquer app e aparecem ao lado dos comandos no menu.
 No Mac, ⌥+letra normalmente digita um caractere especial (por exemplo, ⌥C = ç no layout americano); se
-você precisar de algum deles, mude o comando para outra tecla. O Keepit também lê os seus leiautes de teclado: as letras mostradas nos Ajustes e nos menus são as das teclas do leiaute que você está usando, e um atalho padrão que tomaria um caractere de que o seu leiaute precisa (⌥L digita @ no alemão e ł no polonês) fica livre quando o Keepit abre; a nota abaixo do campo diz isso. Clique no campo e pressione a combinação para usá-la mesmo assim.
+você precisar de algum deles, mude o comando para outra tecla. O Keepit também lê os seus leiautes de teclado: as letras mostradas nos Ajustes e nos menus são as das teclas do leiaute que você está usando, e um atalho padrão que tomaria um caractere de que o seu leiaute precisa (⌥L digita @ no alemão e ł no polonês) fica livre quando o Keepit abre; a nota abaixo do campo diz isso. Clique no campo e pressione a combinação para usá-la mesmo assim. Em um layout não latino, como o russo, os nomes vêm do layout latino que o macOS associa a ele, como nos menus do próprio sistema.
 
 ---
 

@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 02a558b209b5788bd20956d5be4d5997d024d7d3 -->
+<!-- source: GUIDE.md 0be95178b3d79d4d8716766770440ce3a98d0dcf -->
 # Příručka Keepit
 
 Keepit spravuje historii schránky a šablony v systému macOS. Sídlí v řádku nabídek, pamatuje si
@@ -11,13 +11,13 @@ příručka pro Keepit 2.x zůstává beze změny na adrese
 
 **Obsah**
 
-- [Část 1: Začínáme](#part-1--getting-started): [Instalace](#install) · [První spuštění](#first-launch)
-- [Část 2: Každodenní používání](#part-2--everyday-use): [Nabídka historie](#the-history-menu) · [Hledání a náhled](#search-and-preview) · [Vkládání bez nabídky](#paste-without-the-menu) · [Fronta vkládání](#the-paste-queue) · [Rozšířená nabídka](#the-extended-menu)
-- [Část 3: Šablony](#part-3--templates): [Vytváření a uspořádání](#creating-and-organising) · [Zástupné symboly](#placeholders) · [Šablony, které se ptají](#templates-that-ask-questions)
-- [Část 4: Prohlížeč](#part-4--the-viewer)
-- [Část 5: Nastavení](#part-5--settings)
+- [Část 1: Začínáme](#part-1-getting-started): [Instalace](#install) · [První spuštění](#first-launch)
+- [Část 2: Každodenní používání](#part-2-everyday-use): [Nabídka historie](#the-history-menu) · [Hledání a náhled](#search-and-preview) · [Vkládání bez nabídky](#paste-without-the-menu) · [Fronta vkládání](#the-paste-queue) · [Rozšířená nabídka](#the-extended-menu)
+- [Část 3: Šablony](#part-3-templates): [Vytváření a uspořádání](#creating-and-organising) · [Zástupné symboly](#placeholders) · [Šablony, které se ptají](#templates-that-ask-questions)
+- [Část 4: Prohlížeč](#part-4-the-viewer)
+- [Část 5: Nastavení](#part-5-settings)
 - [Část 6: Zabezpečení](#part-6-security): [Heslo a šifrování](#password-and-encryption) · [Touch ID](#touch-id) · [Fráze pro obnovu](#recovery-phrase) · [Záloha](#backup)
-- [Část 7: Pro pokročilé](#part-7--advanced): [Automatizace](#automation-the-keepit-url-scheme) · [Aktualizace](#updates) · [Odinstalace](#uninstalling)
+- [Část 7: Pro pokročilé](#part-7-advanced): [Automatizace](#automation-the-keepit-url-scheme) · [Aktualizace](#updates) · [Odinstalace](#uninstalling)
 - [Přehledy](#reference): [Řešení potíží](#troubleshooting) · [Tahák klávesových zkratek](#keyboard-cheat-sheet) · [Tahák zástupných symbolů](#placeholder-cheat-sheet)
 
 ---
@@ -340,7 +340,7 @@ macOS nebo jiná aplikace, Keepit to oznámí při spuštění. *Prohlížeč* �
 historii* ⌥C, *Pozastavit záznam* ⌥P, *Zamknout Keepit* ⌥L a *Ukončit Keepit* ⌥Q fungují
 z kterékoli aplikace a v nabídce jsou uvedené vedle svých příkazů. Na americkém rozložení klávesnice
 píše ⌥ + písmeno obvykle speciální znak (⌥S = ß, ⌥C = ç …); pokud některý z nich potřebujete,
-přesuňte zkratku jinam. Keepit také čte vaše rozložení klávesnice: písmena zobrazená v Nastavení a v nabídkách jsou ta na klávesách rozložení, které právě používáte, a výchozí zkratku, která by zabrala znak potřebný ve vašem rozložení (⌥L píše @ v německém a ł v polském), Keepit při spuštění nechá volnou — říká to poznámka pod jejím polem; chcete-li ji přesto použít, klikněte do pole a stiskněte kombinaci.
+přesuňte zkratku jinam. Keepit také čte vaše rozložení klávesnice: písmena zobrazená v Nastavení a v nabídkách jsou ta na klávesách rozložení, které právě používáte, a výchozí zkratku, která by zabrala znak potřebný ve vašem rozložení (⌥L píše @ v německém a ł v polském), Keepit při spuštění nechá volnou — říká to poznámka pod jejím polem; chcete-li ji přesto použít, klikněte do pole a stiskněte kombinaci. U nelatinkového rozložení, například ruského, pocházejí názvy z latinkového rozložení, které k němu macOS přiřazuje — stejně jako v nabídkách samotného systému.
 
 ---
 

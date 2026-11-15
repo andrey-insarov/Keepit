@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 02a558b209b5788bd20956d5be4d5997d024d7d3 -->
+<!-- source: GUIDE.md 0be95178b3d79d4d8716766770440ce3a98d0dcf -->
 # Keepit-Handbuch
 
 Keepit verwaltet den Verlauf der Zwischenablage und Vorlagen unter macOS. Es sitzt in der Menüleiste,
@@ -11,13 +11,13 @@ Handbuch beschreibt Keepit 3. Das Handbuch für Keepit 2.x bleibt unverändert u
 
 **Inhalt**
 
-- [Teil 1: Erste Schritte](#part-1--getting-started): [Installation](#install) · [Erster Start](#first-launch)
-- [Teil 2: Im Alltag](#part-2--everyday-use): [Das Verlaufsmenü](#the-history-menu) · [Suche und Vorschau](#search-and-preview) · [Einfügen ohne Menü](#paste-without-the-menu) · [Die Einfügewarteschlange](#the-paste-queue) · [Das erweiterte Menü](#the-extended-menu)
-- [Teil 3: Vorlagen](#part-3--templates): [Anlegen und ordnen](#creating-and-organising) · [Platzhalter](#placeholders) · [Vorlagen, die Fragen stellen](#templates-that-ask-questions)
-- [Teil 4: Der Viewer](#part-4--the-viewer)
-- [Teil 5: Einstellungen](#part-5--settings)
+- [Teil 1: Erste Schritte](#part-1-getting-started): [Installation](#install) · [Erster Start](#first-launch)
+- [Teil 2: Im Alltag](#part-2-everyday-use): [Das Verlaufsmenü](#the-history-menu) · [Suche und Vorschau](#search-and-preview) · [Einfügen ohne Menü](#paste-without-the-menu) · [Die Einfügewarteschlange](#the-paste-queue) · [Das erweiterte Menü](#the-extended-menu)
+- [Teil 3: Vorlagen](#part-3-templates): [Anlegen und ordnen](#creating-and-organising) · [Platzhalter](#placeholders) · [Vorlagen, die Fragen stellen](#templates-that-ask-questions)
+- [Teil 4: Der Viewer](#part-4-the-viewer)
+- [Teil 5: Einstellungen](#part-5-settings)
 - [Teil 6: Sicherheit](#part-6-security): [Passwort und Verschlüsselung](#password-and-encryption) · [Touch ID](#touch-id) · [Wiederherstellungsphrase](#recovery-phrase) · [Backup](#backup)
-- [Teil 7: Für Fortgeschrittene](#part-7--advanced): [Automatisierung](#automation-the-keepit-url-scheme) · [Updates](#updates) · [Deinstallieren](#uninstalling)
+- [Teil 7: Für Fortgeschrittene](#part-7-advanced): [Automatisierung](#automation-the-keepit-url-scheme) · [Updates](#updates) · [Deinstallieren](#uninstalling)
 - [Referenz](#reference): [Fehlerbehebung](#troubleshooting) · [Tastenkürzel im Überblick](#keyboard-cheat-sheet) · [Platzhalter im Überblick](#placeholder-cheat-sheet)
 
 ---
@@ -354,7 +354,7 @@ oder einer anderen App, meldet Keepit das beim Start. *Viewer* ⌥E, *Einstellun
 löschen* ⌥C, *Aufzeichnung pausieren* ⌥P, *Keepit sperren* ⌥L und *Keepit beenden* ⌥Q funktionieren
 aus jeder App und stehen im Menü neben ihren Befehlen. Auf der Mac-Tastatur schreibt ⌥ mit einem
 Buchstaben normalerweise ein Sonderzeichen (auf der deutschen Belegung etwa ⌥L = @, ⌥E = €). Wenn du
-eines davon brauchst, leg den Befehl auf eine andere Taste. Keepit liest außerdem deine Tastaturbelegungen: Die Buchstaben in den Einstellungen und in den Menüs sind die der Tasten der Belegung, die du gerade benutzt, und ein Standardkürzel, das ein Zeichen deiner Belegung wegnehmen würde (⌥L schreibt @ auf der deutschen, ł auf der polnischen), lässt Keepit beim Start frei — die Notiz unter seinem Feld sagt es; klick in das Feld und drück die Kombination, um es trotzdem zu verwenden.
+eines davon brauchst, leg den Befehl auf eine andere Taste. Keepit liest außerdem deine Tastaturbelegungen: Die Buchstaben in den Einstellungen und in den Menüs sind die der Tasten der Belegung, die du gerade benutzt, und ein Standardkürzel, das ein Zeichen deiner Belegung wegnehmen würde (⌥L schreibt @ auf der deutschen, ł auf der polnischen), lässt Keepit beim Start frei — die Notiz unter seinem Feld sagt es; klick in das Feld und drück die Kombination, um es trotzdem zu verwenden. Bei einer nicht lateinischen Belegung, etwa der russischen, stammen die Namen aus der lateinischen Belegung, die macOS ihr zuordnet — wie in den Menüs des Systems selbst.
 
 ---
 
