@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 0be95178b3d79d4d8716766770440ce3a98d0dcf -->
+<!-- source: GUIDE.md 0f36e925531ade930cdb706759faaec152a91d4a -->
 # Guida di Keepit
 
 Keepit gestisce la cronologia degli appunti e i modelli su macOS. Vive nella barra dei menu,
@@ -588,7 +588,7 @@ viene reinstallata.
 
 **Un tasto rapido non fa nulla.** Appartiene a un’altra app o a macOS; Keepit lo segnala
 all’avvio. Scegli un’altra combinazione nel pannello *Abbreviazioni*. ⌃⌥ con cifre e lettere
-è libero su un Mac con le impostazioni di fabbrica. Oppure è un tasto rapido predefinito che Keepit ha lasciato libero perché scrive un carattere in una delle tue disposizioni di tastiera; lo dice la nota sotto il suo campo nel pannello *Tasti rapidi*. Scegli un’altra combinazione, o fai clic nel campo e premi la stessa per usarla comunque.
+è libero su un Mac con le impostazioni di fabbrica. Oppure è un tasto rapido predefinito che Keepit ha lasciato libero perché scrive un carattere in una delle tue disposizioni di tastiera; lo dice la nota sotto il suo campo nel pannello *Tasti rapidi*. Scegli un’altra combinazione, o fai clic nel campo e premi la stessa per usarla comunque. ⌃⌥V non fa nulla mentre un menu di Keepit è aperto: macOS usa ⌃V (e ⌃N, ⌃P) per spostare la selezione nei menu. Chiudi prima il menu, oppure tieni premuto ⇧ e scegli *Incolla come testo semplice* nel sottomenu dell’elemento. Per lo stesso motivo il tasto rapido di *Blocca Keepit* non può essere ⌃ con V, N o P.
 
 **Il menu si apre nel posto sbagliato.** L’app in cui ti trovi non espone il suo cursore di testo,
 quindi il menu ripiega sul puntatore del mouse. *Apri il menu al cursore di testo quando

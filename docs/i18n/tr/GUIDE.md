@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 0be95178b3d79d4d8716766770440ce3a98d0dcf -->
+<!-- source: GUIDE.md 0f36e925531ade930cdb706759faaec152a91d4a -->
 # Keepit kullanım kılavuzu
 
 Keepit, macOS için bir pano geçmişi ve şablon yöneticisidir. Menü çubuğunda durur, kopyaladığınız
@@ -571,7 +571,7 @@ yapıştırmıyorsa kapatıp yeniden açın. Uygulama yeniden kurulduğunda macO
 
 **Bir kısayol tuşu hiçbir şey yapmıyor.** Onu başka bir uygulama ya da macOS kullanıyor; Keepit
 bunu açılışta bildirir. *Kısayollar* bölmesinde başka bir birleşim seçin. Rakam ve harflerle ⌃⌥,
-fabrika ayarlarındaki bir Mac’te boştadır. Ya da klavye düzenlerinizden birinde bir karakter yazdığı için Keepit’in boş bıraktığı varsayılan bir kısayoldur; *Kısayollar* panelinde alanının altındaki not bunu söyler. Başka bir kombinasyon seçin ya da yine de kullanmak için alana tıklayıp aynısına basın.
+fabrika ayarlarındaki bir Mac’te boştadır. Ya da klavye düzenlerinizden birinde bir karakter yazdığı için Keepit’in boş bıraktığı varsayılan bir kısayoldur; *Kısayollar* panelinde alanının altındaki not bunu söyler. Başka bir kombinasyon seçin ya da yine de kullanmak için alana tıklayıp aynısına basın. Bir Keepit menüsü açıkken ⌃⌥V hiçbir şey yapmaz: macOS, menülerde seçimi taşımak için ⌃V’yi (ayrıca ⌃N ve ⌃P’yi) kullanır. Önce menüyü kapatın ya da ⇧ tuşunu basılı tutup öğenin alt menüsünden *Düz metin olarak yapıştır* seçeneğini seçin. Aynı nedenle *Keepit'i kilitle* kısayolu ⌃ ile V, N veya P olamaz.
 
 **Menü yanlış yerde açılıyor.** İçinde bulunduğunuz uygulama metin imlecini bildirmiyor; bu yüzden
 menü fare imlecinin yanında açılıyor. Her zaman fare imlecini tercih ediyorsanız Genel bölmesindeki

@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 0be95178b3d79d4d8716766770440ce3a98d0dcf -->
+<!-- source: GUIDE.md 0f36e925531ade930cdb706759faaec152a91d4a -->
 # Keepit-Handbuch
 
 Keepit verwaltet den Verlauf der Zwischenablage und Vorlagen unter macOS. Es sitzt in der Menüleiste,
@@ -585,7 +585,7 @@ wenn die App neu installiert wird.
 
 **Ein Tastenkürzel tut nichts.** Es gehört einer anderen App oder macOS. Keepit meldet das beim
 Start. Wähle im Bereich *Kurzbefehle* eine andere Kombination. ⌃⌥ mit Ziffern und Buchstaben ist auf
-einem Mac im Auslieferungszustand frei. Oder es ist ein Standardkürzel, das Keepit frei gelassen hat, weil es auf einer deiner Tastaturbelegungen ein Zeichen schreibt; die Notiz unter seinem Feld auf der Seite *Kurzbefehle* sagt es. Wähl eine andere Kombination, oder klick in das Feld und drück dieselbe, um sie trotzdem zu verwenden.
+einem Mac im Auslieferungszustand frei. Oder es ist ein Standardkürzel, das Keepit frei gelassen hat, weil es auf einer deiner Tastaturbelegungen ein Zeichen schreibt; die Notiz unter seinem Feld auf der Seite *Kurzbefehle* sagt es. Wähl eine andere Kombination, oder klick in das Feld und drück dieselbe, um sie trotzdem zu verwenden. ⌃⌥V tut nichts, solange ein Keepit-Menü offen ist: macOS bewegt mit ⌃V (und ⌃N, ⌃P) die Auswahl in Menüs. Schließ zuerst das Menü, oder halte ⇧ und wähle *Als reinen Text einfügen* im Untermenü des Eintrags. Aus demselben Grund kann das Kürzel für *Keepit sperren* nicht ⌃ mit V, N oder P sein.
 
 **Das Menü öffnet sich an der falschen Stelle.** Die App, in der du arbeitest, gibt ihren Textcursor
 nicht preis, deshalb weicht das Menü auf den Mauszeiger aus. *Menü nach Möglichkeit am Textcursor

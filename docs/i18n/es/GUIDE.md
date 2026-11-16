@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 0be95178b3d79d4d8716766770440ce3a98d0dcf -->
+<!-- source: GUIDE.md 0f36e925531ade930cdb706759faaec152a91d4a -->
 # Guía de Keepit
 
 Keepit es un gestor del historial del portapapeles y de plantillas para macOS. Vive en la barra de
@@ -568,7 +568,7 @@ Sistema → Privacidad y seguridad → Accesibilidad → Keepit*. Si Keepit apar
 sin pegar, desactívalo y vuelve a activarlo: macOS olvida el permiso cuando se reinstala la app.
 
 **Un atajo no hace nada.** Lo está usando otra app o macOS. Keepit lo avisa al arrancar. Elige otra
-combinación en el panel *Atajos*. ⌃⌥ con dígitos y letras está libre en un Mac recién configurado. O es un atajo predeterminado que Keepit dejó libre porque escribe un carácter en una de tus distribuciones de teclado; la nota bajo su campo en el panel *Atajos* lo dice. Elige otra combinación, o haz clic en el campo y pulsa la misma para usarla de todos modos.
+combinación en el panel *Atajos*. ⌃⌥ con dígitos y letras está libre en un Mac recién configurado. O es un atajo predeterminado que Keepit dejó libre porque escribe un carácter en una de tus distribuciones de teclado; la nota bajo su campo en el panel *Atajos* lo dice. Elige otra combinación, o haz clic en el campo y pulsa la misma para usarla de todos modos. ⌃⌥V no hace nada mientras un menú de Keepit está abierto: macOS usa ⌃V (y ⌃N, ⌃P) para mover la selección en los menús. Cierra antes el menú, o mantén ⇧ y elige *Pegar como texto sin formato* en el submenú del elemento. Por la misma razón, el atajo de *Bloquear Keepit* no puede ser ⌃ con V, N o P.
 
 **El menú se abre en un sitio equivocado.** La app en la que estás no expone su cursor de texto, así
 que el menú recurre al puntero del ratón. *Abrir el menú en el cursor de texto cuando sea posible*, en

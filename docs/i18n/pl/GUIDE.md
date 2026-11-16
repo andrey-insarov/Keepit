@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 0be95178b3d79d4d8716766770440ce3a98d0dcf -->
+<!-- source: GUIDE.md 0f36e925531ade930cdb706759faaec152a91d4a -->
 # Podręcznik Keepit
 
 Keepit zarządza historią schowka i szablonami w systemie macOS. Mieszka na pasku menu, pamięta
@@ -567,7 +567,7 @@ wyłącz go i włącz ponownie. macOS zapomina przyznane uprawnienie po ponownej
 
 **Skrót klawiszowy nic nie robi.** Należy do innej aplikacji albo do macOS; Keepit zgłasza to przy
 uruchomieniu. Wybierz inną kombinację w panelu *Skróty*. Kombinacja ⌃⌥ z cyframi i literami jest
-wolna na Macu w stanie fabrycznym. Albo jest to domyślny skrót, który Keepit zostawił wolny, bo w jednym z twoich układów klawiatury wpisuje znak; mówi o tym notatka pod jego polem w panelu *Skróty*. Wybierz inną kombinację albo kliknij pole i naciśnij tę samą, aby mimo to jej użyć.
+wolna na Macu w stanie fabrycznym. Albo jest to domyślny skrót, który Keepit zostawił wolny, bo w jednym z twoich układów klawiatury wpisuje znak; mówi o tym notatka pod jego polem w panelu *Skróty*. Wybierz inną kombinację albo kliknij pole i naciśnij tę samą, aby mimo to jej użyć. ⌃⌥V nic nie robi, dopóki otwarte jest menu Keepit: macOS używa ⌃V (a także ⌃N i ⌃P) do przesuwania zaznaczenia w menu. Najpierw zamknij menu albo przytrzymaj ⇧ i wybierz *Wklej jako zwykły tekst* w podmenu elementu. Z tego samego powodu skrótem *Zablokuj Keepit* nie może być ⌃ z V, N ani P.
 
 **Menu otwiera się w złym miejscu.** Aplikacja, w której jesteś, nie udostępnia swojego kursora
 tekstowego, więc menu otwiera się przy wskaźniku myszy. Opcja *Otwieraj menu przy kursorze

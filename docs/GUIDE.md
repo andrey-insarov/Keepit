@@ -534,7 +534,7 @@ on again — macOS forgets the grant when the app is reinstalled.
 **A hot key does nothing.** Another app or macOS owns it; Keepit reports that at launch. Or it is a
 default Keepit left free because it types a character on one of your keyboard layouts; the note under
 its field on the *Shortcuts* pane says so. Pick a different combination, or click the field and press
-the same one to use it anyway. ⌃⌥ with digits and letters is free on a stock Mac.
+the same one to use it anyway. ⌃⌥ with digits and letters is free on a stock Mac. ⌃⌥V does nothing while a Keepit menu is open: macOS uses ⌃V (and ⌃N, ⌃P) to move the selection in menus. Close the menu first, or hold ⇧ and pick *Paste as plain text* in the item's submenu. For the same reason the *Lock Keepit* shortcut cannot be ⌃ with V, N or P.
 
 **The menu opens in the wrong place.** The app you are in does not expose its text cursor, so the
 menu falls back to the mouse pointer. *Open menu at text cursor* on the General tab turns the
