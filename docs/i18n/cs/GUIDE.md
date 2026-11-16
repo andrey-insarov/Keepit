@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 0f36e925531ade930cdb706759faaec152a91d4a -->
+<!-- source: GUIDE.md 5e4e05273c142ac7759f3c994f7665d09f9b8d3c -->
 # Příručka Keepit
 
 Keepit spravuje historii schránky a šablony v systému macOS. Sídlí v řádku nabídek, pamatuje si
@@ -550,7 +550,7 @@ a znovu zapněte. macOS udělené oprávnění zapomene, když se aplikace přei
 
 **Klávesová zkratka nic nedělá.** Vlastní ji jiná aplikace nebo macOS; Keepit to hlásí při spuštění.
 Vyberte jinou kombinaci na panelu *Zkratky*. Kombinace ⌃⌥ s číslicemi a písmeny je na Macu
-v továrním stavu volná. Nebo je to výchozí zkratka, kterou Keepit nechal volnou, protože v některém z vašich rozložení klávesnice píše znak; říká to poznámka pod jejím polem na panelu *Zkratky*. Vyberte jinou kombinaci, nebo klikněte do pole a stiskněte tutéž, chcete-li ji přesto použít. ⌃⌥V nic nedělá, dokud je otevřená nabídka Keepitu: macOS používá ⌃V (a také ⌃N a ⌃P) k posouvání výběru v nabídkách. Nejprve nabídku zavřete, nebo podržte ⇧ a v podnabídce položky zvolte *Vložit jako prostý text*. Ze stejného důvodu nemůže být zkratkou pro *Zamknout Keepit* ⌃ s V, N nebo P.
+v továrním stavu volná. Nebo je to výchozí zkratka, kterou Keepit nechal volnou, protože v některém z vašich rozložení klávesnice píše znak; říká to poznámka pod jejím polem na panelu *Zkratky*. Vyberte jinou kombinaci, nebo klikněte do pole a stiskněte tutéž, chcete-li ji přesto použít. ⌃⌥V nic nevloží, dokud je otevřená nabídka Keepitu: macOS používá ⌃V (a také ⌃N a ⌃P) k posouvání výběru v nabídkách. Nejprve nabídku zavřete, nebo podržte ⇧ a v podnabídce položky zvolte *Vložit jako prostý text*. Ze stejného důvodu nemůže být zkratkou pro *Zamknout Keepit* ⌃ s V, N nebo P.
 
 **Nabídka se otevírá na špatném místě.** Aplikace, ve které jste, nezpřístupňuje svůj textový
 kurzor, a nabídka se proto otevře u ukazatele myši. Volba *Otevírat nabídku u textového kurzoru,

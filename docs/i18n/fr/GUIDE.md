@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 0f36e925531ade930cdb706759faaec152a91d4a -->
+<!-- source: GUIDE.md 5e4e05273c142ac7759f3c994f7665d09f9b8d3c -->
 # Guide de Keepit
 
 Keepit est un gestionnaire d’historique du presse-papiers et de modèles pour macOS. Il s’installe dans
@@ -593,7 +593,7 @@ réinstallée.
 
 **Un raccourci ne fait rien.** Une autre app ou macOS l’utilise déjà. Keepit le signale au lancement.
 Choisissez une autre combinaison dans la sous-fenêtre *Raccourcis*. ⌃⌥ avec des chiffres et des lettres
-est libre sur un Mac dans sa configuration d’origine. Ou c’est un raccourci par défaut que Keepit a laissé libre parce qu’il saisit un caractère dans l’une de vos dispositions de clavier ; la note sous son champ dans le panneau *Raccourcis* le dit. Choisissez une autre combinaison, ou cliquez dans le champ et appuyez sur la même pour l’utiliser malgré tout. ⌃⌥V ne fait rien tant qu’un menu de Keepit est ouvert : macOS utilise ⌃V (ainsi que ⌃N et ⌃P) pour déplacer la sélection dans les menus. Fermez d’abord le menu, ou maintenez ⇧ et choisissez *Coller en texte brut* dans le sous-menu de l’élément. Pour la même raison, le raccourci *Verrouiller Keepit* ne peut pas être ⌃ avec V, N ou P.
+est libre sur un Mac dans sa configuration d’origine. Ou c’est un raccourci par défaut que Keepit a laissé libre parce qu’il saisit un caractère dans l’une de vos dispositions de clavier ; la note sous son champ dans le panneau *Raccourcis* le dit. Choisissez une autre combinaison, ou cliquez dans le champ et appuyez sur la même pour l’utiliser malgré tout. ⌃⌥V ne colle rien tant qu’un menu de Keepit est ouvert : macOS utilise ⌃V (ainsi que ⌃N et ⌃P) pour déplacer la sélection dans les menus. Fermez d’abord le menu, ou maintenez ⇧ et choisissez *Coller en texte brut* dans le sous-menu de l’élément. Pour la même raison, le raccourci *Verrouiller Keepit* ne peut pas être ⌃ avec V, N ou P.
 
 **Le menu s’ouvre au mauvais endroit.** L’app dans laquelle vous êtes n’expose pas son curseur de
 texte, le menu se rabat donc sur le pointeur de la souris. *Ouvrir le menu au curseur de texte si

@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 0f36e925531ade930cdb706759faaec152a91d4a -->
+<!-- source: GUIDE.md 5e4e05273c142ac7759f3c994f7665d09f9b8d3c -->
 # Guia do Keepit
 
 O Keepit é um gerenciador de histórico da área de transferência e de modelos para macOS. Ele fica na
@@ -561,7 +561,7 @@ desative e ative de novo: o macOS esquece a permissão quando o app é reinstala
 
 **Um atalho não faz nada.** Outro app ou o macOS já usa essa combinação. O Keepit avisa ao abrir.
 Escolha outra combinação no painel *Atalhos*. ⌃⌥ com dígitos e letras está livre em um Mac com a
-configuração de fábrica. Ou é um atalho padrão que o Keepit deixou livre porque ele digita um caractere em um dos seus leiautes de teclado; a nota abaixo do campo no painel *Atalhos* diz isso. Escolha outra combinação, ou clique no campo e pressione a mesma para usá-la mesmo assim. ⌃⌥V não faz nada enquanto um menu do Keepit está aberto: o macOS usa ⌃V (e ⌃N, ⌃P) para mover a seleção nos menus. Feche o menu antes, ou segure ⇧ e escolha *Colar como texto simples* no submenu do item. Pelo mesmo motivo, o atalho de *Bloquear o Keepit* não pode ser ⌃ com V, N ou P.
+configuração de fábrica. Ou é um atalho padrão que o Keepit deixou livre porque ele digita um caractere em um dos seus leiautes de teclado; a nota abaixo do campo no painel *Atalhos* diz isso. Escolha outra combinação, ou clique no campo e pressione a mesma para usá-la mesmo assim. ⌃⌥V não cola nada enquanto um menu do Keepit está aberto: o macOS usa ⌃V (e ⌃N, ⌃P) para mover a seleção nos menus. Feche o menu antes, ou segure ⇧ e escolha *Colar como texto simples* no submenu do item. Pelo mesmo motivo, o atalho de *Bloquear o Keepit* não pode ser ⌃ com V, N ou P.
 
 **O menu abre no lugar errado.** O app em que você está não expõe o cursor de texto, então o menu
 recorre ao cursor do mouse. *Abrir o menu no cursor de texto quando possível*, no painel Geral,

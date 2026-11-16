@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 0f36e925531ade930cdb706759faaec152a91d4a -->
+<!-- source: GUIDE.md 5e4e05273c142ac7759f3c994f7665d09f9b8d3c -->
 # Keepit-handleiding
 
 Keepit beheert je klembordgeschiedenis en sjablonen op macOS. Het woont in de menubalk, onthoudt
@@ -586,7 +586,7 @@ wanneer de app opnieuw wordt geïnstalleerd.
 
 **Een sneltoets doet niets.** Een andere app of macOS heeft hem in gebruik; Keepit meldt dat bij
 de start. Kies een andere combinatie in het paneel *Sneltoetsen*. ⌃⌥ met cijfers en letters is vrij
-op een Mac met standaardinstellingen. Of het is een standaardsneltoets die Keepit vrij heeft gelaten omdat hij op een van je toetsenbordindelingen een teken typt; de notitie onder het veld in het paneel *Sneltoetsen* zegt het. Kies een andere combinatie, of klik in het veld en druk op dezelfde om hem toch te gebruiken. ⌃⌥V doet niets zolang een menu van Keepit open is: macOS gebruikt ⌃V (en ⌃N, ⌃P) om de selectie in menu’s te verplaatsen. Sluit eerst het menu, of houd ⇧ ingedrukt en kies *Als platte tekst plakken* in het submenu van het item. Om dezelfde reden kan de sneltoets voor *Keepit vergrendelen* niet ⌃ met V, N of P zijn.
+op een Mac met standaardinstellingen. Of het is een standaardsneltoets die Keepit vrij heeft gelaten omdat hij op een van je toetsenbordindelingen een teken typt; de notitie onder het veld in het paneel *Sneltoetsen* zegt het. Kies een andere combinatie, of klik in het veld en druk op dezelfde om hem toch te gebruiken. ⌃⌥V plakt niets zolang een menu van Keepit open is: macOS gebruikt ⌃V (en ⌃N, ⌃P) om de selectie in menu’s te verplaatsen. Sluit eerst het menu, of houd ⇧ ingedrukt en kies *Als platte tekst plakken* in het submenu van het item. Om dezelfde reden kan de sneltoets voor *Keepit vergrendelen* niet ⌃ met V, N of P zijn.
 
 **Het menu opent op de verkeerde plek.** De app waarin je werkt, geeft zijn tekstcursor niet door,
 en daarom valt het menu terug op de muisaanwijzer. *Menu bij de tekstcursor openen indien
