@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 39bab8b4f2a3de5ce61f2427db3f17e669b6f280 -->
+<!-- source: GUIDE.md 5e4e05273c142ac7759f3c994f7665d09f9b8d3c -->
 # Guía de Keepit
 
 Keepit es un gestor del historial del portapapeles y de plantillas para macOS. Vive en la barra de
@@ -11,13 +11,13 @@ Atajos*. Esta guía describe Keepit 3. La guía de Keepit 2.x se conserva sin ca
 
 **Contenido**
 
-- [Parte 1: Primeros pasos](#part-1--getting-started): [Instalación](#install) · [Primer arranque](#first-launch)
-- [Parte 2: Uso diario](#part-2--everyday-use): [El menú del historial](#the-history-menu) · [Búsqueda y vista previa](#search-and-preview) · [Pegar sin el menú](#paste-without-the-menu) · [La cola de pegado](#the-paste-queue) · [El menú ampliado](#the-extended-menu)
-- [Parte 3: Plantillas](#part-3--templates): [Crear y organizar](#creating-and-organising) · [Marcadores](#placeholders) · [Plantillas que hacen preguntas](#templates-that-ask-questions)
-- [Parte 4: El Visor](#part-4--the-viewer)
-- [Parte 5: Ajustes](#part-5--settings)
+- [Parte 1: Primeros pasos](#part-1-getting-started): [Instalación](#install) · [Primer arranque](#first-launch)
+- [Parte 2: Uso diario](#part-2-everyday-use): [El menú del historial](#the-history-menu) · [Búsqueda y vista previa](#search-and-preview) · [Pegar sin el menú](#paste-without-the-menu) · [La cola de pegado](#the-paste-queue) · [El menú ampliado](#the-extended-menu)
+- [Parte 3: Plantillas](#part-3-templates): [Crear y organizar](#creating-and-organising) · [Marcadores](#placeholders) · [Plantillas que hacen preguntas](#templates-that-ask-questions)
+- [Parte 4: El Visor](#part-4-the-viewer)
+- [Parte 5: Ajustes](#part-5-settings)
 - [Parte 6: Seguridad](#part-6-security): [Contraseña y cifrado](#password-and-encryption) · [Touch ID](#touch-id) · [Frase de recuperación](#recovery-phrase) · [Copia de seguridad](#backup)
-- [Parte 7: Funciones avanzadas](#part-7--advanced): [Automatización](#automation-the-keepit-url-scheme) · [Actualizaciones](#updates) · [Desinstalación](#uninstalling)
+- [Parte 7: Funciones avanzadas](#part-7-advanced): [Automatización](#automation-the-keepit-url-scheme) · [Actualizaciones](#updates) · [Desinstalación](#uninstalling)
 - [Referencia](#reference): [Solución de problemas](#troubleshooting) · [Resumen de atajos](#keyboard-cheat-sheet) · [Resumen de marcadores](#placeholder-cheat-sheet)
 
 ---
@@ -349,7 +349,7 @@ los añade Keepit. Si macOS u otra app ya usa alguna combinación, Keepit lo avi
 ⌥E, *Ajustes* ⌥S, *Borrar historial* ⌥C, *Pausar la grabación* ⌥P, *Bloquear Keepit* ⌥L y *Salir de
 Keepit* ⌥Q funcionan desde cualquier app y aparecen junto a sus comandos en el menú. En el Mac,
 ⌥+letra suele escribir un carácter especial (por ejemplo ⌥C = © o ⌥E = € en el teclado español); si
-necesitas alguno, mueve el comando a otra tecla.
+necesitas alguno, mueve el comando a otra tecla. Keepit también lee tus distribuciones de teclado: las letras que ves en Ajustes y en los menús son las de las teclas de la distribución que estás usando, y un atajo predeterminado que quitaría un carácter que tu distribución necesita (⌥L escribe @ en la alemana y ł en la polaca) se deja libre al arrancar Keepit; la nota bajo su campo lo dice; haz clic en el campo y pulsa la combinación para usarla de todos modos. Con una distribución no latina, como la rusa, los nombres se toman de la distribución latina que macOS le asocia, como en los menús del propio sistema.
 
 ---
 
@@ -568,7 +568,7 @@ Sistema → Privacidad y seguridad → Accesibilidad → Keepit*. Si Keepit apar
 sin pegar, desactívalo y vuelve a activarlo: macOS olvida el permiso cuando se reinstala la app.
 
 **Un atajo no hace nada.** Lo está usando otra app o macOS. Keepit lo avisa al arrancar. Elige otra
-combinación en el panel *Atajos*. ⌃⌥ con dígitos y letras está libre en un Mac recién configurado.
+combinación en el panel *Atajos*. ⌃⌥ con dígitos y letras está libre en un Mac recién configurado. O es un atajo predeterminado que Keepit dejó libre porque escribe un carácter en una de tus distribuciones de teclado; la nota bajo su campo en el panel *Atajos* lo dice. Elige otra combinación, o haz clic en el campo y pulsa la misma para usarla de todos modos. ⌃⌥V no pega nada mientras un menú de Keepit está abierto: macOS usa ⌃V (y ⌃N, ⌃P) para mover la selección en los menús. Cierra antes el menú, o mantén ⇧ y elige *Pegar como texto sin formato* en el submenú del elemento. Por la misma razón, el atajo de *Bloquear Keepit* no puede ser ⌃ con V, N o P.
 
 **El menú se abre en un sitio equivocado.** La app en la que estás no expone su cursor de texto, así
 que el menú recurre al puntero del ratón. *Abrir el menú en el cursor de texto cuando sea posible*, en

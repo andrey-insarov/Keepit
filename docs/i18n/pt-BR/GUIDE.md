@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 39bab8b4f2a3de5ce61f2427db3f17e669b6f280 -->
+<!-- source: GUIDE.md 5e4e05273c142ac7759f3c994f7665d09f9b8d3c -->
 # Guia do Keepit
 
 O Keepit é um gerenciador de histórico da área de transferência e de modelos para macOS. Ele fica na
@@ -11,13 +11,13 @@ descreve o Keepit 3. O guia do Keepit 2.x continua disponível, sem alterações
 
 **Conteúdo**
 
-- [Parte 1: Primeiros passos](#part-1--getting-started): [Instalação](#install) · [Primeira abertura](#first-launch)
-- [Parte 2: Uso no dia a dia](#part-2--everyday-use): [O menu de histórico](#the-history-menu) · [Busca e pré-visualização](#search-and-preview) · [Colar sem o menu](#paste-without-the-menu) · [A fila de colagem](#the-paste-queue) · [O menu estendido](#the-extended-menu)
-- [Parte 3: Modelos](#part-3--templates): [Criar e organizar](#creating-and-organising) · [Marcadores](#placeholders) · [Modelos que fazem perguntas](#templates-that-ask-questions)
-- [Parte 4: O Visualizador](#part-4--the-viewer)
-- [Parte 5: Ajustes](#part-5--settings)
+- [Parte 1: Primeiros passos](#part-1-getting-started): [Instalação](#install) · [Primeira abertura](#first-launch)
+- [Parte 2: Uso no dia a dia](#part-2-everyday-use): [O menu de histórico](#the-history-menu) · [Busca e pré-visualização](#search-and-preview) · [Colar sem o menu](#paste-without-the-menu) · [A fila de colagem](#the-paste-queue) · [O menu estendido](#the-extended-menu)
+- [Parte 3: Modelos](#part-3-templates): [Criar e organizar](#creating-and-organising) · [Marcadores](#placeholders) · [Modelos que fazem perguntas](#templates-that-ask-questions)
+- [Parte 4: O Visualizador](#part-4-the-viewer)
+- [Parte 5: Ajustes](#part-5-settings)
 - [Parte 6: Segurança](#part-6-security): [Senha e criptografia](#password-and-encryption) · [Touch ID](#touch-id) · [Frase de recuperação](#recovery-phrase) · [Backup](#backup)
-- [Parte 7: Recursos avançados](#part-7--advanced): [Automação](#automation-the-keepit-url-scheme) · [Atualizações](#updates) · [Desinstalação](#uninstalling)
+- [Parte 7: Recursos avançados](#part-7-advanced): [Automação](#automation-the-keepit-url-scheme) · [Atualizações](#updates) · [Desinstalação](#uninstalling)
 - [Referência](#reference): [Solução de problemas](#troubleshooting) · [Resumo dos atalhos](#keyboard-cheat-sheet) · [Resumo dos marcadores](#placeholder-cheat-sheet)
 
 ---
@@ -344,7 +344,7 @@ acrescentado pelo Keepit. Se o macOS ou outro app já usa alguma combinação, o
 *Visualizador* ⌥E, *Ajustes* ⌥S, *Limpar histórico* ⌥C, *Pausar gravação* ⌥P, *Bloquear o Keepit* ⌥L
 e *Encerrar o Keepit* ⌥Q funcionam a partir de qualquer app e aparecem ao lado dos comandos no menu.
 No Mac, ⌥+letra normalmente digita um caractere especial (por exemplo, ⌥C = ç no layout americano); se
-você precisar de algum deles, mude o comando para outra tecla.
+você precisar de algum deles, mude o comando para outra tecla. O Keepit também lê os seus leiautes de teclado: as letras mostradas nos Ajustes e nos menus são as das teclas do leiaute que você está usando, e um atalho padrão que tomaria um caractere de que o seu leiaute precisa (⌥L digita @ no alemão e ł no polonês) fica livre quando o Keepit abre; a nota abaixo do campo diz isso. Clique no campo e pressione a combinação para usá-la mesmo assim. Em um layout não latino, como o russo, os nomes vêm do layout latino que o macOS associa a ele, como nos menus do próprio sistema.
 
 ---
 
@@ -561,7 +561,7 @@ desative e ative de novo: o macOS esquece a permissão quando o app é reinstala
 
 **Um atalho não faz nada.** Outro app ou o macOS já usa essa combinação. O Keepit avisa ao abrir.
 Escolha outra combinação no painel *Atalhos*. ⌃⌥ com dígitos e letras está livre em um Mac com a
-configuração de fábrica.
+configuração de fábrica. Ou é um atalho padrão que o Keepit deixou livre porque ele digita um caractere em um dos seus leiautes de teclado; a nota abaixo do campo no painel *Atalhos* diz isso. Escolha outra combinação, ou clique no campo e pressione a mesma para usá-la mesmo assim. ⌃⌥V não cola nada enquanto um menu do Keepit está aberto: o macOS usa ⌃V (e ⌃N, ⌃P) para mover a seleção nos menus. Feche o menu antes, ou segure ⇧ e escolha *Colar como texto simples* no submenu do item. Pelo mesmo motivo, o atalho de *Bloquear o Keepit* não pode ser ⌃ com V, N ou P.
 
 **O menu abre no lugar errado.** O app em que você está não expõe o cursor de texto, então o menu
 recorre ao cursor do mouse. *Abrir o menu no cursor de texto quando possível*, no painel Geral,

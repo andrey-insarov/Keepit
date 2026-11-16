@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 39bab8b4f2a3de5ce61f2427db3f17e669b6f280 -->
+<!-- source: GUIDE.md 5e4e05273c142ac7759f3c994f7665d09f9b8d3c -->
 # Příručka Keepit
 
 Keepit spravuje historii schránky a šablony v systému macOS. Sídlí v řádku nabídek, pamatuje si
@@ -11,13 +11,13 @@ příručka pro Keepit 2.x zůstává beze změny na adrese
 
 **Obsah**
 
-- [Část 1: Začínáme](#part-1--getting-started): [Instalace](#install) · [První spuštění](#first-launch)
-- [Část 2: Každodenní používání](#part-2--everyday-use): [Nabídka historie](#the-history-menu) · [Hledání a náhled](#search-and-preview) · [Vkládání bez nabídky](#paste-without-the-menu) · [Fronta vkládání](#the-paste-queue) · [Rozšířená nabídka](#the-extended-menu)
-- [Část 3: Šablony](#part-3--templates): [Vytváření a uspořádání](#creating-and-organising) · [Zástupné symboly](#placeholders) · [Šablony, které se ptají](#templates-that-ask-questions)
-- [Část 4: Prohlížeč](#part-4--the-viewer)
-- [Část 5: Nastavení](#part-5--settings)
+- [Část 1: Začínáme](#part-1-getting-started): [Instalace](#install) · [První spuštění](#first-launch)
+- [Část 2: Každodenní používání](#part-2-everyday-use): [Nabídka historie](#the-history-menu) · [Hledání a náhled](#search-and-preview) · [Vkládání bez nabídky](#paste-without-the-menu) · [Fronta vkládání](#the-paste-queue) · [Rozšířená nabídka](#the-extended-menu)
+- [Část 3: Šablony](#part-3-templates): [Vytváření a uspořádání](#creating-and-organising) · [Zástupné symboly](#placeholders) · [Šablony, které se ptají](#templates-that-ask-questions)
+- [Část 4: Prohlížeč](#part-4-the-viewer)
+- [Část 5: Nastavení](#part-5-settings)
 - [Část 6: Zabezpečení](#part-6-security): [Heslo a šifrování](#password-and-encryption) · [Touch ID](#touch-id) · [Fráze pro obnovu](#recovery-phrase) · [Záloha](#backup)
-- [Část 7: Pro pokročilé](#part-7--advanced): [Automatizace](#automation-the-keepit-url-scheme) · [Aktualizace](#updates) · [Odinstalace](#uninstalling)
+- [Část 7: Pro pokročilé](#part-7-advanced): [Automatizace](#automation-the-keepit-url-scheme) · [Aktualizace](#updates) · [Odinstalace](#uninstalling)
 - [Přehledy](#reference): [Řešení potíží](#troubleshooting) · [Tahák klávesových zkratek](#keyboard-cheat-sheet) · [Tahák zástupných symbolů](#placeholder-cheat-sheet)
 
 ---
@@ -340,7 +340,7 @@ macOS nebo jiná aplikace, Keepit to oznámí při spuštění. *Prohlížeč* �
 historii* ⌥C, *Pozastavit záznam* ⌥P, *Zamknout Keepit* ⌥L a *Ukončit Keepit* ⌥Q fungují
 z kterékoli aplikace a v nabídce jsou uvedené vedle svých příkazů. Na americkém rozložení klávesnice
 píše ⌥ + písmeno obvykle speciální znak (⌥S = ß, ⌥C = ç …); pokud některý z nich potřebujete,
-přesuňte zkratku jinam.
+přesuňte zkratku jinam. Keepit také čte vaše rozložení klávesnice: písmena zobrazená v Nastavení a v nabídkách jsou ta na klávesách rozložení, které právě používáte, a výchozí zkratku, která by zabrala znak potřebný ve vašem rozložení (⌥L píše @ v německém a ł v polském), Keepit při spuštění nechá volnou — říká to poznámka pod jejím polem; chcete-li ji přesto použít, klikněte do pole a stiskněte kombinaci. U nelatinkového rozložení, například ruského, pocházejí názvy z latinkového rozložení, které k němu macOS přiřazuje — stejně jako v nabídkách samotného systému.
 
 ---
 
@@ -550,7 +550,7 @@ a znovu zapněte. macOS udělené oprávnění zapomene, když se aplikace přei
 
 **Klávesová zkratka nic nedělá.** Vlastní ji jiná aplikace nebo macOS; Keepit to hlásí při spuštění.
 Vyberte jinou kombinaci na panelu *Zkratky*. Kombinace ⌃⌥ s číslicemi a písmeny je na Macu
-v továrním stavu volná.
+v továrním stavu volná. Nebo je to výchozí zkratka, kterou Keepit nechal volnou, protože v některém z vašich rozložení klávesnice píše znak; říká to poznámka pod jejím polem na panelu *Zkratky*. Vyberte jinou kombinaci, nebo klikněte do pole a stiskněte tutéž, chcete-li ji přesto použít. ⌃⌥V nic nevloží, dokud je otevřená nabídka Keepitu: macOS používá ⌃V (a také ⌃N a ⌃P) k posouvání výběru v nabídkách. Nejprve nabídku zavřete, nebo podržte ⇧ a v podnabídce položky zvolte *Vložit jako prostý text*. Ze stejného důvodu nemůže být zkratkou pro *Zamknout Keepit* ⌃ s V, N nebo P.
 
 **Nabídka se otevírá na špatném místě.** Aplikace, ve které jste, nezpřístupňuje svůj textový
 kurzor, a nabídka se proto otevře u ukazatele myši. Volba *Otevírat nabídku u textového kurzoru,

@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 39bab8b4f2a3de5ce61f2427db3f17e669b6f280 -->
+<!-- source: GUIDE.md 5e4e05273c142ac7759f3c994f7665d09f9b8d3c -->
 # Keepit 使用指南
 
 Keepit 是一款 macOS 上的剪贴板历史记录和模板管理工具。它常驻菜单栏，记住你复制过的所有内容，并能用快捷键把其中任意一项粘贴回来。下面列出的都是默认快捷键，每一个都可以在“设置”→“快捷键”中更改。本指南介绍的是 Keepit 3。Keepit 2.x 的指南原样保留在 [keep.it.com/v2/guide](https://keep.it.com/v2/guide)（英文）。
@@ -7,13 +7,13 @@ Keepit 是一款 macOS 上的剪贴板历史记录和模板管理工具。它常
 
 **目录**
 
-- [第 1 部分：入门](#part-1--getting-started)：[安装](#install) · [首次启动](#first-launch)
-- [第 2 部分：日常使用](#part-2--everyday-use)：[历史记录菜单](#the-history-menu) · [搜索和预览](#search-and-preview) · [不打开菜单直接粘贴](#paste-without-the-menu) · [粘贴队列](#the-paste-queue) · [扩展菜单](#the-extended-menu)
-- [第 3 部分：模板](#part-3--templates)：[创建和整理](#creating-and-organising) · [占位符](#placeholders) · [会提问的模板](#templates-that-ask-questions)
-- [第 4 部分：查看器](#part-4--the-viewer)
-- [第 5 部分：设置](#part-5--settings)
+- [第 1 部分：入门](#part-1-getting-started)：[安装](#install) · [首次启动](#first-launch)
+- [第 2 部分：日常使用](#part-2-everyday-use)：[历史记录菜单](#the-history-menu) · [搜索和预览](#search-and-preview) · [不打开菜单直接粘贴](#paste-without-the-menu) · [粘贴队列](#the-paste-queue) · [扩展菜单](#the-extended-menu)
+- [第 3 部分：模板](#part-3-templates)：[创建和整理](#creating-and-organising) · [占位符](#placeholders) · [会提问的模板](#templates-that-ask-questions)
+- [第 4 部分：查看器](#part-4-the-viewer)
+- [第 5 部分：设置](#part-5-settings)
 - [第 6 部分：安全](#part-6-security)：[密码和加密](#password-and-encryption) · [Touch ID](#touch-id) · [恢复短语](#recovery-phrase) · [备份](#backup)
-- [第 7 部分：高级功能](#part-7--advanced)：[自动化](#automation-the-keepit-url-scheme) · [更新](#updates) · [卸载](#uninstalling)
+- [第 7 部分：高级功能](#part-7-advanced)：[自动化](#automation-the-keepit-url-scheme) · [更新](#updates) · [卸载](#uninstalling)
 - [参考](#reference)：[故障排除](#troubleshooting) · [快捷键速查表](#keyboard-cheat-sheet) · [占位符速查表](#placeholder-cheat-sheet)
 
 ---
@@ -247,7 +247,7 @@ Keepit 默认在登录时启动，可以在“设置”→“通用”中关闭�
 
 ![“设置”→“快捷键”](site/img/guide/prefs-hotkeys.png)
 
-在**快捷键**面板中，点按一个输入栏，然后按下组合键。⌫ 可以关闭某个按键。已被其他命令占用的组合键不会被接受，原因会显示在输入栏下方。“恢复默认”会把 ⌥+字母这一组（⌥M 历史记录、⌥T 模板、⌥E 查看器、⌥S 设置、⌥C 清除历史记录、⌥P 暂停、⌥L 锁定、⌥Q 退出）以及 ⌥⇧V 和 ⌃⌥ 恢复原样。“按编号粘贴项目”和“对最新项的操作”只接受修饰键，数字或字母由 Keepit 补上。如果某个组合键已经被 macOS 或其他应用占用，Keepit 会在启动时告诉你。“查看器”⌥E、“设置”⌥S、“清除历史记录”⌥C、“暂停记录”⌥P、“锁定 Keepit”⌥L 和“退出 Keepit”⌥Q 在任何应用中都能使用，并显示在菜单中相应命令的旁边。快捷键是按键盘上的按键位置来定义的，所以使用中文输入法时 ⌥M 照样有效。在英文输入状态下，⌥+字母通常会输入特殊字符（⌥S = ß、⌥C = ç 等），如果你需要输入这些字符，请把命令换到别的按键上。
+在**快捷键**面板中，点按一个输入栏，然后按下组合键。⌫ 可以关闭某个按键。已被其他命令占用的组合键不会被接受，原因会显示在输入栏下方。“恢复默认”会把 ⌥+字母这一组（⌥M 历史记录、⌥T 模板、⌥E 查看器、⌥S 设置、⌥C 清除历史记录、⌥P 暂停、⌥L 锁定、⌥Q 退出）以及 ⌥⇧V 和 ⌃⌥ 恢复原样。“按编号粘贴项目”和“对最新项的操作”只接受修饰键，数字或字母由 Keepit 补上。如果某个组合键已经被 macOS 或其他应用占用，Keepit 会在启动时告诉你。“查看器”⌥E、“设置”⌥S、“清除历史记录”⌥C、“暂停记录”⌥P、“锁定 Keepit”⌥L 和“退出 Keepit”⌥Q 在任何应用中都能使用，并显示在菜单中相应命令的旁边。快捷键是按键盘上的按键位置来定义的，所以使用中文输入法时 ⌥M 照样有效。在英文输入状态下，⌥+字母通常会输入特殊字符（⌥S = ß、⌥C = ç 等），如果你需要输入这些字符，请把命令换到别的按键上。Keepit 还会读取你的键盘布局：设置和菜单中显示的字母就是你当前布局中这些按键上的字母；如果某个默认快捷键会占用你的布局需要的字符（德语布局中 ⌥L 输入 @，波兰语布局中输入 ł），Keepit 启动时会把它空出来，字段下方的说明会写明；要照旧使用，请点击字段并按下该组合键。在俄语等非拉丁字母布局下，名称取自 macOS 与之配对的拉丁字母布局，与系统自身的菜单一致。
 
 ---
 
@@ -354,7 +354,7 @@ Keepit 每天检查一次 GitHub Releases，有更新时会用对话框提示。
 
 **选择项目后没有粘贴任何内容。** 缺少无障碍权限：请检查“系统设置”→“隐私与安全”→“无障碍”→“Keepit”。如果 Keepit 已经在列表中却仍然不粘贴，请先关闭再重新打开：重新安装应用后，macOS 会忘记之前的授权。
 
-**某个快捷键没有反应。** 它被其他应用或 macOS 占用了，Keepit 在启动时会报告这一点。请在“快捷键”面板中换一个组合键。在一台没有额外配置的 Mac 上，⌃⌥ 加数字和字母的组合是空闲的。
+**某个快捷键没有反应。** 它被其他应用或 macOS 占用了，Keepit 在启动时会报告这一点。请在“快捷键”面板中换一个组合键。在一台没有额外配置的 Mac 上，⌃⌥ 加数字和字母的组合是空闲的。也可能是 Keepit 空出来的默认快捷键，因为它在你的某个键盘布局中会输入字符；“快捷键”面板中该字段下方的说明会写明。请换一个组合键，或点击字段并按下同一组合键以照旧使用。Keepit 的菜单打开时，⌃⌥V 不会粘贴：macOS 用 ⌃V（以及 ⌃N、⌃P）在菜单中移动选择。请先关闭菜单，或按住 ⇧ 并在该项的子菜单中选择“以纯文本粘贴”。出于同样的原因，“锁定 Keepit”的快捷键不能是 ⌃ 加 V、N 或 P。
 
 **菜单打开的位置不对。** 你正在使用的应用没有提供文本光标的位置，所以菜单改为在鼠标指针处打开。如果你希望菜单始终在指针处打开，可以关闭“通用”面板中的“尽可能在文本光标处打开菜单”。
 

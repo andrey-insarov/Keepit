@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 39bab8b4f2a3de5ce61f2427db3f17e669b6f280 -->
+<!-- source: GUIDE.md 5e4e05273c142ac7759f3c994f7665d09f9b8d3c -->
 # Keepit 사용 설명서
 
 Keepit은 macOS용 클립보드 기록 및 템플릿 관리자입니다. 메뉴 막대에 자리하고, 복사한 모든 것을
@@ -10,13 +10,13 @@ Keepit은 macOS용 클립보드 기록 및 템플릿 관리자입니다. 메뉴 
 
 **목차**
 
-- [1부. 시작하기](#part-1--getting-started): [설치](#install) · [처음 실행](#first-launch)
-- [2부. 일상적인 사용](#part-2--everyday-use): [기록 메뉴](#the-history-menu) · [검색과 미리보기](#search-and-preview) · [메뉴 없이 붙여넣기](#paste-without-the-menu) · [붙여넣기 대기열](#the-paste-queue) · [확장 메뉴](#the-extended-menu)
-- [3부. 템플릿](#part-3--templates): [만들기와 정리하기](#creating-and-organising) · [자리표시자](#placeholders) · [질문하는 템플릿](#templates-that-ask-questions)
-- [4부. 뷰어](#part-4--the-viewer)
-- [5부. 설정](#part-5--settings)
+- [1부. 시작하기](#part-1-getting-started): [설치](#install) · [처음 실행](#first-launch)
+- [2부. 일상적인 사용](#part-2-everyday-use): [기록 메뉴](#the-history-menu) · [검색과 미리보기](#search-and-preview) · [메뉴 없이 붙여넣기](#paste-without-the-menu) · [붙여넣기 대기열](#the-paste-queue) · [확장 메뉴](#the-extended-menu)
+- [3부. 템플릿](#part-3-templates): [만들기와 정리하기](#creating-and-organising) · [자리표시자](#placeholders) · [질문하는 템플릿](#templates-that-ask-questions)
+- [4부. 뷰어](#part-4-the-viewer)
+- [5부. 설정](#part-5-settings)
 - [6부. 보안](#part-6-security): [암호와 암호화](#password-and-encryption) · [Touch ID](#touch-id) · [복구 문구](#recovery-phrase) · [백업](#backup)
-- [7부. 고급](#part-7--advanced): [자동화](#automation-the-keepit-url-scheme) · [업데이트](#updates) · [설치 제거](#uninstalling)
+- [7부. 고급](#part-7-advanced): [자동화](#automation-the-keepit-url-scheme) · [업데이트](#updates) · [설치 제거](#uninstalling)
 - [참고 자료](#reference): [문제 해결](#troubleshooting) · [단축키 요약](#keyboard-cheat-sheet) · [자리표시자 요약](#placeholder-cheat-sheet)
 
 ---
@@ -335,7 +335,7 @@ Keepit이 덧붙입니다. macOS나 다른 앱이 어떤 조합을 이미 쓰고
 줍니다. *뷰어* ⌥E, *설정* ⌥S, *기록 지우기* ⌥C, *기록 일시 정지* ⌥P, *Keepit 잠그기* ⌥L,
 *Keepit 종료* ⌥Q는 모든 앱에서 작동하며 메뉴에서 각 명령 옆에 표시됩니다. 미국 키보드 배열에서
 ⌥ + 글자는 보통 특수 문자를 입력합니다(⌥S = ß, ⌥C = ç …). 그런 문자가 필요하면 단축키를 다른
-키로 옮기세요.
+키로 옮기세요. Keepit은 키보드 배열도 읽습니다. 설정과 메뉴에 표시되는 글자는 지금 쓰는 배열의 키에 있는 글자이고, 배열에 필요한 문자를 빼앗게 되는 기본 단축키(독일어 배열에서 ⌥L은 @, 폴란드어 배열에서는 ł)는 Keepit이 실행될 때 비워 둡니다. 해당 칸 아래의 안내문이 이를 알려 줍니다. 그래도 쓰려면 칸을 클릭하고 그 조합을 누르세요. 러시아어 배열처럼 라틴 문자가 아닌 배열에서는 macOS가 그 배열과 짝지은 라틴 문자 배열의 이름을 사용합니다. 시스템 자체 메뉴와 같은 방식입니다.
 
 ---
 
@@ -538,7 +538,7 @@ Homebrew로 업데이트합니다. App Store 에디션에는 업데이트 기능
 
 **단축키가 아무 동작도 하지 않습니다.** 다른 앱이나 macOS가 그 키를 쓰고 있습니다. Keepit은 실행할
 때 이를 알려 줍니다. *단축키* 패널에서 다른 조합을 고르세요. 숫자나 글자와 함께 쓰는 ⌃⌥ 조합은
-기본 상태의 Mac에서 비어 있습니다.
+기본 상태의 Mac에서 비어 있습니다. 또는 키보드 배열 중 하나에서 문자를 입력하는 키라서 Keepit이 비워 둔 기본 단축키일 수 있습니다. *단축키* 패널의 해당 칸 아래 안내문이 이를 알려 줍니다. 다른 조합을 고르거나, 그래도 쓰려면 칸을 클릭하고 같은 조합을 누르세요. Keepit 메뉴가 열려 있는 동안에는 ⌃⌥V로 붙여넣기가 되지 않습니다. macOS가 메뉴에서 선택을 옮기는 데 ⌃V(그리고 ⌃N, ⌃P)를 쓰기 때문입니다. 먼저 메뉴를 닫거나, ⇧를 누른 채 항목의 하위 메뉴에서 *서식 없는 텍스트로 붙여넣기*를 고르세요. 같은 이유로 *Keepit 잠그기* 단축키는 ⌃와 V, N, P의 조합이 될 수 없습니다.
 
 **메뉴가 엉뚱한 곳에 열립니다.** 사용 중인 앱이 텍스트 커서 위치를 알려 주지 않아서 메뉴가 마우스
 포인터 위치에 열리는 것입니다. 항상 포인터 위치가 좋다면 일반 패널의 *가능하면 텍스트 커서 위치에

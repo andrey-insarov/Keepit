@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 39bab8b4f2a3de5ce61f2427db3f17e669b6f280 -->
+<!-- source: GUIDE.md 5e4e05273c142ac7759f3c994f7665d09f9b8d3c -->
 # Guide de Keepit
 
 Keepit est un gestionnaire d’historique du presse-papiers et de modèles pour macOS. Il s’installe dans
@@ -11,13 +11,13 @@ raccourci clavier. Tous les raccourcis ci-dessous sont ceux par défaut, et chac
 
 **Sommaire**
 
-- [Partie 1 : Premiers pas](#part-1--getting-started) : [Installation](#install) · [Premier lancement](#first-launch)
-- [Partie 2 : Au quotidien](#part-2--everyday-use) : [Le menu d’historique](#the-history-menu) · [Recherche et aperçu](#search-and-preview) · [Coller sans le menu](#paste-without-the-menu) · [La file de collage](#the-paste-queue) · [Le menu étendu](#the-extended-menu)
-- [Partie 3 : Modèles](#part-3--templates) : [Créer et organiser](#creating-and-organising) · [Variables](#placeholders) · [Des modèles qui posent des questions](#templates-that-ask-questions)
-- [Partie 4 : La Visionneuse](#part-4--the-viewer)
-- [Partie 5 : Réglages](#part-5--settings)
+- [Partie 1 : Premiers pas](#part-1-getting-started) : [Installation](#install) · [Premier lancement](#first-launch)
+- [Partie 2 : Au quotidien](#part-2-everyday-use) : [Le menu d’historique](#the-history-menu) · [Recherche et aperçu](#search-and-preview) · [Coller sans le menu](#paste-without-the-menu) · [La file de collage](#the-paste-queue) · [Le menu étendu](#the-extended-menu)
+- [Partie 3 : Modèles](#part-3-templates) : [Créer et organiser](#creating-and-organising) · [Variables](#placeholders) · [Des modèles qui posent des questions](#templates-that-ask-questions)
+- [Partie 4 : La Visionneuse](#part-4-the-viewer)
+- [Partie 5 : Réglages](#part-5-settings)
 - [Partie 6 : Sécurité](#part-6-security) : [Mot de passe et chiffrement](#password-and-encryption) · [Touch ID](#touch-id) · [Phrase de récupération](#recovery-phrase) · [Sauvegarde](#backup)
-- [Partie 7 : Fonctions avancées](#part-7--advanced) : [Automatisation](#automation-the-keepit-url-scheme) · [Mises à jour](#updates) · [Désinstallation](#uninstalling)
+- [Partie 7 : Fonctions avancées](#part-7-advanced) : [Automatisation](#automation-the-keepit-url-scheme) · [Mises à jour](#updates) · [Désinstallation](#uninstalling)
 - [Référence](#reference) : [Dépannage](#troubleshooting) · [Aide-mémoire des raccourcis](#keyboard-cheat-sheet) · [Aide-mémoire des variables](#placeholder-cheat-sheet)
 
 ---
@@ -357,10 +357,10 @@ des touches de modification, le chiffre ou la lettre étant ajouté par Keepit. 
 app utilise déjà une combinaison, Keepit le signale au démarrage. *Visionneuse* ⌥E, *Réglages* ⌥S,
 *Effacer l’historique* ⌥C, *Suspendre l’enregistrement* ⌥P, *Verrouiller Keepit* ⌥L et *Quitter
 Keepit* ⌥Q fonctionnent depuis n’importe quelle app et sont rappelés à côté de leurs commandes dans le
-menu. Les touches sont définies par leur position physique sur le clavier, selon la disposition
-américaine : sur un clavier AZERTY, ⌥M correspond donc à la touche située à droite du N. Sur un Mac,
+menu. Les touches sont définies par leur position physique sur le clavier : sur un clavier AZERTY, le
+raccourci de l’historique est la touche à droite du N et s’affiche donc ⌥,. Sur un Mac,
 ⌥+lettre saisit normalement un caractère spécial (© ou € par exemple) ; si vous avez besoin de
-l’un d’eux, déplacez la commande sur une autre touche.
+l’un d’eux, déplacez la commande sur une autre touche. Keepit lit aussi vos dispositions de clavier : les lettres affichées dans les Réglages et dans les menus sont celles des touches de la disposition que vous utilisez, et un raccourci par défaut qui prendrait un caractère dont votre disposition a besoin (⌥L saisit @ en allemand, ł en polonais) est laissé libre au lancement de Keepit — la note sous son champ le dit ; cliquez dans le champ et appuyez sur la combinaison pour l’utiliser malgré tout. Avec une disposition non latine, comme le russe, les noms viennent de la disposition latine que macOS lui associe, comme dans les menus du système lui-même.
 
 ---
 
@@ -593,7 +593,7 @@ réinstallée.
 
 **Un raccourci ne fait rien.** Une autre app ou macOS l’utilise déjà. Keepit le signale au lancement.
 Choisissez une autre combinaison dans la sous-fenêtre *Raccourcis*. ⌃⌥ avec des chiffres et des lettres
-est libre sur un Mac dans sa configuration d’origine.
+est libre sur un Mac dans sa configuration d’origine. Ou c’est un raccourci par défaut que Keepit a laissé libre parce qu’il saisit un caractère dans l’une de vos dispositions de clavier ; la note sous son champ dans le panneau *Raccourcis* le dit. Choisissez une autre combinaison, ou cliquez dans le champ et appuyez sur la même pour l’utiliser malgré tout. ⌃⌥V ne colle rien tant qu’un menu de Keepit est ouvert : macOS utilise ⌃V (ainsi que ⌃N et ⌃P) pour déplacer la sélection dans les menus. Fermez d’abord le menu, ou maintenez ⇧ et choisissez *Coller en texte brut* dans le sous-menu de l’élément. Pour la même raison, le raccourci *Verrouiller Keepit* ne peut pas être ⌃ avec V, N ou P.
 
 **Le menu s’ouvre au mauvais endroit.** L’app dans laquelle vous êtes n’expose pas son curseur de
 texte, le menu se rabat donc sur le pointeur de la souris. *Ouvrir le menu au curseur de texte si

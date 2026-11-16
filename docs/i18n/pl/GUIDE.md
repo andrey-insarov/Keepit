@@ -1,4 +1,4 @@
-<!-- source: GUIDE.md 39bab8b4f2a3de5ce61f2427db3f17e669b6f280 -->
+<!-- source: GUIDE.md 5e4e05273c142ac7759f3c994f7665d09f9b8d3c -->
 # Podręcznik Keepit
 
 Keepit zarządza historią schowka i szablonami w systemie macOS. Mieszka na pasku menu, pamięta
@@ -11,13 +11,13 @@ podręcznik opisuje Keepit 3; podręcznik do Keepit 2.x pozostaje bez zmian pod 
 
 **Spis treści**
 
-- [Część 1. Pierwsze kroki](#part-1--getting-started): [Instalacja](#install) · [Pierwsze uruchomienie](#first-launch)
-- [Część 2. Codzienna praca](#part-2--everyday-use): [Menu historii](#the-history-menu) · [Wyszukiwanie i podgląd](#search-and-preview) · [Wklejanie bez menu](#paste-without-the-menu) · [Kolejka wklejania](#the-paste-queue) · [Menu rozszerzone](#the-extended-menu)
-- [Część 3. Szablony](#part-3--templates): [Tworzenie i porządkowanie](#creating-and-organising) · [Symbole zastępcze](#placeholders) · [Szablony, które zadają pytania](#templates-that-ask-questions)
-- [Część 4. Przeglądarka](#part-4--the-viewer)
-- [Część 5. Ustawienia](#part-5--settings)
+- [Część 1. Pierwsze kroki](#part-1-getting-started): [Instalacja](#install) · [Pierwsze uruchomienie](#first-launch)
+- [Część 2. Codzienna praca](#part-2-everyday-use): [Menu historii](#the-history-menu) · [Wyszukiwanie i podgląd](#search-and-preview) · [Wklejanie bez menu](#paste-without-the-menu) · [Kolejka wklejania](#the-paste-queue) · [Menu rozszerzone](#the-extended-menu)
+- [Część 3. Szablony](#part-3-templates): [Tworzenie i porządkowanie](#creating-and-organising) · [Symbole zastępcze](#placeholders) · [Szablony, które zadają pytania](#templates-that-ask-questions)
+- [Część 4. Przeglądarka](#part-4-the-viewer)
+- [Część 5. Ustawienia](#part-5-settings)
 - [Część 6. Ochrona](#part-6-security): [Hasło i szyfrowanie](#password-and-encryption) · [Touch ID](#touch-id) · [Fraza odzyskiwania](#recovery-phrase) · [Kopia zapasowa](#backup)
-- [Część 7. Dla zaawansowanych](#part-7--advanced): [Automatyzacja](#automation-the-keepit-url-scheme) · [Aktualizacje](#updates) · [Odinstalowanie](#uninstalling)
+- [Część 7. Dla zaawansowanych](#part-7-advanced): [Automatyzacja](#automation-the-keepit-url-scheme) · [Aktualizacje](#updates) · [Odinstalowanie](#uninstalling)
 - [Informacje pomocnicze](#reference): [Rozwiązywanie problemów](#troubleshooting) · [Ściąga ze skrótów klawiszowych](#keyboard-cheat-sheet) · [Ściąga z symboli zastępczych](#placeholder-cheat-sheet)
 
 ---
@@ -346,7 +346,7 @@ Keepit. Jeśli któryś skrót należy już do macOS albo innej aplikacji, Keepi
 starcie. *Przeglądarka* ⌥E, *Ustawienia* ⌥S, *Wyczyść historię* ⌥C, *Wstrzymaj nagrywanie* ⌥P,
 *Zablokuj Keepit* ⌥L i *Zakończ Keepit* ⌥Q działają z dowolnej aplikacji i są pokazane w menu obok
 swoich poleceń. W układzie amerykańskim ⌥ + litera zwykle wpisuje znak specjalny (⌥S = ß, ⌥C = ç …);
-jeśli któregoś z nich potrzebujesz, przenieś skrót na inny klawisz.
+jeśli któregoś z nich potrzebujesz, przenieś skrót na inny klawisz. Keepit odczytuje też twoje układy klawiatury: litery pokazywane w Ustawieniach i w menu są literami klawiszy układu, którego właśnie używasz, a domyślny skrót, który zabrałby znak potrzebny w twoim układzie (⌥L wpisuje @ w układzie niemieckim, ł w polskim), Keepit zostawia wolny przy uruchomieniu — mówi o tym notatka pod jego polem; kliknij pole i naciśnij kombinację, aby mimo to jej użyć. W układzie niełacińskim, na przykład rosyjskim, nazwy pochodzą z układu łacińskiego, który macOS z nim łączy — tak samo jak w menu samego systemu.
 
 ---
 
@@ -567,7 +567,7 @@ wyłącz go i włącz ponownie. macOS zapomina przyznane uprawnienie po ponownej
 
 **Skrót klawiszowy nic nie robi.** Należy do innej aplikacji albo do macOS; Keepit zgłasza to przy
 uruchomieniu. Wybierz inną kombinację w panelu *Skróty*. Kombinacja ⌃⌥ z cyframi i literami jest
-wolna na Macu w stanie fabrycznym.
+wolna na Macu w stanie fabrycznym. Albo jest to domyślny skrót, który Keepit zostawił wolny, bo w jednym z twoich układów klawiatury wpisuje znak; mówi o tym notatka pod jego polem w panelu *Skróty*. Wybierz inną kombinację albo kliknij pole i naciśnij tę samą, aby mimo to jej użyć. ⌃⌥V niczego nie wkleja, dopóki otwarte jest menu Keepit: macOS używa ⌃V (a także ⌃N i ⌃P) do przesuwania zaznaczenia w menu. Najpierw zamknij menu albo przytrzymaj ⇧ i wybierz *Wklej jako zwykły tekst* w podmenu elementu. Z tego samego powodu skrótem *Zablokuj Keepit* nie może być ⌃ z V, N ani P.
 
 **Menu otwiera się w złym miejscu.** Aplikacja, w której jesteś, nie udostępnia swojego kursora
 tekstowego, więc menu otwiera się przy wskaźniku myszy. Opcja *Otwieraj menu przy kursorze

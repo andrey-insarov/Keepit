@@ -957,7 +957,9 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate, NSTo
 
     /// Two of our own shortcuts on the same combination would silently shadow each other.
     private func conflict(in s: Settings) -> String? {
-        if let h = s.lockHotKey, h.isTakenByMenuTracking { return Self.lockTakenByMenuText }
+        // Only a lock being recorded now is refused: a stored one from before is reported by its note
+        // and the launch alert, and must not block the recording of every other shortcut.
+        if let h = s.lockHotKey, h.isTakenByMenuTracking, h != app.settings.lockHotKey { return Self.lockTakenByMenuText }
         var all: [(String, HotKey)] = [(L("History menu"), s.historyHotKey), (L("Template menu"), s.templateHotKey)]
         if let h = s.previousHotKey { all.append((L("Paste previous item"), h)) }
         if let m = s.latestActionModifiers {

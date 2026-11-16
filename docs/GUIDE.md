@@ -328,7 +328,7 @@ On the **Shortcuts** pane click a field and press a combination; ⌫ switches a 
 combination already used by another command is refused and the reason is shown under the fields; *Reset to
 Defaults* brings back the ⌥-letter set (⌥M history, ⌥T templates, ⌥E Viewer, ⌥S Settings, ⌥C Clear History, ⌥P pause, ⌥L lock, ⌥Q quit), ⌥⇧V and ⌃⌥. *Paste item by number* and *Actions on the latest item*
 take only modifiers — the digit or letter is added by Keepit. If macOS or another app already owns one, Keepit says so when it
-starts. *Viewer* ⌥E, *Settings* ⌥S, *Clear History* ⌥C, *Pause recording* ⌥P, *Lock Keepit* ⌥L and *Quit Keepit* ⌥Q work from any app and are shown next to their commands in the menu. On a US layout ⌥+letter normally types a special character (⌥S = ß, ⌥C = ç …); if you need one of those, move the key.
+starts. *Viewer* ⌥E, *Settings* ⌥S, *Clear History* ⌥C, *Pause recording* ⌥P, *Lock Keepit* ⌥L and *Quit Keepit* ⌥Q work from any app and are shown next to their commands in the menu. On a US layout ⌥+letter normally types a special character (⌥S = ß, ⌥C = ç …); if you need one of those, move the key. Keepit also reads your keyboard layouts: the letters shown in Settings and in the menus are the ones on the keys of the layout you are using, and a default that would take a character your layout needs (⌥L types @ on German, ł on Polish) is left free when Keepit starts — the note under its field says so; click the field and press the combination to use it anyway. On a non-Latin layout such as Russian, the names come from the Latin layout macOS pairs with it, as in the system's own menus.
 
 ---
 
@@ -531,8 +531,10 @@ forgets the cask.
 Security → Accessibility → Keepit*. If Keepit is listed but still does not paste, switch it off and
 on again — macOS forgets the grant when the app is reinstalled.
 
-**A hot key does nothing.** Another app or macOS owns it; Keepit reports that at launch. Pick a
-different combination on the *Shortcuts* pane. ⌃⌥ with digits and letters is free on a stock Mac.
+**A hot key does nothing.** Another app or macOS owns it; Keepit reports that at launch. Or it is a
+default Keepit left free because it types a character on one of your keyboard layouts; the note under
+its field on the *Shortcuts* pane says so. Pick a different combination, or click the field and press
+the same one to use it anyway. ⌃⌥ with digits and letters is free on a stock Mac. ⌃⌥V does not paste while a Keepit menu is open: macOS uses ⌃V (and ⌃N, ⌃P) to move the selection in menus. Close the menu first, or hold ⇧ and pick *Paste as plain text* in the item's submenu. For the same reason the *Lock Keepit* shortcut cannot be ⌃ with V, N or P.
 
 **The menu opens in the wrong place.** The app you are in does not expose its text cursor, so the
 menu falls back to the mouse pointer. *Open menu at text cursor* on the General tab turns the
