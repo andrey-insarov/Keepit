@@ -212,7 +212,7 @@ def langpick_html(lang: str, ui: dict, page: str | None) -> str:
 
 def header_html(lang: str, ui: dict, page: str | None = None) -> str:
     h = f"""<header><div class="wrap">
-  <a class="brand" href="/"><img src="/img/icon.png?v=a1519b94" alt="">Keepit</a>
+  <a class="brand" href="/"><img src="/img/icon.png?v=a1519b94" alt="Keepit"><span aria-hidden="true">Keepit</span></a>
   <nav><a href="/#features">{ui['features']}</a><a href="/guide">{ui['guide']}</a><a href="/security">{ui['security']}</a><a href="/support">{ui['support']}</a><a class="gh" href="https://github.com/andrey-insarov/Keepit">GitHub</a>__LPICK__<details class="mnav"><summary aria-label="{ui['menu']}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary><div class="links"><a href="/#features">{ui['features']}</a><a href="/#privacy">{ui['privacy']}</a><a href="/#install">{ui['install']}</a><a href="/guide">{ui['guide']}</a><a href="/security">{ui['security']}</a><a href="/support">{ui['support']}</a></div></details></nav>
 </div></header>"""
     # the picker goes in after localize_links: its links point at other languages on purpose
@@ -524,7 +524,7 @@ def render(src_name: str, out_name: str, title: str, description: str, with_toc:
             f'<meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0c0d14" media="(prefers-color-scheme: dark)">\n'
             f'{json_ld(out_name, title, description, kind, crumb, headline, lang)}\n'
             f'{ANALYTICS}\n<style>{CSS}{CSS_I18N if len(active_langs()) > 1 else ""}</style></head>\n<body>{header_html(lang, ui, out_name if multi else None)}\n<main class="{main_cls}">{aside}<article>{body}</article></main>\n{footer_html(lang, ui, out_name if multi else None)}\n'
-            f'<div id="lb" role="dialog" aria-label="{ui["full_size_screenshot"]}"><img alt=""></div>\n'
+            f'<div id="lb" role="dialog" aria-label="{ui["full_size_screenshot"]}"><img alt="{ui["full_size_screenshot"]}"></div>\n'
             f'<script>{JS}</script>\n</body></html>')
     stray = re.findall(r'href="(?:\.\./|/)?[a-z0-9/-]+\.html[^"]*"', page)
     if stray:

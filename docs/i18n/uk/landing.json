@@ -362,5 +362,9 @@
  [
   "const after = '. Delivery takes two to three days.';",
   "const after = '. Доставка триватиме два-три дні.';"
+ ],
+ [
+  "alt=\"A picture in the history\"",
+  "alt=\"Зображення в історії\""
  ]
 ]

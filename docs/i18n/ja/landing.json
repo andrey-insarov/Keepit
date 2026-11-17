@@ -362,5 +362,9 @@
  [
   "const after = '. Delivery takes two to three days.';",
   "const after = '。お届けまで2〜3日かかります。';"
+ ],
+ [
+  "alt=\"A picture in the history\"",
+  "alt=\"履歴内の画像\""
  ]
 ]
