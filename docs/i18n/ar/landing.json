@@ -362,5 +362,9 @@
  [
   "const after = '. Delivery takes two to three days.';",
   "const after = '. يستغرق التوصيل من يومين إلى ثلاثة أيام.';"
+ ],
+ [
+  "alt=\"A picture in the history\"",
+  "alt=\"صورة في السجل\""
  ]
 ]

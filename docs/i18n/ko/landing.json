@@ -362,5 +362,9 @@
  [
   "const after = '. Delivery takes two to three days.';",
   "const after = '. 배송에는 2–3일이 걸립니다.';"
+ ],
+ [
+  "alt=\"A picture in the history\"",
+  "alt=\"기록에 있는 그림\""
  ]
 ]

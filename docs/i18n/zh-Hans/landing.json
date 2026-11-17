@@ -362,5 +362,9 @@
  [
   "const after = '. Delivery takes two to three days.';",
   "const after = '。预计两到三天送达。';"
+ ],
+ [
+  "alt=\"A picture in the history\"",
+  "alt=\"历史记录中的图片\""
  ]
 ]
